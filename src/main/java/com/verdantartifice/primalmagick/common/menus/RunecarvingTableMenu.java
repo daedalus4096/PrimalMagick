@@ -175,7 +175,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.selectedRecipe.set(-1);
         this.outputSlot.set(ItemStack.EMPTY);
         this.recipes = this.level.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), inventoryIn, this.level).stream()
-                .filter(r -> r != null && (r.value().getRequiredResearch() == null || r.value().getRequiredResearch().isKnownByStrict(this.player)))
+                .filter(r -> r != null && (r.value().getRequirement().isEmpty() || r.value().getRequirement().get().isMetBy(this.player)))
                 .collect(Collectors.toList());
     }
     

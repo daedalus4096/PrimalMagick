@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +27,7 @@ public class SourceLanguageBuilder extends AbstractLanguageBuilder<Source, Sourc
 
     @Override
     protected ResourceLocation getBaseRegistryKey(Source base) {
-        return PrimalMagick.resource(base.getTag());
+        return base.getId();
     }
     
     @Override

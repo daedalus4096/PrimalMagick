@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeType;
  *  
  * @author Daedalus4096
  */
-public interface IArcaneRecipe extends CraftingRecipe, IHasManaCost, IHasRequiredResearch, IArcaneRecipeBookItem {
+public interface IArcaneRecipe extends CraftingRecipe, IHasManaCost, IHasRequirement, IArcaneRecipeBookItem {
     @Override
     default RecipeType<?> getType() {
         return RecipeTypesPM.ARCANE_CRAFTING.get();

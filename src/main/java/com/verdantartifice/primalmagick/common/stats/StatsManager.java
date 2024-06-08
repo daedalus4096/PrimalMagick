@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -59,8 +60,8 @@ public class StatsManager {
     
     public static boolean registerStat(@Nullable Stat stat) {
         if (stat != null) {
-            REGISTRY.put(stat.getLocation(), stat);
-            if (stat.isInternal()) {
+            REGISTRY.put(stat.key(), stat);
+            if (stat.internal()) {
                 return true;    // Don't register internal stats in the display list
             } else {
                 return DISPLAY_STATS.add(stat);
@@ -87,7 +88,7 @@ public class StatsManager {
     
     @Nonnull
     public static Component getFormattedValue(@Nullable Player player, @Nullable Stat stat) {
-        return Component.literal(stat.getFormatter().format(getValue(player, stat)));
+        return Component.literal(stat.formatter().format(getValue(player, stat)));
     }
     
     public static void incrementValue(@Nullable Player player, @Nullable Stat stat) {
@@ -106,9 +107,6 @@ public class StatsManager {
                 // Set the new value into the player capability
                 stats.setValue(stat, value);
                 scheduleSync(spe);
-                
-                // Check stat triggers for updates
-                StatTriggers.checkTriggers(spe, stat, value);
             }
         }
     }
@@ -130,24 +128,21 @@ public class StatsManager {
                 stats.setLocationDiscovered(shrinePos);
                 stats.setValue(stat, value);
                 scheduleSync(spe);
-                
-                // Check stat triggers for updates
-                StatTriggers.checkTriggers(spe, stat, value);
             }
         }
     }
     
     @Nullable
     protected static Stat getShrineStatForSource(@Nonnull Source source) {
-        if (source.equals(Source.EARTH)) {
+        if (source.equals(Sources.EARTH)) {
             return StatsPM.SHRINE_FOUND_EARTH;
-        } else if (source.equals(Source.SEA)) {
+        } else if (source.equals(Sources.SEA)) {
             return StatsPM.SHRINE_FOUND_SEA;
-        } else if (source.equals(Source.SKY)) {
+        } else if (source.equals(Sources.SKY)) {
             return StatsPM.SHRINE_FOUND_SKY;
-        } else if (source.equals(Source.SUN)) {
+        } else if (source.equals(Sources.SUN)) {
             return StatsPM.SHRINE_FOUND_SUN;
-        } else if (source.equals(Source.MOON)) {
+        } else if (source.equals(Sources.MOON)) {
             return StatsPM.SHRINE_FOUND_MOON;
         } else {
             return null;

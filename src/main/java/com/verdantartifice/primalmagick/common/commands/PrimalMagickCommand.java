@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,11 +44,8 @@ import com.verdantartifice.primalmagick.common.commands.arguments.AttunementValu
 import com.verdantartifice.primalmagick.common.commands.arguments.KnowledgeAmountArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.KnowledgeTypeArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.KnowledgeTypeInput;
-import com.verdantartifice.primalmagick.common.commands.arguments.ResearchArgument;
-import com.verdantartifice.primalmagick.common.commands.arguments.ResearchInput;
 import com.verdantartifice.primalmagick.common.commands.arguments.ResourceKeyArgumentPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.SourceArgument;
-import com.verdantartifice.primalmagick.common.commands.arguments.SourceInput;
 import com.verdantartifice.primalmagick.common.commands.arguments.StatValueArgument;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
@@ -55,11 +53,13 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
-import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.DataPackUtils;
@@ -108,23 +108,23 @@ public class PrimalMagickCommand {
                     .then(Commands.literal("grant_all").executes((context) -> { return grantAllResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("grant")
                         // /pm research <target> grant <research>
-                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return grantResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                        .then(Commands.argument("research", ResourceKeyArgumentPM.key(RegistryKeysPM.RESEARCH_ENTRIES)).executes((context) -> { return grantResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceKeyArgumentPM.getResearchEntry(context, "research")); }))
                     )
                     .then(Commands.literal("grant_parents")
                         // /pm research <target> grant_parents <research>
-                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return grantResearchParents(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                        .then(Commands.argument("research", ResourceKeyArgumentPM.key(RegistryKeysPM.RESEARCH_ENTRIES)).executes((context) -> { return grantResearchParents(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceKeyArgumentPM.getResearchEntry(context, "research")); }))
                     )
                     .then(Commands.literal("revoke")
                         // /pm research <target> revoke <research>
-                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return revokeResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                        .then(Commands.argument("research", ResourceKeyArgumentPM.key(RegistryKeysPM.RESEARCH_ENTRIES)).executes((context) -> { return revokeResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceKeyArgumentPM.getResearchEntry(context, "research")); }))
                     )
                     .then(Commands.literal("details")
                         // /pm research <target> details <research>
-                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return detailResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                        .then(Commands.argument("research", ResourceKeyArgumentPM.key(RegistryKeysPM.RESEARCH_ENTRIES)).executes((context) -> { return detailResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceKeyArgumentPM.getResearchEntry(context, "research")); }))
                     )
                     .then(Commands.literal("progress")
                         // /pm research <target> progress <research>
-                        .then(Commands.argument("research", ResearchArgument.research()).executes((context) -> { return progressResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResearchArgument.getResearch(context, "research")); }))
+                        .then(Commands.argument("research", ResourceKeyArgumentPM.key(RegistryKeysPM.RESEARCH_ENTRIES)).executes((context) -> { return progressResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceKeyArgumentPM.getResearchEntry(context, "research")); }))
                     )
                 )
             )
@@ -316,11 +316,11 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
             // List all unlocked research entries for the target player
-            Set<SimpleResearchKey> researchSet = knowledge.getResearchSet();
+            Set<AbstractResearchKey<?>> researchSet = knowledge.getResearchSet();
             String[] researchList = researchSet.stream()
-                                        .map(k -> k.getRootKey())
+                                        .map(k -> k.toString())
                                         .collect(Collectors.toSet())
-                                        .toArray(new String[researchSet.size()]);
+                                        .toArray(String[]::new);
             String output = String.join(", ", researchList);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.list", target.getName(), output), true);
         }
@@ -343,37 +343,33 @@ public class PrimalMagickCommand {
         return 0;
     }
     
-    private static int grantResearch(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
+    private static int grantResearch(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
-        SimpleResearchKey key = input.getKey();
+        ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // Grant the specified research to the target player, along with all its parents
-            ResearchManager.forceGrantWithAllParents(target, key);
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant", target.getName(), key.toString()), true);
+            ResearchManager.forceGrantWithAllParents(target, entryKey);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant", target.getName(), entryKey.toString()), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant.target", source.getTextName(), key.toString()));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant.target", source.getTextName(), entryKey.toString()));
             }
         }
         return 0;
     }
     
-    private static int grantResearchParents(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
+    private static int grantResearchParents(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
-        SimpleResearchKey key = input.getKey();
+        ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // Grant the parents of the specified research to the target player, but not the research itself
-            ResearchManager.forceGrantParentsOnly(target, key);
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant_parents", target.getName(), key.toString()), true);
+            ResearchManager.forceGrantParentsOnly(target, entryKey);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant_parents", target.getName(), entryKey.toString()), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant_parents.target", source.getTextName(), key.toString()));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant_parents.target", source.getTextName(), entryKey.toString()));
             }
         }
         return 0;
@@ -394,42 +390,38 @@ public class PrimalMagickCommand {
         return 0;
     }
     
-    private static int revokeResearch(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
+    private static int revokeResearch(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
-        SimpleResearchKey key = input.getKey();
+        ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // Revoke the specified research from the target player, along with all its children
-            ResearchManager.forceRevokeWithAllChildren(target, key);
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.revoke", target.getName(), key.toString()), true);
+            ResearchManager.forceRevokeWithAllChildren(target, entryKey);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.revoke", target.getName(), entryKey.toString()), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.revoke.target", source.getTextName(), key.toString()));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.revoke.target", source.getTextName(), entryKey.toString()));
             }
         }
         return 0;
     }
     
-    private static int detailResearch(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
+    private static int detailResearch(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
-        SimpleResearchKey key = input.getKey();
+        ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // List the status, current stage, and attached flags of the given research for the target player
-            IPlayerKnowledge.ResearchStatus status = knowledge.getResearchStatus(key);
-            int stage = knowledge.getResearchStage(key);
-            Set<IPlayerKnowledge.ResearchFlag> flagSet = knowledge.getResearchFlags(key);
+            IPlayerKnowledge.ResearchStatus status = knowledge.getResearchStatus(source.registryAccess(), entryKey);
+            int stage = knowledge.getResearchStage(entryKey);
+            Set<IPlayerKnowledge.ResearchFlag> flagSet = knowledge.getResearchFlags(entryKey);
             String[] flagStrs = flagSet.stream()
                                     .map(f -> f.name())
                                     .collect(Collectors.toSet())
-                                    .toArray(new String[flagSet.size()]);
+                                    .toArray(String[]::new);
             String flagOutput = (flagStrs.length == 0) ? "none" : String.join(", ", flagStrs);
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.details.1", key.toString(), target.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.details.1", entryKey.toString(), target.getName()), true);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.details.2", status.name()), true);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.details.3", stage), true);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.details.4", flagOutput), true);
@@ -437,24 +429,22 @@ public class PrimalMagickCommand {
         return 0;
     }
     
-    private static int progressResearch(CommandSourceStack source, ServerPlayer target, ResearchInput input) {
+    private static int progressResearch(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
-        SimpleResearchKey key = input.getKey();
+        ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else if (ResearchEntries.getEntry(key) == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.research.noexist", key.toString()));
         } else {
             // Advance the given research to its next stage for the target player
-            int oldStage = knowledge.getResearchStage(key);
-            if (ResearchManager.progressResearch(target, key)) {
-                int newStage = knowledge.getResearchStage(key);
-                source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.progress.success", key.toString(), target.getName(), oldStage, newStage), true);
+            int oldStage = knowledge.getResearchStage(entryKey);
+            if (ResearchManager.progressResearch(target, entryKey)) {
+                int newStage = knowledge.getResearchStage(entryKey);
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.progress.success", entryKey.toString(), target.getName(), oldStage, newStage), true);
                 if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                    target.sendSystemMessage(Component.translatable("commands.primalmagick.research.progress.target", key.toString(), source.getTextName(), oldStage, newStage));
+                    target.sendSystemMessage(Component.translatable("commands.primalmagick.research.progress.target", entryKey.toString(), source.getTextName(), oldStage, newStage));
                 }
             } else {
-                source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.progress.failure", key.toString(), oldStage), true);
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.progress.failure", entryKey.toString(), oldStage), true);
             }
         }
         return 0;
@@ -544,10 +534,7 @@ public class PrimalMagickCommand {
 
     private static int listUnlockedSources(CommandSourceStack source, ServerPlayer target) {
         // List the unlocked sources for the target player in prescribed order
-        List<String> unlockedTags = Source.SORTED_SOURCES.stream()
-                                        .filter((s) -> s.isDiscovered(target))
-                                        .map((s) -> s.getTag().toUpperCase())
-                                        .collect(Collectors.toList());
+        List<String> unlockedTags = Sources.streamSorted().filter(s -> s.isDiscovered(target)).map(s -> s.getId().getPath().toUpperCase()).toList();
         String tagStr = String.join(", ", unlockedTags);
         source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.list", target.getName(), tagStr), true);
         return 0;
@@ -555,15 +542,13 @@ public class PrimalMagickCommand {
 
     private static int unlockAllSources(CommandSourceStack source, ServerPlayer target) {
         // Grant the target player the unlock research for all sources.  Can't do this with grantResearch because source unlocks aren't in the grimoire.
-        int unlocked = 0;
-        for (Source toUnlock : Source.SOURCES.values()) {
-            if (!toUnlock.isDiscovered(target)) {
-                if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
-                    unlocked++;
-                }
+        MutableInt unlocked = new MutableInt(0);
+        Sources.stream().filter(s -> !s.isDiscovered(target) && s.getDiscoverKey().isPresent()).map(s -> s.getDiscoverKey().get()).forEach(toUnlock -> {
+            if (ResearchManager.completeResearch(target, toUnlock)) {
+                unlocked.increment();
             }
-        }
-        final int totalUnlocked = unlocked;
+        });
+        final int totalUnlocked = unlocked.getValue();
         source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.unlock_all", target.getName(), totalUnlocked), true);
         if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
             target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock_all.target", source.getTextName(), totalUnlocked));
@@ -571,21 +556,17 @@ public class PrimalMagickCommand {
         return 0;
     }
 
-    private static int unlockSource(CommandSourceStack source, ServerPlayer target, SourceInput input) {
+    private static int unlockSource(CommandSourceStack source, ServerPlayer target, Source toUnlock) {
         // Grant the target player the unlock research for the given source.  Can't do this with grantResearch because source unlocks aren't in the grimoire.
-        String tag = input.getSourceTag();
-        Source toUnlock = Source.getSource(tag.toLowerCase());
-        if (toUnlock == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.source.noexist", tag));
-        } else if (toUnlock.isDiscovered(target)) {
-            source.sendFailure(Component.translatable("commands.primalmagick.sources.unlock.already_unlocked", target.getName(), tag.toUpperCase()));
-        } else if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.unlock.success", target.getName(), tag.toUpperCase()), true);
+        if (toUnlock.isDiscovered(target)) {
+            source.sendFailure(Component.translatable("commands.primalmagick.sources.unlock.already_unlocked", target.getName(), toUnlock.getId().toString()));
+        } else if (toUnlock.getDiscoverKey().isPresent() && ResearchManager.completeResearch(target, toUnlock.getDiscoverKey().get())) {
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.unlock.success", target.getName(), toUnlock.getId().toString()), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock.target", source.getTextName(), tag.toUpperCase()));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock.target", source.getTextName(), toUnlock.getId().toString()));
             }
         } else {
-            source.sendFailure(Component.translatable("commands.primalmagick.sources.unlock.failure", target.getName(), tag.toUpperCase()));
+            source.sendFailure(Component.translatable("commands.primalmagick.sources.unlock.failure", target.getName(), toUnlock.getId().toString()));
         }
         return 0;
     }
@@ -653,31 +634,21 @@ public class PrimalMagickCommand {
         return 0;
     }
 
-    private static int getAttunements(CommandSourceStack source, ServerPlayer target, SourceInput input) {
+    private static int getAttunements(CommandSourceStack source, ServerPlayer target, Source toQuery) {
         // Get the partial and total attunements for the given source for the target player
-        String tag = input.getSourceTag();
-        Source toQuery = Source.getSource(tag.toLowerCase());
-        if (toQuery == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.source.noexist", tag));
-        } else {
-            Component sourceText = Component.translatable(toQuery.getNameTranslationKey());
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.get.total", sourceText, source.getTextName(), AttunementManager.getTotalAttunement(target, toQuery)), true);
-            for (AttunementType type : AttunementType.values()) {
-                Component typeText = Component.translatable(type.getNameTranslationKey());
-                source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.get.partial", typeText, AttunementManager.getAttunement(target, toQuery, type)), true);
-            }
+        Component sourceText = Component.translatable(toQuery.getNameTranslationKey());
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.get.total", sourceText, source.getTextName(), AttunementManager.getTotalAttunement(target, toQuery)), true);
+        for (AttunementType type : AttunementType.values()) {
+            Component typeText = Component.translatable(type.getNameTranslationKey());
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.get.partial", typeText, AttunementManager.getAttunement(target, toQuery, type)), true);
         }
         return 0;
     }
 
-    private static int setAttunement(CommandSourceStack source, ServerPlayer target, SourceInput input, AttunementTypeInput attunementType, int value) {
+    private static int setAttunement(CommandSourceStack source, ServerPlayer target, Source toSet, AttunementTypeInput attunementType, int value) {
         // Set the partial attunement for the target player
-        String tag = input.getSourceTag();
-        Source toSet = Source.getSource(tag.toLowerCase());
         AttunementType type = attunementType.getType();
-        if (toSet == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.source.noexist", tag));
-        } else if (type == null) {
+        if (type == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.attunement_type.noexist"));
         } else {
             AttunementManager.setAttunement(target, toSet, type, value);

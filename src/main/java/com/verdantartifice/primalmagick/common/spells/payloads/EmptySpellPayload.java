@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
 import net.minecraft.core.BlockPos;
@@ -34,7 +35,7 @@ public class EmptySpellPayload extends AbstractSpellPayload {
     
     @Override
     public Source getSource() {
-        return Source.EARTH;
+        return Sources.EARTH;
     }
 
     @Override
@@ -52,7 +53,7 @@ public class EmptySpellPayload extends AbstractSpellPayload {
         return TYPE;
     }
     
-    public static CompoundResearchKey getResearch() {
+    public static AbstractRequirement<?> getRequirement() {
         return null;
     }
 }

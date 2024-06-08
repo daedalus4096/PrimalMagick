@@ -1,0 +1,76 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:celestial_harp"
+  },
+  "key": {
+    "rootKey": "primalmagick:celestial_harp"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_ritual"
+    },
+    {
+      "rootKey": "primalmagick:discover_hallowed"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "Count": 1,
+              "id": "minecraft:note_block"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "Count": 1,
+              "id": "minecraft:jukebox"
+            }
+          },
+          {
+            "amount": 3,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:celestial_harp"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.celestial_harp.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:hallowed": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:celestial_harp"
+      },
+      "recipes": [
+        "primalmagick:celestial_harp"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.celestial_harp.text.stage.2"
+    }
+  ]
+}

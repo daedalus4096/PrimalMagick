@@ -28,7 +28,7 @@
       },
       "mana": {
         "sources": {
-          "earth": 1
+          "primalmagick:earth": 1
         }
       },
       "outputAmount": 3,

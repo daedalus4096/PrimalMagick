@@ -23,7 +23,7 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "blood": 40
+      "primalmagick:blood": 40
     }
   },
   "props": [
@@ -34,7 +34,13 @@
       "block": "primalmagick:bloodletter"
     }
   ],
-  "research": "FORBIDDEN_TRIDENT",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:forbidden_trident"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:forbidden_trident",

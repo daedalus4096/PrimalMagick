@@ -4,11 +4,11 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.common.theorycrafting.AbstractProjectMaterial;
-import com.verdantartifice.primalmagick.common.theorycrafting.ExperienceProjectMaterial;
-import com.verdantartifice.primalmagick.common.theorycrafting.ItemProjectMaterial;
-import com.verdantartifice.primalmagick.common.theorycrafting.ItemTagProjectMaterial;
-import com.verdantartifice.primalmagick.common.theorycrafting.ObservationProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.ExperienceProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;
 
 import net.minecraft.world.level.block.Block;
 
@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.Block;
  */
 public class ProjectMaterialWidgetFactory {
     @Nullable
-    public static AbstractProjectMaterialWidget<?> create(AbstractProjectMaterial material, int x, int y, Set<Block> surroundings) {
+    public static AbstractProjectMaterialWidget<?> create(AbstractProjectMaterial<?> material, int x, int y, Set<Block> surroundings) {
         if (material instanceof ItemProjectMaterial itemMaterial) {
             return new ItemProjectMaterialWidget(itemMaterial, x, y, surroundings);
         } else if (material instanceof ItemTagProjectMaterial itemTagMaterial) {

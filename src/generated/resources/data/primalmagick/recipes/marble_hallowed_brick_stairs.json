@@ -10,7 +10,13 @@
     "MM ",
     "MMM"
   ],
-  "research": "SUPREME_MANAWEAVING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:supreme_manaweaving"
+    }
+  },
   "result": {
     "Count": 4,
     "id": "primalmagick:marble_hallowed_brick_stairs"

@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "infernal": 20
+    "primalmagick:infernal": 20
   },
   "target": "primalmagick:essence_shard_infernal"
 }

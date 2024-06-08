@@ -6,8 +6,12 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.data.ContainerSynchronizerLarge;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -37,6 +41,9 @@ public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryT
     public static final ResourceLocation WAND_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_slot");
     protected static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.mana_battery.slot.input");
     protected static final Component CHARGE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.mana_battery.slot.charge");
+    protected static final AbstractRequirement<?> SHARD_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SHARD_SYNTHESIS));
+    protected static final AbstractRequirement<?> CRYSTAL_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CRYSTAL_SYNTHESIS));
+    protected static final AbstractRequirement<?> CLUSTER_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CLUSTER_SYNTHESIS));
 
     protected final ContainerData data;
     protected final Slot inputSlot;
@@ -56,9 +63,9 @@ public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryT
         // Slot 0: input slot
         this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 34, new FilteredSlot.Properties().typeOf(EssenceItem.class, IWand.class).tooltip(INPUT_SLOT_TOOLTIP)
                 .background(DUST_SLOT_TEXTURE)
-                .background(SHARD_SLOT_TEXTURE, $ -> ResearchNames.SHARD_SYNTHESIS.get().simpleKey().isKnownBy(this.player))
-                .background(CRYSTAL_SLOT_TEXTURE, $ -> ResearchNames.CRYSTAL_SYNTHESIS.get().simpleKey().isKnownBy(this.player))
-                .background(CLUSTER_SLOT_TEXTURE, $ -> ResearchNames.CLUSTER_SYNTHESIS.get().simpleKey().isKnownBy(this.player))
+                .background(SHARD_SLOT_TEXTURE, $ -> SHARD_REQUIREMENT.isMetBy(playerInv.player))
+                .background(CRYSTAL_SLOT_TEXTURE, $ -> CRYSTAL_REQUIREMENT.isMetBy(playerInv.player))
+                .background(CLUSTER_SLOT_TEXTURE, $ -> CLUSTER_REQUIREMENT.isMetBy(playerInv.player))
                 .background(WAND_SLOT_TEXTURE)));
         
         // Slot 1: charge slot
@@ -157,12 +164,12 @@ public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryT
     }
     
     public int getCurrentMana(Source source) {
-        int sourceIndex = Source.SORTED_SOURCES.indexOf(source);
+        int sourceIndex = Sources.getAllSorted().indexOf(source);
         return this.data.get(2 + (2 * sourceIndex));
     }
     
     public int getMaxMana(Source source) {
-        int sourceIndex = Source.SORTED_SOURCES.indexOf(source);
+        int sourceIndex = Sources.getAllSorted().indexOf(source);
         return this.data.get(3 + (2 * sourceIndex));
     }
 }

@@ -19,9 +19,6 @@ import com.verdantartifice.primalmagick.common.network.packets.data.TileToClient
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.UpdateResearchPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.UpdateRuneEnchantmentsPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.UpdateTheorycraftingPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -118,9 +115,7 @@ public class PacketHandler {
             .messageBuilder(SyncCompanionsPacket.class, SyncCompanionsPacket.direction()).encoder(SyncCompanionsPacket::encode).decoder(SyncCompanionsPacket::decode).consumerMainThread(SyncCompanionsPacket::onMessage).add()
             .messageBuilder(ScanEntityPacket.class, ScanEntityPacket.direction()).encoder(ScanEntityPacket::encode).decoder(ScanEntityPacket::decode).consumerMainThread(ScanEntityPacket::onMessage).add()
             .messageBuilder(PotionExplosionPacket.class, PotionExplosionPacket.direction()).encoder(PotionExplosionPacket::encode).decoder(PotionExplosionPacket::decode).consumerMainThread(PotionExplosionPacket::onMessage).add()
-            .messageBuilder(UpdateResearchPacket.class, UpdateResearchPacket.direction()).encoder(UpdateResearchPacket::encode).decoder(UpdateResearchPacket::decode).consumerMainThread(UpdateResearchPacket::onMessage).add()
             .messageBuilder(UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.direction()).encoder(UpdateAffinitiesPacket::encode).decoder(UpdateAffinitiesPacket::decode).consumerMainThread(UpdateAffinitiesPacket::onMessage).add()
-            .messageBuilder(UpdateTheorycraftingPacket.class, UpdateTheorycraftingPacket.direction()).encoder(UpdateTheorycraftingPacket::encode).decoder(UpdateTheorycraftingPacket::decode).consumerMainThread(UpdateTheorycraftingPacket::onMessage).add()
             .messageBuilder(SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket.direction()).encoder(SyncArcaneRecipeBookPacket::encode).decoder(SyncArcaneRecipeBookPacket::decode).consumerMainThread(SyncArcaneRecipeBookPacket::onMessage).add()
             .messageBuilder(PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket.direction()).encoder(PlaceArcaneRecipePacket::encode).decoder(PlaceArcaneRecipePacket::decode).consumerMainThread(PlaceArcaneRecipePacket::onMessage).add()
             .messageBuilder(PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.direction()).encoder(PlaceGhostArcaneRecipePacket::encode).decoder(PlaceGhostArcaneRecipePacket::decode).consumerMainThread(PlaceGhostArcaneRecipePacket::onMessage).add()
@@ -130,7 +125,6 @@ public class PacketHandler {
             .messageBuilder(SpellcraftingRunePacket.class, SpellcraftingRunePacket.direction()).encoder(SpellcraftingRunePacket::encode).decoder(SpellcraftingRunePacket::decode).consumerMainThread(SpellcraftingRunePacket::onMessage).add()
             .messageBuilder(SetActiveSpellPacket.class, SetActiveSpellPacket.direction()).encoder(SetActiveSpellPacket::encode).decoder(SetActiveSpellPacket::decode).consumerMainThread(SetActiveSpellPacket::onMessage).add()
             .messageBuilder(WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket.direction()).encoder(WithdrawCaskEssencePacket::encode).decoder(WithdrawCaskEssencePacket::decode).consumerMainThread(WithdrawCaskEssencePacket::onMessage).add()
-            .messageBuilder(UpdateRuneEnchantmentsPacket.class, UpdateRuneEnchantmentsPacket.direction()).encoder(UpdateRuneEnchantmentsPacket::encode).decoder(UpdateRuneEnchantmentsPacket::decode).consumerMainThread(UpdateRuneEnchantmentsPacket::onMessage).add()
             .messageBuilder(OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket.direction()).encoder(OpenGrimoireScreenPacket::encode).decoder(OpenGrimoireScreenPacket::decode).consumerMainThread(OpenGrimoireScreenPacket::onMessage).add()
             .messageBuilder(SyncWardPacket.class, SyncWardPacket.direction()).encoder(SyncWardPacket::encode).decoder(SyncWardPacket::decode).consumerMainThread(SyncWardPacket::onMessage).add()
             .messageBuilder(OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket.direction()).encoder(OpenStaticBookScreenPacket::encode).decoder(OpenStaticBookScreenPacket::decode).consumerMainThread(OpenStaticBookScreenPacket::onMessage).add()

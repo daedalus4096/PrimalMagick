@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 /**
  * Definition of an empty spell mod.  This mod has no effect and is not valid in spells.  Its only
@@ -26,7 +26,7 @@ public class EmptySpellMod extends AbstractSpellMod {
         return TYPE;
     }
     
-    public static CompoundResearchKey getResearch() {
+    public static AbstractRequirement<?> getRequirement() {
         return null;
     }
     

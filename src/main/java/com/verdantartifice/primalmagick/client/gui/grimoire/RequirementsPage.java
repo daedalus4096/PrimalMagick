@@ -7,21 +7,17 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.InactiveWidget;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemTagWidget;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.KnowledgeWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ProgressButton;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ResearchWidget;
-import com.verdantartifice.primalmagick.common.research.Knowledge;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RequirementWidgetFactory;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 
 /**
  * Grimoire page showing the requirements needed to advance a research entry to its next stage.
@@ -47,95 +43,49 @@ public class RequirementsPage extends AbstractPage {
         return Component.translatable("grimoire.primalmagick.requirements_header");
     }
     
+    protected int initWidgetCategory(GrimoireScreen screen, RequirementCategory category, int x, int y) {
+        int startX = x;
+        int widgetHeight = Integer.MIN_VALUE;
+        Minecraft mc = Minecraft.getInstance();
+
+        List<AbstractRequirement<?>> reqs = this.stage.getRequirementsByCategory(category);
+        if (!reqs.isEmpty()) {
+            y += mc.font.lineHeight;   // Make room for section header
+            List<Boolean> completion = this.stage.getRequirementCompletionByCategory(mc.player, category);
+            for (int index = 0; index < reqs.size(); index++) {
+                if (index > 0 && index % ITEMS_PER_ROW == 0 && widgetHeight > 0) {
+                    // If the number of items exceeds the capacity of the row, wrap to the next one
+                    x = startX;
+                    y += (widgetHeight + 2);
+                }
+                AbstractWidget widget = RequirementWidgetFactory.fromRequirement(reqs.get(index), x, y, completion.get(index));
+                if (widget != null) {
+                    screen.addWidgetToScreen(widget);
+                    widgetHeight = Math.max(widgetHeight, widget.getHeight());
+                }
+                x += 18;
+            }
+            if (widgetHeight > 0) {
+                y += (widgetHeight + 2);
+            }
+        }
+        
+        return y;
+    }
+    
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         int startX = x;
         int startY = y;
         y += 27;    // Make room for page title
+        
         Minecraft mc = Minecraft.getInstance();
         
-        // Init obtain requirement widgets
-        if (!this.stage.getMustObtain().isEmpty()) {
-            y += mc.font.lineHeight;   // Make room for section header
-            List<Boolean> completion = this.stage.getObtainRequirementCompletion(mc.player);
-            for (int index = 0; index < this.stage.getMustObtain().size(); index++) {
-                if (index > 0 && index % ITEMS_PER_ROW == 0) {
-                    // If the number of items exceeds the capacity of the row, wrap to the next one
-                    x = startX;
-                    y += 18;
-                }
-                Object obj = this.stage.getMustObtain().get(index);
-                if (obj instanceof ItemStack) {
-                    // Render item stack
-                    screen.addWidgetToScreen(new ItemStackWidget((ItemStack)obj, x + 8 + (side * 144), y, completion.get(index).booleanValue()));
-                } else if (obj instanceof ResourceLocation) {
-                    // Render cycling stacks from tag
-                    screen.addWidgetToScreen(new ItemTagWidget((ResourceLocation)obj, x + 8 + (side * 144), y, completion.get(index).booleanValue()));
-                }
-                x += 18;
-            }
-            x = startX;
-            y += 18;
-        }
-        
-        // Init craft requirement widgets
-        if (!this.stage.getMustCraft().isEmpty()) {
-            y += mc.font.lineHeight;   // Make room for section header
-            List<Boolean> completion = this.stage.getCraftRequirementCompletion(mc.player);
-            for (int index = 0; index < this.stage.getMustCraft().size(); index++) {
-                if (index > 0 && index % ITEMS_PER_ROW == 0) {
-                    // If the number of items exceeds the capacity of the row, wrap to the next one
-                    x = startX;
-                    y += 18;
-                }
-                Object obj = this.stage.getMustCraft().get(index);
-                if (obj instanceof ItemStack) {
-                    // Render item stack
-                    screen.addWidgetToScreen(new ItemStackWidget((ItemStack)obj, x + 8 + (side * 144), y, completion.get(index).booleanValue()));
-                } else if (obj instanceof ResourceLocation) {
-                    // Render cycling stacks from tag
-                    screen.addWidgetToScreen(new ItemTagWidget((ResourceLocation)obj, x + 8 + (side * 144), y, completion.get(index).booleanValue()));
-                }
-                x += 18;
-            }
-            x = startX;
-            y += 18;
-        }
-        
-        // Init knowledge requirement widgets
-        if (!this.stage.getRequiredKnowledge().isEmpty()) {
-            y += mc.font.lineHeight;   // Make room for section header
-            List<Boolean> completion = this.stage.getKnowledgeRequirementCompletion(mc.player);
-            for (int index = 0; index < this.stage.getRequiredKnowledge().size(); index++) {
-                if (index > 0 && index % ITEMS_PER_ROW == 0) {
-                    // If the number of items exceeds the capacity of the row, wrap to the next one
-                    x = startX;
-                    y += 18;
-                }
-                Knowledge know = this.stage.getRequiredKnowledge().get(index);
-                screen.addWidgetToScreen(new KnowledgeWidget(know, x + 8 + (side * 144), y, completion.get(index).booleanValue()));
-                x += 18;
-            }
-            x = startX;
-            y += 18;
-        }
-        
-        // Init research requirement widgets
-        if (!this.stage.getRequiredResearch().isEmpty()) {
-            y += mc.font.lineHeight;   // Make room for section header
-            List<Boolean> completion = this.stage.getResearchRequirementCompletion(mc.player);
-            for (int index = 0; index < this.stage.getRequiredResearch().getKeys().size(); index++) {
-                if (index > 0 && index % ITEMS_PER_ROW == 0) {
-                    // If the number of items exceeds the capacity of the row, wrap to the next one
-                    x = startX;
-                    y += 18;
-                }
-                SimpleResearchKey key = this.stage.getRequiredResearch().getKeys().get(index);
-                screen.addWidgetToScreen(new ResearchWidget(key, x + 8 + (side * 144), y, completion.get(index).booleanValue(), this.stage.getHints().contains(key)));
-                x += 18;
-            }
-            x = startX;
-            y += 18;
-        }
+        int widgetX = x + 8 + (side * 144);
+        y = this.initWidgetCategory(screen, RequirementCategory.MUST_OBTAIN, widgetX, y);   // Init obtain requirement widgets
+        y = this.initWidgetCategory(screen, RequirementCategory.MUST_CRAFT, widgetX, y);    // Init craft requirement widgets
+        y = this.initWidgetCategory(screen, RequirementCategory.KNOWLEDGE, widgetX, y);     // Init knowledge requirement widgets
+        y = this.initWidgetCategory(screen, RequirementCategory.RESEARCH, widgetX, y);      // Init research requirement widgets
+        y = this.initWidgetCategory(screen, RequirementCategory.STAT, widgetX, y);          // Init stat research widgets
         
         // Init progress button if applicable
         y = startY + 141;
@@ -146,6 +96,18 @@ public class RequirementsPage extends AbstractPage {
             Component text = Component.translatable("grimoire.primalmagick.complete_button");
             screen.addWidgetToScreen(new ProgressButton(this.stage, startX + 16 + (side * 136), y, text, screen));
         }
+    }
+    
+    public int renderRequirementsLabel(GuiGraphics guiGraphics, RequirementCategory category, String textTranslationKey, int x, int y, int widgetHeight) {
+        Minecraft mc = Minecraft.getInstance();
+        List<AbstractRequirement<?>> reqs = this.stage.getRequirementsByCategory(category);
+        if (!reqs.isEmpty()) {
+            Component leadComponent = Component.translatable(textTranslationKey).withStyle(ChatFormatting.UNDERLINE);
+            guiGraphics.drawString(mc.font, leadComponent, x, y - 6, Color.BLACK.getRGB(), false);
+            y += mc.font.lineHeight;
+            y += ((widgetHeight + 2) * (1 + (reqs.size() / ITEMS_PER_ROW)));  // Make room for widgets
+        }
+        return y;
     }
 
     @Override
@@ -158,39 +120,13 @@ public class RequirementsPage extends AbstractPage {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
-        Minecraft mc = Minecraft.getInstance();
         
-        // Render obtain requirement section
-        if (!this.stage.getMustObtain().isEmpty()) {
-            Component leadComponent = Component.translatable("grimoire.primalmagick.must_obtain_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
-            y += mc.font.lineHeight;
-            y += (18 * (1 + (this.stage.getMustObtain().size() / ITEMS_PER_ROW)));  // Make room for obtain widgets
-        }
-        
-        // Render craft requirement section
-        if (!this.stage.getMustCraft().isEmpty()) {
-            Component leadComponent = Component.translatable("grimoire.primalmagick.must_craft_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
-            y += mc.font.lineHeight;
-            y += (18 * (1 + (this.stage.getMustCraft().size() / ITEMS_PER_ROW)));   // Make room for craft widgets
-        }
-        
-        // Render knowledge requirement section
-        if (!this.stage.getRequiredKnowledge().isEmpty()) {
-            Component leadComponent = Component.translatable("grimoire.primalmagick.required_knowledge_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
-            y += mc.font.lineHeight;
-            y += (18 * (1 + (this.stage.getRequiredKnowledge().size() / ITEMS_PER_ROW)));   // Make room for knowledge widgets
-        }
-        
-        // Render research requirement section
-        if (!this.stage.getRequiredResearch().isEmpty()) {
-            Component leadComponent = Component.translatable("grimoire.primalmagick.required_research_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
-            y += mc.font.lineHeight;
-            y += (18 * (1 + (this.stage.getRequiredResearch().getKeys().size() / ITEMS_PER_ROW)));  // Make room for research widgets
-        }
+        int labelX = x - 3 + (side * 140);
+        y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.MUST_OBTAIN, "grimoire.primalmagick.must_obtain_header", labelX, y, 16);      // Render obtain requirement section
+        y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.MUST_CRAFT, "grimoire.primalmagick.must_craft_header", labelX, y, 16);        // Render craft requirement section
+        y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.KNOWLEDGE, "grimoire.primalmagick.required_knowledge_header", labelX, y, 16); // Render knowledge requirement section
+        y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.RESEARCH, "grimoire.primalmagick.required_research_header", labelX, y, 16);   // Render research requirement section
+        y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.STAT, "grimoire.primalmagick.required_stats_header", labelX, y, 18);          // Render stat requirement section
         
         guiGraphics.pose().popPose();
     }

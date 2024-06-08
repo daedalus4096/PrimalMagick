@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "earth": 20
+    "primalmagick:earth": 20
   },
   "target": "minecraft:diamond"
 }

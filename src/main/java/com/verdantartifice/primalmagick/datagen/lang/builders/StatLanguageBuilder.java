@@ -24,6 +24,11 @@ public class StatLanguageBuilder extends AbstractLanguageBuilder<Stat, StatLangu
 
     @Override
     protected ResourceLocation getBaseRegistryKey(Stat base) {
-        return base.getLocation();
+        return base.key();
+    }
+
+    public StatLanguageBuilder hint(String value) {
+        this.add(this.getKey("hint"), value);
+        return this;
     }
 }

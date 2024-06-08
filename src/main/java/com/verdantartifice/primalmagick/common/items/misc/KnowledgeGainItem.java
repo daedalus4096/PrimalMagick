@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
 import net.minecraft.ChatFormatting;
@@ -40,7 +39,7 @@ public class KnowledgeGainItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide) {
-            if (SimpleResearchKey.FIRST_STEPS.isKnownByStrict(player)) {
+            if (ResearchManager.hasStartedProgression(player)) {
                 ResearchManager.addKnowledge(player, this.knowledgeType, this.knowledgePoints);
                 player.displayClientMessage(Component.translatable("event.primalmagick.knowledge_item.success").withStyle(ChatFormatting.GREEN), true);
                 if (player instanceof ServerPlayer serverPlayer) {

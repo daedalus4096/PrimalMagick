@@ -16,7 +16,7 @@
   },
   "mana": {
     "sources": {
-      "earth": 100
+      "primalmagick:earth": 100
     }
   },
   "pattern": [
@@ -24,7 +24,13 @@
     "DCD",
     "MPM"
   ],
-  "research": "DISSOLUTION_CHAMBER",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:dissolution_chamber"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:dissolution_chamber"

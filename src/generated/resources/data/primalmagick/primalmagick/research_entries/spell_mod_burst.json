@@ -1,0 +1,49 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "key": {
+    "rootKey": "primalmagick:spell_mod_burst"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:spell_mod_mine"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_mod_burst"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_mod_burst.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_mod_burst"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_mod_burst.text.stage.2"
+    }
+  ]
+}

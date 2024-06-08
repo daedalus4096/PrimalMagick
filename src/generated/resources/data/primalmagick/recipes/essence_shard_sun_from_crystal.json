@@ -6,7 +6,13 @@
       "item": "primalmagick:essence_crystal_sun"
     }
   ],
-  "research": "CRYSTAL_DESYNTHESIS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:crystal_desynthesis"
+    }
+  },
   "result": {
     "Count": 4,
     "id": "primalmagick:essence_shard_sun"

@@ -33,7 +33,7 @@ public class AttunementAttributeModifier {
     
     @Nonnull
     public String getModifierName() {
-        return this.source.getTag() + Integer.toString(this.threshold.getValue());
+        return this.source.getId().toString() + Integer.toString(this.threshold.getValue());
     }
     
     @Nonnull

@@ -1,11 +1,12 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
@@ -25,16 +26,16 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
     public static final int MIN_INSTABILITY = 0;
     public static final int MAX_INSTABILITY = 10;
     
-    protected final CompoundResearchKey research;
+    protected final Optional<AbstractRequirement<?>> requirement;
     protected final SourceList manaCosts;
     protected final int instability;
     protected final NonNullList<Ingredient> recipeItems;
     protected final NonNullList<BlockIngredient> recipeProps;
     protected final boolean isSimple;
 
-    public RitualRecipe(String group, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props, CompoundResearchKey research, SourceList manaCosts, int instability) {
+    public RitualRecipe(String group, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts, int instability) {
         super(group, output);
-        this.research = research;
+        this.requirement = requirement;
         this.manaCosts = manaCosts;
         this.instability = instability;
         this.recipeItems = items;
@@ -59,8 +60,8 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
     }
 
     @Override
-    public CompoundResearchKey getRequiredResearch() {
-        return this.research;
+    public Optional<AbstractRequirement<?>> getRequirement() {
+        return this.requirement;
     }
 
     @Override
@@ -84,8 +85,9 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
     }
 
     public static class Serializer implements RecipeSerializer<RitualRecipe> {
-        protected static final Codec<RitualRecipe> CODEC = RecordCodecBuilder.create(instance -> {
-            return instance.group(
+        @Override
+        public Codec<RitualRecipe> codec() {
+            return RecordCodecBuilder.create(instance -> instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
@@ -104,21 +106,17 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
                             return DataResult.success(NonNullList.of(BlockIngredient.EMPTY, ingArray));
                         }
                     }, DataResult::success).forGetter(rr -> rr.recipeProps),
-                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
+                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rr -> rr.requirement),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rr -> rr.manaCosts),
                     ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability)
-                ).apply(instance, RitualRecipe::new);
-        });
-        
-        @Override
-        public Codec<RitualRecipe> codec() {
-            return CODEC;
+                ).apply(instance, RitualRecipe::new)
+            );
         }
-
+        
         @Override
         public RitualRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
-            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
+            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
             int instability = buffer.readVarInt();
             
             SourceList manaCosts = SourceList.fromNetwork(buffer);
@@ -136,13 +134,13 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
             }
             
             ItemStack result = buffer.readItem();
-            return new RitualRecipe(group, result, ingredients, props, research, manaCosts, instability);
+            return new RitualRecipe(group, result, ingredients, props, requirement, manaCosts, instability);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, RitualRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            buffer.writeUtf(recipe.research.toString());
+            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
             buffer.writeVarInt(recipe.instability);
             SourceList.toNetwork(buffer, recipe.manaCosts);
             buffer.writeVarInt(recipe.recipeItems.size());

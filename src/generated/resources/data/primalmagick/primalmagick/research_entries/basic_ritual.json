@@ -1,0 +1,35 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_ritual.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:basic_ritual"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_ritual"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:basic_ritual"
+      },
+      "recipes": [
+        "primalmagick:ritual_altar",
+        "primalmagick:offering_pedestal"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.basic_ritual.text.stage.1"
+    }
+  ]
+}

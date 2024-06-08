@@ -4,16 +4,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.research.ResearchName;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
@@ -27,45 +24,41 @@ import net.minecraft.world.item.Rarity;
 public abstract class Rune {
     protected static final Map<ResourceLocation, Rune> REGISTRY = new HashMap<>();
     
-    public static final SourceRune EARTH = new SourceRune("earth", ResearchNames.RUNE_EARTH, Source.EARTH);
-    public static final SourceRune SEA = new SourceRune("sea", ResearchNames.RUNE_SEA, Source.SEA);
-    public static final SourceRune SKY = new SourceRune("sky", ResearchNames.RUNE_SKY, Source.SKY);
-    public static final SourceRune SUN = new SourceRune("sun", ResearchNames.RUNE_SUN, Source.SUN);
-    public static final SourceRune MOON = new SourceRune("moon", ResearchNames.RUNE_MOON, Source.MOON);
-    public static final SourceRune BLOOD = new SourceRune("blood", ResearchNames.RUNE_BLOOD, Source.BLOOD);
-    public static final SourceRune INFERNAL = new SourceRune("infernal", ResearchNames.RUNE_INFERNAL, Source.INFERNAL);
-    public static final SourceRune VOID = new SourceRune("void", ResearchNames.RUNE_VOID, Source.VOID);
-    public static final SourceRune HALLOWED = new SourceRune("hallowed", ResearchNames.RUNE_HALLOWED, Source.HALLOWED);
-    public static final VerbRune ABSORB = new VerbRune("absorb", ResearchNames.RUNE_ABSORB);
-    public static final VerbRune DISPEL = new VerbRune("dispel", ResearchNames.RUNE_DISPEL);
-    public static final VerbRune PROJECT = new VerbRune("project", ResearchNames.RUNE_PROJECT);
-    public static final VerbRune PROTECT = new VerbRune("protect", ResearchNames.RUNE_PROTECT);
-    public static final VerbRune SUMMON = new VerbRune("summon", ResearchNames.RUNE_SUMMON);
-    public static final NounRune AREA = new NounRune("area", ResearchNames.RUNE_AREA);
-    public static final NounRune CREATURE = new NounRune("creature", ResearchNames.RUNE_CREATURE);
-    public static final NounRune ITEM = new NounRune("item", ResearchNames.RUNE_ITEM);
-    public static final NounRune SELF = new NounRune("self", ResearchNames.RUNE_SELF);
-    public static final PowerRune INSIGHT = new PowerRune("insight", ResearchNames.RUNE_INSIGHT, Rarity.UNCOMMON, 1);
-    public static final PowerRune POWER = new PowerRune("power", ResearchNames.RUNE_POWER, Rarity.RARE, 1);
-    public static final PowerRune GRACE = new PowerRune("grace", ResearchNames.RUNE_GRACE, Rarity.EPIC, -1);
+    public static final SourceRune EARTH = new SourceRune("earth", ResearchEntries.RUNE_EARTH, Sources.EARTH);
+    public static final SourceRune SEA = new SourceRune("sea", ResearchEntries.RUNE_SEA, Sources.SEA);
+    public static final SourceRune SKY = new SourceRune("sky", ResearchEntries.RUNE_SKY, Sources.SKY);
+    public static final SourceRune SUN = new SourceRune("sun", ResearchEntries.RUNE_SUN, Sources.SUN);
+    public static final SourceRune MOON = new SourceRune("moon", ResearchEntries.RUNE_MOON, Sources.MOON);
+    public static final SourceRune BLOOD = new SourceRune("blood", ResearchEntries.RUNE_BLOOD, Sources.BLOOD);
+    public static final SourceRune INFERNAL = new SourceRune("infernal", ResearchEntries.RUNE_INFERNAL, Sources.INFERNAL);
+    public static final SourceRune VOID = new SourceRune("void", ResearchEntries.RUNE_VOID, Sources.VOID);
+    public static final SourceRune HALLOWED = new SourceRune("hallowed", ResearchEntries.RUNE_HALLOWED, Sources.HALLOWED);
+    public static final VerbRune ABSORB = new VerbRune("absorb", ResearchEntries.RUNE_ABSORB);
+    public static final VerbRune DISPEL = new VerbRune("dispel", ResearchEntries.RUNE_DISPEL);
+    public static final VerbRune PROJECT = new VerbRune("project", ResearchEntries.RUNE_PROJECT);
+    public static final VerbRune PROTECT = new VerbRune("protect", ResearchEntries.RUNE_PROTECT);
+    public static final VerbRune SUMMON = new VerbRune("summon", ResearchEntries.RUNE_SUMMON);
+    public static final NounRune AREA = new NounRune("area", ResearchEntries.RUNE_AREA);
+    public static final NounRune CREATURE = new NounRune("creature", ResearchEntries.RUNE_CREATURE);
+    public static final NounRune ITEM = new NounRune("item", ResearchEntries.RUNE_ITEM);
+    public static final NounRune SELF = new NounRune("self", ResearchEntries.RUNE_SELF);
+    public static final PowerRune INSIGHT = new PowerRune("insight", ResearchEntries.RUNE_INSIGHT, Rarity.UNCOMMON, 1);
+    public static final PowerRune POWER = new PowerRune("power", ResearchEntries.RUNE_POWER, Rarity.RARE, 1);
+    public static final PowerRune GRACE = new PowerRune("grace", ResearchEntries.RUNE_GRACE, Rarity.EPIC, -1);
     
     protected final ResourceLocation id;
-    protected final Supplier<SimpleResearchKey> discoveryKey;
+    protected final AbstractRequirement<?> requirement;
     protected final Rarity rarity;
     protected final boolean glint;
     protected final int limit;
     
-    public Rune(@Nonnull String tag, @Nonnull Supplier<ResearchName> discoveryKey, @Nonnull Rarity rarity, boolean glint, int limit) {
-        this(PrimalMagick.resource(tag), ResearchNames.simpleKey(discoveryKey), rarity, glint, limit);
-    }
-    
-    public Rune(@Nonnull ResourceLocation id, @Nonnull Supplier<SimpleResearchKey> discoveryKey, @Nonnull Rarity rarity, boolean glint, int limit) {
+    public Rune(@Nonnull ResourceLocation id, @Nonnull AbstractRequirement<?> requirement, @Nonnull Rarity rarity, boolean glint, int limit) {
         if (REGISTRY.containsKey(id)) {
             // Don't allow a given rune to be registered more than once
             throw new IllegalArgumentException("Rune " + id.toString() + " already registered!");
         }
         this.id = id;
-        this.discoveryKey = discoveryKey;
+        this.requirement = requirement;
         this.rarity = rarity;
         this.glint = glint;
         this.limit = limit;
@@ -78,8 +71,8 @@ public abstract class Rune {
     }
     
     @Nonnull
-    public SimpleResearchKey getDiscoveryKey() {
-        return this.discoveryKey.get();
+    public AbstractRequirement<?> getRequirement() {
+        return this.requirement;
     }
     
     @Nonnull

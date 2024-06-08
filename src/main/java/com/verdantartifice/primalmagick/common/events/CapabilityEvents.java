@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerWard;
 import com.verdantartifice.primalmagick.common.capabilities.WorldEntitySwappers;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -53,7 +53,7 @@ public class CapabilityEvents {
     public static void attachItemStackCapability(AttachCapabilitiesEvent<ItemStack> event) {
         if (WardingModuleItem.hasWardAttached(event.getObject())) {
             // Only attach these capabilities to certain item stacks, not all of them
-            event.addCapability(ManaStorage.Provider.NAME, new ManaStorage.Provider(WardingModuleItem.MANA_CAPACITY, WardingModuleItem.CHARGE_RATE, WardingModuleItem.REGEN_COST, Source.EARTH));
+            event.addCapability(ManaStorage.Provider.NAME, new ManaStorage.Provider(WardingModuleItem.MANA_CAPACITY, WardingModuleItem.CHARGE_RATE, WardingModuleItem.REGEN_COST, Sources.EARTH));
         }
     }
 }

@@ -25,7 +25,7 @@ public class ManaContainerHelper {
         CompoundTag nbt = stack.getTagElement("ManaContainerTag");
         if (nbt != null) {
             SourceList mana = SourceList.deserializeNBT(nbt);
-            Source.SORTED_SOURCES.stream().filter(source -> source.isDiscovered(player) && mana.getAmount(source) > 0).map(source ->
+            Sources.getAllSorted().stream().filter(source -> source.isDiscovered(player) && mana.getAmount(source) > 0).map(source ->
                 Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (mana.getAmount(source) / 100.0D))
             ).forEach(tooltip::add);
         }

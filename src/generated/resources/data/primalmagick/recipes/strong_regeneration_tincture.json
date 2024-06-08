@@ -27,10 +27,28 @@
   ],
   "mana": {
     "sources": {
-      "infernal": 1
+      "primalmagick:infernal": 1
     }
   },
-  "research": "CONCOCTING_TINCTURES&&t_discover_blood",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_tinctures"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:concoction",

@@ -1,11 +1,12 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
@@ -23,14 +24,14 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * @author Daedalus4096
  */
 public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> implements IShapelessRecipePM<Container>, IConcoctingRecipe {
-    protected final CompoundResearchKey research;
+    protected final Optional<AbstractRequirement<?>> requirement;
     protected final SourceList manaCosts;
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
 
-    public ConcoctingRecipe(String group, ItemStack output, NonNullList<Ingredient> items, CompoundResearchKey research, SourceList manaCosts) {
+    public ConcoctingRecipe(String group, ItemStack output, NonNullList<Ingredient> items, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts) {
         super(group, output);
-        this.research = research;
+        this.requirement = requirement;
         this.manaCosts = manaCosts;
         this.recipeItems = items;
         this.isSimple = items.stream().allMatch(Ingredient::isSimple);
@@ -52,8 +53,8 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
     }
 
     @Override
-    public CompoundResearchKey getRequiredResearch() {
-        return this.research;
+    public Optional<AbstractRequirement<?>> getRequirement() {
+        return this.requirement;
     }
 
     @Override
@@ -62,8 +63,9 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
     }
 
     public static class Serializer implements RecipeSerializer<ConcoctingRecipe> {
-        protected static final Codec<ConcoctingRecipe> CODEC = RecordCodecBuilder.create(instance -> {
-            return instance.group(
+        @Override
+        public Codec<ConcoctingRecipe> codec() { 
+            return RecordCodecBuilder.create(instance -> instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
@@ -76,20 +78,15 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
                             return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
                         }
                     }, DataResult::success).forGetter(sar -> sar.recipeItems),
-                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
+                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts)
-                ).apply(instance, ConcoctingRecipe::new);
-        });
+                ).apply(instance, ConcoctingRecipe::new));
+        }
         
         @Override
-        public Codec<ConcoctingRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
         public ConcoctingRecipe fromNetwork(FriendlyByteBuf buffer) {
-            String group = buffer.readUtf(32767);
-            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
+            String group = buffer.readUtf();
+            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
             
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             
@@ -100,13 +97,13 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
             }
             
             ItemStack result = buffer.readItem();
-            return new ConcoctingRecipe(group, result, ingredients, research, manaCosts);
+            return new ConcoctingRecipe(group, result, ingredients, requirement, manaCosts);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, ConcoctingRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            buffer.writeUtf(recipe.research.toString());
+            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
             SourceList.toNetwork(buffer, recipe.manaCosts);
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems) {

@@ -1,14 +1,16 @@
 package com.verdantartifice.primalmagick.common.items.essence;
 
-import java.util.function.Supplier;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -25,10 +27,6 @@ public enum EssenceType implements StringRepresentable {
     SHARD("shard", Rarity.UNCOMMON, 20, 10),
     CRYSTAL("crystal", Rarity.RARE, 50, 100),
     CLUSTER("cluster", Rarity.EPIC, 100, 1000);
-    
-    private static final Supplier<SimpleResearchKey> SHARD_RESEARCH = ResearchNames.simpleKey(ResearchNames.SHARD_SYNTHESIS);
-    private static final Supplier<SimpleResearchKey> CRYSTAL_RESEARCH = ResearchNames.simpleKey(ResearchNames.CRYSTAL_SYNTHESIS);
-    private static final Supplier<SimpleResearchKey> CLUSTER_RESEARCH = ResearchNames.simpleKey(ResearchNames.CLUSTER_SYNTHESIS);
     
     private final String name;
     private final Rarity rarity;
@@ -68,69 +66,66 @@ public enum EssenceType implements StringRepresentable {
     }
     
     @Nullable
-    public EssenceType getUpgrade() {
-        // Get the next quality up, or null if it's already highest
-        switch (this) {
-        case DUST:
-            return SHARD;
-        case SHARD:
-            return CRYSTAL;
-        case CRYSTAL:
-            return CLUSTER;
-        case CLUSTER:
-        default:
-            return null;
-        }
+    public Optional<EssenceType> getUpgrade() {
+        // Get the next quality up, or empty if it's already highest
+        return switch (this) {
+            case DUST -> Optional.of(SHARD);
+            case SHARD -> Optional.of(CRYSTAL);
+            case CRYSTAL -> Optional.of(CLUSTER);
+            case CLUSTER -> Optional.empty();
+        };
+    }
+    
+    public Optional<ResourceKey<ResearchEntry>> getUpgradeResearchEntry() {
+        return switch (this) {
+            case DUST -> Optional.of(ResearchEntries.SHARD_SYNTHESIS);
+            case SHARD -> Optional.of(ResearchEntries.CRYSTAL_SYNTHESIS);
+            case CRYSTAL -> Optional.of(ResearchEntries.CLUSTER_SYNTHESIS);
+            case CLUSTER -> Optional.empty();
+        };
     }
     
     @Nullable
-    public EssenceType getDowngrade() {
-        // Get the next quality down, or null if it's already lowest
-        switch (this) {
-        case CLUSTER:
-            return CRYSTAL;
-        case CRYSTAL:
-            return SHARD;
-        case SHARD:
-            return DUST;
-        case DUST:
-        default:
-            return null;
-        }
+    public Optional<EssenceType> getDowngrade() {
+        // Get the next quality down, or empty if it's already lowest
+        return switch (this) {
+            case CLUSTER -> Optional.of(CRYSTAL);
+            case CRYSTAL -> Optional.of(SHARD);
+            case SHARD -> Optional.of(DUST);
+            case DUST -> Optional.empty();
+        };
+    }
+    
+    public Optional<ResourceKey<ResearchEntry>> getDowngradeResearchEntry() {
+        return switch (this) {
+            case CLUSTER -> Optional.of(ResearchEntries.CLUSTER_DESYNTHESIS);
+            case CRYSTAL -> Optional.of(ResearchEntries.CRYSTAL_DESYNTHESIS);
+            case SHARD -> Optional.of(ResearchEntries.SHARD_DESYNTHESIS);
+            case DUST -> Optional.empty();
+        };
     }
     
     @Nullable
-    public Item getUpgradeMedium() {
+    public Optional<Item> getUpgradeMedium() {
         // Get the type of quartz that must be used to upgrade to this essence type
-        switch (this) {
-        case CLUSTER:
-            return Items.QUARTZ_BLOCK;
-        case CRYSTAL:
-            return Items.QUARTZ;
-        case SHARD:
-            return ItemsPM.QUARTZ_NUGGET.get();
-        case DUST:
-        default:
-            return null;
-        }
+        return switch (this) {
+            case CLUSTER -> Optional.of(Items.QUARTZ_BLOCK);
+            case CRYSTAL -> Optional.of(Items.QUARTZ);
+            case SHARD -> Optional.of(ItemsPM.QUARTZ_NUGGET.get());
+            case DUST -> Optional.empty();
+        };
     }
     
     public boolean isDiscovered(@Nullable Player player) {
         if (player == null) {
             return false;
         } else {
-            switch (this) {
-            case DUST:
-                return true;
-            case SHARD:
-                return SHARD_RESEARCH.get().isKnownByStrict(player);
-            case CRYSTAL:
-                return CRYSTAL_RESEARCH.get().isKnownByStrict(player);
-            case CLUSTER:
-                return CLUSTER_RESEARCH.get().isKnownByStrict(player);
-            default:
-                return false;
-            }
+            return switch (this) {
+                case DUST -> true;
+                case SHARD -> new ResearchEntryKey(ResearchEntries.SHARD_SYNTHESIS).isKnownBy(player);
+                case CRYSTAL -> new ResearchEntryKey(ResearchEntries.CRYSTAL_SYNTHESIS).isKnownBy(player);
+                case CLUSTER -> new ResearchEntryKey(ResearchEntries.CLUSTER_SYNTHESIS).isKnownBy(player);
+            };
         }
     }
 }

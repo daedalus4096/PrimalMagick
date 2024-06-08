@@ -1,26 +1,33 @@
 package com.verdantartifice.primalmagick.common.research;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.google.common.base.Preconditions;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.tags.ResearchEntryTagsPM;
 
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Definition of a research entry, the primary component of the research system.  A research entry
@@ -32,175 +39,76 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class ResearchEntry {
-    protected SimpleResearchKey key;
-    protected String disciplineKey;
-    protected String nameTranslationKey;
-    protected ResearchEntry.Icon icon;
-    protected CompoundResearchKey parentResearch;
-    protected boolean hidden;
-    protected boolean finaleExempt;
-    protected List<String> finales = new ArrayList<>();
-    protected List<ResearchStage> stages = new ArrayList<>();
-    protected List<ResearchAddendum> addenda = new ArrayList<>();
-    
-    protected ResearchEntry(@Nonnull SimpleResearchKey key, @Nonnull String disciplineKey, @Nonnull String nameTranslationKey, @Nullable ResearchEntry.Icon icon) {
-        this.key = key;
-        this.disciplineKey = disciplineKey;
-        this.nameTranslationKey = nameTranslationKey;
-        this.hidden = false;
-        this.finaleExempt = false;
-        this.icon = icon;
-    }
-    
-    @Nullable
-    public static ResearchEntry create(@Nullable SimpleResearchKey key, @Nullable String disciplineKey, @Nullable String nameTranslationKey, @Nullable ResearchEntry.Icon icon) {
-        if (key == null || disciplineKey == null || nameTranslationKey == null) {
-            return null;
-        } else {
-            // ResearchEntry main keys should never have a stage
-            return new ResearchEntry(key.stripStage(), disciplineKey, nameTranslationKey, icon);
-        }
-    }
-    
-    @Nonnull
-    public static ResearchEntry parse(@Nonnull JsonObject obj) throws Exception {
-        // Parse a research entry from a research definition file
-        ResearchEntry entry = create(
-            SimpleResearchKey.parse(obj.getAsJsonPrimitive("key").getAsString()),
-            obj.getAsJsonPrimitive("discipline").getAsString(),
-            obj.getAsJsonPrimitive("name").getAsString(),
-            ResearchEntry.Icon.parse(obj.getAsJsonObject("icon"))
-        );
-        if (entry == null) {
-            throw new JsonParseException("Invalid entry data in research JSON");
-        }
-        
-        if (obj.has("hidden")) {
-            entry.hidden = obj.getAsJsonPrimitive("hidden").getAsBoolean();
-        }
-        
-        if (obj.has("finaleExempt")) {
-            entry.finaleExempt = obj.getAsJsonPrimitive("finaleExempt").getAsBoolean();
-        }
-        
-        if (obj.has("parents")) {
-            entry.parentResearch = CompoundResearchKey.parse(obj.get("parents").getAsJsonArray());
-        }
-        
-        if (obj.has("finales")) {
-            for (JsonElement element : obj.get("finales").getAsJsonArray()) {
-                entry.finales.add(element.getAsString());
-            }
-        }
-        
-        for (JsonElement element : obj.get("stages").getAsJsonArray()) {
-            entry.stages.add(ResearchStage.parse(entry, element.getAsJsonObject()));
-        }
-        
-        if (obj.has("addenda")) {
-            for (JsonElement element : obj.get("addenda").getAsJsonArray()) {
-                entry.addenda.add(ResearchAddendum.parse(entry, element.getAsJsonObject()));
-            }
-        }
-        
-        return entry;
+public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<IconDefinition> iconOpt, List<ResearchEntryKey> parents, boolean hidden,
+        boolean hasHint, boolean internal, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
+    public static Codec<ResearchEntry> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
+                ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
+                IconDefinition.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
+                ResearchEntryKey.CODEC.listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
+                Codec.BOOL.optionalFieldOf("hidden", false).forGetter(ResearchEntry::hidden),
+                Codec.BOOL.optionalFieldOf("hasHint", false).forGetter(ResearchEntry::hasHint),
+                Codec.BOOL.optionalFieldOf("internal", false).forGetter(ResearchEntry::internal),
+                Codec.BOOL.optionalFieldOf("finaleExempt", false).forGetter(ResearchEntry::finaleExempt),
+                ResearchDisciplineKey.CODEC.listOf().fieldOf("finales").forGetter(ResearchEntry::finales),
+                ResearchStage.codec().listOf().fieldOf("stages").forGetter(ResearchEntry::stages),
+                ResearchAddendum.codec().listOf().fieldOf("addenda").forGetter(ResearchEntry::addenda)
+            ).apply(instance, ResearchEntry::new));
     }
     
     @Nonnull
     public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {
-        SimpleResearchKey key = SimpleResearchKey.parse(buf.readUtf());
-        String discipline = buf.readUtf();
-        String name = buf.readUtf();
-        ResearchEntry.Icon icon = ResearchEntry.Icon.fromNetwork(buf);
-        ResearchEntry entry = create(key, discipline, name, icon);
-        entry.hidden = buf.readBoolean();
-        entry.finaleExempt = buf.readBoolean();
-        entry.parentResearch = CompoundResearchKey.parse(buf.readUtf());
-        int finaleCount = buf.readVarInt();
-        for (int index = 0; index < finaleCount; index++) {
-            entry.finales.add(buf.readUtf());
-        }
-        int stageCount = buf.readVarInt();
-        for (int index = 0; index < stageCount; index++) {
-            entry.stages.add(ResearchStage.fromNetwork(buf, entry));
-        }
-        int addendumCount = buf.readVarInt();
-        for (int index = 0; index < addendumCount; index++) {
-            entry.addenda.add(ResearchAddendum.fromNetwork(buf, entry));
-        }
-        return entry;
+        ResearchEntryKey key = ResearchEntryKey.fromNetwork(buf);
+        Optional<ResearchDisciplineKey> disciplineKeyOpt = buf.readOptional(ResearchDisciplineKey::fromNetwork);
+        Optional<IconDefinition> iconOpt = buf.readOptional(IconDefinition::fromNetwork);
+        List<ResearchEntryKey> parents = buf.readList(ResearchEntryKey::fromNetwork);
+        boolean hidden = buf.readBoolean();
+        boolean hasHint = buf.readBoolean();
+        boolean internal = buf.readBoolean();
+        boolean finaleExempt = buf.readBoolean();
+        List<ResearchDisciplineKey> finales = buf.readList(ResearchDisciplineKey::fromNetwork);
+        List<ResearchStage> stages = buf.readList(ResearchStage::fromNetwork);
+        List<ResearchAddendum> addenda = buf.readList(ResearchAddendum::fromNetwork);
+        return new ResearchEntry(key, disciplineKeyOpt, iconOpt, parents, hidden, hasHint, internal, finaleExempt, finales, stages, addenda);
     }
     
     public static void toNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
-        buf.writeUtf(entry.key.toString());
-        buf.writeUtf(entry.disciplineKey);
-        buf.writeUtf(entry.nameTranslationKey);
-        ResearchEntry.Icon.toNetwork(buf, entry.icon);
+        entry.key.toNetwork(buf);
+        buf.writeOptional(entry.disciplineKeyOpt, (b, d) -> d.toNetwork(b));
+        buf.writeOptional(entry.iconOpt, IconDefinition::toNetwork);
+        buf.writeCollection(entry.parents, (b, p) -> p.toNetwork(b));
         buf.writeBoolean(entry.hidden);
+        buf.writeBoolean(entry.hasHint);
+        buf.writeBoolean(entry.internal);
         buf.writeBoolean(entry.finaleExempt);
-        buf.writeUtf(entry.parentResearch == null ? "" : entry.parentResearch.toString());
-        buf.writeVarInt(entry.finales.size());
-        for (String discipline : entry.finales) {
-            buf.writeUtf(discipline);
-        }
-        buf.writeVarInt(entry.stages.size());
-        for (ResearchStage stage : entry.stages) {
-            ResearchStage.toNetwork(buf, stage);
-        }
-        buf.writeVarInt(entry.addenda.size());
-        for (ResearchAddendum addendum : entry.addenda) {
-            ResearchAddendum.toNetwork(buf, addendum);
-        }
+        buf.writeCollection(entry.finales, (b, f) -> f.toNetwork(b));
+        buf.writeCollection(entry.stages, ResearchStage::toNetwork);
+        buf.writeCollection(entry.addenda, ResearchAddendum::toNetwork);
     }
     
-    @Nonnull
-    public SimpleResearchKey getKey() {
-        return this.key;
+    public static Builder builder(ResourceKey<ResearchEntry> key) {
+        return new Builder(key);
     }
     
-    @Nonnull
-    public String getDisciplineKey() {
-        return this.disciplineKey;
+    public String getBaseTranslationKey() {
+        return String.join(".", "research", this.key.getRootKey().location().getNamespace(), this.key.getRootKey().location().getPath());
     }
     
-    @Nonnull
     public String getNameTranslationKey() {
-        return this.nameTranslationKey;
+        return String.join(".", this.getBaseTranslationKey(), "title");
     }
     
-    @Nullable
-    public ResearchEntry.Icon getIcon() {
-        return this.icon;
+    public Optional<String> getHintTranslationKey() {
+        if (this.hasHint) {
+            return Optional.of(String.join(".", this.getBaseTranslationKey(), "hint"));
+        } else {
+            return Optional.empty();
+        }
     }
     
-    @Nullable
-    public CompoundResearchKey getParentResearch() {
-        return this.parentResearch;
-    }
-    
-    public boolean isHidden() {
-        return this.hidden;
-    }
-    
-    /**
-     * Get whether this research entry is exempt from counting towards discipline completion for unlocking finale research.
-     * 
-     * @return whether this entry is finale exempt
-     */
-    public boolean isFinaleExempt() {
-        return this.finaleExempt;
-    }
-    
-    /**
-     * Get a list of all discipline keys for which this entry is a finale.  For this entry to be unlocked,
-     * all listed disciplines must be completed.
-     * 
-     * @return all discipline keys for which this entry is a finale
-     */
-    @Nonnull
-    public List<String> getFinaleDisciplines() {
-        return Collections.unmodifiableList(this.finales);
+    public boolean isForDiscipline(ResearchDisciplineKey discipline) {
+        return this.disciplineKeyOpt.isPresent() && this.disciplineKeyOpt.get().equals(discipline);
     }
     
     /**
@@ -209,26 +117,18 @@ public class ResearchEntry {
      * @param discipline the discipline to be tested
      * @return whether this research is a finale for the given discipline key
      */
-    public boolean isFinaleFor(String discipline) {
+    public boolean isFinaleFor(ResearchDisciplineKey discipline) {
         return this.finales.contains(discipline);
     }
     
-    @Nonnull
-    public List<ResearchStage> getStages() {
-        return Collections.unmodifiableList(this.stages);
-    }
-    
-    public boolean appendStage(@Nullable ResearchStage stage) {
-        return (stage == null) ? false : this.stages.add(stage);
-    }
-    
-    @Nonnull
-    public List<ResearchAddendum> getAddenda() {
-        return Collections.unmodifiableList(this.addenda);
-    }
-    
-    public boolean appendAddendum(@Nullable ResearchAddendum addendum) {
-        return (addendum == null) ? false : this.addenda.add(addendum);
+    /**
+     * Get whether this research entry is a finale for the given discipline key.
+     * 
+     * @param discipline the discipline to be tested
+     * @return whether this research is a finale for the given discipline key
+     */
+    public boolean isFinaleFor(ResourceKey<ResearchDiscipline> discipline) {
+        return this.isFinaleFor(new ResearchDisciplineKey(discipline));
     }
     
     @Nonnull
@@ -237,157 +137,192 @@ public class ResearchEntry {
     }
     
     public boolean isNew(@Nonnull Player player) {
-        return this.getKnowledge(player).hasResearchFlag(this.getKey(), IPlayerKnowledge.ResearchFlag.NEW);
+        return this.getKnowledge(player).hasResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.NEW);
     }
     
     public boolean isUpdated(@Nonnull Player player) {
-        return this.getKnowledge(player).hasResearchFlag(this.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
+        return this.getKnowledge(player).hasResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
     }
     
     public boolean isComplete(@Nonnull Player player) {
-        return this.getKnowledge(player).getResearchStatus(this.getKey()) == IPlayerKnowledge.ResearchStatus.COMPLETE;
+        return this.getKnowledge(player).getResearchStatus(player.level().registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.COMPLETE;
     }
     
     public boolean isInProgress(@Nonnull Player player) {
-        return this.getKnowledge(player).getResearchStatus(this.getKey()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS;
+        return this.getKnowledge(player).getResearchStatus(player.level().registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS;
     }
     
     public boolean isAvailable(@Nonnull Player player) {
-        return this.getParentResearch() == null || this.getParentResearch().isKnownByStrict(player);
+        return this.parents.isEmpty() || this.parents.stream().allMatch(key -> key.isKnownBy(player));
     }
     
     public boolean isUpcoming(@Nonnull Player player) {
-        for (SimpleResearchKey parentKey : this.getParentResearch().getKeys()) {
-            if (ResearchManager.isOpaque(parentKey) && !parentKey.isKnownBy(player)) {
-                return false;
-            } else {
-                ResearchEntry parent = ResearchEntries.getEntry(parentKey);
-                if (parent != null && !parent.isAvailable(player)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        Registry<ResearchEntry> registry = player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES);
+        return !this.parents.stream().map(k -> registry.getHolder(k.getRootKey())).anyMatch(opt -> {
+            return opt.isPresent() && ((opt.get().is(ResearchEntryTagsPM.OPAQUE) && !opt.get().get().key().isKnownBy(player)) || !opt.get().get().isAvailable(player));
+        });
     }
     
     @Nonnull
     public Set<ResourceLocation> getAllRecipeIds() {
-        Set<ResourceLocation> retVal = new HashSet<>();
-        
-        ResearchStage lastStage = this.stages.isEmpty() ? null : this.stages.get(this.stages.size() - 1);
-        if (lastStage != null) {
-            retVal.addAll(lastStage.getRecipes());
-        }
-        
-        for (ResearchAddendum addendum : this.addenda) {
-            retVal.addAll(addendum.getRecipes());
-        }
-        
-        return retVal;
+        return Stream.concat(this.stages.stream().flatMap(stage -> stage.recipes().stream()), this.addenda.stream().flatMap(addendum -> addendum.recipes().stream())).collect(Collectors.toSet());
     }
     
     @Nonnull
     public Set<ResourceLocation> getKnownRecipeIds(Player player) {
         Set<ResourceLocation> retVal = new HashSet<>();
+        if (this.stages().isEmpty()) {
+            // If this research entry has no stages, then it can't have any recipes, so just abort
+            return retVal;
+        }
+        
         IPlayerKnowledge knowledge = this.getKnowledge(player);
+        RegistryAccess registryAccess = player.level().registryAccess();
         
         ResearchStage currentStage = null;
-        int currentStageNum = knowledge.getResearchStage(key);
+        int currentStageNum = knowledge.getResearchStage(this.key);
         if (currentStageNum >= 0) {
-            currentStage = this.getStages().get(Math.min(currentStageNum, this.getStages().size() - 1));
+            currentStage = this.stages().get(Math.min(currentStageNum, this.stages().size() - 1));
         }
-        boolean entryComplete = (currentStageNum >= this.getStages().size());
+        boolean entryComplete = (currentStageNum >= this.stages().size());
         
         if (currentStage != null) {
-            retVal.addAll(currentStage.getRecipes());
+            retVal.addAll(currentStage.recipes());
         }
         if (entryComplete) {
-            for (ResearchAddendum addendum : this.getAddenda()) {
-                if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(player)) {
-                    retVal.addAll(addendum.getRecipes());
-                }
+            for (ResearchAddendum addendum : this.addenda()) {
+                addendum.completionRequirementOpt().ifPresent(req -> {
+                    if (req.isMetBy(player)) {
+                        retVal.addAll(addendum.recipes());
+                    }
+                });
             }
-            for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
-                if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
-                    for (ResearchAddendum addendum : searchEntry.getAddenda()) {
-                        if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(this.getKey()) && addendum.getRequiredResearch().isKnownByStrict(player)) {
-                            retVal.addAll(addendum.getRecipes());
-                        }
+            registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
+                if (!searchEntry.addenda().isEmpty() && knowledge.isResearchComplete(registryAccess, searchEntry.key())) {
+                    for (ResearchAddendum addendum : searchEntry.addenda()) {
+                        addendum.completionRequirementOpt().ifPresent(req -> {
+                            if (req.contains(this.key) && req.isMetBy(player)) {
+                                retVal.addAll(addendum.recipes());
+                            }
+                        });
                     }
                 }
-            }
+            });
         }
         
         return retVal;
     }
     
-    public static class Icon {
-        protected final boolean isItem;
-        protected final ResourceLocation location;
+    public static class Builder {
+        protected final String modId;
+        protected final ResearchEntryKey key;
+        protected Optional<ResearchDisciplineKey> disciplineKeyOpt = Optional.empty();
+        protected Optional<IconDefinition> iconOpt = Optional.empty();
+        protected final List<ResearchEntryKey> parents = new ArrayList<>();
+        protected boolean hidden = false;
+        protected boolean hasHint = false;
+        protected boolean internal = false;
+        protected boolean finaleExempt = false;
+        protected final List<ResearchDisciplineKey> finales = new ArrayList<>();
+        protected final List<ResearchStage.Builder> stageBuilders = new ArrayList<>();
+        protected final List<ResearchAddendum.Builder> addendumBuilders = new ArrayList<>();
         
-        protected Icon(boolean isItem, ResourceLocation location) {
-            this.isItem = isItem;
-            this.location = location;
+        public Builder(String modId, ResearchEntryKey key) {
+            this.modId = Preconditions.checkNotNull(modId);
+            this.key = Preconditions.checkNotNull(key);
         }
         
-        public static Icon of(ItemLike item) {
-            return new Icon(true, ForgeRegistries.ITEMS.getKey(item.asItem()));
+        public Builder(String modId, ResourceKey<ResearchEntry> rawKey) {
+            this(modId, new ResearchEntryKey(rawKey));
         }
         
-        public static Icon of(ResourceLocation loc) {
-            return new Icon(false, loc);
+        public Builder(ResearchEntryKey key) {
+            this(PrimalMagick.MODID, key);
         }
         
-        public boolean isItem() {
-            return this.isItem;
+        public Builder(ResourceKey<ResearchEntry> rawKey) {
+            this(new ResearchEntryKey(rawKey));
         }
         
-        public ResourceLocation getLocation() {
-            return this.location;
+        public Builder discipline(ResourceKey<ResearchDiscipline> discKey) {
+            this.disciplineKeyOpt = Optional.of(new ResearchDisciplineKey(discKey));
+            return this;
         }
         
-        @Nullable
-        public Item asItem() {
-            return this.isItem ? ForgeRegistries.ITEMS.getValue(this.location) : null;
+        public Builder icon(ItemLike item) {
+            this.iconOpt = Optional.of(IconDefinition.of(item));
+            return this;
         }
         
-        public JsonObject toJson() {
-            JsonObject retVal = new JsonObject();
-            retVal.addProperty("isItem", this.isItem);
-            retVal.addProperty("location", this.location.toString());
+        public Builder icon(ResourceLocation loc) {
+            this.iconOpt = Optional.of(IconDefinition.of(loc));
+            return this;
+        }
+        
+        public Builder icon(String path) {
+            return this.icon(PrimalMagick.resource(path));
+        }
+        
+        public Builder parent(ResearchEntryKey key) {
+            this.parents.add(key);
+            return this;
+        }
+        
+        public Builder parent(ResourceKey<ResearchEntry> rawKey) {
+            return this.parent(new ResearchEntryKey(rawKey));
+        }
+        
+        public Builder hidden() {
+            this.hidden = true;
+            return this;
+        }
+        
+        public Builder hasHint() {
+            this.hasHint = true;
+            return this;
+        }
+        
+        public Builder internal() {
+            this.internal = true;
+            return this;
+        }
+        
+        public Builder finaleExempt() {
+            this.finaleExempt = true;
+            return this;
+        }
+        
+        public Builder finale(ResourceKey<ResearchDiscipline> discKey) {
+            this.finales.add(new ResearchDisciplineKey(discKey));
+            return this;
+        }
+        
+        public ResearchStage.Builder stage() {
+            ResearchStage.Builder retVal = new ResearchStage.Builder(this.modId, this, this.key, this.stageBuilders.size() + 1);
+            this.stageBuilders.add(retVal);
             return retVal;
         }
         
-        @Nullable
-        public static ResearchEntry.Icon parse(@Nullable JsonObject obj) {
-            if (obj == null) {
-                return null;
-            }
-            boolean isItem = obj.getAsJsonPrimitive("isItem").getAsBoolean();
-            ResourceLocation loc = ResourceLocation.tryParse(obj.getAsJsonPrimitive("location").getAsString());
-            return loc == null ? null : new Icon(isItem, loc);
+        public ResearchAddendum.Builder addendum() {
+            ResearchAddendum.Builder retVal = new ResearchAddendum.Builder(this.modId, this, this.key, this.addendumBuilders.size() + 1);
+            this.addendumBuilders.add(retVal);
+            return retVal;
         }
         
-        @Nullable
-        public static ResearchEntry.Icon fromNetwork(FriendlyByteBuf buf) {
-            boolean hasIcon = buf.readBoolean();
-            if (!hasIcon) {
-                return null;
-            } else {
-                boolean isItem = buf.readBoolean();
-                ResourceLocation loc = ResourceLocation.tryParse(buf.readUtf());
-                return loc == null ? null : new Icon(isItem, loc);
+        private void validate() {
+            if (this.modId.isBlank()) {
+                throw new IllegalStateException("No mod ID specified for entry");
+            } else if (!this.internal && this.disciplineKeyOpt.isEmpty()) {
+                throw new IllegalStateException("No discipline specified for non-internal entry");
+            } else if (!this.internal && this.stageBuilders.isEmpty()) {
+                throw new IllegalStateException("Non-internal entries must have at least one stage");
             }
         }
         
-        public static void toNetwork(FriendlyByteBuf buf, @Nullable ResearchEntry.Icon icon) {
-            if (icon == null) {
-                buf.writeBoolean(false);
-            } else {
-                buf.writeBoolean(true);
-                buf.writeBoolean(icon.isItem);
-                buf.writeUtf(icon.location.toString());
-            }
+        public ResearchEntry build() {
+            this.validate();
+            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.iconOpt, this.parents, this.hidden, this.hasHint, this.internal, this.finaleExempt, this.finales,
+                    this.stageBuilders.stream().map(b -> b.build()).toList(), this.addendumBuilders.stream().map(b -> b.build()).toList());
         }
     }
 }

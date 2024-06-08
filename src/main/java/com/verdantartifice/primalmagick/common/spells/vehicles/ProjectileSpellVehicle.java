@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellProjectileEntity;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.mods.ForkSpellMod;
 
@@ -22,10 +24,10 @@ import net.minecraft.world.phys.Vec3;
  */
 public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "projectile";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_VEHICLE_PROJECTILE.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_VEHICLE_PROJECTILE));
     
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
     
     @Override

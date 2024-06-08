@@ -16,7 +16,7 @@
   },
   "mana": {
     "sources": {
-      "void": 50
+      "primalmagick:void": 50
     }
   },
   "pattern": [
@@ -24,7 +24,13 @@
     "KRK",
     "PKP"
   ],
-  "research": "ENDERWARD",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:enderward"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:enderward"

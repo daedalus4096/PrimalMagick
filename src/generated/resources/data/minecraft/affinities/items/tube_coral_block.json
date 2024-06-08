@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "sun": 15
+    "primalmagick:sun": 15
   },
   "base": "minecraft:dead_tube_coral_block",
   "target": "minecraft:tube_coral_block"

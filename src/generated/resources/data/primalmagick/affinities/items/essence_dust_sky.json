@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "sky": 5
+    "primalmagick:sky": 5
   },
   "target": "primalmagick:essence_dust_sky"
 }

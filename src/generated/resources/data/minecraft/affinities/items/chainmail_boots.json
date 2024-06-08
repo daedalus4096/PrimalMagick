@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "earth": 20,
-    "sky": 20
+    "primalmagick:earth": 20,
+    "primalmagick:sky": 20
   },
   "target": "minecraft:chainmail_boots"
 }

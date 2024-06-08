@@ -1,0 +1,62 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:wand_charger"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_charger"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_manaweaving"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "primalmagick:essences/terrestrial_dusts"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_charger"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_charger.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_charger"
+      },
+      "recipes": [
+        "primalmagick:wand_charger"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_charger.text.stage.2"
+    }
+  ]
+}

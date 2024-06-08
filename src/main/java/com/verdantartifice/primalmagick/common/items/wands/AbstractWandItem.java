@@ -16,11 +16,12 @@ import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -65,6 +66,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  */
 public abstract class AbstractWandItem extends Item implements IWand {
     protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
+    protected static final ResearchEntryKey WAND_TRANSFORM_HINT_KEY = new ResearchEntryKey(ResearchEntries.WAND_TRANSFORM_HINT);
     
     public AbstractWandItem(Properties properties) {
         super(properties);
@@ -78,8 +80,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
         } else {
             // Otherwise get the current centimana for that source from the stack's NBT tag
             int retVal = 0;
-            if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getTag())) {
-                retVal = stack.getTag().getInt(source.getTag());
+            if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getId().toString())) {
+                retVal = stack.getTag().getInt(source.getId().toString());
             }
             return retVal;
         }
@@ -100,13 +102,13 @@ public abstract class AbstractWandItem extends Item implements IWand {
     public SourceList getAllMana(ItemStack stack) {
         SourceList retVal = SourceList.EMPTY;
         boolean isInfinite = this.getMaxMana(stack) == -1;
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             if (isInfinite) {
                 // If the stack has infinite mana, set that into the returned source list (not merge; it would keep the default zero)
                 retVal = retVal.set(source, -1);
-            } else if (stack.hasTag() && stack.getTag().contains(source.getTag())) {
+            } else if (stack.hasTag() && stack.getTag().contains(source.getId().toString())) {
                 // Otherwise, merge the current centimana into the returned source list
-                retVal = retVal.merge(source, stack.getTag().getInt(source.getTag()));
+                retVal = retVal.merge(source, stack.getTag().getInt(source.getId().toString()));
             } else {
                 retVal = retVal.merge(source, 0);
             }
@@ -127,7 +129,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
         // Save the given amount of centimana for the given source into the stack's NBT tag
-        stack.addTagElement(source.getTag(), IntTag.valueOf(amount));
+        stack.addTagElement(source.getId().toString(), IntTag.valueOf(amount));
     }
 
     @Override
@@ -331,7 +333,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         boolean showDetails = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.hasShiftDown() : false;
         if (showDetails) {
             // Add detailed mana information
-            for (Source source : Source.SORTED_SOURCES) {
+            for (Source source : Sources.getAllSorted()) {
                 // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
                     Component nameComp = source.getNameText();
@@ -362,7 +364,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add mana summary
             boolean first = true;
             Component summaryText = Component.literal("");
-            for (Source source : Source.SORTED_SOURCES) {
+            for (Source source : Sources.getAllSorted()) {
                 // Only include a mana source in the summary if it's been discovered
                 if (source.isDiscovered(player)) {
                     Component manaText = this.getManaText(stack, source).withStyle(source.getChatColor());
@@ -521,7 +523,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     if (transform.isValid(level, player, wandPos)) {
                         if (level.isClientSide) {
                             // Trigger visual effects during channel
-                            FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Source.HALLOWED.getColor());
+                            FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Sources.HALLOWED.getColor());
                         }
                         if (this.getUseDuration(stack) - count >= WandTransforms.CHANNEL_DURATION) {
                             if (!level.isClientSide && player instanceof ServerPlayer) {
@@ -541,12 +543,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
         super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
         
         // Give a hint the first time the player aborts a wand transform early
-        SimpleResearchKey hintKey = ResearchNames.INTERNAL_WAND_TRANSFORM_HINT.get().simpleKey();
         BlockPos wandPos = this.getPositionInUse(stack);
-        if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !hintKey.isKnownByStrict(player)) {
+        if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !WAND_TRANSFORM_HINT_KEY.isKnownBy(player)) {
             for (IWandTransform transform : WandTransforms.getAll()) {
                 if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack) - timeLeft < WandTransforms.CHANNEL_DURATION) {
-                    ResearchManager.completeResearch(player, hintKey);
+                    ResearchManager.completeResearch(player, WAND_TRANSFORM_HINT_KEY);
                     player.sendSystemMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN));
                     break;
                 }

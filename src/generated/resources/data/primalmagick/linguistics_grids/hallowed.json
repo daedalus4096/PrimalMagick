@@ -67,7 +67,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "hallowed"
+        "source": "primalmagick:hallowed"
       },
       "x": 5,
       "y": 1
@@ -87,7 +87,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "hallowed"
+        "source": "primalmagick:hallowed"
       },
       "x": 0,
       "y": 2
@@ -137,7 +137,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "hallowed"
+        "source": "primalmagick:hallowed"
       },
       "x": 7,
       "y": 2
@@ -227,7 +227,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "hallowed"
+        "source": "primalmagick:hallowed"
       },
       "x": 0,
       "y": 5
@@ -277,7 +277,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "hallowed"
+        "source": "primalmagick:hallowed"
       },
       "x": 7,
       "y": 5

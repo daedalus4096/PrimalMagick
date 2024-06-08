@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "earth": 5,
-    "sky": 5,
-    "sun": 5
+    "primalmagick:earth": 5,
+    "primalmagick:sky": 5,
+    "primalmagick:sun": 5
   },
   "target": "minecraft:oak_leaves"
 }

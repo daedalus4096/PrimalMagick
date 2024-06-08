@@ -14,7 +14,13 @@
       "item": "primalmagick:essence_crystal_void"
     }
   ],
-  "research": "RUNE_POWER",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:rune_power"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:rune_power"

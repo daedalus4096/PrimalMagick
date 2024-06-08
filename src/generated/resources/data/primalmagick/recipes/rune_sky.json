@@ -9,7 +9,13 @@
       "item": "primalmagick:essence_dust_sky"
     }
   ],
-  "research": "RUNE_SKY",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:rune_sky"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:rune_sky"

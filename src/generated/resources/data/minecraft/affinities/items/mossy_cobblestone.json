@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "moon": 5
+    "primalmagick:moon": 5
   },
   "base": "minecraft:cobblestone",
   "target": "minecraft:mossy_cobblestone"

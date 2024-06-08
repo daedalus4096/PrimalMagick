@@ -1,30 +1,34 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 
-import com.google.gson.JsonObject;
+import javax.annotation.Nonnull;
 
-import net.minecraft.nbt.CompoundTag;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ExtraCodecs;
 
 /**
  * Theorycrafting reward that grants experience points.
  * 
  * @author Daedalus4096
  */
-public class ExperienceReward extends AbstractReward {
-    public static final String TYPE = "experience";
-    public static final IRewardSerializer<ExperienceReward> SERIALIZER = new Serializer();
+public class ExperienceReward extends AbstractReward<ExperienceReward> {
+    public static final Codec<ExperienceReward> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ExtraCodecs.POSITIVE_INT.fieldOf("points").forGetter(r -> r.points)
+        ).apply(instance, ExperienceReward::new));
     
-    private int points;
+    private final int points;
     
-    public ExperienceReward() {
-        this.points = 0;
-    }
-    
-    protected ExperienceReward(int points) {
+    public ExperienceReward(int points) {
         this.points = points;
+    }
+
+    @Override
+    protected RewardType<ExperienceReward> getType() {
+        return RewardTypesPM.EXPERIENCE.get();
     }
 
     @Override
@@ -38,45 +42,13 @@ public class ExperienceReward extends AbstractReward {
         return Component.translatable("label.primalmagick.research_table.reward", this.points, label);
     }
 
-    @Override
-    public String getRewardType() {
-        return TYPE;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public IRewardSerializer<ExperienceReward> getSerializer() {
-        return SERIALIZER;
+    @Nonnull
+    static ExperienceReward fromNetworkInner(FriendlyByteBuf buf) {
+        return new ExperienceReward(buf.readVarInt());
     }
 
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = super.serializeNBT();
-        tag.putInt("Points", this.points);
-        return tag;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        super.deserializeNBT(nbt);
-        this.points = nbt.getInt("Points");
-    }
-
-    public static class Serializer implements IRewardSerializer<ExperienceReward> {
-        @Override
-        public ExperienceReward read(ResourceLocation templateId, JsonObject json) {
-            int points = json.getAsJsonPrimitive("points").getAsInt();
-            return new ExperienceReward(points);
-        }
-
-        @Override
-        public ExperienceReward fromNetwork(FriendlyByteBuf buf) {
-            return new ExperienceReward(buf.readVarInt());
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ExperienceReward reward) {
-            buf.writeVarInt(reward.points);
-        }
+    protected void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeVarInt(this.points);
     }
 }

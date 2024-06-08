@@ -20,7 +20,7 @@
   "instability": 4,
   "mana": {
     "sources": {
-      "infernal": 50
+      "primalmagick:infernal": 50
     }
   },
   "props": [
@@ -31,7 +31,13 @@
       "block": "primalmagick:bloodletter"
     }
   ],
-  "research": "EMBERFLOWER",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:emberflower"
+    }
+  },
   "result": {
     "Count": 2,
     "id": "primalmagick:emberflower"

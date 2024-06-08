@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "earth": 12,
-    "moon": 7,
-    "sun": 4
+    "primalmagick:earth": 12,
+    "primalmagick:moon": 7,
+    "primalmagick:sun": 4
   },
   "target": "minecraft:suspicious_stew"
 }

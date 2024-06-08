@@ -7,18 +7,24 @@
   },
   "mana": {
     "sources": {
-      "earth": 50,
-      "moon": 50,
-      "sea": 50,
-      "sky": 50,
-      "sun": 50
+      "primalmagick:earth": 50,
+      "primalmagick:moon": 50,
+      "primalmagick:sea": 50,
+      "primalmagick:sky": 50,
+      "primalmagick:sun": 50
     }
   },
   "pattern": [
     "NNN",
     "N N"
   ],
-  "research": "WAND_CAP_HEXIUM",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_cap_hexium"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:hexium_wand_cap_item"

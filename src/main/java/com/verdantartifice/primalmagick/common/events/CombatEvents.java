@@ -17,11 +17,10 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.EntitySelectorsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 
@@ -61,7 +60,7 @@ public class CombatEvents {
         // Handle effects caused by damage target
         if (event.getEntity() instanceof Player target) {
             // Players with greater infernal attunement are immune to all fire damage
-            if (event.getSource().is(DamageTypeTags.IS_FIRE) && AttunementManager.meetsThreshold(target, Source.INFERNAL, AttunementThreshold.GREATER)) {
+            if (event.getSource().is(DamageTypeTags.IS_FIRE) && AttunementManager.meetsThreshold(target, Sources.INFERNAL, AttunementThreshold.GREATER)) {
                 event.setCanceled(true);
                 return;
             }
@@ -70,7 +69,7 @@ public class CombatEvents {
             Level targetLevel = target.level();
             if (targetLevel.random.nextDouble() < 0.5D &&
                     !target.hasEffect(MobEffects.INVISIBILITY) && 
-                    AttunementManager.meetsThreshold(target, Source.MOON, AttunementThreshold.LESSER)) {
+                    AttunementManager.meetsThreshold(target, Sources.MOON, AttunementThreshold.LESSER)) {
                 targetLevel.playSound(target, target.blockPosition(), SoundsPM.SHIMMER.get(), 
                         SoundSource.PLAYERS, 1.0F, 1.0F + (0.05F * (float)targetLevel.random.nextGaussian()));
                 target.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 200));
@@ -84,13 +83,13 @@ public class CombatEvents {
             if (!event.getSource().is(DamageTypesPM.HELLISH_CHAIN) && 
                     event.getAmount() > 0.0F && 
                     !attackerLevel.isClientSide && 
-                    AttunementManager.meetsThreshold(attacker, Source.INFERNAL, AttunementThreshold.LESSER)) {
+                    AttunementManager.meetsThreshold(attacker, Sources.INFERNAL, AttunementThreshold.LESSER)) {
                 List<LivingEntity> targets = EntityUtils.getEntitiesInRangeSorted(attackerLevel, event.getEntity().position(), 
                         Arrays.asList(event.getEntity(), attacker), LivingEntity.class, 4.0D, EntitySelectorsPM.validHellishChainTarget(attacker));
                 if (!targets.isEmpty()) {
                     LivingEntity target = targets.get(0);
                     target.hurt(DamageSourcesPM.hellishChain(attackerLevel, attacker), event.getAmount() / 2.0F);
-                    PacketHandler.sendToAllAround(new SpellBoltPacket(event.getEntity().getEyePosition(1.0F), target.getEyePosition(1.0F), Source.INFERNAL.getColor()), 
+                    PacketHandler.sendToAllAround(new SpellBoltPacket(event.getEntity().getEyePosition(1.0F), target.getEyePosition(1.0F), Sources.INFERNAL.getColor()), 
                             attackerLevel.dimension(), event.getEntity().blockPosition(), 64.0D);
                     attackerLevel.playSound(null, event.getEntity().blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attackerLevel.random.nextGaussian() * 0.05D));
                 }
@@ -103,20 +102,17 @@ public class CombatEvents {
         // Handle effects triggered by damage target
         if (event.getEntity() instanceof Player target) {
             // Gain appropriate research for damage sources, if applicable
-            if (ResearchManager.isResearchComplete(target, SimpleResearchKey.FIRST_STEPS)) {
-                SimpleResearchKey drownKey = ResearchNames.INTERNAL_DROWN_A_LITTLE.get().simpleKey();
-                if (event.getSource() == target.damageSources().drown() && !ResearchManager.isResearchComplete(target, drownKey)) {
-                    ResearchManager.completeResearch(target, drownKey);
+            if (ResearchManager.isResearchComplete(target, ResearchEntries.FIRST_STEPS)) {
+                if (event.getSource() == target.damageSources().drown() && !ResearchManager.isResearchComplete(target, ResearchEntries.DROWN_A_LITTLE)) {
+                    ResearchManager.completeResearch(target, ResearchEntries.DROWN_A_LITTLE);
                 }
-                
-                SimpleResearchKey lavaKey = ResearchNames.INTERNAL_FEEL_THE_BURN.get().simpleKey();
-                if (event.getSource() == target.damageSources().lava() && !ResearchManager.isResearchComplete(target, lavaKey)) {
-                    ResearchManager.completeResearch(target, lavaKey);
+                if (event.getSource() == target.damageSources().lava() && !ResearchManager.isResearchComplete(target, ResearchEntries.FEEL_THE_BURN)) {
+                    ResearchManager.completeResearch(target, ResearchEntries.FEEL_THE_BURN);
                 }
             }
 
             // Reduce fall damage if the recipient has lesser sky attunement
-            if (event.getSource() == target.damageSources().fall() && AttunementManager.meetsThreshold(target, Source.SKY, AttunementThreshold.LESSER)) {
+            if (event.getSource() == target.damageSources().fall() && AttunementManager.meetsThreshold(target, Sources.SKY, AttunementThreshold.LESSER)) {
                 float newDamage = Math.max(0.0F, event.getAmount() / 3.0F - 2.0F);
                 if (newDamage < event.getAmount()) {
                     event.setAmount(newDamage);
@@ -130,7 +126,7 @@ public class CombatEvents {
             }
             
             // Reduce all non-absolute (e.g. starvation) damage taken players with lesser void attunement
-            if (!event.getSource().is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(target, Source.VOID, AttunementThreshold.LESSER)) {
+            if (!event.getSource().is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(target, Sources.VOID, AttunementThreshold.LESSER)) {
                 event.setAmount(0.9F * event.getAmount());
             }
             
@@ -158,22 +154,22 @@ public class CombatEvents {
             Level level = attacker.level();
             
             // Increase all non-absolute damage dealt by players with greater void attunement
-            if (!event.getSource().is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(attacker, Source.VOID, AttunementThreshold.GREATER)) {
+            if (!event.getSource().is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(attacker, Sources.VOID, AttunementThreshold.GREATER)) {
                 event.setAmount(1.25F * event.getAmount());
             }
             
             // Increase damage to undead targets by players with lesser hallowed attunement
-            if (event.getEntity().isInvertedHealAndHarm() && AttunementManager.meetsThreshold(attacker, Source.HALLOWED, AttunementThreshold.LESSER)) {
+            if (event.getEntity().isInvertedHealAndHarm() && AttunementManager.meetsThreshold(attacker, Sources.HALLOWED, AttunementThreshold.LESSER)) {
                 event.setAmount(2.0F * event.getAmount());
             }
 
             // If at least one point of damage was done by a player with the lesser blood attunement, cause bleeding
-            if (event.getAmount() >= 1.0F && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.LESSER)) {
+            if (event.getAmount() >= 1.0F && AttunementManager.meetsThreshold(attacker, Sources.BLOOD, AttunementThreshold.LESSER)) {
                 event.getEntity().addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 200));
             }
             
             // Players with greater blood attunement can steal health, with a chance based on damage done
-            if (level.random.nextFloat() < (event.getAmount() / 12.0F) && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.GREATER)) {
+            if (level.random.nextFloat() < (event.getAmount() / 12.0F) && AttunementManager.meetsThreshold(attacker, Sources.BLOOD, AttunementThreshold.GREATER)) {
                 attacker.heal(1.0F);
             }
         }
@@ -187,7 +183,7 @@ public class CombatEvents {
         if (entity instanceof Player player) {
             Level level = player.level();
             IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
-            if (AttunementManager.meetsThreshold(player, Source.HALLOWED, AttunementThreshold.GREATER) &&
+            if (AttunementManager.meetsThreshold(player, Sources.HALLOWED, AttunementThreshold.GREATER) &&
                     cooldowns != null &&
                     !cooldowns.isOnCooldown(CooldownType.DEATH_SAVE)) {
                 player.setHealth(1.0F);

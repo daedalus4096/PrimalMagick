@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
@@ -21,11 +23,12 @@ import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
@@ -50,6 +53,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -72,8 +76,8 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
-    protected Set<SimpleResearchKey> relevantResearch = Collections.emptySet();
-    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.getRelevantResearch().contains(k);
+    protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
+    protected final Predicate<AbstractResearchKey<?>> relevantFilter = k -> this.getRelevantResearch().contains(k);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData concocterData = new ContainerData() {
@@ -85,9 +89,9 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
             case 1:
                 return ConcocterTileEntity.this.cookTimeTotal;
             case 2:
-                return ConcocterTileEntity.this.manaStorage.getManaStored(Source.INFERNAL);
+                return ConcocterTileEntity.this.manaStorage.getManaStored(Sources.INFERNAL);
             case 3:
-                return ConcocterTileEntity.this.manaStorage.getMaxManaStored(Source.INFERNAL);
+                return ConcocterTileEntity.this.manaStorage.getMaxManaStored(Sources.INFERNAL);
             default:
                 return 0;
             }
@@ -114,7 +118,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     
     public ConcocterTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.CONCOCTER.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 1000, 1000, Source.INFERNAL);
+        this.manaStorage = new ManaStorage(10000, 1000, 1000, Sources.INFERNAL);
         this.researchCache = new TileResearchCache();
     }
     
@@ -170,29 +174,32 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         return null;
     }
 
-    protected boolean isResearchKnown(@Nullable CompoundResearchKey key) {
-        if (key == null) {
+    protected boolean isResearchKnown(Optional<AbstractRequirement<?>> requirementOpt) {
+        if (requirementOpt.isEmpty()) {
             return true;
         } else {
             Player owner = this.getTileOwner();
             if (owner != null) {
-                // Check the live research list if possible
-                return key.isKnownByStrict(owner);
+                // Check the live data if possible
+                return requirementOpt.get().isMetBy(owner);
             } else {
                 // Check the research cache if the owner is unavailable
-                return this.researchCache.isResearchComplete(key);
+                return this.researchCache.isResearchComplete(requirementOpt.get().streamKeys().toList());
             }
         }
     }
     
-    protected Set<SimpleResearchKey> getRelevantResearch() {
+    protected Set<AbstractResearchKey<?>> getRelevantResearch() {
         return this.relevantResearch;
     }
     
-    protected static Set<SimpleResearchKey> assembleRelevantResearch(Level level) {
+    protected static Set<AbstractResearchKey<?>> assembleRelevantResearch(RecipeManager recipeManager) {
         // Get a set of all the research keys used in any concocting recipe
-        return level.getRecipeManager().getAllRecipesFor(RecipeTypesPM.CONCOCTING.get()).stream().map(r -> r.value().getRequiredResearch().getKeys())
-                .flatMap(l -> l.stream()).distinct().collect(Collectors.toUnmodifiableSet());
+        return recipeManager.getAllRecipesFor(RecipeTypesPM.CONCOCTING.get()).stream().flatMap(holder -> {
+            return holder.value().getRequirement().map(req -> {
+                return req.streamKeys();
+            }).orElse(Stream.empty());
+        }).distinct().collect(Collectors.toUnmodifiableSet());
     }
     
     @Override
@@ -204,7 +211,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     public void onLoad() {
         super.onLoad();
         if (!this.level.isClientSide) {
-            this.relevantResearch = assembleRelevantResearch(this.level);
+            this.relevantResearch = assembleRelevantResearch(this.level.getRecipeManager());
         }
         this.cookTimeTotal = this.getCookTimeTotal();
     }
@@ -217,10 +224,10 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 IWand wand = (IWand)wandStack.getItem();
-                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.INFERNAL) - entity.manaStorage.getManaStored(Source.INFERNAL);
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.INFERNAL) - entity.manaStorage.getManaStored(Sources.INFERNAL);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Source.INFERNAL, centimanaToTransfer)) {
-                    entity.manaStorage.receiveMana(Source.INFERNAL, centimanaToTransfer, false);
+                if (wand.consumeMana(wandStack, null, Sources.INFERNAL, centimanaToTransfer)) {
+                    entity.manaStorage.receiveMana(Sources.INFERNAL, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
@@ -260,9 +267,9 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
             ItemStack output = recipe.getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
-            } else if (this.getMana(Source.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Source.INFERNAL))) {
+            } else if (this.getMana(Sources.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Sources.INFERNAL))) {
                 return false;
-            } else if (!this.isResearchKnown(recipe.getRequiredResearch())) {
+            } else if (!this.isResearchKnown(recipe.getRequirement())) {
                 return false;
             } else {
                 ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
@@ -298,7 +305,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
                     stack.shrink(1);
                 }
             }
-            this.setMana(Source.INFERNAL, this.getMana(Source.INFERNAL) - (100 * recipe.getManaCosts().getAmount(Source.INFERNAL)));
+            this.setMana(Sources.INFERNAL, this.getMana(Sources.INFERNAL) - (100 * recipe.getManaCosts().getAmount(Sources.INFERNAL)));
         }
     }
     
@@ -336,7 +343,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     @Override
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {
                 mana.with(source, amount);
@@ -348,7 +355,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     @Override
     public int getMaxMana() {
         // TODO Fix up
-        return this.manaStorage.getMaxManaStored(Source.INFERNAL);
+        return this.manaStorage.getMaxManaStored(Sources.INFERNAL);
     }
 
     @Override

@@ -1,12 +1,12 @@
 {
   "type": "item",
   "set": {
-    "earth": 5,
-    "hallowed": 20,
-    "moon": 20,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "primalmagick:earth": 5,
+    "primalmagick:hallowed": 20,
+    "primalmagick:moon": 20,
+    "primalmagick:sea": 5,
+    "primalmagick:sky": 5,
+    "primalmagick:sun": 5
   },
   "target": "primalmagick:sheep_tome"
 }

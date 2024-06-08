@@ -3,25 +3,45 @@ package com.verdantartifice.primalmagick.common.research;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+
+import com.google.common.base.Preconditions;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
+import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ItemStackRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ItemTagRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.KnowledgeRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.VanillaCustomStatRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.VanillaItemUsedStatRequirement;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
-import com.verdantartifice.primalmagick.common.util.ItemUtils;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
+import com.verdantartifice.primalmagick.common.stats.Stat;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Definition of a research stage, a portion of a research entry.  A research stage contains text to be
@@ -32,359 +52,232 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class ResearchStage {
-    protected ResearchEntry researchEntry;
-    protected String textTranslationKey;
-    protected List<ResourceLocation> recipes = new ArrayList<>();
-    protected List<Object> mustObtain = new ArrayList<>();  // Either a specific ItemStack or a tag ResourceLocation
-    protected List<Object> mustCraft = new ArrayList<>();   // Either a specific ItemStack or a tag ResourceLocation
-    protected List<Integer> craftReference = new ArrayList<>();
-    protected List<Knowledge> requiredKnowledge = new ArrayList<>();
-    protected List<SimpleResearchKey> siblings = new ArrayList<>();
-    protected List<SimpleResearchKey> revelations = new ArrayList<>();
-    protected List<SimpleResearchKey> hints = new ArrayList<>();
-    protected CompoundResearchKey requiredResearch;
-    protected SourceList attunements = SourceList.EMPTY;
-    
-    protected ResearchStage(@Nonnull ResearchEntry entry, @Nonnull String textTranslationKey) {
-        this.researchEntry = entry;
-        this.textTranslationKey = textTranslationKey;
-    }
-    
-    @Nullable
-    public static ResearchStage create(@Nonnull ResearchEntry entry, @Nullable String textTranslationKey) {
-        return (textTranslationKey == null) ? null : new ResearchStage(entry, textTranslationKey);
+public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceLocation> recipes,
+        List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, SourceList attunements) {
+    public static Codec<ResearchStage> codec() { 
+        return RecordCodecBuilder.create(instance -> instance.group(
+            ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchStage::parentKey),
+            Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchStage::textTranslationKey),
+            AbstractRequirement.dispatchCodec().optionalFieldOf("completionRequirementOpt").forGetter(ResearchStage::completionRequirementOpt),
+            ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
+            AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
+            ResearchEntryKey.CODEC.listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
+            SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchStage::attunements)
+        ).apply(instance, ResearchStage::new));
     }
     
     @Nonnull
-    public static ResearchStage parse(@Nonnull ResearchEntry entry, @Nonnull JsonObject obj) throws Exception {
-        // Parse a research entry from a research definition file
-        ResearchStage stage = create(entry, obj.getAsJsonPrimitive("text").getAsString());
-        if (stage == null) {
-            throw new JsonParseException("Illegal stage text in research JSON");
-        }
-        if (obj.has("recipes")) {
-            stage.recipes = JsonUtils.toResourceLocations(obj.get("recipes").getAsJsonArray());
-        }
-        if (obj.has("required_item")) {
-            stage.mustObtain = JsonUtils.toOres(obj.get("required_item").getAsJsonArray());
-        }
-        if (obj.has("required_craft")) {
-            stage.mustCraft = JsonUtils.toOres(obj.get("required_craft").getAsJsonArray());
-            List<Integer> references = new ArrayList<>();
-            for (Object craftObj : stage.mustCraft) {
-                // For each item or tag that must be crafted, compute its hash code and store it for future comparison 
-                int code = (craftObj instanceof ItemStack) ? 
-                        ItemUtils.getHashCode((ItemStack)craftObj) :
-                        ("tag:" + craftObj.toString()).hashCode();
-                references.add(Integer.valueOf(code));
-                ResearchManager.addCraftingReference(code);
-            }
-            stage.craftReference = references;
-        }
-        if (obj.has("required_knowledge")) {
-            List<String> knowledgeStrs = JsonUtils.toStrings(obj.get("required_knowledge").getAsJsonArray());
-            stage.requiredKnowledge = knowledgeStrs.stream()
-                                        .map(s -> Knowledge.parse(s))
-                                        .filter(Objects::nonNull)
-                                        .collect(Collectors.toList());
-        }
-        if (obj.has("siblings")) {
-            stage.siblings = JsonUtils.toSimpleResearchKeys(obj.get("siblings").getAsJsonArray());
-        }
-        if (obj.has("revelations")) {
-            stage.revelations = JsonUtils.toSimpleResearchKeys(obj.get("revelations").getAsJsonArray());
-        }
-        if (obj.has("hints")) {
-            stage.hints = JsonUtils.toSimpleResearchKeys(obj.get("hints").getAsJsonArray());
-        }
-        if (obj.has("required_research")) {
-            stage.requiredResearch = CompoundResearchKey.parse(obj.get("required_research").getAsJsonArray());
-        }
-        if (obj.has("attunements")) {
-            stage.attunements = JsonUtils.toSourceList(obj.get("attunements").getAsJsonObject());
-        }
-        return stage;
-    }
-    
-    @Nonnull
-    public static ResearchStage fromNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
-        ResearchStage stage = create(entry, buf.readUtf());
-        int recipeSize = buf.readVarInt();
-        for (int index = 0; index < recipeSize; index++) {
-            stage.recipes.add(new ResourceLocation(buf.readUtf()));
-        }
-        int obtainSize = buf.readVarInt();
-        for (int index = 0; index < obtainSize; index++) {
-            stage.mustObtain.add(buf.readBoolean() ? buf.readItem() : new ResourceLocation(buf.readUtf()));
-        }
-        int craftSize = buf.readVarInt();
-        for (int index = 0; index < craftSize; index++) {
-            stage.mustCraft.add(buf.readBoolean() ? buf.readItem() : new ResourceLocation(buf.readUtf()));
-        }
-        int refSize = buf.readVarInt();
-        for (int index = 0; index < refSize; index++) {
-            int ref = buf.readVarInt();
-            stage.craftReference.add(ref);
-        }
-        int knowSize = buf.readVarInt();
-        for (int index = 0; index < knowSize; index++) {
-            stage.requiredKnowledge.add(Knowledge.parse(buf.readUtf()));
-        }
-        int siblingSize = buf.readVarInt();
-        for (int index = 0; index < siblingSize; index++) {
-            stage.siblings.add(SimpleResearchKey.parse(buf.readUtf()));
-        }
-        int revelationsSize = buf.readVarInt();
-        for (int index = 0; index < revelationsSize; index++) {
-            stage.revelations.add(SimpleResearchKey.parse(buf.readUtf()));
-        }
-        int hintsSize = buf.readVarInt();
-        for (int index = 0; index < hintsSize; index++) {
-            stage.hints.add(SimpleResearchKey.parse(buf.readUtf()));
-        }
-        stage.requiredResearch = CompoundResearchKey.parse(buf.readUtf());
-        stage.attunements = SourceList.fromNetwork(buf);
-        return stage;
+    public static ResearchStage fromNetwork(FriendlyByteBuf buf) {
+        ResearchEntryKey parentKey = ResearchEntryKey.fromNetwork(buf);
+        String textKey = buf.readUtf();
+        Optional<AbstractRequirement<?>> compReqOpt = buf.readOptional(AbstractRequirement::fromNetwork);
+        List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
+        List<AbstractResearchKey<?>> siblings = buf.readList(ResearchEntryKey::fromNetwork);
+        List<ResearchEntryKey> revelations = buf.readList(ResearchEntryKey::fromNetwork);
+        SourceList attunements = SourceList.fromNetwork(buf);
+        return new ResearchStage(parentKey, textKey, compReqOpt, recipes, siblings, revelations, attunements);
     }
     
     public static void toNetwork(FriendlyByteBuf buf, ResearchStage stage) {
+        stage.parentKey.toNetwork(buf);
         buf.writeUtf(stage.textTranslationKey);
-        buf.writeVarInt(stage.recipes.size());
-        for (ResourceLocation recipe : stage.recipes) {
-            buf.writeUtf(recipe.toString());
-        }
-        buf.writeVarInt(stage.mustObtain.size());
-        for (Object obj : stage.mustObtain) {
-            if (obj instanceof ItemStack) {
-                buf.writeBoolean(true);
-                buf.writeItem((ItemStack)obj);
-            } else {
-                buf.writeBoolean(false);
-                buf.writeUtf(obj.toString());
-            }
-        }
-        buf.writeVarInt(stage.mustCraft.size());
-        for (Object obj : stage.mustCraft) {
-            if (obj instanceof ItemStack) {
-                buf.writeBoolean(true);
-                buf.writeItem((ItemStack)obj);
-            } else {
-                buf.writeBoolean(false);
-                buf.writeUtf(obj.toString());
-            }
-        }
-        buf.writeVarInt(stage.craftReference.size());
-        for (Integer ref : stage.craftReference) {
-            buf.writeVarInt(ref);
-        }
-        buf.writeVarInt(stage.requiredKnowledge.size());
-        for (Knowledge know : stage.requiredKnowledge) {
-            buf.writeUtf(know.toString());
-        }
-        buf.writeVarInt(stage.siblings.size());
-        for (SimpleResearchKey key : stage.siblings) {
-            buf.writeUtf(key.toString());
-        }
-        buf.writeVarInt(stage.revelations.size());
-        for (SimpleResearchKey key : stage.revelations) {
-            buf.writeUtf(key.toString());
-        }
-        buf.writeVarInt(stage.hints.size());
-        for (SimpleResearchKey key : stage.hints) {
-            buf.writeUtf(key.toString());
-        }
-        buf.writeUtf(stage.requiredResearch == null ? "" : stage.requiredResearch.toString());
+        buf.writeOptional(stage.completionRequirementOpt, (b, r) -> r.toNetwork(b));
+        buf.writeCollection(stage.recipes, (b, l) -> b.writeResourceLocation(l));
+        buf.writeCollection(stage.siblings, (b, s) -> s.toNetwork(b));
+        buf.writeCollection(stage.revelations, (b, r) -> r.toNetwork(b));
         SourceList.toNetwork(buf, stage.attunements);
     }
     
-    @Nonnull
-    public ResearchEntry getResearchEntry() {
-        return this.researchEntry;
-    }
-    
-    @Nonnull
-    public String getTextTranslationKey() {
-        return this.textTranslationKey;
-    }
-    
-    @Nonnull
-    public List<ResourceLocation> getRecipes() {
-        return Collections.unmodifiableList(this.recipes);
-    }
-    
-    @Nonnull
-    public List<Object> getMustObtain() {
-        return Collections.unmodifiableList(this.mustObtain);
-    }
-    
-    @Nonnull
-    public List<Object> getMustCraft() {
-        return Collections.unmodifiableList(this.mustCraft);
-    }
-    
-    @Nonnull
-    public List<Integer> getCraftReference() {
-        return Collections.unmodifiableList(this.craftReference);
-    }
-    
-    @Nonnull
-    public List<Knowledge> getRequiredKnowledge() {
-        return Collections.unmodifiableList(this.requiredKnowledge);
-    }
-    
-    @Nonnull
-    public List<SimpleResearchKey> getSiblings() {
-        return Collections.unmodifiableList(this.siblings);
-    }
-    
-    @Nonnull
-    public List<SimpleResearchKey> getRevelations() {
-        return Collections.unmodifiableList(this.revelations);
-    }
-    
-    @Nonnull
-    public List<SimpleResearchKey> getHints() {
-        return Collections.unmodifiableList(this.hints);
-    }
-    
-    @Nonnull
-    public CompoundResearchKey getRequiredResearch() {
-        return this.requiredResearch == null ? CompoundResearchKey.EMPTY : this.requiredResearch;
-    }
-    
-    @Nonnull
-    public SourceList getAttunements() {
-        return this.attunements;
-    }
-    
     public boolean hasPrerequisites() {
-        return !this.mustObtain.isEmpty() || !this.mustCraft.isEmpty() || !this.requiredKnowledge.isEmpty() || (this.requiredResearch != null && !this.requiredResearch.isEmpty());
+        return this.completionRequirementOpt.isPresent();
     }
     
     public boolean arePrerequisitesMet(@Nullable Player player) {
         if (player == null) {
             return false;
+        } else {
+            MutableBoolean retVal = new MutableBoolean(false);
+            this.completionRequirementOpt.ifPresent(req -> {
+                retVal.setValue(req.isMetBy(player));
+            });
+            return retVal.booleanValue();
         }
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
-        if (knowledge == null) {
-            return false;
-        }
-        
-        // Check if player is carrying must-obtain items
-        for (Object obtainObj : this.mustObtain) {
-            if (obtainObj instanceof ItemStack && !InventoryUtils.isPlayerCarrying(player, (ItemStack)obtainObj)) {
-                return false;
-            } else if (obtainObj instanceof ResourceLocation && !InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obtainObj, 1)) {
-                return false;
-            }
-        }
-        
-        // Check if player knows research for must-craft items
-        for (Integer craftRef : this.craftReference) {
-            if (!knowledge.isResearchKnown(SimpleResearchKey.parseCrafted(craftRef))) {
-                return false;
-            }
-        }
-        
-        // Check if player has required knowledge
-        for (Knowledge knowPacket : this.requiredKnowledge) {
-            if (knowledge.getKnowledge(knowPacket.getType()) < knowPacket.getAmount()) {
-                return false;
-            }
-        }
-        
-        // Check if player has required research
-        if (this.requiredResearch != null && !this.requiredResearch.isKnownByStrict(player)) {
-            return false;
-        }
-        
-        return true;
     }
     
-    public List<Boolean> getObtainRequirementCompletion(@Nullable Player player) {
-        if (this.mustObtain.isEmpty()) {
+    public List<AbstractRequirement<?>> getRequirementsByCategory(RequirementCategory category) {
+        if (this.completionRequirementOpt.isEmpty()) {
             return Collections.emptyList();
+        } else {
+            return this.completionRequirementOpt.get().streamByCategory(category).toList();
         }
-        if (player == null) {
-            // If the player is invalid, return false for all requirements
-            return Collections.nCopies(this.mustObtain.size(), Boolean.FALSE);
-        }
-        
-        List<Boolean> retVal = new ArrayList<>();
-        for (Object obj : this.mustObtain) {
-            if (obj instanceof ItemStack) {
-                // If the obtain requirement is a specific itemstack, check if the player is carrying some
-                retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ItemStack)obj)));
-            } else if (obj instanceof ResourceLocation) {
-                // If the obtain requirement is a tag, check if the player is carrying one of any of the tag's contents
-                retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obj, 1)));
+    }
+    
+    public List<Boolean> getRequirementCompletionByCategory(@Nullable Player player, RequirementCategory category) {
+        if (this.completionRequirementOpt.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            Stream<AbstractRequirement<?>> reqStream = this.completionRequirementOpt.get().streamByCategory(category);
+            if (player == null) {
+                return Collections.nCopies((int)reqStream.count(), false);
             } else {
-                // If the obtain requirement is invalid, just assume the player has it
-                retVal.add(Boolean.TRUE);
+                return reqStream.map(req -> req.isMetBy(player)).toList();
             }
         }
-        return retVal;
     }
     
-    public List<Boolean> getCraftRequirementCompletion(@Nullable Player player) {
-        if (this.craftReference.isEmpty()) {
-            return Collections.emptyList();
-        }
-        if (player == null) {
-            // If the player is invalid, return false for all requirements
-            return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
-        }
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
-        if (knowledge == null) {
-            // If the player's knowledge capability is invalid, return false for all requirements
-            return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
+    public static class Builder {
+        protected final String modId;
+        protected final ResearchEntry.Builder entryBuilder;
+        protected final ResearchEntryKey parentKey;
+        protected final int stageIndex;
+        protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
+        protected final List<ResourceLocation> recipes = new ArrayList<>();
+        protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
+        protected final List<ResearchEntryKey> revelations = new ArrayList<>();
+        protected final SourceList.Builder attunements = SourceList.builder();
+        
+        public Builder(String modId, ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int stageIndex) {
+            this.modId = Preconditions.checkNotNull(modId);
+            this.entryBuilder = Preconditions.checkNotNull(entryBuilder);
+            this.parentKey = Preconditions.checkNotNull(parentKey);
+            this.stageIndex = stageIndex;
         }
         
-        List<Boolean> retVal = new ArrayList<>();
-        for (Integer craftRef : this.craftReference) {
-            // Check if the player knows the special research entry corresponding to the required hash code
-            retVal.add(Boolean.valueOf(knowledge.isResearchKnown(SimpleResearchKey.parseCrafted(craftRef))));
-        }
-        return retVal;
-    }
-    
-    public List<Boolean> getKnowledgeRequirementCompletion(@Nullable Player player) {
-        if (this.requiredKnowledge.isEmpty()) {
-            return Collections.emptyList();
-        }
-        if (player == null) {
-            // If the player is invalid, return false for all requirements
-            return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
-        }
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
-        if (knowledge == null) {
-            // If the player's knowledge capability is invalid, return false for all requirements
-            return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
+        public Builder(ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int stageIndex) {
+            this(PrimalMagick.MODID, entryBuilder, parentKey, stageIndex);
         }
         
-        List<Boolean> retVal = new ArrayList<>();
-        for (Knowledge knowPacket : this.requiredKnowledge) {
-            // Check if the player has enough levels in each required type of knowledge
-            retVal.add(Boolean.valueOf(knowledge.getKnowledge(knowPacket.getType()) >= knowPacket.getAmount()));
-        }
-        return retVal;
-    }
-    
-    public List<Boolean> getResearchRequirementCompletion(@Nullable Player player) {
-        if (this.requiredResearch == null || this.requiredResearch.getKeys().isEmpty()) {
-            return Collections.emptyList();
-        }
-        if (player == null) {
-            // If the player is invalid, return false for all requirements
-            return Collections.nCopies(this.requiredResearch.getKeys().size(), Boolean.FALSE);
+        public Builder requirement(AbstractRequirement<?> req) {
+            this.requirements.add(req);
+            return this;
         }
         
-        List<Boolean> retVal = new ArrayList<>();
-        for (SimpleResearchKey key : this.requiredResearch.getKeys()) {
-            // Do a strict knowledge check for each required research entry
-            retVal.add(Boolean.valueOf(key.isKnownByStrict(player)));
+        public Builder requiredCraft(ItemStack stack) {
+            return this.requirement(new ResearchRequirement(new StackCraftedKey(stack.copy())));
         }
-        return retVal;
+        
+        public Builder requiredCraft(ItemLike item) {
+            return this.requiredCraft(new ItemStack(item.asItem()));
+        }
+        
+        public Builder requiredCraft(TagKey<Item> tag) {
+            return this.requirement(new ResearchRequirement(new TagCraftedKey(tag)));
+        }
+        
+        public Builder requiredItem(ItemStack stack) {
+            return this.requirement(new ItemStackRequirement(stack.copy()));
+        }
+        
+        public Builder requiredItem(ItemLike item, int count) {
+            return this.requiredItem(new ItemStack(item.asItem(), count));
+        }
+        
+        public Builder requiredItem(ItemLike item) {
+            return this.requiredItem(item, 1);
+        }
+        
+        public Builder requiredItem(TagKey<Item> tag, int count) {
+            return this.requirement(new ItemTagRequirement(tag, count));
+        }
+        
+        public Builder requiredItem(TagKey<Item> tag) {
+            return this.requiredItem(tag, 1);
+        }
+        
+        public Builder requiredResearch(ResourceKey<ResearchEntry> entryKey) {
+            return this.requirement(new ResearchRequirement(new ResearchEntryKey(entryKey)));
+        }
+        
+        protected Builder requiredKnowledge(KnowledgeType type, int levels) {
+            return this.requirement(new KnowledgeRequirement(type, levels));
+        }
+        
+        public Builder requiredObservations(int levels) {
+            return this.requiredKnowledge(KnowledgeType.OBSERVATION, levels);
+        }
+        
+        public Builder requiredTheories(int levels) {
+            return this.requiredKnowledge(KnowledgeType.THEORY, levels);
+        }
+        
+        public Builder requiredStat(Stat stat, int value) {
+            return this.requirement(new StatRequirement(stat, value));
+        }
+        
+        public Builder requiredVanillaCustomStat(ResourceLocation statLoc, int value, IconDefinition iconDef) {
+            return this.requirement(new VanillaCustomStatRequirement(statLoc, value, iconDef));
+        }
+        
+        public Builder requiredVanillaItemUsedStat(ItemLike item, int value) {
+            return this.requirement(new VanillaItemUsedStatRequirement(item.asItem(), value));
+        }
+        
+        public Builder recipe(String name) {
+            return this.recipe(PrimalMagick.resource(name));
+        }
+        
+        public Builder recipe(String modId, String name) {
+            return this.recipe(new ResourceLocation(modId, name));
+        }
+        
+        public Builder recipe(ItemLike itemLike) {
+            return this.recipe(ForgeRegistries.ITEMS.getKey(itemLike.asItem()));
+        }
+        
+        public Builder recipe(ResourceLocation recipe) {
+            this.recipes.add(recipe);
+            return this;
+        }
+        
+        public Builder sibling(ResourceKey<ResearchEntry> siblingKey) {
+            this.siblings.add(new ResearchEntryKey(siblingKey));
+            return this;
+        }
+        
+        public Builder reveals(ResourceKey<ResearchEntry> revelationKey) {
+            this.revelations.add(new ResearchEntryKey(revelationKey));
+            return this;
+        }
+        
+        public Builder attunement(SourceList sources) {
+            this.attunements.with(sources);
+            return this;
+        }
+        
+        public Builder attunement(Source source, int amount) {
+            this.attunements.with(source, amount);
+            return this;
+        }
+
+        private String getTextTranslationKey() {
+            return String.join(".", "research", this.modId.toLowerCase(), this.parentKey.getRootKey().location().getPath().toLowerCase(), "text", "stage", Integer.toString(this.stageIndex));
+        }
+        
+        protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+            if (this.requirements.isEmpty()) {
+                return Optional.empty();
+            } else if (this.requirements.size() == 1) {
+                return Optional.of(this.requirements.get(0));
+            } else {
+                return Optional.of(new AndRequirement(this.requirements));
+            }
+        }
+        
+        private void validate() {
+            if (this.modId.isBlank()) {
+                throw new IllegalStateException("Mod ID may not be empty");
+            } else if (this.stageIndex < 0) {
+                throw new IllegalStateException("Stage index must be non-negative");
+            }
+        }
+        
+        ResearchStage build() {
+            this.validate();
+            return new ResearchStage(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes, this.siblings, this.revelations, this.attunements.build());
+        }
+        
+        public ResearchEntry.Builder end() {
+            return this.entryBuilder;
+        }
     }
 }

@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "sun": 25
+    "primalmagick:sun": 25
   },
   "target": "primalmagick:ancient_font_sun"
 }

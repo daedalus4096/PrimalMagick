@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.StringReader;
@@ -16,6 +17,8 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -37,11 +40,8 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
     private static final Collection<String> EXAMPLES = Arrays.asList("foo", "foo:bar", "012");
-    private static final DynamicCommandExceptionType ERROR_INVALID_BOOK = new DynamicCommandExceptionType((err) -> {
-        return Component.translatable("commands.primalmagick.books.noexist", err);
-    });
-    private static final DynamicCommandExceptionType ERROR_INVALID_LANGUAGE = new DynamicCommandExceptionType((err) -> {
-        return Component.translatable("commands.primalmagick.books.nolanguage", err);
+    private static final Function<String, DynamicCommandExceptionType> ERROR_MESSAGE = messageKey -> new DynamicCommandExceptionType(err -> {
+        return Component.translatable(messageKey, err);
     });
 
     protected final ResourceKey<? extends Registry<T>> registryKey;
@@ -58,12 +58,21 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
         return new ResourceKeyArgumentPM<>(pRegistryKey);
     }
     
+    public static Holder.Reference<ResearchEntry> getResearchEntry(CommandContext<CommandSourceStack> pContext, String pArgument) throws CommandSyntaxException {
+        // TODO Filter out internal research entries from suggestions
+        return resolveKey(pContext, pArgument, RegistryKeysPM.RESEARCH_ENTRIES, ERROR_MESSAGE.apply("commands.primalmagick.research.noexist"));
+    }
+    
+    public static Holder.Reference<ResearchDiscipline> getResearchDiscipline(CommandContext<CommandSourceStack> pContext, String pArgument) throws CommandSyntaxException {
+        return resolveKey(pContext, pArgument, RegistryKeysPM.RESEARCH_DISCIPLINES, ERROR_MESSAGE.apply("commands.primalmagick.discipline.noexist"));
+    }
+    
     public static Holder.Reference<BookDefinition> getBook(CommandContext<CommandSourceStack> pContext, String pArgument) throws CommandSyntaxException {
-        return resolveKey(pContext, pArgument, RegistryKeysPM.BOOKS, ERROR_INVALID_BOOK);
+        return resolveKey(pContext, pArgument, RegistryKeysPM.BOOKS, ERROR_MESSAGE.apply("commands.primalmagick.books.noexist"));
     }
     
     public static Holder.Reference<BookLanguage> getLanguage(CommandContext<CommandSourceStack> pContext, String pArgument) throws CommandSyntaxException {
-        return resolveKey(pContext, pArgument, RegistryKeysPM.BOOK_LANGUAGES, ERROR_INVALID_LANGUAGE);
+        return resolveKey(pContext, pArgument, RegistryKeysPM.BOOK_LANGUAGES, ERROR_MESSAGE.apply("commands.primalmagick.books.nolanguage"));
     }
 
     private static <T> Holder.Reference<T> resolveKey(CommandContext<CommandSourceStack> pContext, String pArgument, ResourceKey<Registry<T>> pRegistryKey, DynamicCommandExceptionType pException) throws CommandSyntaxException {

@@ -2,8 +2,8 @@
   "type": "entity_type",
   "target": "primalmagick:pixie_majestic_void",
   "values": {
-    "blood": 5,
-    "sky": 10,
-    "void": 20
+    "primalmagick:blood": 5,
+    "primalmagick:sky": 10,
+    "primalmagick:void": 20
   }
 }

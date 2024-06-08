@@ -14,6 +14,10 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagick.common.capabilities.IWorldEntitySwappers;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
+import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
 
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,6 +46,10 @@ public class ModRegistrationEvents {
     
     @SubscribeEvent
     public static void onNewDatapackRegistry(DataPackRegistryEvent.NewRegistry event) {
+        event.dataPackRegistry(RegistryKeysPM.RESEARCH_DISCIPLINES, ResearchDiscipline.codec(), ResearchDiscipline.codec());
+        event.dataPackRegistry(RegistryKeysPM.RESEARCH_ENTRIES, ResearchEntry.codec(), ResearchEntry.codec());
+        event.dataPackRegistry(RegistryKeysPM.PROJECT_TEMPLATES, ProjectTemplate.codec(), ProjectTemplate.codec());
+        event.dataPackRegistry(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, RuneEnchantmentDefinition.codec(), RuneEnchantmentDefinition.codec());
         event.dataPackRegistry(RegistryKeysPM.BOOKS, BookDefinition.DIRECT_CODEC, BookDefinition.NETWORK_CODEC);
         event.dataPackRegistry(RegistryKeysPM.BOOK_LANGUAGES, BookLanguage.DIRECT_CODEC, BookLanguage.NETWORK_CODEC);
         event.dataPackRegistry(RegistryKeysPM.CULTURES, Culture.DIRECT_CODEC, Culture.NETWORK_CODEC);

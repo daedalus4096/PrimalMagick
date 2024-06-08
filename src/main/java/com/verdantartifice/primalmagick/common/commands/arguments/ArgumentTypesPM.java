@@ -22,10 +22,6 @@ public class ArgumentTypesPM {
         COMMAND_ARGUMENT_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<SingletonArgumentInfo<ResearchArgument>> RESEARCH = COMMAND_ARGUMENT_TYPES.register("research", 
-            () -> ArgumentTypeInfos.registerByClass(ResearchArgument.class, SingletonArgumentInfo.contextFree(ResearchArgument::research)));
-    public static final RegistryObject<SingletonArgumentInfo<DisciplineArgument>> DISCIPLINE = COMMAND_ARGUMENT_TYPES.register("discipline", 
-            () -> ArgumentTypeInfos.registerByClass(DisciplineArgument.class, SingletonArgumentInfo.contextFree(DisciplineArgument::discipline)));
     public static final RegistryObject<SingletonArgumentInfo<KnowledgeTypeArgument>> KNOWLEDGE_TYPE = COMMAND_ARGUMENT_TYPES.register("knowledge_type", 
             () -> ArgumentTypeInfos.registerByClass(KnowledgeTypeArgument.class, SingletonArgumentInfo.contextFree(KnowledgeTypeArgument::knowledgeType)));
     public static final RegistryObject<SingletonArgumentInfo<KnowledgeAmountArgument>> KNOWLEDGE_AMOUNT = COMMAND_ARGUMENT_TYPES.register("knowledge_amount", 

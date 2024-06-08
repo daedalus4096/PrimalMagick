@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "sea": 100
+    "primalmagick:sea": 100
   },
   "target": "primalmagick:essence_cluster_sea"
 }

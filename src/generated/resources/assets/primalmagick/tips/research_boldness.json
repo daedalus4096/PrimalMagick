@@ -1,4 +1,10 @@
 {
-  "requiredResearch": "THEORYCRAFTING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:theorycrafting"
+    }
+  },
   "translationKey": "tip.primalmagick.research_boldness"
 }

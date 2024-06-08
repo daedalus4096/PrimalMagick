@@ -1,8 +1,8 @@
 {
   "type": "potion_bonus",
   "bonus": {
-    "blood": 2,
-    "sun": 2
+    "primalmagick:blood": 2,
+    "primalmagick:sun": 2
   },
   "target": "minecraft:strong_healing"
 }

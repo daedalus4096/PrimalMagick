@@ -6,7 +6,25 @@
       "item": "primalmagick:essence_shard_hallowed"
     }
   ],
-  "research": "SHARD_DESYNTHESIS&&t_discover_hallowed",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:shard_desynthesis"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 4,
     "id": "primalmagick:essence_dust_hallowed"

@@ -14,7 +14,7 @@
   },
   "mana": {
     "sources": {
-      "sky": 250
+      "primalmagick:sky": 250
     }
   },
   "pattern": [
@@ -22,7 +22,13 @@
     " E ",
     "IMI"
   ],
-  "research": "ARTIFICIAL_MANA_FONTS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:artificial_mana_fonts"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:artificial_font_sky"

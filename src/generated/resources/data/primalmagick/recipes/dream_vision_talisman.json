@@ -23,7 +23,7 @@
   "instability": 4,
   "mana": {
     "sources": {
-      "moon": 40
+      "primalmagick:moon": 40
     }
   },
   "props": [
@@ -37,7 +37,13 @@
       "block": "primalmagick:ritual_lectern"
     }
   ],
-  "research": "DREAM_VISION_TALISMAN",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:dream_vision_talisman"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:dream_vision_talisman",

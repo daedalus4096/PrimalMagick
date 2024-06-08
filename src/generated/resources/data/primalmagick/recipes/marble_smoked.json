@@ -10,7 +10,7 @@
   },
   "mana": {
     "sources": {
-      "moon": 5
+      "primalmagick:moon": 5
     }
   },
   "pattern": [
@@ -18,7 +18,13 @@
     "MCM",
     "MMM"
   ],
-  "research": "MASTER_MANAWEAVING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:master_manaweaving"
+    }
+  },
   "result": {
     "Count": 8,
     "id": "primalmagick:marble_smoked"

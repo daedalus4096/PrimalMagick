@@ -1,9 +1,12 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
@@ -35,7 +38,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "conjure_animal";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_CONJURE_ANIMAL.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_ANIMAL));
     protected static final WeightedRandomBag<EntityType<?>> LAND_ANIMALS = Util.make(new WeightedRandomBag<>(), bag -> {
         bag.add(EntityType.BAT, 2);
         bag.add(EntityType.CAT, 5);
@@ -68,8 +71,8 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
         super();
     }
     
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
     
     @Override
@@ -99,7 +102,7 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
 
     @Override
     public Source getSource() {
-        return Source.BLOOD;
+        return Sources.BLOOD;
     }
 
     @Override

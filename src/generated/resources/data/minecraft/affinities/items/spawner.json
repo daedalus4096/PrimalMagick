@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "blood": 20,
-    "infernal": 10,
-    "void": 10
+    "primalmagick:blood": 20,
+    "primalmagick:infernal": 10,
+    "primalmagick:void": 10
   },
   "target": "minecraft:spawner"
 }

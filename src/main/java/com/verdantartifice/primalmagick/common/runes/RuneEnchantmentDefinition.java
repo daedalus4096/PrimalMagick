@@ -1,15 +1,21 @@
 package com.verdantartifice.primalmagick.common.runes;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.google.common.base.Preconditions;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,119 +26,89 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class RuneEnchantmentDefinition {
-    protected Enchantment result;
-    protected VerbRune verb;
-    protected NounRune noun;
-    protected SourceRune source;
-    protected CompoundResearchKey requiredResearch;
-    
-    protected RuneEnchantmentDefinition(@Nonnull Enchantment result, @Nonnull VerbRune verb, @Nonnull NounRune noun, @Nonnull SourceRune source, @Nullable CompoundResearchKey research) {
-        this.result = result;
-        this.verb = verb;
-        this.noun = noun;
-        this.source = source;
-        this.requiredResearch = research;
-    }
-    
-    public Enchantment getResult() {
-        return this.result;
+public record RuneEnchantmentDefinition(Enchantment result, VerbRune verb, NounRune noun, SourceRune source, Optional<AbstractRequirement<?>> requirementOpt) {
+    public static Codec<RuneEnchantmentDefinition> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ResourceLocation.CODEC.fieldOf("result").xmap(loc -> ForgeRegistries.ENCHANTMENTS.getValue(loc), ench -> ForgeRegistries.ENCHANTMENTS.getKey(ench)).forGetter(RuneEnchantmentDefinition::result),
+                VerbRune.CODEC.fieldOf("verb").forGetter(RuneEnchantmentDefinition::verb),
+                NounRune.CODEC.fieldOf("noun").forGetter(RuneEnchantmentDefinition::noun),
+                SourceRune.CODEC.fieldOf("source").forGetter(RuneEnchantmentDefinition::source),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(RuneEnchantmentDefinition::requirementOpt)
+            ).apply(instance, RuneEnchantmentDefinition::new));
     }
     
     public ResourceLocation getId() {
         return ForgeRegistries.ENCHANTMENTS.getKey(this.result);
     }
     
-    public VerbRune getVerb() {
-        return this.verb;
-    }
-    
-    public NounRune getNoun() {
-        return this.noun;
-    }
-    
-    public SourceRune getSource() {
-        return this.source;
-    }
-    
     public List<Rune> getRunes() {
-        return List.of(this.getVerb(), this.getNoun(), this.getSource());
+        return List.of(this.verb(), this.noun(), this.source());
     }
     
-    public CompoundResearchKey getRequiredResearch() {
-        return this.requiredResearch;
+    public static Builder builder(Enchantment ench) {
+        return new Builder(ench);
     }
     
-    public static class Serializer implements IRuneEnchantmentDefinitionSerializer {
-        @Override
-        public RuneEnchantmentDefinition read(ResourceLocation id, JsonObject json) {
-            ResourceLocation resultLoc = ResourceLocation.tryParse(json.getAsJsonPrimitive("result").getAsString());
-            if (!ForgeRegistries.ENCHANTMENTS.containsKey(resultLoc)) {
-                throw new JsonSyntaxException("Invalid result in rune enchantment definition for " + id.toString());
-            }
-            
-            CompoundResearchKey requiredResearch = null;
-            if (json.has("required_research")) {
-                requiredResearch = CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString());
-            }
-            
-            ResourceLocation verbLoc = ResourceLocation.tryParse(json.getAsJsonPrimitive("verb").getAsString());
-            if (!(Rune.getRune(verbLoc) instanceof VerbRune verb)) {
-                throw new JsonSyntaxException("Invalid verb in rune enchantment definition for " + id.toString());
-            }
-            
-            ResourceLocation nounLoc = ResourceLocation.tryParse(json.getAsJsonPrimitive("noun").getAsString());
-            if (!(Rune.getRune(nounLoc) instanceof NounRune noun)) {
-                throw new JsonSyntaxException("Invalid noun in rune enchantment definition for " + id.toString());
-            }
-            
-            ResourceLocation sourceLoc = ResourceLocation.tryParse(json.getAsJsonPrimitive("source").getAsString());
-            if (!(Rune.getRune(sourceLoc) instanceof SourceRune source)) {
-                throw new JsonSyntaxException("Invalid source in rune enchantment definition for " + id.toString());
-            }
-            
-            return new RuneEnchantmentDefinition(ForgeRegistries.ENCHANTMENTS.getValue(resultLoc), verb, noun, source, requiredResearch);
+    public static class Builder {
+        protected final Enchantment result;
+        protected VerbRune verb;
+        protected NounRune noun;
+        protected SourceRune source;
+        protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
+        
+        public Builder(Enchantment result) {
+            this.result = Preconditions.checkNotNull(result);
         }
-
-        @Override
-        public RuneEnchantmentDefinition fromNetwork(FriendlyByteBuf buf) {
-            ResourceLocation resultLoc = buf.readResourceLocation();
-            if (!ForgeRegistries.ENCHANTMENTS.containsKey(resultLoc)) {
-                throw new IllegalArgumentException("Unknown rune enchantment definition result " + resultLoc);
-            }
-            
-            CompoundResearchKey requiredResearch = buf.readBoolean() ? CompoundResearchKey.parse(buf.readUtf()) : null;
-            
-            ResourceLocation verbLoc = buf.readResourceLocation();
-            if (!(Rune.getRune(verbLoc) instanceof VerbRune verb)) {
-                throw new IllegalArgumentException("Unknown rune enchantment definition verb " + verbLoc);
-            }
-            
-            ResourceLocation nounLoc = buf.readResourceLocation();
-            if (!(Rune.getRune(nounLoc) instanceof NounRune noun)) {
-                throw new IllegalArgumentException("Unknown rune enchantment definition noun " + nounLoc);
-            }
-
-            ResourceLocation sourceLoc = buf.readResourceLocation();
-            if (!(Rune.getRune(sourceLoc) instanceof SourceRune source)) {
-                throw new IllegalArgumentException("Unknown rune enchantment definition source " + sourceLoc);
-            }
-            
-            return new RuneEnchantmentDefinition(ForgeRegistries.ENCHANTMENTS.getValue(resultLoc), verb, noun, source, requiredResearch);
+        
+        public Builder verb(@Nonnull VerbRune verb) {
+            this.verb = verb;
+            return this;
         }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, RuneEnchantmentDefinition data) {
-            buf.writeResourceLocation(data.getId());
-            if (data.getRequiredResearch() == null) {
-                buf.writeBoolean(false);
+        
+        public Builder noun(@Nonnull NounRune noun) {
+            this.noun = noun;
+            return this;
+        }
+        
+        public Builder source(@Nonnull SourceRune source) {
+            this.source = source;
+            return this;
+        }
+        
+        public Builder requirement(AbstractRequirement<?> req) {
+            this.requirements.add(req);
+            return this;
+        }
+        
+        public Builder requiredResearch(ResourceKey<ResearchEntry> rawKey) {
+            return this.requirement(new ResearchRequirement(new ResearchEntryKey(rawKey)));
+        }
+        
+        protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+            if (this.requirements.isEmpty()) {
+                return Optional.empty();
+            } else if (this.requirements.size() == 1) {
+                return Optional.of(this.requirements.get(0));
             } else {
-                buf.writeBoolean(true);
-                buf.writeUtf(data.getRequiredResearch().toString());
+                return Optional.of(new AndRequirement(this.requirements));
             }
-            buf.writeResourceLocation(data.getVerb().getId());
-            buf.writeResourceLocation(data.getNoun().getId());
-            buf.writeResourceLocation(data.getSource().getId());
+        }
+        
+        private void validate() {
+            if (this.verb == null) {
+                throw new IllegalStateException("No verb rune for rune enchantment");
+            }
+            if (this.noun == null) {
+                throw new IllegalStateException("No noun rune for rune enchantment");
+            }
+            if (this.source == null) {
+                throw new IllegalStateException("No source rune for rune enchantment");
+            }
+        }
+        
+        public RuneEnchantmentDefinition build() {
+            this.validate();
+            return new RuneEnchantmentDefinition(this.result, this.verb, this.noun, this.source, this.getFinalRequirement());
         }
     }
 }

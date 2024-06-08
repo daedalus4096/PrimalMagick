@@ -1,11 +1,11 @@
 {
   "type": "item",
   "add": {
-    "earth": 1,
-    "moon": 1,
-    "sea": 1,
-    "sky": 1,
-    "sun": 1
+    "primalmagick:earth": 1,
+    "primalmagick:moon": 1,
+    "primalmagick:sea": 1,
+    "primalmagick:sky": 1,
+    "primalmagick:sun": 1
   },
   "base": "primalmagick:marble_brick_stairs",
   "target": "primalmagick:marble_enchanted_brick_stairs"

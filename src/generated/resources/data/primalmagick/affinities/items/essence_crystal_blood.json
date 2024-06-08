@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "blood": 50
+    "primalmagick:blood": 50
   },
   "target": "primalmagick:essence_crystal_blood"
 }

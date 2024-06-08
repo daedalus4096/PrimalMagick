@@ -11,7 +11,7 @@
   },
   "mana": {
     "sources": {
-      "sun": 5
+      "primalmagick:sun": 5
     }
   },
   "pattern": [
@@ -19,7 +19,13 @@
     "ADA",
     " A "
   ],
-  "research": "MANA_ARROWS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_arrows"
+    }
+  },
   "result": {
     "Count": 4,
     "id": "primalmagick:mana_arrow_sun"

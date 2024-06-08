@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -8,13 +10,19 @@ import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.ConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -46,7 +54,7 @@ public class ConcoctingRecipeBuilder {
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected String group;
     protected boolean useDefaultGroup = false;
-    protected CompoundResearchKey research;
+    protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected SourceList manaCosts;
 
     protected ConcoctingRecipeBuilder(ItemStack result) {
@@ -102,13 +110,17 @@ public class ConcoctingRecipeBuilder {
         return this;
     }
     
-    public ConcoctingRecipeBuilder research(CompoundResearchKey research) {
-        this.research = research;
+    public ConcoctingRecipeBuilder requirement(AbstractRequirement<?> requirement) {
+        this.requirements.add(requirement);
         return this;
     }
     
-    public ConcoctingRecipeBuilder research(Optional<CompoundResearchKey> researchOpt) {
-        return this.research(researchOpt.orElseThrow());
+    public ConcoctingRecipeBuilder requiredResearch(ResourceKey<ResearchEntry> research) {
+        return this.requirement(new ResearchRequirement(new ResearchEntryKey(research)));
+    }
+    
+    public ConcoctingRecipeBuilder requiredResearch(ResourceKey<ResearchEntry> research, int stage) {
+        return this.requirement(new ResearchRequirement(new ResearchStageKey(research, stage)));
     }
     
     public ConcoctingRecipeBuilder manaCost(SourceList mana) {
@@ -116,19 +128,29 @@ public class ConcoctingRecipeBuilder {
         return this;
     }
     
+    protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+        if (this.requirements.isEmpty()) {
+            return Optional.empty();
+        } else if (this.requirements.size() == 1) {
+            return Optional.of(this.requirements.get(0));
+        } else {
+            return Optional.of(new AndRequirement(this.requirements));
+        }
+    }
+    
     protected void validate(ResourceLocation id) {
         if (this.ingredients.isEmpty()) {
             throw new IllegalStateException("No ingredients defined for concocting recipe " + id + "!");
         }
-        if (this.research == null) {
-            throw new IllegalStateException("No research is defined for concocting recipe " + id + "!");
+        if (this.requirements.isEmpty()) {
+            throw new IllegalStateException("No requirement is defined for concocting recipe " + id + "!");
         }
     }
     
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
         String groupStr = this.useDefaultGroup ? ForgeRegistries.POTIONS.getKey(PotionUtils.getPotion(this.result)).getPath() : this.group;
-        ConcoctingRecipe recipe = new ConcoctingRecipe(Objects.requireNonNullElse(groupStr, ""), this.result, this.ingredients, this.research, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        ConcoctingRecipe recipe = new ConcoctingRecipe(Objects.requireNonNullElse(groupStr, ""), this.result, this.ingredients, this.getFinalRequirement(), Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);
     }
     

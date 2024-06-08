@@ -24,10 +24,16 @@
   ],
   "mana": {
     "sources": {
-      "infernal": 9
+      "primalmagick:infernal": 9
     }
   },
-  "research": "CONCOCTING_ELIXIRS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_elixirs"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:concoction",

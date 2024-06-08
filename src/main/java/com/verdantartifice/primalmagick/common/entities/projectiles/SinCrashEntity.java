@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellTrailPacket;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -36,7 +36,7 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
         if (!level.isClientSide && this.isAlive() && this.tickCount % 2 == 0) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
-                    new SpellTrailPacket(this.position(), Source.VOID.getColor()), 
+                    new SpellTrailPacket(this.position(), Sources.VOID.getColor()), 
                     level.dimension(), 
                     this.blockPosition(), 
                     64.0D);

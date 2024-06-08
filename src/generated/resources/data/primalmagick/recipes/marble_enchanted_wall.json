@@ -9,7 +9,13 @@
     "MMM",
     "MMM"
   ],
-  "research": "EXPERT_MANAWEAVING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:expert_manaweaving"
+    }
+  },
   "result": {
     "Count": 6,
     "id": "primalmagick:marble_enchanted_wall"

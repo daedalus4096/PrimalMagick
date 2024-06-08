@@ -1,0 +1,15 @@
+{
+  "craftingStat": "primalmagick:crafted_manaweaving",
+  "iconLocation": "primalmagick:textures/research/discipline_manaweaving.png",
+  "indexSortOrder": 200,
+  "key": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "unlockRequirementOpt": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:unlock_manaweaving"
+    }
+  }
+}

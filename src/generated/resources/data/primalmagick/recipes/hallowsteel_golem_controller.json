@@ -13,7 +13,7 @@
   },
   "mana": {
     "sources": {
-      "hallowed": 100
+      "primalmagick:hallowed": 100
     }
   },
   "pattern": [
@@ -21,7 +21,13 @@
     "IRI",
     "PIP"
   ],
-  "research": "HALLOWSTEEL_GOLEM",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hallowsteel_golem"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:hallowsteel_golem_controller"

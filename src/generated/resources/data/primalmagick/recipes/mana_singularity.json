@@ -16,11 +16,11 @@
   },
   "mana": {
     "sources": {
-      "earth": 750,
-      "moon": 750,
-      "sea": 750,
-      "sky": 750,
-      "sun": 750
+      "primalmagick:earth": 750,
+      "primalmagick:moon": 750,
+      "primalmagick:sea": 750,
+      "primalmagick:sky": 750,
+      "primalmagick:sun": 750
     }
   },
   "pattern": [
@@ -28,7 +28,13 @@
     "MGM",
     "APA"
   ],
-  "research": "MANA_SINGULARITY",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_singularity"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:mana_singularity"

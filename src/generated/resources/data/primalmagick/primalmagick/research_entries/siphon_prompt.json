@@ -1,0 +1,13 @@
+{
+  "addenda": [],
+  "finales": [],
+  "icon": {
+    "location": "primalmagick:textures/research/research_map.png"
+  },
+  "internal": true,
+  "key": {
+    "rootKey": "primalmagick:siphon_prompt"
+  },
+  "parents": [],
+  "stages": []
+}

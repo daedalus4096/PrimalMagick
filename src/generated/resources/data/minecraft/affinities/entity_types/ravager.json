@@ -2,6 +2,6 @@
   "type": "entity_type",
   "target": "minecraft:ravager",
   "values": {
-    "blood": 20
+    "primalmagick:blood": 20
   }
 }

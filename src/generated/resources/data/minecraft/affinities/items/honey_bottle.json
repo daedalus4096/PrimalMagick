@@ -1,8 +1,8 @@
 {
   "type": "item",
   "add": {
-    "blood": 1,
-    "sea": 5
+    "primalmagick:blood": 1,
+    "primalmagick:sea": 5
   },
   "base": "minecraft:glass_bottle",
   "target": "minecraft:honey_bottle"

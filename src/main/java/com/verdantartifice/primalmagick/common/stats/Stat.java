@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.stats;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -14,52 +16,70 @@ import net.minecraft.stats.StatFormatter;
  * 
  * @author Daedalus4096
  */
-public class Stat {
-    protected ResourceLocation location;
-    protected StatFormatter formatter;
-    protected boolean hidden;
-    protected boolean internal;
-    
-    protected Stat(@Nonnull ResourceLocation location, @Nonnull StatFormatter formatter, boolean hidden, boolean internal) {
-        this.location = location;
-        this.formatter = formatter;
-        this.hidden = hidden;
-        this.internal = internal;
-    }
-    
-    @Nonnull
-    public static Stat create(@Nonnull String name, @Nonnull StatFormatter formatter, boolean hidden) {
-        return create(name, formatter, hidden, false);
-    }
-    
-    @Nonnull
-    public static Stat create(@Nonnull String name, @Nonnull StatFormatter formatter, boolean hidden, boolean internal) {
-        // Create the new stat and register it with the stats manager
-        Stat retVal = new Stat(PrimalMagick.resource(name), formatter, hidden, internal);
-        StatsManager.registerStat(retVal);
-        return retVal;
-    }
-    
-    @Nonnull
-    public ResourceLocation getLocation() {
-        return this.location;
-    }
-    
-    @Nonnull
-    public StatFormatter getFormatter() {
-        return this.formatter;
-    }
-    
-    public boolean isHidden() {
-        return this.hidden;
-    }
-    
-    public boolean isInternal() {
-        return this.internal;
-    }
-    
+public record Stat(ResourceLocation key, StatFormatter formatter, Optional<ResourceLocation> iconLocationOpt, boolean hidden, boolean internal, boolean hasHint) {
     @Nonnull
     public String getTranslationKey() {
-        return "stat." + this.location.getNamespace() + "." + this.location.getPath();
+        return String.join(".", "stat", this.key.getNamespace(), this.key.getPath());
+    }
+    
+    @Nonnull
+    public Optional<String> getHintTranslationKey() {
+        if (this.hasHint) {
+            return Optional.of(String.join(".", "stat", this.key.getNamespace(), this.key.getPath(), "hint"));
+        } else {
+            return Optional.empty();
+        }
+    }
+    
+    public static Builder builder(ResourceLocation loc) {
+        return new Builder(loc);
+    }
+    
+    public static Builder builder(String rawKey) {
+        return new Builder(PrimalMagick.resource(rawKey));
+    }
+    
+    public static class Builder {
+        protected final ResourceLocation key;
+        protected StatFormatter formatter = StatFormatter.DEFAULT;
+        protected Optional<ResourceLocation> iconLocationOpt = Optional.empty();
+        protected boolean hidden = false;
+        protected boolean internal = false;
+        protected boolean hasHint = false;
+        
+        public Builder(ResourceLocation key) {
+            this.key = key;
+        }
+        
+        public Builder formatter(StatFormatter formatter) {
+            this.formatter = formatter;
+            return this;
+        }
+        
+        public Builder icon(ResourceLocation iconLoc) {
+            this.iconLocationOpt = Optional.ofNullable(iconLoc);
+            return this;
+        }
+        
+        public Builder hidden() {
+            this.hidden = true;
+            return this;
+        }
+        
+        public Builder internal() {
+            this.internal = true;
+            return this;
+        }
+        
+        public Builder hasHint() {
+            this.hasHint = true;
+            return this;
+        }
+        
+        public Stat build() {
+            Stat retVal = new Stat(this.key, this.formatter, this.iconLocationOpt, this.hidden, this.internal, this.hasHint);
+            StatsManager.registerStat(retVal);
+            return retVal;
+        }
     }
 }

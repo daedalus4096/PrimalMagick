@@ -1,8 +1,11 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -19,19 +22,19 @@ import net.minecraft.world.level.material.Fluids;
  */
 public class ConjureWaterSpellPayload extends AbstractConjureFluidSpellPayload {
     public static final String TYPE = "conjure_water";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_CONJURE_WATER.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_WATER));
 
     public ConjureWaterSpellPayload() {
         super(Fluids.WATER);
     }
     
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
 
     @Override
     public Source getSource() {
-        return Source.SEA;
+        return Sources.SEA;
     }
 
     @Override

@@ -2,8 +2,10 @@ package com.verdantartifice.primalmagick.common.spells.mods;
 
 import java.util.Map;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
@@ -17,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class AmplifySpellMod extends AbstractSpellMod {
     public static final String TYPE = "amplify";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_MOD_AMPLIFY.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_AMPLIFY));
 
     public AmplifySpellMod() {
         super();
@@ -28,8 +30,8 @@ public class AmplifySpellMod extends AbstractSpellMod {
         this.getProperty("power").setValue(power);
     }
     
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
     
     @Override

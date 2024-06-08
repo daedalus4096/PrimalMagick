@@ -34,10 +34,9 @@ public class ProgressButton extends Button {
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
-            if (button instanceof ProgressButton) {
+            if (button instanceof ProgressButton pb) {
                 // Send a packet to the server and tell the screen to update more frequently until resolved
-                ProgressButton pb = (ProgressButton)button;
-                PacketHandler.sendToServer(new SyncProgressPacket(pb.getStage().getResearchEntry().getKey(), false, true, true, false));
+                PacketHandler.sendToServer(new SyncProgressPacket(pb.getStage().parentKey(), false, true, true, false));
                 pb.getScreen().setProgressing();
             }
         }

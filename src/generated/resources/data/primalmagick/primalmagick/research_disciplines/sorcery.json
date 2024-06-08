@@ -1,0 +1,15 @@
+{
+  "craftingStat": "primalmagick:crafted_sorcery",
+  "iconLocation": "primalmagick:textures/research/discipline_sorcery.png",
+  "indexSortOrder": 400,
+  "key": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "unlockRequirementOpt": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:unlock_sorcery"
+    }
+  }
+}

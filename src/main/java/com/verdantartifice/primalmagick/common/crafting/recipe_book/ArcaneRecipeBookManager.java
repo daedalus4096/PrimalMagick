@@ -11,11 +11,9 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -75,18 +73,13 @@ public class ArcaneRecipeBookManager {
     
     public static boolean syncRecipesWithResearch(ServerPlayer player) {
         IPlayerArcaneRecipeBook recipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(player).orElse(null);
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
-        if (recipeBook == null || knowledge == null) {
+        if (recipeBook == null) {
             return false;
         } else {
             recipeBook.get().clear();
             RecipeManager recipeManager = player.level().getRecipeManager();
             Set<ResourceLocation> idsToAdd = new HashSet<>();
-            for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
-                if (knowledge.isResearchKnown(entry.getKey())) {
-                    idsToAdd.addAll(entry.getKnownRecipeIds(player));
-                }
-            }
+            ResearchEntries.stream(player.level().registryAccess()).filter(e -> e.key().isKnownBy(player)).forEach(e -> idsToAdd.addAll(e.getKnownRecipeIds(player)));
             ArcaneRecipeBookManager.addRecipes(idsToAdd.stream().map(id -> recipeManager.byKey(id).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet()), player);
             return true;
         }

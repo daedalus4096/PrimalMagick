@@ -1,8 +1,8 @@
 {
   "type": "potion_bonus",
   "bonus": {
-    "blood": 1,
-    "sun": 1
+    "primalmagick:blood": 1,
+    "primalmagick:sun": 1
   },
   "target": "minecraft:regeneration"
 }

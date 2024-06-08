@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "earth": 5
+    "primalmagick:earth": 5
   },
   "target": "minecraft:small_amethyst_bud"
 }

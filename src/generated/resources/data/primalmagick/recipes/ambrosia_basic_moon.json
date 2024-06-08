@@ -20,7 +20,7 @@
   "instability": 4,
   "mana": {
     "sources": {
-      "moon": 40
+      "primalmagick:moon": 40
     }
   },
   "props": [
@@ -34,7 +34,13 @@
       "block": "primalmagick:ritual_lectern"
     }
   ],
-  "research": "AMBROSIA",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ambrosia"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ambrosia_basic_moon"

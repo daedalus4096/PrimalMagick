@@ -13,7 +13,7 @@
   },
   "mana": {
     "sources": {
-      "sea": 10
+      "primalmagick:sea": 10
     }
   },
   "pattern": [
@@ -21,7 +21,13 @@
     "PSP",
     "PIP"
   ],
-  "research": "RITUAL_BELL",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ritual_bell"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ritual_bell"

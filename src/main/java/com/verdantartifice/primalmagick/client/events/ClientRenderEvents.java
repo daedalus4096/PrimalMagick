@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
@@ -71,7 +72,7 @@ public class ClientRenderEvents {
         
         // Show a tooltip entry if the item is warded armor
         event.getItemStack().getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(manaStorage -> {
-            Source.SORTED_SOURCES.stream().filter(source -> source.isDiscovered(event.getEntity()) && manaStorage.canStore(source)).forEach(source ->
+            Sources.getAllSorted().stream().filter(source -> source.isDiscovered(event.getEntity()) && manaStorage.canStore(source)).forEach(source ->
                 event.getToolTip().add(Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (manaStorage.getManaStored(source) / 100.0D))));
         });
     }

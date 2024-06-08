@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -61,9 +62,9 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
             case 1:
                 return HoneyExtractorTileEntity.this.spinTimeTotal;
             case 2:
-                return HoneyExtractorTileEntity.this.manaStorage.getManaStored(Source.SKY);
+                return HoneyExtractorTileEntity.this.manaStorage.getManaStored(Sources.SKY);
             case 3:
-                return HoneyExtractorTileEntity.this.manaStorage.getMaxManaStored(Source.SKY);
+                return HoneyExtractorTileEntity.this.manaStorage.getMaxManaStored(Sources.SKY);
             default:
                 return 0;
             }
@@ -90,7 +91,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     
     public HoneyExtractorTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.HONEY_EXTRACTOR.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Source.SKY);
+        this.manaStorage = new ManaStorage(10000, 100, 100, Sources.SKY);
     }
 
     @Override
@@ -141,10 +142,10 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 IWand wand = (IWand)wandStack.getItem();
-                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.SKY) - entity.manaStorage.getManaStored(Source.SKY);
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.SKY) - entity.manaStorage.getManaStored(Sources.SKY);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Source.SKY, centimanaToTransfer)) {
-                    entity.manaStorage.receiveMana(Source.SKY, centimanaToTransfer, false);
+                if (wand.consumeMana(wandStack, null, Sources.SKY, centimanaToTransfer)) {
+                    entity.manaStorage.receiveMana(Sources.SKY, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
@@ -152,7 +153,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
             // Process ingredients
             ItemStack honeycombStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack bottleStack = entity.getItem(INPUT_INV_INDEX, 1);
-            if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && entity.manaStorage.getManaStored(Source.SKY) >= entity.getManaCost()) {
+            if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && entity.manaStorage.getManaStored(Sources.SKY) >= entity.getManaCost()) {
                 // If spinnable input is in place, process it
                 if (entity.canSpin()) {
                     entity.spinTime++;
@@ -188,7 +189,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     protected void doExtraction() {
         ItemStack honeycombStack = this.getItem(INPUT_INV_INDEX, 0);
         ItemStack bottleStack = this.getItem(INPUT_INV_INDEX, 1);
-        if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && this.canSpin() && this.manaStorage.getManaStored(Source.SKY) >= this.getManaCost()) {
+        if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && this.canSpin() && this.manaStorage.getManaStored(Sources.SKY) >= this.getManaCost()) {
             ItemStack honeyStack = this.getItem(OUTPUT_INV_INDEX, 0);
             if (honeyStack.isEmpty()) {
                 this.setItem(OUTPUT_INV_INDEX, 0, new ItemStack(Items.HONEY_BOTTLE));
@@ -205,7 +206,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
             
             honeycombStack.shrink(1);
             bottleStack.shrink(1);
-            this.manaStorage.extractMana(Source.SKY, this.getManaCost(), false);
+            this.manaStorage.extractMana(Sources.SKY, this.getManaCost(), false);
         }
     }
 
@@ -242,7 +243,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     @Override
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {
                 mana.with(source, amount);
@@ -254,7 +255,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     @Override
     public int getMaxMana() {
         // TODO Fix up
-        return this.manaStorage.getMaxManaStored(Source.SKY);
+        return this.manaStorage.getMaxManaStored(Sources.SKY);
     }
 
     @Override

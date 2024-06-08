@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -46,7 +47,7 @@ public class WithdrawCaskEssencePacket implements IMessageToServer {
     
     public static void encode(WithdrawCaskEssencePacket message, FriendlyByteBuf buf) {
         buf.writeUtf(message.essenceType.toString());
-        buf.writeUtf(message.essenceSource.getTag());
+        buf.writeResourceLocation(message.essenceSource.getId());
         buf.writeVarInt(message.amount);
         buf.writeLong(message.caskPos.asLong());
     }
@@ -54,7 +55,7 @@ public class WithdrawCaskEssencePacket implements IMessageToServer {
     public static WithdrawCaskEssencePacket decode(FriendlyByteBuf buf) {
         WithdrawCaskEssencePacket message = new WithdrawCaskEssencePacket();
         message.essenceType = EssenceType.valueOf(buf.readUtf());
-        message.essenceSource = Source.getSource(buf.readUtf());
+        message.essenceSource = Sources.get(buf.readResourceLocation());
         message.amount = buf.readVarInt();
         message.caskPos = BlockPos.of(buf.readLong());
         return message;

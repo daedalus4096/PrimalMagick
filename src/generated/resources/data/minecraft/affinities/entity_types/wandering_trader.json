@@ -2,6 +2,6 @@
   "type": "entity_type",
   "target": "minecraft:wandering_trader",
   "values": {
-    "blood": 10
+    "primalmagick:blood": 10
   }
 }

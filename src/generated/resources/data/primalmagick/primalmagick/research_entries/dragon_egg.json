@@ -1,0 +1,34 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:dragon_egg"
+  },
+  "key": {
+    "rootKey": "primalmagick:dragon_egg"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:dragon_egg"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.dragon_egg.text.stage.1"
+    }
+  ]
+}

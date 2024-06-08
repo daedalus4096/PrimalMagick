@@ -16,11 +16,11 @@
   },
   "mana": {
     "sources": {
-      "earth": 250,
-      "moon": 250,
-      "sea": 250,
-      "sky": 250,
-      "sun": 250
+      "primalmagick:earth": 250,
+      "primalmagick:moon": 250,
+      "primalmagick:sea": 250,
+      "primalmagick:sky": 250,
+      "primalmagick:sun": 250
     }
   },
   "pattern": [
@@ -28,7 +28,13 @@
     "MGM",
     "APA"
   ],
-  "research": "MANA_NEXUS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_nexus"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:mana_nexus"

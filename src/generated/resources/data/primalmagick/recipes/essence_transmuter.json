@@ -16,7 +16,7 @@
   },
   "mana": {
     "sources": {
-      "moon": 40
+      "primalmagick:moon": 40
     }
   },
   "pattern": [
@@ -24,7 +24,13 @@
     "CRC",
     "MPM"
   ],
-  "research": "ESSENCE_TRANSMUTER",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:essence_transmuter"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:essence_transmuter"

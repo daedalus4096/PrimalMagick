@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "blood": 2
+    "primalmagick:blood": 2
   },
   "base": "minecraft:stone",
   "target": "minecraft:infested_stone"

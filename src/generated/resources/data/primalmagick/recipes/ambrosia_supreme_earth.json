@@ -23,7 +23,7 @@
   "instability": 8,
   "mana": {
     "sources": {
-      "earth": 200
+      "primalmagick:earth": 200
     }
   },
   "props": [
@@ -46,7 +46,13 @@
       "block": "primalmagick:celestial_harp"
     }
   ],
-  "research": "SUPREME_AMBROSIA",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:supreme_ambrosia"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ambrosia_supreme_earth"

@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "sky": 25,
-    "void": 10
+    "primalmagick:sky": 25,
+    "primalmagick:void": 10
   },
   "target": "minecraft:elytra"
 }

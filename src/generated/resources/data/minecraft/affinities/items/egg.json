@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "blood": 5,
-    "sky": 5
+    "primalmagick:blood": 5,
+    "primalmagick:sky": 5
   },
   "target": "minecraft:egg"
 }

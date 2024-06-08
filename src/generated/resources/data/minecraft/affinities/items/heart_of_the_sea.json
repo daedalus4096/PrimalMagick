@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "sea": 25
+    "primalmagick:sea": 25
   },
   "target": "minecraft:heart_of_the_sea"
 }

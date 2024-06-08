@@ -23,15 +23,15 @@
   "instability": 7,
   "mana": {
     "sources": {
-      "blood": 100,
-      "earth": 100,
-      "hallowed": 100,
-      "infernal": 100,
-      "moon": 100,
-      "sea": 100,
-      "sky": 100,
-      "sun": 100,
-      "void": 100
+      "primalmagick:blood": 100,
+      "primalmagick:earth": 100,
+      "primalmagick:hallowed": 100,
+      "primalmagick:infernal": 100,
+      "primalmagick:moon": 100,
+      "primalmagick:sea": 100,
+      "primalmagick:sky": 100,
+      "primalmagick:sun": 100,
+      "primalmagick:void": 100
     }
   },
   "props": [
@@ -54,7 +54,13 @@
       "block": "primalmagick:celestial_harp"
     }
   ],
-  "research": "WAND_CORE_PURE_PRIMAL",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_pure_primal"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:pure_primal_wand_core_item"

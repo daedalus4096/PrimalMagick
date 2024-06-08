@@ -11,6 +11,10 @@ import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinitions;
+import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplates;
 import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
@@ -18,6 +22,7 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.StructureSets
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
 import com.verdantartifice.primalmagick.datagen.tags.BookLanguageTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.DamageTypeTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.ResearchEntryTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.StructureTagsProviderPM;
 
 import net.minecraft.core.Cloner;
@@ -43,6 +48,10 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
             .add(Registries.TRIM_MATERIAL, TrimMaterialsPM::bootstrap)
             .add(Registries.TRIM_PATTERN, TrimPatternsPM::bootstrap)
             .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap)
+            .add(RegistryKeysPM.RESEARCH_DISCIPLINES, ResearchDisciplines::bootstrap)
+            .add(RegistryKeysPM.RESEARCH_ENTRIES, ResearchEntries::bootstrap)
+            .add(RegistryKeysPM.PROJECT_TEMPLATES, ProjectTemplates::bootstrap)
+            .add(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, RuneEnchantmentDefinitions::bootstrap)
             .add(RegistryKeysPM.BOOKS, BooksPM::bootstrap)
             .add(RegistryKeysPM.BOOK_LANGUAGES, BookLanguagesPM::bootstrap)
             .add(RegistryKeysPM.CULTURES, CulturesPM::bootstrap);
@@ -58,6 +67,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         generator.addProvider(isServer, new DamageTypeTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new StructureTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new BookLanguageTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new ResearchEntryTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         return registryDataGenerator.getRegistryProvider();
     }
     

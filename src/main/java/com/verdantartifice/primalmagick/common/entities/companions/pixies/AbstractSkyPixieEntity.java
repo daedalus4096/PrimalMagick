@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.entities.companions.pixies;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionOwnerHurtByTargetGoal;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionOwnerHurtTargetGoal;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.payloads.LightningDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
@@ -30,7 +31,7 @@ public abstract class AbstractSkyPixieEntity extends AbstractPixieEntity impleme
 
     @Override
     protected Source getPixieSource() {
-        return Source.SKY;
+        return Sources.SKY;
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.crafting;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.TagKey;
@@ -20,8 +20,8 @@ import net.minecraft.world.level.block.Block;
 public class WandTransformBlockTag extends AbstractWandTransform {
     protected final TagKey<Block> target;
     
-    public WandTransformBlockTag(@Nonnull TagKey<Block> target, @Nonnull ItemStack result, @Nullable CompoundResearchKey research) {
-        super(result, research);
+    public WandTransformBlockTag(@Nonnull TagKey<Block> target, @Nonnull ItemStack result, @Nullable AbstractRequirement<?> requirement) {
+        super(result, requirement);
         this.target = target;
     }
 

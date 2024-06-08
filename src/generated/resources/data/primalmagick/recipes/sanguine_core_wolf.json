@@ -12,7 +12,13 @@
       "item": "minecraft:beef"
     }
   ],
-  "research": "SANGUINE_CORE_LAND_ANIMALS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sanguine_core_land_animals"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:sanguine_core_wolf",

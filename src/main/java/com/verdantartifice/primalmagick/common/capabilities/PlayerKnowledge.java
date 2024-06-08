@@ -6,7 +6,6 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -14,13 +13,17 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicFactory;
@@ -28,8 +31,10 @@ import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectFactory;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,11 +48,13 @@ import net.minecraftforge.common.util.LazyOptional;
  * @author Daedalus4096
  */
 public class PlayerKnowledge implements IPlayerKnowledge {
-    private final Set<String> research = ConcurrentHashMap.newKeySet();             // Set of known research
-    private final Map<String, Integer> stages = new ConcurrentHashMap<>();          // Map of research keys to current stage numbers
-    private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>(); // Map of research keys to attached flag sets
-    private final Map<KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();   // Map of knowledge types to accrued points
-    private final LinkedList<AbstractResearchTopic> topicHistory = new LinkedList<>();  // Grimoire research topic history
+    private static final Logger LOGGER = LogManager.getLogger();
+    
+    private final Set<AbstractResearchKey<?>> research = ConcurrentHashMap.newKeySet();                 // Set of known research
+    private final Map<AbstractResearchKey<?>, Integer> stages = new ConcurrentHashMap<>();              // Map of research keys to current stage numbers
+    private final Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags = new ConcurrentHashMap<>();     // Map of research keys to attached flag sets
+    private final Map<KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();                    // Map of knowledge types to accrued points
+    private final LinkedList<AbstractResearchTopic> topicHistory = new LinkedList<>();                  // Grimoire research topic history
     
     private Project project = null;     // Currently active research project
     private AbstractResearchTopic topic = null; // Last active grimoire research topic
@@ -60,15 +67,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Serialize known research, including stage number and attached flags
         ListTag researchList = new ListTag();
-        for (String res : this.research) {
+        for (AbstractResearchKey<?> key : this.research) {
             CompoundTag tag = new CompoundTag();
-            tag.putString("key", res);
-            if (this.stages.containsKey(res)) {
-                tag.putInt("stage", this.stages.get(res).intValue());
+            AbstractResearchKey.dispatchCodec().encodeStart(NbtOps.INSTANCE, key).resultOrPartial(LOGGER::error).ifPresent(encodedTag -> tag.put("key", encodedTag));
+            if (this.stages.containsKey(key)) {
+                tag.putInt("stage", this.stages.get(key));
             }
-            Set<ResearchFlag> researchFlags = this.flags.get(res);
+            Set<ResearchFlag> researchFlags = this.flags.get(key);
             if (researchFlags != null) {
-                String str = Arrays.stream(researchFlags.toArray(new ResearchFlag[researchFlags.size()]))
+                String str = Arrays.stream(researchFlags.toArray(ResearchFlag[]::new))
                                    .map(t -> t.name())
                                    .collect(Collectors.joining(","));
                 if (str != null && !str.isEmpty()) {
@@ -96,7 +103,9 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Serialize active research project, if any
         if (this.project != null) {
-            rootTag.put("project", this.project.serializeNBT());
+            Project.codec().encodeStart(NbtOps.INSTANCE, this.project)
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(encodedProject -> rootTag.put("project", encodedProject));
         }
         
         // Serialize last active grimoire topic, if any
@@ -131,24 +140,25 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         ListTag researchList = nbt.getList("research", Tag.TAG_COMPOUND);
         for (int index = 0; index < researchList.size(); index++) {
             CompoundTag tag = researchList.getCompound(index);
-            SimpleResearchKey keyObj = SimpleResearchKey.parse(tag.getString("key"));
-            if (keyObj != null && !this.isResearchKnown(keyObj)) {
-                this.research.add(keyObj.getRootKey());
-                int stage = tag.getInt("stage");
-                if (stage > 0) {
-                    this.stages.put(keyObj.getRootKey(), Integer.valueOf(stage));
-                }
-                String flagStr = tag.getString("flags");
-                if (flagStr != null && !flagStr.isEmpty()) {
-                    for (String flagName : flagStr.split(",")) {
-                        ResearchFlag flag = null;
-                        try {
-                            flag = ResearchFlag.valueOf(flagName);
-                        } catch (Exception e) {}
-                        this.addResearchFlag(keyObj, flag);
+            AbstractResearchKey.dispatchCodec().parse(NbtOps.INSTANCE, tag.get("key")).resultOrPartial(LOGGER::error).ifPresent(parsedKey -> {
+                if (!this.isResearchKnown(parsedKey)) {
+                    this.research.add(parsedKey);
+                    int stage = tag.getInt("stage");
+                    if (stage > 0) {
+                        this.stages.put(parsedKey, stage);
+                    }
+                    String flagStr = tag.getString("flags");
+                    if (flagStr != null && !flagStr.isEmpty()) {
+                        for (String flagName : flagStr.split(",")) {
+                            try {
+                                this.addResearchFlag(parsedKey, ResearchFlag.valueOf(flagName));
+                            } catch (Exception e) {
+                                LOGGER.warn("Invalid research flag name: " + flagName, e);
+                            }
+                        }
                     }
                 }
-            }
+            });
         }
 
         // Deserialize knowledge types, including accrued points
@@ -203,65 +213,58 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     
     @Override
     @Nonnull
-    public Set<SimpleResearchKey> getResearchSet() {
-        // Map the stored strings to parsed keys, filtering out failures
-        return Collections.unmodifiableSet(this.research.stream()
-                                            .map(s -> SimpleResearchKey.parse(s))
-                                            .filter(Objects::nonNull)
-                                            .collect(Collectors.toSet()));
+    public Set<AbstractResearchKey<?>> getResearchSet() {
+        return Collections.unmodifiableSet(this.research);
     }
 
     @Override
     @Nonnull
-    public ResearchStatus getResearchStatus(@Nullable SimpleResearchKey research) {
+    public ResearchStatus getResearchStatus(@Nonnull RegistryAccess registryAccess, @Nullable AbstractResearchKey<?> research) {
         if (!this.isResearchKnown(research)) {
             return ResearchStatus.UNKNOWN;
         } else {
-            // Research is complete if it is known and its current stage exceeds the number of stages defined in its entry
-            ResearchEntry entry = ResearchEntries.getEntry(research);
-            if (entry == null || entry.getStages().isEmpty() || this.getResearchStage(research) >= entry.getStages().size()) {
-                return ResearchStatus.COMPLETE;
+            // Research is complete if it is known and its current stage equals or exceeds the number of stages defined in its entry
+            if (research instanceof ResearchEntryKey entryKey) {
+                ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
+                if (entry == null || entry.stages().isEmpty() || this.getResearchStage(research) >= entry.stages().size()) {
+                    return ResearchStatus.COMPLETE;
+                } else {
+                    return ResearchStatus.IN_PROGRESS;
+                }
             } else {
-                return ResearchStatus.IN_PROGRESS;
+                // If the key isn't for a research entry (it's a StackCraftedKey, for example), then it's complete if it's in the known set
+                return ResearchStatus.COMPLETE;
             }
         }
     }
 
     @Override
-    public boolean isResearchComplete(@Nullable SimpleResearchKey research) {
-        return (this.getResearchStatus(research) == ResearchStatus.COMPLETE);
+    public boolean isResearchComplete(@Nonnull RegistryAccess registryAccess, @Nullable AbstractResearchKey<?> research) {
+        return (this.getResearchStatus(registryAccess, research) == ResearchStatus.COMPLETE);
     }
 
     @Override
-    public boolean isResearchKnown(@Nullable SimpleResearchKey research) {
+    public boolean isResearchKnown(@Nullable AbstractResearchKey<?> research) {
         if (research == null) {
             return false;
-        }
-        if ("".equals(research.getRootKey())) {
-            return true;
-        }
-
-        // If a specific stage is specified in the given key, check if the current stage meets it
-        if (research.hasStage() && (this.getResearchStage(research) + 1) < research.getStage()) {
-            return false;
         } else {
-            return this.research.contains(research.getRootKey());
+            return this.research.contains(research);
         }
     }
 
     @Override
-    public int getResearchStage(@Nullable SimpleResearchKey research) {
-        if (research == null || research.getRootKey().isEmpty() || !this.research.contains(research.getRootKey())) {
+    public int getResearchStage(@Nullable AbstractResearchKey<?> research) {
+        if (research == null || !this.research.contains(research)) {
             return -1;
         } else {
-            return this.stages.getOrDefault(research.getRootKey(), Integer.valueOf(0)).intValue();
+            return this.stages.getOrDefault(research, 0);
         }
     }
 
     @Override
-    public boolean addResearch(@Nullable SimpleResearchKey research) {
+    public boolean addResearch(@Nullable AbstractResearchKey<?> research) {
         if (research != null && !this.isResearchKnown(research)) {
-            this.research.add(research.getRootKey());
+            this.research.add(research);
             return true;
         } else {
             return false;
@@ -269,19 +272,19 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean setResearchStage(@Nullable SimpleResearchKey research, int newStage) {
-        if (research == null || research.getRootKey().isEmpty() || !this.research.contains(research.getRootKey()) || newStage <= 0) {
+    public boolean setResearchStage(@Nullable AbstractResearchKey<?> research, int newStage) {
+        if (research == null || !this.research.contains(research) || newStage <= 0) {
             return false;
         } else {
-            this.stages.put(research.getRootKey(), Integer.valueOf(newStage));
+            this.stages.put(research, newStage);
             return true;
         }
     }
 
     @Override
-    public boolean removeResearch(@Nullable SimpleResearchKey research) {
+    public boolean removeResearch(@Nullable AbstractResearchKey<?> research) {
         if (research != null && this.isResearchKnown(research)) {
-            this.research.remove(research.getRootKey());
+            this.research.remove(research);
             return true;
         } else {
             return false;
@@ -289,35 +292,29 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean addResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag) {
+    public boolean addResearchFlag(@Nullable AbstractResearchKey<?> research, @Nullable ResearchFlag flag) {
         if (research == null || flag == null) {
             return false;
         }
-        Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
-        if (researchFlags == null) {
-            // Create and store a set if no flags are currently attached to the research
-            researchFlags = EnumSet.noneOf(ResearchFlag.class);
-            this.flags.put(research.getRootKey(), researchFlags);
-        }
-        return researchFlags.add(flag);
+        return this.flags.computeIfAbsent(research, $ -> EnumSet.noneOf(ResearchFlag.class)).add(flag);
     }
     
     @Override
-    public boolean removeResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag) {
+    public boolean removeResearchFlag(@Nullable AbstractResearchKey<?> research, @Nullable ResearchFlag flag) {
         if (research == null || flag == null) {
             return false;
         } else {
-            return this.removeResearchFlagInner(research.getRootKey(), flag);
+            return this.removeResearchFlagInner(research, flag);
         }
     }
     
-    protected boolean removeResearchFlagInner(@Nonnull String researchKeyStr, @Nonnull ResearchFlag flag) {
-        Set<ResearchFlag> researchFlags = this.flags.get(researchKeyStr);
+    protected boolean removeResearchFlagInner(@Nonnull AbstractResearchKey<?> research, @Nonnull ResearchFlag flag) {
+        Set<ResearchFlag> researchFlags = this.flags.get(research);
         if (researchFlags != null) {
             boolean retVal = researchFlags.remove(flag);
             if (researchFlags.isEmpty()) {
                 // Remove empty flag sets to prevent data bloat
-                this.flags.remove(researchKeyStr);
+                this.flags.remove(research);
             }
             return retVal;
         }
@@ -325,22 +322,22 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean hasResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag) {
+    public boolean hasResearchFlag(@Nullable AbstractResearchKey<?> research, @Nullable ResearchFlag flag) {
         if (research == null || flag == null) {
             return false;
         } else {
-            Set<ResearchFlag> researchFlags = this.flags.get(research.getRootKey());
+            Set<ResearchFlag> researchFlags = this.flags.get(research);
             return researchFlags != null && researchFlags.contains(flag);
         }
     }
     
     @Override
     @Nonnull
-    public Set<ResearchFlag> getResearchFlags(@Nullable SimpleResearchKey research) {
+    public Set<ResearchFlag> getResearchFlags(@Nullable AbstractResearchKey<?> research) {
         if (research == null) {
             return Collections.emptySet();
         } else {
-            return Collections.unmodifiableSet(this.flags.getOrDefault(research.getRootKey(), EnumSet.noneOf(ResearchFlag.class)));
+            return Collections.unmodifiableSet(this.flags.getOrDefault(research, EnumSet.noneOf(ResearchFlag.class)));
         }
     }
     
@@ -414,9 +411,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             PacketHandler.sendToPlayer(new SyncKnowledgePacket(player), player);
             
             // Remove all popup flags after syncing to prevent spam
-            for (String keyStr : this.flags.keySet()) {
-                this.removeResearchFlagInner(keyStr, ResearchFlag.POPUP);
-            }
+            this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
         }
     }
     

@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +29,7 @@ public interface ITileResearchCache extends INBTSerializable<CompoundTag> {
      * @param key a key for the desired research entry
      * @return true if the given research is complete, false otherwise
      */
-    public boolean isResearchComplete(@Nullable SimpleResearchKey key);
+    public boolean isResearchComplete(@Nullable AbstractResearchKey<?> key);
     
     /**
      * Determine if the given research has been completed, as known by the cache.
@@ -37,7 +37,7 @@ public interface ITileResearchCache extends INBTSerializable<CompoundTag> {
      * @param key a key for the desired research entry
      * @return true if the given research is complete, false otherwise
      */
-    public boolean isResearchComplete(@Nullable CompoundResearchKey key);
+    public boolean isResearchComplete(List<AbstractResearchKey<?>> keys);
     
     /**
      * Updates the cache to contain a subset of the given player's research.  The subset to copy over
@@ -47,5 +47,5 @@ public interface ITileResearchCache extends INBTSerializable<CompoundTag> {
      * @param player the player whose research to cache
      * @param researchFilter the predicate defining which research keys to cache
      */
-    public void update(@Nullable Player player, Predicate<SimpleResearchKey> researchFilter);
+    public void update(@Nullable Player player, @Nullable Predicate<AbstractResearchKey<?>> researchFilter);
 }

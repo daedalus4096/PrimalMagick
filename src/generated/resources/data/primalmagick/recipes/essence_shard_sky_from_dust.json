@@ -14,7 +14,13 @@
     "#Q#",
     "###"
   ],
-  "research": "SHARD_SYNTHESIS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:essence_shard_sky"

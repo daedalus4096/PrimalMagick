@@ -14,9 +14,9 @@
   },
   "mana": {
     "sources": {
-      "blood": 50,
-      "infernal": 50,
-      "void": 50
+      "primalmagick:blood": 50,
+      "primalmagick:infernal": 50,
+      "primalmagick:void": 50
     }
   },
   "pattern": [
@@ -24,7 +24,13 @@
     "IPI",
     "SIS"
   ],
-  "research": "MASTER_MAGITECH",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:master_magitech"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:magitech_parts_forbidden"

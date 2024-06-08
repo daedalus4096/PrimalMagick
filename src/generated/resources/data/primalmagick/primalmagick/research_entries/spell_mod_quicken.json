@@ -1,0 +1,49 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "key": {
+    "rootKey": "primalmagick:spell_mod_quicken"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:spell_mod_amplify"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_mod_quicken"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_mod_quicken.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_mod_quicken"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_mod_quicken.text.stage.2"
+    }
+  ]
+}

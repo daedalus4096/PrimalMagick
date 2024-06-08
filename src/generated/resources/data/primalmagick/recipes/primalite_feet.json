@@ -9,7 +9,13 @@
     "I I",
     "I I"
   ],
-  "research": "PRIMALITE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:primalite"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:primalite_feet",

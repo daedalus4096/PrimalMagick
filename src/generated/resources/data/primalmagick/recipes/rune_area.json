@@ -6,7 +6,13 @@
   "ingredient2": {
     "tag": "forge:gems/lapis"
   },
-  "research": "RUNE_AREA",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:rune_area"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:rune_area"

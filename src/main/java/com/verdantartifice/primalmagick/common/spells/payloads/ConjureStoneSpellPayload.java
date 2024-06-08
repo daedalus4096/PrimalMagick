@@ -1,9 +1,12 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
@@ -18,19 +21,19 @@ import net.minecraft.world.level.block.Blocks;
  */
 public class ConjureStoneSpellPayload extends AbstractConjureBlockSpellPayload {
     public static final String TYPE = "conjure_stone";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_CONJURE_STONE.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_STONE));
     
     public ConjureStoneSpellPayload() {
         super(Blocks.STONE.defaultBlockState());
     }
     
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
 
     @Override
     public Source getSource() {
-        return Source.EARTH;
+        return Sources.EARTH;
     }
 
     @Override

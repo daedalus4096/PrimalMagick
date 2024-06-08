@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "blood": 25
+    "primalmagick:blood": 25
   },
   "target": "primalmagick:blood_notes"
 }

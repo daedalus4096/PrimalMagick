@@ -23,14 +23,14 @@
   "instability": 6,
   "mana": {
     "sources": {
-      "blood": 50,
-      "earth": 50,
-      "infernal": 50,
-      "moon": 50,
-      "sea": 50,
-      "sky": 50,
-      "sun": 50,
-      "void": 50
+      "primalmagick:blood": 50,
+      "primalmagick:earth": 50,
+      "primalmagick:infernal": 50,
+      "primalmagick:moon": 50,
+      "primalmagick:sea": 50,
+      "primalmagick:sky": 50,
+      "primalmagick:sun": 50,
+      "primalmagick:void": 50
     }
   },
   "props": [
@@ -50,7 +50,25 @@
       "block": "primalmagick:soul_anvil"
     }
   ],
-  "research": "STAVES&&WAND_CORE_DARK_PRIMAL",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:wand_core_dark_primal"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:dark_primal_staff_core_item"

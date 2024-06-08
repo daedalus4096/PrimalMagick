@@ -8,7 +8,25 @@
       "item": "primalmagick:essence_dust_infernal"
     }
   ],
-  "research": "PIXIES&&t_discover_infernal",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:pixies"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:pixie_basic_infernal"

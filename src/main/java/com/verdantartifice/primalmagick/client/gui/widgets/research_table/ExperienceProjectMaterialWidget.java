@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.common.theorycrafting.ExperienceProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.ExperienceProjectMaterial;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

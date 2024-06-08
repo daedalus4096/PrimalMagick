@@ -53,7 +53,7 @@ public class TipLoader extends SimpleJsonResourceReloadListener {
             ResourceLocation location = entry.getKey();
             // Filter anything beginning with "_" as it's used for metadata.
             if (!location.getPath().startsWith("_")) {
-                TipDefinition.CODEC.parse(JsonOps.INSTANCE, entry.getValue())
+                TipDefinition.codec().parse(JsonOps.INSTANCE, entry.getValue())
                         .resultOrPartial(LOGGER::error)
                         .ifPresent(tipDef -> TipManager.setTipDefinition(location, tipDef));
             }

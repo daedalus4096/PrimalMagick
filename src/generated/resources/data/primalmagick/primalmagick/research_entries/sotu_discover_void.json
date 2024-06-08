@@ -1,0 +1,14 @@
+{
+  "addenda": [],
+  "finales": [],
+  "hasHint": true,
+  "icon": {
+    "location": "primalmagick:textures/research/research_map.png"
+  },
+  "internal": true,
+  "key": {
+    "rootKey": "primalmagick:sotu_discover_void"
+  },
+  "parents": [],
+  "stages": []
+}

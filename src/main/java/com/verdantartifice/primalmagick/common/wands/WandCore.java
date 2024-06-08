@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
@@ -29,17 +30,17 @@ public class WandCore implements IWandComponent {
     protected static final Map<String, WandCore> REGISTRY = new HashMap<>();
     
     public static final WandCore HEARTWOOD = new WandCore("heartwood", Rarity.COMMON, 1, null, Collections.emptyList());
-    public static final WandCore OBSIDIAN = new WandCore("obsidian", Rarity.COMMON, 1, Source.EARTH, Arrays.asList(Source.EARTH));
-    public static final WandCore CORAL = new WandCore("coral", Rarity.COMMON, 1, Source.SEA, Arrays.asList(Source.SEA));
-    public static final WandCore BAMBOO = new WandCore("bamboo", Rarity.COMMON, 1, Source.SKY, Arrays.asList(Source.SKY));
-    public static final WandCore SUNWOOD = new WandCore("sunwood", Rarity.COMMON, 1, Source.SUN, Arrays.asList(Source.SUN));
-    public static final WandCore MOONWOOD = new WandCore("moonwood", Rarity.COMMON, 1, Source.MOON, Arrays.asList(Source.MOON));
-    public static final WandCore BONE = new WandCore("bone", Rarity.UNCOMMON, 2, Source.BLOOD, Arrays.asList(Source.BLOOD));
-    public static final WandCore BLAZE_ROD = new WandCore("blaze_rod", Rarity.UNCOMMON, 2, Source.INFERNAL, Arrays.asList(Source.INFERNAL));
-    public static final WandCore PURPUR = new WandCore("purpur", Rarity.UNCOMMON, 2, Source.VOID, Arrays.asList(Source.VOID));
-    public static final WandCore PRIMAL = new WandCore("primal", Rarity.UNCOMMON, 2, null, Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON));
-    public static final WandCore DARK_PRIMAL = new WandCore("dark_primal", Rarity.RARE, 3, null, Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID));
-    public static final WandCore PURE_PRIMAL = new WandCore("pure_primal", Rarity.EPIC, 4, null, Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID, Source.HALLOWED));
+    public static final WandCore OBSIDIAN = new WandCore("obsidian", Rarity.COMMON, 1, Sources.EARTH, Arrays.asList(Sources.EARTH));
+    public static final WandCore CORAL = new WandCore("coral", Rarity.COMMON, 1, Sources.SEA, Arrays.asList(Sources.SEA));
+    public static final WandCore BAMBOO = new WandCore("bamboo", Rarity.COMMON, 1, Sources.SKY, Arrays.asList(Sources.SKY));
+    public static final WandCore SUNWOOD = new WandCore("sunwood", Rarity.COMMON, 1, Sources.SUN, Arrays.asList(Sources.SUN));
+    public static final WandCore MOONWOOD = new WandCore("moonwood", Rarity.COMMON, 1, Sources.MOON, Arrays.asList(Sources.MOON));
+    public static final WandCore BONE = new WandCore("bone", Rarity.UNCOMMON, 2, Sources.BLOOD, Arrays.asList(Sources.BLOOD));
+    public static final WandCore BLAZE_ROD = new WandCore("blaze_rod", Rarity.UNCOMMON, 2, Sources.INFERNAL, Arrays.asList(Sources.INFERNAL));
+    public static final WandCore PURPUR = new WandCore("purpur", Rarity.UNCOMMON, 2, Sources.VOID, Arrays.asList(Sources.VOID));
+    public static final WandCore PRIMAL = new WandCore("primal", Rarity.UNCOMMON, 2, null, Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON));
+    public static final WandCore DARK_PRIMAL = new WandCore("dark_primal", Rarity.RARE, 3, null, Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON, Sources.BLOOD, Sources.INFERNAL, Sources.VOID));
+    public static final WandCore PURE_PRIMAL = new WandCore("pure_primal", Rarity.EPIC, 4, null, Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON, Sources.BLOOD, Sources.INFERNAL, Sources.VOID, Sources.HALLOWED));
     
     protected final String tag;                     // Unique identifier for the wand core
     protected final Rarity rarity;                  // The core's rarity, used to color its name and determine completed wand rarity

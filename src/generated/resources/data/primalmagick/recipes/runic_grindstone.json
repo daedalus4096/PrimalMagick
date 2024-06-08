@@ -16,7 +16,7 @@
   },
   "mana": {
     "sources": {
-      "earth": 25
+      "primalmagick:earth": 25
     }
   },
   "pattern": [
@@ -24,7 +24,13 @@
     "SLS",
     "PDP"
   ],
-  "research": "RUNIC_GRINDSTONE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:runic_grindstone"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:runic_grindstone"

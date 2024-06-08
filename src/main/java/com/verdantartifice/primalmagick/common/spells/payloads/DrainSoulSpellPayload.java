@@ -3,9 +3,12 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
@@ -31,7 +34,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class DrainSoulSpellPayload extends AbstractSpellPayload {
     public static final String TYPE = "drain_soul";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_DRAIN_SOUL.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_DRAIN_SOUL));
     
     public DrainSoulSpellPayload() {
         super();
@@ -42,8 +45,8 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
         this.getProperty("duration").setValue(duration);
     }
 
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
     
     @Override
@@ -68,7 +71,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
 
     @Override
     public Source getSource() {
-        return Source.INFERNAL;
+        return Sources.INFERNAL;
     }
 
     @Override

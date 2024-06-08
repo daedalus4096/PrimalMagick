@@ -2,6 +2,6 @@
   "type": "entity_type",
   "target": "minecraft:sheep",
   "values": {
-    "blood": 10
+    "primalmagick:blood": 10
   }
 }

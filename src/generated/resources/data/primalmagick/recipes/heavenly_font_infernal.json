@@ -17,7 +17,7 @@
   },
   "mana": {
     "sources": {
-      "infernal": 2500
+      "primalmagick:infernal": 2500
     }
   },
   "pattern": [
@@ -25,7 +25,25 @@
     "EFE",
     "IMI"
   ],
-  "research": "HEAVENLY_MANA_FONTS&&t_discover_infernal",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:heavenly_mana_fonts"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:heavenly_font_infernal"

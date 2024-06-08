@@ -1,0 +1,54 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "icon": {
+    "location": "primalmagick:textures/sources/infernal.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_flame"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_flame"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_flame.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_flame"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_flame.text.stage.2"
+    }
+  ]
+}

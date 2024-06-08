@@ -17,7 +17,7 @@
   },
   "mana": {
     "sources": {
-      "hallowed": 750
+      "primalmagick:hallowed": 750
     }
   },
   "pattern": [
@@ -25,7 +25,25 @@
     "EFE",
     "IMI"
   ],
-  "research": "FORBIDDEN_MANA_FONTS&&t_discover_hallowed",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:forbidden_mana_fonts"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:forbidden_font_hallowed"

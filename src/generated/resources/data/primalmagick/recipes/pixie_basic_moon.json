@@ -17,7 +17,7 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "moon": 40
+      "primalmagick:moon": 40
     }
   },
   "props": [
@@ -28,7 +28,13 @@
       "block": "primalmagick:ritual_bell"
     }
   ],
-  "research": "PIXIES",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:pixies"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:pixie_basic_moon"

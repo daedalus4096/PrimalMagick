@@ -1,0 +1,34 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
+  "key": {
+    "rootKey": "primalmagick:inner_demon"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:inner_demon"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.inner_demon.text.stage.1"
+    }
+  ]
+}

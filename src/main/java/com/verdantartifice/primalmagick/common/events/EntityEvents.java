@@ -7,9 +7,8 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
@@ -117,26 +116,24 @@ public class EntityEvents {
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void onAnimalTameLowest(AnimalTameEvent event) {
         // Grant appropriate research if a player tames a wolf
-        SimpleResearchKey tameKey = ResearchNames.INTERNAL_FURRY_FRIEND.get().simpleKey();
         Player player = event.getTamer();
         if ( !event.isCanceled() &&
              event.getAnimal() instanceof Wolf && 
-             ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) && 
-             !ResearchManager.isResearchComplete(player, tameKey) ) {
-            ResearchManager.completeResearch(player, tameKey);
+             ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS) && 
+             !ResearchManager.isResearchComplete(player, ResearchEntries.FURRY_FRIEND) ) {
+            ResearchManager.completeResearch(player, ResearchEntries.FURRY_FRIEND);
         }
     }
     
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void onBabyEntitySpawnLowest(BabyEntitySpawnEvent event) {
         // Grant appropriate research if a player breeds an animal
-        SimpleResearchKey breedKey = ResearchNames.INTERNAL_BREED_ANIMAL.get().simpleKey();
         Player player = event.getCausedByPlayer();
         if ( !event.isCanceled() && 
              player != null &&
-             ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) &&
-             !ResearchManager.isResearchComplete(player, breedKey) ) {
-            ResearchManager.completeResearch(player, breedKey);
+             ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS) &&
+             !ResearchManager.isResearchComplete(player, ResearchEntries.BREED_ANIMAL) ) {
+            ResearchManager.completeResearch(player, ResearchEntries.BREED_ANIMAL);
         }
     }
     

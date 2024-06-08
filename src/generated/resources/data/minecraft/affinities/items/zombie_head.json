@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "blood": 20,
-    "moon": 5
+    "primalmagick:blood": 20,
+    "primalmagick:moon": 5
   },
   "target": "minecraft:zombie_head"
 }

@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -287,7 +288,7 @@ public class AttunementManager {
      */
     public static void decayTemporaryAttunements(@Nullable Player player) {
         if (player instanceof ServerPlayer) {
-            for (Source source : Source.SORTED_SOURCES) {
+            for (Source source : Sources.getAllSorted()) {
                 incrementAttunement(player, source, AttunementType.TEMPORARY, -1);
             }
         }

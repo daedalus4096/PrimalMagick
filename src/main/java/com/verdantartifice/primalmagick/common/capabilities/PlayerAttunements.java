@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -48,7 +49,7 @@ public class PlayerAttunements implements IPlayerAttunements {
                 for (Map.Entry<AttunementType, Integer> typeEntry : sourceEntry.getValue().entrySet()) {
                     if (typeEntry != null && sourceEntry.getKey() != null && typeEntry.getKey() != null && typeEntry.getValue() != null) {
                         CompoundTag tag = new CompoundTag();
-                        tag.putString("Source", sourceEntry.getKey().getTag());
+                        tag.putString("Source", sourceEntry.getKey().getId().toString());
                         tag.putString("Type", typeEntry.getKey().name());
                         tag.putInt("Value", typeEntry.getValue().intValue());
                         attunementList.add(tag);
@@ -62,7 +63,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         ListTag suppressionList = new ListTag();
         for (Source source : this.suppressions) {
             if (source != null) {
-                suppressionList.add(StringTag.valueOf(source.getTag()));
+                suppressionList.add(StringTag.valueOf(source.getId().toString()));
             }
         }
         rootTag.put("Suppressions", suppressionList);
@@ -84,7 +85,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         ListTag attunementList = nbt.getList("Attunements", Tag.TAG_COMPOUND);
         for (int index = 0; index < attunementList.size(); index++) {
             CompoundTag tag = attunementList.getCompound(index);
-            Source source = Source.getSource(tag.getString("Source"));
+            Source source = Sources.get(new ResourceLocation(tag.getString("Source")));
             AttunementType type = null;
             try {
                 type = AttunementType.valueOf(tag.getString("Type"));
@@ -96,7 +97,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         // Deserialize suppression values
         ListTag suppressionList = nbt.getList("Suppressions", Tag.TAG_STRING);
         for (int index = 0; index < suppressionList.size(); index++) {
-            Source source = Source.getSource(suppressionList.getString(index));
+            Source source = Sources.get(new ResourceLocation(suppressionList.getString(index)));
             this.setSuppressed(source, true);
         }
     }

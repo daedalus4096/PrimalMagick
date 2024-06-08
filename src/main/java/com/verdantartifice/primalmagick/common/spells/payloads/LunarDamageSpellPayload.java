@@ -2,10 +2,13 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import java.util.Map;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
@@ -30,7 +33,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class LunarDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "lunar_damage";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_LUNAR.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_LUNAR));
 
     public LunarDamageSpellPayload() {
         super();
@@ -41,8 +44,8 @@ public class LunarDamageSpellPayload extends AbstractDamageSpellPayload {
         this.getProperty("duration").setValue(duration);
     }
     
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
     
     @Override
@@ -54,7 +57,7 @@ public class LunarDamageSpellPayload extends AbstractDamageSpellPayload {
 
     @Override
     public Source getSource() {
-        return Source.MOON;
+        return Sources.MOON;
     }
 
     @Override

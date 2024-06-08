@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "sea": 2
+    "primalmagick:sea": 2
   },
   "base": "minecraft:stone",
   "target": "minecraft:dripstone_block"

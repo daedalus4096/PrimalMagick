@@ -1,0 +1,14 @@
+{
+  "addenda": [],
+  "finales": [],
+  "hasHint": true,
+  "icon": {
+    "location": "primalmagick:textures/research/research_bag.png"
+  },
+  "internal": true,
+  "key": {
+    "rootKey": "primalmagick:scan_hexium"
+  },
+  "parents": [],
+  "stages": []
+}

@@ -16,7 +16,7 @@
   },
   "mana": {
     "sources": {
-      "hallowed": 400
+      "primalmagick:hallowed": 400
     }
   },
   "pattern": [
@@ -24,7 +24,13 @@
     "MBM",
     "WWW"
   ],
-  "research": "ESSENCE_CASK_HEAVENLY",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:essence_cask_heavenly"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:essence_cask_heavenly"

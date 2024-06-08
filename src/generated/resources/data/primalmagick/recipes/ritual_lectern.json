@@ -10,7 +10,7 @@
   },
   "mana": {
     "sources": {
-      "moon": 10
+      "primalmagick:moon": 10
     }
   },
   "pattern": [
@@ -18,7 +18,13 @@
     " B ",
     " S "
   ],
-  "research": "RITUAL_LECTERN",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ritual_lectern"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ritual_lectern"

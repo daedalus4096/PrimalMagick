@@ -1,0 +1,49 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "key": {
+    "rootKey": "primalmagick:spell_vehicle_bolt"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:spell_vehicle_projectile"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_vehicle_bolt"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_vehicle_bolt.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_vehicle_bolt"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_vehicle_bolt.text.stage.2"
+    }
+  ]
+}

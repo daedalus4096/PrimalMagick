@@ -67,7 +67,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sea"
+        "source": "primalmagick:sea"
       },
       "x": 2,
       "y": 3
@@ -117,7 +117,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sea"
+        "source": "primalmagick:sea"
       },
       "x": 3,
       "y": 4
@@ -177,7 +177,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sea"
+        "source": "primalmagick:sea"
       },
       "x": 4,
       "y": 5
@@ -257,7 +257,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sea"
+        "source": "primalmagick:sea"
       },
       "x": 5,
       "y": 6
@@ -347,7 +347,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sea"
+        "source": "primalmagick:sea"
       },
       "x": 6,
       "y": 7

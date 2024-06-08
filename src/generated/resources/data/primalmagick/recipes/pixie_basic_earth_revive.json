@@ -8,7 +8,13 @@
       "item": "primalmagick:essence_dust_earth"
     }
   ],
-  "research": "PIXIES",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:pixies"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:pixie_basic_earth"

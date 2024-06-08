@@ -17,7 +17,7 @@
   },
   "mana": {
     "sources": {
-      "sun": 2500
+      "primalmagick:sun": 2500
     }
   },
   "pattern": [
@@ -25,7 +25,13 @@
     "EFE",
     "IMI"
   ],
-  "research": "HEAVENLY_MANA_FONTS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:heavenly_mana_fonts"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:heavenly_font_sun"

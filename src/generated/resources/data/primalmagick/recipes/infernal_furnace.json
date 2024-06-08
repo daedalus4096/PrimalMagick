@@ -13,7 +13,7 @@
   },
   "mana": {
     "sources": {
-      "infernal": 50
+      "primalmagick:infernal": 50
     }
   },
   "pattern": [
@@ -21,7 +21,13 @@
     "MCM",
     "MPM"
   ],
-  "research": "INFERNAL_FURNACE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:infernal_furnace"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:infernal_furnace"

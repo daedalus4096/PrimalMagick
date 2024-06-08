@@ -13,7 +13,7 @@
   },
   "mana": {
     "sources": {
-      "blood": 50
+      "primalmagick:blood": 50
     }
   },
   "pattern": [
@@ -21,7 +21,13 @@
     "MMM",
     " P "
   ],
-  "research": "BLOODLETTER",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:bloodletter"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:bloodletter"

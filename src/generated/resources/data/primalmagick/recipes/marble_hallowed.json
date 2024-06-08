@@ -10,7 +10,7 @@
   },
   "mana": {
     "sources": {
-      "hallowed": 5
+      "primalmagick:hallowed": 5
     }
   },
   "pattern": [
@@ -18,7 +18,13 @@
     "MDM",
     "MMM"
   ],
-  "research": "SUPREME_MANAWEAVING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:supreme_manaweaving"
+    }
+  },
   "result": {
     "Count": 8,
     "id": "primalmagick:marble_hallowed"

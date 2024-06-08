@@ -24,10 +24,28 @@
   ],
   "mana": {
     "sources": {
-      "infernal": 9
+      "primalmagick:infernal": 9
     }
   },
-  "research": "CONCOCTING_ELIXIRS&&t_discover_blood",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_elixirs"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:concoction",

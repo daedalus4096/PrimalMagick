@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "sun": 5
+    "primalmagick:sun": 5
   },
   "base": "minecraft:stone",
   "target": "minecraft:sandstone"

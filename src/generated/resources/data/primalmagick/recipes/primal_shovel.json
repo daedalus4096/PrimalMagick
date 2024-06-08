@@ -23,7 +23,7 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "earth": 40
+      "primalmagick:earth": 40
     }
   },
   "props": [
@@ -34,7 +34,13 @@
       "block": "primalmagick:ritual_bell"
     }
   ],
-  "research": "PRIMAL_SHOVEL",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:primal_shovel"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:primal_shovel",

@@ -1,0 +1,13 @@
+{
+  "addenda": [],
+  "finales": [],
+  "icon": {
+    "location": "primalmagick:textures/research/research_unknown.png"
+  },
+  "internal": true,
+  "key": {
+    "rootKey": "primalmagick:discover_hallowed"
+  },
+  "parents": [],
+  "stages": []
+}

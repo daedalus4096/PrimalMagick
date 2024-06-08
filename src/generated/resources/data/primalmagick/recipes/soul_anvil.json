@@ -10,7 +10,7 @@
   },
   "mana": {
     "sources": {
-      "infernal": 50
+      "primalmagick:infernal": 50
     }
   },
   "pattern": [
@@ -18,7 +18,13 @@
     " I ",
     "III"
   ],
-  "research": "SOUL_ANVIL",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:soul_anvil"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:soul_anvil"

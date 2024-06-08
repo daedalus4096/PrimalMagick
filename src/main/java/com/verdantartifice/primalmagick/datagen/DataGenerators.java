@@ -20,15 +20,12 @@ import com.verdantartifice.primalmagick.datagen.loot_tables.LibraryLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.TheorycraftingRewardLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.TreefolkBarteringLootTables;
 import com.verdantartifice.primalmagick.datagen.recipes.Recipes;
-import com.verdantartifice.primalmagick.datagen.research.ResearchProvider;
-import com.verdantartifice.primalmagick.datagen.runes.RuneEnchantmentProvider;
 import com.verdantartifice.primalmagick.datagen.sounds.SoundDefinitionsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPM;
-import com.verdantartifice.primalmagick.datagen.theorycrafting.ProjectProvider;
 import com.verdantartifice.primalmagick.datagen.tips.TipDefinitionProvider;
 
 import net.minecraft.core.HolderLookup;
@@ -55,7 +52,6 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new WandComponentBlockStateProvider(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new ItemModelProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
-        generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput()));
         generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
         generator.addProvider(event.includeClient(), new TipDefinitionProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput()));
@@ -72,11 +68,9 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new BiomeTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeServer(), new ResearchProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeServer(), new ProjectProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator.getPackOutput()));
         CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
+        generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput(), registryLookupFuture));
     }
 }

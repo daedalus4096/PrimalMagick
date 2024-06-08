@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "sun": 1
+    "primalmagick:sun": 1
   },
   "base": "minecraft:oak_slab",
   "target": "primalmagick:sunwood_slab"

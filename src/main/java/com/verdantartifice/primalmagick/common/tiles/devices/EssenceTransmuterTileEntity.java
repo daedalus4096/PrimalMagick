@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
@@ -21,10 +20,11 @@ import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterMenu;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
@@ -39,6 +39,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -77,8 +78,8 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
-    protected Set<SimpleResearchKey> relevantResearch = Collections.emptySet();
-    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.getRelevantResearch().contains(k);
+    protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
+    protected final Predicate<AbstractResearchKey<?>> relevantFilter = k -> this.getRelevantResearch().contains(k);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData transmuterData = new ContainerData() {
@@ -90,9 +91,9 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
             case 1:
                 return EssenceTransmuterTileEntity.this.processTimeTotal;
             case 2:
-                return EssenceTransmuterTileEntity.this.manaStorage.getManaStored(Source.MOON);
+                return EssenceTransmuterTileEntity.this.manaStorage.getManaStored(Sources.MOON);
             case 3:
-                return EssenceTransmuterTileEntity.this.manaStorage.getMaxManaStored(Source.MOON);
+                return EssenceTransmuterTileEntity.this.manaStorage.getMaxManaStored(Sources.MOON);
             default:
                 return 0;
             }
@@ -119,7 +120,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     
     public EssenceTransmuterTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.ESSENCE_TRANSMUTER.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Source.MOON);
+        this.manaStorage = new ManaStorage(10000, 100, 100, Sources.MOON);
         this.researchCache = new TileResearchCache();
     }
 
@@ -130,7 +131,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
         this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
-        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Source.getSource(compound.getString("NextSource")) : null;
+        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(new ResourceLocation(compound.getString("NextSource"))) : null;
         
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
@@ -149,7 +150,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
         compound.put("ResearchCache", this.researchCache.serializeNBT());
         if (this.nextOutputSource != null) {
-            compound.putString("NextSource", this.nextOutputSource.getTag());
+            compound.putString("NextSource", this.nextOutputSource.getId().toString());
         }
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
@@ -190,17 +191,17 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
-                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.MOON) - entity.manaStorage.getManaStored(Source.MOON);
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.MOON) - entity.manaStorage.getManaStored(Sources.MOON);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Source.MOON, centimanaToTransfer)) {
-                    entity.manaStorage.receiveMana(Source.MOON, centimanaToTransfer, false);
+                if (wand.consumeMana(wandStack, null, Sources.MOON, centimanaToTransfer)) {
+                    entity.manaStorage.receiveMana(Sources.MOON, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
             
             // Process ingredients
             ItemStack essenceStack = entity.getItem(INPUT_INV_INDEX, 0);
-            if (!essenceStack.isEmpty() && entity.manaStorage.getManaStored(Source.MOON) >= entity.getManaCost()) {
+            if (!essenceStack.isEmpty() && entity.manaStorage.getManaStored(Sources.MOON) >= entity.getManaCost()) {
                 // If transmutable input is in place, process it
                 if (entity.canTransmute(essenceStack)) {
                     entity.processTime++;
@@ -230,11 +231,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         if (this.nextOutputSource == null || this.nextOutputSource.equals(inputSource)) {
             // Generate a new random, known source different from the input
             WeightedRandomBag<Source> bag = new WeightedRandomBag<>();
-            for (Source source : Source.SOURCES.values()) {
-                if (!source.equals(inputSource) && this.isSourceKnown(source)) {
-                    bag.add(source, 1.0D);
-                }
-            }
+            Sources.stream().filter(s -> !s.equals(inputSource) && this.isSourceKnown(s)).forEach(s -> bag.add(s, 1.0D));
             this.nextOutputSource = bag.getRandom(rng);
         }
         return this.nextOutputSource;
@@ -256,7 +253,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
             
             // Deduct the inputs
             inputStack.shrink(ESSENCE_PER_TRANSMUTE);
-            this.manaStorage.extractMana(Source.MOON, this.getManaCost(), false);
+            this.manaStorage.extractMana(Sources.MOON, this.getManaCost(), false);
         }
     }
     
@@ -313,7 +310,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     @Override
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {
                 mana.with(source, amount);
@@ -325,7 +322,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     @Override
     public int getMaxMana() {
         // TODO Fix up
-        return this.manaStorage.getMaxManaStored(Source.MOON);
+        return this.manaStorage.getMaxManaStored(Sources.MOON);
     }
 
     @Override
@@ -376,17 +373,17 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
                 return source.isDiscovered(owner);
             } else {
                 // Check the research cache if the owner is unavailable
-                return this.researchCache.isResearchComplete(source.getDiscoverKey());
+                return this.researchCache.isResearchComplete(source.getDiscoverKey().orElse(null));
             }
         }
     }
     
-    protected Set<SimpleResearchKey> getRelevantResearch() {
+    protected Set<AbstractResearchKey<?>> getRelevantResearch() {
         return this.relevantResearch;
     }
     
-    protected static Set<SimpleResearchKey> assembleRelevantResearch() {
-        return Source.SORTED_SOURCES.stream().map(s -> s.getDiscoverKey()).filter(Objects::nonNull).collect(Collectors.toUnmodifiableSet());
+    protected static Set<AbstractResearchKey<?>> assembleRelevantResearch() {
+        return Sources.streamSorted().map(s -> s.getDiscoverKey()).filter(o -> o.isPresent()).map(o -> o.get()).collect(Collectors.toUnmodifiableSet());
     }
 
     @Override

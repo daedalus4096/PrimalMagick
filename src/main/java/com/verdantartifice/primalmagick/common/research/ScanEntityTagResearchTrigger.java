@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.research;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -13,11 +14,11 @@ import net.minecraft.world.entity.EntityType;
 public class ScanEntityTagResearchTrigger extends AbstractScanResearchTrigger {
     protected final TagKey<EntityType<?>> target;
 
-    public ScanEntityTagResearchTrigger(TagKey<EntityType<?>> target, SimpleResearchKey toUnlock) {
+    public ScanEntityTagResearchTrigger(TagKey<EntityType<?>> target, ResourceKey<ResearchEntry> toUnlock) {
         this(target, toUnlock, true);
     }
     
-    public ScanEntityTagResearchTrigger(TagKey<EntityType<?>> target, SimpleResearchKey toUnlock, boolean unlockScansPage) {
+    public ScanEntityTagResearchTrigger(TagKey<EntityType<?>> target, ResourceKey<ResearchEntry> toUnlock, boolean unlockScansPage) {
         super(toUnlock, unlockScansPage);
         this.target = target;
     }

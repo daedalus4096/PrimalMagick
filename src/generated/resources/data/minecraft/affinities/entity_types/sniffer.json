@@ -2,7 +2,7 @@
   "type": "entity_type",
   "target": "minecraft:sniffer",
   "values": {
-    "blood": 10,
-    "earth": 5
+    "primalmagick:blood": 10,
+    "primalmagick:earth": 5
   }
 }

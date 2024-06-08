@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementButton;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -48,7 +49,7 @@ public class AttunementIndexPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a button to the screen for each discovered source
         Minecraft mc = Minecraft.getInstance();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             if (source.isDiscovered(mc.player)) {
                 Component text = Component.translatable(source.getNameTranslationKey());
                 screen.addWidgetToScreen(new AttunementButton(x + 12 + (side * 140), y, text, screen, source));

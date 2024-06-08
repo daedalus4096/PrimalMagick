@@ -8,7 +8,13 @@
   "pattern": [
     "MMM"
   ],
-  "research": "MASTER_MANAWEAVING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:master_manaweaving"
+    }
+  },
   "result": {
     "Count": 6,
     "id": "primalmagick:marble_smoked_slab"

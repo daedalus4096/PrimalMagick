@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,11 +46,13 @@ import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDistancePacket;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
+import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
+import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
@@ -69,7 +70,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -81,7 +81,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.NameTagItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -117,9 +116,18 @@ public class PlayerEvents {
     
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
-    private static final Supplier<SimpleResearchKey> NDE_RESEARCH_KEY = ResearchNames.simpleKey(ResearchNames.INTERNAL_NEAR_DEATH_EXPERIENCE);
     private static final UUID STEP_MODIFIER_EARTH_UUID = UUID.fromString("17b138bf-1d32-43a9-a690-59e0e4e0d0b6");
     private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_UUID, "Earth attunement step height bonus", 0.4D, AttributeModifier.Operation.ADDITION);
+    private static final ResearchStageKey SOURCE_EARTH_START = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 1);
+    private static final ResearchStageKey SOURCE_EARTH_END = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 2);
+    private static final ResearchStageKey SOURCE_SEA_START = new ResearchStageKey(ResearchEntries.SOURCE_SEA, 1);
+    private static final ResearchStageKey SOURCE_SEA_END = new ResearchStageKey(ResearchEntries.SOURCE_SEA, 2);
+    private static final ResearchStageKey SOURCE_SKY_START = new ResearchStageKey(ResearchEntries.SOURCE_SKY, 1);
+    private static final ResearchStageKey SOURCE_SKY_END = new ResearchStageKey(ResearchEntries.SOURCE_SKY, 2);
+    private static final ResearchStageKey SOURCE_SUN_START = new ResearchStageKey(ResearchEntries.SOURCE_SUN, 1);
+    private static final ResearchStageKey SOURCE_SUN_END = new ResearchStageKey(ResearchEntries.SOURCE_SUN, 2);
+    private static final ResearchStageKey SOURCE_MOON_START = new ResearchStageKey(ResearchEntries.SOURCE_MOON, 1);
+    private static final ResearchStageKey SOURCE_MOON_END = new ResearchStageKey(ResearchEntries.SOURCE_MOON, 2);
     private static final Logger LOGGER = LogManager.getLogger();
 
     @SubscribeEvent
@@ -145,7 +153,6 @@ public class PlayerEvents {
             if (player.tickCount % 200 == 0) {
                 // Periodically check for environmentally-triggered research entries and for photosynthesis
                 checkEnvironmentalResearch(player);
-                checkVanillaStatistics(player);
                 handlePhotosynthesis(player);
             }
             if (player.tickCount % 1200 == 0) {
@@ -170,27 +177,27 @@ public class PlayerEvents {
         }
         if ( NEAR_DEATH_ELIGIBLE.contains(playerId) && 
              health >= player.getMaxHealth() &&
-             ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) ) {
-            if (!ResearchManager.isResearchComplete(player, NDE_RESEARCH_KEY.get())) {
-                ResearchManager.completeResearch(player, NDE_RESEARCH_KEY.get());
+             ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS) ) {
+            if (!ResearchManager.isResearchComplete(player, ResearchEntries.NEAR_DEATH_EXPERIENCE)) {
+                ResearchManager.completeResearch(player, ResearchEntries.NEAR_DEATH_EXPERIENCE);
             }
             NEAR_DEATH_ELIGIBLE.remove(playerId);
         }
     }
 
     protected static void applyAttunementBuffs(ServerPlayer player) {
-        if (AttunementManager.meetsThreshold(player, Source.SEA, AttunementThreshold.GREATER)) {
+        if (AttunementManager.meetsThreshold(player, Sources.SEA, AttunementThreshold.GREATER)) {
             // Apply Water Breathing for 30.5s if the player has greater sea attunement
             player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 610, 0, true, false, true));
         }
-        if (AttunementManager.meetsThreshold(player, Source.MOON, AttunementThreshold.GREATER)) {
+        if (AttunementManager.meetsThreshold(player, Sources.MOON, AttunementThreshold.GREATER)) {
             // Apply Night Vision for 30.5s if the player has greater moon attunement
             player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 610, 0, true, false, true));
         }
         
         AttributeInstance stepHeightAttribute = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
         stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH.getId());
-        if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
+        if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Sources.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height
             stepHeightAttribute.addTransientModifier(STEP_MODIFIER_EARTH);
         }
@@ -256,7 +263,7 @@ public class PlayerEvents {
     protected static void checkEnvironmentalResearch(ServerPlayer player) {
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             Level level = player.level();
-            if (!knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS)) {
+            if (!ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS)) {
                 // Only check environmental research if the player has started progression
                 return;
             }
@@ -264,84 +271,63 @@ public class PlayerEvents {
             Holder<Biome> biomeHolder = level.getBiome(player.blockPosition());
             boolean inOverworld = level.dimension().equals(Level.OVERWORLD);
             
-            if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_NETHER)) {
+            if (!ResearchManager.isResearchStarted(player, ResearchEntries.DISCOVER_INFERNAL) && biomeHolder.is(BiomeTags.IS_NETHER)) {
                 // If the player is in a Nether-based biome, discover the Infernal source
-                ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
+                ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_INFERNAL);
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
-            if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_END)) {
+            if (!ResearchManager.isResearchStarted(player, ResearchEntries.DISCOVER_VOID) && biomeHolder.is(BiomeTags.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
-                ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
+                ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_VOID);
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
             }
             
             // If the player is working on the Earth Source research, check if they're far enough down
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_EARTH.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_EARTH.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_EARTH.get().simpleKey();
-                if (player.position().y < -16.0D && inOverworld && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (SOURCE_EARTH_START.isKnownBy(player) && !SOURCE_EARTH_END.isKnownBy(player)) {
+                if (player.position().y < -16.0D && inOverworld && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_EARTH)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_EARTH);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
             // If the player is working on the Sea Source research, check if they're in the ocean
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_SEA.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_SEA.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_SEA.get().simpleKey();
-                if (biomeHolder.is(BiomeTags.IS_OCEAN) && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (SOURCE_SEA_START.isKnownBy(player) && !SOURCE_SEA_END.isKnownBy(player)) {
+                if (biomeHolder.is(BiomeTags.IS_OCEAN) && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SEA)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_SEA);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
             // If the player is working on the Sky Source research, check if they're high up enough
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_SKY.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_SKY.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_SKY.get().simpleKey();
-                if (player.position().y > 128.0D && inOverworld && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (SOURCE_SKY_START.isKnownBy(player) && !SOURCE_SKY_END.isKnownBy(player)) {
+                if (player.position().y > 128.0D && inOverworld && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SKY)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_SKY);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
             // If the player is working on the Sun Source research, check if they're in the desert during the daytime
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_SUN.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_SUN.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_SUN.get().simpleKey();
-                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (SOURCE_SUN_START.isKnownBy(player) && !SOURCE_SUN_END.isKnownBy(player)) {
+                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SUN)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_SUN);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
             // If the player is working on the Moon Source research, check if they're in the forest during the night-time
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_MOON.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_MOON.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_MOON.get().simpleKey();
-                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (SOURCE_MOON_START.isKnownBy(player) && !SOURCE_MOON_END.isKnownBy(player)) {
+                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_MOON)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_MOON);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }
             }
         });
     }
     
-    protected static void checkVanillaStatistics(ServerPlayer player) {
-        SimpleResearchKey elytraKey = ResearchNames.INTERNAL_FLY_ELYTRA.get().simpleKey();
-        if (!ResearchManager.isResearchComplete(player, elytraKey) && player.getStats().getValue(Stats.CUSTOM.get(Stats.AVIATE_ONE_CM)) >= 100000) {
-            ResearchManager.completeResearch(player, elytraKey);
-        }
-        SimpleResearchKey torchKey = ResearchNames.INTERNAL_PLACE_TORCH_EXPERT.get().simpleKey();
-        if (!ResearchManager.isResearchComplete(player, torchKey) && player.getStats().getValue(Stats.ITEM_USED.get(Items.TORCH)) >= 100) {
-            ResearchManager.completeResearch(player, torchKey);
-        }
-        SimpleResearchKey stoneKey = ResearchNames.INTERNAL_PLACE_STONE_EXPERT.get().simpleKey();
-        if (!ResearchManager.isResearchComplete(player, stoneKey) &&
-                (player.getStats().getValue(Stats.ITEM_USED.get(Items.STONE)) + player.getStats().getValue(Stats.ITEM_USED.get(Items.COBBLESTONE))) >= 100) {
-            ResearchManager.completeResearch(player, stoneKey);
-        }
-    }
-
     @SuppressWarnings("deprecation")
     protected static void handlePhotosynthesis(ServerPlayer player) {
         Level level = player.level();
-        if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && level.isDay() &&
+        if (AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.LESSER) && level.isDay() &&
                 player.getLightLevelDependentMagicValue() > 0.5F && level.canSeeSky(player.blockPosition())) {
             // If an attuned player is outdoors during the daytime, restore some hunger
             player.getFoodData().eat(1, 0.3F);
@@ -352,7 +338,7 @@ public class PlayerEvents {
         BlockPos pos = player.blockPosition();
         Level world = player.level();
         if (world.random.nextDouble() < 0.1D && 
-                AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.GREATER) && 
+                AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.GREATER) && 
                 !player.isShiftKeyDown() && 
                 world.isEmptyBlock(pos) && 
                 world.getBlockState(pos) != BlocksPM.GLOW_FIELD.get().defaultBlockState() && 
@@ -372,7 +358,7 @@ public class PlayerEvents {
         }
         if (jumpPressed && !player.onGround() && !player.isInWater() && 
                 DOUBLE_JUMP_ALLOWED.getOrDefault(player.getUUID(), Boolean.FALSE).booleanValue() && 
-                AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
+                AttunementManager.meetsThreshold(player, Sources.SKY, AttunementThreshold.GREATER)) {
             // If the conditions are right, execute the second jump
             level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, 
                     SoundSource.PLAYERS, 0.1F, 1.0F + (0.05F * (float)level.random.nextGaussian()), false);
@@ -423,9 +409,9 @@ public class PlayerEvents {
                         LazyOptional<IManaStorage> manaCapOpt = slotStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE);
                         if (manaCapOpt.isPresent()) {
                             IManaStorage manaCap = manaCapOpt.orElseThrow(IllegalArgumentException::new);
-                            if (manaCap.getManaStored(Source.EARTH) >= WardingModuleItem.REGEN_COST) {
+                            if (manaCap.getManaStored(Sources.EARTH) >= WardingModuleItem.REGEN_COST) {
                                 // Consume mana from warded armor stacks to regenerate a single point of ward
-                                manaCap.extractMana(Source.EARTH, WardingModuleItem.REGEN_COST, false);
+                                manaCap.extractMana(Sources.EARTH, WardingModuleItem.REGEN_COST, false);
                                 wardCap.incrementCurrentWard();
                                 wardCap.sync(player);
                                 player.connection.send(new ClientboundSetEquipmentPacket(player.getId(), List.of(Pair.of(slot, slotStack.copy()))));
@@ -531,18 +517,16 @@ public class PlayerEvents {
     
     protected static void registerItemCrafted(Player player, ItemStack stack) {
         if (player != null && !player.level().isClientSide) {
-            int stackHash = ItemUtils.getHashCode(stack);
-            
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
-            if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(stackHash))) {
-                ResearchManager.completeResearch(player, SimpleResearchKey.parseCrafted(stackHash));
+            if (ResearchManager.getAllCraftingReferences().contains(ItemUtils.getHashCode(stack))) {
+                ResearchManager.completeResearch(player, new StackCraftedKey(stack));
             }
             
             // If a research entry requires crafting the a tag containing the item that was just crafted, grant the appropriate research
             stack.getTags().filter(tag -> tag != null).forEach(tagKey -> {
-                int tagHash = ("tag:" + tagKey.location().toString()).hashCode();
-                if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(tagHash))) {
-                    ResearchManager.completeResearch(player, SimpleResearchKey.parseCrafted(tagHash));
+                int tagHash = tagKey.hashCode();
+                if (ResearchManager.getAllCraftingReferences().contains(tagHash)) {
+                    ResearchManager.completeResearch(player, new TagCraftedKey(tagKey));
                 }
             });
         }
@@ -552,8 +536,8 @@ public class PlayerEvents {
     public static void onWakeUp(PlayerWakeUpEvent event) {
         Player player = event.getEntity();
         if (player != null && !player.level().isClientSide) {
-            if ( ResearchManager.isResearchComplete(player, ResearchNames.INTERNAL_FOUND_SHRINE.get().simpleKey()) &&
-                 !ResearchManager.isResearchComplete(player, ResearchNames.INTERNAL_GOT_DREAM.get().simpleKey()) ) {
+            if ( ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE) &&
+                 !ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM) ) {
                 // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
                 grantDreamJournal(player);
             }
@@ -580,7 +564,7 @@ public class PlayerEvents {
     
     protected static void grantDreamJournal(Player player) {
         // First grant the appropriate research entry to continue FTUX
-        ResearchManager.completeResearch(player, ResearchNames.INTERNAL_GOT_DREAM.get().simpleKey());
+        ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM);
         
         // Construct the dream journal item
         ItemStack journal = StaticBookItem.make(ItemsPM.STATIC_BOOK, Optional.of(BooksPM.DREAM_JOURNAL), Optional.of(BookLanguagesPM.DEFAULT), Optional.of(player.getName().getString()), 
@@ -597,7 +581,7 @@ public class PlayerEvents {
     public static void onJump(LivingEvent.LivingJumpEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player)event.getEntity();
-            if (AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
+            if (AttunementManager.meetsThreshold(player, Sources.SKY, AttunementThreshold.GREATER)) {
                 // Boost the player's vertical motion on jump if they have greater sky attunement
                 Vec3 motion = player.getDeltaMovement();
                 motion = motion.add(0.0D, 0.275D, 0.0D);

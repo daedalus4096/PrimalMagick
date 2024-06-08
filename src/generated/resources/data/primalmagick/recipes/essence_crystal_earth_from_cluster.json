@@ -6,7 +6,13 @@
       "item": "primalmagick:essence_cluster_earth"
     }
   ],
-  "research": "CLUSTER_DESYNTHESIS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:cluster_desynthesis"
+    }
+  },
   "result": {
     "Count": 4,
     "id": "primalmagick:essence_crystal_earth"

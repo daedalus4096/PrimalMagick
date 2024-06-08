@@ -16,7 +16,6 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,15 +31,21 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ItemTagWidget extends AbstractWidget {
     protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
 
-    protected final ResourceLocation tag;
+    protected final TagKey<Item> tag;
+    protected final int amount;
     protected final boolean isComplete;
     protected ItemStack lastStack = ItemStack.EMPTY;
     protected ItemStack currentStack = ItemStack.EMPTY;
 
-    public ItemTagWidget(ResourceLocation tag, int x, int y, boolean isComplete) {
+    public ItemTagWidget(TagKey<Item> tag, int amount, int x, int y, boolean isComplete) {
         super(x, y, 16, 16, Component.empty());
         this.tag = tag;
+        this.amount = amount;
         this.isComplete = isComplete;
+    }
+    
+    public ItemTagWidget(TagKey<Item> tag, int x, int y, boolean isComplete) {
+        this(tag, 1, x, y, isComplete);
     }
     
     @Override
@@ -74,13 +79,12 @@ public class ItemTagWidget extends AbstractWidget {
     
     @Nonnull
     protected ItemStack getDisplayStack() {
-        TagKey<Item> itemTag = ItemTags.create(this.tag);
         List<Item> tagContents = new ArrayList<>();
-        ForgeRegistries.ITEMS.tags().getTag(itemTag).forEach(tagContents::add);
+        ForgeRegistries.ITEMS.tags().getTag(this.tag).forEach(tagContents::add);
         if (!tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());
-            return new ItemStack(tagContents.get(index), 1);
+            return new ItemStack(tagContents.get(index), this.amount);
         }
         return ItemStack.EMPTY;
     }

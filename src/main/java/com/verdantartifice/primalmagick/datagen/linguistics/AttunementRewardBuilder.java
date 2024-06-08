@@ -50,7 +50,7 @@ public class AttunementRewardBuilder {
         @Override
         public void serialize(JsonObject json) {
             json.addProperty("type", AttunementReward.TYPE);
-            json.addProperty("source", this.source.getTag());
+            json.addProperty("source", this.source.getId().toString());
             json.addProperty("points", this.points);
         }
     }

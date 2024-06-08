@@ -10,7 +10,7 @@
   },
   "mana": {
     "sources": {
-      "earth": 40
+      "primalmagick:earth": 40
     }
   },
   "pattern": [
@@ -18,7 +18,13 @@
     "C C",
     "S S"
   ],
-  "research": "ATTUNEMENT_SHACKLES",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:attunement_shackles"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:attunement_shackles_earth"

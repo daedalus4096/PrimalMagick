@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import java.awt.Color;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.research.Knowledge;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,14 +21,16 @@ import net.minecraft.resources.ResourceLocation;
 public class KnowledgeWidget extends AbstractWidget {
     protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
 
-    protected Knowledge knowledge;
+    protected KnowledgeType type;
+    protected int amount;
     protected boolean isComplete;
     
-    public KnowledgeWidget(Knowledge knowledge, int x, int y, boolean isComplete) {
+    public KnowledgeWidget(KnowledgeType type, int amount, int x, int y, boolean isComplete) {
         super(x, y, 16, 16, Component.empty());
-        this.knowledge = knowledge;
+        this.type = type;
+        this.amount = amount;
         this.isComplete = isComplete;
-        this.setTooltip(Tooltip.create(Component.translatable(this.knowledge.getType().getNameTranslationKey())));
+        this.setTooltip(Tooltip.create(Component.translatable(this.type.getNameTranslationKey())));
     }
     
     @Override
@@ -40,12 +42,12 @@ public class KnowledgeWidget extends AbstractWidget {
         // Draw knowledge type icon
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
         guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
-        guiGraphics.blit(this.knowledge.getType().getIconLocation(), 0, 0, 0, 0, 255, 255);
+        guiGraphics.blit(this.type.getIconLocation(), 0, 0, 0, 0, 255, 255);
         
         guiGraphics.pose().popPose();
         
         // Draw amount str
-        Component amountText = Component.literal(Integer.toString(this.knowledge.getAmount()));
+        Component amountText = Component.literal(Integer.toString(this.amount));
         int width = mc.font.width(amountText.getString());
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);

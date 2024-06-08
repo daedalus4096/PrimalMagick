@@ -1,12 +1,12 @@
 {
   "type": "item",
   "set": {
-    "earth": 20,
-    "hallowed": 20,
-    "moon": 20,
-    "sea": 20,
-    "sky": 20,
-    "sun": 20
+    "primalmagick:earth": 20,
+    "primalmagick:hallowed": 20,
+    "primalmagick:moon": 20,
+    "primalmagick:sea": 20,
+    "primalmagick:sky": 20,
+    "primalmagick:sun": 20
   },
   "target": "primalmagick:theory_notes"
 }

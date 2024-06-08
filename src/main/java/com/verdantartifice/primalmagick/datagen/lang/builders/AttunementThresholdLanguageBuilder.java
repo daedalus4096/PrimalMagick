@@ -30,7 +30,7 @@ public class AttunementThresholdLanguageBuilder extends AbstractLanguageBuilder<
     }
     
     public AttunementThresholdLanguageBuilder effect(Source source, String value) {
-        this.add(this.getKey(source.getTag()), value);
+        this.add(this.getKey(source.getId().getPath()), value);
         return this;
     }
 }

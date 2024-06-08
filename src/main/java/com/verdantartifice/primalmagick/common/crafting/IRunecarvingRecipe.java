@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeType;
  *  
  * @author Daedalus4096
  */
-public interface IRunecarvingRecipe extends Recipe<Container>, IHasRequiredResearch {
+public interface IRunecarvingRecipe extends Recipe<Container>, IHasRequirement {
     @Override
     default RecipeType<?> getType() {
         return RecipeTypesPM.RUNECARVING.get();

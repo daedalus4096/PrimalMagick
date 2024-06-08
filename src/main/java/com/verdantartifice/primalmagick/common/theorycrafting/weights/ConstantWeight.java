@@ -1,9 +1,11 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.weights;
 
-import com.google.gson.JsonObject;
+import javax.annotation.Nonnull;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -11,46 +13,32 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class ConstantWeight implements IWeightFunction {
-    public static final String TYPE = "constant";
-    public static final IWeightFunctionSerializer<ConstantWeight> SERIALIZER = new Serializer();
+public class ConstantWeight extends AbstractWeightFunction<ConstantWeight> {
+    public static final Codec<ConstantWeight> CODEC = RecordCodecBuilder.create(instance -> instance.group(Codec.DOUBLE.fieldOf("weight").forGetter(w -> w.weight)).apply(instance, ConstantWeight::new));
     
     private final double weight;
     
-    protected ConstantWeight(double weight) {
+    public ConstantWeight(double weight) {
         this.weight = weight;
     }
     
     @Override
+    protected WeightFunctionType<ConstantWeight> getType() {
+        return WeightFunctionTypesPM.CONSTANT.get();
+    }
+
+    @Override
     public double getWeight(Player t) {
         return this.weight;
     }
-
-    @Override
-    public String getFunctionType() {
-        return TYPE;
-    }
     
-    @SuppressWarnings("unchecked")
-    @Override
-    public IWeightFunctionSerializer<ConstantWeight> getSerializer() {
-        return SERIALIZER;
+    @Nonnull
+    static ConstantWeight fromNetworkInner(FriendlyByteBuf buf) {
+        return new ConstantWeight(buf.readDouble());
     }
 
-    public static class Serializer implements IWeightFunctionSerializer<ConstantWeight> {
-        @Override
-        public ConstantWeight read(ResourceLocation templateId, JsonObject json) {
-            return new ConstantWeight(json.getAsJsonPrimitive("weight").getAsDouble());
-        }
-
-        @Override
-        public ConstantWeight fromNetwork(FriendlyByteBuf buf) {
-            return new ConstantWeight(buf.readDouble());
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ConstantWeight template) {
-            buf.writeDouble(template.weight);
-        }
+    @Override
+    protected void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeDouble(this.weight);
     }
 }

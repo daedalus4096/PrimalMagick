@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import java.util.Optional;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
@@ -27,13 +29,13 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
     public static final int MAX_HEIGHT = 3;
 
     protected final ShapedRecipePattern pattern;
-    protected final CompoundResearchKey research;
+    protected final Optional<AbstractRequirement<?>> requirement;
     protected final SourceList manaCosts;
     
-    public ShapedArcaneRecipe(String group, ItemStack output, ShapedRecipePattern pattern, CompoundResearchKey research, SourceList manaCosts) {
+    public ShapedArcaneRecipe(String group, ItemStack output, ShapedRecipePattern pattern, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts) {
         super(group, output);
         this.pattern = pattern;
-        this.research = research;
+        this.requirement = requirement;
         this.manaCosts = manaCosts;
     }
     
@@ -53,8 +55,8 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
     }
 
     @Override
-    public CompoundResearchKey getRequiredResearch() {
-        return this.research;
+    public Optional<AbstractRequirement<?>> getRequirement() {
+        return this.requirement;
     }
     
     @Override
@@ -83,34 +85,32 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
     }
 
     public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
-        public static final Codec<ShapedArcaneRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(r -> r.group),
-                ItemStack.CODEC.fieldOf("result").forGetter(r -> r.output),
-                ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
-                CompoundResearchKey.CODEC.fieldOf("research").forGetter(rsar -> rsar.research),
-                SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rsar -> rsar.manaCosts)
-        ).apply(instance, ShapedArcaneRecipe::new));
-
         @Override
         public Codec<ShapedArcaneRecipe> codec() {
-            return CODEC;
+            return RecordCodecBuilder.create(instance -> instance.group(
+                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(r -> r.group),
+                    ItemStack.CODEC.fieldOf("result").forGetter(r -> r.output),
+                    ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
+                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rsar -> rsar.requirement),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rsar -> rsar.manaCosts)
+            ).apply(instance, ShapedArcaneRecipe::new));
         }
 
         @Override
         public ShapedArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
             ShapedRecipePattern pattern = ShapedRecipePattern.fromNetwork(buffer);
-            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf());
+            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             ItemStack stack = buffer.readItem();
-            return new ShapedArcaneRecipe(group, stack, pattern, research, manaCosts);
+            return new ShapedArcaneRecipe(group, stack, pattern, requirement, manaCosts);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, ShapedArcaneRecipe recipe) {
             buffer.writeUtf(recipe.group);
             recipe.pattern.toNetwork(buffer);
-            buffer.writeUtf(recipe.research.toString());
+            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
             SourceList.toNetwork(buffer, recipe.manaCosts);
             buffer.writeItem(recipe.output);
         }

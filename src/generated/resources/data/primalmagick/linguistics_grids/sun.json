@@ -47,7 +47,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sun"
+        "source": "primalmagick:sun"
       },
       "x": 3,
       "y": 1
@@ -157,7 +157,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sun"
+        "source": "primalmagick:sun"
       },
       "x": 5,
       "y": 3
@@ -197,7 +197,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sun"
+        "source": "primalmagick:sun"
       },
       "x": 1,
       "y": 4
@@ -287,7 +287,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sun"
+        "source": "primalmagick:sun"
       },
       "x": 6,
       "y": 5
@@ -317,7 +317,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "sun"
+        "source": "primalmagick:sun"
       },
       "x": 4,
       "y": 6

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
-import com.verdantartifice.primalmagick.common.theorycrafting.ObservationProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;

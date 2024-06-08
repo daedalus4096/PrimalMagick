@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "earth": 2,
-    "infernal": 2,
-    "void": 2
+    "primalmagick:earth": 2,
+    "primalmagick:infernal": 2,
+    "primalmagick:void": 2
   },
   "target": "minecraft:sculk_vein"
 }

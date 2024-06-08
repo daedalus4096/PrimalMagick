@@ -501,7 +501,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     protected boolean canUseRitualRecipe(ItemStack wandStack, Player player, RecipeHolder<IRitualRecipe> recipeHolder) {
         // Players must know the correct research and the wand must have enough mana in order to use the recipe
         IRitualRecipe recipe = recipeHolder.value();
-        return (recipe.getRequiredResearch() == null || recipe.getRequiredResearch().isKnownByStrict(player)) &&
+        return (recipe.getRequirement().isEmpty() || recipe.getRequirement().get().isMetBy(player)) &&
                 (recipe.getManaCosts().isEmpty() || this.consumeMana(wandStack, player, recipe));
     }
     

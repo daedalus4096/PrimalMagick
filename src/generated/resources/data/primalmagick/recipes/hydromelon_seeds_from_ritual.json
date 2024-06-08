@@ -17,7 +17,7 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "sea": 50
+      "primalmagick:sea": 50
     }
   },
   "props": [
@@ -28,7 +28,13 @@
       "block": "primalmagick:ritual_bell"
     }
   ],
-  "research": "HYDROMELON",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hydromelon"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:hydromelon_seeds"

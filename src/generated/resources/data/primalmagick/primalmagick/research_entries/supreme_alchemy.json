@@ -1,0 +1,68 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_alchemy.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:supreme_alchemy"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:calcinator_forbidden"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_hallowed"
+            }
+          },
+          {
+            "requiredValue": 1000,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:crafted_alchemy"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_alchemy"
+      },
+      "recipes": [],
+      "revelations": [
+        {
+          "rootKey": "primalmagick:secrets_of_the_universe"
+        }
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_alchemy.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_alchemy"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_alchemy.text.stage.2"
+    }
+  ]
+}

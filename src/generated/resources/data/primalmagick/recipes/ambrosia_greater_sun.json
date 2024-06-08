@@ -23,7 +23,7 @@
   "instability": 6,
   "mana": {
     "sources": {
-      "sun": 100
+      "primalmagick:sun": 100
     }
   },
   "props": [
@@ -40,7 +40,13 @@
       "block": "primalmagick:bloodletter"
     }
   ],
-  "research": "GREATER_AMBROSIA",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:greater_ambrosia"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ambrosia_greater_sun"

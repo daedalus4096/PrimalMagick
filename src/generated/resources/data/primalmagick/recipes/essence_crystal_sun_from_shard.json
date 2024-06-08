@@ -14,7 +14,13 @@
     "#Q#",
     "###"
   ],
-  "research": "CRYSTAL_SYNTHESIS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:crystal_synthesis"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:essence_crystal_sun"

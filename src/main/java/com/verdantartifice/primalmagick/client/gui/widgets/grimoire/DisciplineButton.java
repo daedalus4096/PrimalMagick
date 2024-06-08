@@ -16,7 +16,7 @@ public class DisciplineButton extends AbstractTopicButton {
     protected final ResearchDiscipline discipline;
 
     public DisciplineButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, ResearchDiscipline discipline, boolean showIcon, boolean enlarge) {
-        super(widthIn, heightIn, 123, enlarge ? 18 : 12, text, screen, showIcon ? GenericIndexIcon.of(discipline.getIconLocation(), true) : null, new Handler());
+        super(widthIn, heightIn, 123, enlarge ? 18 : 12, text, screen, showIcon ? GenericIndexIcon.of(discipline.iconLocation(), true) : null, new Handler());
         this.discipline = discipline;
     }
     
@@ -29,7 +29,7 @@ public class DisciplineButton extends AbstractTopicButton {
         public void onPress(Button button) {
             if (button instanceof DisciplineButton gdb) {
                 // Set the new grimoire topic and open a new screen for it
-                gdb.getScreen().gotoTopic(new DisciplineResearchTopic(gdb.getDiscipline(), 0));
+                gdb.getScreen().gotoTopic(new DisciplineResearchTopic(gdb.getDiscipline().key(), 0));
             }
         }
     }

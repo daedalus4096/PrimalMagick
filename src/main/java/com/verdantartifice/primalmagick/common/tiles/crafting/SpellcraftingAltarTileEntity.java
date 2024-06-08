@@ -9,12 +9,14 @@ import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingRunePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -34,15 +36,15 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
     public static final int BOB_CYCLE_TIME_TICKS = 200;
     protected static final int TICKS_PER_SEGMENT_ROTATION = 10;
     protected static final int TICKS_PER_PAUSE = 20;
-    protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON);
+    protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON);
     
     protected int phaseTicks = 0;
     protected int nextUpdate = 0;
     protected Segment lastSegment = Segment.U1;
     protected Segment nextSegment = Segment.U1;
     protected RotationPhase currentRotation = RotationPhase.COUNTER_CLOCKWISE_PAUSE;
-    protected Source lastSource = Source.EARTH;
-    protected Source nextSource = Source.EARTH;
+    protected Source lastSource = Sources.EARTH;
+    protected Source nextSource = Sources.EARTH;
     
     public SpellcraftingAltarTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.SPELLCRAFTING_ALTAR.get(), pos, state);
@@ -68,10 +70,10 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         this.nextSegment = Segment.values()[compound.getInt("NextSegmentIndex")];
         this.currentRotation = RotationPhase.values()[compound.getInt("CurrentRotationIndex")];
         
-        Source last = Source.getSource(compound.getString("LastSource"));
-        this.lastSource = last == null ? Source.EARTH : last;
-        Source next = Source.getSource(compound.getString("NextSource"));
-        this.nextSource = next == null ? Source.EARTH : next;
+        Source last = Sources.get(new ResourceLocation(compound.getString("LastSource")));
+        this.lastSource = last == null ? Sources.EARTH : last;
+        Source next = Sources.get(new ResourceLocation(compound.getString("NextSource")));
+        this.nextSource = next == null ? Sources.EARTH : next;
     }
 
     @Override
@@ -82,8 +84,8 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         compound.putInt("LastSegmentIndex", this.lastSegment.ordinal());
         compound.putInt("NextSegmentIndex", this.nextSegment.ordinal());
         compound.putInt("CurrentRotationIndex", this.currentRotation.ordinal());
-        compound.putString("LastSource", this.lastSource.getTag());
-        compound.putString("NextSource", this.nextSource.getTag());
+        compound.putString("LastSource", this.lastSource.getId().toString());
+        compound.putString("NextSource", this.nextSource.getId().toString());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SpellcraftingAltarTileEntity entity) {
@@ -126,7 +128,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
     
     public Color getCurrentColor(float partialTicks) {
         if (this.nextUpdate == 0) {
-            return new Color(Source.EARTH.getColor());
+            return new Color(Sources.EARTH.getColor());
         } else if (this.currentRotation.isPause()) {
             return new Color(this.nextSource.getColor());
         } else {

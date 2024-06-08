@@ -1,0 +1,32 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "key": {
+    "rootKey": "primalmagick:heavenly_magick"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:forbidden_magick"
+    },
+    {
+      "rootKey": "primalmagick:discover_hallowed"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:heavenly_magick"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.heavenly_magick.text.stage.1"
+    }
+  ]
+}

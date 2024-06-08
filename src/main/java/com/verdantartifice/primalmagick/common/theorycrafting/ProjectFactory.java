@@ -2,12 +2,12 @@ package com.verdantartifice.primalmagick.common.theorycrafting;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ExperienceReward;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ItemReward;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableReward;
+import org.apache.commons.lang3.mutable.MutableObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 
 /**
  * Collection of factory methods for creating research project related data structures.
@@ -15,47 +15,15 @@ import net.minecraft.nbt.CompoundTag;
  * @author Daedalus4096
  */
 public class ProjectFactory {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     @Nullable
     public static Project getProjectFromNBT(@Nullable CompoundTag tag) {
         // Deserialize a research project instance from the given NBT data
-        Project retVal = new Project();
-        retVal.deserializeNBT(tag);
-        return retVal;
-    }
-    
-    @Nullable
-    public static AbstractProjectMaterial getMaterialFromNBT(@Nullable CompoundTag tag) {
-        AbstractProjectMaterial retVal = null;
-        String materialType = (tag == null) ? null : tag.getString("MaterialType");
-        if (ItemProjectMaterial.TYPE.equals(materialType)) {
-            retVal = new ItemProjectMaterial();
-        } else if (ItemTagProjectMaterial.TYPE.equals(materialType)) {
-            retVal = new ItemTagProjectMaterial();
-        } else if (ObservationProjectMaterial.TYPE.equals(materialType)) {
-            retVal = new ObservationProjectMaterial();
-        } else if (ExperienceProjectMaterial.TYPE.equals(materialType)) {
-            retVal = new ExperienceProjectMaterial();
-        }
-        if (retVal != null) {
-            retVal.deserializeNBT(tag);
-        }
-        return retVal;
-    }
-    
-    @Nullable
-    public static AbstractReward getRewardFromNBT(@Nullable CompoundTag tag) {
-        AbstractReward retVal = null;
-        String rewardType = (tag == null) ? null : tag.getString("RewardType");
-        if (ExperienceReward.TYPE.equals(rewardType)) {
-            retVal = new ExperienceReward();
-        } else if (ItemReward.TYPE.equals(rewardType)) {
-            retVal = new ItemReward();
-        } else if (LootTableReward.TYPE.equals(rewardType)) {
-            retVal = new LootTableReward();
-        }
-        if (retVal != null) {
-            retVal.deserializeNBT(tag);
-        }
-        return retVal;
+        MutableObject<Project> retVal = new MutableObject<>();
+        Project.codec().parse(NbtOps.INSTANCE, tag)
+            .resultOrPartial(LOGGER::error)
+            .ifPresent(project -> retVal.setValue(project));
+        return retVal.getValue();
     }
 }

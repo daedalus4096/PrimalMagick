@@ -27,10 +27,16 @@
   ],
   "mana": {
     "sources": {
-      "infernal": 1
+      "primalmagick:infernal": 1
     }
   },
-  "research": "CONCOCTING_TINCTURES",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_tinctures"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:concoction",

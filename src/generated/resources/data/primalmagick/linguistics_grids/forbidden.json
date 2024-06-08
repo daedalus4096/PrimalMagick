@@ -127,7 +127,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "blood"
+        "source": "primalmagick:blood"
       },
       "x": 0,
       "y": 2
@@ -147,7 +147,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "infernal"
+        "source": "primalmagick:infernal"
       },
       "x": 3,
       "y": 2
@@ -157,7 +157,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "infernal"
+        "source": "primalmagick:infernal"
       },
       "x": 4,
       "y": 2
@@ -177,7 +177,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "blood"
+        "source": "primalmagick:blood"
       },
       "x": 7,
       "y": 2
@@ -277,7 +277,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "void"
+        "source": "primalmagick:void"
       },
       "x": 4,
       "y": 5
@@ -337,7 +337,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "void"
+        "source": "primalmagick:void"
       },
       "x": 4,
       "y": 7

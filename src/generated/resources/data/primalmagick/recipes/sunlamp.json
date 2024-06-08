@@ -10,7 +10,7 @@
   },
   "mana": {
     "sources": {
-      "sun": 10
+      "primalmagick:sun": 10
     }
   },
   "pattern": [
@@ -18,7 +18,13 @@
     "NTN",
     "NNN"
   ],
-  "research": "SUNLAMP",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sunlamp"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:sunlamp"

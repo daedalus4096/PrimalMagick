@@ -32,9 +32,9 @@
   "instability": 7,
   "mana": {
     "sources": {
-      "blood": 100,
-      "infernal": 100,
-      "void": 100
+      "primalmagick:blood": 100,
+      "primalmagick:infernal": 100,
+      "primalmagick:void": 100
     }
   },
   "props": [
@@ -54,7 +54,13 @@
       "block": "primalmagick:soul_anvil"
     }
   ],
-  "research": "CLEANSING_RITE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:cleansing_rite"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:sanguine_core_inner_demon"

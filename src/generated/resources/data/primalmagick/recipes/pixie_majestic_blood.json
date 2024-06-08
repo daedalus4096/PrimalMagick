@@ -23,7 +23,7 @@
   "instability": 7,
   "mana": {
     "sources": {
-      "blood": 200
+      "primalmagick:blood": 200
     }
   },
   "props": [
@@ -40,7 +40,25 @@
       "block": "primalmagick:celestial_harp"
     }
   ],
-  "research": "MAJESTIC_PIXIES&&t_discover_blood",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:majestic_pixies"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:pixie_majestic_blood"

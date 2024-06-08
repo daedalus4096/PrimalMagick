@@ -1,32 +1,38 @@
 package com.verdantartifice.primalmagick.common.theorycrafting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagick.common.research.IResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchKeyFactory;
+import com.google.common.base.Preconditions;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.QuorumRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.IRewardSerializer;
-import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunction;
-import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunctionSerializer;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.AbstractWeightFunction;
+import com.verdantartifice.primalmagick.common.util.CodecUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -39,52 +45,39 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class ProjectTemplate {
-    protected ResourceLocation key;
-    protected List<AbstractProjectMaterial> materialOptions = new ArrayList<>();
-    protected List<AbstractReward> otherRewards = new ArrayList<>();
-    protected IResearchKey requiredResearch;
-    protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
-    protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
-    protected double rewardMultiplier = 0.25D;
-    protected List<ResourceLocation> aidBlocks = new ArrayList<>();
-    protected Optional<IWeightFunction> weightFunction = Optional.empty();
+public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, List<AbstractReward<?>> otherRewards, Optional<AbstractRequirement<?>> requirement,
+        OptionalInt requiredMaterialCountOverride, OptionalDouble baseSuccessChanceOverride, double rewardMultiplier, List<ResourceLocation> aidBlocks,
+        Optional<AbstractWeightFunction<?>> weightFunction) {
+    public static final int MAX_MATERIALS = 4;
     
-    protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nonnull List<AbstractReward> otherRewards, @Nullable IResearchKey requiredResearch,
-            @Nonnull Optional<Integer> requiredMaterialCountOverride, @Nonnull Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks,
-            @Nonnull Optional<IWeightFunction> weightFunction) {
-        this.key = key;
-        this.materialOptions = materialOptions;
-        this.otherRewards = otherRewards;
-        this.requiredResearch = requiredResearch;
-        this.requiredMaterialCountOverride = requiredMaterialCountOverride;
-        this.baseSuccessChanceOverride = baseSuccessChanceOverride;
-        this.rewardMultiplier = rewardMultiplier;
-        this.aidBlocks = aidBlocks;
-        this.weightFunction = weightFunction;
-    }
-
-    public ResourceLocation getKey() {
-        return this.key;
-    }
-    
-    @Nullable
-    public List<ResourceLocation> getAidBlocks() {
-        return this.aidBlocks;
+    public static Codec<ProjectTemplate> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                AbstractProjectMaterial.dispatchCodec().listOf().fieldOf("materialOptions").forGetter(ProjectTemplate::materialOptions),
+                AbstractReward.dispatchCodec().listOf().fieldOf("otherRewards").forGetter(ProjectTemplate::otherRewards),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ProjectTemplate::requirement),
+                CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("requiredMaterialCountOverride")).forGetter(ProjectTemplate::requiredMaterialCountOverride),
+                CodecUtils.asOptionalDouble(Codec.DOUBLE.optionalFieldOf("baseSuccessChanceOverride")).forGetter(ProjectTemplate::baseSuccessChanceOverride),
+                Codec.DOUBLE.fieldOf("rewardMultiplier").forGetter(ProjectTemplate::rewardMultiplier),
+                ResourceLocation.CODEC.listOf().fieldOf("aidBlocks").forGetter(ProjectTemplate::aidBlocks),
+                AbstractWeightFunction.dispatchCodec().optionalFieldOf("weightFunction").forGetter(ProjectTemplate::weightFunction)
+            ).apply(instance, ProjectTemplate::new));
     }
     
     public double getWeight(Player player) {
-        if (this.weightFunction.isPresent()) {
-            return this.weightFunction.get().getWeight(player);
-        } else {
-            return 1D;
-        }
+        return this.weightFunction.map(func -> func.getWeight(player)).orElse(1D);
     }
     
     @Nullable
     public Project initialize(ServerPlayer player, Set<Block> nearby) {
-        if (this.requiredResearch != null && !this.requiredResearch.isKnownByStrict(player)) {
+        if (this.requirement.isPresent() && !this.requirement.get().isMetBy(player)) {
             // Fail initialization to prevent use if the player doesn't have the right research unlocked
+            return null;
+        }
+        
+        RegistryAccess registryAccess = player.level().registryAccess();
+        ResourceKey<ProjectTemplate> key = registryAccess.registryOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).getResourceKey(this).orElse(null);
+        if (key == null) {
+            // If this isn't a registered project template, fail initialization to prevent use
             return null;
         }
         
@@ -108,13 +101,15 @@ public class ProjectTemplate {
         // Randomly select materials to use from the bag of options, disallowing duplicates
         int attempts = 0;
         int maxMaterials = this.getRequiredMaterialCount(player);
-        List<AbstractProjectMaterial> materials = new ArrayList<>();
-        WeightedRandomBag<AbstractProjectMaterial> options = this.getMaterialOptions(player);
+        List<MaterialInstance> materials = new ArrayList<>();
+        Set<AbstractProjectMaterial<?>> chosen = new HashSet<>();
+        WeightedRandomBag<AbstractProjectMaterial<?>> options = this.getMaterialOptions(player);
         while (materials.size() < maxMaterials && attempts < 1000) {
             attempts++;
-            AbstractProjectMaterial material = options.getRandom(player.getRandom()).copy();
-            if (!materials.contains(material)) {
-                materials.add(material);
+            AbstractProjectMaterial<?> material = options.getRandom(player.getRandom());
+            if (!chosen.contains(material)) {
+                chosen.add(material);
+                materials.add(new MaterialInstance(material));
             }
         }
         if (materials.size() < maxMaterials) {
@@ -123,14 +118,14 @@ public class ProjectTemplate {
         }
         
         // Create new initialized project
-        return new Project(this.key, materials, this.otherRewards, this.getBaseSuccessChance(player), this.rewardMultiplier, foundAid);
+        return new Project(key, materials, this.otherRewards, this.getBaseSuccessChance(player), this.rewardMultiplier, Optional.ofNullable(foundAid));
     }
     
     protected int getRequiredMaterialCount(Player player) {
         return this.requiredMaterialCountOverride.orElseGet(() -> {
             // Get projects completed from stats and calculate based on that
             int completed = StatsManager.getValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
-            return Math.min(4, 1 + (completed / 5));
+            return Math.min(MAX_MATERIALS, 1 + (completed / 5));
         });
     }
     
@@ -143,9 +138,9 @@ public class ProjectTemplate {
     }
     
     @Nonnull
-    protected WeightedRandomBag<AbstractProjectMaterial> getMaterialOptions(ServerPlayer player) {
-        WeightedRandomBag<AbstractProjectMaterial> retVal = new WeightedRandomBag<>();
-        for (AbstractProjectMaterial material : this.materialOptions) {
+    protected WeightedRandomBag<AbstractProjectMaterial<?>> getMaterialOptions(ServerPlayer player) {
+        WeightedRandomBag<AbstractProjectMaterial<?>> retVal = new WeightedRandomBag<>();
+        for (AbstractProjectMaterial<?> material : this.materialOptions) {
             if (material.isAllowedInProject(player)) {
                 retVal.add(material, material.getWeight());
             }
@@ -153,191 +148,100 @@ public class ProjectTemplate {
         return retVal;
     }
     
-    public static class Serializer implements IProjectTemplateSerializer {
-        private static final Logger LOGGER = LogManager.getLogger();
+    public static Builder builder() {
+        return new Builder();
+    }
+    
+    public static class Builder {
+        protected final List<AbstractProjectMaterial<?>> materialOptions = new ArrayList<>();
+        protected final List<AbstractReward<?>> otherRewards = new ArrayList<>();
+        protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
+        protected OptionalInt requiredMaterialCountOverride = OptionalInt.empty();
+        protected OptionalDouble baseSuccessChanceOverride = OptionalDouble.empty();
+        protected double rewardMultiplier = 0.25D;
+        protected final List<ResourceLocation> aidBlocks = new ArrayList<>();
+        protected Optional<AbstractWeightFunction<?>> weightFunction = Optional.empty();
         
-        @Override
-        public ProjectTemplate read(ResourceLocation templateId, JsonObject json) {
-            String keyStr = json.getAsJsonPrimitive("key").getAsString();
-            if (keyStr == null) {
-                throw new JsonSyntaxException("Illegal key in project template JSON for " + templateId.toString());
-            }
-            ResourceLocation key = new ResourceLocation(keyStr);
-            
-            IResearchKey requiredResearch = null;
-            if (json.has("required_research")) {
-                requiredResearch = ResearchKeyFactory.parse(json.getAsJsonPrimitive("required_research").getAsString());
-            }
-            
-            Optional<Integer> materialCountOverride = Optional.empty();
-            if (json.has("required_material_count_override")) {
-                materialCountOverride = Optional.of(Integer.valueOf(json.getAsJsonPrimitive("required_material_count_override").getAsInt()));
-            }
-            
-            Optional<Double> baseSuccessChanceOverride = Optional.empty();
-            if (json.has("base_success_chance_override")) {
-                baseSuccessChanceOverride = Optional.of(Double.valueOf(json.getAsJsonPrimitive("base_success_chance_override").getAsDouble()));
-            }
-            
-            double rewardMultiplier = json.getAsJsonPrimitive("reward_multiplier").getAsDouble();
-            
-            List<ResourceLocation> aidBlocks = new ArrayList<>();
-            JsonArray aidsArray = json.getAsJsonArray("aid_blocks");
-            for (JsonElement aidElement : aidsArray) {
-                ResourceLocation aidBlock;
-                try {
-                    aidBlock = new ResourceLocation(aidElement.getAsString());
-                }
-                catch (Exception e) {
-                    throw new JsonSyntaxException("Invalid aid block in project template JSON for " + templateId.toString());
-                }
-                if (!ForgeRegistries.BLOCKS.containsKey(aidBlock)) {
-                    throw new JsonSyntaxException("Invalid aid block in project template JSON for " + templateId.toString());
-                }
-                aidBlocks.add(aidBlock);
-            }
-            
-            List<AbstractProjectMaterial> materials = new ArrayList<>();
-            JsonArray materialsArray = json.getAsJsonArray("material_options");
-            for (JsonElement materialElement : materialsArray) {
-                try {
-                    JsonObject materialObj = materialElement.getAsJsonObject();
-                    IProjectMaterialSerializer<?> materialSerializer = TheorycraftManager.getMaterialSerializer(materialObj.getAsJsonPrimitive("type").getAsString());
-                    materials.add(materialSerializer.read(templateId, materialObj));
-                }
-                catch (Exception e) {
-                    throw new JsonSyntaxException("Invalid material in project template JSON for " + templateId.toString(), e);
-                }
-            }
-            
-            List<AbstractReward> otherRewards = new ArrayList<>();
-            if (json.has("other_rewards")) {
-                JsonArray rewardsArray = json.getAsJsonArray("other_rewards");
-                for (JsonElement rewardElement : rewardsArray) {
-                    try {
-                        JsonObject rewardObj = rewardElement.getAsJsonObject();
-                        IRewardSerializer<?> rewardSerializer = TheorycraftManager.getRewardSerializer(rewardObj.getAsJsonPrimitive("type").getAsString());
-                        otherRewards.add(rewardSerializer.read(templateId, rewardObj));
-                    } catch (Exception e) {
-                        throw new JsonSyntaxException("Invalid reward in project template JSON for " + templateId.toString(), e);
-                    }
-                }
-            }
-            
-            Optional<IWeightFunction> weightOpt = Optional.empty();
-            if (json.has("weight_function")) {
-                JsonObject weightObj = json.getAsJsonObject("weight_function");
-                String functionType = weightObj.getAsJsonPrimitive("type").getAsString();
-                IWeightFunctionSerializer<?> serializer = TheorycraftManager.getWeightFunctionSerializer(functionType);
-                if (serializer != null) {
-                    weightOpt = Optional.ofNullable(serializer.read(templateId, weightObj));
-                } else {
-                    LOGGER.warn("Unknown weight function type {} in JSON for project template {}", functionType, templateId.toString());
-                    weightOpt = Optional.empty();
-                }
-            }
-            
-            return new ProjectTemplate(key, materials, otherRewards, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks, weightOpt);
+        protected Builder() {}
+        
+        public Builder material(AbstractProjectMaterial<?> material) {
+            this.materialOptions.add(material);
+            return this;
         }
-
-        @Override
-        public ProjectTemplate fromNetwork(FriendlyByteBuf buf) {
-            ResourceLocation key = buf.readResourceLocation();
-            IResearchKey requiredResearch = buf.readBoolean() ? ResearchKeyFactory.parse(buf.readUtf()) : null;
-            Optional<Integer> materialCountOverride = buf.readBoolean() ? Optional.of(buf.readVarInt()) : Optional.empty();
-            Optional<Double> baseSuccessChanceOverride = buf.readBoolean() ? Optional.of(buf.readDouble()) : Optional.empty();
-            double rewardMultiplier = buf.readDouble();
-            
-            List<ResourceLocation> aidBlocks = new ArrayList<>();
-            int aidCount = buf.readVarInt();
-            for (int index = 0; index < aidCount; index++) {
-                aidBlocks.add(buf.readResourceLocation());
-            }
-            
-            List<AbstractProjectMaterial> materials = new ArrayList<>();
-            int materialCount = buf.readVarInt();
-            for (int index = 0; index < materialCount; index++) {
-                String materialType = buf.readUtf();
-                IProjectMaterialSerializer<?> serializer = TheorycraftManager.getMaterialSerializer(materialType);
-                if (serializer != null) {
-                    materials.add(serializer.fromNetwork(buf));
-                } else {
-                    throw new IllegalArgumentException("Unknown theorycrafting project material type " + materialType);
-                }
-            }
-            
-            List<AbstractReward> rewards = new ArrayList<>();
-            int rewardCount = buf.readVarInt();
-            for (int index = 0; index < rewardCount; index++) {
-                String rewardType = buf.readUtf();
-                IRewardSerializer<?> serializer = TheorycraftManager.getRewardSerializer(rewardType);
-                if (serializer != null) {
-                    rewards.add(serializer.fromNetwork(buf));
-                } else {
-                    throw new IllegalArgumentException("Unknown theorycrafting project reward type " + rewardType);
-                }
-            }
-            
-            Optional<IWeightFunction> weightOpt;
-            if (buf.readBoolean()) {
-                String functionType = buf.readUtf();
-                IWeightFunctionSerializer<?> serializer = TheorycraftManager.getWeightFunctionSerializer(functionType);
-                if (serializer != null) {
-                    weightOpt = Optional.ofNullable(serializer.fromNetwork(buf));
-                } else {
-                    LOGGER.warn("Unknown weight function type {} from network for project template {}", functionType, key.toString());
-                    weightOpt = Optional.empty();
-                }
-            } else {
-                weightOpt = Optional.empty();
-            }
-            
-            return new ProjectTemplate(key, materials, rewards, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks, weightOpt);
+        
+        public Builder otherReward(AbstractReward<?> reward) {
+            this.otherRewards.add(reward);
+            return this;
         }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ProjectTemplate template) {
-            buf.writeResourceLocation(template.key);
-            if (template.requiredResearch != null) {
-                buf.writeBoolean(true);
-                buf.writeUtf(template.requiredResearch.toString());
+        
+        public Builder requirement(AbstractRequirement<?> requirement) {
+            this.requirements.add(requirement);
+            return this;
+        }
+        
+        public Builder requiredResearch(ResourceKey<ResearchEntry> rawKey) {
+            return this.requirement(new ResearchRequirement(new ResearchEntryKey(rawKey)));
+        }
+        
+        @SafeVarargs
+        public final Builder quorumResearch(int count, ResourceKey<ResearchEntry>... rawKeys) {
+            return this.requirement(new QuorumRequirement(count, Arrays.stream(rawKeys).map(k -> new ResearchRequirement(new ResearchEntryKey(k))).toArray(AbstractRequirement<?>[]::new)));
+        }
+        
+        public Builder materialCountOverride(int value) {
+            this.requiredMaterialCountOverride = OptionalInt.of(value);
+            return this;
+        }
+        
+        public Builder baseSuccessChanceOverride(double value) {
+            this.baseSuccessChanceOverride = OptionalDouble.of(value);
+            return this;
+        }
+        
+        public Builder rewardMultiplier(double multiplier) {
+            this.rewardMultiplier = multiplier;
+            return this;
+        }
+        
+        public Builder aid(Block block) {
+            this.aidBlocks.add(ForgeRegistries.BLOCKS.getKey(Preconditions.checkNotNull(block)));
+            return this;
+        }
+        
+        public Builder weightFunction(AbstractWeightFunction<?> func) {
+            this.weightFunction = Optional.of(func);
+            return this;
+        }
+        
+        protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+            if (this.requirements.isEmpty()) {
+                return Optional.empty();
+            } else if (this.requirements.size() == 1) {
+                return Optional.of(this.requirements.get(0));
             } else {
-                buf.writeBoolean(false);
+                return Optional.of(new AndRequirement(this.requirements));
             }
-            template.requiredMaterialCountOverride.ifPresentOrElse((val) -> {
-                buf.writeBoolean(true);
-                buf.writeVarInt(val);
-            }, () -> {
-                buf.writeBoolean(false);
-            });
-            template.baseSuccessChanceOverride.ifPresentOrElse((val) -> {
-                buf.writeBoolean(true);
-                buf.writeDouble(val);
-            }, () -> {
-                buf.writeBoolean(false);
-            });
-            buf.writeDouble(template.rewardMultiplier);
-            buf.writeVarInt(template.aidBlocks.size());
-            for (ResourceLocation aidBlock : template.aidBlocks) {
-                buf.writeResourceLocation(aidBlock);
+        }
+        
+        private void validate() {
+            int maxMaterialCount = this.requiredMaterialCountOverride.orElse(MAX_MATERIALS);
+            if (this.materialOptions.size() < maxMaterialCount) {
+                throw new IllegalStateException("Project template must have at least " + maxMaterialCount + " material option(s)");
+            } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.getAsInt() > MAX_MATERIALS) {
+                throw new IllegalStateException("Project template material override must not be greater than " + MAX_MATERIALS);
+            } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.getAsInt() <= 0) {
+                throw new IllegalStateException("Project template material override must be positive");
+            } else if (this.baseSuccessChanceOverride.isPresent() && (this.baseSuccessChanceOverride.getAsDouble() < 0D || this.baseSuccessChanceOverride.getAsDouble() > 1D)) {
+                throw new IllegalStateException("Project template base success chance override must be between 0 and 1, inclusive");
+            } else if (this.rewardMultiplier <= 0D) {
+                throw new IllegalStateException("Project template reward multiplier must be positive");
             }
-            buf.writeVarInt(template.materialOptions.size());
-            for (AbstractProjectMaterial material : template.materialOptions) {
-                buf.writeUtf(material.getMaterialType());
-                material.toNetwork(buf);
-            }
-            buf.writeVarInt(template.otherRewards.size());
-            for (AbstractReward reward : template.otherRewards) {
-                buf.writeUtf(reward.getRewardType());
-                reward.getSerializer().toNetwork(buf, reward);
-            }
-            template.weightFunction.ifPresentOrElse(weight -> {
-                buf.writeBoolean(true);
-                buf.writeUtf(weight.getFunctionType());
-                weight.getSerializer().toNetwork(buf, weight);
-            }, () -> {
-                buf.writeBoolean(false);
-            });
+        }
+        
+        public ProjectTemplate build() {
+            this.validate();
+            return new ProjectTemplate(this.materialOptions, this.otherRewards, this.getFinalRequirement(), this.requiredMaterialCountOverride, this.baseSuccessChanceOverride,
+                    this.rewardMultiplier, this.aidBlocks, this.weightFunction);
         }
     }
 }

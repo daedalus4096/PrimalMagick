@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -67,24 +68,24 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
             return switch (index) {
                 case 0 -> ManaBatteryTileEntity.this.chargeTime;
                 case 1 -> ManaBatteryTileEntity.this.chargeTimeTotal;
-                case 2 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.EARTH);
-                case 3 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.EARTH);
-                case 4 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.SEA);
-                case 5 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.SEA);
-                case 6 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.SKY);
-                case 7 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.SKY);
-                case 8 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.SUN);
-                case 9 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.SUN);
-                case 10 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.MOON);
-                case 11 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.MOON);
-                case 12 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.BLOOD);
-                case 13 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.BLOOD);
-                case 14 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.INFERNAL);
-                case 15 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.INFERNAL);
-                case 16 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.VOID);
-                case 17 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.VOID);
-                case 18 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.HALLOWED);
-                case 19 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.HALLOWED);
+                case 2 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Sources.EARTH);
+                case 3 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Sources.EARTH);
+                case 4 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Sources.SEA);
+                case 5 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Sources.SEA);
+                case 6 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Sources.SKY);
+                case 7 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Sources.SKY);
+                case 8 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Sources.SUN);
+                case 9 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Sources.SUN);
+                case 10 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Sources.MOON);
+                case 11 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Sources.MOON);
+                case 12 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Sources.BLOOD);
+                case 13 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Sources.BLOOD);
+                case 14 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Sources.INFERNAL);
+                case 15 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Sources.INFERNAL);
+                case 16 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Sources.VOID);
+                case 17 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Sources.VOID);
+                case 18 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Sources.HALLOWED);
+                case 19 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Sources.HALLOWED);
                 default -> 0;
             };
         }
@@ -110,7 +111,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     
     public ManaBatteryTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.MANA_BATTERY.get(), pos, state);
-        this.manaStorage = new ManaStorage(this.getBatteryCapacity(), this.getBatteryTransferCap(), Source.SORTED_SOURCES.toArray(new Source[0]));
+        this.manaStorage = new ManaStorage(this.getBatteryCapacity(), this.getBatteryTransferCap(), Sources.getAllSorted().toArray(new Source[0]));
     }
     
     protected int getBatteryCapacity() {
@@ -178,7 +179,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
                 }
                 
                 // Siphon from input if it's a wand
-                for (Source source : Source.SORTED_SOURCES) {
+                for (Source source : Sources.getAllSorted()) {
                     if (entity.canSiphonWand(inputStack, source) && entity.doWandSiphon(inputStack, source)) {
                         shouldMarkDirty = true;
                     }
@@ -187,7 +188,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
             
             if (!chargeStack.isEmpty()) {
                 // Output mana to wand
-                for (Source source : Source.SORTED_SOURCES) {
+                for (Source source : Sources.getAllSorted()) {
                     if (entity.canOutputToWand(chargeStack, source)) {
                         entity.doOutput(chargeStack, source);
                         shouldMarkDirty = true;
@@ -340,7 +341,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {
                 mana.with(source, amount);
@@ -352,7 +353,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     public int getMaxMana() {
         // TODO Fix up
-        return this.manaStorage.getMaxManaStored(Source.EARTH);
+        return this.manaStorage.getMaxManaStored(Sources.EARTH);
     }
 
     @Override

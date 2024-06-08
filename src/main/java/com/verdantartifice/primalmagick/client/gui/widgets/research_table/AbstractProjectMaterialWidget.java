@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.theorycrafting.AbstractProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMaterial> extends AbstractWidget {
+public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMaterial<T>> extends AbstractWidget {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
 
     protected final T material;

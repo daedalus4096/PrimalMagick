@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.init.InitCauldron;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;
 import com.verdantartifice.primalmagick.common.init.InitResearch;
 import com.verdantartifice.primalmagick.common.init.InitSpells;
-import com.verdantartifice.primalmagick.common.init.InitStats;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionTypesPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -39,7 +38,6 @@ public class ModLifecycleEvents {
         InitAttunements.initAttunementAttributeModifiers();
         InitResearch.initResearch();
         InitSpells.initSpells();
-        InitStats.initStats();
         InitCauldron.initCauldronInteractions();
         
         LootConditionTypesPM.register();

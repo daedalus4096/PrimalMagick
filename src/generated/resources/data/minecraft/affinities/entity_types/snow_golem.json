@@ -2,6 +2,6 @@
   "type": "entity_type",
   "target": "minecraft:snow_golem",
   "values": {
-    "sea": 20
+    "primalmagick:sea": 20
   }
 }

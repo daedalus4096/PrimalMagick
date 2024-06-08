@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.compat.jei.concocting;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
@@ -9,7 +10,7 @@ import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
 import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -20,6 +21,7 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -64,7 +66,7 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<ICon
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
-        if (recipe.getRequiredResearch() != null && !recipe.getRequiredResearch().getKeys().isEmpty()) {
+        if (recipe.getRequirement().isPresent()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
@@ -74,17 +76,18 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<ICon
 
     @Override
     public List<Component> getTooltipStrings(RecipeHolder<IConcoctingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        Minecraft mc = Minecraft.getInstance();
         IConcoctingRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
-        CompoundResearchKey compoundResearch = recipe.getRequiredResearch();
+        Optional<AbstractRequirement<?>> requirementOpt = recipe.getRequirement();
         if ( manaCosts != null && !manaCosts.isEmpty() && 
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
             return JeiHelper.getManaCostTooltipStrings(manaCosts);
-        } else if ( compoundResearch != null && !compoundResearch.getKeys().isEmpty() &&
+        } else if ( requirementOpt.isPresent() &&
                     mouseX >= RESEARCH_X_OFFSET && mouseX < RESEARCH_X_OFFSET + this.researchIcon.getWidth() &&
                     mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
-            return JeiHelper.getRequiredResearchTooltipStrings(compoundResearch);
+            return JeiHelper.getRequirementTooltipStrings(mc.level.registryAccess(), requirementOpt.get());
         } else {
             return super.getTooltipStrings(recipeHolder, recipeSlotsView, mouseX, mouseY);
         }

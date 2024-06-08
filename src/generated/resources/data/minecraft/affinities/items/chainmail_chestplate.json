@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "earth": 40,
-    "sky": 40
+    "primalmagick:earth": 40,
+    "primalmagick:sky": 40
   },
   "target": "minecraft:chainmail_chestplate"
 }

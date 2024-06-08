@@ -7,10 +7,12 @@ import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -48,21 +50,21 @@ public class ManaArrowEntity extends AbstractArrow {
     }
 
     public void setSource(Source source) {
-        this.entityData.set(SOURCE_TAG, source.getTag());
-        if (source == Source.EARTH) {
+        this.entityData.set(SOURCE_TAG, source.getId().toString());
+        if (source == Sources.EARTH) {
             this.setKnockback(this.getKnockback() + 2);
-        } else if (source == Source.SKY) {
+        } else if (source == Sources.SKY) {
             this.setNoGravity(true);
-        } else if (source == Source.INFERNAL) {
+        } else if (source == Sources.INFERNAL) {
             this.setSecondsOnFire(100);
-        } else if (source == Source.HALLOWED) {
+        } else if (source == Sources.HALLOWED) {
             this.setBaseDamage(this.getBaseDamage() + 1);
         }
     }
     
     @Nullable
     public Source getSource() {
-        return Source.getSource(this.entityData.get(SOURCE_TAG));
+        return Sources.get(new ResourceLocation(this.entityData.get(SOURCE_TAG)));
     }
     
     @Override
@@ -74,7 +76,7 @@ public class ManaArrowEntity extends AbstractArrow {
     @Override
     public void tick() {
         super.tick();
-        if (this.getSource() == Source.SKY && this.isNoGravity() && this.isInWater()) {
+        if (this.getSource() == Sources.SKY && this.isNoGravity() && this.isInWater()) {
             this.setNoGravity(false);
         }
         Level level = this.level();
@@ -109,20 +111,20 @@ public class ManaArrowEntity extends AbstractArrow {
     protected void doPostHurtEffects(LivingEntity target) {
         super.doPostHurtEffects(target);
         Source source = this.getSource();
-        if (source == Source.SEA) {
+        if (source == Sources.SEA) {
             target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 50));
-        } else if (source == Source.SUN) {
+        } else if (source == Sources.SUN) {
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 50));
             if (target.getMobType() == MobType.UNDEAD) {
                 target.setSecondsOnFire(3);
             }
-        } else if (source == Source.MOON) {
+        } else if (source == Sources.MOON) {
             target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 50));
-        } else if (source == Source.BLOOD) {
+        } else if (source == Sources.BLOOD) {
             target.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 50));
-        } else if (source == Source.VOID) {
+        } else if (source == Sources.VOID) {
             target.addEffect(new MobEffectInstance(MobEffects.WITHER, 50));
-        } else if (source == Source.HALLOWED) {
+        } else if (source == Sources.HALLOWED) {
             if (target.getMobType() == MobType.UNDEAD) {
                 target.setSecondsOnFire(3);
             }
@@ -132,6 +134,6 @@ public class ManaArrowEntity extends AbstractArrow {
     @Override
     protected float getWaterInertia() {
         Source source = this.getSource();
-        return source == Source.SEA || source == Source.BLOOD ? 0.99F : super.getWaterInertia();
+        return source == Sources.SEA || source == Sources.BLOOD ? 0.99F : super.getWaterInertia();
     }
 }

@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "sun": 2
+    "primalmagick:sun": 2
   },
   "base": "minecraft:dirt",
   "target": "minecraft:rooted_dirt"

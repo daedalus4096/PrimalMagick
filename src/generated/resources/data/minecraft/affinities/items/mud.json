@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "earth": 5,
-    "sea": 10
+    "primalmagick:earth": 5,
+    "primalmagick:sea": 10
   },
   "target": "minecraft:mud"
 }

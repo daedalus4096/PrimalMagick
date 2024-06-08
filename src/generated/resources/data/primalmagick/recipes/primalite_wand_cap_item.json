@@ -7,18 +7,24 @@
   },
   "mana": {
     "sources": {
-      "earth": 15,
-      "moon": 15,
-      "sea": 15,
-      "sky": 15,
-      "sun": 15
+      "primalmagick:earth": 15,
+      "primalmagick:moon": 15,
+      "primalmagick:sea": 15,
+      "primalmagick:sky": 15,
+      "primalmagick:sun": 15
     }
   },
   "pattern": [
     "NNN",
     "N N"
   ],
-  "research": "WAND_CAP_PRIMALITE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_cap_primalite"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:primalite_wand_cap_item"

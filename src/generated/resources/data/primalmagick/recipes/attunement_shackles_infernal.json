@@ -10,7 +10,7 @@
   },
   "mana": {
     "sources": {
-      "infernal": 40
+      "primalmagick:infernal": 40
     }
   },
   "pattern": [
@@ -18,7 +18,25 @@
     "C C",
     "S S"
   ],
-  "research": "ATTUNEMENT_SHACKLES&&t_discover_infernal",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:attunement_shackles"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:attunement_shackles_infernal"

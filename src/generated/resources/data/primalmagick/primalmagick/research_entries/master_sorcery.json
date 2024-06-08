@@ -1,0 +1,69 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_sorcery.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:master_sorcery"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:spell_vehicle_projectile"
+    },
+    {
+      "rootKey": "primalmagick:spell_mod_amplify"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_forbidden"
+            }
+          },
+          {
+            "requiredValue": 50,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:spells_cast"
+          },
+          {
+            "requiredValue": 50,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:spells_crafted_max_cost"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:master_sorcery"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.master_sorcery.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:master_sorcery"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.master_sorcery.text.stage.2"
+    }
+  ]
+}

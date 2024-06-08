@@ -3,9 +3,9 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 import java.util.List;
 import java.util.Map;
 
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -46,23 +46,18 @@ public class RunescribingResultSlot extends Slot {
         Level level = this.player.level();
         if (!level.isClientSide) {
             // Increment the player's runescribing stat
-            if (this.player instanceof ServerPlayer) {
-                StatsManager.incrementValue((ServerPlayer)this.player, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());
+            if (this.player instanceof ServerPlayer serverPlayer) {
+                StatsManager.incrementValue(serverPlayer, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());
             }
 
             // Grant the player rune enchantment research for each rune enchantmant imbued
-            if (ResearchManager.isResearchComplete(this.player, SimpleResearchKey.FIRST_STEPS)) {
+            if (ResearchManager.isResearchComplete(this.player, ResearchEntries.FIRST_STEPS)) {
                 List<Rune> runes = RuneManager.getRunes(stack);
-                Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(runes, stack, this.player, false);
-                if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, ResearchNames.UNLOCK_RUNE_ENCHANTMENTS.get().simpleKey())) {
-                    ResearchManager.completeResearch(this.player, ResearchNames.UNLOCK_RUNE_ENCHANTMENTS.get().simpleKey());
+                Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(level.registryAccess(), runes, stack, this.player, false);
+                if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS)) {
+                    ResearchManager.completeResearch(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS);
                 }
-                for (Enchantment enchant : enchants.keySet()) {
-                    SimpleResearchKey key = SimpleResearchKey.parseRuneEnchantment(enchant);
-                    if (key != null) {
-                        ResearchManager.completeResearch(this.player, key);
-                    }
-                }
+                enchants.keySet().forEach(enchant -> ResearchManager.completeResearch(this.player, new RuneEnchantmentKey(enchant)));
             }
         }
     }

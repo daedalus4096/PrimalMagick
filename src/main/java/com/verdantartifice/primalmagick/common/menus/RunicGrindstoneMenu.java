@@ -2,17 +2,19 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
@@ -47,7 +49,6 @@ import net.minecraft.world.phys.Vec3;
  */
 public class RunicGrindstoneMenu extends AbstractContainerMenu {
     protected static final List<RuneType> RUNE_TYPES = List.of(RuneType.VERB, RuneType.NOUN, RuneType.SOURCE);
-    protected static final Supplier<SimpleResearchKey> UNLOCK_INDEX_RESEARCH = ResearchNames.simpleKey(ResearchNames.UNLOCK_RUNE_ENCHANTMENTS);
     
     public final Container resultSlots = new ResultContainer();
     public final Container repairSlots = new SimpleContainer(2) {
@@ -262,38 +263,41 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
     
     protected void grantHints(ItemStack stack) {
         Set<Enchantment> enchants = EnchantmentHelper.getEnchantments(stack).keySet();
-        int hintCount = 0;
         
-        for (Enchantment enchant : enchants) {
-            SimpleResearchKey fullResearch = SimpleResearchKey.parseRuneEnchantment(enchant);
-            if (RuneManager.hasRuneDefinition(enchant) && !fullResearch.isKnownByStrict(this.player)) {
-                RuneEnchantmentDefinition definition = RuneManager.getRuneDefinition(enchant);
-                CompoundResearchKey requirements = definition.getRequiredResearch();
-                if (requirements == null || requirements.isKnownByStrict(this.player)) {
-                    List<SimpleResearchKey> candidates = definition.getRunes().stream().filter(rune -> rune.getDiscoveryKey().isKnownByStrict(this.player))
-                            .map(rune -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rune.getType())).filter(key -> !key.isKnownByStrict(this.player)).toList();
-                    if (!candidates.isEmpty()) {
-                        // If at least one hint is available, grant one at random
-                        WeightedRandomBag<SimpleResearchKey> candidateBag = new WeightedRandomBag<>();
-                        for (SimpleResearchKey candidate : candidates) {
-                            candidateBag.add(candidate, 1);
-                        }
-                        ResearchManager.completeResearch(this.player, UNLOCK_INDEX_RESEARCH.get());
-                        ResearchManager.completeResearch(this.player, candidateBag.getRandom(this.player.getRandom()));
-                        hintCount++;
-                        
-                        // If, after granting the hint, the player knows all three pieces, then grant them the full research
-                        if (definition.getRunes().stream().map(rune -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rune.getType())).allMatch(key -> key.isKnownByStrict(this.player))) {
-                            ResearchManager.completeResearch(this.player, fullResearch);
+        this.worldPosCallable.execute((level, pos) -> {
+            MutableInt hintCount = new MutableInt(0);
+            for (Enchantment enchant : enchants) {
+                RuneManager.getRuneDefinition(level.registryAccess(), enchant).ifPresent(definition -> {
+                    RuneEnchantmentKey fullResearch = new RuneEnchantmentKey(enchant);
+                    if (!fullResearch.isKnownBy(this.player)) {
+                        Optional<AbstractRequirement<?>> requirementOpt = definition.requirementOpt();
+                        if (requirementOpt.isEmpty() || requirementOpt.get().isMetBy(this.player)) {
+                            List<RuneEnchantmentPartialKey> candidates = definition.getRunes().stream().filter(rune -> rune.getRequirement().isMetBy(this.player))
+                                    .map(rune -> new RuneEnchantmentPartialKey(enchant, rune.getType())).filter(key -> !key.isKnownBy(this.player)).toList();
+                            if (!candidates.isEmpty()) {
+                                // If at least one hint is available, grant one at random
+                                WeightedRandomBag<RuneEnchantmentPartialKey> candidateBag = new WeightedRandomBag<>();
+                                for (RuneEnchantmentPartialKey candidate : candidates) {
+                                    candidateBag.add(candidate, 1);
+                                }
+                                ResearchManager.completeResearch(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS);
+                                ResearchManager.completeResearch(this.player, candidateBag.getRandom(this.player.getRandom()));
+                                hintCount.increment();
+                                
+                                // If, after granting the hint, the player knows all three pieces, then grant them the full research
+                                if (definition.getRunes().stream().map(rune -> new RuneEnchantmentPartialKey(enchant, rune.getType())).allMatch(key -> key.isKnownBy(this.player))) {
+                                    ResearchManager.completeResearch(this.player, fullResearch);
+                                }
+                            }
                         }
                     }
-                }
+                });
             }
-        }
-        if (hintCount > 0) {
-            // If at least one hint was granted to the player, notify them
-            this.player.displayClientMessage(Component.translatable("event.primalmagick.runic_grindstone.hints_granted").withStyle(ChatFormatting.GREEN), false);
-        }
+            if (hintCount.intValue() > 0) {
+                // If at least one hint was granted to the player, notify them
+                this.player.displayClientMessage(Component.translatable("event.primalmagick.runic_grindstone.hints_granted").withStyle(ChatFormatting.GREEN), false);
+            }
+        });
     }
     
     public ItemStack mergeEnchants(ItemStack pCopyTo, ItemStack pCopyFrom) {

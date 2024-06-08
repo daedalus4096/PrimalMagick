@@ -9,7 +9,13 @@
     "###",
     "# #"
   ],
-  "research": "SAINTSWOOL",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:saintswool"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:saintswool_head",

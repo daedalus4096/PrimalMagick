@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "earth": 78,
-    "infernal": 22
+    "primalmagick:earth": 78,
+    "primalmagick:infernal": 22
   },
   "target": "minecraft:netherite_boots"
 }

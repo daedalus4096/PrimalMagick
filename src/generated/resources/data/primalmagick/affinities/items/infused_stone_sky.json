@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "sky": 1
+    "primalmagick:sky": 1
   },
   "base": "minecraft:stone",
   "target": "primalmagick:infused_stone_sky"

@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.runes;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
+
 import net.minecraft.util.StringRepresentable;
 
 /**
@@ -16,6 +18,8 @@ public enum RuneType implements StringRepresentable {
     SOURCE("source"),
     POWER("power");
     
+    public static final Codec<RuneType> CODEC = StringRepresentable.fromEnum(RuneType::values);
+
     private final String name;
     
     private RuneType(String str) {

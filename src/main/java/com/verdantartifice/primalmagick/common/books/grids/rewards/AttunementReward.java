@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -67,7 +68,7 @@ public class AttunementReward extends AbstractReward {
 
     @Override
     public ResourceLocation getIconLocation(Player player) {
-        return this.source.isDiscovered(player) ? this.source.getImage() : Source.UNKNOWN_IMAGE;
+        return this.source.isDiscovered(player) ? this.source.getImage() : Source.getUnknownImage();
     }
 
     @Override
@@ -89,7 +90,7 @@ public class AttunementReward extends AbstractReward {
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = super.serializeNBT();
-        tag.putString("Source", this.source.getTag());
+        tag.putString("Source", this.source.getId().toString());
         tag.putInt("Points", this.points);
         return tag;
     }
@@ -97,7 +98,7 @@ public class AttunementReward extends AbstractReward {
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
-        this.source = Source.getSource(nbt.getString("Source"));
+        this.source = Sources.get(new ResourceLocation(nbt.getString("Source")));
         Verify.verifyNotNull(this.source, "Invalid source for attunement reward");
         this.setPoints(nbt.getInt("Points"));
     }
@@ -105,19 +106,19 @@ public class AttunementReward extends AbstractReward {
     public static class Serializer implements IRewardSerializer<AttunementReward> {
         @Override
         public AttunementReward read(ResourceLocation templateId, JsonObject json) {
-            Source source = Source.getSource(json.getAsJsonPrimitive("source").getAsString());
+            Source source = Sources.get(new ResourceLocation(json.getAsJsonPrimitive("source").getAsString()));
             int points = json.getAsJsonPrimitive("points").getAsInt();
             return new AttunementReward(source, points);
         }
 
         @Override
         public AttunementReward fromNetwork(FriendlyByteBuf buf) {
-            return new AttunementReward(Source.getSource(buf.readUtf()), buf.readVarInt());
+            return new AttunementReward(Sources.get(buf.readResourceLocation()), buf.readVarInt());
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, AttunementReward reward) {
-            buf.writeUtf(reward.source.getTag());
+            buf.writeResourceLocation(reward.source.getId());
             buf.writeVarInt(reward.points);
         }
     }

@@ -10,19 +10,25 @@
   },
   "mana": {
     "sources": {
-      "earth": 5,
-      "moon": 5,
-      "sea": 5,
-      "sky": 5,
-      "sun": 5,
-      "void": 15
+      "primalmagick:earth": 5,
+      "primalmagick:moon": 5,
+      "primalmagick:sea": 5,
+      "primalmagick:sky": 5,
+      "primalmagick:sun": 5,
+      "primalmagick:void": 15
     }
   },
   "pattern": [
     "D#",
     "#D"
   ],
-  "research": "WAND_CORE_PURPUR",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_purpur"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:purpur_wand_core_item"

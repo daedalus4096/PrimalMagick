@@ -5,8 +5,9 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
 import net.minecraft.ChatFormatting;
@@ -26,9 +27,9 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class ResearchGainItem extends Item {
-    protected final Supplier<SimpleResearchKey> keySupplier;
+    protected final Supplier<ResearchEntryKey> keySupplier;
     
-    public ResearchGainItem(Supplier<SimpleResearchKey> keySupplier, Item.Properties properties) {
+    public ResearchGainItem(Supplier<ResearchEntryKey> keySupplier, Item.Properties properties) {
         super(properties);
         this.keySupplier = keySupplier;
     }
@@ -36,8 +37,8 @@ public class ResearchGainItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide) {
-            if (SimpleResearchKey.FIRST_STEPS.isKnownByStrict(player)) {
-                if (!this.keySupplier.get().isKnownByStrict(player)) {
+            if (ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS)) {
+                if (!this.keySupplier.get().isKnownBy(player)) {
                     ResearchManager.completeResearch(player, this.keySupplier.get());
                     player.displayClientMessage(Component.translatable("event.primalmagick.research.gain").withStyle(ChatFormatting.GREEN), false);
                     if (player instanceof ServerPlayer serverPlayer) {

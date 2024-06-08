@@ -23,10 +23,28 @@
   ],
   "mana": {
     "sources": {
-      "infernal": 3
+      "primalmagick:infernal": 3
     }
   },
-  "research": "CONCOCTING_BOMBS&&t_discover_infernal",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_bombs"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:alchemical_bomb",

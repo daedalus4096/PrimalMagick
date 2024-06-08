@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.research;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 
@@ -11,19 +12,19 @@ import net.minecraft.world.entity.EntityType;
 public class ScanEntityResearchTrigger extends AbstractScanResearchTrigger {
     protected final EntityType<?> target;
     
-    public ScanEntityResearchTrigger(EntityType<?> target, SimpleResearchKey toUnlock) {
+    public ScanEntityResearchTrigger(EntityType<?> target, ResourceKey<ResearchEntry> toUnlock) {
         this(target, toUnlock, true);
     }
     
-    public ScanEntityResearchTrigger(EntityType<?> target, SimpleResearchKey toUnlock, boolean unlockScansPage) {
+    public ScanEntityResearchTrigger(EntityType<?> target, ResourceKey<ResearchEntry> toUnlock, boolean unlockScansPage) {
         super(toUnlock, unlockScansPage);
         this.target = target;
     }
 
     @Override
     public boolean matches(ServerPlayer player, Object obj) {
-        if (obj instanceof EntityType<?>) {
-            return this.target.equals((EntityType<?>)obj);
+        if (obj instanceof EntityType<?> entityType) {
+            return this.target.equals(entityType);
         } else {
             return false;
         }

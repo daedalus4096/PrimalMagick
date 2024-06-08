@@ -5,8 +5,8 @@ import java.util.List;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
@@ -38,11 +38,11 @@ public class ForbiddenSourceGainItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide) {
-            if (SimpleResearchKey.FIRST_STEPS.isKnownByStrict(player)) {
-                if (!this.source.getDiscoverKey().isKnownByStrict(player)) {
+            if (ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS)) {
+                if (!this.source.isDiscovered(player)) {
                     // FIXME Refactor this to either be blood-specific or fully generic, stop splitting the difference
-                    ResearchManager.completeResearch(player, this.source.getDiscoverKey());
-                    player.displayClientMessage(Component.translatable("event.primalmagick.discover_source." + this.source.getTag() + ".alternate").withStyle(ChatFormatting.GREEN), false);
+                    this.source.getDiscoverKey().ifPresent(key -> ResearchManager.completeResearch(player, key));
+                    player.displayClientMessage(Component.translatable("event." + this.source.getId().getNamespace() + ".discover_source." + this.source.getId().getPath() + ".alternate").withStyle(ChatFormatting.GREEN), false);
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                     }

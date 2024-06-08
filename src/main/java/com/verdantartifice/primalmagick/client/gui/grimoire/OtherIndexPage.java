@@ -13,8 +13,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -48,21 +46,21 @@ public class OtherIndexPage extends AbstractPage {
         y += 24;
         
         // Add attunements button if attunements are unlocked
-        if (ResearchManager.isResearchComplete(mc.player, ResearchNames.ATTUNEMENTS.get().simpleKey())) {
+        if (ResearchManager.isResearchComplete(mc.player, ResearchEntries.ATTUNEMENTS)) {
             text = Component.translatable("grimoire.primalmagick.attunement_header");
             Button button = screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();
         }
         
         // Add linguistics button
-        if (ResearchManager.isResearchComplete(mc.player, ResearchNames.LINGUISTICS.get().simpleKey())) {
+        if (ResearchManager.isResearchComplete(mc.player, ResearchEntries.LINGUISTICS)) {
             text = Component.translatable("grimoire.primalmagick.linguistics_header");
             Button button = screen.addWidgetToScreen(new LinguisticsIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();
         }
         
         // Add recipes button
-        ResearchEntry firstSteps = ResearchEntries.getEntry(SimpleResearchKey.FIRST_STEPS);
+        ResearchEntry firstSteps = ResearchEntries.getEntry(mc.level.registryAccess(), ResearchEntries.FIRST_STEPS);
         if (firstSteps != null && (firstSteps.isComplete(mc.player) || firstSteps.isInProgress(mc.player))) {
             text = Component.translatable("grimoire.primalmagick.recipe_index_header");
             Button button = screen.addWidgetToScreen(new RecipeIndexButton(x + 12 + (side * 140), y, text, screen));
@@ -70,15 +68,15 @@ public class OtherIndexPage extends AbstractPage {
         }
         
         // Add rune enchantments button if rune enchantments are unlocked
-        if (ResearchManager.isResearchComplete(mc.player, ResearchNames.UNLOCK_RUNE_ENCHANTMENTS.get().simpleKey())) {
+        if (ResearchManager.isResearchComplete(mc.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS)) {
             text = Component.translatable("grimoire.primalmagick.rune_enchantment_header");
             Button button = screen.addWidgetToScreen(new RuneEnchantmentIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();
         }
         
         // Add scans button if at least one scan is unlocked
-        ResearchDiscipline scans = ResearchDisciplines.getDiscipline("SCANS");
-        if (scans != null && scans.getUnlockResearchKey().isKnownBy(mc.player)) {
+        ResearchDiscipline scans = ResearchDisciplines.getDiscipline(mc.level.registryAccess(), ResearchDisciplines.SCANS);
+        if (scans != null && scans.unlockRequirementOpt().isPresent() && scans.unlockRequirementOpt().get().isMetBy(mc.player)) {
             text = Component.translatable(scans.getNameTranslationKey());
             Button button = screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, scans, true, true));
             y += button.getHeight();

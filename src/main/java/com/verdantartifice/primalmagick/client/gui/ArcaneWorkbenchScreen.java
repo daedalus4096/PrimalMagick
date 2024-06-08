@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
@@ -106,10 +107,10 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
     
     protected void initCostWidgets() {
         this.costWidgets.clear();
-        int widgetSetWidth = Source.SORTED_SOURCES.size() * 18;
+        int widgetSetWidth = Sources.getAllSorted().size() * 18;
         int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
         int y = this.topPos + 10;
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             this.costWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, 0, x, y, this.menu::getWand, this.menu.getPlayer())));
             x += 18;
         }

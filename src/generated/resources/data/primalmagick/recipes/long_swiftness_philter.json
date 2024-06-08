@@ -24,10 +24,16 @@
   ],
   "mana": {
     "sources": {
-      "infernal": 3
+      "primalmagick:infernal": 3
     }
   },
-  "research": "CONCOCTING_PHILTERS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_philters"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:concoction",

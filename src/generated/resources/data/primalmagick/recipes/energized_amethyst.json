@@ -11,7 +11,13 @@
       "item": "primalmagick:essence_shard_sun"
     }
   ],
-  "research": "SYNTHETIC_GEM_BUDS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:synthetic_gem_buds"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:energized_amethyst"

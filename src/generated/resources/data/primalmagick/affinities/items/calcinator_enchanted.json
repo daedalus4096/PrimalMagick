@@ -1,12 +1,12 @@
 {
   "type": "item",
   "set": {
-    "earth": 77,
-    "infernal": 2,
-    "moon": 26,
-    "sea": 26,
-    "sky": 26,
-    "sun": 26
+    "primalmagick:earth": 77,
+    "primalmagick:infernal": 2,
+    "primalmagick:moon": 26,
+    "primalmagick:sea": 26,
+    "primalmagick:sky": 26,
+    "primalmagick:sun": 26
   },
   "target": "primalmagick:calcinator_enchanted"
 }

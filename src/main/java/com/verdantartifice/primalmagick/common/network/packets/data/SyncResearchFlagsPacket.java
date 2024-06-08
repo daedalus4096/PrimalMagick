@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.network.packets.data;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -17,26 +17,24 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SyncResearchFlagsPacket implements IMessageToServer {
-    protected SimpleResearchKey key;
-    protected boolean isNew;
-    protected boolean isUpdated;
-    protected boolean isPopup;
+    protected final ResearchEntryKey key;
+    protected final boolean isNew;
+    protected final boolean isUpdated;
+    protected final boolean isPopup;
     
-    public SyncResearchFlagsPacket() {
-        this.key = null;
-        this.isNew = false;
-        this.isUpdated = false;
-        this.isPopup = false;
+    public SyncResearchFlagsPacket(Player player, ResearchEntryKey key) {
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
+        this.key = key;
+        this.isNew = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
+        this.isUpdated = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.UPDATED);
+        this.isPopup = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
     }
     
-    public SyncResearchFlagsPacket(Player player, SimpleResearchKey key) {
-        this();
+    protected SyncResearchFlagsPacket(ResearchEntryKey key, boolean isNew, boolean isUpdated, boolean isPopup) {
         this.key = key;
-        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-            this.isNew = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
-            this.isUpdated = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.UPDATED);
-            this.isPopup = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
-        });
+        this.isNew = isNew;
+        this.isUpdated = isUpdated;
+        this.isPopup = isPopup;
     }
     
     public static NetworkDirection direction() {
@@ -44,19 +42,14 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
     }
     
     public static void encode(SyncResearchFlagsPacket message, FriendlyByteBuf buf) {
-        buf.writeUtf(message.key.getRootKey());
+        message.key.toNetwork(buf);
         buf.writeBoolean(message.isNew);
         buf.writeBoolean(message.isUpdated);
         buf.writeBoolean(message.isPopup);
     }
     
     public static SyncResearchFlagsPacket decode(FriendlyByteBuf buf) {
-        SyncResearchFlagsPacket message = new SyncResearchFlagsPacket();
-        message.key = SimpleResearchKey.parse(buf.readUtf());
-        message.isNew = buf.readBoolean();
-        message.isUpdated = buf.readBoolean();
-        message.isPopup = buf.readBoolean();
-        return message;
+        return new SyncResearchFlagsPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
     }
     
     public static void onMessage(SyncResearchFlagsPacket message, CustomPayloadEvent.Context ctx) {

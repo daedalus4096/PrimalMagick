@@ -23,7 +23,7 @@
   "instability": 5,
   "mana": {
     "sources": {
-      "hallowed": 100
+      "primalmagick:hallowed": 100
     }
   },
   "props": [
@@ -37,7 +37,25 @@
       "block": "primalmagick:soul_anvil"
     }
   ],
-  "research": "GRAND_PIXIES&&t_discover_hallowed",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:grand_pixies"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:pixie_grand_hallowed"
