@@ -10,7 +10,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
-import com.verdantartifice.primalmagick.common.stats.StatsManager;
+import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -65,7 +65,7 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
     }
     
     public int getThreshold() {
-        return this.thresholdOverrideOpt.orElseGet(() -> StatsManager.getExpertiseThreshold(this.discipline, this.tier));
+        return this.thresholdOverrideOpt.orElseGet(() -> ExpertiseManager.getThreshold(this.discipline, this.tier).orElse(0));
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
         if (player == null) {
             return false;
         } else {
-            return this.discipline.isKnownBy(player) && (StatsManager.getExpertiseValue(player, this.discipline) >= this.getThreshold());
+            return this.discipline.isKnownBy(player) && (ExpertiseManager.getValue(player, this.discipline).orElse(0) >= this.getThreshold());
         }
     }
 
@@ -84,7 +84,7 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
 
     @Override
     public boolean forceComplete(Player player) {
-        StatsManager.setExpertiseValue(player, this.discipline, this.getThreshold());
+        ExpertiseManager.setValueIfMax(player, this.discipline, this.getThreshold());
         return true;
     }
 
