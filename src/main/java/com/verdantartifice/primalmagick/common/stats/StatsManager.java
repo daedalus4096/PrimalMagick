@@ -14,6 +14,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
@@ -115,6 +117,20 @@ public class StatsManager {
         if (newVal > getValue(player, stat)) {
             setValue(player, stat, newVal);
         }
+    }
+    
+    public static int getExpertiseThreshold(ResearchDisciplineKey discipline, ResearchTier tier) {
+        // TODO Stub
+        return 0;
+    }
+    
+    public static int getExpertiseValue(Player player, ResearchDisciplineKey discipline) {
+        // TODO Stub
+        return 0;
+    }
+    
+    public static void setExpertiseValue(Player player, ResearchDisciplineKey discipline, int total) {
+        // TODO Stub
     }
     
     public static void discoverShrine(@Nullable Player player, @Nullable Source shrineSource, @Nullable BlockPos shrinePos) {
