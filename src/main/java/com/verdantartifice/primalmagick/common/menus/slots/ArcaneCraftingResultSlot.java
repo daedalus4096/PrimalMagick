@@ -97,7 +97,7 @@ public class ArcaneCraftingResultSlot extends Slot {
                                 ResearchDiscipline disc = ResearchDisciplines.getDiscipline(this.player.level().registryAccess(), entry.disciplineKeyOpt().get());
                                 if (disc != null && !recordedDisciplines.contains(disc.key())) {
                                     // Only increment the stat for each discipline once
-                                    disc.craftingStat().ifPresent(stat -> StatsManager.incrementValue(this.player, stat, this.amountCrafted));
+                                    disc.expertiseStat().ifPresent(stat -> StatsManager.incrementValue(this.player, stat, this.amountCrafted));
                                 }
                             }
                         }

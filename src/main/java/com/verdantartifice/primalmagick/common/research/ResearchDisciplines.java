@@ -35,17 +35,17 @@ public class ResearchDisciplines {
     public static void bootstrap(BootstapContext<ResearchDiscipline> context) {
         context.register(BASICS, ResearchDiscipline.builder(BASICS).icon(PrimalMagick.resource("textures/item/grimoire.png")).indexSortOrder(100).build());
         context.register(MANAWEAVING, ResearchDiscipline.builder(MANAWEAVING).unlock(ResearchEntries.UNLOCK_MANAWEAVING).icon(PrimalMagick.resource("textures/research/discipline_manaweaving.png"))
-                .craftingStat(StatsPM.CRAFTED_MANAWEAVING).indexSortOrder(200).build());
+                .expertiseStat(StatsPM.EXPERTISE_MANAWEAVING).indexSortOrder(200).build());
         context.register(ALCHEMY, ResearchDiscipline.builder(ALCHEMY).unlock(ResearchEntries.UNLOCK_ALCHEMY).icon(PrimalMagick.resource("textures/research/discipline_alchemy.png"))
-                .craftingStat(StatsPM.CRAFTED_ALCHEMY).indexSortOrder(300).build());
+                .expertiseStat(StatsPM.EXPERTISE_ALCHEMY).indexSortOrder(300).build());
         context.register(SORCERY, ResearchDiscipline.builder(SORCERY).unlock(ResearchEntries.UNLOCK_SORCERY).icon(PrimalMagick.resource("textures/research/discipline_sorcery.png"))
-                .craftingStat(StatsPM.CRAFTED_SORCERY).indexSortOrder(400).build());
+                .expertiseStat(StatsPM.EXPERTISE_SORCERY).indexSortOrder(400).build());
         context.register(RUNEWORKING, ResearchDiscipline.builder(RUNEWORKING).unlock(ResearchEntries.UNLOCK_RUNEWORKING).icon(PrimalMagick.resource("textures/research/discipline_runeworking.png"))
-                .craftingStat(StatsPM.CRAFTED_SORCERY).indexSortOrder(500).build());
+                .expertiseStat(StatsPM.EXPERTISE_RUNEWORKING).indexSortOrder(500).build());
         context.register(RITUAL, ResearchDiscipline.builder(RITUAL).unlock(ResearchEntries.UNLOCK_RITUAL).icon(PrimalMagick.resource("textures/research/discipline_ritual.png"))
-                .craftingStat(StatsPM.CRAFTED_RITUAL).indexSortOrder(600).build());
+                .expertiseStat(StatsPM.EXPERTISE_RITUAL).indexSortOrder(600).build());
         context.register(MAGITECH, ResearchDiscipline.builder(MAGITECH).unlock(ResearchEntries.UNLOCK_MAGITECH).icon(PrimalMagick.resource("textures/research/discipline_magitech.png"))
-                .craftingStat(StatsPM.CRAFTED_MAGITECH).indexSortOrder(700).build());
+                .expertiseStat(StatsPM.EXPERTISE_MAGITECH).indexSortOrder(700).build());
         context.register(SCANS, ResearchDiscipline.builder(SCANS).unlock(ResearchEntries.UNLOCK_SCANS).icon(PrimalMagick.resource("textures/item/magnifying_glass.png")).build());
     }
     

@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 public class ExpertiseManager {
     protected static Optional<Stat> getStat(RegistryAccess registryAccess, ResearchDisciplineKey disciplineKey) {
         ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(registryAccess, disciplineKey);
-        return discipline == null ? Optional.empty() : discipline.craftingStat();
+        return discipline == null ? Optional.empty() : discipline.expertiseStat();
     }
     
     public static Optional<Integer> getThreshold(ResearchDisciplineKey disciplineKey, ResearchTier tier) {

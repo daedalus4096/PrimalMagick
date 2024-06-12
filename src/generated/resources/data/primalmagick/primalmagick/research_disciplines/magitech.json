@@ -1,5 +1,5 @@
 {
-  "craftingStat": "primalmagick:crafted_magitech",
+  "expertiseStat": "primalmagick:expertise_magitech",
   "iconLocation": "primalmagick:textures/research/discipline_magitech.png",
   "indexSortOrder": 700,
   "key": {

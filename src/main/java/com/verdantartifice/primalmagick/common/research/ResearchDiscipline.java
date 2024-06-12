@@ -33,13 +33,13 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractRequirement<?>> unlockRequirementOpt, ResourceLocation iconLocation, Optional<Stat> craftingStat, OptionalInt indexSortOrder) {
+public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractRequirement<?>> unlockRequirementOpt, ResourceLocation iconLocation, Optional<Stat> expertiseStat, OptionalInt indexSortOrder) {
     public static Codec<ResearchDiscipline> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResearchDisciplineKey.CODEC.fieldOf("key").forGetter(ResearchDiscipline::key),
                 AbstractRequirement.dispatchCodec().optionalFieldOf("unlockRequirementOpt").forGetter(ResearchDiscipline::unlockRequirementOpt),
                 ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(ResearchDiscipline::iconLocation),
-                ResourceLocation.CODEC.optionalFieldOf("craftingStat").xmap(locOpt -> locOpt.map(loc -> StatsManager.getStat(loc)), statOpt -> statOpt.map(stat -> stat.key())).forGetter(ResearchDiscipline::craftingStat),
+                ResourceLocation.CODEC.optionalFieldOf("expertiseStat").xmap(locOpt -> locOpt.map(loc -> StatsManager.getStat(loc)), statOpt -> statOpt.map(stat -> stat.key())).forGetter(ResearchDiscipline::expertiseStat),
                 CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("indexSortOrder")).forGetter(ResearchDiscipline::indexSortOrder)
             ).apply(instance, ResearchDiscipline::new));
     }
@@ -71,7 +71,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
         protected final ResearchDisciplineKey key;
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
         protected ResourceLocation iconLocation = null;
-        protected Optional<Stat> craftingStat = Optional.empty();
+        protected Optional<Stat> expertiseStat = Optional.empty();
         protected OptionalInt indexSortOrder = OptionalInt.empty();
         
         public Builder(ResearchDisciplineKey key) {
@@ -92,8 +92,8 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
             return this;
         }
         
-        public Builder craftingStat(Stat stat) {
-            this.craftingStat = Optional.of(stat);
+        public Builder expertiseStat(Stat stat) {
+            this.expertiseStat = Optional.of(stat);
             return this;
         }
         
@@ -120,7 +120,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
         
         public ResearchDiscipline build() {
             this.validate();
-            return new ResearchDiscipline(this.key, this.getFinalRequirement(), this.iconLocation, this.craftingStat, this.indexSortOrder);
+            return new ResearchDiscipline(this.key, this.getFinalRequirement(), this.iconLocation, this.expertiseStat, this.indexSortOrder);
         }
     }
 }

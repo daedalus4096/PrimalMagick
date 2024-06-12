@@ -1,5 +1,5 @@
 {
-  "craftingStat": "primalmagick:crafted_sorcery",
+  "expertiseStat": "primalmagick:expertise_sorcery",
   "iconLocation": "primalmagick:textures/research/discipline_sorcery.png",
   "indexSortOrder": 400,
   "key": {
