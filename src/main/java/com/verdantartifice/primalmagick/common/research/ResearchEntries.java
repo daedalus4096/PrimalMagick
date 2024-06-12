@@ -1133,18 +1133,19 @@ public class ResearchEntries {
     
     private static void bootstrapRuneworkingEntries(BootstapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.RUNEWORKING;
-        register(context, BASIC_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(UNLOCK_RUNEWORKING)
+        register(context, BASIC_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_RUNEWORKING).parent(UNLOCK_RUNEWORKING)
                 .stage().recipe(ItemsPM.RUNECARVING_TABLE.get()).recipe(ItemsPM.RUNE_UNATTUNED.get()).recipe(ItemsPM.RUNESCRIBING_ALTAR_BASIC.get()).end()
                 .build());
-        register(context, EXPERT_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(RUNE_EARTH).parent(RUNE_PROJECT).parent(RUNE_ITEM)
+        register(context, EXPERT_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_RUNEWORKING)
+                .parent(RUNE_EARTH).parent(RUNE_PROJECT).parent(RUNE_ITEM)
                 .stage().requiredStat(StatsPM.CRAFTED_RUNEWORKING, 10).requiredStat(StatsPM.ITEMS_RUNESCRIBED, 2).end()
                 .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get()).end()
                 .build());
-        register(context, MASTER_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(RUNE_ABSORB).parent(RUNE_CREATURE)
+        register(context, MASTER_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ICON_RUNEWORKING).parent(RUNE_ABSORB).parent(RUNE_CREATURE)
                 .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_RUNEWORKING, 50).requiredStat(StatsPM.ITEMS_RUNESCRIBED, 10).end()
                 .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).end()
                 .build());
-        register(context, SUPREME_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(RUNE_POWER)
+        register(context, SUPREME_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_RUNEWORKING).parent(RUNE_POWER)
                 .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_RUNEWORKING, 250).requiredStat(StatsPM.ITEMS_RUNESCRIBED, 50).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).end()
                 .build());
@@ -1153,107 +1154,111 @@ public class ResearchEntries {
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
                 .build());
-        register(context, RUNE_EARTH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_EARTH.get()).parent(BASIC_RUNEWORKING)
+        register(context, RUNE_EARTH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.RUNE_EARTH.get()).parent(BASIC_RUNEWORKING)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).recipe(ItemsPM.RUNE_EARTH.get()).end()
                 .build());
-        register(context, RUNE_SEA, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_SEA.get()).parent(RUNE_EARTH)
+        register(context, RUNE_SEA, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.RUNE_SEA.get()).parent(RUNE_EARTH)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.SEA, 1).recipe(ItemsPM.RUNE_SEA.get()).end()
                 .build());
-        register(context, RUNE_SKY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_SKY.get()).parent(RUNE_EARTH)
+        register(context, RUNE_SKY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.RUNE_SKY.get()).parent(RUNE_EARTH)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.SKY, 1).recipe(ItemsPM.RUNE_SKY.get()).end()
                 .build());
-        register(context, RUNE_SUN, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_SUN.get()).parent(RUNE_SKY)
+        register(context, RUNE_SUN, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.RUNE_SUN.get()).parent(RUNE_SKY)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.SUN, 1).recipe(ItemsPM.RUNE_SUN.get()).end()
                 .build());
-        register(context, RUNE_MOON, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_MOON.get()).parent(RUNE_SEA)
+        register(context, RUNE_MOON, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.RUNE_MOON.get()).parent(RUNE_SEA)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.MOON, 1).recipe(ItemsPM.RUNE_MOON.get()).end()
                 .build());
-        register(context, RUNE_PROJECT, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_PROJECT.get()).parent(BASIC_RUNEWORKING)
+        register(context, RUNE_PROJECT, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.RUNE_PROJECT.get()).parent(BASIC_RUNEWORKING)
                 .stage().requiredObservations(1).end()
                 .stage().recipe(ItemsPM.RUNE_PROJECT.get()).end()
                 .build());
-        register(context, RUNE_PROTECT, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_PROTECT.get()).parent(RUNE_PROJECT)
+        register(context, RUNE_PROTECT, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.RUNE_PROTECT.get()).parent(RUNE_PROJECT)
                 .stage().requiredObservations(1).end()
                 .stage().recipe(ItemsPM.RUNE_PROTECT.get()).end()
                 .build());
-        register(context, RUNE_ITEM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_ITEM.get()).parent(BASIC_RUNEWORKING)
+        register(context, RUNE_ITEM, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.RUNE_ITEM.get()).parent(BASIC_RUNEWORKING)
                 .stage().requiredObservations(1).end()
                 .stage().recipe(ItemsPM.RUNE_ITEM.get()).end()
                 .build());
-        register(context, RUNE_SELF, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_SELF.get()).parent(RUNE_ITEM)
+        register(context, RUNE_SELF, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.RUNE_SELF.get()).parent(RUNE_ITEM)
                 .stage().requiredObservations(1).end()
                 .stage().recipe(ItemsPM.RUNE_SELF.get()).end()
                 .build());
-        register(context, RUNE_BLOOD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_BLOOD.get()).parent(EXPERT_RUNEWORKING).parent(DISCOVER_BLOOD)
+        register(context, RUNE_BLOOD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNE_BLOOD.get()).parent(EXPERT_RUNEWORKING).parent(DISCOVER_BLOOD)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.BLOOD, 1).recipe(ItemsPM.RUNE_BLOOD.get()).end()
                 .build());
-        register(context, RUNE_INFERNAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_INFERNAL.get()).parent(EXPERT_RUNEWORKING).parent(DISCOVER_INFERNAL)
+        register(context, RUNE_INFERNAL, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNE_INFERNAL.get())
+                .parent(EXPERT_RUNEWORKING).parent(DISCOVER_INFERNAL)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.INFERNAL, 1).recipe(ItemsPM.RUNE_INFERNAL.get()).end()
                 .build());
-        register(context, RUNE_VOID, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_VOID.get()).parent(EXPERT_RUNEWORKING).parent(DISCOVER_VOID)
+        register(context, RUNE_VOID, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNE_VOID.get()).parent(EXPERT_RUNEWORKING).parent(DISCOVER_VOID)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.VOID, 1).recipe(ItemsPM.RUNE_VOID.get()).end()
                 .build());
-        register(context, RUNE_ABSORB, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_ABSORB.get()).parent(EXPERT_RUNEWORKING)
+        register(context, RUNE_ABSORB, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNE_ABSORB.get()).parent(EXPERT_RUNEWORKING)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.RUNE_ABSORB.get()).end()
                 .build());
-        register(context, RUNE_DISPEL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_DISPEL.get()).parent(RUNE_ABSORB)
+        register(context, RUNE_DISPEL, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNE_DISPEL.get()).parent(RUNE_ABSORB)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.RUNE_DISPEL.get()).end()
                 .build());
-        register(context, RUNE_SUMMON, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_SUMMON.get()).parent(RUNE_ABSORB)
+        register(context, RUNE_SUMMON, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNE_SUMMON.get()).parent(RUNE_ABSORB)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.RUNE_SUMMON.get()).end()
                 .build());
-        register(context, RUNE_AREA, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_AREA.get()).parent(RUNE_CREATURE)
+        register(context, RUNE_AREA, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNE_AREA.get()).parent(RUNE_CREATURE)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.RUNE_AREA.get()).end()
                 .build());
-        register(context, RUNE_CREATURE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_CREATURE.get()).parent(EXPERT_RUNEWORKING)
+        register(context, RUNE_CREATURE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNE_CREATURE.get()).parent(EXPERT_RUNEWORKING)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.RUNE_CREATURE.get()).end()
                 .build());
-        register(context, RUNE_HALLOWED, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_HALLOWED.get()).parent(MASTER_RUNEWORKING).parent(DISCOVER_HALLOWED)
+        register(context, RUNE_HALLOWED, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.RUNE_HALLOWED.get())
+                .parent(MASTER_RUNEWORKING).parent(DISCOVER_HALLOWED)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.RUNE_HALLOWED.get()).end()
                 .build());
-        register(context, RUNE_INSIGHT, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_INSIGHT.get()).parent(EXPERT_RUNEWORKING).parent(SHARD_SYNTHESIS)
+        register(context, RUNE_INSIGHT, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNE_INSIGHT.get()).parent(EXPERT_RUNEWORKING).parent(SHARD_SYNTHESIS)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.RUNE_INSIGHT.get()).end()
                 .build());
-        register(context, RUNE_POWER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_POWER.get()).parent(MASTER_RUNEWORKING).parent(CRYSTAL_SYNTHESIS).parent(DISCOVER_BLOOD)
-                .parent(DISCOVER_INFERNAL).parent(DISCOVER_VOID).parent(RUNE_INSIGHT)
+        register(context, RUNE_POWER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.RUNE_POWER.get())
+                .parent(MASTER_RUNEWORKING).parent(CRYSTAL_SYNTHESIS).parent(DISCOVER_BLOOD).parent(DISCOVER_INFERNAL).parent(DISCOVER_VOID).parent(RUNE_INSIGHT)
                 .stage().requiredTheories(2).end()
                 .stage().sibling(SOTU_RESEARCH_POWER_RUNE).recipe(ItemsPM.RUNE_POWER.get()).end()
                 .build());
-        register(context, RUNE_GRACE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNE_GRACE.get()).parent(SUPREME_RUNEWORKING).parent(CLUSTER_SYNTHESIS).parent(DISCOVER_HALLOWED)
-                .parent(RUNE_POWER)
+        register(context, RUNE_GRACE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.RUNE_GRACE.get())
+                .parent(SUPREME_RUNEWORKING).parent(CLUSTER_SYNTHESIS).parent(DISCOVER_HALLOWED).parent(RUNE_POWER)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.RUNE_GRACE.get()).end()
                 .build());
-        register(context, RUNIC_GRINDSTONE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNIC_GRINDSTONE.get()).parent(RUNE_DISPEL)
+        register(context, RUNIC_GRINDSTONE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNIC_GRINDSTONE.get()).parent(RUNE_DISPEL)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.RUNIC_GRINDSTONE.get()).end()
                 .build());
-        register(context, RECALL_STONE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RECALL_STONE.get()).parent(EXPERT_RUNEWORKING).parent(RUNE_SUMMON).parent(RUNE_SELF)
+        register(context, RECALL_STONE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RECALL_STONE.get())
+                .parent(EXPERT_RUNEWORKING).parent(RUNE_SUMMON).parent(RUNE_SELF)
                 .stage().requiredTheories(1).requiredCraft(ItemTags.BEDS).end()
                 .stage().recipe(ItemsPM.RECALL_STONE.get()).end()
                 .build());
-        register(context, RUNIC_TRIM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()).parent(EXPERT_RUNEWORKING).parent(IMBUED_WOOL)
-                .parent(RUNE_EARTH).parent(RUNE_SEA).parent(RUNE_SKY).parent(RUNE_SUN).parent(RUNE_MOON)
+        register(context, RUNIC_TRIM, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get())
+                .parent(EXPERT_RUNEWORKING).parent(IMBUED_WOOL).parent(RUNE_EARTH).parent(RUNE_SEA).parent(RUNE_SKY).parent(RUNE_SUN).parent(RUNE_MOON)
                 .stage().requiredTheories(1).requiredItem(ItemsPM.RUNE_EARTH.get()).requiredItem(ItemsPM.RUNE_SEA.get())
                         .requiredItem(ItemsPM.RUNE_SKY.get()).requiredItem(ItemsPM.RUNE_SUN.get()).requiredItem(ItemsPM.RUNE_MOON.get()).end()
                 .stage().recipe(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()).end()
                 .build());
-        register(context, ENDERWARD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ENDERWARD.get()).parent(MASTER_RUNEWORKING).parent(RUNE_DISPEL).parent(DISCOVER_VOID)
+        register(context, ENDERWARD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.ENDERWARD.get())
+                .parent(MASTER_RUNEWORKING).parent(RUNE_DISPEL).parent(DISCOVER_VOID)
                 .stage().requiredTheories(2).end()
                 .stage().attunement(Sources.VOID, 3).recipe(ItemsPM.ENDERWARD.get()).end()
                 .addendum().requiredResearch(RECALL_STONE).end()
