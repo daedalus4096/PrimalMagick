@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType;
  * 
  * @author Daedalus4096
  */
-public interface IRitualRecipe extends Recipe<Container>, IHasManaCost, IHasRequirement {
+public interface IRitualRecipe extends Recipe<Container>, IHasManaCost, IHasRequirement, IHasExpertise {
     /**
      * Get the list of props for the recipe.
      * 
