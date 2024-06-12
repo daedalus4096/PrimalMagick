@@ -4,11 +4,18 @@ import java.util.Optional;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -31,12 +38,19 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
     protected final ShapedRecipePattern pattern;
     protected final Optional<AbstractRequirement<?>> requirement;
     protected final SourceList manaCosts;
+    protected final Optional<Integer> baseExpertiseOverride;
+    protected final Optional<Integer> bonusExpertiseOverride;
+    protected final Optional<ResourceLocation> expertiseGroup;
     
-    public ShapedArcaneRecipe(String group, ItemStack output, ShapedRecipePattern pattern, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts) {
+    public ShapedArcaneRecipe(String group, ItemStack output, ShapedRecipePattern pattern, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts, Optional<Integer> baseExpertiseOverride,
+            Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup) {
         super(group, output);
         this.pattern = pattern;
         this.requirement = requirement;
         this.manaCosts = manaCosts;
+        this.baseExpertiseOverride = baseExpertiseOverride;
+        this.bonusExpertiseOverride = bonusExpertiseOverride;
+        this.expertiseGroup = expertiseGroup;
     }
     
     @Override
@@ -84,6 +98,43 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
         });
     }
 
+    @Override
+    public int getExpertiseReward(RegistryAccess registryAccess) {
+        return this.baseExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
+        return this.bonusExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultBonusExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public Optional<ResourceLocation> getExpertiseGroup() {
+        return this.expertiseGroup;
+    }
+    
+    protected Optional<ResearchTier> getResearchTier(RegistryAccess registryAccess) {
+        return this.getRequirement().flatMap(req -> {
+            Optional<ResearchTier> retVal = Optional.empty();
+            for (AbstractResearchKey<?> rawKey : req.streamKeys().toList()) {
+                if (rawKey instanceof ResearchEntryKey entryKey) {
+                    ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
+                    if (entry != null) {
+                        Optional<ResearchTier> tierOpt = entry.tierOpt();
+                        if (retVal.isEmpty() || (tierOpt.isPresent() && tierOpt.get().compareTo(retVal.get()) > 0)) {
+                            retVal = tierOpt;
+                        }
+                    }
+                }
+            }
+            return retVal;
+        });
+    }
+
     public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
         @Override
         public Codec<ShapedArcaneRecipe> codec() {
@@ -91,8 +142,11 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(r -> r.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(r -> r.output),
                     ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
-                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rsar -> rsar.requirement),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rsar -> rsar.manaCosts)
+                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(r -> r.requirement),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(r -> r.manaCosts),
+                    Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
+                    Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
+                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup)
             ).apply(instance, ShapedArcaneRecipe::new));
         }
 
@@ -102,8 +156,11 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
             ShapedRecipePattern pattern = ShapedRecipePattern.fromNetwork(buffer);
             Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
             SourceList manaCosts = SourceList.fromNetwork(buffer);
+            Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
+            Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
+            Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
             ItemStack stack = buffer.readItem();
-            return new ShapedArcaneRecipe(group, stack, pattern, requirement, manaCosts);
+            return new ShapedArcaneRecipe(group, stack, pattern, requirement, manaCosts, baseExpOverride, bonusExpOverride, expGroup);
         }
 
         @Override
@@ -112,6 +169,9 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
             recipe.pattern.toNetwork(buffer);
             buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
             SourceList.toNetwork(buffer, recipe.manaCosts);
+            buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
             buffer.writeItem(recipe.output);
         }
     }
