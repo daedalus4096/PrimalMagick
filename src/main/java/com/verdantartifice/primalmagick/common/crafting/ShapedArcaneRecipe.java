@@ -4,11 +4,6 @@ import java.util.Optional;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.research.ResearchTier;
-import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -115,24 +110,6 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
     @Override
     public Optional<ResourceLocation> getExpertiseGroup() {
         return this.expertiseGroup;
-    }
-    
-    protected Optional<ResearchTier> getResearchTier(RegistryAccess registryAccess) {
-        return this.getRequirement().flatMap(req -> {
-            Optional<ResearchTier> retVal = Optional.empty();
-            for (AbstractResearchKey<?> rawKey : req.streamKeys().toList()) {
-                if (rawKey instanceof ResearchEntryKey entryKey) {
-                    ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
-                    if (entry != null) {
-                        Optional<ResearchTier> tierOpt = entry.tierOpt();
-                        if (retVal.isEmpty() || (tierOpt.isPresent() && tierOpt.get().compareTo(retVal.get()) > 0)) {
-                            retVal = tierOpt;
-                        }
-                    }
-                }
-            }
-            return retVal;
-        });
     }
 
     public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
