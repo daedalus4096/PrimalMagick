@@ -48,5 +48,6 @@
       "siblings": [],
       "textTranslationKey": "research.primalmagick.rune_dispel.text.stage.2"
     }
-  ]
+  ],
+  "tier": "expert"
 }
