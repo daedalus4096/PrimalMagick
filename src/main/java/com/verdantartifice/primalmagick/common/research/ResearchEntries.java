@@ -744,19 +744,19 @@ public class ResearchEntries {
     
     private static void bootstrapAlchemyEntries(BootstapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.ALCHEMY;
-        register(context, BASIC_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(UNLOCK_ALCHEMY)
+        register(context, BASIC_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_ALCHEMY).parent(UNLOCK_ALCHEMY)
                 .stage().requiredCraft(ItemsPM.ESSENCE_FURNACE.get()).end()
                 .stage().end()
                 .build());
-        register(context, EXPERT_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(CALCINATOR_BASIC).parent(STONEMELDING)
+        register(context, EXPERT_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_ALCHEMY).parent(CALCINATOR_BASIC).parent(STONEMELDING)
                 .stage().requiredStat(StatsPM.CRAFTED_ALCHEMY, 50).end()
                 .stage().end()
                 .build());
-        register(context, MASTER_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(CALCINATOR_ENCHANTED).parent(PRIMALITE)
+        register(context, MASTER_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ICON_ALCHEMY).parent(CALCINATOR_ENCHANTED).parent(PRIMALITE)
                 .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_ALCHEMY, 250).end()
                 .stage().end()
                 .build());
-        register(context, SUPREME_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(CALCINATOR_FORBIDDEN).parent(HEXIUM)
+        register(context, SUPREME_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_ALCHEMY).parent(CALCINATOR_FORBIDDEN).parent(HEXIUM)
                 .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_ALCHEMY, 1000).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().end()
                 .build());
@@ -765,12 +765,12 @@ public class ResearchEntries {
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
                 .build());
-        register(context, STONEMELDING, key -> ResearchEntry.builder(key).discipline(discipline).icon(Items.STONE).parent(BASIC_ALCHEMY)
+        register(context, STONEMELDING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(Items.STONE).parent(BASIC_ALCHEMY)
                 .stage().requiredItem(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredCraft(Items.STONE).requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).recipe("stone_from_stonemelding").recipe("deepslate_from_stonemelding")
                         .recipe("cobblestone_from_stonemelding").recipe("gravel_from_stonemelding").end()
                 .build());
-        register(context, SKYGLASS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SKYGLASS.get()).parent(STONEMELDING)
+        register(context, SKYGLASS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.SKYGLASS.get()).parent(STONEMELDING)
                 .stage().requiredItem(ItemsPM.ESSENCE_DUST_SKY.get()).requiredCraft(Items.GLASS).requiredObservations(1).end()
                 .stage().attunement(Sources.SKY, 1)
                         .recipe(ItemsPM.SKYGLASS.get()).recipe(ItemsPM.SKYGLASS_PANE.get())
@@ -796,7 +796,7 @@ public class ResearchEntries {
                         .recipe("stained_skyglass_pane_yellow_from_blocks").recipe("stained_skyglass_pane_yellow_from_panes")
                         .end()
                 .build());
-        register(context, SHARD_SYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_SHARD_EARTH.get()).parent(EXPERT_ALCHEMY)
+        register(context, SHARD_SYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.ESSENCE_SHARD_EARTH.get()).parent(EXPERT_ALCHEMY)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .recipe("essence_shard_earth_from_dust").recipe("essence_shard_sea_from_dust").recipe("essence_shard_sky_from_dust").recipe("essence_shard_sun_from_dust")
@@ -806,7 +806,7 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 1).recipe("essence_shard_void_from_dust").end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 1).recipe("essence_shard_hallowed_from_dust").end()
                 .build());
-        register(context, SHARD_DESYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_SHARD_EARTH.get()).parent(SHARD_SYNTHESIS)
+        register(context, SHARD_DESYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.ESSENCE_SHARD_EARTH.get()).parent(SHARD_SYNTHESIS)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .recipe("essence_dust_earth_from_shard").recipe("essence_dust_sea_from_shard").recipe("essence_dust_sky_from_shard").recipe("essence_dust_sun_from_shard")
@@ -816,7 +816,7 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 1).recipe("essence_dust_void_from_shard").end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 1).recipe("essence_dust_hallowed_from_shard").end()
                 .build());
-        register(context, PRIMALITE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMALITE_INGOT.get()).parent(EXPERT_ALCHEMY)
+        register(context, PRIMALITE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.PRIMALITE_INGOT.get()).parent(EXPERT_ALCHEMY)
                 .stage().requiredItem(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredItem(ItemsPM.ESSENCE_DUST_SEA.get()).requiredItem(ItemsPM.ESSENCE_DUST_SKY.get())
                         .requiredItem(ItemsPM.ESSENCE_DUST_SUN.get()).requiredItem(ItemsPM.ESSENCE_DUST_MOON.get()).requiredTheories(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
@@ -826,7 +826,8 @@ public class ResearchEntries {
                         .recipe(ItemsPM.PRIMALITE_HOE.get()).recipe(ItemsPM.PRIMALITE_FISHING_ROD.get()).recipe(ItemsPM.PRIMALITE_HEAD.get()).recipe(ItemsPM.PRIMALITE_CHEST.get())
                         .recipe(ItemsPM.PRIMALITE_LEGS.get()).recipe(ItemsPM.PRIMALITE_FEET.get()).recipe(ItemsPM.PRIMALITE_SHIELD.get()).end()
                 .build());
-        register(context, CRYSTAL_SYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_CRYSTAL_EARTH.get()).parent(MASTER_ALCHEMY).parent(SHARD_SYNTHESIS)
+        register(context, CRYSTAL_SYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
+                .parent(MASTER_ALCHEMY).parent(SHARD_SYNTHESIS)
                 .stage().requiredTheories(2).end()
                 .stage().attunement(Sources.EARTH, 2).attunement(Sources.SEA, 2).attunement(Sources.SKY, 2).attunement(Sources.SUN, 2).attunement(Sources.MOON, 2)
                         .recipe("essence_crystal_earth_from_shard").recipe("essence_crystal_sea_from_shard").recipe("essence_crystal_sky_from_shard").recipe("essence_crystal_sun_from_shard")
@@ -836,7 +837,7 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 2).recipe("essence_crystal_void_from_shard").end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 2).recipe("essence_crystal_hallowed_from_shard").end()
                 .build());
-        register(context, CRYSTAL_DESYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_CRYSTAL_EARTH.get()).parent(CRYSTAL_SYNTHESIS)
+        register(context, CRYSTAL_DESYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.ESSENCE_CRYSTAL_EARTH.get()).parent(CRYSTAL_SYNTHESIS)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .recipe("essence_shard_earth_from_crystal").recipe("essence_shard_sea_from_crystal").recipe("essence_shard_sky_from_crystal").recipe("essence_shard_sun_from_crystal")
@@ -846,8 +847,8 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 1).recipe("essence_shard_void_from_crystal").end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 1).recipe("essence_shard_hallowed_from_crystal").end()
                 .build());
-        register(context, HEXIUM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HEXIUM_INGOT.get()).parent(MASTER_ALCHEMY).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
-                .parent(DISCOVER_BLOOD).parent(DISCOVER_INFERNAL).parent(DISCOVER_VOID)
+        register(context, HEXIUM, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.HEXIUM_INGOT.get())
+                .parent(MASTER_ALCHEMY).parent(PRIMALITE).parent(SHARD_SYNTHESIS).parent(DISCOVER_BLOOD).parent(DISCOVER_INFERNAL).parent(DISCOVER_VOID)
                 .stage().requiredItem(ItemsPM.ESSENCE_SHARD_BLOOD.get()).requiredItem(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
                         .requiredItem(ItemsPM.ESSENCE_SHARD_VOID.get()).requiredCraft(ItemsPM.PRIMALITE_INGOT.get()).requiredTheories(2).end()
                 .stage().attunement(Sources.BLOOD, 2).attunement(Sources.INFERNAL, 2).attunement(Sources.VOID, 2).sibling(SOTU_RESEARCH_HEXIUM)
@@ -858,7 +859,8 @@ public class ResearchEntries {
                         .recipe(ItemsPM.HEXIUM_HEAD.get()).recipe(ItemsPM.HEXIUM_CHEST.get()).recipe(ItemsPM.HEXIUM_LEGS.get()).recipe(ItemsPM.HEXIUM_FEET.get())
                         .recipe(ItemsPM.HEXIUM_SHIELD.get()).end()
                 .build());
-        register(context, CLUSTER_SYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_CLUSTER_EARTH.get()).parent(SUPREME_ALCHEMY).parent(CRYSTAL_SYNTHESIS)
+        register(context, CLUSTER_SYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.ESSENCE_CLUSTER_EARTH.get())
+                .parent(SUPREME_ALCHEMY).parent(CRYSTAL_SYNTHESIS)
                 .stage().requiredTheories(3).end()
                 .stage().attunement(Sources.EARTH, 3).attunement(Sources.SEA, 3).attunement(Sources.SKY, 3).attunement(Sources.SUN, 3).attunement(Sources.MOON, 3)
                         .recipe("essence_cluster_earth_from_crystal").recipe("essence_cluster_sea_from_crystal").recipe("essence_cluster_sky_from_crystal").recipe("essence_cluster_sun_from_crystal")
@@ -868,7 +870,7 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 3).recipe("essence_cluster_void_from_crystal").end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 3).recipe("essence_cluster_hallowed_from_crystal").end()
                 .build());
-        register(context, CLUSTER_DESYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_CLUSTER_EARTH.get()).parent(CLUSTER_SYNTHESIS)
+        register(context, CLUSTER_DESYNTHESIS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.ESSENCE_CLUSTER_EARTH.get()).parent(CLUSTER_SYNTHESIS)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .recipe("essence_crystal_earth_from_cluster").recipe("essence_crystal_sea_from_cluster").recipe("essence_crystal_sky_from_cluster").recipe("essence_crystal_sun_from_cluster")
@@ -878,8 +880,8 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 1).recipe("essence_crystal_void_from_cluster").end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 1).recipe("essence_crystal_hallowed_from_cluster").end()
                 .build());
-        register(context, HALLOWSTEEL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HALLOWSTEEL_INGOT.get()).parent(SUPREME_ALCHEMY).parent(HEXIUM).parent(CRYSTAL_SYNTHESIS)
-                .parent(DISCOVER_HALLOWED)
+        register(context, HALLOWSTEEL, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.HALLOWSTEEL_INGOT.get())
+                .parent(SUPREME_ALCHEMY).parent(HEXIUM).parent(CRYSTAL_SYNTHESIS).parent(DISCOVER_HALLOWED)
                 .stage().requiredItem(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get()).requiredCraft(ItemsPM.HEXIUM_INGOT.get())
                         .requiredTheories(3).end()
                 .stage().attunement(Sources.HALLOWED, 3).recipe(ItemsPM.HALLOWSTEEL_INGOT.get()).recipe(ItemsPM.HALLOWSTEEL_NUGGET.get())
@@ -889,37 +891,37 @@ public class ResearchEntries {
                         .recipe(ItemsPM.HALLOWSTEEL_AXE.get()).recipe(ItemsPM.HALLOWSTEEL_HOE.get()).recipe(ItemsPM.HALLOWSTEEL_FISHING_ROD.get()).recipe(ItemsPM.HALLOWSTEEL_HEAD.get())
                         .recipe(ItemsPM.HALLOWSTEEL_CHEST.get()).recipe(ItemsPM.HALLOWSTEEL_LEGS.get()).recipe(ItemsPM.HALLOWSTEEL_FEET.get()).recipe(ItemsPM.HALLOWSTEEL_SHIELD.get()).end()
                 .build());
-        register(context, CALCINATOR_BASIC, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CALCINATOR_BASIC.get()).parent(BASIC_ALCHEMY)
+        register(context, CALCINATOR_BASIC, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.CALCINATOR_BASIC.get()).parent(BASIC_ALCHEMY)
                 .stage().requiredObservations(1).requiredCraft(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredCraft(ItemsPM.ESSENCE_DUST_SEA.get())
                         .requiredCraft(ItemsPM.ESSENCE_DUST_SKY.get()).requiredCraft(ItemsPM.ESSENCE_DUST_SUN.get()).requiredCraft(ItemsPM.ESSENCE_DUST_MOON.get()).end()
                 .stage().recipe(ItemsPM.CALCINATOR_BASIC.get()).end()
                 .build());
-        register(context, CALCINATOR_ENCHANTED, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CALCINATOR_ENCHANTED.get()).parent(EXPERT_ALCHEMY).parent(EXPERT_MANAWEAVING)
-                .parent(SHARD_SYNTHESIS).parent(CALCINATOR_BASIC)
+        register(context, CALCINATOR_ENCHANTED, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.CALCINATOR_ENCHANTED.get())
+                .parent(EXPERT_ALCHEMY).parent(EXPERT_MANAWEAVING).parent(SHARD_SYNTHESIS).parent(CALCINATOR_BASIC)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.CALCINATOR_ENCHANTED.get()).end()
                 .build());
-        register(context, CALCINATOR_FORBIDDEN, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CALCINATOR_FORBIDDEN.get()).parent(MASTER_ALCHEMY).parent(MASTER_MANAWEAVING)
-                .parent(CRYSTAL_SYNTHESIS).parent(CALCINATOR_ENCHANTED) .parent(DISCOVER_BLOOD).parent(DISCOVER_INFERNAL).parent(DISCOVER_VOID)
+        register(context, CALCINATOR_FORBIDDEN, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.CALCINATOR_FORBIDDEN.get())
+                .parent(MASTER_ALCHEMY).parent(MASTER_MANAWEAVING).parent(CRYSTAL_SYNTHESIS).parent(CALCINATOR_ENCHANTED) .parent(DISCOVER_BLOOD).parent(DISCOVER_INFERNAL).parent(DISCOVER_VOID)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.CALCINATOR_FORBIDDEN.get()).end()
                 .build());
-        register(context, CALCINATOR_HEAVENLY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CALCINATOR_HEAVENLY.get()).parent(SUPREME_ALCHEMY).parent(SUPREME_MANAWEAVING)
-                .parent(CLUSTER_SYNTHESIS).parent(CALCINATOR_FORBIDDEN).parent(DISCOVER_HALLOWED)
+        register(context, CALCINATOR_HEAVENLY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.CALCINATOR_HEAVENLY.get())
+                .parent(SUPREME_ALCHEMY).parent(SUPREME_MANAWEAVING).parent(CLUSTER_SYNTHESIS).parent(CALCINATOR_FORBIDDEN).parent(DISCOVER_HALLOWED)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.CALCINATOR_HEAVENLY.get()).end()
                 .build());
-        register(context, CRYOTREATMENT, key -> ResearchEntry.builder(key).discipline(discipline).icon(Items.ICE).parent(STONEMELDING)
+        register(context, CRYOTREATMENT, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(Items.ICE).parent(STONEMELDING)
                 .stage().requiredItem(ItemsPM.ESSENCE_DUST_SEA.get()).requiredObservations(1).end()
                 .stage().attunement(Sources.SEA, 1).recipe("ice_from_cryotreatment").recipe("obsidian_from_cryotreatment").recipe("slime_ball_from_cryotreatment").end()
                 .build());
-        register(context, SANGUINE_CRUCIBLE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CRUCIBLE.get()).parent(MASTER_ALCHEMY).parent(HEXIUM).parent(CRYSTAL_SYNTHESIS)
-                .parent(SPELL_PAYLOAD_CONJURE_ANIMAL).parent(SPELL_PAYLOAD_DRAIN_SOUL)
+        register(context, SANGUINE_CRUCIBLE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CRUCIBLE.get())
+                .parent(MASTER_ALCHEMY).parent(HEXIUM).parent(CRYSTAL_SYNTHESIS).parent(SPELL_PAYLOAD_CONJURE_ANIMAL).parent(SPELL_PAYLOAD_DRAIN_SOUL)
                 .stage().requiredTheories(2).end()
                 .stage().attunement(Sources.BLOOD, 3).attunement(Sources.INFERNAL, 3).sibling(SOTU_RESEARCH_SANGUINE_CRUCIBLE).recipe(ItemsPM.SANGUINE_CRUCIBLE.get())
                         .recipe(ItemsPM.SANGUINE_CORE_BLANK.get()).end()
                 .build());
-        register(context, SANGUINE_CORE_LAND_ANIMALS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
+        register(context, SANGUINE_CORE_LAND_ANIMALS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.EARTH, 2).recipe(ItemsPM.SANGUINE_CORE_CAT.get()).recipe(ItemsPM.SANGUINE_CORE_CAMEL.get()).recipe(ItemsPM.SANGUINE_CORE_CAVE_SPIDER.get())
                         .recipe(ItemsPM.SANGUINE_CORE_COW.get()) .recipe(ItemsPM.SANGUINE_CORE_DONKEY.get()).recipe(ItemsPM.SANGUINE_CORE_FOX.get()).recipe(ItemsPM.SANGUINE_CORE_GOAT.get())
@@ -928,50 +930,51 @@ public class ResearchEntries {
                         .recipe(ItemsPM.SANGUINE_CORE_SILVERFISH.get()).recipe(ItemsPM.SANGUINE_CORE_SLIME.get()).recipe(ItemsPM.SANGUINE_CORE_SNIFFER.get()).recipe(ItemsPM.SANGUINE_CORE_SPIDER.get())
                         .recipe(ItemsPM.SANGUINE_CORE_WOLF.get()).end()
                 .build());
-        register(context, SANGUINE_CORE_SEA_CREATURES, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
+        register(context, SANGUINE_CORE_SEA_CREATURES, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.SEA, 2).recipe(ItemsPM.SANGUINE_CORE_AXOLOTL.get()).recipe(ItemsPM.SANGUINE_CORE_COD.get()).recipe(ItemsPM.SANGUINE_CORE_DOLPHIN.get())
                         .recipe(ItemsPM.SANGUINE_CORE_ELDER_GUARDIAN.get()).recipe(ItemsPM.SANGUINE_CORE_GLOW_SQUID.get()).recipe(ItemsPM.SANGUINE_CORE_GUARDIAN.get()).recipe(ItemsPM.SANGUINE_CORE_POLAR_BEAR.get())
                         .recipe(ItemsPM.SANGUINE_CORE_PUFFERFISH.get()).recipe(ItemsPM.SANGUINE_CORE_SALMON.get()).recipe(ItemsPM.SANGUINE_CORE_SQUID.get()).recipe(ItemsPM.SANGUINE_CORE_TROPICAL_FISH.get())
                         .recipe(ItemsPM.SANGUINE_CORE_TURTLE.get()).recipe(ItemsPM.SANGUINE_CORE_FROG.get()).end()
                 .build());
-        register(context, SANGUINE_CORE_FLYING_CREATURES, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
+        register(context, SANGUINE_CORE_FLYING_CREATURES, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.SKY, 2).recipe(ItemsPM.SANGUINE_CORE_BAT.get()).recipe(ItemsPM.SANGUINE_CORE_BEE.get()).recipe(ItemsPM.SANGUINE_CORE_CHICKEN.get())
                         .recipe(ItemsPM.SANGUINE_CORE_PARROT.get()).recipe(ItemsPM.SANGUINE_CORE_VEX.get()).recipe(ItemsPM.SANGUINE_CORE_ALLAY.get()).end()
                 .build());
-        register(context, SANGUINE_CORE_PLANTS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
+        register(context, SANGUINE_CORE_PLANTS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.SUN, 2).recipe(ItemsPM.SANGUINE_CORE_CREEPER.get()).recipe(ItemsPM.SANGUINE_CORE_MOOSHROOM.get()).recipe(ItemsPM.SANGUINE_CORE_TREEFOLK.get()).end()
                 .build());
-        register(context, SANGUINE_CORE_UNDEAD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
+        register(context, SANGUINE_CORE_UNDEAD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.MOON, 2).recipe(ItemsPM.SANGUINE_CORE_DROWNED.get()).recipe(ItemsPM.SANGUINE_CORE_HUSK.get()).recipe(ItemsPM.SANGUINE_CORE_PHANTOM.get())
                         .recipe(ItemsPM.SANGUINE_CORE_SKELETON.get()).recipe(ItemsPM.SANGUINE_CORE_SKELETON_HORSE.get()).recipe(ItemsPM.SANGUINE_CORE_STRAY.get()).recipe(ItemsPM.SANGUINE_CORE_WITHER_SKELETON.get())
                         .recipe(ItemsPM.SANGUINE_CORE_ZOGLIN.get()).recipe(ItemsPM.SANGUINE_CORE_ZOMBIE.get()).recipe(ItemsPM.SANGUINE_CORE_ZOMBIE_HORSE.get()).recipe(ItemsPM.SANGUINE_CORE_ZOMBIE_VILLAGER.get())
                         .recipe(ItemsPM.SANGUINE_CORE_ZOMBIFIED_PIGLIN.get()).end()
                 .build());
-        register(context, SANGUINE_CORE_SAPIENTS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
+        register(context, SANGUINE_CORE_SAPIENTS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.BLOOD, 2).recipe(ItemsPM.SANGUINE_CORE_EVOKER.get()).recipe(ItemsPM.SANGUINE_CORE_PILLAGER.get()).recipe(ItemsPM.SANGUINE_CORE_VILLAGER.get())
                         .recipe(ItemsPM.SANGUINE_CORE_VINDICATOR.get()).recipe(ItemsPM.SANGUINE_CORE_WITCH.get()).end()
                 .build());
-        register(context, SANGUINE_CORE_DEMONS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
+        register(context, SANGUINE_CORE_DEMONS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.SANGUINE_CORE_BLAZE.get()).recipe(ItemsPM.SANGUINE_CORE_GHAST.get()).recipe(ItemsPM.SANGUINE_CORE_HOGLIN.get())
                         .recipe(ItemsPM.SANGUINE_CORE_MAGMA_CUBE.get()).recipe(ItemsPM.SANGUINE_CORE_PIGLIN.get()).recipe(ItemsPM.SANGUINE_CORE_PIGLIN_BRUTE.get())
                         .recipe(ItemsPM.SANGUINE_CORE_STRIDER.get()).end()
                 .build());
-        register(context, SANGUINE_CORE_ALIENS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
+        register(context, SANGUINE_CORE_ALIENS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.VOID, 2).recipe(ItemsPM.SANGUINE_CORE_ENDERMAN.get()).recipe(ItemsPM.SANGUINE_CORE_ENDERMITE.get()).recipe(ItemsPM.SANGUINE_CORE_SHULKER.get()).end()
                 .build());
-        register(context, IGNYX, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.IGNYX.get()).parent(EXPERT_ALCHEMY).parent(CALCINATOR_BASIC).parent(STONEMELDING)
-                .parent(DISCOVER_INFERNAL)
+        register(context, IGNYX, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.IGNYX.get())
+                .parent(EXPERT_ALCHEMY).parent(CALCINATOR_BASIC).parent(STONEMELDING).parent(DISCOVER_INFERNAL)
                 .stage().requiredTheories(1).requiredItem(ItemTags.COALS).end()
                 .stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.IGNYX.get()).recipe(ItemsPM.IGNYX_BLOCK.get()).recipe("ignyx_from_storage_block").recipe("torch_from_ignyx").end()
                 .build());
-        register(context, SYNTHETIC_GEM_BUDS, key -> ResearchEntry.builder(key).discipline(discipline).icon(Items.AMETHYST_CLUSTER).parent(MASTER_ALCHEMY).parent(SHARD_SYNTHESIS).parent(STONEMELDING)
+        register(context, SYNTHETIC_GEM_BUDS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(Items.AMETHYST_CLUSTER)
+                .parent(MASTER_ALCHEMY).parent(SHARD_SYNTHESIS).parent(STONEMELDING)
                 .stage().requiredTheories(2).requiredItem(Tags.Items.GEMS_AMETHYST).end()
                 .stage().attunement(SourceList.builder().withEarth(3).withSun(3).build()).recipe(ItemsPM.ENERGIZED_AMETHYST.get()).recipe(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get())
                         .recipe(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get()).recipe(ItemsPM.FLAWED_BUDDING_AMETHYST_BLOCK.get()).end()
