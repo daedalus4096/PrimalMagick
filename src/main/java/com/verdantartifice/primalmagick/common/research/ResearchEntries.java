@@ -1527,18 +1527,18 @@ public class ResearchEntries {
     
     private static void bootstrapMagitechEntries(BootstapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.MAGITECH;
-        register(context, BASIC_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(UNLOCK_MAGITECH)
+        register(context, BASIC_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_MAGITECH).parent(UNLOCK_MAGITECH)
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).end()
                 .build());
-        register(context, EXPERT_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(HONEY_EXTRACTOR).parent(SEASCRIBE_PEN)
+        register(context, EXPERT_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_MAGITECH).parent(HONEY_EXTRACTOR).parent(SEASCRIBE_PEN)
                 .stage().requiredStat(StatsPM.CRAFTED_MAGITECH, 5).requiredResearch(SCAN_PRIMALITE).end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).end()
                 .build());
-        register(context, MASTER_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(ARCANOMETER).parent(PRIMALITE_GOLEM)
+        register(context, MASTER_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ICON_MAGITECH).parent(ARCANOMETER).parent(PRIMALITE_GOLEM)
                 .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_MAGITECH, 25).requiredResearch(SCAN_HEXIUM).end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).end()
                 .build());
-        register(context, SUPREME_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(HEXIUM_GOLEM)
+        register(context, SUPREME_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_MAGITECH).parent(HEXIUM_GOLEM)
                 .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_MAGITECH, 100).requiredResearch(SCAN_HALLOWSTEEL).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).end()
                 .build());
@@ -1547,31 +1547,35 @@ public class ResearchEntries {
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
                 .build());
-        register(context, HONEY_EXTRACTOR, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HONEY_EXTRACTOR.get()).parent(BASIC_MAGITECH)
+        register(context, HONEY_EXTRACTOR, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.HONEY_EXTRACTOR.get()).parent(BASIC_MAGITECH)
                 .stage().requiredItem(Items.HONEYCOMB).requiredItem(Items.HONEY_BOTTLE).requiredObservations(1).end()
                 .stage().recipe(ItemsPM.HONEY_EXTRACTOR.get()).end()
                 .build());
-        register(context, SEASCRIBE_PEN, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SEASCRIBE_PEN.get()).parent(BASIC_MAGITECH).parent(THEORYCRAFTING)
+        register(context, SEASCRIBE_PEN, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.SEASCRIBE_PEN.get()).parent(BASIC_MAGITECH).parent(THEORYCRAFTING)
                 .stage().requiredItem(ItemsPM.ENCHANTED_INK.get()).requiredStat(StatsPM.RESEARCH_PROJECTS_COMPLETED, 10).requiredObservations(1).end()
                 .stage().recipe(ItemsPM.SEASCRIBE_PEN.get()).end()
                 .build());
-        register(context, ARCANOMETER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ARCANOMETER.get()).parent(EXPERT_MAGITECH)
+        register(context, ARCANOMETER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.ARCANOMETER.get()).parent(EXPERT_MAGITECH)
                 .stage().requiredStat(StatsPM.ITEMS_ANALYZED, 25).requiredTheories(1).end()
                 .stage().sibling(SOTU_RESEARCH_ARCANOMETER).recipe(ItemsPM.ARCANOMETER.get()).end()
                 .build());
-        register(context, PRIMALITE_GOLEM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get()).parent(EXPERT_MAGITECH).parent(PRIMALITE)
+        register(context, PRIMALITE_GOLEM, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get())
+                .parent(EXPERT_MAGITECH).parent(PRIMALITE)
                 .stage().requiredResearch(SCAN_GOLEM).requiredTheories(1).end()
                 .stage().recipe(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get()).end()
                 .build());
-        register(context, HEXIUM_GOLEM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HEXIUM_GOLEM_CONTROLLER.get()).parent(MASTER_MAGITECH).parent(PRIMALITE_GOLEM).parent(HEXIUM)
+        register(context, HEXIUM_GOLEM, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.HEXIUM_GOLEM_CONTROLLER.get())
+                .parent(MASTER_MAGITECH).parent(PRIMALITE_GOLEM).parent(HEXIUM)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.HEXIUM_GOLEM_CONTROLLER.get()).end()
                 .build());
-        register(context, HALLOWSTEEL_GOLEM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HALLOWSTEEL_GOLEM_CONTROLLER.get()).parent(SUPREME_MAGITECH).parent(HEXIUM_GOLEM).parent(HALLOWSTEEL)
+        register(context, HALLOWSTEEL_GOLEM, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.HALLOWSTEEL_GOLEM_CONTROLLER.get())
+                .parent(SUPREME_MAGITECH).parent(HEXIUM_GOLEM).parent(HALLOWSTEEL)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.HALLOWSTEEL_GOLEM_CONTROLLER.get()).end()
                 .build());
-        register(context, CONCOCTING_TINCTURES, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CONCOCTER.get()).parent(EXPERT_MAGITECH).parent(SKYGLASS).parent(DISCOVER_INFERNAL)
+        register(context, CONCOCTING_TINCTURES, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.CONCOCTER.get())
+                .parent(EXPERT_MAGITECH).parent(SKYGLASS).parent(DISCOVER_INFERNAL)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.SKYGLASS_FLASK.get()).recipe(ItemsPM.CONCOCTER.get()).recipe("night_vision_tincture")
                         .recipe("long_night_vision_tincture").recipe("invisibility_tincture")
@@ -1590,7 +1594,8 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_INFERNAL).recipe("fire_resistance_tincture")
                         .recipe("long_fire_resistance_tincture").end()
                 .build());
-        register(context, CONCOCTING_PHILTERS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CONCOCTER.get()).parent(MASTER_MAGITECH).parent(CONCOCTING_TINCTURES).parent(SHARD_SYNTHESIS)
+        register(context, CONCOCTING_PHILTERS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.CONCOCTER.get())
+                .parent(MASTER_MAGITECH).parent(CONCOCTING_TINCTURES).parent(SHARD_SYNTHESIS)
                 .stage().requiredTheories(2).end()
                 .stage().recipe("night_vision_philter")
                         .recipe("long_night_vision_philter").recipe("invisibility_philter")
@@ -1609,7 +1614,8 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_INFERNAL).recipe("fire_resistance_philter")
                         .recipe("long_fire_resistance_philter").end()
                 .build());
-        register(context, CONCOCTING_ELIXIRS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CONCOCTER.get()).parent(SUPREME_MAGITECH).parent(CONCOCTING_PHILTERS).parent(CRYSTAL_SYNTHESIS)
+        register(context, CONCOCTING_ELIXIRS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.CONCOCTER.get())
+                .parent(SUPREME_MAGITECH).parent(CONCOCTING_PHILTERS).parent(CRYSTAL_SYNTHESIS)
                 .stage().requiredTheories(3).end()
                 .stage().recipe("night_vision_elixir")
                         .recipe("long_night_vision_elixir").recipe("invisibility_elixir")
@@ -1628,7 +1634,8 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_INFERNAL).recipe("fire_resistance_elixir")
                         .recipe("long_fire_resistance_elixir").end()
                 .build());
-        register(context, CONCOCTING_BOMBS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CONCOCTER.get()).parent(MASTER_MAGITECH).parent(CONCOCTING_TINCTURES).parent(SHARD_SYNTHESIS)
+        register(context, CONCOCTING_BOMBS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.CONCOCTER.get())
+                .parent(MASTER_MAGITECH).parent(CONCOCTING_TINCTURES).parent(SHARD_SYNTHESIS)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.BOMB_CASING.get()).recipe("night_vision_bomb")
                         .recipe("long_night_vision_bomb").recipe("invisibility_bomb")
@@ -1653,21 +1660,23 @@ public class ResearchEntries {
                         .recipe("long_slowness_bomb").recipe("strong_slowness_bomb")
                         .recipe("weakness_bomb").recipe("long_weakness_bomb").end()
                 .build());
-        register(context, ENTROPY_SINK, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ENTROPY_SINK.get()).parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING).parent(MANAFRUIT)
+        register(context, ENTROPY_SINK, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.ENTROPY_SINK.get())
+                .parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING).parent(MANAFRUIT)
                 .stage().requiredTheories(1).requiredStat(StatsPM.RITUAL_MISHAPS, 1).end()
                 .stage().recipe(ItemsPM.ENTROPY_SINK.get()).end()
                 .build());
-        register(context, AUTO_CHARGER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.AUTO_CHARGER.get()).parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING).parent(WAND_CHARGER)
-                .parent(ARTIFICIAL_MANA_FONTS)
+        register(context, AUTO_CHARGER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.AUTO_CHARGER.get())
+                .parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING).parent(WAND_CHARGER).parent(ARTIFICIAL_MANA_FONTS)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.AUTO_CHARGER.get()).end()
                 .build());
-        register(context, ESSENCE_TRANSMUTER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_TRANSMUTER.get()).parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING)
+        register(context, ESSENCE_TRANSMUTER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.ESSENCE_TRANSMUTER.get())
+                .parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.ESSENCE_TRANSMUTER.get()).end()
                 .build());
-        register(context, DISSOLUTION_CHAMBER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.DISSOLUTION_CHAMBER.get()).parent(MASTER_MAGITECH).parent(MASTER_MANAWEAVING)
-                .parent(EARTHSHATTER_HAMMER)
+        register(context, DISSOLUTION_CHAMBER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.DISSOLUTION_CHAMBER.get())
+                .parent(MASTER_MAGITECH).parent(MASTER_MANAWEAVING).parent(EARTHSHATTER_HAMMER)
                 .stage().requiredItem(ItemsPM.IRON_GRIT.get(), 20).requiredItem(ItemsPM.COPPER_GRIT.get(), 20).requiredItem(ItemsPM.GOLD_GRIT.get(), 10)
                         .requiredTheories(2).end()
                 .stage().attunement(Sources.EARTH, 3).recipe(ItemsPM.DISSOLUTION_CHAMBER.get()).recipe("iron_grit_from_dissolving_ore")
@@ -1685,37 +1694,44 @@ public class ResearchEntries {
                         .recipe("rock_salt_from_dissolving_rock_salt_ore").recipe("refined_salt_from_dissolving_rock_salt")
                         .recipe("netherite_scrap_from_dissolving_ancient_debris").end()
                 .build());
-        register(context, ZEPHYR_ENGINE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ZEPHYR_ENGINE.get()).parent(EXPERT_MAGITECH).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
+        register(context, ZEPHYR_ENGINE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.ZEPHYR_ENGINE.get())
+                .parent(EXPERT_MAGITECH).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
                 .stage().requiredTheories(1).requiredItem(Items.PISTON).end()
                 .stage().attunement(Sources.SKY, 2).recipe(ItemsPM.ZEPHYR_ENGINE.get()).end()
                 .build());
-        register(context, VOID_TURBINE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.VOID_TURBINE.get()).parent(MASTER_MAGITECH).parent(HEXIUM).parent(SHARD_SYNTHESIS)
+        register(context, VOID_TURBINE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.VOID_TURBINE.get())
+                .parent(MASTER_MAGITECH).parent(HEXIUM).parent(SHARD_SYNTHESIS)
                 .stage().requiredTheories(2).requiredItem(Items.STICKY_PISTON).end()
                 .stage().attunement(Sources.VOID, 3).recipe(ItemsPM.VOID_TURBINE.get()).end()
                 .build());
-        register(context, INFERNAL_FURNACE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.INFERNAL_FURNACE.get()).parent(MASTER_MAGITECH).parent(HEXIUM).parent(CRYSTAL_SYNTHESIS)
+        register(context, INFERNAL_FURNACE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.INFERNAL_FURNACE.get())
+                .parent(MASTER_MAGITECH).parent(HEXIUM).parent(CRYSTAL_SYNTHESIS)
                 .stage().requiredTheories(2).end()
                 .stage().attunement(Sources.INFERNAL, 3).recipe(ItemsPM.INFERNAL_FURNACE.get()).end()
                 .addendum().requiredResearch(IGNYX).end()
                 .build());
-        register(context, MANA_NEXUS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.MANA_NEXUS.get()).parent(MASTER_MAGITECH).parent(AUTO_CHARGER).parent(HEXIUM).parent(WAND_GEM_WIZARD)
+        register(context, MANA_NEXUS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.MANA_NEXUS.get())
+                .parent(MASTER_MAGITECH).parent(AUTO_CHARGER).parent(HEXIUM).parent(WAND_GEM_WIZARD)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.MANA_NEXUS.get()).end()
                 .build());
-        register(context, MANA_SINGULARITY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.MANA_SINGULARITY.get()).parent(SUPREME_MAGITECH).parent(MANA_NEXUS).parent(HALLOWSTEEL).parent(WAND_GEM_ARCHMAGE)
+        register(context, MANA_SINGULARITY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.MANA_SINGULARITY.get())
+                .parent(SUPREME_MAGITECH).parent(MANA_NEXUS).parent(HALLOWSTEEL).parent(WAND_GEM_ARCHMAGE)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.MANA_SINGULARITY.get()).end()
                 .build());
-        register(context, WARDING_MODULE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BASIC_WARDING_MODULE.get()).parent(EXPERT_MAGITECH).parent(RUNE_PROTECT).parent(RUNE_SELF).parent(RUNE_INSIGHT)
-                .parent(PRIMALITE).parent(WAND_CHARGER)
+        register(context, WARDING_MODULE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.BASIC_WARDING_MODULE.get())
+                .parent(EXPERT_MAGITECH).parent(RUNE_PROTECT).parent(RUNE_SELF).parent(RUNE_INSIGHT).parent(PRIMALITE).parent(WAND_CHARGER)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.BASIC_WARDING_MODULE.get()).end()
                 .build());
-        register(context, GREATER_WARDING_MODULE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.GREATER_WARDING_MODULE.get()).parent(MASTER_MAGITECH).parent(RUNE_POWER).parent(WARDING_MODULE)
+        register(context, GREATER_WARDING_MODULE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.GREATER_WARDING_MODULE.get())
+                .parent(MASTER_MAGITECH).parent(RUNE_POWER).parent(WARDING_MODULE)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.GREATER_WARDING_MODULE.get()).end()
                 .build());
-        register(context, SUPREME_WARDING_MODULE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SUPREME_WARDING_MODULE.get()).parent(SUPREME_MAGITECH).parent(RUNE_GRACE).parent(GREATER_WARDING_MODULE)
+        register(context, SUPREME_WARDING_MODULE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.SUPREME_WARDING_MODULE.get())
+                .parent(SUPREME_MAGITECH).parent(RUNE_GRACE).parent(GREATER_WARDING_MODULE)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.SUPREME_WARDING_MODULE.get()).end()
                 .build());
