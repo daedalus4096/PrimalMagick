@@ -39,12 +39,13 @@ import net.minecraft.world.level.ItemLike;
  * 
  * @author Daedalus4096
  */
-public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<IconDefinition> iconOpt, List<ResearchEntryKey> parents, boolean hidden,
-        boolean hasHint, boolean internal, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
+public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<ResearchTier> tierOpt, Optional<IconDefinition> iconOpt, List<ResearchEntryKey> parents, 
+        boolean hidden, boolean hasHint, boolean internal, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
     public static Codec<ResearchEntry> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
                 ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
+                ResearchTier.CODEC.optionalFieldOf("tier").forGetter(ResearchEntry::tierOpt),
                 IconDefinition.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
                 ResearchEntryKey.CODEC.listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
                 Codec.BOOL.optionalFieldOf("hidden", false).forGetter(ResearchEntry::hidden),
@@ -61,6 +62,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {
         ResearchEntryKey key = ResearchEntryKey.fromNetwork(buf);
         Optional<ResearchDisciplineKey> disciplineKeyOpt = buf.readOptional(ResearchDisciplineKey::fromNetwork);
+        Optional<ResearchTier> tierOpt = buf.readOptional(b -> b.readEnum(ResearchTier.class));
         Optional<IconDefinition> iconOpt = buf.readOptional(IconDefinition::fromNetwork);
         List<ResearchEntryKey> parents = buf.readList(ResearchEntryKey::fromNetwork);
         boolean hidden = buf.readBoolean();
@@ -70,12 +72,13 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         List<ResearchDisciplineKey> finales = buf.readList(ResearchDisciplineKey::fromNetwork);
         List<ResearchStage> stages = buf.readList(ResearchStage::fromNetwork);
         List<ResearchAddendum> addenda = buf.readList(ResearchAddendum::fromNetwork);
-        return new ResearchEntry(key, disciplineKeyOpt, iconOpt, parents, hidden, hasHint, internal, finaleExempt, finales, stages, addenda);
+        return new ResearchEntry(key, disciplineKeyOpt, tierOpt, iconOpt, parents, hidden, hasHint, internal, finaleExempt, finales, stages, addenda);
     }
     
     public static void toNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
         entry.key.toNetwork(buf);
         buf.writeOptional(entry.disciplineKeyOpt, (b, d) -> d.toNetwork(b));
+        buf.writeOptional(entry.tierOpt, (b, t) -> b.writeEnum(t));
         buf.writeOptional(entry.iconOpt, IconDefinition::toNetwork);
         buf.writeCollection(entry.parents, (b, p) -> p.toNetwork(b));
         buf.writeBoolean(entry.hidden);
@@ -217,6 +220,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         protected final String modId;
         protected final ResearchEntryKey key;
         protected Optional<ResearchDisciplineKey> disciplineKeyOpt = Optional.empty();
+        protected Optional<ResearchTier> tierOpt = Optional.empty();
         protected Optional<IconDefinition> iconOpt = Optional.empty();
         protected final List<ResearchEntryKey> parents = new ArrayList<>();
         protected boolean hidden = false;
@@ -246,6 +250,11 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         
         public Builder discipline(ResourceKey<ResearchDiscipline> discKey) {
             this.disciplineKeyOpt = Optional.of(new ResearchDisciplineKey(discKey));
+            return this;
+        }
+        
+        public Builder tier(ResearchTier tier) {
+            this.tierOpt = Optional.ofNullable(tier);
             return this;
         }
         
@@ -321,7 +330,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         
         public ResearchEntry build() {
             this.validate();
-            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.iconOpt, this.parents, this.hidden, this.hasHint, this.internal, this.finaleExempt, this.finales,
+            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.tierOpt, this.iconOpt, this.parents, this.hidden, this.hasHint, this.internal, this.finaleExempt, this.finales,
                     this.stageBuilders.stream().map(b -> b.build()).toList(), this.addendumBuilders.stream().map(b -> b.build()).toList());
         }
     }
