@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.crafting.WritableBookCraftingReci
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -198,6 +199,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.SUNLAMP)
             .requiredResearch(ResearchEntries.HEXIUM)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 10))
+            .discipline(ResearchDisciplines.MANAWEAVING)
             .expertiseTier(ResearchTier.EXPERT)
             .expertiseGroup("sunlamp")
             .build(consumer);
@@ -2785,6 +2787,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_HEARTWOOD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseTier(ResearchTier.BASIC)
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get())
             .patternLine(" D#")
