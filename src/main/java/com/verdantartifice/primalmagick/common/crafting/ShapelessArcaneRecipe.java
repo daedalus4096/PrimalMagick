@@ -10,7 +10,9 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -28,13 +30,20 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
     protected final SourceList manaCosts;
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
-    
-    public ShapelessArcaneRecipe(String group, ItemStack output, NonNullList<Ingredient> items, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts) {
+    protected final Optional<Integer> baseExpertiseOverride;
+    protected final Optional<Integer> bonusExpertiseOverride;
+    protected final Optional<ResourceLocation> expertiseGroup;
+
+    public ShapelessArcaneRecipe(String group, ItemStack output, NonNullList<Ingredient> items, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts,
+            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup) {
         super(group, output);
         this.requirement = requirement;
         this.manaCosts = manaCosts;
         this.recipeItems = items;
         this.isSimple = items.stream().allMatch(Ingredient::isSimple);
+        this.baseExpertiseOverride = baseExpertiseOverride;
+        this.bonusExpertiseOverride = bonusExpertiseOverride;
+        this.expertiseGroup = expertiseGroup;
     }
 
     @Override
@@ -62,6 +71,25 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
         return this.isSimple;
     }
 
+    @Override
+    public int getExpertiseReward(RegistryAccess registryAccess) {
+        return this.baseExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
+        return this.bonusExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultBonusExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public Optional<ResourceLocation> getExpertiseGroup() {
+        return this.expertiseGroup;
+    }
+
     public static class Serializer implements RecipeSerializer<ShapelessArcaneRecipe> {
         @Override
         public Codec<ShapelessArcaneRecipe> codec() {
@@ -79,7 +107,10 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
                         }
                     }, DataResult::success).forGetter(sar -> sar.recipeItems),
                     AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts)
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
+                    Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
+                    Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
+                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup)
                 ).apply(instance, ShapelessArcaneRecipe::new)
             );
         }
@@ -97,8 +128,12 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
                 ingredients.set(index, Ingredient.fromNetwork(buffer));
             }
             
+            Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
+            Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
+            Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
+            
             ItemStack result = buffer.readItem();
-            return new ShapelessArcaneRecipe(group, result, ingredients, requirement, manaCosts);
+            return new ShapelessArcaneRecipe(group, result, ingredients, requirement, manaCosts, baseExpOverride, bonusExpOverride, expGroup);
         }
 
         @Override
@@ -110,6 +145,9 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
             for (Ingredient ingredient : recipe.recipeItems) {
                 ingredient.toNetwork(buffer);
             }
+            buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
             buffer.writeItem(recipe.output);
         }
     }

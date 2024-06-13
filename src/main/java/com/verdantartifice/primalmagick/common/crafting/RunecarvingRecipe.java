@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -26,12 +27,19 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
     protected final Optional<AbstractRequirement<?>> requirement;
     protected final Ingredient ingredient1;
     protected final Ingredient ingredient2;
-    
-    public RunecarvingRecipe(String group, ItemStack result, Ingredient ingredient1, Ingredient ingredient2, Optional<AbstractRequirement<?>> requirement) {
+    protected final Optional<Integer> baseExpertiseOverride;
+    protected final Optional<Integer> bonusExpertiseOverride;
+    protected final Optional<ResourceLocation> expertiseGroup;
+
+    public RunecarvingRecipe(String group, ItemStack result, Ingredient ingredient1, Ingredient ingredient2, Optional<AbstractRequirement<?>> requirement, Optional<Integer> baseExpertiseOverride,
+            Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup) {
         super(group, result);
         this.requirement = requirement;
         this.ingredient1 = ingredient1;
         this.ingredient2 = ingredient2;
+        this.baseExpertiseOverride = baseExpertiseOverride;
+        this.bonusExpertiseOverride = bonusExpertiseOverride;
+        this.expertiseGroup = expertiseGroup;
     }
 
     @Override
@@ -64,6 +72,25 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
         return this.requirement;
     }
 
+    @Override
+    public int getExpertiseReward(RegistryAccess registryAccess) {
+        return this.baseExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
+        return this.bonusExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultBonusExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public Optional<ResourceLocation> getExpertiseGroup() {
+        return this.expertiseGroup;
+    }
+
     public static class Serializer implements RecipeSerializer<RunecarvingRecipe> {
         @Override
         public Codec<RunecarvingRecipe> codec() {
@@ -72,7 +99,10 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter(rr -> rr.ingredient1),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient2").forGetter(rr -> rr.ingredient2),
-                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rr -> rr.requirement)
+                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rr -> rr.requirement),
+                    Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
+                    Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
+                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup)
                 ).apply(instance, RunecarvingRecipe::new)
             );
         }
@@ -83,8 +113,11 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
             Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
             Ingredient ing1 = Ingredient.fromNetwork(buffer);
             Ingredient ing2 = Ingredient.fromNetwork(buffer);
+            Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
+            Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
+            Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
             ItemStack result = buffer.readItem();
-            return new RunecarvingRecipe(group, result, ing1, ing2, requirement);
+            return new RunecarvingRecipe(group, result, ing1, ing2, requirement, baseExpOverride, bonusExpOverride, expGroup);
         }
 
         @Override
@@ -93,6 +126,9 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
             buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
             recipe.ingredient1.toNetwork(buffer);
             recipe.ingredient2.toNetwork(buffer);
+            buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
             buffer.writeItem(recipe.output);
         }
     }

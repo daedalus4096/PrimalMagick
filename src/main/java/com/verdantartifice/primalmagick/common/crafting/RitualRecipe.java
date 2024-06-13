@@ -10,7 +10,9 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -32,8 +34,12 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
     protected final NonNullList<Ingredient> recipeItems;
     protected final NonNullList<BlockIngredient> recipeProps;
     protected final boolean isSimple;
+    protected final Optional<Integer> baseExpertiseOverride;
+    protected final Optional<Integer> bonusExpertiseOverride;
+    protected final Optional<ResourceLocation> expertiseGroup;
 
-    public RitualRecipe(String group, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts, int instability) {
+    public RitualRecipe(String group, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts, int instability,
+            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup) {
         super(group, output);
         this.requirement = requirement;
         this.manaCosts = manaCosts;
@@ -41,6 +47,9 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
         this.recipeItems = items;
         this.recipeProps = props;
         this.isSimple = items.stream().allMatch(Ingredient::isSimple);
+        this.baseExpertiseOverride = baseExpertiseOverride;
+        this.bonusExpertiseOverride = bonusExpertiseOverride;
+        this.expertiseGroup = expertiseGroup;
     }
 
     @Override
@@ -84,6 +93,25 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
         return this.isSimple;
     }
 
+    @Override
+    public int getExpertiseReward(RegistryAccess registryAccess) {
+        return this.baseExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
+        return this.bonusExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultBonusExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public Optional<ResourceLocation> getExpertiseGroup() {
+        return this.expertiseGroup;
+    }
+
     public static class Serializer implements RecipeSerializer<RitualRecipe> {
         @Override
         public Codec<RitualRecipe> codec() {
@@ -108,7 +136,10 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
                     }, DataResult::success).forGetter(rr -> rr.recipeProps),
                     AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rr -> rr.requirement),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rr -> rr.manaCosts),
-                    ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability)
+                    ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability),
+                    Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
+                    Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
+                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup)
                 ).apply(instance, RitualRecipe::new)
             );
         }
@@ -133,8 +164,12 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
                 props.set(index, BlockIngredient.read(buffer));
             }
             
+            Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
+            Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
+            Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
+            
             ItemStack result = buffer.readItem();
-            return new RitualRecipe(group, result, ingredients, props, requirement, manaCosts, instability);
+            return new RitualRecipe(group, result, ingredients, props, requirement, manaCosts, instability, baseExpOverride, bonusExpOverride, expGroup);
         }
 
         @Override
@@ -151,6 +186,9 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
             for (BlockIngredient prop : recipe.recipeProps) {
                 prop.write(buffer);
             }
+            buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
             buffer.writeItem(recipe.output);
         }
     }

@@ -10,8 +10,10 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -31,13 +33,20 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
     protected final SourceList manaCosts;
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
-    
-    public ShapelessArcaneTagRecipe(String group, TagKey<Item> outputTag, int outputAmount, NonNullList<Ingredient> items, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts) {
+    protected final Optional<Integer> baseExpertiseOverride;
+    protected final Optional<Integer> bonusExpertiseOverride;
+    protected final Optional<ResourceLocation> expertiseGroup;
+
+    public ShapelessArcaneTagRecipe(String group, TagKey<Item> outputTag, int outputAmount, NonNullList<Ingredient> items, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts,
+            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup) {
         super(group, outputTag, outputAmount);
         this.requirement = requirement;
         this.manaCosts = manaCosts;
         this.recipeItems = items;
         this.isSimple = items.stream().allMatch(Ingredient::isSimple);
+        this.baseExpertiseOverride = baseExpertiseOverride;
+        this.bonusExpertiseOverride = bonusExpertiseOverride;
+        this.expertiseGroup = expertiseGroup;
     }
 
     @Override
@@ -65,6 +74,25 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
         return this.isSimple;
     }
 
+    @Override
+    public int getExpertiseReward(RegistryAccess registryAccess) {
+        return this.baseExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
+        return this.bonusExpertiseOverride.orElseGet(() -> {
+            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultBonusExpertise()).orElse(0);
+        });
+    }
+
+    @Override
+    public Optional<ResourceLocation> getExpertiseGroup() {
+        return this.expertiseGroup;
+    }
+
     public static class Serializer implements RecipeSerializer<ShapelessArcaneTagRecipe> {
         @Override
         public Codec<ShapelessArcaneTagRecipe> codec() {
@@ -83,7 +111,10 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
                         }
                     }, DataResult::success).forGetter(sar -> sar.recipeItems),
                     AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts)
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
+                    Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
+                    Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
+                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup)
                 ).apply(instance, ShapelessArcaneTagRecipe::new)
             );
         }
@@ -101,10 +132,14 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
                 ingredients.set(index, Ingredient.fromNetwork(pBuffer));
             }
             
+            Optional<Integer> baseExpOverride = pBuffer.readOptional(b -> b.readVarInt());
+            Optional<Integer> bonusExpOverride = pBuffer.readOptional(b -> b.readVarInt());
+            Optional<ResourceLocation> expGroup = pBuffer.readOptional(b -> b.readResourceLocation());
+            
             TagKey<Item> resultTag = TagKey.create(Registries.ITEM, pBuffer.readResourceLocation());
             int resultAmount = pBuffer.readVarInt();
             
-            return new ShapelessArcaneTagRecipe(group, resultTag, resultAmount, ingredients, requirement, manaCosts);
+            return new ShapelessArcaneTagRecipe(group, resultTag, resultAmount, ingredients, requirement, manaCosts, baseExpOverride, bonusExpOverride, expGroup);
         }
 
         @Override
@@ -116,6 +151,9 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
             for (Ingredient ingredient : pRecipe.recipeItems) {
                 ingredient.toNetwork(pBuffer);
             }
+            pBuffer.writeOptional(pRecipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            pBuffer.writeOptional(pRecipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
+            pBuffer.writeOptional(pRecipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
             pBuffer.writeResourceLocation(pRecipe.outputTag.location());
             pBuffer.writeVarInt(pRecipe.outputAmount);
         }
