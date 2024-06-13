@@ -4270,6 +4270,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.NOTE_BLOCK)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_FLYING_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_AXOLOTL.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4277,6 +4278,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BAT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4284,6 +4286,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_FLYING_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BEE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4291,6 +4294,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.HONEYCOMB)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_FLYING_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BLAZE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4298,6 +4302,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_DEMONS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAMEL.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4305,6 +4310,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.CACTUS)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4312,6 +4318,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.STRING)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAVE_SPIDER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4319,6 +4326,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CHICKEN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4326,6 +4334,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.EGGS)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_FLYING_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_COD.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4333,6 +4342,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_COW.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4340,6 +4350,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.LEATHER)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CREEPER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4347,6 +4358,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_PLANTS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_DOLPHIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4354,6 +4366,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_DONKEY.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4361,6 +4374,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CHESTS_WOODEN)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_DROWNED.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4368,6 +4382,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ELDER_GUARDIAN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4375,6 +4390,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SPONGE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ENDERMAN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4382,6 +4398,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_ALIENS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ENDERMITE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4389,6 +4406,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_ALIENS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_EVOKER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4396,6 +4414,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.TOTEM_OF_UNDYING)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SAPIENTS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_FOX.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4403,6 +4422,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SWEET_BERRIES)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_FROG.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4410,6 +4430,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SLIME_BALL)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GHAST.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4417,6 +4438,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_DEMONS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GLOW_SQUID.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4424,6 +4446,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GOAT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4431,6 +4454,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOAT_HORN)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GUARDIAN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4438,6 +4462,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_HOGLIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4445,6 +4470,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_DEMONS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_HORSE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4452,6 +4478,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.APPLE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_HUSK.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4459,6 +4486,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_LLAMA.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4466,6 +4494,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemTags.WOOL_CARPETS)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_MAGMA_CUBE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4473,6 +4502,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_DEMONS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_MOOSHROOM.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4480,6 +4510,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.MUSHROOMS)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_PLANTS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_OCELOT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4487,6 +4518,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.VINE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PANDA.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4494,6 +4526,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.VINE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PARROT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4501,6 +4534,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.VINE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_FLYING_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PHANTOM.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4508,6 +4542,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PIG.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4515,6 +4550,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_CARROT)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PIGLIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4522,6 +4558,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_DEMONS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PIGLIN_BRUTE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4529,6 +4566,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_DEMONS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PILLAGER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4536,6 +4574,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.CROSSBOW)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SAPIENTS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_POLAR_BEAR.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4543,6 +4582,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.ICE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PUFFERFISH.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4550,6 +4590,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_RABBIT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4557,6 +4598,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_HIDE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_RAVAGER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4564,6 +4606,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.BLOODY_FLESH.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SALMON.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4571,6 +4614,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SHEEP.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4578,6 +4622,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemTags.WOOL)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SHULKER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4585,6 +4630,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_ALIENS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SILVERFISH.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4592,6 +4638,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SKELETON.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4599,6 +4646,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.BOW)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SKELETON_HORSE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4606,6 +4654,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SADDLE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SLIME.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4613,6 +4662,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SNIFFER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4620,6 +4670,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.TORCHFLOWER_SEEDS)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SPIDER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4627,6 +4678,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.STRING)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SQUID.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4634,6 +4686,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_STRAY.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4641,6 +4694,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.ICE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_STRIDER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4648,6 +4702,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_DEMONS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_TROPICAL_FISH.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4655,6 +4710,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_TURTLE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4662,6 +4718,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SEAGRASS)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_VEX.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4669,6 +4726,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.IRON_SWORD)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_FLYING_CREATURES)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_VILLAGER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4676,6 +4734,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.GEMS_EMERALD)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SAPIENTS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_VINDICATOR.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4683,6 +4742,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.IRON_AXE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SAPIENTS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_WITCH.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4690,6 +4750,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GLASS_BOTTLE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SAPIENTS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_WITHER_SKELETON.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4697,6 +4758,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.WITHER_SKELETON_SKULL)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_WOLF.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4704,6 +4766,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.BEEF)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOGLIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4711,6 +4774,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.PORKCHOP)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOMBIE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4718,6 +4782,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOMBIE_HORSE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4725,6 +4790,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SADDLE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOMBIE_VILLAGER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4732,6 +4798,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.GEMS_EMERALD)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOMBIFIED_PIGLIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4739,6 +4806,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_SWORD)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_TREEFOLK.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4746,8 +4814,9 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.APPLE)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_PLANTS)
+            .expertiseGroup("sanguine_core")
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get())   // Inner demon cores are not part of the expertise group because they're a different discipline
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.NETHER_STARS)
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
@@ -6057,6 +6126,7 @@ public class Recipes extends RecipeProvider {
             .key('#', ItemTags.WOOL)
             .requiredResearch(ResearchEntries.IMBUED_WOOL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("imbued_wool_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_CHEST.get())
             .patternLine("# #")
@@ -6065,6 +6135,7 @@ public class Recipes extends RecipeProvider {
             .key('#', ItemTags.WOOL)
             .requiredResearch(ResearchEntries.IMBUED_WOOL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("imbued_wool_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_LEGS.get())
             .patternLine("###")
@@ -6073,6 +6144,7 @@ public class Recipes extends RecipeProvider {
             .key('#', ItemTags.WOOL)
             .requiredResearch(ResearchEntries.IMBUED_WOOL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("imbued_wool_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_FEET.get())
             .patternLine("# #")
@@ -6080,12 +6152,14 @@ public class Recipes extends RecipeProvider {
             .key('#', ItemTags.WOOL)
             .requiredResearch(ResearchEntries.IMBUED_WOOL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("imbued_wool_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_HEAD.get())
             .patternLine("###")
             .patternLine("# #")
             .key('#', ItemsPM.SPELLCLOTH.get())
             .requiredResearch(ResearchEntries.SPELLCLOTH)
+            .expertiseGroup("spellcloth_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_CHEST.get())
             .patternLine("# #")
@@ -6093,6 +6167,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("###")
             .key('#', ItemsPM.SPELLCLOTH.get())
             .requiredResearch(ResearchEntries.SPELLCLOTH)
+            .expertiseGroup("spellcloth_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_LEGS.get())
             .patternLine("###")
@@ -6100,18 +6175,21 @@ public class Recipes extends RecipeProvider {
             .patternLine("# #")
             .key('#', ItemsPM.SPELLCLOTH.get())
             .requiredResearch(ResearchEntries.SPELLCLOTH)
+            .expertiseGroup("spellcloth_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_FEET.get())
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemsPM.SPELLCLOTH.get())
             .requiredResearch(ResearchEntries.SPELLCLOTH)
+            .expertiseGroup("spellcloth_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_HEAD.get())
             .patternLine("###")
             .patternLine("# #")
             .key('#', ItemsPM.HEXWEAVE.get())
             .requiredResearch(ResearchEntries.HEXWEAVE)
+            .expertiseGroup("hexweave_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_CHEST.get())
             .patternLine("# #")
@@ -6119,6 +6197,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("###")
             .key('#', ItemsPM.HEXWEAVE.get())
             .requiredResearch(ResearchEntries.HEXWEAVE)
+            .expertiseGroup("hexweave_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_LEGS.get())
             .patternLine("###")
@@ -6126,18 +6205,21 @@ public class Recipes extends RecipeProvider {
             .patternLine("# #")
             .key('#', ItemsPM.HEXWEAVE.get())
             .requiredResearch(ResearchEntries.HEXWEAVE)
+            .expertiseGroup("hexweave_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_FEET.get())
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemsPM.HEXWEAVE.get())
             .requiredResearch(ResearchEntries.HEXWEAVE)
+            .expertiseGroup("hexweave_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_HEAD.get())
             .patternLine("###")
             .patternLine("# #")
             .key('#', ItemsPM.SAINTSWOOL.get())
             .requiredResearch(ResearchEntries.SAINTSWOOL)
+            .expertiseGroup("saintswool_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_CHEST.get())
             .patternLine("# #")
@@ -6145,6 +6227,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("###")
             .key('#', ItemsPM.SAINTSWOOL.get())
             .requiredResearch(ResearchEntries.SAINTSWOOL)
+            .expertiseGroup("saintswool_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_LEGS.get())
             .patternLine("###")
@@ -6152,12 +6235,14 @@ public class Recipes extends RecipeProvider {
             .patternLine("# #")
             .key('#', ItemsPM.SAINTSWOOL.get())
             .requiredResearch(ResearchEntries.SAINTSWOOL)
+            .expertiseGroup("saintswool_robes")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_FEET.get())
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemsPM.SAINTSWOOL.get())
             .requiredResearch(ResearchEntries.SAINTSWOOL)
+            .expertiseGroup("saintswool_robes")
             .build(consumer);
     }
     
@@ -6269,7 +6354,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerManaFontRecipes(RecipeOutput consumer) {
+    protected void registerManaFontRecipes(RecipeOutput consumer) {          
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_EARTH.get())
             .patternLine("IMI")
             .patternLine(" E ")
@@ -6280,6 +6365,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("artificial_mana_fonts")
             .requiredResearch(ResearchEntries.ARTIFICIAL_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 250))
+            .expertiseGroup("mana_font_artificial")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_SEA.get())
             .patternLine("IMI")
@@ -6291,6 +6377,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("artificial_mana_fonts")
             .requiredResearch(ResearchEntries.ARTIFICIAL_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.SEA, 250))
+            .expertiseGroup("mana_font_artificial")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_SKY.get())
             .patternLine("IMI")
@@ -6302,6 +6389,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("artificial_mana_fonts")
             .requiredResearch(ResearchEntries.ARTIFICIAL_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.SKY, 250))
+            .expertiseGroup("mana_font_artificial")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_SUN.get())
             .patternLine("IMI")
@@ -6313,6 +6401,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("artificial_mana_fonts")
             .requiredResearch(ResearchEntries.ARTIFICIAL_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.SUN, 250))
+            .expertiseGroup("mana_font_artificial")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_MOON.get())
             .patternLine("IMI")
@@ -6324,6 +6413,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("artificial_mana_fonts")
             .requiredResearch(ResearchEntries.ARTIFICIAL_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 250))
+            .expertiseGroup("mana_font_artificial")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_BLOOD.get())
             .patternLine("IMI")
@@ -6336,6 +6426,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.ARTIFICIAL_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 250))
+            .expertiseGroup("mana_font_artificial")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_INFERNAL.get())
             .patternLine("IMI")
@@ -6348,6 +6439,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.ARTIFICIAL_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 250))
+            .expertiseGroup("mana_font_artificial")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_VOID.get())
             .patternLine("IMI")
@@ -6360,6 +6452,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.ARTIFICIAL_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.VOID, 250))
+            .expertiseGroup("mana_font_artificial")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_HALLOWED.get())
             .patternLine("IMI")
@@ -6372,6 +6465,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.ARTIFICIAL_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 250))
+            .expertiseGroup("mana_font_artificial")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_EARTH.get())
             .patternLine("IMI")
@@ -6384,6 +6478,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("forbidden_mana_fonts")
             .requiredResearch(ResearchEntries.FORBIDDEN_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 750))
+            .expertiseGroup("mana_font_forbidden")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_SEA.get())
             .patternLine("IMI")
@@ -6396,6 +6491,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("forbidden_mana_fonts")
             .requiredResearch(ResearchEntries.FORBIDDEN_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.SEA, 750))
+            .expertiseGroup("mana_font_forbidden")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_SKY.get())
             .patternLine("IMI")
@@ -6408,6 +6504,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("forbidden_mana_fonts")
             .requiredResearch(ResearchEntries.FORBIDDEN_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.SKY, 750))
+            .expertiseGroup("mana_font_forbidden")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_SUN.get())
             .patternLine("IMI")
@@ -6420,6 +6517,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("forbidden_mana_fonts")
             .requiredResearch(ResearchEntries.FORBIDDEN_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.SUN, 750))
+            .expertiseGroup("mana_font_forbidden")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_MOON.get())
             .patternLine("IMI")
@@ -6432,6 +6530,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("forbidden_mana_fonts")
             .requiredResearch(ResearchEntries.FORBIDDEN_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 750))
+            .expertiseGroup("mana_font_forbidden")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_BLOOD.get())
             .patternLine("IMI")
@@ -6445,6 +6544,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.FORBIDDEN_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 750))
+            .expertiseGroup("mana_font_forbidden")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_INFERNAL.get())
             .patternLine("IMI")
@@ -6458,6 +6558,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.FORBIDDEN_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 750))
+            .expertiseGroup("mana_font_forbidden")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_VOID.get())
             .patternLine("IMI")
@@ -6471,6 +6572,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.FORBIDDEN_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.VOID, 750))
+            .expertiseGroup("mana_font_forbidden")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_HALLOWED.get())
             .patternLine("IMI")
@@ -6484,6 +6586,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.FORBIDDEN_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 750))
+            .expertiseGroup("mana_font_forbidden")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_EARTH.get())
             .patternLine("IMI")
@@ -6496,6 +6599,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("heavenly_mana_fonts")
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 2500))
+            .expertiseGroup("mana_font_heavenly")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_SEA.get())
             .patternLine("IMI")
@@ -6508,6 +6612,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("heavenly_mana_fonts")
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.SEA, 2500))
+            .expertiseGroup("mana_font_heavenly")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_SKY.get())
             .patternLine("IMI")
@@ -6520,6 +6625,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("heavenly_mana_fonts")
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.SKY, 2500))
+            .expertiseGroup("mana_font_heavenly")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_SUN.get())
             .patternLine("IMI")
@@ -6532,6 +6638,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("heavenly_mana_fonts")
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.SUN, 2500))
+            .expertiseGroup("mana_font_heavenly")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_MOON.get())
             .patternLine("IMI")
@@ -6544,6 +6651,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("heavenly_mana_fonts")
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_FONTS)
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 2500))
+            .expertiseGroup("mana_font_heavenly")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_BLOOD.get())
             .patternLine("IMI")
@@ -6557,6 +6665,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 2500))
+            .expertiseGroup("mana_font_heavenly")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_INFERNAL.get())
             .patternLine("IMI")
@@ -6570,6 +6679,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 2500))
+            .expertiseGroup("mana_font_heavenly")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_VOID.get())
             .patternLine("IMI")
@@ -6583,6 +6693,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.VOID, 2500))
+            .expertiseGroup("mana_font_heavenly")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_HALLOWED.get())
             .patternLine("IMI")
@@ -6596,6 +6707,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_FONTS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 2500))
+            .expertiseGroup("mana_font_heavenly")
             .build(consumer);
     }
     
@@ -6609,6 +6721,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("mana_arrows")
             .requiredResearch(ResearchEntries.MANA_ARROWS)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5))
+            .expertiseGroup("mana_arrow")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_SEA.get(), 4)
             .patternLine(" A ")
@@ -6619,6 +6732,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("mana_arrows")
             .requiredResearch(ResearchEntries.MANA_ARROWS)
             .manaCost(SourceList.EMPTY.add(Sources.SEA, 5))
+            .expertiseGroup("mana_arrow")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_SKY.get(), 4)
             .patternLine(" A ")
@@ -6629,6 +6743,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("mana_arrows")
             .requiredResearch(ResearchEntries.MANA_ARROWS)
             .manaCost(SourceList.EMPTY.add(Sources.SKY, 5))
+            .expertiseGroup("mana_arrow")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_SUN.get(), 4)
             .patternLine(" A ")
@@ -6639,6 +6754,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("mana_arrows")
             .requiredResearch(ResearchEntries.MANA_ARROWS)
             .manaCost(SourceList.EMPTY.add(Sources.SUN, 5))
+            .expertiseGroup("mana_arrow")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_MOON.get(), 4)
             .patternLine(" A ")
@@ -6649,6 +6765,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("mana_arrows")
             .requiredResearch(ResearchEntries.MANA_ARROWS)
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 5))
+            .expertiseGroup("mana_arrow")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_BLOOD.get(), 4)
             .patternLine(" A ")
@@ -6660,6 +6777,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.MANA_ARROWS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 5))
+            .expertiseGroup("mana_arrow")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_INFERNAL.get(), 4)
             .patternLine(" A ")
@@ -6671,6 +6789,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.MANA_ARROWS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 5))
+            .expertiseGroup("mana_arrow")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_VOID.get(), 4)
             .patternLine(" A ")
@@ -6682,6 +6801,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.MANA_ARROWS)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.VOID, 5))
+            .expertiseGroup("mana_arrow")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_HALLOWED.get(), 4)
             .patternLine(" A ")
@@ -6693,6 +6813,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.MANA_ARROWS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 5))
+            .expertiseGroup("mana_arrow")
             .build(consumer);
     }
     
@@ -6892,6 +7013,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("humming_artifact")
             .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 40))
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_SEA.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
@@ -6899,6 +7021,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("humming_artifact")
             .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
             .manaCost(SourceList.EMPTY.add(Sources.SEA, 40))
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_SKY.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
@@ -6906,6 +7029,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("humming_artifact")
             .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
             .manaCost(SourceList.EMPTY.add(Sources.SKY, 40))
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_SUN.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
@@ -6913,6 +7037,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("humming_artifact")
             .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
             .manaCost(SourceList.EMPTY.add(Sources.SUN, 40))
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_MOON.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
@@ -6920,6 +7045,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("humming_artifact")
             .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 40))
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_BLOOD.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
@@ -6928,6 +7054,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 40))
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
@@ -6936,6 +7063,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 40))
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_VOID.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
@@ -6944,6 +7072,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.VOID, 40))
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
@@ -6952,6 +7081,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 40))
+            .noExpertise()
             .build(consumer);
     }
     
@@ -7000,6 +7130,7 @@ public class Recipes extends RecipeProvider {
             .key('S', ItemsPM.ESSENCE_SHARD_EARTH.get())
             .requiredResearch(ResearchEntries.ATTUNEMENT_SHACKLES)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 40))
+            .expertiseGroup("attunement_shackles")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_SEA.get())
             .patternLine("CSC")
@@ -7009,6 +7140,7 @@ public class Recipes extends RecipeProvider {
             .key('S', ItemsPM.ESSENCE_SHARD_SEA.get())
             .requiredResearch(ResearchEntries.ATTUNEMENT_SHACKLES)
             .manaCost(SourceList.EMPTY.add(Sources.SEA, 40))
+            .expertiseGroup("attunement_shackles")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_SKY.get())
             .patternLine("CSC")
@@ -7018,6 +7150,7 @@ public class Recipes extends RecipeProvider {
             .key('S', ItemsPM.ESSENCE_SHARD_SKY.get())
             .requiredResearch(ResearchEntries.ATTUNEMENT_SHACKLES)
             .manaCost(SourceList.EMPTY.add(Sources.SKY, 40))
+            .expertiseGroup("attunement_shackles")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_SUN.get())
             .patternLine("CSC")
@@ -7027,6 +7160,7 @@ public class Recipes extends RecipeProvider {
             .key('S', ItemsPM.ESSENCE_SHARD_SUN.get())
             .requiredResearch(ResearchEntries.ATTUNEMENT_SHACKLES)
             .manaCost(SourceList.EMPTY.add(Sources.SUN, 40))
+            .expertiseGroup("attunement_shackles")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_MOON.get())
             .patternLine("CSC")
@@ -7036,6 +7170,7 @@ public class Recipes extends RecipeProvider {
             .key('S', ItemsPM.ESSENCE_SHARD_MOON.get())
             .requiredResearch(ResearchEntries.ATTUNEMENT_SHACKLES)
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 40))
+            .expertiseGroup("attunement_shackles")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_BLOOD.get())
             .patternLine("CSC")
@@ -7046,6 +7181,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.ATTUNEMENT_SHACKLES)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 40))
+            .expertiseGroup("attunement_shackles")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get())
             .patternLine("CSC")
@@ -7056,6 +7192,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.ATTUNEMENT_SHACKLES)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 40))
+            .expertiseGroup("attunement_shackles")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get())
             .patternLine("CSC")
@@ -7066,6 +7203,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.ATTUNEMENT_SHACKLES)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.VOID, 40))
+            .expertiseGroup("attunement_shackles")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get())
             .patternLine("CSC")
@@ -7076,6 +7214,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.ATTUNEMENT_SHACKLES)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 40))
+            .expertiseGroup("attunement_shackles")
             .build(consumer);
     }
     
@@ -7254,16 +7393,19 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.AMETHYST_BLOCK)
             .addIngredient(ItemsPM.ENERGIZED_AMETHYST.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get())
             .addIngredient(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get())
             .addIngredient(ItemsPM.ENERGIZED_AMETHYST.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.FLAWED_BUDDING_AMETHYST_BLOCK.get())
             .addIngredient(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get())
             .addIngredient(ItemsPM.ENERGIZED_AMETHYST.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENERGIZED_DIAMOND.get())
             .addIngredient(Tags.Items.GEMS_DIAMOND)
@@ -7277,18 +7419,21 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ENERGIZED_DIAMOND.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get())
             .addIngredient(ItemsPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get())
             .addIngredient(ItemsPM.ENERGIZED_DIAMOND.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.FLAWED_BUDDING_DIAMOND_BLOCK.get())
             .addIngredient(ItemsPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get())
             .addIngredient(ItemsPM.ENERGIZED_DIAMOND.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENERGIZED_EMERALD.get())
             .addIngredient(Tags.Items.GEMS_EMERALD)
@@ -7302,18 +7447,21 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ENERGIZED_EMERALD.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.CHIPPED_BUDDING_EMERALD_BLOCK.get())
             .addIngredient(ItemsPM.DAMAGED_BUDDING_EMERALD_BLOCK.get())
             .addIngredient(ItemsPM.ENERGIZED_EMERALD.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.FLAWED_BUDDING_EMERALD_BLOCK.get())
             .addIngredient(ItemsPM.CHIPPED_BUDDING_EMERALD_BLOCK.get())
             .addIngredient(ItemsPM.ENERGIZED_EMERALD.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENERGIZED_QUARTZ.get())
             .addIngredient(Tags.Items.GEMS_QUARTZ)
@@ -7327,18 +7475,21 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ENERGIZED_QUARTZ.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get())
             .addIngredient(ItemsPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get())
             .addIngredient(ItemsPM.ENERGIZED_QUARTZ.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
+            .noExpertise()
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.FLAWED_BUDDING_QUARTZ_BLOCK.get())
             .addIngredient(ItemsPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get())
             .addIngredient(ItemsPM.ENERGIZED_QUARTZ.get())
             .requiredResearch(ResearchEntries.SYNTHETIC_GEM_BUDS)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
+            .noExpertise()
             .build(consumer);
     }
 }
