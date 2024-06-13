@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneTagRecipe;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -152,6 +153,10 @@ public class ArcaneShapelessTagRecipeBuilder {
     
     public ArcaneShapelessTagRecipeBuilder noExpertise() {
         return this.expertise(0, 0);
+    }
+    
+    public ArcaneShapelessTagRecipeBuilder expertiseTier(ResearchTier tier) {
+        return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
     }
     
     public ArcaneShapelessTagRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {

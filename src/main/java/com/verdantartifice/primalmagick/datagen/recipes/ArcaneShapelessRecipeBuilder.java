@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneRecipe;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -165,6 +166,10 @@ public class ArcaneShapelessRecipeBuilder {
     
     public ArcaneShapelessRecipeBuilder noExpertise() {
         return this.expertise(0, 0);
+    }
+    
+    public ArcaneShapelessRecipeBuilder expertiseTier(ResearchTier tier) {
+        return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
     }
     
     public ArcaneShapelessRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {

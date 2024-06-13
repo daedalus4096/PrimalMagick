@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -158,6 +159,10 @@ public class RunecarvingRecipeBuilder {
     
     public RunecarvingRecipeBuilder noExpertise() {
         return this.expertise(0, 0);
+    }
+    
+    public RunecarvingRecipeBuilder expertiseTier(ResearchTier tier) {
+        return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
     }
     
     public RunecarvingRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
