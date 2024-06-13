@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneTagRecipe;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
@@ -31,6 +32,9 @@ public class ArcaneShapelessTagRecipeBuilder {
     protected String group;
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected SourceList manaCosts;
+    protected Optional<Integer> baseExpertiseOverride = Optional.empty();
+    protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
+    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
 
     protected ArcaneShapelessTagRecipeBuilder(TagKey<Item> result, int count) {
         this.resultTag = result;
@@ -140,6 +144,25 @@ public class ArcaneShapelessTagRecipeBuilder {
         return this;
     }
     
+    public ArcaneShapelessTagRecipeBuilder expertise(int baseValue, int bonusValue) {
+        this.baseExpertiseOverride = Optional.of(baseValue);
+        this.bonusExpertiseOverride = Optional.of(bonusValue);
+        return this;
+    }
+    
+    public ArcaneShapelessTagRecipeBuilder noExpertise() {
+        return this.expertise(0, 0);
+    }
+    
+    public ArcaneShapelessTagRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+        this.expertiseGroup = Optional.ofNullable(groupLoc);
+        return this;
+    }
+    
+    public ArcaneShapelessTagRecipeBuilder expertiseGroup(String groupName) {
+        return this.expertiseGroup(PrimalMagick.resource(groupName));
+    }
+    
     protected Optional<AbstractRequirement<?>> getFinalRequirement() {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
@@ -158,7 +181,8 @@ public class ArcaneShapelessTagRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        ShapelessArcaneTagRecipe recipe = new ShapelessArcaneTagRecipe(Objects.requireNonNullElse(this.group, ""), this.resultTag, this.resultAmount, this.ingredients, this.getFinalRequirement(), Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        ShapelessArcaneTagRecipe recipe = new ShapelessArcaneTagRecipe(Objects.requireNonNullElse(this.group, ""), this.resultTag, this.resultAmount, this.ingredients, this.getFinalRequirement(), 
+                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup);
         output.accept(id, recipe, null);
     }
 

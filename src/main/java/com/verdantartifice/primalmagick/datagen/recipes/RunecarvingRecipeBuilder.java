@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -34,7 +35,10 @@ public class RunecarvingRecipeBuilder {
     protected Ingredient ingredient2;
     protected String group;
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
-    
+    protected Optional<Integer> baseExpertiseOverride = Optional.empty();
+    protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
+    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+
     protected RunecarvingRecipeBuilder(ItemLike item, int count) {
         this.result = new ItemStack(item, count);
     }
@@ -146,6 +150,25 @@ public class RunecarvingRecipeBuilder {
         return this.requirement(new ResearchRequirement(new ResearchStageKey(research, stage)));
     }
     
+    public RunecarvingRecipeBuilder expertise(int baseValue, int bonusValue) {
+        this.baseExpertiseOverride = Optional.of(baseValue);
+        this.bonusExpertiseOverride = Optional.of(bonusValue);
+        return this;
+    }
+    
+    public RunecarvingRecipeBuilder noExpertise() {
+        return this.expertise(0, 0);
+    }
+    
+    public RunecarvingRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+        this.expertiseGroup = Optional.ofNullable(groupLoc);
+        return this;
+    }
+    
+    public RunecarvingRecipeBuilder expertiseGroup(String groupName) {
+        return this.expertiseGroup(PrimalMagick.resource(groupName));
+    }
+    
     protected Optional<AbstractRequirement<?>> getFinalRequirement() {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
@@ -164,7 +187,8 @@ public class RunecarvingRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        RunecarvingRecipe recipe = new RunecarvingRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient1, this.ingredient2, this.getFinalRequirement());
+        RunecarvingRecipe recipe = new RunecarvingRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient1, this.ingredient2, this.getFinalRequirement(),
+                this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup);
         output.accept(id, recipe, null);
     }
     

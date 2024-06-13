@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -40,6 +41,9 @@ public class ArcaneShapedRecipeBuilder {
     protected String group;
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected SourceList manaCosts;
+    protected Optional<Integer> baseExpertiseOverride = Optional.empty();
+    protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
+    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
     
     protected ArcaneShapedRecipeBuilder(ItemLike result, int count) {
         this.result = new ItemStack(result, count);
@@ -156,6 +160,25 @@ public class ArcaneShapedRecipeBuilder {
         return this;
     }
     
+    public ArcaneShapedRecipeBuilder expertise(int baseValue, int bonusValue) {
+        this.baseExpertiseOverride = Optional.of(baseValue);
+        this.bonusExpertiseOverride = Optional.of(bonusValue);
+        return this;
+    }
+    
+    public ArcaneShapedRecipeBuilder noExpertise() {
+        return this.expertise(0, 0);
+    }
+    
+    public ArcaneShapedRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+        this.expertiseGroup = Optional.ofNullable(groupLoc);
+        return this;
+    }
+    
+    public ArcaneShapedRecipeBuilder expertiseGroup(String groupName) {
+        return this.expertiseGroup(PrimalMagick.resource(groupName));
+    }
+    
     protected Optional<AbstractRequirement<?>> getFinalRequirement() {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
@@ -174,7 +197,8 @@ public class ArcaneShapedRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         ShapedRecipePattern pattern = this.validate(id);
-        ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.getFinalRequirement(), Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.getFinalRequirement(), 
+                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup);
         output.accept(id, recipe, null);
     }
     
