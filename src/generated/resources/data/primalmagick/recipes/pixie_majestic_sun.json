@@ -1,5 +1,6 @@
 {
   "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:pixie_majestic",
   "ingredients": [
     {
       "item": "primalmagick:mana_salts"
