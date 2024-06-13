@@ -1,11 +1,16 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
 
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.Util;
@@ -75,6 +80,39 @@ public interface IHasExpertise extends IHasRequirement {
                 }
             }
             return retVal;
+        });
+    }
+    
+    /**
+     * Get the manually-specified override research discipline for this recipe, if any.
+     * 
+     * @return the recipe's discipline override, if any
+     */
+    Optional<ResearchDisciplineKey> getResearchDisciplineOverride();
+    
+    /**
+     * Get the research discipline for which expertise should be credited for this recipe, if any.
+     * 
+     * @param registryAccess a registry access object
+     * @return the recipe's research discipline, if any
+     */
+    default Optional<ResearchDisciplineKey> getResearchDiscipline(RegistryAccess registryAccess, ResourceLocation recipeId) {
+        return this.getResearchDisciplineOverride().or(() -> {
+            return this.getRequirement().flatMap(req -> {
+                Set<ResearchDisciplineKey> foundDisciplines = new HashSet<>();
+                for (AbstractResearchKey<?> rawKey : req.streamKeys().toList()) {
+                    if (rawKey instanceof ResearchEntryKey entryKey) {
+                        ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
+                        if (entry != null) {
+                            entry.disciplineKeyOpt().ifPresent(foundDisciplines::add);
+                        }
+                    }
+                }
+                if (foundDisciplines.size() > 1) {
+                    LogManager.getLogger().warn("Multiple disciplines found for recipe {}", recipeId);
+                }
+                return foundDisciplines.stream().findFirst();
+            });
         });
     }
 }

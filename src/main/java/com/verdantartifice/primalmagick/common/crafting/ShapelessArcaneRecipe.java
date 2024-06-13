@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -33,9 +34,10 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
     protected final Optional<Integer> baseExpertiseOverride;
     protected final Optional<Integer> bonusExpertiseOverride;
     protected final Optional<ResourceLocation> expertiseGroup;
+    protected final Optional<ResearchDisciplineKey> disciplineOverride;
 
     public ShapelessArcaneRecipe(String group, ItemStack output, NonNullList<Ingredient> items, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts,
-            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup) {
+            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
         super(group, output);
         this.requirement = requirement;
         this.manaCosts = manaCosts;
@@ -44,6 +46,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
         this.baseExpertiseOverride = baseExpertiseOverride;
         this.bonusExpertiseOverride = bonusExpertiseOverride;
         this.expertiseGroup = expertiseGroup;
+        this.disciplineOverride = disciplineOverride;
     }
 
     @Override
@@ -90,6 +93,11 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
         return this.expertiseGroup;
     }
 
+    @Override
+    public Optional<ResearchDisciplineKey> getResearchDisciplineOverride() {
+        return this.disciplineOverride;
+    }
+
     public static class Serializer implements RecipeSerializer<ShapelessArcaneRecipe> {
         @Override
         public Codec<ShapelessArcaneRecipe> codec() {
@@ -110,7 +118,8 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
-                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup)
+                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
+                    ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
                 ).apply(instance, ShapelessArcaneRecipe::new)
             );
         }
@@ -131,9 +140,10 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
             Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
+            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey::fromNetwork);
             
             ItemStack result = buffer.readItem();
-            return new ShapelessArcaneRecipe(group, result, ingredients, requirement, manaCosts, baseExpOverride, bonusExpOverride, expGroup);
+            return new ShapelessArcaneRecipe(group, result, ingredients, requirement, manaCosts, baseExpOverride, bonusExpOverride, expGroup, discOverride);
         }
 
         @Override
@@ -148,6 +158,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
             buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
+            buffer.writeOptional(recipe.disciplineOverride, (b, d) -> d.toNetwork(b));
             buffer.writeItem(recipe.output);
         }
     }

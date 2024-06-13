@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 import net.minecraft.core.NonNullList;
@@ -30,9 +31,10 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
     protected final Optional<Integer> baseExpertiseOverride;
     protected final Optional<Integer> bonusExpertiseOverride;
     protected final Optional<ResourceLocation> expertiseGroup;
+    protected final Optional<ResearchDisciplineKey> disciplineOverride;
 
     public RunecarvingRecipe(String group, ItemStack result, Ingredient ingredient1, Ingredient ingredient2, Optional<AbstractRequirement<?>> requirement, Optional<Integer> baseExpertiseOverride,
-            Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup) {
+            Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
         super(group, result);
         this.requirement = requirement;
         this.ingredient1 = ingredient1;
@@ -40,6 +42,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
         this.baseExpertiseOverride = baseExpertiseOverride;
         this.bonusExpertiseOverride = bonusExpertiseOverride;
         this.expertiseGroup = expertiseGroup;
+        this.disciplineOverride = disciplineOverride;
     }
 
     @Override
@@ -91,6 +94,11 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
         return this.expertiseGroup;
     }
 
+    @Override
+    public Optional<ResearchDisciplineKey> getResearchDisciplineOverride() {
+        return this.disciplineOverride;
+    }
+
     public static class Serializer implements RecipeSerializer<RunecarvingRecipe> {
         @Override
         public Codec<RunecarvingRecipe> codec() {
@@ -102,7 +110,8 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
                     AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rr -> rr.requirement),
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
-                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup)
+                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
+                    ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
                 ).apply(instance, RunecarvingRecipe::new)
             );
         }
@@ -116,8 +125,9 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
             Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
+            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey::fromNetwork);
             ItemStack result = buffer.readItem();
-            return new RunecarvingRecipe(group, result, ing1, ing2, requirement, baseExpOverride, bonusExpOverride, expGroup);
+            return new RunecarvingRecipe(group, result, ing1, ing2, requirement, baseExpOverride, bonusExpOverride, expGroup, discOverride);
         }
 
         @Override
@@ -129,6 +139,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
             buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
+            buffer.writeOptional(recipe.disciplineOverride, (b, d) -> d.toNetwork(b));
             buffer.writeItem(recipe.output);
         }
     }

@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -37,9 +38,10 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
     protected final Optional<Integer> baseExpertiseOverride;
     protected final Optional<Integer> bonusExpertiseOverride;
     protected final Optional<ResourceLocation> expertiseGroup;
+    protected final Optional<ResearchDisciplineKey> disciplineOverride;
 
     public RitualRecipe(String group, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts, int instability,
-            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup) {
+            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
         super(group, output);
         this.requirement = requirement;
         this.manaCosts = manaCosts;
@@ -50,6 +52,7 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
         this.baseExpertiseOverride = baseExpertiseOverride;
         this.bonusExpertiseOverride = bonusExpertiseOverride;
         this.expertiseGroup = expertiseGroup;
+        this.disciplineOverride = disciplineOverride;
     }
 
     @Override
@@ -112,6 +115,11 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
         return this.expertiseGroup;
     }
 
+    @Override
+    public Optional<ResearchDisciplineKey> getResearchDisciplineOverride() {
+        return this.disciplineOverride;
+    }
+
     public static class Serializer implements RecipeSerializer<RitualRecipe> {
         @Override
         public Codec<RitualRecipe> codec() {
@@ -139,7 +147,8 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
                     ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability),
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
-                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup)
+                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
+                    ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
                 ).apply(instance, RitualRecipe::new)
             );
         }
@@ -167,9 +176,10 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
             Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
+            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey::fromNetwork);
             
             ItemStack result = buffer.readItem();
-            return new RitualRecipe(group, result, ingredients, props, requirement, manaCosts, instability, baseExpOverride, bonusExpOverride, expGroup);
+            return new RitualRecipe(group, result, ingredients, props, requirement, manaCosts, instability, baseExpOverride, bonusExpOverride, expGroup, discOverride);
         }
 
         @Override
@@ -189,6 +199,7 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
             buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
+            buffer.writeOptional(recipe.disciplineOverride, (b, d) -> d.toNetwork(b));
             buffer.writeItem(recipe.output);
         }
     }
