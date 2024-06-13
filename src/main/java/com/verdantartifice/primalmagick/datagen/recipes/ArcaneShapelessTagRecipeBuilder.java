@@ -7,13 +7,16 @@ import java.util.Optional;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneTagRecipe;
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -36,6 +39,7 @@ public class ArcaneShapelessTagRecipeBuilder {
     protected Optional<Integer> baseExpertiseOverride = Optional.empty();
     protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
     protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+    protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
     protected ArcaneShapelessTagRecipeBuilder(TagKey<Item> result, int count) {
         this.resultTag = result;
@@ -168,6 +172,11 @@ public class ArcaneShapelessTagRecipeBuilder {
         return this.expertiseGroup(PrimalMagick.resource(groupName));
     }
     
+    public ArcaneShapelessTagRecipeBuilder discipline(ResourceKey<ResearchDiscipline> rawDiscipline) {
+        this.disciplineOverride = Optional.of(new ResearchDisciplineKey(rawDiscipline));
+        return this;
+    }
+    
     protected Optional<AbstractRequirement<?>> getFinalRequirement() {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
@@ -187,7 +196,7 @@ public class ArcaneShapelessTagRecipeBuilder {
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
         ShapelessArcaneTagRecipe recipe = new ShapelessArcaneTagRecipe(Objects.requireNonNullElse(this.group, ""), this.resultTag, this.resultAmount, this.ingredients, this.getFinalRequirement(), 
-                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup);
+                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
         output.accept(id, recipe, null);
     }
 

@@ -9,8 +9,10 @@ import java.util.Optional;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -45,6 +47,7 @@ public class ArcaneShapedRecipeBuilder {
     protected Optional<Integer> baseExpertiseOverride = Optional.empty();
     protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
     protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+    protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
     
     protected ArcaneShapedRecipeBuilder(ItemLike result, int count) {
         this.result = new ItemStack(result, count);
@@ -184,6 +187,11 @@ public class ArcaneShapedRecipeBuilder {
         return this.expertiseGroup(PrimalMagick.resource(groupName));
     }
     
+    public ArcaneShapedRecipeBuilder discipline(ResourceKey<ResearchDiscipline> rawDiscipline) {
+        this.disciplineOverride = Optional.of(new ResearchDisciplineKey(rawDiscipline));
+        return this;
+    }
+    
     protected Optional<AbstractRequirement<?>> getFinalRequirement() {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
@@ -203,7 +211,7 @@ public class ArcaneShapedRecipeBuilder {
     public void build(RecipeOutput output, ResourceLocation id) {
         ShapedRecipePattern pattern = this.validate(id);
         ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.getFinalRequirement(), 
-                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup);
+                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
         output.accept(id, recipe, null);
     }
     
