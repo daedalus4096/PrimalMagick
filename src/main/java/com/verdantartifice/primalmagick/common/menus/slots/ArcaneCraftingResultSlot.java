@@ -1,22 +1,12 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
-import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
-import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
-import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -83,26 +73,10 @@ public class ArcaneCraftingResultSlot extends Slot {
             stack.onCraftedBy(this.player.level(), this.player, this.amountCrafted);
             ForgeEventFactory.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
             
-            // Increment the craft counter for the recipe's discipline
-            // TODO Grant expertise instead
-            if (this.container instanceof RecipeCraftingHolder recipeHolder && recipeHolder.getRecipeUsed() != null && recipeHolder.getRecipeUsed().value() instanceof IArcaneRecipe arcaneRecipe) {
-                Optional<AbstractRequirement<?>> requirementOpt = arcaneRecipe.getRequirement();
-                Set<ResearchDisciplineKey> recordedDisciplines = new HashSet<>();
-                requirementOpt.ifPresent(req -> {
-                    List<AbstractResearchKey<?>> keyList = req.streamKeys().toList();
-                    for (AbstractResearchKey<?> key : keyList) {
-                        if (key instanceof ResearchEntryKey entryKey) {
-                            ResearchEntry entry = ResearchEntries.getEntry(this.player.level().registryAccess(), entryKey);
-                            if (entry != null && entry.disciplineKeyOpt().isPresent()) {
-                                ResearchDiscipline disc = ResearchDisciplines.getDiscipline(this.player.level().registryAccess(), entry.disciplineKeyOpt().get());
-                                if (disc != null && !recordedDisciplines.contains(disc.key())) {
-                                    // Only increment the stat for each discipline once
-                                    disc.expertiseStat().ifPresent(stat -> StatsManager.incrementValue(this.player, stat, this.amountCrafted));
-                                }
-                            }
-                        }
-                    }
-                });
+            // Increment the expertise and craft counter stats for the recipe's discipline
+            if (this.container instanceof RecipeCraftingHolder recipeHolder && recipeHolder.getRecipeUsed() != null) {
+                ExpertiseManager.awardExpertise(this.player, recipeHolder.getRecipeUsed());
+                StatsManager.incrementCraftCount(this.player, recipeHolder.getRecipeUsed(), this.amountCrafted);
             }
         }
         if (this.container instanceof RecipeCraftingHolder recipeHolder) {

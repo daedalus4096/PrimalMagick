@@ -1,4 +1,5 @@
 {
+  "craftingStat": "primalmagick:crafted_manaweaving",
   "expertiseStat": "primalmagick:expertise_manaweaving",
   "iconLocation": "primalmagick:textures/research/discipline_manaweaving.png",
   "indexSortOrder": 200,

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
@@ -11,6 +12,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineK
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Wrapper around {@link StatsManager} specifically for dealing with expertise stats.
@@ -54,5 +56,29 @@ public class ExpertiseManager {
         if (player != null) {
             getStat(player.level().registryAccess(), disciplineKey).ifPresent(stat -> StatsManager.setValueIfMax(player, stat, newVal));
         }
+    }
+    
+    public static void awardExpertise(@Nullable Player player, @Nullable RecipeHolder<?> recipeHolder) {
+        if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
+            expRecipe.getResearchDiscipline(player.level().registryAccess(), recipeHolder.id()).ifPresent(discKey -> {
+                // Award base expertise for this recipe to the player's discipline score
+                incrementValue(player, discKey, expRecipe.getExpertiseReward(player.level().registryAccess()));
+                
+                // Award bonus expertise for this recipe to the player's discipline score if eligible, then mark it as having been crafted
+                if (isBonusEligible(player, recipeHolder)) {
+                    incrementValue(player, discKey, expRecipe.getBonusExpertiseReward(player.level().registryAccess()));
+                    markCrafted(player, recipeHolder);
+                }
+            });
+        }
+    }
+    
+    protected static boolean isBonusEligible(Player player, RecipeHolder<?> recipeHolder) {
+        // TODO Stub
+        return false;
+    }
+    
+    protected static void markCrafted(Player player, RecipeHolder<?> recipeHolder) {
+        // TODO Stub
     }
 }

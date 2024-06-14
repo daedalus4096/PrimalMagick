@@ -14,6 +14,9 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
@@ -22,6 +25,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Primary access point for statistics-related methods.  Also stores the sorted list of stat definitions
@@ -96,7 +100,9 @@ public class StatsManager {
     }
     
     public static void incrementValue(@Nullable Player player, @Nullable Stat stat, int delta) {
-        setValue(player, stat, delta + getValue(player, stat));
+        if (delta != 0) {
+            setValue(player, stat, delta + getValue(player, stat));
+        }
     }
     
     public static void setValue(@Nullable Player player, @Nullable Stat stat, int value) {
@@ -113,6 +119,17 @@ public class StatsManager {
     public static void setValueIfMax(@Nullable Player player, @Nullable Stat stat, int newVal) {
         if (newVal > getValue(player, stat)) {
             setValue(player, stat, newVal);
+        }
+    }
+    
+    public static void incrementCraftCount(@Nullable Player player, @Nullable RecipeHolder<?> recipeHolder, int amount) {
+        if (recipeHolder.value() instanceof IHasExpertise expRecipe) {
+            expRecipe.getResearchDiscipline(player.level().registryAccess(), recipeHolder.id()).ifPresent(discKey -> {
+                ResearchDiscipline disc = ResearchDisciplines.getDiscipline(player.level().registryAccess(), discKey);
+                if (disc != null) {
+                    disc.craftingStat().ifPresent(stat -> StatsManager.incrementValue(player, stat, amount));
+                }
+            });
         }
     }
     
