@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
@@ -74,11 +76,22 @@ public class ExpertiseManager {
     }
     
     protected static boolean isBonusEligible(Player player, RecipeHolder<?> recipeHolder) {
-        // TODO Stub
+        if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
+            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
+            if (stats != null) {
+                return !stats.isRecipeCrafted(recipeHolder.id()) && (expRecipe.getExpertiseGroup().isEmpty() || !stats.isRecipeGroupCrafted(expRecipe.getExpertiseGroup().get()));
+            }
+        }
         return false;
     }
     
     protected static void markCrafted(Player player, RecipeHolder<?> recipeHolder) {
-        // TODO Stub
+        if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
+            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
+            if (stats != null) {
+                stats.setRecipeCrafted(recipeHolder.id());
+                expRecipe.getExpertiseGroup().ifPresent(groupId -> stats.setRecipeGroupCrafted(groupId));
+            }
+        }
     }
 }

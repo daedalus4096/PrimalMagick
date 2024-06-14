@@ -14,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongArrayTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,8 +28,10 @@ import net.minecraftforge.common.util.LazyOptional;
  * @author Daedalus4096
  */
 public class PlayerStats implements IPlayerStats {
-    private final Map<ResourceLocation, Integer> stats = new ConcurrentHashMap<>(); // Map of stat locations to values
-    private final Set<Long> discoveredShrines = ConcurrentHashMap.newKeySet();      // Set of long-encoded block positions of shrine locations
+    private final Map<ResourceLocation, Integer> stats = new ConcurrentHashMap<>();     // Map of stat locations to values
+    private final Set<Long> discoveredShrines = ConcurrentHashMap.newKeySet();          // Set of long-encoded block positions of shrine locations
+    private final Set<ResourceLocation> craftedRecipes = ConcurrentHashMap.newKeySet(); // Set of IDs of expertise-eligible recipes crafted by the player
+    private final Set<ResourceLocation> craftedGroups = ConcurrentHashMap.newKeySet();  // Set of IDs of expertise-eligible recipe groups crafted by the player
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
@@ -54,6 +57,20 @@ public class PlayerStats implements IPlayerStats {
             locs[index++] = loc.longValue();
         }
         rootTag.put("ShrineLocations", new LongArrayTag(locs));
+        
+        // Serialize crafted recipe IDs
+        ListTag recipeList = new ListTag();
+        for (ResourceLocation recipeId : this.craftedRecipes) {
+            recipeList.add(StringTag.valueOf(recipeId.toString()));
+        }
+        rootTag.put("CraftedRecipes", recipeList);
+        
+        // Serialize crafted recipe group IDs
+        ListTag groupList = new ListTag();
+        for (ResourceLocation groupId : this.craftedGroups) {
+            groupList.add(StringTag.valueOf(groupId.toString()));
+        }
+        rootTag.put("CraftedGroups", groupList);
         
         rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
         
@@ -82,12 +99,28 @@ public class PlayerStats implements IPlayerStats {
         for (long loc : locs) {
             this.discoveredShrines.add(Long.valueOf(loc));
         }
+        
+        // Deserialize crafted recipe IDs
+        ListTag recipeList = nbt.getList("CraftedRecipes", Tag.TAG_STRING);
+        for (int index = 0; index < recipeList.size(); index++) {
+            String idStr = recipeList.getString(index);
+            this.craftedRecipes.add(new ResourceLocation(idStr));
+        }
+        
+        // Deserialize crafted recipe group IDs
+        ListTag groupList = nbt.getList("CraftedGroups", Tag.TAG_STRING);
+        for (int index = 0; index < groupList.size(); index++) {
+            String idStr = groupList.getString(index);
+            this.craftedGroups.add(new ResourceLocation(idStr));
+        }
     }
 
     @Override
     public void clear() {
         this.stats.clear();
         this.discoveredShrines.clear();
+        this.craftedRecipes.clear();
+        this.craftedGroups.clear();
     }
 
     @Override
@@ -120,6 +153,26 @@ public class PlayerStats implements IPlayerStats {
         if (pos != null) {
             this.discoveredShrines.add(Long.valueOf(pos.asLong()));
         }
+    }
+
+    @Override
+    public boolean isRecipeCrafted(ResourceLocation recipeId) {
+        return this.craftedRecipes.contains(recipeId);
+    }
+
+    @Override
+    public boolean isRecipeGroupCrafted(ResourceLocation groupId) {
+        return this.craftedGroups.contains(groupId);
+    }
+
+    @Override
+    public void setRecipeCrafted(ResourceLocation recipeId) {
+        this.craftedRecipes.add(recipeId);
+    }
+
+    @Override
+    public void setRecipeGroupCrafted(ResourceLocation groupId) {
+        this.craftedGroups.add(groupId);
     }
 
     @Override
