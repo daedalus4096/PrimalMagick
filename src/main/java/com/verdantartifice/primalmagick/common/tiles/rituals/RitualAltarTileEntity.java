@@ -20,6 +20,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,6 +52,7 @@ import com.verdantartifice.primalmagick.common.rituals.RitualStepFactory;
 import com.verdantartifice.primalmagick.common.rituals.RitualStepType;
 import com.verdantartifice.primalmagick.common.rituals.UniversalRitualStep;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -167,11 +169,11 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     @Nullable
-    protected IRitualRecipe getActiveRecipe() {
+    protected Optional<RecipeHolder<IRitualRecipe>> getActiveRecipe() {
         if (this.activeRecipeId != null) {
             Optional<RecipeHolder<?>> recipeOpt = this.level.getServer().getRecipeManager().byKey(this.activeRecipeId);
             if (recipeOpt.isPresent() && recipeOpt.get().value() instanceof IRitualRecipe ritualRecipe) {
-                return ritualRecipe;
+                return Optional.of(new RecipeHolder<>(recipeOpt.get().id(), ritualRecipe));
             }
         }
         return null;
@@ -485,15 +487,18 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     protected void finishCraft() {
-        IRitualRecipe recipe = this.getActiveRecipe();
-        if (recipe != null) {
-            this.setItem(OUTPUT_INV_INDEX, 0, recipe.getResultItem(this.getLevel().registryAccess()).copy());
-        }
-        if (this.getActivePlayer() != null) {
-            this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.info.complete"), false);
-            StatsManager.incrementValue(this.getActivePlayer(), StatsPM.RITUALS_COMPLETED);
-            StatsManager.incrementValue(this.getActivePlayer(), StatsPM.CRAFTED_RITUAL);
-        }
+        this.getActiveRecipe().ifPresent(recipeHolder -> {
+            ItemStack outputStack = recipeHolder.value().getResultItem(this.getLevel().registryAccess()).copy();
+            this.setItem(OUTPUT_INV_INDEX, 0, outputStack);
+            Player activePlayer = this.getActivePlayer();
+            if (activePlayer != null) {
+                activePlayer.displayClientMessage(Component.translatable("ritual.primalmagick.info.complete"), false);
+                StatsManager.incrementValue(activePlayer, StatsPM.RITUALS_COMPLETED);
+                StatsManager.incrementValue(activePlayer, StatsPM.CRAFTED_RITUAL, outputStack.getCount());
+                ExpertiseManager.awardExpertise(activePlayer, recipeHolder);
+            }
+        });
+        
         this.spawnSuccessParticles();
         this.reset();
     }
@@ -638,7 +643,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     protected boolean doStep(@Nonnull AbstractRitualStep step) {
-        IRitualRecipe recipe = this.getActiveRecipe();
+        IRitualRecipe recipe = this.getActiveRecipe().map(holder -> holder.value()).orElse(null);
         if (recipe == null) {
             LOGGER.warn("No recipe found when trying to do ritual step");
             return false;
@@ -856,27 +861,23 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     public float calculateStabilityDelta() {
-        float delta = 0.0F;
+        MutableFloat retVal = new MutableFloat(0F);
         
         // Deduct stability based on the active recipe
-        IRitualRecipe recipe = this.getActiveRecipe();
-        if (recipe != null) {
-            delta -= (0.01F * recipe.getInstability());
-        }
+        this.getActiveRecipe().ifPresent(recipeHolder -> retVal.subtract(0.01F * recipeHolder.value().getInstability()));
         
         // Deduct stability for each salt trail in excess of the safe amount
-        Block block = this.getBlockState().getBlock();
-        if (block instanceof RitualAltarBlock) {
-            int safeSaltCount = ((RitualAltarBlock)block).getMaxSafeSalt();
+        if (this.getBlockState().getBlock() instanceof RitualAltarBlock altarBlock) {
+            int safeSaltCount = altarBlock.getMaxSafeSalt();
             if (this.saltPositions.size() > safeSaltCount) {
-                delta -= (0.001F * (this.saltPositions.size() - safeSaltCount));
+                retVal.subtract(0.001F * (this.saltPositions.size() - safeSaltCount));
             }
         }
         
         // Add or subtract stability based on pedestal/prop symmetry
-        delta += this.symmetryDelta;
+        retVal.add(this.symmetryDelta);
         
-        return delta;
+        return retVal.floatValue();
     }
     
     protected void spawnOfferingParticles(BlockPos startPos, ItemStack stack) {
