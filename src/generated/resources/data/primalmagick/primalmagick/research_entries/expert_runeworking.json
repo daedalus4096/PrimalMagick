@@ -27,19 +27,11 @@
         "sources": {}
       },
       "completionRequirementOpt": {
-        "requirement_type": "primalmagick:and",
-        "subRequirements": [
-          {
-            "requiredValue": 10,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:crafted_runeworking"
-          },
-          {
-            "requiredValue": 2,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:items_runescribed"
-          }
-        ]
+        "discipline": {
+          "rootKey": "primalmagick:runeworking"
+        },
+        "requirement_type": "primalmagick:expertise",
+        "tier": "expert"
       },
       "parentKey": {
         "rootKey": "primalmagick:expert_runeworking"

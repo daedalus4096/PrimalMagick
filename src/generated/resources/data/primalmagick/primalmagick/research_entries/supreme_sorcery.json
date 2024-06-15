@@ -34,9 +34,11 @@
             }
           },
           {
-            "requiredValue": 250,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:spells_cast"
+            "discipline": {
+              "rootKey": "primalmagick:sorcery"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "supreme"
           },
           {
             "requiredValue": 250,

@@ -34,9 +34,11 @@
             }
           },
           {
-            "requiredValue": 10,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:rituals_completed"
+            "discipline": {
+              "rootKey": "primalmagick:ritual"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "master"
           }
         ]
       },

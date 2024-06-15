@@ -27,9 +27,11 @@
         "requirement_type": "primalmagick:and",
         "subRequirements": [
           {
-            "requiredValue": 5,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:crafted_magitech"
+            "discipline": {
+              "rootKey": "primalmagick:magitech"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "expert"
           },
           {
             "requirement_type": "primalmagick:research",

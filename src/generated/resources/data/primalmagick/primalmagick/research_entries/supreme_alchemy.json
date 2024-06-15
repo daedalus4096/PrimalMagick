@@ -34,9 +34,11 @@
             }
           },
           {
-            "requiredValue": 1000,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:crafted_alchemy"
+            "discipline": {
+              "rootKey": "primalmagick:alchemy"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "supreme"
           }
         ]
       },

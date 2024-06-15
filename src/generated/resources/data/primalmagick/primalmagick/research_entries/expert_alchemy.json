@@ -24,9 +24,11 @@
         "sources": {}
       },
       "completionRequirementOpt": {
-        "requiredValue": 50,
-        "requirement_type": "primalmagick:stat",
-        "stat": "primalmagick:crafted_alchemy"
+        "discipline": {
+          "rootKey": "primalmagick:alchemy"
+        },
+        "requirement_type": "primalmagick:expertise",
+        "tier": "expert"
       },
       "parentKey": {
         "rootKey": "primalmagick:expert_alchemy"
