@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
@@ -46,11 +47,11 @@ public class ExpertiseManager {
             // These disciplines don't track expertise
             return Optional.empty();
         } else if (rawKey.equals(ResearchDisciplines.SORCERY)) {
-            // The Sorcery discipline calculates expertise thresholds arbitrarily
+            // The Sorcery discipline calculates expertise thresholds arbitrarily, out of necessity
             return Optional.of(getThresholdBySpellsCast(tier));
         } else if (rawKey.equals(ResearchDisciplines.RUNEWORKING)) {
             // The Runeworking discipline calculates thresholds based both on traditional crafting and enchantment runescribing
-            return Optional.of(getThresholdByDisciplineRecipes(level.registryAccess(), level.getRecipeManager(), disciplineKey, tier) + getThresholdByEnchantmentsRunescribed(tier));
+            return Optional.of(getThresholdByDisciplineRecipes(level.registryAccess(), level.getRecipeManager(), disciplineKey, tier) + getThresholdByEnchantmentsRunescribed(level.registryAccess(), tier));
         } else {
             // All other disciplines calculate thresholds based solely on traditional and/or ritual crafting
             return Optional.of(getThresholdByDisciplineRecipes(level.registryAccess(), level.getRecipeManager(), disciplineKey, tier));
@@ -66,9 +67,27 @@ public class ExpertiseManager {
         };
     }
     
-    protected static int getThresholdByEnchantmentsRunescribed(ResearchTier tier) {
-        // TODO Stub
-        return 0;
+    protected static int getThresholdByEnchantmentsRunescribed(RegistryAccess registryAccess, ResearchTier tier) {
+        MutableInt retVal = new MutableInt(0);
+        ForgeRegistries.ENCHANTMENTS.getValues().forEach(ench -> {
+            RuneManager.getRuneDefinition(registryAccess, ench).ifPresent(runeEnchDef -> {
+                // Only consider rune enchantment definitions with a research tier lower than the given one
+                getRuneEnchantmentTier(registryAccess, runeEnchDef).filter(enchTier -> enchTier.compareTo(tier) < 0).ifPresent(enchTier -> {
+                    retVal.add(enchTier.getDefaultExpertise());
+                    retVal.add(enchTier.getDefaultBonusExpertise());
+                });
+            });
+        });
+        
+        // Only require a fraction of the possible enchantments to be runescribed
+        float multiplier = switch (tier) {
+            case EXPERT -> 0.2F;
+            case MASTER -> 0.4F;
+            case SUPREME -> 0.6F;
+            default -> 0F;
+        };
+
+        return (int)(multiplier * (float)retVal.intValue());
     }
     
     protected static int getThresholdByDisciplineRecipes(RegistryAccess registryAccess, RecipeManager recipeManager, ResearchDisciplineKey discKey, ResearchTier tier) {
@@ -76,17 +95,20 @@ public class ExpertiseManager {
         MutableInt retVal = new MutableInt(0);
         for (RecipeHolder<?> recipeHolder : recipeManager.getRecipes()) {
             if (recipeHolder.value() instanceof IHasExpertise expRecipe) {
-                expRecipe.getExpertiseGroup().ifPresentOrElse(groupId -> {
-                    // If the recipe is part of an expertise group, only take its values into account if that group has not already been processed
-                    if (!foundGroups.contains(groupId)) {
+                // Only consider recipes with a research tier lower than the given one
+                expRecipe.getResearchTier(registryAccess).filter(recipeTier -> recipeTier.compareTo(tier) < 0).ifPresent(recipeTier -> {
+                    expRecipe.getExpertiseGroup().ifPresentOrElse(groupId -> {
+                        // If the recipe is part of an expertise group, only take its values into account if that group has not already been processed
+                        if (!foundGroups.contains(groupId)) {
+                            retVal.add(expRecipe.getExpertiseReward(registryAccess));
+                            retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
+                            foundGroups.add(groupId);
+                        }
+                    }, () -> {
+                        // If the recipe is not part of an expertise group, then always contribute its values to the threshold
                         retVal.add(expRecipe.getExpertiseReward(registryAccess));
                         retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
-                        foundGroups.add(groupId);
-                    }
-                }, () -> {
-                    // If the recipe is not part of an expertise group, then always contribute its values to the threshold
-                    retVal.add(expRecipe.getExpertiseReward(registryAccess));
-                    retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
+                    });
                 });
             }
         }
@@ -173,17 +195,8 @@ public class ExpertiseManager {
         if (player != null && enchantment != null) {
             ResearchDisciplineKey discKey = new ResearchDisciplineKey(ResearchDisciplines.RUNEWORKING);
             RuneManager.getRuneDefinition(player.level().registryAccess(), enchantment).ifPresent(runeEnchDef -> {
-                // Determine the highest research tier represented by any of the runes in this enchantment's definition
-                Optional<ResearchTier> maxTierOpt = Optional.empty();
-                for (AbstractRequirement<?> req : runeEnchDef.getRunes().stream().map(r -> r.getRequirement()).toList()) {
-                    Optional<ResearchTier> tierOpt = req.getResearchTier(player.level().registryAccess());
-                    if (maxTierOpt.isEmpty() || (tierOpt.isPresent() && tierOpt.get().compareTo(maxTierOpt.get()) > 0)) {
-                        maxTierOpt = tierOpt;
-                    }
-                }
-                
                 // Award the expertise based on the research tier of the enchantment, then mark it as having been crafted
-                maxTierOpt.ifPresent(tier -> {
+                getRuneEnchantmentTier(player.level().registryAccess(), runeEnchDef).ifPresent(tier -> {
                     incrementValue(player, discKey, tier.getDefaultExpertise());
                     if (isBonusEligible(player, enchantment)) {
                         incrementValue(player, discKey, tier.getDefaultBonusExpertise());
@@ -192,6 +205,18 @@ public class ExpertiseManager {
                 });
             });
         }
+    }
+    
+    protected static Optional<ResearchTier> getRuneEnchantmentTier(RegistryAccess registryAccess, RuneEnchantmentDefinition runeEnchDef) {
+        // Determine the highest research tier represented by any of the runes in this enchantment's definition
+        Optional<ResearchTier> maxTierOpt = Optional.empty();
+        for (AbstractRequirement<?> req : runeEnchDef.getRunes().stream().map(r -> r.getRequirement()).toList()) {
+            Optional<ResearchTier> tierOpt = req.getResearchTier(registryAccess);
+            if (maxTierOpt.isEmpty() || (tierOpt.isPresent() && tierOpt.get().compareTo(maxTierOpt.get()) > 0)) {
+                maxTierOpt = tierOpt;
+            }
+        }
+        return maxTierOpt;
     }
     
     protected static boolean isBonusEligible(Player player, Enchantment enchantment) {
