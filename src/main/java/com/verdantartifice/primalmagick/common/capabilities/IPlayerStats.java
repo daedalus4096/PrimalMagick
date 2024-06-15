@@ -69,6 +69,14 @@ public interface IPlayerStats extends INBTSerializable<CompoundTag> {
     public boolean isRecipeGroupCrafted(@Nullable ResourceLocation groupId);
     
     /**
+     * Determine whether the player has runescribed the given enchantment before, for the purposes of bonus expertise.
+     * 
+     * @param enchantmentId the ID of the enchantment to be queried
+     * @return whether the player has runescribed the given enchantment before
+     */
+    public boolean isRuneEnchantmentCrafted(@Nullable ResourceLocation enchantmentId);
+    
+    /**
      * Mark the given recipe as having been crafted, and thus ineligible for further bonus expertise.
      * 
      * @param recipeId the ID of the recipe to be updated
@@ -81,6 +89,13 @@ public interface IPlayerStats extends INBTSerializable<CompoundTag> {
      * @param groupId the ID of the recipe group to be updated
      */
     public void setRecipeGroupCrafted(@Nullable ResourceLocation groupId);
+    
+    /**
+     * Mark the given enchantment as having been runescribed, and thus ineligible for further bonus expertise.
+     * 
+     * @param enchantmentId the ID of the enchantment to be updated
+     */
+    public void setRuneEnchantmentCrafted(@Nullable ResourceLocation enchantmentId);
     
     /**
      * Sync the given player's statistics data to the their client.

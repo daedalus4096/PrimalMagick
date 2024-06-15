@@ -10,16 +10,16 @@ import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
-import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Wrapper around {@link StatsManager} specifically for dealing with expertise stats.
@@ -139,11 +139,23 @@ public class ExpertiseManager {
     }
     
     protected static boolean isBonusEligible(Player player, Enchantment enchantment) {
-        // TODO Stub
+        ResourceLocation enchKey = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+        if (player != null && enchKey != null) {
+            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
+            if (stats != null) {
+                return !stats.isRuneEnchantmentCrafted(enchKey);
+            }
+        }
         return false;
     }
     
     protected static void markCrafted(Player player, Enchantment enchantment) {
-        // TODO Stub
+        ResourceLocation enchKey = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+        if (player != null && enchKey != null) {
+            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
+            if (stats != null) {
+                stats.setRuneEnchantmentCrafted(enchKey);
+            }
+        }
     }
 }

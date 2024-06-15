@@ -32,6 +32,7 @@ public class PlayerStats implements IPlayerStats {
     private final Set<Long> discoveredShrines = ConcurrentHashMap.newKeySet();          // Set of long-encoded block positions of shrine locations
     private final Set<ResourceLocation> craftedRecipes = ConcurrentHashMap.newKeySet(); // Set of IDs of expertise-eligible recipes crafted by the player
     private final Set<ResourceLocation> craftedGroups = ConcurrentHashMap.newKeySet();  // Set of IDs of expertise-eligible recipe groups crafted by the player
+    private final Set<ResourceLocation> craftedEnchs = ConcurrentHashMap.newKeySet();   // Set of IDs of expertise-eligible rune enchantments crafted by the player
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
@@ -71,6 +72,13 @@ public class PlayerStats implements IPlayerStats {
             groupList.add(StringTag.valueOf(groupId.toString()));
         }
         rootTag.put("CraftedGroups", groupList);
+        
+        // Serialize crafted rune enchantment IDs
+        ListTag enchList = new ListTag();
+        for (ResourceLocation enchId : this.craftedEnchs) {
+            enchList.add(StringTag.valueOf(enchId.toString()));
+        }
+        rootTag.put("CraftedRuneEnchantments", enchList);
         
         rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
         
@@ -113,6 +121,13 @@ public class PlayerStats implements IPlayerStats {
             String idStr = groupList.getString(index);
             this.craftedGroups.add(new ResourceLocation(idStr));
         }
+        
+        // Deserialize crafted rune enchantment IDs
+        ListTag enchList = nbt.getList("CraftedRuneEnchantments", Tag.TAG_STRING);
+        for (int index = 0; index < enchList.size(); index++) {
+            String idStr = enchList.getString(index);
+            this.craftedEnchs.add(new ResourceLocation(idStr));
+        }
     }
 
     @Override
@@ -121,6 +136,7 @@ public class PlayerStats implements IPlayerStats {
         this.discoveredShrines.clear();
         this.craftedRecipes.clear();
         this.craftedGroups.clear();
+        this.craftedEnchs.clear();
     }
 
     @Override
@@ -166,6 +182,11 @@ public class PlayerStats implements IPlayerStats {
     }
 
     @Override
+    public boolean isRuneEnchantmentCrafted(ResourceLocation enchantmentId) {
+        return this.craftedEnchs.contains(enchantmentId);
+    }
+
+    @Override
     public void setRecipeCrafted(ResourceLocation recipeId) {
         this.craftedRecipes.add(recipeId);
     }
@@ -173,6 +194,11 @@ public class PlayerStats implements IPlayerStats {
     @Override
     public void setRecipeGroupCrafted(ResourceLocation groupId) {
         this.craftedGroups.add(groupId);
+    }
+
+    @Override
+    public void setRuneEnchantmentCrafted(ResourceLocation enchantmentId) {
+        this.craftedEnchs.add(enchantmentId);
     }
 
     @Override
