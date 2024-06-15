@@ -42,6 +42,7 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
     protected final ResearchDisciplineKey discipline;
     protected final ResearchTier tier;
     protected final OptionalInt thresholdOverrideOpt;
+    protected OptionalInt thresholdCache = OptionalInt.empty();
     
     protected ExpertiseRequirement(ResearchDisciplineKey discipline, ResearchTier tier, OptionalInt thresholdOverrideOpt) {
         this.discipline = discipline;
@@ -66,7 +67,14 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
     }
     
     public int getThreshold(Level level) {
-        return this.thresholdOverrideOpt.orElseGet(() -> ExpertiseManager.getThreshold(level, this.discipline, this.tier).orElse(0));
+        return this.thresholdOverrideOpt.orElseGet(() -> this.getThresholdInner(level));
+    }
+    
+    protected int getThresholdInner(Level level) {
+        if (this.thresholdCache.isEmpty()) {
+            this.thresholdCache = OptionalInt.of(ExpertiseManager.getThreshold(level, this.discipline, this.tier).orElse(0));
+        }
+        return this.thresholdCache.getAsInt();
     }
 
     @Override
