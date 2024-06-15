@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.util.CodecUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 /**
  * Requirement that the player has accumulated at least the required amount of expertise in the
@@ -64,8 +65,8 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
         return this.tier;
     }
     
-    public int getThreshold() {
-        return this.thresholdOverrideOpt.orElseGet(() -> ExpertiseManager.getThreshold(this.discipline, this.tier).orElse(0));
+    public int getThreshold(Level level) {
+        return this.thresholdOverrideOpt.orElseGet(() -> ExpertiseManager.getThreshold(level, this.discipline, this.tier).orElse(0));
     }
 
     @Override
@@ -73,7 +74,7 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
         if (player == null) {
             return false;
         } else {
-            return this.discipline.isKnownBy(player) && (ExpertiseManager.getValue(player, this.discipline).orElse(0) >= this.getThreshold());
+            return this.discipline.isKnownBy(player) && (ExpertiseManager.getValue(player, this.discipline).orElse(0) >= this.getThreshold(player.level()));
         }
     }
 
@@ -84,7 +85,7 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
 
     @Override
     public boolean forceComplete(Player player) {
-        ExpertiseManager.setValueIfMax(player, this.discipline, this.getThreshold());
+        ExpertiseManager.setValueIfMax(player, this.discipline, this.getThreshold(player.level()));
         return true;
     }
 

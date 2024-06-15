@@ -1,8 +1,12 @@
 package com.verdantartifice.primalmagick.common.stats;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -16,10 +20,13 @@ import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -33,9 +40,57 @@ public class ExpertiseManager {
         return discipline == null ? Optional.empty() : discipline.expertiseStat();
     }
     
-    public static Optional<Integer> getThreshold(ResearchDisciplineKey disciplineKey, ResearchTier tier) {
+    public static Optional<Integer> getThreshold(Level level, ResearchDisciplineKey disciplineKey, ResearchTier tier) {
+        ResourceKey<ResearchDiscipline> rawKey = disciplineKey.getRootKey();
+        if (rawKey.equals(ResearchDisciplines.BASICS) || rawKey.equals(ResearchDisciplines.SCANS)) {
+            // These disciplines don't track expertise
+            return Optional.empty();
+        } else if (rawKey.equals(ResearchDisciplines.SORCERY)) {
+            // The Sorcery discipline calculates expertise thresholds arbitrarily
+            return Optional.of(getThresholdBySpellsCast(tier));
+        } else if (rawKey.equals(ResearchDisciplines.RUNEWORKING)) {
+            // The Runeworking discipline calculates thresholds based both on traditional crafting and enchantment runescribing
+            return Optional.of(getThresholdByDisciplineRecipes(level.registryAccess(), level.getRecipeManager(), disciplineKey, tier) + getThresholdByEnchantmentsRunescribed(tier));
+        } else {
+            // All other disciplines calculate thresholds based solely on traditional and/or ritual crafting
+            return Optional.of(getThresholdByDisciplineRecipes(level.registryAccess(), level.getRecipeManager(), disciplineKey, tier));
+        }
+    }
+    
+    protected static int getThresholdBySpellsCast(ResearchTier tier) {
+        return switch (tier) {
+            case EXPERT -> 50;      // Assume 10 spells at 5 mana each
+            case MASTER -> 500;     // Assume 50 spells at 10 mana each
+            case SUPREME -> 5000;   // Assume 250 spells at 20 mana each
+            default -> 0;
+        };
+    }
+    
+    protected static int getThresholdByEnchantmentsRunescribed(ResearchTier tier) {
         // TODO Stub
-        return Optional.empty();
+        return 0;
+    }
+    
+    protected static int getThresholdByDisciplineRecipes(RegistryAccess registryAccess, RecipeManager recipeManager, ResearchDisciplineKey discKey, ResearchTier tier) {
+        Set<ResourceLocation> foundGroups = new HashSet<>();
+        MutableInt retVal = new MutableInt(0);
+        for (RecipeHolder<?> recipeHolder : recipeManager.getRecipes()) {
+            if (recipeHolder.value() instanceof IHasExpertise expRecipe) {
+                expRecipe.getExpertiseGroup().ifPresentOrElse(groupId -> {
+                    // If the recipe is part of an expertise group, only take its values into account if that group has not already been processed
+                    if (!foundGroups.contains(groupId)) {
+                        retVal.add(expRecipe.getExpertiseReward(registryAccess));
+                        retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
+                        foundGroups.add(groupId);
+                    }
+                }, () -> {
+                    // If the recipe is not part of an expertise group, then always contribute its values to the threshold
+                    retVal.add(expRecipe.getExpertiseReward(registryAccess));
+                    retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
+                });
+            }
+        }
+        return retVal.intValue();
     }
     
     public static Optional<Integer> getValue(@Nullable Player player, ResearchDisciplineKey disciplineKey) {
