@@ -1023,6 +1023,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("wand_gui").sub("slot").sub("staff").output("Add a magickal wand or staff").end().build();
         this.tooltip("stat_description").sub("vanilla").output("%1$s (%2$s)").end().build();
         this.tooltip("stat_progress").name("%1$s: %2$s / %3$s").build();
+        this.tooltip("expertise").sub("group").output("Expertise group: %1$s").end().build();
+        this.tooltip("expertise").sub("base").output("Base expertise reward: %1$d").end().build();
+        this.tooltip("expertise").sub("bonus").output("First-craft bonus reward: %1$d").end().build();
+        this.tooltip("expertise").sub("claimed").output(" (claimed)").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();

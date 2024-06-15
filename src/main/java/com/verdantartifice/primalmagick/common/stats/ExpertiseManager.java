@@ -165,7 +165,7 @@ public class ExpertiseManager {
         }
     }
     
-    protected static boolean isBonusEligible(Player player, RecipeHolder<?> recipeHolder) {
+    public static boolean isBonusEligible(Player player, RecipeHolder<?> recipeHolder) {
         if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
             IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
             if (stats != null) {
