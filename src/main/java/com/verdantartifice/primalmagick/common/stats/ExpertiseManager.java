@@ -28,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ExpertiseManager {
-    protected static Optional<Stat> getStat(RegistryAccess registryAccess, ResearchDisciplineKey disciplineKey) {
+    public static Optional<Stat> getStat(RegistryAccess registryAccess, ResearchDisciplineKey disciplineKey) {
         ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(registryAccess, disciplineKey);
         return discipline == null ? Optional.empty() : discipline.expertiseStat();
     }

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ExpertiseRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.IVanillaStatRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ItemStackRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ItemTagRequirement;
@@ -20,6 +21,8 @@ public class RequirementWidgetFactory {
             return new KnowledgeWidget(req.getKnowledgeType(), req.getAmount(), x, y, isComplete);
         } else if (requirement instanceof ResearchRequirement req) {
             return new ResearchWidget(req.getRootKey(), x, y, isComplete);
+        } else if (requirement instanceof ExpertiseRequirement req) {
+            return new ExpertiseProgressWidget(req.getDiscipline(), req.getTier(), req.getThreshold(), x, y, isComplete);
         } else if (requirement instanceof StatRequirement req) {
             return new StatProgressWidget(req.getStat(), req.getRequiredValue(), x, y, isComplete);
         } else if (requirement instanceof IVanillaStatRequirement req) {

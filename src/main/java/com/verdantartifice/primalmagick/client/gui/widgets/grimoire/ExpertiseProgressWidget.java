@@ -1,10 +1,13 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
+import java.util.Optional;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.util.GuiUtils;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
+import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.Stat;
-import com.verdantartifice.primalmagick.common.stats.StatsManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -18,43 +21,31 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
-/**
- * Display widget for showing progress towards a statistic threshold on the requirements page.
- * 
- * @author Daedalus4096
- */
-public class StatProgressWidget extends AbstractWidget {
-    protected static final ResourceLocation UNKNOWN_TEXTURE = PrimalMagick.resource("textures/research/research_unknown.png");
+public class ExpertiseProgressWidget extends AbstractWidget {
     protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
-
-    protected final Stat stat;
+    
+    protected final ResearchDisciplineKey disciplineKey;
+    protected final ResearchTier tier;
     protected final int maxValue;
     protected final int currentValue;
     protected final boolean isComplete;
-    protected final ResourceLocation iconLoc;
     protected MutableComponent lastTooltip = Component.empty();
     protected MutableComponent tooltip = Component.empty();
-
-    public StatProgressWidget(Stat stat, int maxProgressValue, int x, int y, boolean isComplete) {
+    
+    public ExpertiseProgressWidget(ResearchDisciplineKey disciplineKey, ResearchTier tier, int maxProgressValue, int x, int y, boolean isComplete) {
         super(x, y, 16, 18, Component.empty());
         Minecraft mc = Minecraft.getInstance();
-        this.stat = stat;
+        this.disciplineKey = disciplineKey;
+        this.tier = tier;
         this.maxValue = maxProgressValue;
-        this.currentValue = StatsManager.getValue(mc.player, stat);
+        this.currentValue = ExpertiseManager.getValue(mc.player, disciplineKey).orElse(0);
         this.isComplete = isComplete;
-        this.iconLoc = stat.iconLocationOpt().orElse(UNKNOWN_TEXTURE);
     }
 
     @Override
     protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render the icon
-        pGuiGraphics.pose().pushPose();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        pGuiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
-        pGuiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
-        pGuiGraphics.blit(this.iconLoc, 0, 0, 0, 0, 255, 255);
-        pGuiGraphics.pose().popPose();
+        this.tier.getIconDefinition().ifPresent(iconDef -> GuiUtils.renderIconFromDefinition(pGuiGraphics, iconDef, this.getX(), this.getY()));
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
@@ -78,9 +69,10 @@ public class StatProgressWidget extends AbstractWidget {
         pGuiGraphics.pose().popPose();
         
         // Prepare the tooltip
+        Minecraft mc = Minecraft.getInstance();
         this.lastTooltip = this.tooltip;
         this.tooltip = Component.empty();
-        this.stat.getHintTranslationKey().ifPresentOrElse(hintTranslationKey -> {
+        ExpertiseManager.getStat(mc.player.level().registryAccess(), this.disciplineKey).flatMap(Stat::getHintTranslationKey).ifPresentOrElse(hintTranslationKey -> {
             if (Screen.hasShiftDown()) {
                 this.tooltip.append(Component.translatable(hintTranslationKey));
             } else {
@@ -95,13 +87,19 @@ public class StatProgressWidget extends AbstractWidget {
             this.setTooltip(Tooltip.create(this.tooltip));
         }
     }
-    
+
     protected Component getStatDescription() {
         Minecraft mc = Minecraft.getInstance();
-        Component baseDescription = Component.translatable(this.stat.getTranslationKey());
-        String currentValue = this.stat.formatter().format(Math.min(StatsManager.getValue(mc.player, this.stat), this.maxValue));
-        String maxValue = this.stat.formatter().format(this.maxValue);
-        return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
+        Optional<Stat> statOpt = ExpertiseManager.getStat(mc.player.level().registryAccess(), this.disciplineKey);
+        if (statOpt.isPresent()) {
+            Stat stat = statOpt.get();
+            Component baseDescription = Component.translatable(stat.getTranslationKey());
+            String currentValue = stat.formatter().format(Math.min(this.currentValue, this.maxValue));
+            String maxValue = stat.formatter().format(this.maxValue);
+            return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
+        } else {
+            return Component.empty();
+        }
     }
     
     @Override
