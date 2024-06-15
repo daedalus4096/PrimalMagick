@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.QuickenSpellMod;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
+import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
@@ -184,8 +185,9 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
             this.payload.playSounds(world, caster.blockPosition());
         }
         if (this.vehicle != null) {
-            if (caster instanceof Player) {
-                StatsManager.incrementValue((Player)caster, StatsPM.SPELLS_CAST);
+            if (caster instanceof Player player) {
+                ExpertiseManager.awardExpertise(player, this);
+                StatsManager.incrementValue(player, StatsPM.SPELLS_CAST);
             }
             this.vehicle.execute(this, world, caster, spellSource);
         }

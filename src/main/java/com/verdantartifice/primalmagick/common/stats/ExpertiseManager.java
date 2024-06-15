@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
+import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -156,6 +157,19 @@ public class ExpertiseManager {
             if (stats != null) {
                 stats.setRuneEnchantmentCrafted(enchKey);
             }
+        }
+    }
+    
+    /**
+     * Award expertise to the given player for casting the given spell.  Expertise awarded is based on the total
+     * mana cost of the spell.
+     * 
+     * @param player the player to receive the expertise
+     * @param spellPackage the spell that was cast
+     */
+    public static void awardExpertise(@Nullable Player player, @Nullable SpellPackage spellPackage) {
+        if (player != null && spellPackage != null) {
+            incrementValue(player, new ResearchDisciplineKey(ResearchDisciplines.SORCERY), spellPackage.getManaCost().getManaSize());
         }
     }
 }
