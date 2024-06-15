@@ -66,21 +66,7 @@ public interface IHasExpertise extends IHasRequirement {
      * @return the recipe's research tier, if any
      */
     default Optional<ResearchTier> getResearchTier(RegistryAccess registryAccess) {
-        return this.getRequirement().flatMap(req -> {
-            Optional<ResearchTier> retVal = Optional.empty();
-            for (AbstractResearchKey<?> rawKey : req.streamKeys().toList()) {
-                if (rawKey instanceof ResearchEntryKey entryKey) {
-                    ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
-                    if (entry != null) {
-                        Optional<ResearchTier> tierOpt = entry.tierOpt();
-                        if (retVal.isEmpty() || (tierOpt.isPresent() && tierOpt.get().compareTo(retVal.get()) > 0)) {
-                            retVal = tierOpt;
-                        }
-                    }
-                }
-            }
-            return retVal;
-        });
+        return this.getRequirement().flatMap(req -> req.getResearchTier(registryAccess));
     }
     
     /**

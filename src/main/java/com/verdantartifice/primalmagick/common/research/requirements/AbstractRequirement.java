@@ -1,13 +1,19 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -45,6 +51,28 @@ public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
      */
     public Stream<AbstractResearchKey<?>> streamKeys() {
         return Stream.empty();
+    }
+    
+    /**
+     * Returns the highest research tier represented by the keys comprising this requirement, if any.
+     * 
+     * @param registryAccess a registry access object
+     * @return the highest research tier represented by the keys comprising this requirement, if any
+     */
+    public Optional<ResearchTier> getResearchTier(RegistryAccess registryAccess) {
+        Optional<ResearchTier> retVal = Optional.empty();
+        for (AbstractResearchKey<?> rawKey : this.streamKeys().toList()) {
+            if (rawKey instanceof ResearchEntryKey entryKey) {
+                ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
+                if (entry != null) {
+                    Optional<ResearchTier> tierOpt = entry.tierOpt();
+                    if (retVal.isEmpty() || (tierOpt.isPresent() && tierOpt.get().compareTo(retVal.get()) > 0)) {
+                        retVal = tierOpt;
+                    }
+                }
+            }
+        }
+        return retVal;
     }
     
     protected abstract RequirementType<T> getType();

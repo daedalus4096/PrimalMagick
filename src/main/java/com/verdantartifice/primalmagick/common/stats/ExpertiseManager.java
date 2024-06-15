@@ -10,11 +10,16 @@ import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.runes.RuneManager;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
  * Wrapper around {@link StatsManager} specifically for dealing with expertise stats.
@@ -60,6 +65,13 @@ public class ExpertiseManager {
         }
     }
     
+    /**
+     * Award expertise to the given player for crafting the given expertise-granting recipe at an arcane workbench or
+     * other crafting station.
+     * 
+     * @param player the player to receive the expertise
+     * @param recipeHolder a holder for the expertise-granting recipe
+     */
     public static void awardExpertise(@Nullable Player player, @Nullable RecipeHolder<?> recipeHolder) {
         if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
             expRecipe.getResearchDiscipline(player.level().registryAccess(), recipeHolder.id()).ifPresent(discKey -> {
@@ -93,5 +105,45 @@ public class ExpertiseManager {
                 expRecipe.getExpertiseGroup().ifPresent(groupId -> stats.setRecipeGroupCrafted(groupId));
             }
         }
+    }
+    
+    /**
+     * Award expertise to the given player for runescribing the given enchantment onto a piece of gear.
+     * 
+     * @param player the player to receive the expertise
+     * @param enchantment the enchantment that was runescribed
+     */
+    public static void awardExpertise(@Nullable Player player, @Nullable Enchantment enchantment) {
+        if (player != null && enchantment != null) {
+            ResearchDisciplineKey discKey = new ResearchDisciplineKey(ResearchDisciplines.RUNEWORKING);
+            RuneManager.getRuneDefinition(player.level().registryAccess(), enchantment).ifPresent(runeEnchDef -> {
+                // Determine the highest research tier represented by any of the runes in this enchantment's definition
+                Optional<ResearchTier> maxTierOpt = Optional.empty();
+                for (AbstractRequirement<?> req : runeEnchDef.getRunes().stream().map(r -> r.getRequirement()).toList()) {
+                    Optional<ResearchTier> tierOpt = req.getResearchTier(player.level().registryAccess());
+                    if (maxTierOpt.isEmpty() || (tierOpt.isPresent() && tierOpt.get().compareTo(maxTierOpt.get()) > 0)) {
+                        maxTierOpt = tierOpt;
+                    }
+                }
+                
+                // Award the expertise based on the research tier of the enchantment, then mark it as having been crafted
+                maxTierOpt.ifPresent(tier -> {
+                    incrementValue(player, discKey, tier.getDefaultExpertise());
+                    if (isBonusEligible(player, enchantment)) {
+                        incrementValue(player, discKey, tier.getDefaultBonusExpertise());
+                        markCrafted(player, enchantment);
+                    }
+                });
+            });
+        }
+    }
+    
+    protected static boolean isBonusEligible(Player player, Enchantment enchantment) {
+        // TODO Stub
+        return false;
+    }
+    
+    protected static void markCrafted(Player player, Enchantment enchantment) {
+        // TODO Stub
     }
 }
