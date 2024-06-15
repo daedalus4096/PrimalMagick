@@ -487,21 +487,21 @@ public class ResearchEntries {
                 .stage().recipe(ItemsPM.MANA_PRISM.get()).end()
                 .build());
         register(context, EXPERT_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_MANAWEAVING).parent(MANA_ARROWS).parent(WAND_CHARGER)
-                .stage().requiredStat(StatsPM.CRAFTED_MANAWEAVING, 10).end()
+                .stage().requiredExpertise(discipline, ResearchTier.EXPERT).end()
                 .stage().recipe(ItemsPM.MARBLE_ENCHANTED.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BRICK_STAIRS.get())
                         .recipe(ItemsPM.MARBLE_ENCHANTED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BRICKS.get()).recipe(ItemsPM.MARBLE_ENCHANTED_CHISELED.get())
                         .recipe(ItemsPM.MARBLE_ENCHANTED_PILLAR.get()).recipe(ItemsPM.MARBLE_ENCHANTED_RUNED.get()).recipe(ItemsPM.MARBLE_ENCHANTED_SLAB.get())
                         .recipe(ItemsPM.MARBLE_ENCHANTED_STAIRS.get()).recipe(ItemsPM.MARBLE_ENCHANTED_WALL.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BOOKSHELF.get()).end()
                 .build());
         register(context, MASTER_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ICON_MANAWEAVING).parent(WAND_CAP_GOLD).parent(WAND_GEM_ADEPT)
-                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_MANAWEAVING, 50).end()
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredExpertise(discipline, ResearchTier.MASTER).end()
                 .stage().recipe(ItemsPM.MARBLE_SMOKED.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICK_STAIRS.get())
                         .recipe(ItemsPM.MARBLE_SMOKED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICKS.get()).recipe(ItemsPM.MARBLE_SMOKED_CHISELED.get())
                         .recipe(ItemsPM.MARBLE_SMOKED_PILLAR.get()).recipe(ItemsPM.MARBLE_SMOKED_RUNED.get()).recipe(ItemsPM.MARBLE_SMOKED_SLAB.get())
                         .recipe(ItemsPM.MARBLE_SMOKED_STAIRS.get()).recipe(ItemsPM.MARBLE_SMOKED_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BOOKSHELF.get()).end()
                 .build());
         register(context, SUPREME_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_MANAWEAVING).parent(WAND_CAP_HEXIUM).parent(WAND_GEM_WIZARD)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_MANAWEAVING, 250).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().recipe(ItemsPM.MARBLE_HALLOWED.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
                         .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
                         .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
@@ -749,15 +749,15 @@ public class ResearchEntries {
                 .stage().end()
                 .build());
         register(context, EXPERT_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_ALCHEMY).parent(CALCINATOR_BASIC).parent(STONEMELDING)
-                .stage().requiredStat(StatsPM.CRAFTED_ALCHEMY, 50).end()
+                .stage().requiredExpertise(discipline, ResearchTier.EXPERT).end()
                 .stage().end()
                 .build());
         register(context, MASTER_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ICON_ALCHEMY).parent(CALCINATOR_ENCHANTED).parent(PRIMALITE)
-                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_ALCHEMY, 250).end()
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredExpertise(discipline, ResearchTier.MASTER).end()
                 .stage().end()
                 .build());
         register(context, SUPREME_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_ALCHEMY).parent(CALCINATOR_FORBIDDEN).parent(HEXIUM)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_ALCHEMY, 1000).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().end()
                 .build());
         register(context, COMPLETE_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_ALCHEMY).finale(discipline)
@@ -992,15 +992,15 @@ public class ResearchEntries {
                 .stage().attunement(Sources.EARTH, 1).recipe(ItemsPM.SPELL_SCROLL_BLANK.get()).recipe(ItemsPM.SPELLCRAFTING_ALTAR.get()).end()
                 .build());
         register(context, EXPERT_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(SPELL_PAYLOAD_LIGHTNING).parent(SPELL_PAYLOAD_FROST)
-                .stage().requiredStat(StatsPM.SPELLS_CRAFTED, 1).requiredStat(StatsPM.SPELLS_CAST, 10).end()
+                .stage().requiredExpertise(discipline, ResearchTier.EXPERT).end()
                 .stage().end()
                 .build());
         register(context, MASTER_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(SPELL_VEHICLE_PROJECTILE).parent(SPELL_MOD_AMPLIFY)
-                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.SPELLS_CAST, 50).requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 50).end()
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredExpertise(discipline, ResearchTier.MASTER).requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 50).end()
                 .stage().end()
                 .build());
         register(context, SUPREME_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(SPELL_VEHICLE_BOLT).parent(SPELL_MOD_QUICKEN)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.SPELLS_CAST, 250).requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 250).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 250).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().end()
                 .build());
         register(context, COMPLETE_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_SORCERY).finale(discipline)
@@ -1138,15 +1138,15 @@ public class ResearchEntries {
                 .build());
         register(context, EXPERT_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_RUNEWORKING)
                 .parent(RUNE_EARTH).parent(RUNE_PROJECT).parent(RUNE_ITEM)
-                .stage().requiredStat(StatsPM.CRAFTED_RUNEWORKING, 10).requiredStat(StatsPM.ITEMS_RUNESCRIBED, 2).end()
+                .stage().requiredExpertise(discipline, ResearchTier.EXPERT).end()
                 .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get()).end()
                 .build());
         register(context, MASTER_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ICON_RUNEWORKING).parent(RUNE_ABSORB).parent(RUNE_CREATURE)
-                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_RUNEWORKING, 50).requiredStat(StatsPM.ITEMS_RUNESCRIBED, 10).end()
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredExpertise(discipline, ResearchTier.MASTER).end()
                 .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).end()
                 .build());
         register(context, SUPREME_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_RUNEWORKING).parent(RUNE_POWER)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_RUNEWORKING, 250).requiredStat(StatsPM.ITEMS_RUNESCRIBED, 50).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).end()
                 .build());
         register(context, COMPLETE_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_RUNEWORKING).finale(discipline)
@@ -1272,15 +1272,15 @@ public class ResearchEntries {
                 .stage().recipe(ItemsPM.RITUAL_ALTAR.get()).recipe(ItemsPM.OFFERING_PEDESTAL.get()).end()
                 .build());
         register(context, EXPERT_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_RITUAL).parent(RITUAL_CANDLES).parent(INCENSE_BRAZIER)
-                .stage().requiredStat(StatsPM.RITUALS_COMPLETED, 2).end()
+                .stage().requiredExpertise(discipline, ResearchTier.EXPERT).end()
                 .stage().end()
                 .build());
         register(context, MASTER_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ICON_RITUAL).parent(RITUAL_LECTERN).parent(RITUAL_BELL)
-                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.RITUALS_COMPLETED, 10).end()
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredExpertise(discipline, ResearchTier.MASTER).end()
                 .stage().end()
                 .build());
         register(context, SUPREME_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_RITUAL).parent(BLOODLETTER).parent(SOUL_ANVIL)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.RITUALS_COMPLETED, 50).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().end()
                 .build());
         register(context, COMPLETE_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_RITUAL).finale(discipline)
@@ -1531,15 +1531,15 @@ public class ResearchEntries {
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).end()
                 .build());
         register(context, EXPERT_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_MAGITECH).parent(HONEY_EXTRACTOR).parent(SEASCRIBE_PEN)
-                .stage().requiredStat(StatsPM.CRAFTED_MAGITECH, 5).requiredResearch(SCAN_PRIMALITE).end()
+                .stage().requiredExpertise(discipline, ResearchTier.EXPERT).requiredResearch(SCAN_PRIMALITE).end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).end()
                 .build());
         register(context, MASTER_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ICON_MAGITECH).parent(ARCANOMETER).parent(PRIMALITE_GOLEM)
-                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_MAGITECH, 25).requiredResearch(SCAN_HEXIUM).end()
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredExpertise(discipline, ResearchTier.MASTER).requiredResearch(SCAN_HEXIUM).end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).end()
                 .build());
         register(context, SUPREME_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_MAGITECH).parent(HEXIUM_GOLEM)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_MAGITECH, 100).requiredResearch(SCAN_HALLOWSTEEL).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).requiredResearch(SCAN_HALLOWSTEEL).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).end()
                 .build());
         register(context, COMPLETE_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_MAGITECH).finale(discipline)

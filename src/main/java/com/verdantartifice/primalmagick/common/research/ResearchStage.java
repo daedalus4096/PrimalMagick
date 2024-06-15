@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
 import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ExpertiseRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ItemStackRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ItemTagRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.KnowledgeRequirement;
@@ -210,6 +211,14 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         
         public Builder requiredVanillaItemUsedStat(ItemLike item, int value) {
             return this.requirement(new VanillaItemUsedStatRequirement(item.asItem(), value));
+        }
+        
+        public Builder requiredExpertise(ResourceKey<ResearchDiscipline> discipline, ResearchTier tier) {
+            return this.requirement(new ExpertiseRequirement(discipline, tier));
+        }
+        
+        public Builder requiredExpertise(ResourceKey<ResearchDiscipline> discipline, ResearchTier tier, int threshold) {
+            return this.requirement(new ExpertiseRequirement(discipline, tier, threshold));
         }
         
         public Builder recipe(String name) {
