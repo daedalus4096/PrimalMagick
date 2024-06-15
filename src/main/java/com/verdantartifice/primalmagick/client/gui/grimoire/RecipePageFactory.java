@@ -21,27 +21,28 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  * @author Daedalus4096
  */
 public class RecipePageFactory {
+    @SuppressWarnings("unchecked")
     @Nonnull
     public static AbstractRecipePage createPage(@Nonnull RecipeHolder<?> recipeHolder, RegistryAccess registryAccess) {
         Recipe<?> recipe = recipeHolder.value();
-        if (recipe instanceof SmeltingRecipe sr) {
-            return new SmeltingRecipePage(sr, registryAccess);
-        } else if (recipe instanceof IRitualRecipe rr) {
-            return new RitualRecipePage(rr, registryAccess);
-        } else if (recipe instanceof IRunecarvingRecipe rr) {
-            return new RunecarvingRecipePage(rr, registryAccess);
-        } else if (recipe instanceof IConcoctingRecipe cr) {
-            return new ConcoctingRecipePage(cr, registryAccess);
-        } else if (recipe instanceof IDissolutionRecipe dr) {
-            return new DissolutionRecipePage(dr, registryAccess);
-        } else if (recipe instanceof IShapedArcaneRecipePM sar) {
-            return new ShapedArcaneRecipePage(sar, registryAccess);
-        } else if (recipe instanceof IShapelessArcaneRecipePM sar) {
-            return new ShapelessArcaneRecipePage(sar, registryAccess);
-        } else if (recipe instanceof IShapedRecipe sr) {
-            return new ShapedRecipePage(sr, registryAccess);
+        if (recipe instanceof SmeltingRecipe) {
+            return new SmeltingRecipePage((RecipeHolder<SmeltingRecipe>)recipeHolder, registryAccess);
+        } else if (recipe instanceof IRitualRecipe) {
+            return new RitualRecipePage((RecipeHolder<IRitualRecipe>)recipeHolder, registryAccess);
+        } else if (recipe instanceof IRunecarvingRecipe) {
+            return new RunecarvingRecipePage((RecipeHolder<IRunecarvingRecipe>)recipeHolder, registryAccess);
+        } else if (recipe instanceof IConcoctingRecipe) {
+            return new ConcoctingRecipePage((RecipeHolder<IConcoctingRecipe>)recipeHolder, registryAccess);
+        } else if (recipe instanceof IDissolutionRecipe) {
+            return new DissolutionRecipePage((RecipeHolder<IDissolutionRecipe>)recipeHolder, registryAccess);
+        } else if (recipe instanceof IShapedArcaneRecipePM) {
+            return new ShapedArcaneRecipePage((RecipeHolder<IShapedArcaneRecipePM>)recipeHolder, registryAccess);
+        } else if (recipe instanceof IShapelessArcaneRecipePM) {
+            return new ShapelessArcaneRecipePage((RecipeHolder<IShapelessArcaneRecipePM>)recipeHolder, registryAccess);
+        } else if (recipe instanceof IShapedRecipe) {
+            return new ShapedRecipePage((RecipeHolder<IShapedRecipe<?>>)recipeHolder, registryAccess);
         } else {
-            return new ShapelessRecipePage(recipe, registryAccess);
+            return new ShapelessRecipePage(recipeHolder, registryAccess);
         }
     }
 }

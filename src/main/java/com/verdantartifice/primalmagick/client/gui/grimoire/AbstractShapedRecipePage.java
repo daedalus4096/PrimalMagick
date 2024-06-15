@@ -14,6 +14,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
 /**
@@ -23,16 +24,16 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  * @param <T> type of recipe, e.g. ShapedArcaneRecipe
  */
 public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> extends AbstractRecipePage {
-    protected T recipe;
+    protected RecipeHolder<? extends T> recipe;
     
-    public AbstractShapedRecipePage(T recipe, RegistryAccess registryAccess) {
+    public AbstractShapedRecipePage(RecipeHolder<? extends T> recipe, RegistryAccess registryAccess) {
         super(registryAccess);
         this.recipe = recipe;
     }
 
     @Override
     protected Component getTitleText() {
-        ItemStack stack = this.recipe.getResultItem(this.registryAccess);
+        ItemStack stack = this.recipe.value().getResultItem(this.registryAccess);
         return stack.getItem().getName(stack);
     }
 
@@ -42,9 +43,9 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         int overlayWidth = 51;
 
         // Render ingredient stacks
-        int recipeWidth = this.recipe.getRecipeWidth();
-        int recipeHeight = this.recipe.getRecipeHeight();
-        List<Ingredient> ingredients = this.recipe.getIngredients();
+        int recipeWidth = this.recipe.value().getRecipeWidth();
+        int recipeHeight = this.recipe.value().getRecipeHeight();
+        List<Ingredient> ingredients = this.recipe.value().getIngredients();
         for (int i = 0; i < Math.min(recipeWidth, 3); i++) {
             for (int j = 0; j < Math.min(recipeHeight, 3); j++) {
                 Ingredient ingredient = ingredients.get(i + j * recipeWidth);
@@ -55,11 +56,11 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         }
         
         // Render output stack
-        ItemStack output = this.recipe.getResultItem(this.registryAccess);
+        ItemStack output = this.recipe.value().getResultItem(this.registryAccess);
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget
-        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe.value(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
     }
     
     @Override

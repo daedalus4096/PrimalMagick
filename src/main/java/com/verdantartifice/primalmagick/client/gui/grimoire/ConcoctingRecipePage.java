@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSumm
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Grimoire page showing a concocting recipe.
@@ -12,7 +13,7 @@ import net.minecraft.core.RegistryAccess;
  * @author Daedalus4096
  */
 public class ConcoctingRecipePage extends AbstractShapelessRecipePage<IConcoctingRecipe> {
-    public ConcoctingRecipePage(IConcoctingRecipe recipe, RegistryAccess registryAccess) {
+    public ConcoctingRecipePage(RecipeHolder<? extends IConcoctingRecipe> recipe, RegistryAccess registryAccess) {
         super(recipe, registryAccess);
     }
     
@@ -24,8 +25,8 @@ public class ConcoctingRecipePage extends AbstractShapelessRecipePage<IConcoctin
         // Add mana cost summary widget
         int indent = 124;
         int overlayWidth = 52;
-        if (!this.recipe.getManaCosts().isEmpty()) {
-            screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
+        if (!this.recipe.value().getManaCosts().isEmpty()) {
+            screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.value().getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
         }
     }
 

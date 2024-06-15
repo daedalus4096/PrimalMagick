@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Base class for grimoire shapeless recipe pages.
@@ -23,16 +24,16 @@ import net.minecraft.world.item.crafting.Recipe;
  * @param <T> type of recipe, e.g. ShapelessArcaneRecipe
  */
 public abstract class AbstractShapelessRecipePage<T extends Recipe<?>> extends AbstractRecipePage {
-    protected T recipe;
+    protected RecipeHolder<? extends T> recipe;
     
-    public AbstractShapelessRecipePage(T recipe, RegistryAccess registryAccess) {
+    public AbstractShapelessRecipePage(RecipeHolder<? extends T> recipe, RegistryAccess registryAccess) {
         super(registryAccess);
         this.recipe = recipe;
     }
 
     @Override
     protected Component getTitleText() {
-        ItemStack stack = this.recipe.getResultItem(this.registryAccess);
+        ItemStack stack = this.recipe.value().getResultItem(this.registryAccess);
         return stack.getItem().getName(stack);
     }
 
@@ -42,7 +43,7 @@ public abstract class AbstractShapelessRecipePage<T extends Recipe<?>> extends A
         int overlayWidth = 51;
 
         // Render ingredient stacks
-        List<Ingredient> ingredients = this.recipe.getIngredients();
+        List<Ingredient> ingredients = this.recipe.value().getIngredients();
         for (int index = 0; index < Math.min(ingredients.size(), 9); index++) {
             Ingredient ingredient = ingredients.get(index);
             if (ingredient != null) {
@@ -51,11 +52,11 @@ public abstract class AbstractShapelessRecipePage<T extends Recipe<?>> extends A
         }
         
         // Render output stack
-        ItemStack output = this.recipe.getResultItem(this.registryAccess);
+        ItemStack output = this.recipe.value().getResultItem(this.registryAccess);
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget
-        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe.value(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
     }
     
     @Override
