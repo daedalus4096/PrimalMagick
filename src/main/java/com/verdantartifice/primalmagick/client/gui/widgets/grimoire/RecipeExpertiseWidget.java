@@ -1,8 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
-import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 
 import net.minecraft.ChatFormatting;
@@ -14,9 +15,12 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class RecipeExpertiseWidget extends AbstractWidget {
+    protected static final ResourceLocation ICON_LOC = PrimalMagick.resource("textures/research/expertise_expert.png");
+    
     protected final RecipeHolder<?> recipeHolder;
     
     public RecipeExpertiseWidget(RecipeHolder<?> recipeHolder, int x, int y) {
@@ -56,12 +60,13 @@ public class RecipeExpertiseWidget extends AbstractWidget {
     @Override
     protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render the icon
-        Minecraft mc = Minecraft.getInstance();
-        if (this.recipeHolder.value() instanceof IHasExpertise expRecipe) {
-            expRecipe.getResearchTier(mc.level.registryAccess()).flatMap(ResearchTier::getIconDefinition).ifPresent(iconDef -> {
-                GuiUtils.renderIconFromDefinition(pGuiGraphics, iconDef, this.getX(), this.getY());
-            });
-        }
+        pGuiGraphics.pose().pushPose();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        pGuiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        pGuiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+        pGuiGraphics.blit(ICON_LOC, 0, 0, 0, 0, 255, 255);
+        pGuiGraphics.pose().popPose();
 
         // Don't allow the widget to become focused, to prevent keyboard navigation from moving the active tooltip
         this.setFocused(false);
