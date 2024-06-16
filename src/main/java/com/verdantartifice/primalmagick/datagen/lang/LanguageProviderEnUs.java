@@ -1922,6 +1922,44 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.SHEARS_USED).name("Times shears used").hint("Right click shearable blocks and entities for credit; breaking blocks with shears in hand does not count").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();
         
+        // Generate expertise group description localizations
+        this.expertiseGroup("sunlamp").name("Enchanted lanterns").build();
+        this.expertiseGroup("skyglass_block").name("Skyglass blocks").build();
+        this.expertiseGroup("skyglass_pane").name("Skyglass panes").build();
+        this.expertiseGroup("essence_dust").name("Essence dusts").build();
+        this.expertiseGroup("essence_shard").name("Essence shards").build();
+        this.expertiseGroup("essence_crystal").name("Essence crystals").build();
+        this.expertiseGroup("essence_cluster").name("Essence clusters").build();
+        this.expertiseGroup("primalite_weapon").name("Primalite weapons").build();
+        this.expertiseGroup("primalite_archery").name("Primalite archery").build();
+        this.expertiseGroup("primalite_tool").name("Primalite tools").build();
+        this.expertiseGroup("primalite_armor").name("Primalite armor").build();
+        this.expertiseGroup("hexium_weapon").name("Hexium weapons").build();
+        this.expertiseGroup("hexium_archery").name("Hexium archery").build();
+        this.expertiseGroup("hexium_tool").name("Hexium tools").build();
+        this.expertiseGroup("hexium_armor").name("Hexium armor").build();
+        this.expertiseGroup("hallowsteel_weapon").name("Hallowsteel weapons").build();
+        this.expertiseGroup("hallowsteel_archery").name("Hallowsteel archery").build();
+        this.expertiseGroup("hallowsteel_tool").name("Hallowsteel tools").build();
+        this.expertiseGroup("hallowsteel_armor").name("Hallowsteel armor").build();
+        this.expertiseGroup("ritual_candle").name("Ritual candles").build();
+        this.expertiseGroup("pixie_basic").name("Basic pixies").build();
+        this.expertiseGroup("pixie_grand").name("Grand pixies").build();
+        this.expertiseGroup("pixie_majestic").name("Majestic pixies").build();
+        this.expertiseGroup("ambrosia_basic").name("Basic ambrosia").build();
+        this.expertiseGroup("ambrosia_greater").name("Greater ambrosia").build();
+        this.expertiseGroup("ambrosia_supreme").name("Supreme ambrosia").build();
+        this.expertiseGroup("sanguine_core").name("Attuned sanguine cores").build();
+        this.expertiseGroup("imbued_wool_robes").name("Imbued wool robes").build();
+        this.expertiseGroup("spellcloth_robes").name("Spellcloth robes").build();
+        this.expertiseGroup("hexweave_robes").name("Hexweave robes").build();
+        this.expertiseGroup("saintswool_robes").name("Saintswool robes").build();
+        this.expertiseGroup("mana_font_artificial").name("Artificial mana fonts").build();
+        this.expertiseGroup("mana_font_forbidden").name("Forbidden mana fonts").build();
+        this.expertiseGroup("mana_font_heavenly").name("Heavenly mana fonts").build();
+        this.expertiseGroup("mana_arrow").name("Mana-tinged arrows").build();
+        this.expertiseGroup("attunement_shackles").name("Attunement shackles").build();
+        
         // Generate research project localizations
         this.researchProject("trade").name("Trade").text("Perhaps some nearby villagers have magickal knowledge to trade.  You assemble some goods they'll find valuable.").build();
         this.researchProject("mundane_tinkering").name("Mundane Tinkering").text("You spend some time working with your tools, creating paraphernalia to help with your magickal pursuits.").build();
