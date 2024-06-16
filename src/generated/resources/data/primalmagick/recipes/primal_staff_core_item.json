@@ -1,5 +1,8 @@
 {
   "type": "primalmagick:ritual",
+  "disciplineOverride": {
+    "rootKey": "primalmagick:ritual"
+  },
   "ingredients": [
     {
       "item": "primalmagick:obsidian_staff_core_item"
