@@ -125,5 +125,6 @@
       ],
       "textTranslationKey": "research.primalmagick.hexium.text.stage.2"
     }
-  ]
+  ],
+  "tier": "master"
 }

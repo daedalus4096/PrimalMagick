@@ -63,5 +63,6 @@
       ],
       "textTranslationKey": "research.primalmagick.arcanometer.text.stage.2"
     }
-  ]
+  ],
+  "tier": "expert"
 }

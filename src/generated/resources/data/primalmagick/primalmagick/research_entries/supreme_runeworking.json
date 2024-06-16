@@ -31,14 +31,11 @@
             }
           },
           {
-            "requiredValue": 250,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:crafted_runeworking"
-          },
-          {
-            "requiredValue": 50,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:items_runescribed"
+            "discipline": {
+              "rootKey": "primalmagick:runeworking"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "supreme"
           }
         ]
       },
@@ -68,5 +65,6 @@
       "siblings": [],
       "textTranslationKey": "research.primalmagick.supreme_runeworking.text.stage.2"
     }
-  ]
+  ],
+  "tier": "supreme"
 }

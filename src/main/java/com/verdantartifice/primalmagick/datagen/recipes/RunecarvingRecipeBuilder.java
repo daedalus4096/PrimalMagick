@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -34,7 +38,11 @@ public class RunecarvingRecipeBuilder {
     protected Ingredient ingredient2;
     protected String group;
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
-    
+    protected Optional<Integer> baseExpertiseOverride = Optional.empty();
+    protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
+    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+    protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
+
     protected RunecarvingRecipeBuilder(ItemLike item, int count) {
         this.result = new ItemStack(item, count);
     }
@@ -146,6 +154,34 @@ public class RunecarvingRecipeBuilder {
         return this.requirement(new ResearchRequirement(new ResearchStageKey(research, stage)));
     }
     
+    public RunecarvingRecipeBuilder expertise(int baseValue, int bonusValue) {
+        this.baseExpertiseOverride = Optional.of(baseValue);
+        this.bonusExpertiseOverride = Optional.of(bonusValue);
+        return this;
+    }
+    
+    public RunecarvingRecipeBuilder noExpertise() {
+        return this.expertise(0, 0);
+    }
+    
+    public RunecarvingRecipeBuilder expertiseTier(ResearchTier tier) {
+        return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
+    }
+    
+    public RunecarvingRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+        this.expertiseGroup = Optional.ofNullable(groupLoc);
+        return this;
+    }
+    
+    public RunecarvingRecipeBuilder expertiseGroup(String groupName) {
+        return this.expertiseGroup(PrimalMagick.resource(groupName));
+    }
+    
+    public RunecarvingRecipeBuilder discipline(ResourceKey<ResearchDiscipline> rawDiscipline) {
+        this.disciplineOverride = Optional.of(new ResearchDisciplineKey(rawDiscipline));
+        return this;
+    }
+    
     protected Optional<AbstractRequirement<?>> getFinalRequirement() {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
@@ -164,7 +200,8 @@ public class RunecarvingRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        RunecarvingRecipe recipe = new RunecarvingRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient1, this.ingredient2, this.getFinalRequirement());
+        RunecarvingRecipe recipe = new RunecarvingRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient1, this.ingredient2, this.getFinalRequirement(),
+                this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
         output.accept(id, recipe, null);
     }
     

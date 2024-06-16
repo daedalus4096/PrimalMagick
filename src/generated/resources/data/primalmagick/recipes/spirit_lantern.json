@@ -1,5 +1,11 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
+  "baseExpertiseOverride": 5,
+  "bonusExpertiseOverride": 20,
+  "disciplineOverride": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "expertiseGroup": "primalmagick:sunlamp",
   "key": {
     "N": {
       "tag": "primalmagick:nuggets/hexium"

@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.DamageTypeLanguage
 import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EventLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.ExpertiseGroupLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.GrimoireLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilder;
@@ -294,6 +295,10 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
     
     public StatLanguageBuilder stat(Stat stat) {
         return this.createBuilder(() -> new StatLanguageBuilder(stat, this::untrack, this::add));
+    }
+    
+    public ExpertiseGroupLanguageBuilder expertiseGroup(String group) {
+        return this.createBuilder(() -> new ExpertiseGroupLanguageBuilder(group, this::untrack, this::add));
     }
     
     public RitualLanguageBuilder ritual(String id) {

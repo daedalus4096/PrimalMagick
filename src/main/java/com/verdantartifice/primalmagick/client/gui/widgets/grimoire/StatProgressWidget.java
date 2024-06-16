@@ -71,9 +71,7 @@ public class StatProgressWidget extends AbstractWidget {
         pGuiGraphics.pose().popPose();
         
         // Draw progress bar foreground
-        Minecraft mc = Minecraft.getInstance();
-        int currentValue = StatsManager.getValue(mc.player, this.stat);
-        int px = (int)(16.0D * ((double)currentValue / (double)this.maxValue));
+        int px = this.getProgressionScaled();
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 1.0F);
         pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 232, px, 2);
@@ -120,6 +118,6 @@ public class StatProgressWidget extends AbstractWidget {
         // Determine how much of the progress meter to show
         int i = this.currentValue;
         int j = this.maxValue;
-        return j != 0 && i != 0 ? i * 24 / j : 0;
+        return j != 0 && i != 0 ? (int)(16.0D * ((double)i / (double)j)) : 0;
     }
 }

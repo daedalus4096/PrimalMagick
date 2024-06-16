@@ -1,5 +1,6 @@
 {
   "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:ambrosia_supreme",
   "ingredients": [
     {
       "item": "primalmagick:manafruit"

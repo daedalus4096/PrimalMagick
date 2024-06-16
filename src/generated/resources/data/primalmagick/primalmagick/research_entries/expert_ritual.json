@@ -24,9 +24,11 @@
         "sources": {}
       },
       "completionRequirementOpt": {
-        "requiredValue": 2,
-        "requirement_type": "primalmagick:stat",
-        "stat": "primalmagick:rituals_completed"
+        "discipline": {
+          "rootKey": "primalmagick:ritual"
+        },
+        "requirement_type": "primalmagick:expertise",
+        "tier": "expert"
       },
       "parentKey": {
         "rootKey": "primalmagick:expert_ritual"
@@ -48,5 +50,6 @@
       "siblings": [],
       "textTranslationKey": "research.primalmagick.expert_ritual.text.stage.2"
     }
-  ]
+  ],
+  "tier": "expert"
 }

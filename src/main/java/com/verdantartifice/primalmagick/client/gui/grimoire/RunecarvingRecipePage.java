@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeExpertiseWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 
@@ -12,6 +13,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Grimoire page showing a runecarving recipe.
@@ -19,16 +21,16 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class RunecarvingRecipePage extends AbstractRecipePage {
-    protected IRunecarvingRecipe recipe;
+    protected RecipeHolder<IRunecarvingRecipe> recipe;
     
-    public RunecarvingRecipePage(IRunecarvingRecipe recipe, RegistryAccess registryAccess) {
+    public RunecarvingRecipePage(RecipeHolder<IRunecarvingRecipe> recipe, RegistryAccess registryAccess) {
         super(registryAccess);
         this.recipe = recipe;
     }
 
     @Override
     protected Component getTitleText() {
-        ItemStack stack = this.recipe.getResultItem(this.registryAccess);
+        ItemStack stack = this.recipe.value().getResultItem(this.registryAccess);
         return stack.getItem().getName(stack);
     }
 
@@ -43,14 +45,19 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         int overlayWidth = 13;
 
         // Render ingredient stacks
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(0), x - 6 + (side * 140) + (indent / 2), y + 99, screen));
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(1), x + 58 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 99, screen));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().getIngredients().get(0), x - 6 + (side * 140) + (indent / 2), y + 99, screen));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().getIngredients().get(1), x + 58 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 99, screen));
 
         // Render output stack
-        screen.addWidgetToScreen(new ItemStackWidget(this.recipe.getResultItem(this.registryAccess), x + 29 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
+        screen.addWidgetToScreen(new ItemStackWidget(this.recipe.value().getResultItem(this.registryAccess), x + 29 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget
-        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe.value(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
+        
+        // Render recipe expertise widget if applicable
+        if (this.recipe.value().hasExpertiseReward(this.registryAccess)) {
+            screen.addWidgetToScreen(new RecipeExpertiseWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 46));
+        }
     }
 
     @Override

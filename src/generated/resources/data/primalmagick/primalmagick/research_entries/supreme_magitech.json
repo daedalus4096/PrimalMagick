@@ -31,9 +31,11 @@
             }
           },
           {
-            "requiredValue": 100,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:crafted_magitech"
+            "discipline": {
+              "rootKey": "primalmagick:magitech"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "supreme"
           },
           {
             "requirement_type": "primalmagick:research",
@@ -70,5 +72,6 @@
       "siblings": [],
       "textTranslationKey": "research.primalmagick.supreme_magitech.text.stage.2"
     }
-  ]
+  ],
+  "tier": "supreme"
 }

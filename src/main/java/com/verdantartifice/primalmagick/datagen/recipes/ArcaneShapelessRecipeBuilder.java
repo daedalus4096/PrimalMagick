@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneRecipe;
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -37,6 +41,10 @@ public class ArcaneShapelessRecipeBuilder {
     protected String group;
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected SourceList manaCosts;
+    protected Optional<Integer> baseExpertiseOverride = Optional.empty();
+    protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
+    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+    protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
     protected ArcaneShapelessRecipeBuilder(ItemLike result, int count) {
         this.result = new ItemStack(result, count);
@@ -153,6 +161,34 @@ public class ArcaneShapelessRecipeBuilder {
         return this;
     }
     
+    public ArcaneShapelessRecipeBuilder expertise(int baseValue, int bonusValue) {
+        this.baseExpertiseOverride = Optional.of(baseValue);
+        this.bonusExpertiseOverride = Optional.of(bonusValue);
+        return this;
+    }
+    
+    public ArcaneShapelessRecipeBuilder noExpertise() {
+        return this.expertise(0, 0);
+    }
+    
+    public ArcaneShapelessRecipeBuilder expertiseTier(ResearchTier tier) {
+        return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
+    }
+    
+    public ArcaneShapelessRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+        this.expertiseGroup = Optional.ofNullable(groupLoc);
+        return this;
+    }
+    
+    public ArcaneShapelessRecipeBuilder expertiseGroup(String groupName) {
+        return this.expertiseGroup(PrimalMagick.resource(groupName));
+    }
+    
+    public ArcaneShapelessRecipeBuilder discipline(ResourceKey<ResearchDiscipline> rawDiscipline) {
+        this.disciplineOverride = Optional.of(new ResearchDisciplineKey(rawDiscipline));
+        return this;
+    }
+    
     protected Optional<AbstractRequirement<?>> getFinalRequirement() {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
@@ -171,7 +207,8 @@ public class ArcaneShapelessRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        ShapelessArcaneRecipe recipe = new ShapelessArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredients, this.getFinalRequirement(), Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        ShapelessArcaneRecipe recipe = new ShapelessArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredients, this.getFinalRequirement(), 
+                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
         output.accept(id, recipe, null);
     }
     

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.stats.Stat;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -50,6 +51,51 @@ public interface IPlayerStats extends INBTSerializable<CompoundTag> {
      * @param pos the location of the shrine being updated
      */
     public void setLocationDiscovered(@Nullable BlockPos pos);
+    
+    /**
+     * Determine whether the player has crafted the given recipe before, for the purposes of bonus expertise.
+     * 
+     * @param recipeId the ID of the recipe to be queried
+     * @return whether the player has crafted the given recipe before
+     */
+    public boolean isRecipeCrafted(@Nullable ResourceLocation recipeId);
+    
+    /**
+     * Determine whether the player has crafted the given recipe group before, for the purposes of bonus expertise.
+     * 
+     * @param groupId the ID of the recipe group to be queried
+     * @return whether the player has crafted any recipe in the given group before
+     */
+    public boolean isRecipeGroupCrafted(@Nullable ResourceLocation groupId);
+    
+    /**
+     * Determine whether the player has runescribed the given enchantment before, for the purposes of bonus expertise.
+     * 
+     * @param enchantmentId the ID of the enchantment to be queried
+     * @return whether the player has runescribed the given enchantment before
+     */
+    public boolean isRuneEnchantmentCrafted(@Nullable ResourceLocation enchantmentId);
+    
+    /**
+     * Mark the given recipe as having been crafted, and thus ineligible for further bonus expertise.
+     * 
+     * @param recipeId the ID of the recipe to be updated
+     */
+    public void setRecipeCrafted(@Nullable ResourceLocation recipeId);
+    
+    /**
+     * Mark the given recipe group as having been crafted, and thus ineligible for further bonus expertise.
+     * 
+     * @param groupId the ID of the recipe group to be updated
+     */
+    public void setRecipeGroupCrafted(@Nullable ResourceLocation groupId);
+    
+    /**
+     * Mark the given enchantment as having been runescribed, and thus ineligible for further bonus expertise.
+     * 
+     * @param enchantmentId the ID of the enchantment to be updated
+     */
+    public void setRuneEnchantmentCrafted(@Nullable ResourceLocation enchantmentId);
     
     /**
      * Sync the given player's statistics data to the their client.

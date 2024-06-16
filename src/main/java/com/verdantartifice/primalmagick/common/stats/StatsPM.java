@@ -25,6 +25,12 @@ public class StatsPM {
     public static final Stat OBSERVATIONS_MADE = Stat.builder("observations_made").icon(ICON_TUBE).hasHint().build();
     public static final Stat RESEARCH_PROJECTS_COMPLETED = Stat.builder("research_projects_completed").icon(ICON_TUBE).build();
     public static final Stat THEORIES_FORMED = Stat.builder("theories_formed").icon(ICON_TUBE).hasHint().build();
+    public static final Stat EXPERTISE_MANAWEAVING = Stat.builder("expertise_manaweaving").icon(ICON_BAG).hasHint().build();
+    public static final Stat EXPERTISE_ALCHEMY = Stat.builder("expertise_alchemy").icon(ICON_BAG).hasHint().build();
+    public static final Stat EXPERTISE_SORCERY = Stat.builder("expertise_sorcery").icon(ICON_BAG).hasHint().build();
+    public static final Stat EXPERTISE_RUNEWORKING = Stat.builder("expertise_runeworking").icon(ICON_BAG).hasHint().build();
+    public static final Stat EXPERTISE_RITUAL = Stat.builder("expertise_ritual").icon(ICON_BAG).hasHint().build();
+    public static final Stat EXPERTISE_MAGITECH = Stat.builder("expertise_magitech").icon(ICON_BAG).hasHint().build();
     public static final Stat CRAFTED_MANAWEAVING = Stat.builder("crafted_manaweaving").icon(ICON_BAG).build();
     public static final Stat CRAFTED_ALCHEMY = Stat.builder("crafted_alchemy").icon(ICON_BAG).build();
     public static final Stat CRAFTED_SORCERY = Stat.builder("crafted_sorcery").icon(ICON_BAG).build();

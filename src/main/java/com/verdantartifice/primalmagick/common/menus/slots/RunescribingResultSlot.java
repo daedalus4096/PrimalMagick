@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
+import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
@@ -50,14 +51,17 @@ public class RunescribingResultSlot extends Slot {
                 StatsManager.incrementValue(serverPlayer, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());
             }
 
-            // Grant the player rune enchantment research for each rune enchantmant imbued
+            // Grant the player rune enchantment research and expertise for each rune enchantmant imbued
             if (ResearchManager.isResearchComplete(this.player, ResearchEntries.FIRST_STEPS)) {
                 List<Rune> runes = RuneManager.getRunes(stack);
                 Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(level.registryAccess(), runes, stack, this.player, false);
                 if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS)) {
                     ResearchManager.completeResearch(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS);
                 }
-                enchants.keySet().forEach(enchant -> ResearchManager.completeResearch(this.player, new RuneEnchantmentKey(enchant)));
+                enchants.keySet().forEach(enchant -> {
+                    ExpertiseManager.awardExpertise(this.player, enchant);
+                    ResearchManager.completeResearch(this.player, new RuneEnchantmentKey(enchant));
+                });
             }
         }
     }

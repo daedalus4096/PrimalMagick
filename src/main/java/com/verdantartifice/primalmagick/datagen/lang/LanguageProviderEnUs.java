@@ -1023,6 +1023,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("wand_gui").sub("slot").sub("staff").output("Add a magickal wand or staff").end().build();
         this.tooltip("stat_description").sub("vanilla").output("%1$s (%2$s)").end().build();
         this.tooltip("stat_progress").name("%1$s: %2$s / %3$s").build();
+        this.tooltip("expertise").sub("group").output("Expertise group: %1$s").end().build();
+        this.tooltip("expertise").sub("base").output("Base expertise reward: %1$d").end().build();
+        this.tooltip("expertise").sub("bonus").output("First-craft bonus reward: %1$d").end().build();
+        this.tooltip("expertise").sub("claimed").output(" (claimed)").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
@@ -1876,6 +1880,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.MANA_SIPHONED).name("Mana siphoned from fonts").build();
         this.stat(StatsPM.OBSERVATIONS_MADE).name("Observations made").hint("Observations are made by destroying items at an Analysis Table; other methods may be revealed in time").build();
         this.stat(StatsPM.THEORIES_FORMED).name("Theories formed").hint("Theories are formed by completing research projects at a Research Table").build();
+        this.stat(StatsPM.EXPERTISE_MANAWEAVING).name("Manaweaving expertise").hint("Manaweaving expertise is gained by crafting most manaweaving recipes at an Arcane Workbench, with a bonus given for the first craft of a given recipe").build();
+        this.stat(StatsPM.EXPERTISE_ALCHEMY).name("Alchemy expertise").hint("Alchemy expertise is gained by crafting most alchemy recipes at an Arcane Workbench, with a bonus given for the first craft of a given recipe").build();
+        this.stat(StatsPM.EXPERTISE_SORCERY).name("Sorcery expertise").hint("Sorcery expertise is gained by casting spells from a scroll or wand, with more expensive spells yielding more expertise").build();
+        this.stat(StatsPM.EXPERTISE_RUNEWORKING).name("Runeworking expertise").hint("Runeworking expertise is gained by crafting most runeworking recipes or by runescribing items, with a bonus given for the first craft of a recipe or runescribe of an enchantment").build();
+        this.stat(StatsPM.EXPERTISE_RITUAL).name("Ritual Magick expertise").hint("Ritual Magick expertise is gained by crafting most ritual magick recipes at an Arcane Workbench or at a Ritual Altar, with a bonus given for the first craft of a given recipe").build();
+        this.stat(StatsPM.EXPERTISE_MAGITECH).name("Magitech expertise").hint("Magitech expertise is gained by crafting most magitech recipes at an Arcane Workbench, with a bonus given for the first craft of a given recipe").build();
         this.stat(StatsPM.CRAFTED_MANAWEAVING).name("Manaweaving items crafted").build();
         this.stat(StatsPM.CRAFTED_ALCHEMY).name("Alchemy items crafted").build();
         this.stat(StatsPM.CRAFTED_SORCERY).name("Sorcery items crafted").build();
@@ -1911,6 +1921,44 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").hint("The blocks must be at least as hard as wood").build();
         this.stat(StatsPM.SHEARS_USED).name("Times shears used").hint("Right click shearable blocks and entities for credit; breaking blocks with shears in hand does not count").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();
+        
+        // Generate expertise group description localizations
+        this.expertiseGroup("sunlamp").name("Enchanted lanterns").build();
+        this.expertiseGroup("skyglass_block").name("Skyglass blocks").build();
+        this.expertiseGroup("skyglass_pane").name("Skyglass panes").build();
+        this.expertiseGroup("essence_dust").name("Essence dusts").build();
+        this.expertiseGroup("essence_shard").name("Essence shards").build();
+        this.expertiseGroup("essence_crystal").name("Essence crystals").build();
+        this.expertiseGroup("essence_cluster").name("Essence clusters").build();
+        this.expertiseGroup("primalite_weapon").name("Primalite weapons").build();
+        this.expertiseGroup("primalite_archery").name("Primalite archery").build();
+        this.expertiseGroup("primalite_tool").name("Primalite tools").build();
+        this.expertiseGroup("primalite_armor").name("Primalite armor").build();
+        this.expertiseGroup("hexium_weapon").name("Hexium weapons").build();
+        this.expertiseGroup("hexium_archery").name("Hexium archery").build();
+        this.expertiseGroup("hexium_tool").name("Hexium tools").build();
+        this.expertiseGroup("hexium_armor").name("Hexium armor").build();
+        this.expertiseGroup("hallowsteel_weapon").name("Hallowsteel weapons").build();
+        this.expertiseGroup("hallowsteel_archery").name("Hallowsteel archery").build();
+        this.expertiseGroup("hallowsteel_tool").name("Hallowsteel tools").build();
+        this.expertiseGroup("hallowsteel_armor").name("Hallowsteel armor").build();
+        this.expertiseGroup("ritual_candle").name("Ritual candles").build();
+        this.expertiseGroup("pixie_basic").name("Basic pixies").build();
+        this.expertiseGroup("pixie_grand").name("Grand pixies").build();
+        this.expertiseGroup("pixie_majestic").name("Majestic pixies").build();
+        this.expertiseGroup("ambrosia_basic").name("Basic ambrosia").build();
+        this.expertiseGroup("ambrosia_greater").name("Greater ambrosia").build();
+        this.expertiseGroup("ambrosia_supreme").name("Supreme ambrosia").build();
+        this.expertiseGroup("sanguine_core").name("Attuned sanguine cores").build();
+        this.expertiseGroup("imbued_wool_robes").name("Imbued wool robes").build();
+        this.expertiseGroup("spellcloth_robes").name("Spellcloth robes").build();
+        this.expertiseGroup("hexweave_robes").name("Hexweave robes").build();
+        this.expertiseGroup("saintswool_robes").name("Saintswool robes").build();
+        this.expertiseGroup("mana_font_artificial").name("Artificial mana fonts").build();
+        this.expertiseGroup("mana_font_forbidden").name("Forbidden mana fonts").build();
+        this.expertiseGroup("mana_font_heavenly").name("Heavenly mana fonts").build();
+        this.expertiseGroup("mana_arrow").name("Mana-tinged arrows").build();
+        this.expertiseGroup("attunement_shackles").name("Attunement shackles").build();
         
         // Generate research project localizations
         this.researchProject("trade").name("Trade").text("Perhaps some nearby villagers have magickal knowledge to trade.  You assemble some goods they'll find valuable.").build();

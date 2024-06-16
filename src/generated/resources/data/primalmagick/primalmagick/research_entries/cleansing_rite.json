@@ -80,5 +80,6 @@
       ],
       "textTranslationKey": "research.primalmagick.cleansing_rite.text.stage.2"
     }
-  ]
+  ],
+  "tier": "master"
 }

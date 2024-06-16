@@ -34,9 +34,11 @@
             }
           },
           {
-            "requiredValue": 50,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:crafted_manaweaving"
+            "discipline": {
+              "rootKey": "primalmagick:manaweaving"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "master"
           }
         ]
       },
@@ -73,5 +75,6 @@
       "siblings": [],
       "textTranslationKey": "research.primalmagick.master_manaweaving.text.stage.2"
     }
-  ]
+  ],
+  "tier": "master"
 }

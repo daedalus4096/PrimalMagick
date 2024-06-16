@@ -13,6 +13,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Grimoire page showing a dissolution recipe.
@@ -20,16 +21,16 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class DissolutionRecipePage extends AbstractRecipePage {
-    protected IDissolutionRecipe recipe;
+    protected RecipeHolder<IDissolutionRecipe> recipe;
     
-    public DissolutionRecipePage(IDissolutionRecipe recipe, RegistryAccess registryAccess) {
+    public DissolutionRecipePage(RecipeHolder<IDissolutionRecipe> recipe, RegistryAccess registryAccess) {
         super(registryAccess);
         this.recipe = recipe;
     }
 
     @Override
     protected Component getTitleText() {
-        ItemStack stack = this.recipe.getResultItem(this.registryAccess);
+        ItemStack stack = this.recipe.value().getResultItem(this.registryAccess);
         return stack.getItem().getName(stack);
     }
 
@@ -44,19 +45,19 @@ public class DissolutionRecipePage extends AbstractRecipePage {
         int overlayWidth = 51;
 
         // Render mana cost widget if appropriate
-        if (!this.recipe.getManaCosts().isEmpty()) {
-            screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
+        if (!this.recipe.value().getManaCosts().isEmpty()) {
+            screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.value().getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
         }
 
         // Render output stack
-        ItemStack output = this.recipe.getResultItem(this.registryAccess);
+        ItemStack output = this.recipe.value().getResultItem(this.registryAccess);
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget
-        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe.value(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
 
         // Render ingredient stacks
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(0), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 27, screen));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().getIngredients().get(0), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 27, screen));
     }
 
     @Override

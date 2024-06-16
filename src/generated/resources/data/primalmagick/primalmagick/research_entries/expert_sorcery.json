@@ -24,19 +24,11 @@
         "sources": {}
       },
       "completionRequirementOpt": {
-        "requirement_type": "primalmagick:and",
-        "subRequirements": [
-          {
-            "requiredValue": 1,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:spells_crafted"
-          },
-          {
-            "requiredValue": 10,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:spells_cast"
-          }
-        ]
+        "discipline": {
+          "rootKey": "primalmagick:sorcery"
+        },
+        "requirement_type": "primalmagick:expertise",
+        "tier": "expert"
       },
       "parentKey": {
         "rootKey": "primalmagick:expert_sorcery"
