@@ -1,5 +1,8 @@
 {
   "type": "primalmagick:ritual",
+  "disciplineOverride": {
+    "rootKey": "primalmagick:ritual"
+  },
   "ingredients": [
     {
       "item": "primalmagick:primal_wand_core_item"

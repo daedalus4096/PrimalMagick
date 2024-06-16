@@ -2687,6 +2687,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES)
             .instability(3)
             .requiredResearch(ResearchEntries.WAND_CORE_PRIMAL)
+            .discipline(ResearchDisciplines.RITUAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 15).add(Sources.SEA, 15).add(Sources.SKY, 15).add(Sources.SUN, 15).add(Sources.MOON, 15))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get())
@@ -2703,6 +2704,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .instability(5)
             .requiredResearch(ResearchEntries.WAND_CORE_DARK_PRIMAL)
+            .discipline(ResearchDisciplines.RITUAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 50).add(Sources.SEA, 50).add(Sources.SKY, 50).add(Sources.SUN, 50).add(Sources.MOON, 50).add(Sources.BLOOD, 50).add(Sources.INFERNAL, 50).add(Sources.VOID, 50))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PURE_PRIMAL_WAND_CORE_ITEM.get())
@@ -2718,6 +2720,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.CELESTIAL_HARP.get())
             .instability(7)
             .requiredResearch(ResearchEntries.WAND_CORE_PURE_PRIMAL)
+            .discipline(ResearchDisciplines.RITUAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 100).add(Sources.SEA, 100).add(Sources.SKY, 100).add(Sources.SUN, 100).add(Sources.MOON, 100).add(Sources.BLOOD, 100).add(Sources.INFERNAL, 100).add(Sources.VOID, 100).add(Sources.HALLOWED, 100))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IRON_WAND_CAP_ITEM.get())
