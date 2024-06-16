@@ -95,19 +95,22 @@ public class ExpertiseManager {
         MutableInt retVal = new MutableInt(0);
         for (RecipeHolder<?> recipeHolder : recipeManager.getRecipes()) {
             if (recipeHolder.value() instanceof IHasExpertise expRecipe) {
-                // Only consider recipes with a research tier lower than the given one
-                expRecipe.getResearchTier(registryAccess).filter(recipeTier -> recipeTier.compareTo(tier) < 0).ifPresent(recipeTier -> {
-                    expRecipe.getExpertiseGroup().ifPresentOrElse(groupId -> {
-                        // If the recipe is part of an expertise group, only take its values into account if that group has not already been processed
-                        if (!foundGroups.contains(groupId)) {
+                // Only consider recipes with a discipline that matches the given one
+                expRecipe.getResearchDiscipline(registryAccess, recipeHolder.id()).filter(recipeDisc -> recipeDisc.equals(discKey)).ifPresent(recipeDisc -> {
+                    // Only consider recipes with a research tier lower than the given one
+                    expRecipe.getResearchTier(registryAccess).filter(recipeTier -> recipeTier.compareTo(tier) < 0).ifPresent(recipeTier -> {
+                        expRecipe.getExpertiseGroup().ifPresentOrElse(groupId -> {
+                            // If the recipe is part of an expertise group, only take its values into account if that group has not already been processed
+                            if (!foundGroups.contains(groupId)) {
+                                retVal.add(expRecipe.getExpertiseReward(registryAccess));
+                                retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
+                                foundGroups.add(groupId);
+                            }
+                        }, () -> {
+                            // If the recipe is not part of an expertise group, then always contribute its values to the threshold
                             retVal.add(expRecipe.getExpertiseReward(registryAccess));
                             retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
-                            foundGroups.add(groupId);
-                        }
-                    }, () -> {
-                        // If the recipe is not part of an expertise group, then always contribute its values to the threshold
-                        retVal.add(expRecipe.getExpertiseReward(registryAccess));
-                        retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
+                        });
                     });
                 });
             }
