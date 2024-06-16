@@ -42,6 +42,16 @@ public interface IHasExpertise extends IHasRequirement {
     int getBonusExpertiseReward(RegistryAccess registryAccess);
     
     /**
+     * Determine whether this recipe has an expertise reward.
+     * 
+     * @param registryAccess a registry access object
+     * @return true if the recipe has a total expertise reward greater than zero, false otherwise
+     */
+    default boolean hasExpertiseReward(RegistryAccess registryAccess) {
+        return (this.getExpertiseReward(registryAccess) > 0) || (this.getBonusExpertiseReward(registryAccess) > 0);
+    }
+    
+    /**
      * Get the identifier of the group of recipes that this recipe belongs to, if any, for purposes
      * of determining first-craft expertise bonuses.  Only the first recipe in a group grants bonus
      * expertise.

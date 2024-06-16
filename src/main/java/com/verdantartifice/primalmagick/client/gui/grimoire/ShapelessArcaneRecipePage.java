@@ -30,8 +30,10 @@ public class ShapelessArcaneRecipePage extends AbstractShapelessRecipePage<IShap
             screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.value().getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
         }
         
-        // Add expertise widget
-        screen.addWidgetToScreen(new RecipeExpertiseWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 46));
+        // Add expertise widget if applicable
+        if (this.recipe.value().hasExpertiseReward(this.registryAccess)) {
+            screen.addWidgetToScreen(new RecipeExpertiseWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 46));
+        }
     }
 
     @Override

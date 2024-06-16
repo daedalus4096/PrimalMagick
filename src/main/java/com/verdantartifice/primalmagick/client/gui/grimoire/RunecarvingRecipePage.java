@@ -54,8 +54,10 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         // Render recipe type widget
         screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe.value(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
         
-        // Render recipe expertise widget
-        screen.addWidgetToScreen(new RecipeExpertiseWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 46));
+        // Render recipe expertise widget if applicable
+        if (this.recipe.value().hasExpertiseReward(this.registryAccess)) {
+            screen.addWidgetToScreen(new RecipeExpertiseWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 46));
+        }
     }
 
     @Override
