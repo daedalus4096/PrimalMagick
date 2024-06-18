@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.projectiles.IgnyxEntity;
+import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.init.InitAttunements;
 import com.verdantartifice.primalmagick.common.init.InitCauldron;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;
@@ -39,6 +40,7 @@ public class ModLifecycleEvents {
         InitResearch.initResearch();
         InitSpells.initSpells();
         InitCauldron.initCauldronInteractions();
+        InitAdvancements.initCriteria();
         
         LootConditionTypesPM.register();
 
