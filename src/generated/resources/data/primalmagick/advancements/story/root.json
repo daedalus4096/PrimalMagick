@@ -83,11 +83,15 @@
   },
   "display": {
     "background": "primalmagick:textures/block/marble_raw.png",
-    "description": "Locate an ancient shrine",
-    "icon": {
-      "item": "primalmagick:ancient_font_earth"
+    "description": {
+      "translate": "advancements.primalmagick.root.description"
     },
-    "title": "Left Behind"
+    "icon": {
+      "item": "primalmagick:grimoire"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.root.title"
+    }
   },
   "requirements": [
     [

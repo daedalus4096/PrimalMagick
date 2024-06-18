@@ -1674,6 +1674,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tip("power_runes").name("Runescribing only produces enchantments of level one by default, but there are special runes, such as Insight Runes, that can improve that.").build();
         this.tip("rune_hints").name("Looking for hints as to valid rune combinations? Try feeding enchanted items to a Runic Grindstone!").build();
         
+        // Generate advancement localizations
+        this.advancement("root").name("Primal Magick").description("Locate an ancient shrine").build();
+        this.advancement("craft_mundane_wand").name("Wondrous Mundanity").description("Create a mundane wand from a stick and magickal dust").build();
+        this.advancement("craft_grimoire").name("Book Learning").description("Transform a common Bookshelf into something more").build();
+        
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
         this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").description("A mysterious language from beyond the stars. Known to be involved in the unusual magic of enchanting, but incomprehensible to the human mind.").build();
