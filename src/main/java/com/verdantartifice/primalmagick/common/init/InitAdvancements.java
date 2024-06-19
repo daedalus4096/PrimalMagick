@@ -14,6 +14,7 @@ import net.minecraft.advancements.CriterionTrigger;
 public class InitAdvancements {
     public static void initCriteria() {
         registerCriterion("research_completed", CriteriaTriggersPM.RESEARCH_COMPLETED);
+        registerCriterion("stat_value", CriteriaTriggersPM.STAT_VALUE);
     }
     
     private static void registerCriterion(String name, CriterionTrigger<?> trigger) {
