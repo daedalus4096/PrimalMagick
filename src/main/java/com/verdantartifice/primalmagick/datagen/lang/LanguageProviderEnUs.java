@@ -1679,6 +1679,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_mundane_wand").name("Wondrous Mundanity").description("Create a mundane wand from a stick and magickal dust").build();
         this.advancement("craft_grimoire").name("Book Learning").description("Transform a common Bookshelf into something more").build();
         this.advancement("craft_arcane_workbench").name("Manaweaving").description("Transform a Crafting Table into an Arcane Workbench").build();
+        this.advancement("craft_essence_furnace").name("Alchemy").description("Transform a Furnace into an Essence Furnace").build();
+        this.advancement("first_theorycraft").name("I've Been Thinking...").description("Complete a theorycrafting project at a Research Table").build();
+        this.advancement("many_theorycrafts").name("From First Principles").description("Complete 250 theorycrafting projects").build();
         // TODO More advancements
         this.advancement("discover_forbidden").name("The Forbidden").description("Discover a forbidden source of magick").build();
         
