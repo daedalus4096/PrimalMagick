@@ -1678,6 +1678,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("root").name("Primal Magick").description("Locate an ancient shrine").build();
         this.advancement("craft_mundane_wand").name("Wondrous Mundanity").description("Create a mundane wand from a stick and magickal dust").build();
         this.advancement("craft_grimoire").name("Book Learning").description("Transform a common Bookshelf into something more").build();
+        this.advancement("craft_arcane_workbench").name("Manaweaving").description("Transform a Crafting Table into an Arcane Workbench").build();
+        // TODO More advancements
+        this.advancement("discover_forbidden").name("The Forbidden").description("Discover a forbidden source of magick").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

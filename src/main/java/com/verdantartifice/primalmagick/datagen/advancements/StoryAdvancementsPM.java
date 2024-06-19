@@ -3,7 +3,10 @@ package com.verdantartifice.primalmagick.datagen.advancements;
 import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
+import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
 
 import net.minecraft.advancements.Advancement;
@@ -25,6 +28,7 @@ import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenera
 public class StoryAdvancementsPM implements AdvancementGenerator {
     @Override
     public void generate(Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
+        InitAdvancements.initCriteria();
         AdvancementHolder root = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("root").icon(ItemsPM.GRIMOIRE.get()).background(PrimalMagick.resource("textures/block/marble_raw.png")).build())
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .addCriterion("earth_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.EARTH_SHRINE)))
@@ -41,5 +45,13 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(craftMundaneWand)
                 .addCriterion("has_grimoire", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRIMOIRE.get()))
                 .save(saver, PrimalMagick.resource("story/craft_grimoire"));
+        AdvancementHolder craftArcaneWorkbench = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_arcane_workbench").icon(ItemsPM.ARCANE_WORKBENCH.get()).build())
+                .parent(craftGrimoire)
+                .addCriterion("made_workbench", ResearchCompletedTrigger.TriggerInstance.stackCrafted(ItemsPM.ARCANE_WORKBENCH.get()))
+                .save(saver, PrimalMagick.resource("story/craft_arcane_workbench"));
+        AdvancementHolder discoverForbidden = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_forbidden").icon(ItemsPM.BLOOD_NOTES.get()).build())
+                .parent(craftGrimoire)
+                .addCriterion("discovered_forbidden", ResearchCompletedTrigger.TriggerInstance.researchEntry(ResearchEntries.DISCOVER_FORBIDDEN))
+                .save(saver, PrimalMagick.resource("story/discover_forbidden"));
     }
 }

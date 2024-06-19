@@ -1,8 +1,12 @@
 {
+  "advancements.primalmagick.craft_arcane_workbench.description": "Transform a Crafting Table into an Arcane Workbench",
+  "advancements.primalmagick.craft_arcane_workbench.title": "Manaweaving",
   "advancements.primalmagick.craft_grimoire.description": "Transform a common Bookshelf into something more",
   "advancements.primalmagick.craft_grimoire.title": "Book Learning",
   "advancements.primalmagick.craft_mundane_wand.description": "Create a mundane wand from a stick and magickal dust",
   "advancements.primalmagick.craft_mundane_wand.title": "Wondrous Mundanity",
+  "advancements.primalmagick.discover_forbidden.description": "Discover a forbidden source of magick",
+  "advancements.primalmagick.discover_forbidden.title": "The Forbidden",
   "advancements.primalmagick.root.description": "Locate an ancient shrine",
   "advancements.primalmagick.root.title": "Primal Magick",
   "attunement_threshold.primalmagick.greater": "Greater",
