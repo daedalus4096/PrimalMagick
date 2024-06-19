@@ -336,8 +336,14 @@ public class ResearchManager {
         if (knowledge == null) {
             return false;
         }
-        if (knowledge.isResearchComplete(registryAccess, key) || !hasPrerequisites(player, key)) {
-            // If the research is already complete or the player doesn't have the prerequisites, abort
+        if (knowledge.isResearchComplete(registryAccess, key)) {
+            // If the research is already complete, trigger advancement criteria if on server side, then abort
+            if (player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggersPM.RESEARCH_COMPLETED.trigger(serverPlayer, key);
+            }
+            return false;
+        } else if (!hasPrerequisites(player, key)) {
+            // If the player doesn't have the prerequisites, just abort
             return false;
         }
         
