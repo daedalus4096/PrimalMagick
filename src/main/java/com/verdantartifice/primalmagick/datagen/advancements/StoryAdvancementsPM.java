@@ -165,5 +165,23 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(discoverHallowed)
                 .addCriterion("discovered_forbidden", ResearchCompletedTrigger.TriggerInstance.researchEntry(ResearchEntries.THEORY_OF_EVERYTHING))
                 .save(saver, PrimalMagick.resource("story/completionist"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_all_shrines").icon(Items.FILLED_MAP).build())
+                .parent(craftGrimoire)
+                .addCriterion("earth_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.EARTH_SHRINE)))
+                .addCriterion("sea_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.SEA_SHRINE)))
+                .addCriterion("sky_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.SKY_SHRINE)))
+                .addCriterion("sun_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.SUN_SHRINE)))
+                .addCriterion("moon_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.MOON_SHRINE)))
+                .save(saver, PrimalMagick.resource("story/discover_all_shrines"));
+        AdvancementHolder discoverLibrary = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_library").icon(ItemsPM.STATIC_BOOK.get()).build())
+                .parent(craftGrimoire)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("earth_library", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.EARTH_LIBRARY)))
+                .addCriterion("sea_library", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.SEA_LIBRARY)))
+                .addCriterion("sky_library", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.SKY_LIBRARY)))
+                .addCriterion("sun_library", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.SUN_LIBRARY)))
+                .addCriterion("moon_library", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.MOON_LIBRARY)))
+                .addCriterion("forbidden_library", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.FORBIDDEN_LIBRARY)))
+                .save(saver, PrimalMagick.resource("story/discover_library"));
     }
 }
