@@ -1687,8 +1687,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_artificial_mana_font").name("We Have Mana at Home").description("Create an artificial Mana Font of any source").build();
         this.advancement("craft_forbidden_mana_font").name("Hungry Hungry Wizards").description("Create a forbidden Mana Font of any source").build();
         this.advancement("craft_heavenly_mana_font").name("Super Size Me").description("Create a heavenly Mana Font of any source").build();
-        // TODO More advancements
         this.advancement("discover_forbidden").name("The Forbidden").description("Discover a forbidden source of magick").build();
+        this.advancement("craft_soul_gem").name("Ethically Sourced, Honest").description("Drain the soul of a creature and capture it in a gem").build();
+        this.advancement("craft_sanguine_crucible").name("It's Alive!").description("Create a Sanguine Crucible").build();
+        this.advancement("kill_inner_demon").name("Just Like Therapy").description("Perform a Cleansing Rite and conquer your inner demons").build();
+        this.advancement("discover_hallowed").name("Secrets of the Universe").description("Hear the song of the cosmos for the first time").build();
+        this.advancement("completionist").name("That's All, Folks!").description("Discover all the secrets of the arcane").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.StatValueTrigger;
+import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
@@ -21,7 +22,9 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
@@ -136,10 +139,31 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(craftEssenceFurnace)
                 .addCriterion("has_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.PRIMALITE_INGOT.get()))
                 .save(saver, PrimalMagick.resource("story/craft_primalite"));
-        // TODO More advancements
         AdvancementHolder discoverForbidden = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_forbidden").icon(ItemsPM.BLOOD_NOTES.get()).build())
                 .parent(firstTheorycraft)
                 .addCriterion("discovered_forbidden", ResearchCompletedTrigger.TriggerInstance.researchEntry(ResearchEntries.DISCOVER_FORBIDDEN))
                 .save(saver, PrimalMagick.resource("story/discover_forbidden"));
+        AdvancementHolder craftSoulGem = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_soul_gem").icon(ItemsPM.SOUL_GEM.get()).build())
+                .parent(discoverForbidden)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("has_gem", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SOUL_GEM.get()))
+                .addCriterion("has_sliver", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SOUL_GEM_SLIVER.get()))
+                .save(saver, PrimalMagick.resource("story/craft_soul_gem"));
+        AdvancementHolder craftSanguineCrucible = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_sanguine_crucible").icon(ItemsPM.SANGUINE_CRUCIBLE.get()).build())
+                .parent(craftSoulGem)
+                .addCriterion("has_crucible", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SANGUINE_CRUCIBLE.get()))
+                .save(saver, PrimalMagick.resource("story/craft_sanguine_crucible"));
+        AdvancementHolder killInnerDemon = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("kill_inner_demon").icon(ItemsPM.SANGUINE_CORE_INNER_DEMON.get()).type(AdvancementType.GOAL).build())
+                .parent(craftSanguineCrucible)
+                .addCriterion("kill_inner_demon", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(EntityTypesPM.INNER_DEMON.get())))
+                .save(saver, PrimalMagick.resource("story/kill_inner_demon"));
+        AdvancementHolder discoverHallowed = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_hallowed").icon(ItemsPM.HALLOWED_ORB.get()).type(AdvancementType.GOAL).build())
+                .parent(killInnerDemon)
+                .addCriterion("discovered_forbidden", ResearchCompletedTrigger.TriggerInstance.researchEntry(ResearchEntries.DISCOVER_HALLOWED))
+                .save(saver, PrimalMagick.resource("story/discover_hallowed"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("completionist").icon(ItemsPM.GRIMOIRE.get()).type(AdvancementType.GOAL).build())
+                .parent(discoverHallowed)
+                .addCriterion("discovered_forbidden", ResearchCompletedTrigger.TriggerInstance.researchEntry(ResearchEntries.THEORY_OF_EVERYTHING))
+                .save(saver, PrimalMagick.resource("story/completionist"));
     }
 }
