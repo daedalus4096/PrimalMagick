@@ -32,7 +32,11 @@ import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenera
 public class StoryAdvancementsPM implements AdvancementGenerator {
     @Override
     public void generate(Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
+        // Custom advancement criteria are normally registered as part of FMLCommonSetup. However, that event never gets fired
+        // in datagen runs, so it must be done manually as part of the data provider.
         InitAdvancements.initCriteria();
+        
+        // Define advancements
         AdvancementHolder root = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("root").icon(ItemsPM.GRIMOIRE.get()).background(PrimalMagick.resource("textures/block/marble_raw.png")).build())
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .addCriterion("earth_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.EARTH_SHRINE)))
@@ -68,7 +72,7 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .save(saver, PrimalMagick.resource("story/many_theorycrafts"));
         // TODO More advancements
         AdvancementHolder discoverForbidden = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_forbidden").icon(ItemsPM.BLOOD_NOTES.get()).build())
-                .parent(craftGrimoire)
+                .parent(firstTheorycraft)
                 .addCriterion("discovered_forbidden", ResearchCompletedTrigger.TriggerInstance.researchEntry(ResearchEntries.DISCOVER_FORBIDDEN))
                 .save(saver, PrimalMagick.resource("story/discover_forbidden"));
     }
