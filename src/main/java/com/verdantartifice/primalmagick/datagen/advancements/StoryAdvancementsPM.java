@@ -3,8 +3,10 @@ package com.verdantartifice.primalmagick.datagen.advancements;
 import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.advancements.critereon.LinguisticsComprehensionTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.StatValueTrigger;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -30,6 +32,7 @@ import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenerator;
 
@@ -183,5 +186,24 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .addCriterion("moon_library", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.MOON_LIBRARY)))
                 .addCriterion("forbidden_library", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(StructuresPM.FORBIDDEN_LIBRARY)))
                 .save(saver, PrimalMagick.resource("story/discover_library"));
+        AdvancementHolder gainSomeComprehension = makeComprehensionAdvancement("gain_some_comprehension", ItemsPM.SCRIBE_TABLE.get(), AdvancementType.TASK, discoverLibrary, false, 1, saver);
+        AdvancementHolder fullyComprehendLanguage = makeComprehensionAdvancement("fully_comprehend_language", ItemsPM.STATIC_BOOK_UNCOMMON.get(), AdvancementType.GOAL, gainSomeComprehension, false, 60, saver);
+        makeComprehensionAdvancement("fully_comprehend_all_languages", ItemsPM.STATIC_BOOK_RARE.get(), AdvancementType.CHALLENGE, fullyComprehendLanguage, true, 60, saver);
+    }
+    
+    private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
+        AdvancementHolder retVal = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
+                .parent(parent)
+                .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR)
+                .addCriterion("earth_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.EARTH, threshold))
+                .addCriterion("sea_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.SEA, threshold))
+                .addCriterion("sky_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.SKY, threshold))
+                .addCriterion("sun_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.SUN, threshold))
+                .addCriterion("moon_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.MOON, threshold))
+                .addCriterion("trade_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.TRADE, threshold))
+                .addCriterion("forbidden_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.FORBIDDEN, threshold))
+                .addCriterion("hallowed_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.HALLOWED, threshold))
+                .save(saver, PrimalMagick.resource("story/" + id));
+        return retVal;
     }
 }

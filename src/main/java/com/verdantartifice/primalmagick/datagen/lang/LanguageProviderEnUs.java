@@ -1695,6 +1695,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("completionist").name("That's All, Folks!").description("Discover all the secrets of the arcane").build();
         this.advancement("discover_all_shrines").name("The Corners of the Earth").description("Locate every type of ancient shrine").build();
         this.advancement("discover_library").name("Library Card").description("Locate an ancient library").build();
+        this.advancement("gain_some_comprehension").name("I Know Some of Those Words").description("Gain a measure of comprehension of an ancient language").build();
+        this.advancement("fully_comprehend_language").name("Syntax Checker").description("Gain full comprehension of an ancient language").build();
+        this.advancement("fully_comprehend_all_languages").name("Polyglot").description("Gain full comprehension of all ancient languages").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
