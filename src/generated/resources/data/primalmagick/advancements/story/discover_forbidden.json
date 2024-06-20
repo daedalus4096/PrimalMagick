@@ -1,5 +1,5 @@
 {
-  "parent": "primalmagick:story/craft_grimoire",
+  "parent": "primalmagick:story/first_theorycraft",
   "criteria": {
     "discovered_forbidden": {
       "conditions": {

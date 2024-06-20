@@ -7,10 +7,15 @@ import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCo
 import com.verdantartifice.primalmagick.common.advancements.critereon.StatValueTrigger;
 import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.wands.WandCap;
+import com.verdantartifice.primalmagick.common.wands.WandCore;
+import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
 
+import net.minecraft.Util;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -20,6 +25,7 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenerator;
@@ -70,6 +76,23 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .rewards(AdvancementRewards.Builder.experience(100))
                 .addCriterion("completed_many_projects", StatValueTrigger.TriggerInstance.atLeast(StatsPM.RESEARCH_PROJECTS_COMPLETED, 250))
                 .save(saver, PrimalMagick.resource("story/many_theorycrafts"));
+        ItemStack apprenticeWand = Util.make(new ItemStack(ItemsPM.MODULAR_WAND.get()), stack -> {
+            ModularWandItem wandItem = (ModularWandItem)stack.getItem();
+            wandItem.setWandCore(stack, WandCore.HEARTWOOD);
+            wandItem.setWandCap(stack, WandCap.IRON);
+            wandItem.setWandGem(stack, WandGem.APPRENTICE);
+        });
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_modular_wand").icon(apprenticeWand).build())
+                .parent(craftArcaneWorkbench)
+                .addCriterion("has_wand", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MODULAR_WAND.get()))
+                .save(saver, PrimalMagick.resource("story/craft_modular_wand"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_starter_robes").icon(ItemsPM.IMBUED_WOOL_HEAD.get()).build())
+                .parent(craftArcaneWorkbench)
+                .addCriterion("wool_head", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.IMBUED_WOOL_HEAD.get()))
+                .addCriterion("wool_chest", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.IMBUED_WOOL_CHEST.get()))
+                .addCriterion("wool_legs", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.IMBUED_WOOL_LEGS.get()))
+                .addCriterion("wool_feet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.IMBUED_WOOL_FEET.get()))
+                .save(saver, PrimalMagick.resource("story/craft_starter_robes"));
         // TODO More advancements
         AdvancementHolder discoverForbidden = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_forbidden").icon(ItemsPM.BLOOD_NOTES.get()).build())
                 .parent(firstTheorycraft)

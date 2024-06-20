@@ -1682,6 +1682,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_essence_furnace").name("Alchemy").description("Transform a Furnace into an Essence Furnace").build();
         this.advancement("first_theorycraft").name("I've Been Thinking...").description("Complete a theorycrafting project at a Research Table").build();
         this.advancement("many_theorycrafts").name("From First Principles").description("Complete 250 theorycrafting projects").build();
+        this.advancement("craft_modular_wand").name("E Pluribus Unum").description("Create a better wand from component parts").build();
+        this.advancement("craft_starter_robes").name("Looking the Part").description("Create a full set of Imbued Wool robes").build();
         // TODO More advancements
         this.advancement("discover_forbidden").name("The Forbidden").description("Discover a forbidden source of magick").build();
         
