@@ -1684,6 +1684,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("many_theorycrafts").name("From First Principles").description("Complete 250 theorycrafting projects").build();
         this.advancement("craft_modular_wand").name("E Pluribus Unum").description("Create a better wand from component parts").build();
         this.advancement("craft_starter_robes").name("Looking the Part").description("Create a full set of Imbued Wool robes").build();
+        this.advancement("craft_artificial_mana_font").name("We Have Mana at Home").description("Create an artificial Mana Font of any source").build();
+        this.advancement("craft_forbidden_mana_font").name("Hungry Hungry Wizards").description("Create a forbidden Mana Font of any source").build();
+        this.advancement("craft_heavenly_mana_font").name("Super Size Me").description("Create a heavenly Mana Font of any source").build();
         // TODO More advancements
         this.advancement("discover_forbidden").name("The Forbidden").description("Discover a forbidden source of magick").build();
         
