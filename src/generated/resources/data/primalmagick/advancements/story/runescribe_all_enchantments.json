@@ -364,43 +364,103 @@
   },
   "requirements": [
     [
-      "primalmagick:bludgeoning"
+      "minecraft:aqua_affinity"
     ],
     [
-      "minecraft:unbreaking"
+      "minecraft:bane_of_arthropods"
     ],
     [
-      "minecraft:riptide"
+      "minecraft:blast_protection"
     ],
     [
-      "minecraft:fire_aspect"
-    ],
-    [
-      "minecraft:protection"
-    ],
-    [
-      "minecraft:silk_touch"
-    ],
-    [
-      "primalmagick:rending"
-    ],
-    [
-      "minecraft:efficiency"
+      "minecraft:channeling"
     ],
     [
       "minecraft:depth_strider"
     ],
     [
+      "minecraft:efficiency"
+    ],
+    [
+      "minecraft:feather_falling"
+    ],
+    [
+      "minecraft:fire_aspect"
+    ],
+    [
+      "minecraft:fire_protection"
+    ],
+    [
+      "minecraft:flame"
+    ],
+    [
+      "minecraft:fortune"
+    ],
+    [
+      "minecraft:frost_walker"
+    ],
+    [
+      "minecraft:impaling"
+    ],
+    [
+      "minecraft:infinity"
+    ],
+    [
+      "minecraft:knockback"
+    ],
+    [
       "minecraft:looting"
+    ],
+    [
+      "minecraft:loyalty"
+    ],
+    [
+      "minecraft:luck_of_the_sea"
+    ],
+    [
+      "minecraft:lure"
+    ],
+    [
+      "minecraft:mending"
+    ],
+    [
+      "minecraft:multishot"
+    ],
+    [
+      "minecraft:piercing"
+    ],
+    [
+      "minecraft:power"
+    ],
+    [
+      "minecraft:projectile_protection"
+    ],
+    [
+      "minecraft:protection"
+    ],
+    [
+      "minecraft:punch"
+    ],
+    [
+      "minecraft:quick_charge"
     ],
     [
       "minecraft:respiration"
     ],
     [
-      "primalmagick:mana_efficiency"
+      "minecraft:riptide"
     ],
     [
-      "minecraft:piercing"
+      "minecraft:sharpness"
+    ],
+    [
+      "minecraft:silk_touch"
+    ],
+    [
+      "minecraft:smite"
+    ],
+    [
+      "minecraft:soul_speed"
     ],
     [
       "minecraft:sweeping"
@@ -409,133 +469,73 @@
       "minecraft:swift_sneak"
     ],
     [
-      "minecraft:luck_of_the_sea"
+      "minecraft:thorns"
     ],
     [
-      "primalmagick:enderport"
-    ],
-    [
-      "minecraft:sharpness"
-    ],
-    [
-      "minecraft:infinity"
-    ],
-    [
-      "minecraft:loyalty"
-    ],
-    [
-      "minecraft:mending"
-    ],
-    [
-      "minecraft:flame"
-    ],
-    [
-      "minecraft:quick_charge"
-    ],
-    [
-      "primalmagick:bulwark"
-    ],
-    [
-      "primalmagick:reverberation"
-    ],
-    [
-      "minecraft:blast_protection"
-    ],
-    [
-      "primalmagick:essence_thief"
-    ],
-    [
-      "minecraft:soul_speed"
-    ],
-    [
-      "primalmagick:lifesteal"
-    ],
-    [
-      "minecraft:aqua_affinity"
-    ],
-    [
-      "primalmagick:judgment"
-    ],
-    [
-      "minecraft:projectile_protection"
-    ],
-    [
-      "minecraft:impaling"
-    ],
-    [
-      "primalmagick:magick_protection"
-    ],
-    [
-      "minecraft:knockback"
-    ],
-    [
-      "minecraft:bane_of_arthropods"
-    ],
-    [
-      "minecraft:fortune"
-    ],
-    [
-      "primalmagick:regrowth"
-    ],
-    [
-      "minecraft:frost_walker"
-    ],
-    [
-      "primalmagick:verdant"
-    ],
-    [
-      "minecraft:channeling"
-    ],
-    [
-      "primalmagick:disintegration"
-    ],
-    [
-      "primalmagick:soulpiercing"
-    ],
-    [
-      "primalmagick:guillotine"
-    ],
-    [
-      "primalmagick:treasure"
-    ],
-    [
-      "primalmagick:spell_power"
+      "minecraft:unbreaking"
     ],
     [
       "primalmagick:aegis"
     ],
     [
-      "minecraft:punch"
-    ],
-    [
-      "minecraft:power"
-    ],
-    [
-      "primalmagick:lucky_strike"
-    ],
-    [
-      "minecraft:multishot"
-    ],
-    [
-      "minecraft:smite"
-    ],
-    [
-      "minecraft:lure"
+      "primalmagick:bludgeoning"
     ],
     [
       "primalmagick:bounty"
     ],
     [
-      "minecraft:fire_protection"
+      "primalmagick:bulwark"
+    ],
+    [
+      "primalmagick:disintegration"
     ],
     [
       "primalmagick:enderlock"
     ],
     [
-      "minecraft:thorns"
+      "primalmagick:enderport"
     ],
     [
-      "minecraft:feather_falling"
+      "primalmagick:essence_thief"
+    ],
+    [
+      "primalmagick:guillotine"
+    ],
+    [
+      "primalmagick:judgment"
+    ],
+    [
+      "primalmagick:lifesteal"
+    ],
+    [
+      "primalmagick:lucky_strike"
+    ],
+    [
+      "primalmagick:magick_protection"
+    ],
+    [
+      "primalmagick:mana_efficiency"
+    ],
+    [
+      "primalmagick:regrowth"
+    ],
+    [
+      "primalmagick:rending"
+    ],
+    [
+      "primalmagick:reverberation"
+    ],
+    [
+      "primalmagick:soulpiercing"
+    ],
+    [
+      "primalmagick:spell_power"
+    ],
+    [
+      "primalmagick:treasure"
+    ],
+    [
+      "primalmagick:verdant"
     ]
   ],
   "rewards": {

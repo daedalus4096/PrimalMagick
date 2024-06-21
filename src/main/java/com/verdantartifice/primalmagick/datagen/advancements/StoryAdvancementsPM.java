@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.advancements;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -253,7 +254,7 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
         Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
-        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().forEach(defHolder -> {
+        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().sorted(Comparator.comparing(defHolder -> defHolder.key().location().toString())).forEach(defHolder -> {
             builder.addCriterion(defHolder.key().location().toString(), RunescribingTrigger.TriggerInstance.enchantment(defHolder.value().result()));
         });
         if (type == AdvancementType.CHALLENGE) {
