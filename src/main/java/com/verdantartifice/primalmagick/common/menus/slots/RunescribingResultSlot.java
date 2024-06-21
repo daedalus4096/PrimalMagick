@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 import java.util.List;
 import java.util.Map;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
@@ -61,6 +62,9 @@ public class RunescribingResultSlot extends Slot {
                 enchants.keySet().forEach(enchant -> {
                     ExpertiseManager.awardExpertise(this.player, enchant);
                     ResearchManager.completeResearch(this.player, new RuneEnchantmentKey(enchant));
+                    if (this.player instanceof ServerPlayer serverPlayer) {
+                        CriteriaTriggersPM.RUNESCRIBING.trigger(serverPlayer, enchant);
+                    }
                 });
             }
         }
