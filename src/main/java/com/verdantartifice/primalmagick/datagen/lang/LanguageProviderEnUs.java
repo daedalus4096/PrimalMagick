@@ -1701,6 +1701,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_spellcrafting_altar").name("Sorcery").description("Create a Spellcrafting Altar").build();
         this.advancement("craft_expensive_spell").name("Unlimited Power").description("Create a spell with a mana cost of at least 2000").build();
         this.advancement("kill_with_sorcery").name("Combat Mage").description("Kill a creature using sorcery").build();
+        this.advancement("kill_with_all_sorcery").name("Elemental Virtuoso").description("Kill creatures using every type of damage spell").build();
+        this.advancement("polymorph_sheep").name("Baa Ram Ewe").description("Learn how to transform creatures into sheep from an unlikely source").build();
+        this.advancement("craft_runecarving_table").name("Runeworking").description("Create a Runecarving Table").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

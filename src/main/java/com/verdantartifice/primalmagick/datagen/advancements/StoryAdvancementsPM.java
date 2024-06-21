@@ -205,6 +205,27 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(craftSpellcraftingAltar)
                 .addCriterion("any_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY))))
                 .save(saver, PrimalMagick.resource("story/kill_with_sorcery"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("kill_with_all_sorcery").icon(Items.SKELETON_SKULL).type(AdvancementType.GOAL).build())
+                .parent(killWithSorcery)
+                .addCriterion("earth_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY_EARTH))))
+                .addCriterion("sea_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY_SEA))))
+                .addCriterion("sky_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY_SKY))))
+                .addCriterion("sun_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY_SUN))))
+                .addCriterion("moon_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY_MOON))))
+                .addCriterion("blood_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY_BLOOD))))
+                .addCriterion("infernal_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY_INFERNAL))))
+                .addCriterion("void_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY_VOID))))
+                .addCriterion("hallowed_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY_HALLOWED))))
+                .save(saver, PrimalMagick.resource("story/kill_with_all_sorcery"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("polymorph_sheep").icon(Items.SHEARS).type(AdvancementType.CHALLENGE).build())
+                .parent(craftSpellcraftingAltar)
+                .rewards(AdvancementRewards.Builder.experience(100))
+                .addCriterion("discovered_forbidden", ResearchCompletedTrigger.TriggerInstance.researchEntry(ResearchEntries.SPELL_PAYLOAD_POLYMORPH_SHEEP))
+                .save(saver, PrimalMagick.resource("story/polymorph_sheep"));
+        AdvancementHolder craftRunecarvingTable = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_runecarving_table").icon(ItemsPM.RUNECARVING_TABLE.get()).build())
+                .parent(craftArcaneWorkbench)
+                .addCriterion("has_table", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNECARVING_TABLE.get()))
+                .save(saver, PrimalMagick.resource("story/craft_runecarving_table"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {

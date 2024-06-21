@@ -30,6 +30,15 @@ public class DamageTypeTagsProviderPM extends TagsProvider<DamageType> {
         this.tag(DamageTypeTags.BYPASSES_ARMOR).add(DamageTypesPM.BLEEDING, DamageTypesPM.SORCERY_BLOOD);
         this.tag(DamageTypeTags.IS_FIRE).add(DamageTypesPM.HELLISH_CHAIN, DamageTypesPM.SORCERY_INFERNAL);
         this.tag(DamageTypeTagsPM.IS_MAGIC).add(DamageTypes.MAGIC).addTag(DamageTypeTagsPM.IS_SORCERY);
-        this.tag(DamageTypeTagsPM.IS_SORCERY).add(DamageTypesPM.SORCERY_EARTH, DamageTypesPM.SORCERY_SEA, DamageTypesPM.SORCERY_SKY, DamageTypesPM.SORCERY_SUN, DamageTypesPM.SORCERY_MOON, DamageTypesPM.SORCERY_BLOOD, DamageTypesPM.SORCERY_INFERNAL, DamageTypesPM.SORCERY_VOID, DamageTypesPM.SORCERY_HALLOWED);
+        this.tag(DamageTypeTagsPM.IS_SORCERY).addTag(DamageTypeTagsPM.IS_SORCERY_EARTH).addTag(DamageTypeTagsPM.IS_SORCERY_SEA).addTag(DamageTypeTagsPM.IS_SORCERY_SKY).addTag(DamageTypeTagsPM.IS_SORCERY_SUN).addTag(DamageTypeTagsPM.IS_SORCERY_MOON).addTag(DamageTypeTagsPM.IS_SORCERY_BLOOD).addTag(DamageTypeTagsPM.IS_SORCERY_INFERNAL).addTag(DamageTypeTagsPM.IS_SORCERY_VOID).addTag(DamageTypeTagsPM.IS_SORCERY_HALLOWED);
+        this.tag(DamageTypeTagsPM.IS_SORCERY_EARTH).add(DamageTypesPM.SORCERY_EARTH);
+        this.tag(DamageTypeTagsPM.IS_SORCERY_SEA).add(DamageTypesPM.SORCERY_SEA);
+        this.tag(DamageTypeTagsPM.IS_SORCERY_SKY).add(DamageTypesPM.SORCERY_SKY);
+        this.tag(DamageTypeTagsPM.IS_SORCERY_SUN).add(DamageTypesPM.SORCERY_SUN);
+        this.tag(DamageTypeTagsPM.IS_SORCERY_MOON).add(DamageTypesPM.SORCERY_MOON);
+        this.tag(DamageTypeTagsPM.IS_SORCERY_BLOOD).add(DamageTypesPM.SORCERY_BLOOD);
+        this.tag(DamageTypeTagsPM.IS_SORCERY_INFERNAL).add(DamageTypesPM.SORCERY_INFERNAL);
+        this.tag(DamageTypeTagsPM.IS_SORCERY_VOID).add(DamageTypesPM.SORCERY_VOID);
+        this.tag(DamageTypeTagsPM.IS_SORCERY_HALLOWED).add(DamageTypesPM.SORCERY_HALLOWED);
     }
 }
