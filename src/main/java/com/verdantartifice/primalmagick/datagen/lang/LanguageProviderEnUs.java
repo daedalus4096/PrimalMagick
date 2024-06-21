@@ -1707,6 +1707,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("runescribe_enchantment").name("Noun, Verb, Source").description("Scribe a runic enchantment onto an item").build();
         this.advancement("runescribe_all_enchantments").name("Gotta Scribe 'em All").description("Runescribe every possible enchantment").build();
         this.advancement("craft_power_rune").name("Leveled Up").description("Discover how to make your runescribed enchantments more powerful").build();
+        this.advancement("use_recall_stone").name("No Place Like It").description("Use a Recall Stone to warp home").build();
+        this.advancement("use_recall_stone_nether").name("Home Is Where The Heat Is").description("Use a Recall Stone to warp to a Respawn Anchor in the Nether").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

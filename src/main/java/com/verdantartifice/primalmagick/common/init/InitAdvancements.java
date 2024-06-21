@@ -17,6 +17,7 @@ public class InitAdvancements {
         registerCriterion("stat_value", CriteriaTriggersPM.STAT_VALUE);
         registerCriterion("linguistics_comprehension", CriteriaTriggersPM.LINGUISTICS_COMPREHENSION);
         registerCriterion("runescribing", CriteriaTriggersPM.RUNESCRIBING);
+        registerCriterion("recall_stone", CriteriaTriggersPM.RECALL_STONE);
     }
     
     private static void registerCriterion(String name, CriterionTrigger<?> trigger) {

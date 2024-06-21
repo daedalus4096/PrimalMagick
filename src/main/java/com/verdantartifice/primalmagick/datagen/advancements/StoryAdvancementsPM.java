@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.advancements.critereon.LinguisticsComprehensionTrigger;
+import com.verdantartifice.primalmagick.common.advancements.critereon.RecallStoneTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RunescribingTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.StatValueTrigger;
@@ -40,6 +41,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenerator;
 
@@ -238,6 +240,14 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .addCriterion("has_power", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNE_POWER.get()))
                 .addCriterion("has_grace", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNE_GRACE.get()))
                 .save(saver, PrimalMagick.resource("story/craft_power_rune"));
+        AdvancementHolder useRecallStone = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("use_recall_stone").icon(ItemsPM.RECALL_STONE.get()).build())
+                .parent(runescribeEnchantment)
+                .addCriterion("recall", RecallStoneTrigger.TriggerInstance.anywhere())
+                .save(saver, PrimalMagick.resource("story/use_recall_stone"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("use_recall_stone_nether").icon(Items.RESPAWN_ANCHOR).build())
+                .parent(useRecallStone)
+                .addCriterion("recall_nether", RecallStoneTrigger.TriggerInstance.inDimension(Level.NETHER))
+                .save(saver, PrimalMagick.resource("story/use_recall_stone_nether"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
