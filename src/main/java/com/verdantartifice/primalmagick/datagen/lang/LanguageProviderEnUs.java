@@ -1704,6 +1704,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("kill_with_all_sorcery").name("Elemental Virtuoso").description("Kill creatures using every type of damage spell").build();
         this.advancement("polymorph_sheep").name("Baa Ram Ewe").description("Learn how to transform creatures into sheep from an unlikely source").build();
         this.advancement("craft_runecarving_table").name("Runeworking").description("Create a Runecarving Table").build();
+        this.advancement("runescribe_enchantment").name("Noun, Verb, Source").description("Scribe a runic enchantment onto an item").build();
+        this.advancement("runescribe_all_enchantments").name("Gotta Scribe 'em All").description("Runescribe every possible enchantment").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
