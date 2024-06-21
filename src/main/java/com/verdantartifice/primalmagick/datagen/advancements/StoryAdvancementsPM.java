@@ -234,9 +234,8 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
-        // FIXME Add reward for challenge type
-        // FIXME Don't hardcode languages, use the registry lookup and ancient tag
-        return Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
+        // TODO Don't hardcode languages, use the registry lookup and ancient tag (problem: custom datapack tags don't appear to be bound)
+        Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR)
                 .addCriterion("earth_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.EARTH, threshold))
@@ -246,8 +245,11 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .addCriterion("moon_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.MOON, threshold))
                 .addCriterion("trade_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.TRADE, threshold))
                 .addCriterion("forbidden_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.FORBIDDEN, threshold))
-                .addCriterion("hallowed_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.HALLOWED, threshold))
-                .save(saver, PrimalMagick.resource("story/" + id));
+                .addCriterion("hallowed_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.HALLOWED, threshold));
+        if (type == AdvancementType.CHALLENGE) {
+            builder.rewards(AdvancementRewards.Builder.experience(100));
+        }
+        return builder.save(saver, PrimalMagick.resource("story/" + id));
     }
     
     private static AdvancementHolder makeRunescribingAdvancement(HolderLookup.Provider registries, String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, Consumer<AdvancementHolder> saver) {
