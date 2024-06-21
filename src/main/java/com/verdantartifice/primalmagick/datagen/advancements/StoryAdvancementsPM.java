@@ -231,6 +231,13 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .save(saver, PrimalMagick.resource("story/craft_runecarving_table"));
         AdvancementHolder runescribeEnchantment = makeRunescribingAdvancement(registries, "runescribe_enchantment", ItemsPM.RUNESCRIBING_ALTAR_BASIC.get(), AdvancementType.TASK, craftRunecarvingTable, false, saver);
         makeRunescribingAdvancement(registries, "runescribe_all_enchantments", Items.ENCHANTING_TABLE, AdvancementType.CHALLENGE, runescribeEnchantment, true, saver);
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_power_rune").icon(ItemsPM.RUNE_POWER.get()).build())
+                .parent(runescribeEnchantment)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("has_insight", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNE_INSIGHT.get()))
+                .addCriterion("has_power", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNE_POWER.get()))
+                .addCriterion("has_grace", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNE_GRACE.get()))
+                .save(saver, PrimalMagick.resource("story/craft_power_rune"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
