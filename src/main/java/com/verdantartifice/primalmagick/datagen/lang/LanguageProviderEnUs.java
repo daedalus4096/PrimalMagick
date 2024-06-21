@@ -1698,6 +1698,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("gain_some_comprehension").name("I Know Some of Those Words").description("Gain a measure of comprehension of an ancient language").build();
         this.advancement("fully_comprehend_language").name("Syntax Checker").description("Gain full comprehension of an ancient language").build();
         this.advancement("fully_comprehend_all_languages").name("Polyglot").description("Gain full comprehension of all ancient languages").build();
+        this.advancement("craft_spellcrafting_altar").name("Sorcery").description("Create a Spellcrafting Altar").build();
+        this.advancement("craft_expensive_spell").name("Unlimited Power").description("Create a spell with a mana cost of at least 2000").build();
+        this.advancement("kill_with_sorcery").name("Combat Mage").description("Kill a creature using sorcery").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

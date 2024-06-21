@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.advancements;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -13,6 +14,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -24,12 +26,14 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.critereon.DamageSourcePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerTrigger;
-import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.advancements.critereon.TagPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -43,7 +47,7 @@ import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenera
  */
 public class StoryAdvancementsPM implements AdvancementGenerator {
     @Override
-    public void generate(Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
+    public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
         // Custom advancement criteria are normally registered as part of FMLCommonSetup. However, that event never gets fired
         // in datagen runs, so it must be done manually as part of the data provider.
         InitAdvancements.initCriteria();
@@ -189,10 +193,22 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
         AdvancementHolder gainSomeComprehension = makeComprehensionAdvancement("gain_some_comprehension", ItemsPM.SCRIBE_TABLE.get(), AdvancementType.TASK, discoverLibrary, false, 1, saver);
         AdvancementHolder fullyComprehendLanguage = makeComprehensionAdvancement("fully_comprehend_language", ItemsPM.STATIC_BOOK_UNCOMMON.get(), AdvancementType.GOAL, gainSomeComprehension, false, 60, saver);
         makeComprehensionAdvancement("fully_comprehend_all_languages", ItemsPM.STATIC_BOOK_RARE.get(), AdvancementType.CHALLENGE, fullyComprehendLanguage, true, 60, saver);
+        AdvancementHolder craftSpellcraftingAltar = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_spellcrafting_altar").icon(ItemsPM.SPELLCRAFTING_ALTAR.get()).build())
+                .parent(craftArcaneWorkbench)
+                .addCriterion("has_altar", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SPELLCRAFTING_ALTAR.get()))
+                .save(saver, PrimalMagick.resource("story/craft_spellcrafting_altar"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_expensive_spell").icon(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get()).type(AdvancementType.GOAL).build())
+                .parent(craftSpellcraftingAltar)
+                .addCriterion("has_stat", StatValueTrigger.TriggerInstance.atLeast(StatsPM.SPELLS_CRAFTED_MAX_COST, 2000))
+                .save(saver, PrimalMagick.resource("story/craft_expensive_spell"));
+        AdvancementHolder killWithSorcery = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("kill_with_sorcery").icon(ItemsPM.SPELL_SCROLL_FILLED.get()).build())
+                .parent(craftSpellcraftingAltar)
+                .addCriterion("any_spell", KilledTrigger.TriggerInstance.playerKilledEntity(Optional.empty(), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTagsPM.IS_SORCERY))))
+                .save(saver, PrimalMagick.resource("story/kill_with_sorcery"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
-        AdvancementHolder retVal = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
+        return Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR)
                 .addCriterion("earth_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.EARTH, threshold))
@@ -204,6 +220,5 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .addCriterion("forbidden_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.FORBIDDEN, threshold))
                 .addCriterion("hallowed_language", LinguisticsComprehensionTrigger.TriggerInstance.atLeast(BookLanguagesPM.HALLOWED, threshold))
                 .save(saver, PrimalMagick.resource("story/" + id));
-        return retVal;
     }
 }
