@@ -36,6 +36,7 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerTrigger;
+import net.minecraft.advancements.critereon.StartRidingTrigger;
 import net.minecraft.advancements.critereon.TagPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
@@ -248,6 +249,23 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(useRecallStone)
                 .addCriterion("recall_nether", RecallStoneTrigger.TriggerInstance.inDimension(Level.NETHER))
                 .save(saver, PrimalMagick.resource("story/use_recall_stone_nether"));
+        AdvancementHolder craftRitualAltar = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_ritual_altar").icon(ItemsPM.RITUAL_ALTAR.get()).build())
+                .parent(craftArcaneWorkbench)
+                .addCriterion("has_ritual_altar", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RITUAL_ALTAR.get()))
+                .save(saver, PrimalMagick.resource("story/craft_ritual_altar"));
+        AdvancementHolder sufferRitualMishap = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("suffer_ritual_mishap").icon(ItemsPM.DOWSING_ROD.get()).build())
+                .parent(craftRitualAltar)
+                .addCriterion("has_mishap", StatValueTrigger.TriggerInstance.atLeast(StatsPM.RITUAL_MISHAPS, 1))
+                .save(saver, PrimalMagick.resource("story/suffer_ritual_mishap"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("suffer_many_ritual_mishaps").icon(ItemsPM.ENTROPY_SINK.get()).type(AdvancementType.CHALLENGE).build())
+                .parent(sufferRitualMishap)
+                .rewards(AdvancementRewards.Builder.experience(100))
+                .addCriterion("has_many_mishaps", StatValueTrigger.TriggerInstance.atLeast(StatsPM.RITUAL_MISHAPS, 50))
+                .save(saver, PrimalMagick.resource("story/suffer_many_ritual_mishaps"));
+        AdvancementHolder rideFlyingCarpet = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("ride_flying_carpet").icon(ItemsPM.FLYING_CARPET.get()).build())
+                .parent(craftRitualAltar)
+                .addCriterion("ride_carpet", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().of(EntityTypesPM.FLYING_CARPET.get())))
+                .save(saver, PrimalMagick.resource("story/ride_flying_carpet"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {

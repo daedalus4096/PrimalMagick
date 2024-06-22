@@ -1709,6 +1709,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_power_rune").name("Leveled Up").description("Discover how to make your runescribed enchantments more powerful").build();
         this.advancement("use_recall_stone").name("No Place Like It").description("Use a Recall Stone to warp home").build();
         this.advancement("use_recall_stone_nether").name("Home Is Where The Heat Is").description("Use a Recall Stone to warp to a Respawn Anchor in the Nether").build();
+        this.advancement("craft_ritual_altar").name("Ritual Magick").description("Create a Ritual Altar").build();
+        this.advancement("suffer_ritual_mishap").name("Oops!").description("Suffer a ritual mishap").build();
+        this.advancement("suffer_many_ritual_mishaps").name("You're Doing it Wrong").description("Suffer 50 ritual mishaps").build();
+        this.advancement("ride_flying_carpet").name("A Whole New World").description("Ride a Flying Carpet").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
