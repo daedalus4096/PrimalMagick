@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import java.util.Optional;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -48,6 +50,7 @@ public class RecallStoneItem extends Item {
                     if (!player.getAbilities().instabuild) {
                         player.getItemInHand(hand).shrink(1);
                     }
+                    CriteriaTriggersPM.RECALL_STONE.trigger(serverPlayer, serverLevel.dimension());
                 }, () -> {
                     player.displayClientMessage(Component.translatable("event.primalmagick.recall_stone.failure").withStyle(ChatFormatting.RED), true);
                 });
