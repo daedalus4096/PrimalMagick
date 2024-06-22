@@ -1713,6 +1713,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("suffer_ritual_mishap").name("Oops!").description("Suffer a ritual mishap").build();
         this.advancement("suffer_many_ritual_mishaps").name("You're Doing it Wrong").description("Suffer 50 ritual mishaps").build();
         this.advancement("ride_flying_carpet").name("A Whole New World").description("Ride a Flying Carpet").build();
+        this.advancement("get_shot_off_flying_carpet").name("Not Exactly Top Gun").description("Get shot off a Flying Carpet by a Ghast").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

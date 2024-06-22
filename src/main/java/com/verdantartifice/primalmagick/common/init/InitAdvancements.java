@@ -18,7 +18,7 @@ public class InitAdvancements {
         registerCriterion("linguistics_comprehension", CriteriaTriggersPM.LINGUISTICS_COMPREHENSION);
         registerCriterion("runescribing", CriteriaTriggersPM.RUNESCRIBING);
         registerCriterion("recall_stone", CriteriaTriggersPM.RECALL_STONE);
-        registerCriterion("entity_hurt_mounted_player", CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT);
+        registerCriterion("entity_hurt_player_ext", CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT);
     }
     
     private static void registerCriterion(String name, CriterionTrigger<?> trigger) {
