@@ -19,6 +19,7 @@ public class InitAdvancements {
         registerCriterion("runescribing", CriteriaTriggersPM.RUNESCRIBING);
         registerCriterion("recall_stone", CriteriaTriggersPM.RECALL_STONE);
         registerCriterion("entity_hurt_player_ext", CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT);
+        registerCriterion("attunement_threshold", CriteriaTriggersPM.ATTUNEMENT_THRESHOLD);
     }
     
     private static void registerCriterion(String name, CriterionTrigger<?> trigger) {
