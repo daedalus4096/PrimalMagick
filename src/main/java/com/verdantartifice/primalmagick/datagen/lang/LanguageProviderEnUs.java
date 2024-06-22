@@ -1717,6 +1717,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_ambrosia").name("Induced Charge").description("Create a piece of Ambrosia").build();
         this.advancement("all_minor_attunements").name("Attunement Dabbler").description("Gain minor attunement with all sources, even if only temporarily").build();
         this.advancement("greater_attunement").name("I Have The Power!").description("Gain lasting greater attunement to a source").build();
+        this.advancement("craft_basic_pixie").name("Flighty Friends").description("Summon a basic Pixie").build();
+        this.advancement("craft_grand_pixie").name("Knight Errant").description("Summon a grand Pixie").build();
+        this.advancement("craft_majestic_pixie").name("In the Presence of Royalty").description("Summon a majestic Pixie").build();
+        this.advancement("craft_magitech_parts").name("Magitech").description("Create some Basic Magitech Parts").build();
+        this.advancement("craft_arcanometer").name("Beep Boop").description("Discover a better way of analyzing things").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

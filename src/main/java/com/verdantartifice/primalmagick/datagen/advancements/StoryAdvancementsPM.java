@@ -309,6 +309,53 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(allMinorAttunements)
                 .addCriterion("any_greater", AttunementThresholdTrigger.TriggerInstance.anyLasting(AttunementThreshold.GREATER))
                 .save(saver, PrimalMagick.resource("story/greater_attunement"));
+        AdvancementHolder craftBasicPixie = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_basic_pixie").icon(ItemsPM.BASIC_EARTH_PIXIE.get()).build())
+                .parent(craftRitualAltar)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("earth_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_EARTH_PIXIE.get()))
+                .addCriterion("sea_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_SEA_PIXIE.get()))
+                .addCriterion("sky_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_SKY_PIXIE.get()))
+                .addCriterion("sun_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_SUN_PIXIE.get()))
+                .addCriterion("moon_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_MOON_PIXIE.get()))
+                .addCriterion("blood_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_BLOOD_PIXIE.get()))
+                .addCriterion("infernal_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_INFERNAL_PIXIE.get()))
+                .addCriterion("void_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_VOID_PIXIE.get()))
+                .addCriterion("hallowed_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_HALLOWED_PIXIE.get()))
+                .save(saver, PrimalMagick.resource("story/craft_basic_pixie"));
+        AdvancementHolder craftGrandPixie = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_grand_pixie").icon(ItemsPM.GRAND_INFERNAL_PIXIE.get()).build())
+                .parent(craftBasicPixie)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("earth_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRAND_EARTH_PIXIE.get()))
+                .addCriterion("sea_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRAND_SEA_PIXIE.get()))
+                .addCriterion("sky_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRAND_SKY_PIXIE.get()))
+                .addCriterion("sun_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRAND_SUN_PIXIE.get()))
+                .addCriterion("moon_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRAND_MOON_PIXIE.get()))
+                .addCriterion("blood_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRAND_BLOOD_PIXIE.get()))
+                .addCriterion("infernal_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRAND_INFERNAL_PIXIE.get()))
+                .addCriterion("void_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRAND_VOID_PIXIE.get()))
+                .addCriterion("hallowed_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GRAND_HALLOWED_PIXIE.get()))
+                .save(saver, PrimalMagick.resource("story/craft_grand_pixie"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_majestic_pixie").icon(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get()).type(AdvancementType.GOAL).build())
+                .parent(craftGrandPixie)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("earth_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAJESTIC_EARTH_PIXIE.get()))
+                .addCriterion("sea_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAJESTIC_SEA_PIXIE.get()))
+                .addCriterion("sky_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAJESTIC_SKY_PIXIE.get()))
+                .addCriterion("sun_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAJESTIC_SUN_PIXIE.get()))
+                .addCriterion("moon_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAJESTIC_MOON_PIXIE.get()))
+                .addCriterion("blood_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAJESTIC_BLOOD_PIXIE.get()))
+                .addCriterion("infernal_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get()))
+                .addCriterion("void_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAJESTIC_VOID_PIXIE.get()))
+                .addCriterion("hallowed_pixie", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get()))
+                .save(saver, PrimalMagick.resource("story/craft_majestic_pixie"));
+        AdvancementHolder craftMagitechParts = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_magitech_parts").icon(ItemsPM.MAGITECH_PARTS_BASIC.get()).build())
+                .parent(craftArcaneWorkbench)
+                .addCriterion("has_parts", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MAGITECH_PARTS_BASIC.get()))
+                .save(saver, PrimalMagick.resource("story/craft_magitech_parts"));
+        AdvancementHolder craftArcanometer = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_arcanometer").icon(ItemsPM.ARCANOMETER.get()).build())
+                .parent(craftMagitechParts)
+                .addCriterion("has_arcanometer", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.ARCANOMETER.get()))
+                .save(saver, PrimalMagick.resource("story/craft_arcanometer"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
