@@ -1714,6 +1714,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("suffer_many_ritual_mishaps").name("You're Doing it Wrong").description("Suffer 50 ritual mishaps").build();
         this.advancement("ride_flying_carpet").name("A Whole New World").description("Ride a Flying Carpet").build();
         this.advancement("get_shot_off_flying_carpet").name("Not Exactly Top Gun").description("Get shot off a Flying Carpet by a Ghast").build();
+        this.advancement("craft_ambrosia").name("Induced Charge").description("Create a piece of Ambrosia").build();
+        this.advancement("all_minor_attunements").name("Attunement Dabbler").description("Gain minor attunement with all sources, even if only temporarily").build();
+        this.advancement("greater_attunement").name("I Have The Power!").description("Gain lasting greater attunement to a source").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

@@ -5,12 +5,14 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.advancements.critereon.AttunementThresholdTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.EntityHurtPlayerTriggerExt;
 import com.verdantartifice.primalmagick.common.advancements.critereon.LinguisticsComprehensionTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RecallStoneTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RunescribingTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.StatValueTrigger;
+import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.init.InitAdvancements;
@@ -18,6 +20,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
@@ -277,6 +280,35 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                         Optional.of(EntityPredicate.Builder.entity().of(EntityType.PLAYER).vehicle(EntityPredicate.Builder.entity().of(EntityTypesPM.FLYING_CARPET.get())).build()), 
                         DamagePredicate.Builder.damageInstance().sourceEntity(EntityPredicate.Builder.entity().of(EntityType.GHAST).build()).type(DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTags.IS_PROJECTILE)).direct(EntityPredicate.Builder.entity().of(EntityType.FIREBALL)))))
                 .save(saver, PrimalMagick.resource("story/get_shot_off_flying_carpet"));
+        AdvancementHolder craftAmbrosia = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_ambrosia").icon(ItemsPM.BASIC_EARTH_AMBROSIA.get()).build())
+                .parent(craftRitualAltar)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("earth", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_EARTH_AMBROSIA.get()))
+                .addCriterion("sea", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_SEA_AMBROSIA.get()))
+                .addCriterion("sky", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_SKY_AMBROSIA.get()))
+                .addCriterion("sun", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_SUN_AMBROSIA.get()))
+                .addCriterion("moon", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_MOON_AMBROSIA.get()))
+                .addCriterion("blood", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_BLOOD_AMBROSIA.get()))
+                .addCriterion("infernal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_INFERNAL_AMBROSIA.get()))
+                .addCriterion("void", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_VOID_AMBROSIA.get()))
+                .addCriterion("hallowed", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_HALLOWED_AMBROSIA.get()))
+                .save(saver, PrimalMagick.resource("story/craft_ambrosia"));
+        AdvancementHolder allMinorAttunements = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("all_minor_attunements").icon(ItemsPM.GREATER_INFERNAL_AMBROSIA.get()).build())
+                .parent(craftAmbrosia)
+                .addCriterion("earth", AttunementThresholdTrigger.TriggerInstance.ephemeral(Sources.EARTH, AttunementThreshold.MINOR))
+                .addCriterion("sea", AttunementThresholdTrigger.TriggerInstance.ephemeral(Sources.SEA, AttunementThreshold.MINOR))
+                .addCriterion("sky", AttunementThresholdTrigger.TriggerInstance.ephemeral(Sources.SKY, AttunementThreshold.MINOR))
+                .addCriterion("sun", AttunementThresholdTrigger.TriggerInstance.ephemeral(Sources.SUN, AttunementThreshold.MINOR))
+                .addCriterion("moon", AttunementThresholdTrigger.TriggerInstance.ephemeral(Sources.MOON, AttunementThreshold.MINOR))
+                .addCriterion("blood", AttunementThresholdTrigger.TriggerInstance.ephemeral(Sources.BLOOD, AttunementThreshold.MINOR))
+                .addCriterion("infernal", AttunementThresholdTrigger.TriggerInstance.ephemeral(Sources.INFERNAL, AttunementThreshold.MINOR))
+                .addCriterion("void", AttunementThresholdTrigger.TriggerInstance.ephemeral(Sources.VOID, AttunementThreshold.MINOR))
+                .addCriterion("hallowed", AttunementThresholdTrigger.TriggerInstance.ephemeral(Sources.HALLOWED, AttunementThreshold.MINOR))
+                .save(saver, PrimalMagick.resource("story/all_minor_attunements"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("greater_attunement").icon(ItemsPM.SUPREME_HALLOWED_AMBROSIA.get()).type(AdvancementType.GOAL).build())
+                .parent(allMinorAttunements)
+                .addCriterion("any_greater", AttunementThresholdTrigger.TriggerInstance.anyLasting(AttunementThreshold.GREATER))
+                .save(saver, PrimalMagick.resource("story/greater_attunement"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
