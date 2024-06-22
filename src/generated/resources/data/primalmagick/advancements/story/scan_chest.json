@@ -1,0 +1,45 @@
+{
+  "parent": "primalmagick:story/craft_arcanometer",
+  "criteria": {
+    "scan_chest": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "tag": "forge:chests"
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": [
+                "primalmagick:arcanometer"
+              ]
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.scan_chest.description"
+    },
+    "icon": {
+      "item": "minecraft:chest"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.scan_chest.title"
+    }
+  },
+  "requirements": [
+    [
+      "scan_chest"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

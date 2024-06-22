@@ -1722,6 +1722,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_majestic_pixie").name("In the Presence of Royalty").description("Summon a majestic Pixie").build();
         this.advancement("craft_magitech_parts").name("Magitech").description("Create some Basic Magitech Parts").build();
         this.advancement("craft_arcanometer").name("Beep Boop").description("Discover a better way of analyzing things").build();
+        this.advancement("scan_chest").name("I Need More Data!").description("Use the Arcanometer to scan the contents of an entire chest at once").build();
+        this.advancement("craft_seascribe_pen").name("Mightier than the Sword").description("Create a Seascribe Pen and never run out of ink again").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

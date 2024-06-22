@@ -34,10 +34,13 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.DamagePredicate;
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerTrigger;
@@ -50,6 +53,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenerator;
 
@@ -356,6 +360,16 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(craftMagitechParts)
                 .addCriterion("has_arcanometer", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.ARCANOMETER.get()))
                 .save(saver, PrimalMagick.resource("story/craft_arcanometer"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("scan_chest").icon(Items.CHEST).build())
+                .parent(craftArcanometer)
+                .addCriterion("scan_chest", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
+                        LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(Tags.Blocks.CHESTS)), 
+                        ItemPredicate.Builder.item().of(ItemsPM.ARCANOMETER.get())))
+                .save(saver, PrimalMagick.resource("story/scan_chest"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_seascribe_pen").icon(ItemsPM.SEASCRIBE_PEN.get()).build())
+                .parent(craftMagitechParts)
+                .addCriterion("has_pen", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SEASCRIBE_PEN.get()))
+                .save(saver, PrimalMagick.resource("story/craft_seascribe_pen"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
