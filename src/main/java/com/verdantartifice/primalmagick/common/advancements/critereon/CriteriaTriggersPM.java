@@ -6,4 +6,5 @@ public class CriteriaTriggersPM {
     public static final LinguisticsComprehensionTrigger LINGUISTICS_COMPREHENSION = new LinguisticsComprehensionTrigger();
     public static final RunescribingTrigger RUNESCRIBING = new RunescribingTrigger();
     public static final RecallStoneTrigger RECALL_STONE = new RecallStoneTrigger();
+    public static final EntityHurtPlayerTriggerExt ENTITY_HURT_PLAYER_EXT = new EntityHurtPlayerTriggerExt();
 }
