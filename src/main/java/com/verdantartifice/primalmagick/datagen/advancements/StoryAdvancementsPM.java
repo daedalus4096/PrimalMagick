@@ -375,6 +375,25 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .save(saver, PrimalMagick.resource("story/craft_seascribe_pen"));
         AdvancementHolder craftAlchemicalBomb = makeBombAdvancement(registries, "craft_alchemical_bomb", ConcoctionUtils.newBomb(Potions.HARMING), AdvancementType.TASK, craftArcanometer, false, saver);
         makeBombAdvancement(registries, "craft_all_alchemical_bombs", new ItemStack(Items.TNT), AdvancementType.CHALLENGE, craftAlchemicalBomb, true, saver);
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_zephyr_engine").icon(ItemsPM.ZEPHYR_ENGINE.get()).build())
+                .parent(craftArcanometer)
+                .addCriterion("has_engine", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.ZEPHYR_ENGINE.get()))
+                .save(saver, PrimalMagick.resource("story/craft_zephyr_engine"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_warding_module").icon(ItemsPM.BASIC_WARDING_MODULE.get()).build())
+                .parent(craftArcanometer)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("has_basic_module", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.BASIC_WARDING_MODULE.get()))
+                .addCriterion("has_greater_module", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.GREATER_WARDING_MODULE.get()))
+                .addCriterion("has_supreme_module", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SUPREME_WARDING_MODULE.get()))
+                .save(saver, PrimalMagick.resource("story/craft_warding_module"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("find_humming_artifact").icon(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).build())
+                .parent(craftGrimoire)
+                .addCriterion("has_artifact", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()))
+                .save(saver, PrimalMagick.resource("story/find_humming_artifact"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("find_lore_tablet").icon(ItemsPM.STATIC_TABLET.get()).build())
+                .parent(discoverLibrary)
+                .addCriterion("has_tablet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.STATIC_TABLET.get()))
+                .save(saver, PrimalMagick.resource("story/find_lore_tablet"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {

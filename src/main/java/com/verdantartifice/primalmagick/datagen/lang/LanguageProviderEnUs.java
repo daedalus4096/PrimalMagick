@@ -1726,6 +1726,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_seascribe_pen").name("Mightier than the Sword").description("Create a Seascribe Pen and never run out of ink again").build();
         this.advancement("craft_alchemical_bomb").name("Bombs are Great!").description("Create an alchemical bomb").build();
         this.advancement("craft_all_alchemical_bombs").name("Big Badda Boom").description("Create all varieties of alchemical bomb").build();
+        this.advancement("craft_zephyr_engine").name("Leaf on the Wind").description("Create a Zephyr Engine").build();
+        this.advancement("craft_warding_module").name("Shields Up!").description("Create a Warding Module").build();
+        this.advancement("find_humming_artifact").name("What's This Do?").description("Find a Humming Artifact").build();
+        this.advancement("find_lore_tablet").name("It Belongs in a Museum").description("Reassemble an ancient text thought lost to time").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
