@@ -1730,6 +1730,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_warding_module").name("Shields Up!").description("Create a Warding Module").build();
         this.advancement("find_humming_artifact").name("What's This Do?").description("Find a Humming Artifact").build();
         this.advancement("find_lore_tablet").name("It Belongs in a Museum").description("Reassemble an ancient text thought lost to time").build();
+        this.advancement("reuse_rune_once").name("Runic Reuse").description("Use the same rune in at least two different enchantments on the same item at once").build();
+        this.advancement("reuse_rune_twice").name("Runic Efficiency").description("Use the same rune in at least three different enchantments on the same item at once").build();
+        this.advancement("reuse_rune_thrice").name("Runic Conservation").description("Use the same rune in at least four different enchantments on the same item at once").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();

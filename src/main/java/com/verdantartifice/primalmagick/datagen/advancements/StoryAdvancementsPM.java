@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.advancements.critereon.EntityHurt
 import com.verdantartifice.primalmagick.common.advancements.critereon.LinguisticsComprehensionTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RecallStoneTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
+import com.verdantartifice.primalmagick.common.advancements.critereon.RuneUseCountTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RunescribingTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.StatValueTrigger;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
@@ -394,6 +395,19 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(discoverLibrary)
                 .addCriterion("has_tablet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.STATIC_TABLET.get()))
                 .save(saver, PrimalMagick.resource("story/find_lore_tablet"));
+        AdvancementHolder reuseRuneOnce = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("reuse_rune_once").icon(ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get()).build())
+                .parent(runescribeEnchantment)
+                .addCriterion("reuse_once", RuneUseCountTrigger.TriggerInstance.atLeast(2))
+                .save(saver, PrimalMagick.resource("story/reuse_rune_once"));
+        AdvancementHolder reuseRuneTwice = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("reuse_rune_twice").icon(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).type(AdvancementType.GOAL).build())
+                .parent(reuseRuneOnce)
+                .addCriterion("reuse_twice", RuneUseCountTrigger.TriggerInstance.atLeast(3))
+                .save(saver, PrimalMagick.resource("story/reuse_rune_twice"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("reuse_rune_thrice").icon(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).type(AdvancementType.CHALLENGE).build())
+                .parent(reuseRuneTwice)
+                .rewards(AdvancementRewards.Builder.experience(100))
+                .addCriterion("reuse_thrice", RuneUseCountTrigger.TriggerInstance.atLeast(4))
+                .save(saver, PrimalMagick.resource("story/reuse_rune_thrice"));
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
