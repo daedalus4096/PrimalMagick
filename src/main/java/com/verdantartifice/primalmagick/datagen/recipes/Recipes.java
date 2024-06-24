@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
-import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.crafting.FlyingCarpetDyeRecipe;
 import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.StaticBookCloningRecipe;
@@ -5730,7 +5729,7 @@ public class Recipes extends RecipeProvider {
             .key('F', ItemsPM.SKYGLASS_FLASK.get())
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.NIGHT_VISION, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.NIGHT_VISION))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5738,7 +5737,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_NIGHT_VISION, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_NIGHT_VISION))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5747,7 +5746,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.INVISIBILITY, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.INVISIBILITY))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5756,7 +5755,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_INVISIBILITY, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_INVISIBILITY))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5766,7 +5765,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LEAPING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LEAPING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5774,7 +5773,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_LEAPING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_LEAPING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5783,7 +5782,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_LEAPING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_LEAPING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5792,7 +5791,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.FIRE_RESISTANCE, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.FIRE_RESISTANCE))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5801,7 +5800,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_FIRE_RESISTANCE, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_FIRE_RESISTANCE))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5811,7 +5810,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SWIFTNESS, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SWIFTNESS))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5819,7 +5818,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SWIFTNESS, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SWIFTNESS))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5828,7 +5827,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SWIFTNESS, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SWIFTNESS))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5837,7 +5836,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.TURTLE_MASTER, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.TURTLE_MASTER))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5845,7 +5844,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_TURTLE_MASTER, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_TURTLE_MASTER))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5854,7 +5853,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_TURTLE_MASTER, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_TURTLE_MASTER))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5863,7 +5862,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WATER_BREATHING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WATER_BREATHING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
@@ -5872,7 +5871,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WATER_BREATHING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WATER_BREATHING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
@@ -5882,7 +5881,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HEALING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HEALING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5892,7 +5891,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HEALING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HEALING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5903,7 +5902,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.REGENERATION, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.REGENERATION))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5913,7 +5912,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_REGENERATION, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_REGENERATION))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5924,7 +5923,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_REGENERATION, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_REGENERATION))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5935,7 +5934,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRENGTH, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRENGTH))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5943,7 +5942,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_STRENGTH, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_STRENGTH))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5952,7 +5951,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_STRENGTH, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_STRENGTH))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5961,7 +5960,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOW_FALLING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOW_FALLING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5969,7 +5968,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOW_FALLING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOW_FALLING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5978,7 +5977,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOWNESS, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOWNESS))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -5989,7 +5988,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOWNESS, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOWNESS))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -6001,7 +6000,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SLOWNESS, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SLOWNESS))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -6013,7 +6012,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HARMING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HARMING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -6023,7 +6022,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HARMING, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HARMING))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -6034,7 +6033,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.POISON, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.POISON))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6044,7 +6043,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_POISON, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_POISON))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6055,7 +6054,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_POISON, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_POISON))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6066,7 +6065,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WEAKNESS, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WEAKNESS))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -6075,7 +6074,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WEAKNESS, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WEAKNESS))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -6085,7 +6084,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
             .build(consumer);
-        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LUCK, FuseType.MEDIUM))
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LUCK))
             .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)

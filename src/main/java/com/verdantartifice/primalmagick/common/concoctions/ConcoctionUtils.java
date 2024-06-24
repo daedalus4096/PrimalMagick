@@ -20,6 +20,10 @@ public class ConcoctionUtils {
         return setConcoctionType(PotionUtils.setPotion(new ItemStack(ItemsPM.CONCOCTION.get()), potion), type);
     }
     
+    public static ItemStack newBomb(Potion potion) {
+        return newBomb(potion, FuseType.MEDIUM);
+    }
+    
     public static ItemStack newBomb(Potion potion, FuseType fuse) {
         return setFuseType(setConcoctionType(PotionUtils.setPotion(new ItemStack(ItemsPM.ALCHEMICAL_BOMB.get()), potion), ConcoctionType.BOMB), fuse);
     }

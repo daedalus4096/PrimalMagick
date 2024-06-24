@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.advancements.critereon.Runescribi
 import com.verdantartifice.primalmagick.common.advancements.critereon.StatValueTrigger;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -47,10 +48,12 @@ import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.advancements.critereon.StartRidingTrigger;
 import net.minecraft.advancements.critereon.TagPredicate;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.Tags;
@@ -370,6 +373,8 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(craftMagitechParts)
                 .addCriterion("has_pen", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SEASCRIBE_PEN.get()))
                 .save(saver, PrimalMagick.resource("story/craft_seascribe_pen"));
+        AdvancementHolder craftAlchemicalBomb = makeBombAdvancement(registries, "craft_alchemical_bomb", ConcoctionUtils.newBomb(Potions.HARMING), AdvancementType.TASK, craftArcanometer, false, saver);
+        makeBombAdvancement(registries, "craft_all_alchemical_bombs", new ItemStack(Items.TNT), AdvancementType.CHALLENGE, craftAlchemicalBomb, true, saver);
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
@@ -397,6 +402,19 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
         registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().sorted(Comparator.comparing(defHolder -> defHolder.key().location().toString())).forEach(defHolder -> {
             builder.addCriterion(defHolder.key().location().toString(), RunescribingTrigger.TriggerInstance.enchantment(defHolder.value().result()));
+        });
+        if (type == AdvancementType.CHALLENGE) {
+            builder.rewards(AdvancementRewards.Builder.experience(100));
+        }
+        return builder.save(saver, PrimalMagick.resource("story/" + id));
+    }
+    
+    private static AdvancementHolder makeBombAdvancement(HolderLookup.Provider registries, String id, ItemStack icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, Consumer<AdvancementHolder> saver) {
+        Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
+                .parent(parent)
+                .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
+        registries.lookupOrThrow(Registries.POTION).listElements().filter(potHolder -> !potHolder.value().getEffects().isEmpty()).sorted(Comparator.comparing(potHolder -> potHolder.key().location().toString())).forEach(potHolder -> {
+            builder.addCriterion(potHolder.key().location().toString(), InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ItemsPM.ALCHEMICAL_BOMB.get()).isPotion(potHolder.value())));
         });
         if (type == AdvancementType.CHALLENGE) {
             builder.rewards(AdvancementRewards.Builder.experience(100));
