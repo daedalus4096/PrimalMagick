@@ -8,7 +8,9 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "primalmagick:flying_carpet"
+              "vehicle": {
+                "type": "primalmagick:flying_carpet"
+              }
             }
           }
         ]

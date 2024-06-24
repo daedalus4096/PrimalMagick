@@ -279,7 +279,7 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .save(saver, PrimalMagick.resource("story/suffer_many_ritual_mishaps"));
         AdvancementHolder rideFlyingCarpet = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("ride_flying_carpet").icon(ItemsPM.FLYING_CARPET.get()).build())
                 .parent(craftRitualAltar)
-                .addCriterion("ride_carpet", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().of(EntityTypesPM.FLYING_CARPET.get())))
+                .addCriterion("ride_carpet", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(EntityTypesPM.FLYING_CARPET.get()))))
                 .save(saver, PrimalMagick.resource("story/ride_flying_carpet"));
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("get_shot_off_flying_carpet").icon(Items.FIRE_CHARGE).type(AdvancementType.CHALLENGE).build())
                 .parent(rideFlyingCarpet)
