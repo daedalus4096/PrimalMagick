@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -66,6 +68,19 @@ public class RunescribingResultSlot extends Slot {
                         CriteriaTriggersPM.RUNESCRIBING.trigger(serverPlayer, enchant);
                     }
                 });
+                
+                // Assemble a frequency map of runes that go into the found enchants to determine which runes were used more than once
+                if (this.player instanceof ServerPlayer serverPlayer) {
+                    Map<Rune, Integer> outputFrequencyMap = enchants.keySet().stream()
+                            .filter(ench -> RuneManager.hasRuneDefinition(level.registryAccess(), ench))
+                            .flatMap(ench -> RuneManager.getRuneDefinition(level.registryAccess(), ench).get().getRunes().stream())
+                            .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(element -> 1)));
+                    Map<Rune, Integer> inputFrequencyMap = runes.stream()
+                            .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(element -> 1)));
+                    inputFrequencyMap.entrySet().stream()
+                            .map(entry -> Map.entry(entry.getKey(), Math.max(0, 1 + outputFrequencyMap.getOrDefault(entry.getKey(), 0) - inputFrequencyMap.get(entry.getKey()))))
+                            .forEach(entry -> CriteriaTriggersPM.RUNE_USE_COUNT.trigger(serverPlayer, entry.getKey(), entry.getValue()));
+                }
             }
         }
     }

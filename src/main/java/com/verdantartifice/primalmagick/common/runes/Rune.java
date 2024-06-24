@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -22,6 +23,8 @@ import net.minecraft.world.item.Rarity;
  * @author Daedalus4096
  */
 public abstract class Rune {
+    public static final Codec<Rune> CODEC = ResourceLocation.CODEC.xmap(Rune::getRune, Rune::getId);
+    
     protected static final Map<ResourceLocation, Rune> REGISTRY = new HashMap<>();
     
     public static final SourceRune EARTH = new SourceRune("earth", ResearchEntries.RUNE_EARTH, Sources.EARTH);
