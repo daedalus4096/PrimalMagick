@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.advancements.critereon.RecallSton
 import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RuneUseCountTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RunescribingTrigger;
+import com.verdantartifice.primalmagick.common.advancements.critereon.ScanLocationTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.StatValueTrigger;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -42,7 +43,6 @@ import net.minecraft.advancements.critereon.DamageSourcePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerTrigger;
@@ -366,7 +366,7 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .save(saver, PrimalMagick.resource("story/craft_arcanometer"));
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("scan_chest").icon(Items.CHEST).build())
                 .parent(craftArcanometer)
-                .addCriterion("scan_chest", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
+                .addCriterion("scan_chest", ScanLocationTrigger.TriggerInstance.itemUsedOnBlock(
                         LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(Tags.Blocks.CHESTS)), 
                         ItemPredicate.Builder.item().of(ItemsPM.ARCANOMETER.get())))
                 .save(saver, PrimalMagick.resource("story/scan_chest"));

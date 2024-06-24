@@ -21,6 +21,7 @@ public class InitAdvancements {
         registerCriterion("entity_hurt_player_ext", CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT);
         registerCriterion("attunement_threshold", CriteriaTriggersPM.ATTUNEMENT_THRESHOLD);
         registerCriterion("rune_use_count", CriteriaTriggersPM.RUNE_USE_COUNT);
+        registerCriterion("scan_location", CriteriaTriggersPM.SCAN_LOCATION);
     }
     
     private static void registerCriterion(String name, CriterionTrigger<?> trigger) {

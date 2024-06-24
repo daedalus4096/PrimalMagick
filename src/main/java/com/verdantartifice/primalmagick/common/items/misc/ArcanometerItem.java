@@ -84,7 +84,7 @@ public class ArcanometerItem extends Item {
                     }
                 } else if (result.getType() == HitResult.Type.BLOCK) {
                     BlockPos pos = ((BlockHitResult)result).getBlockPos();
-                    PacketHandler.sendToServer(new ScanPositionPacket(pos));
+                    PacketHandler.sendToServer(new ScanPositionPacket(pos, playerIn.getItemInHand(handIn)));
                 }
             }
         }

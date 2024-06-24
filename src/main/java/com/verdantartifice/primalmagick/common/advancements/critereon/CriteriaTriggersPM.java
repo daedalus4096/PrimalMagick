@@ -9,4 +9,5 @@ public class CriteriaTriggersPM {
     public static final EntityHurtPlayerTriggerExt ENTITY_HURT_PLAYER_EXT = new EntityHurtPlayerTriggerExt();
     public static final AttunementThresholdTrigger ATTUNEMENT_THRESHOLD = new AttunementThresholdTrigger();
     public static final RuneUseCountTrigger RUNE_USE_COUNT = new RuneUseCountTrigger();
+    public static final ScanLocationTrigger SCAN_LOCATION = new ScanLocationTrigger();
 }

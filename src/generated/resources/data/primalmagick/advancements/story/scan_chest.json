@@ -22,7 +22,7 @@
           }
         ]
       },
-      "trigger": "minecraft:item_used_on_block"
+      "trigger": "primalmagick:scan_location"
     }
   },
   "display": {
