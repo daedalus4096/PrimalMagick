@@ -1687,6 +1687,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_artificial_mana_font").name("We Have Mana at Home").description("Create an artificial Mana Font of any source").build();
         this.advancement("craft_forbidden_mana_font").name("Hungry Hungry Wizards").description("Create a forbidden Mana Font of any source").build();
         this.advancement("craft_heavenly_mana_font").name("Super Size Me").description("Create a heavenly Mana Font of any source").build();
+        this.advancement("craft_primalite").name("Better Hardware").description("Create a Primalite ingot").build();
         this.advancement("discover_forbidden").name("The Forbidden").description("Discover a forbidden source of magick").build();
         this.advancement("craft_soul_gem").name("Ethically Sourced, Honest").description("Drain the soul of a creature and capture it in a gem").build();
         this.advancement("craft_sanguine_crucible").name("It's Alive!").description("Create a Sanguine Crucible").build();
