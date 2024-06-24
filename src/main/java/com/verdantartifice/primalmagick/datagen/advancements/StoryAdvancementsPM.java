@@ -137,7 +137,7 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .addCriterion("has_void_font", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.ARTIFICIAL_FONT_VOID.get()))
                 .addCriterion("has_hallowed_font", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.ARTIFICIAL_FONT_HALLOWED.get()))
                 .save(saver, PrimalMagick.resource("story/craft_artificial_mana_font"));
-        AdvancementHolder craftForbiddenManaFont = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_forbidden_mana_font").icon(ItemsPM.ARTIFICIAL_FONT_EARTH.get()).build())
+        AdvancementHolder craftForbiddenManaFont = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_forbidden_mana_font").icon(ItemsPM.FORBIDDEN_FONT_BLOOD.get()).build())
                 .parent(craftArtificialManaFont)
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .addCriterion("has_earth_font", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.FORBIDDEN_FONT_EARTH.get()))
@@ -150,7 +150,7 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .addCriterion("has_void_font", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.FORBIDDEN_FONT_VOID.get()))
                 .addCriterion("has_hallowed_font", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.FORBIDDEN_FONT_HALLOWED.get()))
                 .save(saver, PrimalMagick.resource("story/craft_forbidden_mana_font"));
-        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_heavenly_mana_font").icon(ItemsPM.ARTIFICIAL_FONT_EARTH.get()).build())
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_heavenly_mana_font").icon(ItemsPM.HEAVENLY_FONT_HALLOWED.get()).build())
                 .parent(craftForbiddenManaFont)
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .addCriterion("has_earth_font", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.HEAVENLY_FONT_EARTH.get()))

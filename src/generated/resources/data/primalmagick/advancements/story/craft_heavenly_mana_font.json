@@ -115,7 +115,7 @@
       "translate": "advancements.primalmagick.craft_heavenly_mana_font.description"
     },
     "icon": {
-      "item": "primalmagick:artificial_font_earth"
+      "item": "primalmagick:heavenly_font_hallowed"
     },
     "title": {
       "translate": "advancements.primalmagick.craft_heavenly_mana_font.title"

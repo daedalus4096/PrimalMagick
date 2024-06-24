@@ -115,7 +115,7 @@
       "translate": "advancements.primalmagick.craft_forbidden_mana_font.description"
     },
     "icon": {
-      "item": "primalmagick:artificial_font_earth"
+      "item": "primalmagick:forbidden_font_blood"
     },
     "title": {
       "translate": "advancements.primalmagick.craft_forbidden_mana_font.title"
