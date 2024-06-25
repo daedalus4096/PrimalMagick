@@ -1688,6 +1688,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("craft_forbidden_mana_font").name("Hungry Hungry Wizards").description("Create a forbidden Mana Font of any source").build();
         this.advancement("craft_heavenly_mana_font").name("Super Size Me").description("Create a heavenly Mana Font of any source").build();
         this.advancement("craft_primalite").name("Better Hardware").description("Create a Primalite ingot").build();
+        this.advancement("craft_hexium").name("Forbidden Hardware").description("Create a Hexium ingot").build();
+        this.advancement("craft_hallowsteel").name("Divine Hardware").description("Create a Hallowsteel ingot").build();
+        this.advancement("craft_shard").name("Don't Get Them Under Your Fingernails").description("Create an essence shard of any source").build();
+        this.advancement("craft_crystal").name("Power Made Manifest").description("Create an essence crystal of any source").build();
+        this.advancement("craft_cluster").name("Like Poetry").description("Create an essence cluster of any source").build();
         this.advancement("discover_forbidden").name("The Forbidden").description("Discover a forbidden source of magick").build();
         this.advancement("craft_soul_gem").name("Ethically Sourced, Honest").description("Drain the soul of a creature and capture it in a gem").build();
         this.advancement("craft_sanguine_crucible").name("It's Alive!").description("Create a Sanguine Crucible").build();
