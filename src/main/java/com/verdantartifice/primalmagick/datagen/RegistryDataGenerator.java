@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinitions;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplates;
 import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
@@ -38,6 +37,11 @@ import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * Generates datapack JSON for the Primal Magick mod.
+ * 
+ * @author Daedalus4096
+ */
 public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.CONFIGURED_FEATURE, context -> { ConfiguredFeaturesPM.bootstrap(context); })    // FIXME Compile error when just using ConfiguredFeaturesPM::bootstrap for some reason
@@ -51,7 +55,6 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
             .add(RegistryKeysPM.RESEARCH_DISCIPLINES, ResearchDisciplines::bootstrap)
             .add(RegistryKeysPM.RESEARCH_ENTRIES, ResearchEntries::bootstrap)
             .add(RegistryKeysPM.PROJECT_TEMPLATES, ProjectTemplates::bootstrap)
-            .add(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, RuneEnchantmentDefinitions::bootstrap)
             .add(RegistryKeysPM.BOOKS, BooksPM::bootstrap)
             .add(RegistryKeysPM.BOOK_LANGUAGES, BookLanguagesPM::bootstrap)
             .add(RegistryKeysPM.CULTURES, CulturesPM::bootstrap);
@@ -75,5 +78,10 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         Cloner.Factory clonerFactory = new Cloner.Factory();
         RegistryDataLoader.getWorldGenAndDimensionStream().forEach(registryData -> registryData.runWithArguments(clonerFactory::addCodec));
         return builder.buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), original, clonerFactory).full();
+    }
+
+    @Override
+    public String getName() {
+        return "Mod-specific Datapack Registries";
     }
 }

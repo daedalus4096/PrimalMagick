@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:creature",
+  "result": "minecraft:lure",
+  "source": "primalmagick:sea",
+  "verb": "primalmagick:summon"
+}
