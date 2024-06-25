@@ -210,7 +210,7 @@ public class ExpertiseManager {
         }
     }
     
-    protected static Optional<ResearchTier> getRuneEnchantmentTier(RegistryAccess registryAccess, RuneEnchantmentDefinition runeEnchDef) {
+    public static Optional<ResearchTier> getRuneEnchantmentTier(RegistryAccess registryAccess, RuneEnchantmentDefinition runeEnchDef) {
         // Determine the highest research tier represented by any of the runes in this enchantment's definition
         Optional<ResearchTier> maxTierOpt = Optional.empty();
         for (AbstractRequirement<?> req : runeEnchDef.getRunes().stream().map(r -> r.getRequirement()).toList()) {
@@ -222,7 +222,7 @@ public class ExpertiseManager {
         return maxTierOpt;
     }
     
-    protected static boolean isBonusEligible(Player player, Enchantment enchantment) {
+    public static boolean isBonusEligible(Player player, Enchantment enchantment) {
         ResourceLocation enchKey = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
         if (player != null && enchKey != null) {
             IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
