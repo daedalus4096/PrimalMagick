@@ -40,6 +40,7 @@ import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.DamagePredicate;
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
+import net.minecraft.advancements.critereon.EntityHurtPlayerTrigger;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -214,6 +215,13 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .addCriterion("void", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.ESSENCE_CLUSTER_VOID.get()))
                 .addCriterion("hallowed", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get()))
                 .save(saver, PrimalMagick.resource("story/craft_cluster"));
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("damage_with_ignyx").icon(ItemsPM.IGNYX.get()).build())
+                .parent(craftEssenceFurnace)
+                .addCriterion("blow_up_player", EntityHurtPlayerTrigger.TriggerInstance.entityHurtPlayer(DamagePredicate.Builder.damageInstance()
+                        .type(DamageSourcePredicate.Builder.damageType()
+                                .tag(TagPredicate.is(DamageTypeTags.IS_EXPLOSION))
+                                .direct(EntityPredicate.Builder.entity().of(EntityTypesPM.IGNYX.get())))))
+                .save(saver, PrimalMagick.resource("story/damage_with_ignyx"));
         AdvancementHolder discoverForbidden = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_forbidden").icon(ItemsPM.BLOOD_NOTES.get()).build())
                 .parent(firstTheorycraft)
                 .addCriterion("discovered_forbidden", ResearchCompletedTrigger.TriggerInstance.researchEntry(ResearchEntries.DISCOVER_FORBIDDEN))
