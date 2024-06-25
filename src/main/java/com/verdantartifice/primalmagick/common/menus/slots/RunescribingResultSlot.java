@@ -49,39 +49,38 @@ public class RunescribingResultSlot extends Slot {
         
         Level level = this.player.level();
         if (!level.isClientSide) {
-            // Increment the player's runescribing stat
-            if (this.player instanceof ServerPlayer serverPlayer) {
-                StatsManager.incrementValue(serverPlayer, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());
-            }
+            List<Rune> runes = RuneManager.getRunes(stack);
+            Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(level.registryAccess(), runes, stack, this.player, false);
 
-            // Grant the player rune enchantment research and expertise for each rune enchantmant imbued
-            if (ResearchManager.isResearchComplete(this.player, ResearchEntries.FIRST_STEPS)) {
-                List<Rune> runes = RuneManager.getRunes(stack);
-                Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(level.registryAccess(), runes, stack, this.player, false);
-                if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS)) {
-                    ResearchManager.completeResearch(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS);
-                }
+            if (this.player instanceof ServerPlayer serverPlayer) {
+                // Increment the player's runescribing craft stat
+                StatsManager.incrementValue(serverPlayer, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());
+                
+                // Award appropriate expertise and advancements for each enchant
                 enchants.keySet().forEach(enchant -> {
-                    ExpertiseManager.awardExpertise(this.player, enchant);
-                    ResearchManager.completeResearch(this.player, new RuneEnchantmentKey(enchant));
-                    if (this.player instanceof ServerPlayer serverPlayer) {
-                        CriteriaTriggersPM.RUNESCRIBING.trigger(serverPlayer, enchant);
-                    }
+                    ExpertiseManager.awardExpertise(serverPlayer, enchant);
+                    CriteriaTriggersPM.RUNESCRIBING.trigger(serverPlayer, enchant);
                 });
                 
                 // Assemble a frequency map of runes that go into the found enchants to determine which runes were used more than once
-                if (this.player instanceof ServerPlayer serverPlayer) {
-                    Map<Rune, Integer> outputFrequencyMap = enchants.keySet().stream()
-                            .filter(ench -> RuneManager.hasRuneDefinition(level.registryAccess(), ench))
-                            .flatMap(ench -> RuneManager.getRuneDefinition(level.registryAccess(), ench).get().getRunes().stream())
-                            .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(element -> 1)));
-                    Map<Rune, Integer> inputFrequencyMap = runes.stream()
-                            .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(element -> 1)));
-                    inputFrequencyMap.entrySet().stream()
-                            .map(entry -> Map.entry(entry.getKey(), Math.max(0, 1 + outputFrequencyMap.getOrDefault(entry.getKey(), 0) - inputFrequencyMap.get(entry.getKey()))))
-                            .forEach(entry -> CriteriaTriggersPM.RUNE_USE_COUNT.trigger(serverPlayer, entry.getKey(), entry.getValue()));
-                }
+                Map<Rune, Integer> outputFrequencyMap = enchants.keySet().stream()
+                        .filter(ench -> RuneManager.hasRuneDefinition(level.registryAccess(), ench))
+                        .flatMap(ench -> RuneManager.getRuneDefinition(level.registryAccess(), ench).get().getRunes().stream())
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(element -> 1)));
+                Map<Rune, Integer> inputFrequencyMap = runes.stream()
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(element -> 1)));
+                inputFrequencyMap.entrySet().stream()
+                        .map(entry -> Map.entry(entry.getKey(), Math.max(0, 1 + outputFrequencyMap.getOrDefault(entry.getKey(), 0) - inputFrequencyMap.get(entry.getKey()))))
+                        .forEach(entry -> CriteriaTriggersPM.RUNE_USE_COUNT.trigger(serverPlayer, entry.getKey(), entry.getValue()));
             }
+
+            // Grant the player rune enchantment research for each rune enchantment imbued
+            if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS)) {
+                ResearchManager.completeResearch(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS);
+            }
+            enchants.keySet().forEach(enchant -> {
+                ResearchManager.completeResearch(this.player, new RuneEnchantmentKey(enchant));
+            });
         }
     }
     
