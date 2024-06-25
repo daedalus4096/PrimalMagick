@@ -16,6 +16,7 @@ import org.apache.commons.lang3.mutable.MutableLong;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.joml.Vector2ic;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
 import com.verdantartifice.primalmagick.common.books.grids.IGridDefinitionSerializer;
 import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
@@ -26,6 +27,7 @@ import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
@@ -97,8 +99,12 @@ public class LinguisticsManager {
     public static void setComprehension(@Nullable Player player, @Nullable Holder<BookLanguage> language, int comprehension) {
         if (player != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setComprehension(language.get().languageId(), Mth.clamp(comprehension, 0, language.get().complexity()));
+                int finalValue = Mth.clamp(comprehension, 0, language.get().complexity());
+                linguistics.setComprehension(language.get().languageId(), finalValue);
                 scheduleSync(player);
+                if (player instanceof ServerPlayer serverPlayer && language.unwrapKey().isPresent()) {
+                    CriteriaTriggersPM.LINGUISTICS_COMPREHENSION.trigger(serverPlayer, language.unwrapKey().get(), finalValue);
+                }
             });
         }
     }
@@ -110,8 +116,12 @@ public class LinguisticsManager {
     public static void incrementComprehension(@Nullable Player player, @Nullable Holder<BookLanguage> language, int delta) {
         if (player != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setComprehension(language.get().languageId(), Mth.clamp(linguistics.getComprehension(language.get().languageId()) + delta, 0, language.get().complexity()));
+                int finalValue = Mth.clamp(linguistics.getComprehension(language.get().languageId()) + delta, 0, language.get().complexity());
+                linguistics.setComprehension(language.get().languageId(), finalValue);
                 scheduleSync(player);
+                if (player instanceof ServerPlayer serverPlayer && language.unwrapKey().isPresent()) {
+                    CriteriaTriggersPM.LINGUISTICS_COMPREHENSION.trigger(serverPlayer, language.unwrapKey().get(), finalValue);
+                }
             });
         }
     }

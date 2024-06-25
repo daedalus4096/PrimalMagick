@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
@@ -27,6 +28,10 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
         this.stack = stack.copy();
     }
 
+    public ItemScanKey(ItemLike itemLike) {
+        this(new ItemStack(itemLike.asItem()));
+    }
+    
     @Override
     public String toString() {
         return PREFIX + ItemUtils.getHashCode(this.stack, true);

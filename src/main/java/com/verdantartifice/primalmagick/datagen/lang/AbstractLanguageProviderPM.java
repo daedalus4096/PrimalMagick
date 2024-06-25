@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
+import com.verdantartifice.primalmagick.datagen.lang.builders.AdvancementLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementThresholdLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.BlockLanguageBuilder;
@@ -331,5 +332,9 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
     
     public TipLanguageBuilder tip(String id) {
         return this.createBuilder(() -> new TipLanguageBuilder(id, this::untrack, this::add));
+    }
+    
+    public AdvancementLanguageBuilder advancement(String id) {
+        return this.createBuilder(() -> new AdvancementLanguageBuilder(id, this::untrack, this::add));
     }
 }

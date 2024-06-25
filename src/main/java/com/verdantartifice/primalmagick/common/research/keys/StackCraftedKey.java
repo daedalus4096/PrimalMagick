@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
@@ -27,6 +28,10 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
         }
         this.stack = stack.copyWithCount(1);    // Preserve the stack NBT but not its count
         ResearchManager.addCraftingReference(ItemUtils.getHashCode(this.stack));
+    }
+    
+    public StackCraftedKey(ItemLike itemLike) {
+        this(new ItemStack(itemLike.asItem()));
     }
     
     @Override

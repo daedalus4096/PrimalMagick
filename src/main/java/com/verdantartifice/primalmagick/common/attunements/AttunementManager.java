@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -179,7 +180,7 @@ public class AttunementManager {
      * @param value the new partial attunement value
      */
     public static void setAttunement(@Nullable Player player, @Nullable Source source, @Nullable AttunementType type, int value) {
-        if (player instanceof ServerPlayer && source != null && type != null) {
+        if (player instanceof ServerPlayer serverPlayer && source != null && type != null) {
             IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
             if (attunements != null) {
                 int oldTotal = getTotalAttunement(player, source);
@@ -222,6 +223,12 @@ public class AttunementManager {
                         }
                     }
                 }
+                
+                // Trigger advancement criteria
+                int permanent = getAttunement(player, source, AttunementType.PERMANENT);
+                int induced = getAttunement(player, source, AttunementType.INDUCED);
+                int temporary = getAttunement(player, source, AttunementType.TEMPORARY);
+                CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.trigger(serverPlayer, source, permanent, induced, temporary);
             }
         }
     }

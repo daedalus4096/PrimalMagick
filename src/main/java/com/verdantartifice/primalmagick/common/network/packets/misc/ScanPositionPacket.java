@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
@@ -38,13 +39,16 @@ public class ScanPositionPacket implements IMessageToServer {
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected BlockPos pos;
+    protected ItemStack toolStack;
     
     public ScanPositionPacket() {
         this.pos = BlockPos.ZERO;
+        this.toolStack = ItemStack.EMPTY;
     }
     
-    public ScanPositionPacket(@Nonnull BlockPos pos) {
+    public ScanPositionPacket(@Nonnull BlockPos pos, @Nonnull ItemStack toolStack) {
         this.pos = pos;
+        this.toolStack = toolStack;
     }
     
     public static NetworkDirection direction() {
@@ -53,11 +57,13 @@ public class ScanPositionPacket implements IMessageToServer {
     
     public static void encode(ScanPositionPacket message, FriendlyByteBuf buf) {
         buf.writeLong(message.pos.asLong());
+        buf.writeItem(message.toolStack);
     }
     
     public static ScanPositionPacket decode(FriendlyByteBuf buf) {
         ScanPositionPacket message = new ScanPositionPacket();
         message.pos = BlockPos.of(buf.readLong());
+        message.toolStack = buf.readItem();
         return message;
     }
     
@@ -110,6 +116,9 @@ public class ScanPositionPacket implements IMessageToServer {
                     LOGGER.error("Failed to scan block at position " + message.pos, e);
                     return null;
                 });
+                
+                // Trigger any relevant advancement criteria
+                CriteriaTriggersPM.SCAN_LOCATION.trigger(player, message.pos, message.toolStack);
             });
         }
     }

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
@@ -45,6 +46,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -172,6 +174,14 @@ public class CombatEvents {
             if (level.random.nextFloat() < (event.getAmount() / 12.0F) && AttunementManager.meetsThreshold(attacker, Sources.BLOOD, AttunementThreshold.GREATER)) {
                 attacker.heal(1.0F);
             }
+        }
+    }
+    
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onEntityHurtLowest(LivingHurtEvent event) {
+        // Trigger the appropriate advancement criteria with more data than vanilla provides, namely player data
+        if (!event.isCanceled() && event.getEntity() instanceof ServerPlayer serverPlayer) {
+            CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT.trigger(serverPlayer, event.getSource(), event.getAmount());
         }
     }
     

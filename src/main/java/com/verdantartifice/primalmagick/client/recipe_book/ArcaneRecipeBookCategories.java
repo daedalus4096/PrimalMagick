@@ -9,7 +9,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
-import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
@@ -33,7 +32,7 @@ public enum ArcaneRecipeBookCategories {
     CRAFTING_ARCANE(RecipeBookCategories.UNKNOWN, new ItemStack(ItemsPM.GRIMOIRE.get())),
     CONCOCTER_SEARCH(RecipeBookCategories.UNKNOWN, new ItemStack(Items.COMPASS)),
     CONCOCTER_DRINKABLE(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE)),
-    CONCOCTER_BOMB(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newBomb(Potions.POISON, FuseType.MEDIUM)),
+    CONCOCTER_BOMB(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newBomb(Potions.POISON)),
     DISSOLUTION_SEARCH(RecipeBookCategories.UNKNOWN, new ItemStack(Items.COMPASS)),
     DISSOLUTION_ORES(RecipeBookCategories.UNKNOWN, new ItemStack(Items.RAW_GOLD)),
     DISSOLUTION_MISC(RecipeBookCategories.UNKNOWN, new ItemStack(Items.GRAVEL)),

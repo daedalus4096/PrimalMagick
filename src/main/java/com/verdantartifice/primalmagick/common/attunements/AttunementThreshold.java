@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.attunements;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.network.chat.Component;
@@ -16,6 +17,8 @@ public enum AttunementThreshold implements StringRepresentable {
     MINOR("minor", 30),
     LESSER("lesser", 60),
     GREATER("greater", 90);
+    
+    public static final Codec<AttunementThreshold> CODEC = StringRepresentable.fromValues(AttunementThreshold::values);
     
     private final String tag;
     private final int value;

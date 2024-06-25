@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
@@ -335,8 +336,14 @@ public class ResearchManager {
         if (knowledge == null) {
             return false;
         }
-        if (knowledge.isResearchComplete(registryAccess, key) || !hasPrerequisites(player, key)) {
-            // If the research is already complete or the player doesn't have the prerequisites, abort
+        if (knowledge.isResearchComplete(registryAccess, key)) {
+            // If the research is already complete, trigger advancement criteria if on server side, then abort
+            if (player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggersPM.RESEARCH_COMPLETED.trigger(serverPlayer, key);
+            }
+            return false;
+        } else if (!hasPrerequisites(player, key)) {
+            // If the player doesn't have the prerequisites, just abort
             return false;
         }
         
@@ -499,6 +506,11 @@ public class ResearchManager {
                         }
                     }
                 });
+            }
+            
+            // Trigger any relevant advancements
+            if (player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggersPM.RESEARCH_COMPLETED.trigger(serverPlayer, key);
             }
         }
         

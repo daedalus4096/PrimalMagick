@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
@@ -112,6 +113,7 @@ public class StatsManager {
                 // Set the new value into the player capability
                 stats.setValue(stat, value);
                 scheduleSync(spe);
+                CriteriaTriggersPM.STAT_VALUE.trigger(spe, stat, value);
             }
         }
     }
@@ -144,6 +146,7 @@ public class StatsManager {
                 stats.setLocationDiscovered(shrinePos);
                 stats.setValue(stat, value);
                 scheduleSync(spe);
+                CriteriaTriggersPM.STAT_VALUE.trigger(spe, stat, value);
             }
         }
     }
