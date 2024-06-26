@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeMod;
 
 /**
@@ -29,7 +30,7 @@ public class TouchSpellVehicle extends AbstractRaycastSpellVehicle {
     
     @Override
     protected double getReachDistance(LivingEntity caster) {
-        return caster.getAttribute(ForgeMod.BLOCK_REACH.get()).getValue();
+        return caster.getAttribute(Attributes.BLOCK_INTERACTION_RANGE).getValue();
     }
 
     @Override

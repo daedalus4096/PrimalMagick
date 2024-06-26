@@ -24,6 +24,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -73,7 +74,7 @@ public class BlockEvents {
         Direction dir;
         if (interact == null) {
             Vec3 startPos = player.getEyePosition(1.0F);
-            Vec3 endPos = startPos.add(player.getViewVector(1.0F).scale(player.getAttribute(ForgeMod.BLOCK_REACH.get()).getValue()));
+            Vec3 endPos = startPos.add(player.getViewVector(1.0F).scale(player.getAttribute(Attributes.BLOCK_INTERACTION_RANGE).getValue()));
             BlockHitResult rayTraceResult = world.clip(new ClipContext(startPos, endPos, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
             if (rayTraceResult.getType() == HitResult.Type.MISS) {
                 return;
