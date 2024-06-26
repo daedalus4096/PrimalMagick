@@ -66,6 +66,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -79,6 +80,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.NameTagItem;
@@ -116,8 +118,8 @@ public class PlayerEvents {
     
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
-    private static final UUID STEP_MODIFIER_EARTH_UUID = UUID.fromString("17b138bf-1d32-43a9-a690-59e0e4e0d0b6");
-    private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_UUID, "Earth attunement step height bonus", 0.4D, AttributeModifier.Operation.ADDITION);
+    private static final ResourceLocation STEP_MODIFIER_EARTH_ID = PrimalMagick.resource("step_modifier");
+    private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_ID, 0.4D, AttributeModifier.Operation.ADD_VALUE);
     private static final ResearchStageKey SOURCE_EARTH_START = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 1);
     private static final ResearchStageKey SOURCE_EARTH_END = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 2);
     private static final ResearchStageKey SOURCE_SEA_START = new ResearchStageKey(ResearchEntries.SOURCE_SEA, 1);
@@ -195,8 +197,8 @@ public class PlayerEvents {
             player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 610, 0, true, false, true));
         }
         
-        AttributeInstance stepHeightAttribute = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
-        stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH.getId());
+        AttributeInstance stepHeightAttribute = player.getAttribute(Attributes.STEP_HEIGHT);
+        stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH.id());
         if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Sources.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height
             stepHeightAttribute.addTransientModifier(STEP_MODIFIER_EARTH);
