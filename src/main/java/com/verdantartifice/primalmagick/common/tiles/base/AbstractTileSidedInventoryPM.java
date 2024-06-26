@@ -348,7 +348,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
 
     protected boolean tryLoadLootTable(CompoundTag pTag) {
         if (pTag.contains("LootTable", Tag.TAG_STRING)) {
-            this.lootTable = new ResourceLocation(pTag.getString("LootTable"));
+            this.lootTable = ResourceLocation.parse(pTag.getString("LootTable"));
             this.lootTableSeed = pTag.getLong("LootTableSeed");
             return true;
         } else {

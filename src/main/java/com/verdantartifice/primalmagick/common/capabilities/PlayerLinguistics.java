@@ -168,24 +168,24 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         ListTag comprehensionList = nbt.getList("Comprehension", Tag.TAG_COMPOUND);
         for (int index = 0; index < comprehensionList.size(); index++) {
             CompoundTag tag = comprehensionList.getCompound(index);
-            this.setComprehension(new ResourceLocation(tag.getString("Language")), tag.getInt("Value"));
+            this.setComprehension(ResourceLocation.parse(tag.getString("Language")), tag.getInt("Value"));
         }
         
         // Deserialize vocabulary values
         ListTag vocabularyList = nbt.getList("Vocabulary", Tag.TAG_COMPOUND);
         for (int index = 0; index < vocabularyList.size(); index++) {
             CompoundTag tag = vocabularyList.getCompound(index);
-            this.setVocabulary(new ResourceLocation(tag.getString("Language")), tag.getInt("Value"));
+            this.setVocabulary(ResourceLocation.parse(tag.getString("Language")), tag.getInt("Value"));
         }
         
         // Deserialize books read values
         ListTag booksReadList = nbt.getList("BooksRead", Tag.TAG_COMPOUND);
         for (int langIndex = 0; langIndex < booksReadList.size(); langIndex++) {
             CompoundTag langTag = booksReadList.getCompound(langIndex);
-            ResourceLocation langId = new ResourceLocation(langTag.getString("Language"));
+            ResourceLocation langId = ResourceLocation.parse(langTag.getString("Language"));
             ListTag booksList = langTag.getList("Books", Tag.TAG_STRING);
             for (int bookIndex = 0; bookIndex < booksList.size(); bookIndex++) {
-                ResourceLocation bookId = new ResourceLocation(booksList.getString(bookIndex));
+                ResourceLocation bookId = ResourceLocation.parse(booksList.getString(bookIndex));
                 this.markRead(bookId, langId);
             }
         }
@@ -194,14 +194,14 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         ListTag studyCountList = nbt.getList("StudyCounts", Tag.TAG_COMPOUND);
         for (int index = 0; index < studyCountList.size(); index++) {
             CompoundTag tag = studyCountList.getCompound(index);
-            this.setTimesStudied(new ResourceLocation(tag.getString("Book")), new ResourceLocation(tag.getString("Language")), tag.getInt("Value"));
+            this.setTimesStudied(ResourceLocation.parse(tag.getString("Book")), ResourceLocation.parse(tag.getString("Language")), tag.getInt("Value"));
         }
         
         // Deserialize unlocked node coordinates
         ListTag unlockGridList = nbt.getList("Unlocks", Tag.TAG_COMPOUND);
         for (int gridIndex = 0; gridIndex < unlockGridList.size(); gridIndex++) {
             CompoundTag gridTag = unlockGridList.getCompound(gridIndex);
-            ResourceLocation gridId = new ResourceLocation(gridTag.getString("GridDef"));
+            ResourceLocation gridId = ResourceLocation.parse(gridTag.getString("GridDef"));
             ListTag coordsList = gridTag.getList("Coords", Tag.TAG_COMPOUND);
             for (int coordsIndex = 0; coordsIndex < coordsList.size(); coordsIndex++) {
                 CompoundTag coordsTag = coordsList.getCompound(coordsIndex);
@@ -213,7 +213,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         ListTag modifiedList = nbt.getList("GridModifiedTimes", Tag.TAG_COMPOUND);
         for (int index = 0; index < modifiedList.size(); index++) {
             CompoundTag tag = modifiedList.getCompound(index);
-            this.setLastModified(new ResourceLocation(tag.getString("GridDef")), tag.getLong("LastModified"));
+            this.setLastModified(ResourceLocation.parse(tag.getString("GridDef")), tag.getLong("LastModified"));
         }
         
         ScribeTableMode mode = ScribeTableMode.fromName(nbt.getString("ScribeTableMode"));

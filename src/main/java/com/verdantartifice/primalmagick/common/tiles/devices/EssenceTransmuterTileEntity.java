@@ -131,7 +131,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
         this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
-        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(new ResourceLocation(compound.getString("NextSource"))) : null;
+        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(ResourceLocation.parse(compound.getString("NextSource"))) : null;
         
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {

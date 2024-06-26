@@ -213,7 +213,7 @@ public class RuneManager {
         ListTag tagList = stack.getTag().getList(RUNE_TAG_NAME, Tag.TAG_STRING);
         for (int index = 0; index < tagList.size(); index++) {
             String tagStr = tagList.getString(index);
-            Rune rune = Rune.getRune(new ResourceLocation(tagStr));
+            Rune rune = Rune.getRune(ResourceLocation.parse(tagStr));
             if (rune != null) {
                 retVal.add(rune);
             }

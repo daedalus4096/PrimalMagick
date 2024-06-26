@@ -20,6 +20,6 @@ public class DisciplineResearchTopic extends AbstractResearchTopic {
     
     @Nullable
     public ResearchDisciplineKey getData() {
-        return new ResearchDisciplineKey(ResourceKey.create(RegistryKeysPM.RESEARCH_DISCIPLINES, new ResourceLocation(this.data)));
+        return new ResearchDisciplineKey(ResourceKey.create(RegistryKeysPM.RESEARCH_DISCIPLINES, ResourceLocation.parse(this.data)));
     }
 }

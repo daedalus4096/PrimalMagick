@@ -53,7 +53,7 @@ public class PotionBonusAffinity extends AbstractAffinity {
                 throw new JsonSyntaxException("Illegal affinity target in affinity JSON for " + affinityId.toString());
             }
             
-            ResourceLocation targetId = new ResourceLocation(target);
+            ResourceLocation targetId = ResourceLocation.parse(target);
             if (!ForgeRegistries.POTIONS.containsKey(targetId)) {
                 throw new JsonSyntaxException("Unknown target potion type " + target + " in affinity JSON for " + affinityId.toString());
             }

@@ -37,6 +37,6 @@ public class ItemTagsForgeExt {
     public static final TagKey<Item> RAW_MATERIALS_URANIUM = tag("raw_materials/uranium");
 
     private static TagKey<Item> tag(String name) {
-        return ItemTags.create(new ResourceLocation("forge", name));
+        return ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", name));
     }
 }

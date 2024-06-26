@@ -70,9 +70,9 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         this.nextSegment = Segment.values()[compound.getInt("NextSegmentIndex")];
         this.currentRotation = RotationPhase.values()[compound.getInt("CurrentRotationIndex")];
         
-        Source last = Sources.get(new ResourceLocation(compound.getString("LastSource")));
+        Source last = Sources.get(ResourceLocation.parse(compound.getString("LastSource")));
         this.lastSource = last == null ? Sources.EARTH : last;
-        Source next = Sources.get(new ResourceLocation(compound.getString("NextSource")));
+        Source next = Sources.get(ResourceLocation.parse(compound.getString("NextSource")));
         this.nextSource = next == null ? Sources.EARTH : next;
     }
 

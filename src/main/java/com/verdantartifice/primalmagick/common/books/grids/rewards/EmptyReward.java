@@ -22,7 +22,7 @@ public class EmptyReward extends AbstractReward {
     public static final IRewardSerializer<EmptyReward> SERIALIZER = new Serializer();
     public static final EmptyReward INSTANCE = new EmptyReward();
     
-    protected static final ResourceLocation ICON_LOCATION = new ResourceLocation("textures/item/barrier.png");
+    protected static final ResourceLocation ICON_LOCATION = ResourceLocation.withDefaultNamespace("textures/item/barrier.png");
     protected static final Component DESCRIPTION = Component.translatable("label.primalmagick.scribe_table.grid.reward.empty");
     
     public static void init() {

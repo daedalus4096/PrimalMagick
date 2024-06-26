@@ -103,7 +103,7 @@ public class ComprehensionReward extends AbstractReward {
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
-        ResourceLocation langLoc = new ResourceLocation(nbt.getString("Language"));
+        ResourceLocation langLoc = ResourceLocation.parse(nbt.getString("Language"));
         Verify.verifyNotNull(langLoc, "Invalid language for comprehension reward");
         this.language = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, langLoc);
         this.setPoints(nbt.getInt("Points"));
@@ -112,7 +112,7 @@ public class ComprehensionReward extends AbstractReward {
     public static class Serializer implements IRewardSerializer<ComprehensionReward> {
         @Override
         public ComprehensionReward read(ResourceLocation templateId, JsonObject json) {
-            ResourceKey<BookLanguage> language = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, new ResourceLocation(json.getAsJsonPrimitive("language").getAsString()));
+            ResourceKey<BookLanguage> language = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, ResourceLocation.parse(json.getAsJsonPrimitive("language").getAsString()));
             int points = json.getAsJsonPrimitive("points").getAsInt();
             return new ComprehensionReward(language, points);
         }

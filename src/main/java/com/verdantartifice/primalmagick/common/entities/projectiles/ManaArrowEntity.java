@@ -64,7 +64,7 @@ public class ManaArrowEntity extends AbstractArrow {
     
     @Nullable
     public Source getSource() {
-        return Sources.get(new ResourceLocation(this.entityData.get(SOURCE_TAG)));
+        return Sources.get(ResourceLocation.parse(this.entityData.get(SOURCE_TAG)));
     }
     
     @Override

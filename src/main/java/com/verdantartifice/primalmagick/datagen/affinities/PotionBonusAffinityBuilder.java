@@ -51,7 +51,7 @@ public class PotionBonusAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {
-        this.build(consumer, new ResourceLocation(name));
+        this.build(consumer, ResourceLocation.parse(name));
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {

@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class FriendlyWitchRenderer extends MobRenderer<FriendlyWitchEntity, WitchModel<FriendlyWitchEntity>> {
-    private static final ResourceLocation WITCH_LOCATION = new ResourceLocation("textures/entity/witch.png");
+    private static final ResourceLocation WITCH_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/witch.png");
     private static final float SCALE = 0.9375F;
 
     public FriendlyWitchRenderer(EntityRendererProvider.Context context) {

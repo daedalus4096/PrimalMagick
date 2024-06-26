@@ -41,14 +41,14 @@ public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
         super(StructurePieceTypesPM.LIBRARY.get(), nbt, templateManager, (dummy) -> {
             return makePlaceSettings();
         });
-        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, new ResourceLocation(nbt.getString("Culture")));
+        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, ResourceLocation.parse(nbt.getString("Culture")));
     }
     
     public AbstractLibraryPiece(StructurePieceSerializationContext context, CompoundTag nbt) {
         super(StructurePieceTypesPM.LIBRARY.get(), nbt, context.structureTemplateManager(), (dummy) -> {
             return makePlaceSettings();
         });
-        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, new ResourceLocation(nbt.getString("Culture")));
+        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, ResourceLocation.parse(nbt.getString("Culture")));
     }
     
     protected static StructurePlaceSettings makePlaceSettings() {

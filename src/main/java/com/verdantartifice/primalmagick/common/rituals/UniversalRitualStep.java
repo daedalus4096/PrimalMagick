@@ -52,6 +52,6 @@ public class UniversalRitualStep extends AbstractRitualStep {
     public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
         this.pos = new BlockPos(nbt.getInt("PosX"), nbt.getInt("PosY"), nbt.getInt("PosZ"));
-        this.expectedId = new ResourceLocation(nbt.getString("ExpectedId"));
+        this.expectedId = ResourceLocation.parse(nbt.getString("ExpectedId"));
     }
 }

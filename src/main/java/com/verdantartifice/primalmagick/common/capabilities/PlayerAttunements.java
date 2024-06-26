@@ -85,7 +85,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         ListTag attunementList = nbt.getList("Attunements", Tag.TAG_COMPOUND);
         for (int index = 0; index < attunementList.size(); index++) {
             CompoundTag tag = attunementList.getCompound(index);
-            Source source = Sources.get(new ResourceLocation(tag.getString("Source")));
+            Source source = Sources.get(ResourceLocation.parse(tag.getString("Source")));
             AttunementType type = null;
             try {
                 type = AttunementType.valueOf(tag.getString("Type"));
@@ -97,7 +97,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         // Deserialize suppression values
         ListTag suppressionList = nbt.getList("Suppressions", Tag.TAG_STRING);
         for (int index = 0; index < suppressionList.size(); index++) {
-            Source source = Sources.get(new ResourceLocation(suppressionList.getString(index)));
+            Source source = Sources.get(ResourceLocation.parse(suppressionList.getString(index)));
             this.setSuppressed(source, true);
         }
     }

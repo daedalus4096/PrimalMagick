@@ -160,7 +160,7 @@ public class ArcaneRecipeBook {
             String locStr = tag.getString(index);
             
             try {
-                ResourceLocation loc = new ResourceLocation(locStr);
+                ResourceLocation loc = ResourceLocation.parse(locStr);
                 Optional<RecipeHolder<?>> recipeOpt = recipeManager.byKey(loc);
                 recipeOpt.ifPresentOrElse(recipe -> {
                     consumer.accept(recipe);

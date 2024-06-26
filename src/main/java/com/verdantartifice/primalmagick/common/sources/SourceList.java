@@ -398,7 +398,7 @@ public class SourceList {
         for (int index = 0; index < tagList.size(); index++) {
             CompoundTag singleTag = tagList.getCompound(index);
             if (singleTag.contains("key")) {
-                retVal.with(Sources.get(new ResourceLocation(singleTag.getString("key"))), singleTag.getInt("amount"));
+                retVal.with(Sources.get(ResourceLocation.parse(singleTag.getString("key"))), singleTag.getInt("amount"));
             }
         }
         return retVal.build();

@@ -50,13 +50,13 @@ public class ResearchTopicFactory {
         case MAIN_INDEX:
             return MainIndexResearchTopic.INSTANCE;
         case RESEARCH_DISCIPLINE:
-            ResearchDisciplineKey discKey = new ResearchDisciplineKey(ResourceKey.create(RegistryKeysPM.RESEARCH_DISCIPLINES, new ResourceLocation(data)));
+            ResearchDisciplineKey discKey = new ResearchDisciplineKey(ResourceKey.create(RegistryKeysPM.RESEARCH_DISCIPLINES, ResourceLocation.parse(data)));
             return new DisciplineResearchTopic(discKey, page);
         case RESEARCH_ENTRY:
-            ResearchEntryKey entryKey = new ResearchEntryKey(ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, new ResourceLocation(data)));
+            ResearchEntryKey entryKey = new ResearchEntryKey(ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, ResourceLocation.parse(data)));
             return new EntryResearchTopic(entryKey, page);
         case SOURCE:
-            Source source = Sources.get(new ResourceLocation(data));
+            Source source = Sources.get(ResourceLocation.parse(data));
             return source == null ? MainIndexResearchTopic.INSTANCE : new SourceResearchTopic(source, page);
         case ENCHANTMENT:
             ResourceLocation loc = ResourceLocation.tryParse(data);

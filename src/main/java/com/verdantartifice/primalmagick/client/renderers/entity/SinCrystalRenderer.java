@@ -21,7 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/end_crystal/end_crystal.png");
+    protected static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/end_crystal/end_crystal.png");
     protected static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(TEXTURE);
     protected static final float ANGLE = (float)Math.sin((Math.PI / 4D));
     

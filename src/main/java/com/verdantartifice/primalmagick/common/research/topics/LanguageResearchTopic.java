@@ -20,6 +20,6 @@ public class LanguageResearchTopic extends AbstractResearchTopic {
     
     @Nullable
     public ResourceKey<BookLanguage> getData() {
-        return ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, new ResourceLocation(this.data));
+        return ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, ResourceLocation.parse(this.data));
     }
 }

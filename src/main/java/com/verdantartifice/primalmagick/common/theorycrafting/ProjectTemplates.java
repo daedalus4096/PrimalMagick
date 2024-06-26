@@ -470,7 +470,7 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(Items.GOLDEN_SHOVEL).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.GOLDEN_SWORD).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.LIGHT_WEIGHTED_PRESSURE_PLATE).consumed().weight(1).build())
-                .otherReward(LootTableReward.builder(new ResourceLocation("gameplay/piglin_bartering")).description("label.primalmagick.loot_table.piglin_bartering.desc").build())
+                .otherReward(LootTableReward.builder(ResourceLocation.withDefaultNamespace("gameplay/piglin_bartering")).description("label.primalmagick.loot_table.piglin_bartering.desc").build())
                 .build());
         context.register(PORTAL_DETRITUS, ProjectTemplate.builder().aid(Blocks.NETHER_PORTAL).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
                 .weightFunction(new ConstantWeight(5))

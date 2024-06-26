@@ -119,8 +119,8 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        this.key = new ResourceLocation(nbt.getString("Key"));
-        this.language = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, new ResourceLocation(nbt.getString("Language")));
+        this.key = ResourceLocation.parse(nbt.getString("Key"));
+        this.language = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, ResourceLocation.parse(nbt.getString("Language")));
         this.startPos = new Vector2i(nbt.getInt("StartX"), nbt.getInt("StartY"));
         
         this.nodes.clear();
@@ -134,8 +134,8 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
     public static class Serializer implements IGridDefinitionSerializer {
         @Override
         public GridDefinition read(ResourceLocation gridId, JsonObject json) {
-            ResourceLocation key = new ResourceLocation(json.getAsJsonPrimitive("key").getAsString());
-            ResourceKey<BookLanguage> langKey = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, new ResourceLocation(json.getAsJsonPrimitive("language").getAsString()));
+            ResourceLocation key = ResourceLocation.parse(json.getAsJsonPrimitive("key").getAsString());
+            ResourceKey<BookLanguage> langKey = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, ResourceLocation.parse(json.getAsJsonPrimitive("language").getAsString()));
             Vector2i startPos = new Vector2i(json.getAsJsonPrimitive("start_x").getAsInt(), json.getAsJsonPrimitive("start_y").getAsInt());
             
             // Because JSON doesn't do maps with anything but string keys, the X and Y coordinates of the node are packed into

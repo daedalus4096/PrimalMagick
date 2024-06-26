@@ -20,6 +20,6 @@ public class EntryResearchTopic extends AbstractResearchTopic {
     
     @Nullable
     public ResearchEntryKey getData() {
-        return new ResearchEntryKey(ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, new ResourceLocation(this.data)));
+        return new ResearchEntryKey(ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, ResourceLocation.parse(this.data)));
     }
 }

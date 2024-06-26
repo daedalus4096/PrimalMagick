@@ -26,7 +26,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  */
 public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     protected static final float ANIMATION_TIME_TOTAL = 15.0F;
-    protected static final WidgetSprites SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/tab"), new ResourceLocation("recipe_book/tab_selected"));
+    protected static final WidgetSprites SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/tab"), ResourceLocation.withDefaultNamespace("recipe_book/tab_selected"));
 
     protected final ArcaneRecipeBookCategories category;
     protected float animationTime;

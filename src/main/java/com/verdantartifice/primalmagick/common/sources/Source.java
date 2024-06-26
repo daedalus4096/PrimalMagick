@@ -60,12 +60,12 @@ public class Source implements StringRepresentable {
     
     public Source(ResourceLocation id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, ResourceKey<ResearchEntry> discoverKey, int sortOrder) {
         this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.of(new ResearchEntryKey(discoverKey)), sortOrder,
-                new ResourceLocation(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), new ResourceLocation(id.getNamespace(), "sources/" + id.getPath()));
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "sources/" + id.getPath()));
     }
     
     public Source(ResourceLocation id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, int sortOrder) {
         this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.empty(), sortOrder,
-                new ResourceLocation(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), new ResourceLocation(id.getNamespace(), "sources/" + id.getPath()));
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "sources/" + id.getPath()));
     }
     
     @Nonnull

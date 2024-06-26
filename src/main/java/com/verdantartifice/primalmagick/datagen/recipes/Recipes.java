@@ -1338,7 +1338,7 @@ public class Recipes extends RecipeProvider {
                                 .setGroup("essence_" + upgradeType.getSerializedName());
                         baseType.getUpgradeResearchEntry().ifPresent(baseResearch -> builder.requiredResearch(baseResearch));
                         source.getDiscoverKey().ifPresent(key -> builder.requiredResearch(key.getRootKey()));
-                        builder.build(consumer, new ResourceLocation(source.getId().getNamespace(), name));
+                        builder.build(consumer, ResourceLocation.fromNamespaceAndPath(source.getId().getNamespace(), name));
                     }
                 });
             }
@@ -1359,7 +1359,7 @@ public class Recipes extends RecipeProvider {
                             .setGroup("essence_" + downgradeType.getSerializedName());
                         baseType.getDowngradeResearchEntry().ifPresent(baseResearch -> builder.requiredResearch(baseResearch));
                         source.getDiscoverKey().ifPresent(key -> builder.requiredResearch(key.getRootKey()));
-                        builder.build(consumer, new ResourceLocation(source.getId().getNamespace(), name));
+                        builder.build(consumer, ResourceLocation.fromNamespaceAndPath(source.getId().getNamespace(), name));
                     }
                 });
             }

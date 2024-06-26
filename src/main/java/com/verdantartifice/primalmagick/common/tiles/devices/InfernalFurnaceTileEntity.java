@@ -151,7 +151,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         
         CompoundTag recipesUsedTag = compound.getCompound("RecipesUsed");
         for (String key : recipesUsedTag.getAllKeys()) {
-            this.recipesUsed.put(new ResourceLocation(key), recipesUsedTag.getInt(key));
+            this.recipesUsed.put(ResourceLocation.parse(key), recipesUsedTag.getInt(key));
         }
     }
 

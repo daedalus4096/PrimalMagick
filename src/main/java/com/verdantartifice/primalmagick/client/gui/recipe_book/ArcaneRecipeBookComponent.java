@@ -60,15 +60,15 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  */
 public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, NarratableEntry, RecipeShownListener, PlaceRecipe<Ingredient> {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected static final ResourceLocation RECIPE_BOOK_LOCATION = new ResourceLocation("textures/gui/recipe_book.png");
+    protected static final ResourceLocation RECIPE_BOOK_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/recipe_book.png");
     protected static final Component SEARCH_HINT = (Component.translatable("gui.recipebook.search_hint")).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
     public static final int IMAGE_WIDTH = 147;
     public static final int IMAGE_HEIGHT = 166;
     private static final int OFFSET_X_POSITION = 86;
     private static final Component ONLY_CRAFTABLES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.craftable");
     private static final Component ALL_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.all");
-    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/filter_enabled"), new ResourceLocation("recipe_book/filter_disabled"), new ResourceLocation("recipe_book/filter_enabled_highlighted"), new ResourceLocation("recipe_book/filter_disabled_highlighted"));
-    private static final WidgetSprites FURNACE_FILTER_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/furnace_filter_enabled"), new ResourceLocation("recipe_book/furnace_filter_disabled"), new ResourceLocation("recipe_book/furnace_filter_enabled_highlighted"), new ResourceLocation("recipe_book/furnace_filter_disabled_highlighted"));
+    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/filter_enabled"), ResourceLocation.withDefaultNamespace("recipe_book/filter_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/filter_enabled_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/filter_disabled_highlighted"));
+    private static final WidgetSprites FURNACE_FILTER_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled_highlighted"));
 
     protected int xOffset;
     protected int width;

@@ -98,7 +98,7 @@ public class AttunementReward extends AbstractReward {
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
-        this.source = Sources.get(new ResourceLocation(nbt.getString("Source")));
+        this.source = Sources.get(ResourceLocation.parse(nbt.getString("Source")));
         Verify.verifyNotNull(this.source, "Invalid source for attunement reward");
         this.setPoints(nbt.getInt("Points"));
     }
@@ -106,7 +106,7 @@ public class AttunementReward extends AbstractReward {
     public static class Serializer implements IRewardSerializer<AttunementReward> {
         @Override
         public AttunementReward read(ResourceLocation templateId, JsonObject json) {
-            Source source = Sources.get(new ResourceLocation(json.getAsJsonPrimitive("source").getAsString()));
+            Source source = Sources.get(ResourceLocation.parse(json.getAsJsonPrimitive("source").getAsString()));
             int points = json.getAsJsonPrimitive("points").getAsInt();
             return new AttunementReward(source, points);
         }

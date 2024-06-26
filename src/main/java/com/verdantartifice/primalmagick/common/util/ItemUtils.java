@@ -90,7 +90,7 @@ public class ItemUtils {
         ItemStack stack = ItemStack.EMPTY;
         try {
             // Get the named item definition from the item registry
-            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
+            Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(name));
             if (item != null) {
                 stack = new ItemStack(item, count);
                 if (nbt != null) {

@@ -45,7 +45,7 @@ public class ScanEntityPacket implements IMessageToServer {
     
     public static ScanEntityPacket decode(FriendlyByteBuf buf) {
         ScanEntityPacket message = new ScanEntityPacket();
-        message.type = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(buf.readUtf()));
+        message.type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(buf.readUtf()));
         return message;
     }
     

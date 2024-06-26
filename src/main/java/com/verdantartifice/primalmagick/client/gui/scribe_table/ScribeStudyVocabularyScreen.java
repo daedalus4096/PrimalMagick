@@ -48,7 +48,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     private static final ResourceLocation SLOT_SPRITE = PrimalMagick.resource("scribe_table/slot");
     private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_study_vocabulary.png");
     /** The ResourceLocation containing the texture for the Book rendered above the enchantment table */
-    private static final ResourceLocation ENCHANTING_BOOK_LOCATION = new ResourceLocation("textures/entity/enchanting_table_book.png");
+    private static final ResourceLocation ENCHANTING_BOOK_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/enchanting_table_book.png");
 
     private final RandomSource random = RandomSource.create();
     private BookModel bookModel;

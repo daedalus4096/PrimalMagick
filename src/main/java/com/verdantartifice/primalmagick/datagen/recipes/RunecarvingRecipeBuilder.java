@@ -214,7 +214,7 @@ public class RunecarvingRecipeBuilder {
      */
     public void build(RecipeOutput output, String save) {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
-        ResourceLocation saveLoc = new ResourceLocation(save);
+        ResourceLocation saveLoc = ResourceLocation.parse(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Runecarving Recipe " + save + " should remove its 'save' argument");
         } else {

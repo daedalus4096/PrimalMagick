@@ -29,9 +29,9 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListener {
-    private static final ResourceLocation OVERLAY_RECIPE_SPRITE = new ResourceLocation("recipe_book/overlay_recipe");
-    protected static final WidgetSprites CRAFTING_OVERLAY_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/crafting_overlay"), new ResourceLocation("recipe_book/crafting_overlay_disabled"), new ResourceLocation("recipe_book/crafting_overlay_highlighted"), new ResourceLocation("recipe_book/crafting_overlay_disabled_highlighted"));
-    protected static final WidgetSprites FURNACE_OVERLAY_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/furnace_overlay"), new ResourceLocation("recipe_book/furnace_overlay_disabled"), new ResourceLocation("recipe_book/furnace_overlay_highlighted"), new ResourceLocation("recipe_book/furnace_overlay_disabled_highlighted"));
+    private static final ResourceLocation OVERLAY_RECIPE_SPRITE = ResourceLocation.withDefaultNamespace("recipe_book/overlay_recipe");
+    protected static final WidgetSprites CRAFTING_OVERLAY_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay"), ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay_disabled_highlighted"));
+    protected static final WidgetSprites FURNACE_OVERLAY_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay_disabled_highlighted"));
     protected static final int MAX_ROW = 4;
     protected static final int MAX_ROW_LARGE = 5;
     protected static final float ITEM_RENDER_SCALE = 0.375F;

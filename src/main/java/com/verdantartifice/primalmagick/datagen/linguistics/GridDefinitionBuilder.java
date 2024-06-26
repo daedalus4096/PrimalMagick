@@ -45,7 +45,7 @@ public class GridDefinitionBuilder {
     }
     
     public static GridDefinitionBuilder grid(@Nonnull String keyNamespace, @Nonnull String keyPath, HolderLookup.Provider lookupProvider) {
-        return grid(new ResourceLocation(keyNamespace, keyPath), lookupProvider);
+        return grid(ResourceLocation.fromNamespaceAndPath(keyNamespace, keyPath), lookupProvider);
     }
     
     public static GridDefinitionBuilder grid(@Nonnull String keyPath, HolderLookup.Provider lookupProvider) {
@@ -113,7 +113,7 @@ public class GridDefinitionBuilder {
     }
     
     public void build(Consumer<IFinishedGrid> consumer, String name) {
-        this.build(consumer, new ResourceLocation(name));
+        this.build(consumer, ResourceLocation.parse(name));
     }
     
     public void build(Consumer<IFinishedGrid> consumer, ResourceLocation id) {

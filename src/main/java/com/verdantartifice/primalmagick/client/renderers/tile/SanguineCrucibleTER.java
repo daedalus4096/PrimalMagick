@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock}
  */
 public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucibleTileEntity> {
-    protected static final ResourceLocation WATER_TEXTURE = new ResourceLocation("block/water_still");
+    protected static final ResourceLocation WATER_TEXTURE = ResourceLocation.withDefaultNamespace("block/water_still");
     protected static final Color COLOR = new Color(Sources.BLOOD.getColor()).brighter().brighter();
     protected static final float R = COLOR.getRed() / 255.0F;
     protected static final float G = COLOR.getGreen() / 255.0F;

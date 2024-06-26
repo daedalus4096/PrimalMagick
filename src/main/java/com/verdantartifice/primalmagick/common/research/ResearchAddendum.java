@@ -102,7 +102,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         }
         
         public Builder recipe(String modId, String name) {
-            return this.recipe(new ResourceLocation(modId, name));
+            return this.recipe(ResourceLocation.fromNamespaceAndPath(modId, name));
         }
         
         public Builder recipe(ItemLike itemLike) {

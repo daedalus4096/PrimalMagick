@@ -19,6 +19,6 @@ public class SourceResearchTopic extends AbstractResearchTopic {
     
     @Nullable
     public Source getData() {
-        return Sources.get(new ResourceLocation(this.data));
+        return Sources.get(ResourceLocation.parse(this.data));
     }
 }

@@ -213,7 +213,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
         }
         
         this.activeRecipeId = compound.contains("ActiveRecipeId", Tag.TAG_STRING) ? 
-                new ResourceLocation(compound.getString("ActiveRecipeId")) : 
+                ResourceLocation.parse(compound.getString("ActiveRecipeId")) : 
                 null;
         
         this.currentStep = null;

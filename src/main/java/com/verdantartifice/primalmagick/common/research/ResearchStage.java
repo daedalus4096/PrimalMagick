@@ -226,7 +226,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
         
         public Builder recipe(String modId, String name) {
-            return this.recipe(new ResourceLocation(modId, name));
+            return this.recipe(ResourceLocation.fromNamespaceAndPath(modId, name));
         }
         
         public Builder recipe(ItemLike itemLike) {
