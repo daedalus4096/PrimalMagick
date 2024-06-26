@@ -85,6 +85,7 @@ import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
@@ -794,7 +795,7 @@ public class ItemsPM {
     public static final RegistryObject<SpellScrollItem> SPELL_SCROLL_FILLED = registerWithoutTab("spell_scroll_filled", SpellScrollItem::new);
     public static final RegistryObject<MundaneWandItem> MUNDANE_WAND = registerSupplier("mundane_wand", MundaneWandItem::new);
     public static final RegistryObject<ModularWandItem> MODULAR_WAND = registerCustom("modular_wand", ModularWandItem::registerCreativeTabItems, () -> new ModularWandItem(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<ModularStaffItem> MODULAR_STAFF = registerCustom("modular_staff", ModularWandItem::registerCreativeTabItems, () -> new ModularStaffItem(5, -2.4F, new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<ModularStaffItem> MODULAR_STAFF = registerCustom("modular_staff", ModularWandItem::registerCreativeTabItems, () -> new ModularStaffItem(new Item.Properties().stacksTo(1).attributes(ModularStaffItem.createAttributes(5, -2.4)).component(DataComponents.TOOL, ModularStaffItem.createToolProperties())));
     public static final RegistryObject<WandCoreItem> HEARTWOOD_WAND_CORE_ITEM = registerSupplier("heartwood_wand_core_item", () -> new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties()));
     public static final RegistryObject<WandCoreItem> OBSIDIAN_WAND_CORE_ITEM = registerSupplier("obsidian_wand_core_item", () -> new WandCoreItem(WandCore.OBSIDIAN, new Item.Properties()));
     public static final RegistryObject<WandCoreItem> CORAL_WAND_CORE_ITEM = registerSupplier("coral_wand_core_item", () -> new WandCoreItem(WandCore.CORAL, new Item.Properties()));
