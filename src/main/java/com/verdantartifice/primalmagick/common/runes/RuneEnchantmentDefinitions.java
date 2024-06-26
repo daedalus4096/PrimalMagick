@@ -20,9 +20,9 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class RuneEnchantmentDefinitions {
-    public static final ResourceKey<RuneEnchantmentDefinition> ALL_DAMAGE_PROTECTION = createKey(Enchantments.ALL_DAMAGE_PROTECTION);
+    public static final ResourceKey<RuneEnchantmentDefinition> ALL_DAMAGE_PROTECTION = createKey(Enchantments.PROTECTION);
     public static final ResourceKey<RuneEnchantmentDefinition> FIRE_PROTECTION = createKey(Enchantments.FIRE_PROTECTION);
-    public static final ResourceKey<RuneEnchantmentDefinition> FALL_PROTECTION = createKey(Enchantments.FALL_PROTECTION);
+    public static final ResourceKey<RuneEnchantmentDefinition> FALL_PROTECTION = createKey(Enchantments.FEATHER_FALLING);
     public static final ResourceKey<RuneEnchantmentDefinition> BLAST_PROTECTION = createKey(Enchantments.BLAST_PROTECTION);
     public static final ResourceKey<RuneEnchantmentDefinition> PROJECTILE_PROTECTION = createKey(Enchantments.PROJECTILE_PROTECTION);
     public static final ResourceKey<RuneEnchantmentDefinition> RESPIRATION = createKey(Enchantments.RESPIRATION);
@@ -33,18 +33,18 @@ public class RuneEnchantmentDefinitions {
     public static final ResourceKey<RuneEnchantmentDefinition> SHARPNESS = createKey(Enchantments.SHARPNESS);
     public static final ResourceKey<RuneEnchantmentDefinition> KNOCKBACK = createKey(Enchantments.KNOCKBACK);
     public static final ResourceKey<RuneEnchantmentDefinition> FIRE_ASPECT = createKey(Enchantments.FIRE_ASPECT);
-    public static final ResourceKey<RuneEnchantmentDefinition> MOB_LOOTING = createKey(Enchantments.MOB_LOOTING);
+    public static final ResourceKey<RuneEnchantmentDefinition> MOB_LOOTING = createKey(Enchantments.LOOTING);
     public static final ResourceKey<RuneEnchantmentDefinition> SWEEPING_EDGE = createKey(Enchantments.SWEEPING_EDGE);
-    public static final ResourceKey<RuneEnchantmentDefinition> BLOCK_EFFICIENCY = createKey(Enchantments.BLOCK_EFFICIENCY);
+    public static final ResourceKey<RuneEnchantmentDefinition> BLOCK_EFFICIENCY = createKey(Enchantments.EFFICIENCY);
     public static final ResourceKey<RuneEnchantmentDefinition> SILK_TOUCH = createKey(Enchantments.SILK_TOUCH);
     public static final ResourceKey<RuneEnchantmentDefinition> UNBREAKING = createKey(Enchantments.UNBREAKING);
-    public static final ResourceKey<RuneEnchantmentDefinition> BLOCK_FORTUNE = createKey(Enchantments.BLOCK_FORTUNE);
-    public static final ResourceKey<RuneEnchantmentDefinition> POWER_ARROWS = createKey(Enchantments.POWER_ARROWS);
-    public static final ResourceKey<RuneEnchantmentDefinition> PUNCH_ARROWS = createKey(Enchantments.PUNCH_ARROWS);
-    public static final ResourceKey<RuneEnchantmentDefinition> FLAMING_ARROWS = createKey(Enchantments.FLAMING_ARROWS);
-    public static final ResourceKey<RuneEnchantmentDefinition> INFINITY_ARROWS = createKey(Enchantments.INFINITY_ARROWS);
-    public static final ResourceKey<RuneEnchantmentDefinition> FISHING_LUCK = createKey(Enchantments.FISHING_LUCK);
-    public static final ResourceKey<RuneEnchantmentDefinition> FISHING_SPEED = createKey(Enchantments.FISHING_SPEED);
+    public static final ResourceKey<RuneEnchantmentDefinition> BLOCK_FORTUNE = createKey(Enchantments.FORTUNE);
+    public static final ResourceKey<RuneEnchantmentDefinition> POWER_ARROWS = createKey(Enchantments.POWER);
+    public static final ResourceKey<RuneEnchantmentDefinition> PUNCH_ARROWS = createKey(Enchantments.PUNCH);
+    public static final ResourceKey<RuneEnchantmentDefinition> FLAMING_ARROWS = createKey(Enchantments.FLAME);
+    public static final ResourceKey<RuneEnchantmentDefinition> INFINITY_ARROWS = createKey(Enchantments.INFINITY);
+    public static final ResourceKey<RuneEnchantmentDefinition> FISHING_LUCK = createKey(Enchantments.LUCK_OF_THE_SEA);
+    public static final ResourceKey<RuneEnchantmentDefinition> FISHING_SPEED = createKey(Enchantments.LURE);
     public static final ResourceKey<RuneEnchantmentDefinition> LOYALTY = createKey(Enchantments.LOYALTY);
     public static final ResourceKey<RuneEnchantmentDefinition> IMPALING = createKey(Enchantments.IMPALING);
     public static final ResourceKey<RuneEnchantmentDefinition> RIPTIDE = createKey(Enchantments.RIPTIDE);

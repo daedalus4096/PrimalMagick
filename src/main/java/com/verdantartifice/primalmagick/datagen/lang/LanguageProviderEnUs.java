@@ -1242,7 +1242,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
 
         // Generate vanilla enchantment localization extensions
-        this.enchantment(Enchantments.ALL_DAMAGE_PROTECTION)
+        this.enchantment(Enchantments.PROTECTION)
             .fullRuneText("The Protection enchantment can be imbued through the use of Protect, Self, and Earth runes.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage.  It is incompatible with other Protection enchantments.")
             .partialRuneText("The Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage.  It is incompatible with other Protection enchantments.")
             .build();
@@ -1250,7 +1250,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Fire Protection enchantment can be imbued through the use of Protect, Self, and Infernal runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming fire damage as well as the amount of time that the wearer is engulfed in flames.  It is incompatible with other Protection enchantments.")
             .partialRuneText("The Fire Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming fire damage as well as the amount of time that the wearer is engulfed in flames.  It is incompatible with other Protection enchantments.")
             .build();
-        this.enchantment(Enchantments.FALL_PROTECTION)
+        this.enchantment(Enchantments.FEATHER_FALLING)
             .fullRuneText("The Feather Falling enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any pair of boots.  When applied, it greatly reduces all damage sustained from falling.")
             .partialRuneText("The Feather Falling enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any pair of boots.  When applied, it greatly reduces all damage sustained from falling.")
             .build();
@@ -1294,7 +1294,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Fire Aspect enchantment can be imbued through the use of Project, Item, and Infernal runes.  It can be applied to any sword.  When applied, creatures struck by the wielder will be set on fire.")
             .partialRuneText("The Fire Aspect enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, creatures struck by the wielder will be set on fire.")
             .build();
-        this.enchantment(Enchantments.MOB_LOOTING)
+        this.enchantment(Enchantments.LOOTING)
             .fullRuneText("The Looting enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any sword.  When applied, it increases the amount of loot dropped by creatures slain by the wielder.")
             .partialRuneText("The Looting enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, it increases the amount of loot dropped by creatures slain by the wielder.")
             .build();
@@ -1302,7 +1302,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Sweeping Edge enchantment can be imbued through the use of Project, Area, and Sky runes.  It can be applied to any sword.  When applied, it increases the damage done by the wielder with sweep attacks.")
             .partialRuneText("The Sweeping Edge enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, it increases the damage done by the wielder with sweep attacks.")
             .build();
-        this.enchantment(Enchantments.BLOCK_EFFICIENCY)
+        this.enchantment(Enchantments.EFFICIENCY)
             .fullRuneText("The Efficiency enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any axe, pickaxe, shears, or shovel.  When applied, it increases the speed with which the wielder may use the tool.")
             .partialRuneText("The Efficiency enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, shears, or shovel.  When applied, it increases the speed with which the wielder may use the tool.")
             .build();
@@ -1314,31 +1314,31 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Unbreaking enchantment can be imbued through the use of Protect, Item, and Earth runes.  It can be applied to any item that may be damaged or broken.  When applied, it increases the durability of the item, making it harder to damage.")
             .partialRuneText("The Unbreaking enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any item that may be damaged or broken.  When applied, it increases the durability of the item, making it harder to damage.")
             .build();
-        this.enchantment(Enchantments.BLOCK_FORTUNE)
+        this.enchantment(Enchantments.FORTUNE)
             .fullRuneText("The Fortune enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any axe, pickaxe, or shovel.  When applied, it increases the drops yielded by certain blocks.  It is incompatible with the Silk Touch enchantment.")
             .partialRuneText("The Fortune enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, or shovel.  When applied, it increases the drops yielded by certain blocks.  It is incompatible with the Silk Touch enchantment.")
             .build();
-        this.enchantment(Enchantments.POWER_ARROWS)
+        this.enchantment(Enchantments.POWER)
             .fullRuneText("The Power enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any bow.  When applied, it increases the damage done by arrows fired by the wielder.")
             .partialRuneText("The Power enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it increases the damage done by arrows fired by the wielder.")
             .build();
-        this.enchantment(Enchantments.PUNCH_ARROWS)
+        this.enchantment(Enchantments.PUNCH)
             .fullRuneText("The Punch enchantment can be imbued through the use of Project, Creature, and Earth runes.  It can be applied to any bow.  When applied, it increases the distance which a creature struck by the wielder's arrows is knocked back.")
             .partialRuneText("The Punch enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it increases the distance which a creature struck by the wielder's arrows is knocked back.")
             .build();
-        this.enchantment(Enchantments.FLAMING_ARROWS)
+        this.enchantment(Enchantments.FLAME)
             .fullRuneText("The Flame enchantment can be imbued through the use of Project, Item, and Infernal runes.  It can be applied to any bow.  When applied, it causes arrows fired by the wielder to set their targets on fire.")
             .partialRuneText("The Flame enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it causes arrows fired by the wielder to set their targets on fire.")
             .build();
-        this.enchantment(Enchantments.INFINITY_ARROWS)
+        this.enchantment(Enchantments.INFINITY)
             .fullRuneText("The Infinity enchantment can be imbued through the use of Summon, Item, and Sky runes.  It can be applied to any bow.  When applied, it prevents regular arrows from being consumed when the wielder fires.  It is incompatible with the Mending enchantment.")
             .partialRuneText("The Infinity enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it prevents regular arrows from being consumed when the wielder fires.  It is incompatible with the Mending enchantment.")
             .build();
-        this.enchantment(Enchantments.FISHING_LUCK)
+        this.enchantment(Enchantments.LUCK_OF_THE_SEA)
             .fullRuneText("The Luck of the Sea enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any fishing rod.  When applied, it increases the quality of the items that the wielder fishes up.")
             .partialRuneText("The Luck of the Sea enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any fishing rod.  When applied, it increases the quality of the items that the wielder fishes up.")
             .build();
-        this.enchantment(Enchantments.FISHING_SPEED)
+        this.enchantment(Enchantments.LURE)
             .fullRuneText("The Lure enchantment can be imbued through the use of Summon, Creature, and Sea runes.  It can be applied to any fishing rod.  When applied, it decreases the time until the wielder gets a bite when fishing.")
             .partialRuneText("The Lure enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any fishing rod.  When applied, it decreases the time until the wielder gets a bite when fishing.")
             .build();

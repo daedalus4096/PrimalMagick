@@ -112,10 +112,10 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     protected void registerLeavesTable(Block leavesBlock, Block saplingBlock, float[] saplingFortuneChances) {
         float[] stickFortuneChances = new float[] { 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F };
         LootItemCondition.Builder shearsOrSilkTouch = CanToolPerformAction.canToolPerformAction(ToolActions.SHEARS_DIG).or(HAS_SILK_TOUCH);
-        LootPoolEntryContainer.Builder<?> saplingEntryBuilder = LootItem.lootTableItem(saplingBlock).when(ExplosionCondition.survivesExplosion()).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, saplingFortuneChances));
+        LootPoolEntryContainer.Builder<?> saplingEntryBuilder = LootItem.lootTableItem(saplingBlock).when(ExplosionCondition.survivesExplosion()).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.FORTUNE, saplingFortuneChances));
         LootPoolEntryContainer.Builder<?> leavesEntryBuilder = LootItem.lootTableItem(leavesBlock).when(shearsOrSilkTouch);
         LootPool.Builder saplingAndLeavesPool = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(leavesEntryBuilder.otherwise(saplingEntryBuilder));
-        LootPoolEntryContainer.Builder<?> stickEntryBuilder = LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))).apply(ApplyExplosionDecay.explosionDecay()).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, stickFortuneChances));
+        LootPoolEntryContainer.Builder<?> stickEntryBuilder = LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))).apply(ApplyExplosionDecay.explosionDecay()).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.FORTUNE, stickFortuneChances));
         LootPool.Builder stickPool = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(shearsOrSilkTouch.invert()).add(stickEntryBuilder);
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(saplingAndLeavesPool).withPool(stickPool);
         this.registerLootTableBuilder(leavesBlock, tableBuilder);
@@ -129,13 +129,13 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     }
     
     protected void registerGemOreTable(Block oreBlock, Item gemItem) {
-        LootPoolEntryContainer.Builder<?> gemEntryBuilder = LootItem.lootTableItem(gemItem).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)).apply(ApplyExplosionDecay.explosionDecay());
+        LootPoolEntryContainer.Builder<?> gemEntryBuilder = LootItem.lootTableItem(gemItem).apply(ApplyBonusCount.addOreBonusCount(Enchantments.FORTUNE)).apply(ApplyExplosionDecay.explosionDecay());
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(oreBlock).when(HAS_SILK_TOUCH).otherwise(gemEntryBuilder)));
         this.registerLootTableBuilder(oreBlock, tableBuilder);
     }
     
     protected void registerMultiGemOreTable(Block oreBlock, Item gemItem, float minGems, float maxGems) {
-        LootPoolEntryContainer.Builder<?> gemEntryBuilder = LootItem.lootTableItem(gemItem).apply(SetItemCountFunction.setCount(UniformGenerator.between(minGems, maxGems))).apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)).apply(ApplyExplosionDecay.explosionDecay());
+        LootPoolEntryContainer.Builder<?> gemEntryBuilder = LootItem.lootTableItem(gemItem).apply(SetItemCountFunction.setCount(UniformGenerator.between(minGems, maxGems))).apply(ApplyBonusCount.addUniformBonusCount(Enchantments.FORTUNE)).apply(ApplyExplosionDecay.explosionDecay());
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(oreBlock).when(HAS_SILK_TOUCH).otherwise(gemEntryBuilder)));
         this.registerLootTableBuilder(oreBlock, tableBuilder);
     }
@@ -158,7 +158,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     protected void registerSplittingTable(Block block, Item splitItem, NumberProvider splitCount, OptionalInt maxWithFortune) {
         var builder = LootItem.lootTableItem(splitItem).apply(SetItemCountFunction.setCount(splitCount));
         if (maxWithFortune.isPresent()) {
-            builder = builder.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)).apply(LimitCount.limitCount(IntRange.upperBound(maxWithFortune.getAsInt())));
+            builder = builder.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.FORTUNE)).apply(LimitCount.limitCount(IntRange.upperBound(maxWithFortune.getAsInt())));
         }
         builder = builder.apply(ApplyExplosionDecay.explosionDecay());
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block).when(HAS_SILK_TOUCH).otherwise(builder)));

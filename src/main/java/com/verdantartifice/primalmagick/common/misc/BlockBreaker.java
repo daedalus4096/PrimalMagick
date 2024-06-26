@@ -219,7 +219,7 @@ public class BlockBreaker {
             if (this.tool.getItem() instanceof IWand) {
                 return this.tool.getEnchantmentLevel(EnchantmentsPM.TREASURE.get());
             } else {
-                return this.tool.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE);
+                return this.tool.getEnchantmentLevel(Enchantments.FORTUNE);
             }
         } else {
             return 0;
@@ -255,9 +255,9 @@ public class BlockBreaker {
                 }
             });
             this.fortuneOverride.ifPresent(fortune -> {
-                int newFortune = Math.max(fortune, enchantMap.getOrDefault(Enchantments.BLOCK_FORTUNE, 0));
+                int newFortune = Math.max(fortune, enchantMap.getOrDefault(Enchantments.FORTUNE, 0));
                 if (newFortune > 0) {
-                    enchantMap.put(Enchantments.BLOCK_FORTUNE, newFortune);
+                    enchantMap.put(Enchantments.FORTUNE, newFortune);
                 }
             });
             EnchantmentHelper.setEnchantments(enchantMap, stack);
