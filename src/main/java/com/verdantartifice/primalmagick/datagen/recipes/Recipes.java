@@ -4719,7 +4719,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_TURTLE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
-            .addIngredient(Items.SCUTE)
+            .addIngredient(Items.TURTLE_SCUTE)
             .addIngredient(Items.SEAGRASS)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_SEA_CREATURES)

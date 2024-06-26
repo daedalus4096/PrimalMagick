@@ -375,7 +375,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.DEAD_HORN_CORAL_FAN).base(Items.DEAD_HORN_CORAL).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CONDUIT).set(Sources.SEA, 78).set(Sources.SUN, 15).set(Sources.BLOOD, 12).build(consumer);  // Add lighting affinity
         ItemAffinityBuilder.itemAffinity(Items.ELYTRA).set(Sources.SKY, 25).set(Sources.VOID, 10).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.SCUTE).set(Sources.SEA, 2).set(Sources.BLOOD, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.TURTLE_SCUTE).set(Sources.SEA, 2).set(Sources.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.APPLE).set(Sources.EARTH, 5).set(Sources.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.COAL).set(Sources.EARTH, 5).set(Sources.INFERNAL, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CHARCOAL).base(Items.COAL).build(consumer);
