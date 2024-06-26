@@ -17,7 +17,7 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
@@ -348,7 +348,7 @@ public class ResearchEntries {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<ResearchEntry> context) {
+    public static void bootstrap(BootstrapContext<ResearchEntry> context) {
         bootstrapBasicsEntries(context);
         bootstrapManaweavingEntries(context); 
         bootstrapAlchemyEntries(context);
@@ -360,7 +360,7 @@ public class ResearchEntries {
         bootstrapInternalEntries(context);
     }
     
-    private static void bootstrapBasicsEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapBasicsEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.BASICS;
         register(context, FIRST_STEPS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.GRIMOIRE.get())
                 .stage().requiredCraft(ItemsPM.ARCANE_WORKBENCH.get()).recipe(ItemsPM.MUNDANE_WAND.get()).end()
@@ -481,7 +481,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapManaweavingEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapManaweavingEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.MANAWEAVING;
         register(context, BASIC_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_MANAWEAVING).parent(UNLOCK_MANAWEAVING)
                 .stage().recipe(ItemsPM.MANA_PRISM.get()).end()
@@ -742,7 +742,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapAlchemyEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapAlchemyEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.ALCHEMY;
         register(context, BASIC_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_ALCHEMY).parent(UNLOCK_ALCHEMY)
                 .stage().requiredCraft(ItemsPM.ESSENCE_FURNACE.get()).end()
@@ -986,7 +986,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapSorceryEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapSorceryEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.SORCERY;
         register(context, BASIC_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(UNLOCK_SORCERY)
                 .stage().attunement(Sources.EARTH, 1).recipe(ItemsPM.SPELL_SCROLL_BLANK.get()).recipe(ItemsPM.SPELLCRAFTING_ALTAR.get()).end()
@@ -1131,7 +1131,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapRuneworkingEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapRuneworkingEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.RUNEWORKING;
         register(context, BASIC_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_RUNEWORKING).parent(UNLOCK_RUNEWORKING)
                 .stage().recipe(ItemsPM.RUNECARVING_TABLE.get()).recipe(ItemsPM.RUNE_UNATTUNED.get()).recipe(ItemsPM.RUNESCRIBING_ALTAR_BASIC.get()).end()
@@ -1266,7 +1266,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapRitualEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapRitualEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.RITUAL;
         register(context, BASIC_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_RITUAL).parent(UNLOCK_RITUAL)
                 .stage().recipe(ItemsPM.RITUAL_ALTAR.get()).recipe(ItemsPM.OFFERING_PEDESTAL.get()).end()
@@ -1525,7 +1525,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapMagitechEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapMagitechEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.MAGITECH;
         register(context, BASIC_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_MAGITECH).parent(UNLOCK_MAGITECH)
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).end()
@@ -1737,7 +1737,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapScanEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapScanEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.SCANS;
         register(context, RAW_MARBLE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.MARBLE_RAW.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.MARBLE_SLAB.get()).recipe(ItemsPM.MARBLE_STAIRS.get()).recipe(ItemsPM.MARBLE_WALL.get()).recipe(ItemsPM.MARBLE_BRICKS.get())
@@ -1806,7 +1806,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapInternalEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapInternalEntries(BootstrapContext<ResearchEntry> context) {
         register(context, UNLOCK_SCANS, key -> ResearchEntry.builder(key).internal().build());
         register(context, UNLOCK_RUNE_ENCHANTMENTS, key -> ResearchEntry.builder(key).internal().build());
         register(context, DISCOVER_BLOOD, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE)
@@ -1852,7 +1852,7 @@ public class ResearchEntries {
         register(context, UNKNOWN_RUNE, key -> ResearchEntry.builder(key).internal().icon(ICON_UNKNOWN).build());
     }
     
-    private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
+    private static Holder.Reference<ResearchEntry> register(BootstrapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
         return context.register(key, supplier.apply(key));
     }
     

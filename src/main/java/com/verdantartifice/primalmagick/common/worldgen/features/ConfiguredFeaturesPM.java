@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodLogBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -52,7 +52,7 @@ public class ConfiguredFeaturesPM {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         // Register configured ore features
         context.register(ORE_MARBLE_RAW, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), BlocksPM.MARBLE_RAW.get().defaultBlockState(), 33)));
         context.register(ORE_ROCK_SALT, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), BlocksPM.ROCK_SALT_ORE.get().defaultBlockState(), 10)));

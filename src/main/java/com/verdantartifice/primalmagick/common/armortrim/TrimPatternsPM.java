@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -49,11 +49,11 @@ public class TrimPatternsPM {
         return ResourceKey.create(Registries.TRIM_PATTERN, PrimalMagick.resource(name));
     }
     
-    private static void register(BootstapContext<TrimPattern> context, Item templateItem, ResourceKey<TrimPattern> patternKey) {
+    private static void register(BootstrapContext<TrimPattern> context, Item templateItem, ResourceKey<TrimPattern> patternKey) {
         context.register(patternKey, new TrimPattern(patternKey.location(), ForgeRegistries.ITEMS.getHolder(templateItem).orElseThrow(), Component.translatable(Util.makeDescriptionId("trim_pattern", patternKey.location())), false));
     }
     
-    public static void bootstrap(BootstapContext<TrimPattern> context) {
+    public static void bootstrap(BootstrapContext<TrimPattern> context) {
         register(context, ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get(), RUNIC);
     }
 }

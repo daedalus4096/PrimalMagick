@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
@@ -53,7 +53,7 @@ public class PlacedFeaturesPM {
         return ResourceKey.create(Registries.PLACED_FEATURE, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<PlacedFeature> context) {
+    public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> features = context.lookup(Registries.CONFIGURED_FEATURE);
         
         // Register placed ore features

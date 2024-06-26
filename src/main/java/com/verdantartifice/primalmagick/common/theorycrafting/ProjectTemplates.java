@@ -20,7 +20,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWe
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -81,7 +81,7 @@ public class ProjectTemplates {
         return ResourceKey.create(RegistryKeysPM.PROJECT_TEMPLATES, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<ProjectTemplate> context) {
+    public static void bootstrap(BootstrapContext<ProjectTemplate> context) {
         context.register(ADVANCED_ENCHANTING_STUDIES, ProjectTemplate.builder().rewardMultiplier(0.5D)
                 .requiredResearch(ResearchEntries.EXPERT_MANAWEAVING)
                 .requiredResearch(ResearchEntries.PRIMALITE)

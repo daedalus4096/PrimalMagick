@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +37,7 @@ public class BookLanguagesPM {
         return ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<BookLanguage> context) {
+    public static void bootstrap(BootstrapContext<BookLanguage> context) {
         context.register(BookLanguagesPM.DEFAULT, new BookLanguage(PrimalMagick.resource("default"), Style.EMPTY.withFont(new ResourceLocation("default")), 0, false));
         context.register(BookLanguagesPM.GALACTIC, new BookLanguage(PrimalMagick.resource("galactic"), Style.EMPTY.withFont(new ResourceLocation("alt")), -1, false));
         context.register(BookLanguagesPM.ILLAGER, new BookLanguage(PrimalMagick.resource("illager"), Style.EMPTY.withFont(new ResourceLocation("illageralt")), -1, false));

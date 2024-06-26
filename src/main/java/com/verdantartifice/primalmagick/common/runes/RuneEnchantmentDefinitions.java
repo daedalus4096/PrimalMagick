@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 
 import net.minecraft.core.Holder;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -89,7 +89,7 @@ public class RuneEnchantmentDefinitions {
         }
     }
     
-    public static void bootstrap(BootstapContext<RuneEnchantmentDefinition> context) {
+    public static void bootstrap(BootstrapContext<RuneEnchantmentDefinition> context) {
         // Register rune enchantment definitions for vanilla enchantments
         register(context, ALL_DAMAGE_PROTECTION, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROTECT).noun(Rune.SELF).source(Rune.EARTH).build());
         register(context, FIRE_PROTECTION, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROTECT).noun(Rune.SELF).source(Rune.INFERNAL).build());
@@ -171,7 +171,7 @@ public class RuneEnchantmentDefinitions {
         register(context, GUILLOTINE, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.DISPEL).noun(Rune.CREATURE).source(Rune.BLOOD).build());
     }
     
-    private static Holder.Reference<RuneEnchantmentDefinition> register(BootstapContext<RuneEnchantmentDefinition> context, ResourceKey<RuneEnchantmentDefinition> key, 
+    private static Holder.Reference<RuneEnchantmentDefinition> register(BootstrapContext<RuneEnchantmentDefinition> context, ResourceKey<RuneEnchantmentDefinition> key, 
             Function<Enchantment, RuneEnchantmentDefinition> supplier) {
         Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(key.location());
         if (ench == null) {

@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
@@ -26,7 +26,7 @@ public class StructureSetsPM {
         return ResourceKey.create(Registries.STRUCTURE_SET, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<StructureSet> context) {
+    public static void bootstrap(BootstrapContext<StructureSet> context) {
         HolderGetter<Structure> structureGetter = context.lookup(Registries.STRUCTURE);
         context.register(StructureSetsPM.SHRINES, new StructureSet(
                 List.of(StructureSet.entry(structureGetter.getOrThrow(StructuresPM.EARTH_SHRINE)), 

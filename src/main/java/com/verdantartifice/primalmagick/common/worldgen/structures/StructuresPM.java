@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.library.Libra
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
@@ -50,16 +50,16 @@ public class StructuresPM {
         return structure(pBiomes, Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.BEARD_THIN);
     }
     
-    private static void registerShrine(BootstapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, ShrineStructure.Type shrineType) {
+    private static void registerShrine(BootstrapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, ShrineStructure.Type shrineType) {
         context.register(structureKey, new ShrineStructure(structure(biomes), shrineType));
     }
     
     @SuppressWarnings("unused")
-    private static void registerLibrary(BootstapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, ResourceKey<Culture> cultureKey) {
+    private static void registerLibrary(BootstrapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, ResourceKey<Culture> cultureKey) {
         context.register(structureKey, new LibraryStructure(structure(biomes), cultureKey));
     }
     
-    public static void bootstrap(BootstapContext<Structure> context) {
+    public static void bootstrap(BootstrapContext<Structure> context) {
         HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
         
         registerShrine(context, StructuresPM.EARTH_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_EARTH_SHRINE), ShrineStructure.Type.EARTH);
