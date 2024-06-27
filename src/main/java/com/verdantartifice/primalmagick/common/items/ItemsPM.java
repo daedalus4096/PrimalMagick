@@ -96,6 +96,7 @@ import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
@@ -438,17 +439,17 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> ENDERWARD = registerSupplier("enderward", () -> new BlockItem(BlocksPM.ENDERWARD.get(), new Item.Properties().stacksTo(16)));
     
     // Register salted food items
-    public static final RegistryObject<Item> SALTED_BAKED_POTATO = registerSupplier("salted_baked_potato", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.72F).build())));
-    public static final RegistryObject<Item> SALTED_COOKED_BEEF = registerSupplier("salted_cooked_beef", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.96F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_CHICKEN = registerSupplier("salted_cooked_chicken", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.72F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_COD = registerSupplier("salted_cooked_cod", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.72F).build())));
-    public static final RegistryObject<Item> SALTED_COOKED_MUTTON = registerSupplier("salted_cooked_mutton", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.96F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_PORKCHOP = registerSupplier("salted_cooked_porkchop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.96F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_RABBIT = registerSupplier("salted_cooked_rabbit", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.72F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_SALMON = registerSupplier("salted_cooked_salmon", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.96F).build())));
-    public static final RegistryObject<BowlFoodItem> SALTED_BEETROOT_SOUP = registerSupplier("salted_beetroot_soup", () -> new BowlFoodItem(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationMod(0.72F).build())));
-    public static final RegistryObject<BowlFoodItem> SALTED_MUSHROOM_STEW = registerSupplier("salted_mushroom_stew", () -> new BowlFoodItem(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationMod(0.72F).build())));
-    public static final RegistryObject<BowlFoodItem> SALTED_RABBIT_STEW = registerSupplier("salted_rabbit_stew", () -> new BowlFoodItem(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(12).saturationMod(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_BAKED_POTATO = registerSupplier("salted_baked_potato", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_BEEF = registerSupplier("salted_cooked_beef", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationModifier(0.96F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_CHICKEN = registerSupplier("salted_cooked_chicken", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_COD = registerSupplier("salted_cooked_cod", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_MUTTON = registerSupplier("salted_cooked_mutton", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.96F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_PORKCHOP = registerSupplier("salted_cooked_porkchop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationModifier(0.96F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_RABBIT = registerSupplier("salted_cooked_rabbit", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_SALMON = registerSupplier("salted_cooked_salmon", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.96F).build())));
+    public static final RegistryObject<Item> SALTED_BEETROOT_SOUP = registerSupplier("salted_beetroot_soup", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).usingConvertsTo(Items.BOWL).build())));
+    public static final RegistryObject<Item> SALTED_MUSHROOM_STEW = registerSupplier("salted_mushroom_stew", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).usingConvertsTo(Items.BOWL).build())));
+    public static final RegistryObject<Item> SALTED_RABBIT_STEW = registerSupplier("salted_rabbit_stew", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(12).saturationModifier(0.72F).usingConvertsTo(Items.BOWL).build())));
     
     // Register mineral items
     public static final RegistryObject<Item> IRON_GRIT = registerSupplier("iron_grit", () -> new Item(new Item.Properties()));
