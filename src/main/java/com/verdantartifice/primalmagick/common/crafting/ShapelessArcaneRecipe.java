@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -26,7 +27,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * @author Daedalus4096
  * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
  */
-public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingContainer> implements IShapelessArcaneRecipePM {
+public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IShapelessArcaneRecipePM {
     protected final Optional<AbstractRequirement<?>> requirement;
     protected final SourceList manaCosts;
     protected final NonNullList<Ingredient> recipeItems;

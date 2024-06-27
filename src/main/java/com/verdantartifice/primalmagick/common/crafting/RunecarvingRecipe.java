@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -24,7 +26,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> implements IRunecarvingRecipe {
+public class RunecarvingRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IRunecarvingRecipe {
     protected final Optional<AbstractRequirement<?>> requirement;
     protected final Ingredient ingredient1;
     protected final Ingredient ingredient2;
@@ -46,13 +48,13 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
     }
 
     @Override
-    public boolean matches(Container inv, Level worldIn) {
+    public boolean matches(CraftingInput inv, Level worldIn) {
         return this.ingredient1.test(inv.getItem(0)) && this.ingredient2.test(inv.getItem(1));
     }
 
     @Override
-    public ItemStack assemble(Container inv, RegistryAccess registryAccess) {
-        return this.getResultItem(registryAccess).copy();
+    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+        return this.getResultItem(registries).copy();
     }
 
     @Override

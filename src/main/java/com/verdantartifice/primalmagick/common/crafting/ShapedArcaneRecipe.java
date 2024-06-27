@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
@@ -27,7 +28,7 @@ import net.minecraftforge.common.ForgeHooks;
  * @author Daedalus4096
  * @see {@link net.minecraft.item.crafting.ShapedRecipe}
  */
-public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingContainer> implements IShapedArcaneRecipePM {
+public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IShapedArcaneRecipePM {
     public static final int MAX_WIDTH = 3;
     public static final int MAX_HEIGHT = 3;
 
@@ -52,7 +53,7 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
     }
     
     @Override
-    public boolean matches(CraftingContainer inv, Level worldIn) {
+    public boolean matches(CraftingInput inv, Level worldIn) {
         return this.pattern.matches(inv);
     }
 

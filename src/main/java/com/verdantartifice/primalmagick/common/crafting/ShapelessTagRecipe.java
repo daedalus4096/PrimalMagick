@@ -14,6 +14,7 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -25,7 +26,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * @author Daedalus4096
  * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
  */
-public class ShapelessTagRecipe extends AbstractTagCraftingRecipe<CraftingContainer> implements IShapelessRecipePM<CraftingContainer>, CraftingRecipe {
+public class ShapelessTagRecipe extends AbstractTagCraftingRecipe<CraftingInput> implements IShapelessRecipePM<CraftingInput>, CraftingRecipe {
     protected final CraftingBookCategory category;
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;

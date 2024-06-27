@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -25,7 +26,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * 
  * @author Daedalus4096
  */
-public class RitualRecipe extends AbstractStackCraftingRecipe<Container> implements IShapelessRecipePM<Container>, IRitualRecipe {
+public class RitualRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IShapelessRecipePM<CraftingInput>, IRitualRecipe {
     public static final int MIN_INSTABILITY = 0;
     public static final int MAX_INSTABILITY = 10;
     

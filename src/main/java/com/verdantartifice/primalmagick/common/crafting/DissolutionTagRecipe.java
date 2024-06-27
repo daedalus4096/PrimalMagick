@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -13,6 +14,7 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -23,7 +25,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> implements IDissolutionRecipe {
+public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<CraftingInput> implements IDissolutionRecipe {
     protected final Ingredient ingredient;
     protected final SourceList manaCosts;
     
@@ -34,13 +36,13 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> i
     }
 
     @Override
-    public boolean matches(Container inv, Level level) {
+    public boolean matches(CraftingInput inv, Level level) {
         return this.ingredient.test(inv.getItem(0));
     }
 
     @Override
-    public ItemStack assemble(Container inv, RegistryAccess registryAccess) {
-        return this.getResultItem(registryAccess).copy();
+    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+        return this.getResultItem(registries).copy();
     }
 
     @Override

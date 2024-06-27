@@ -14,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -23,7 +24,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * 
  * @author Daedalus4096
  */
-public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> implements IShapelessRecipePM<Container>, IConcoctingRecipe {
+public class ConcoctingRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IShapelessRecipePM<CraftingInput>, IConcoctingRecipe {
     protected final Optional<AbstractRequirement<?>> requirement;
     protected final SourceList manaCosts;
     protected final NonNullList<Ingredient> recipeItems;

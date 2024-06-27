@@ -19,6 +19,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -29,7 +30,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * @author Daedalus4096
  * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
  */
-public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<CraftingContainer> implements IShapelessArcaneRecipePM {
+public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<CraftingInput> implements IShapelessArcaneRecipePM {
     protected final Optional<AbstractRequirement<?>> requirement;
     protected final SourceList manaCosts;
     protected final NonNullList<Ingredient> recipeItems;

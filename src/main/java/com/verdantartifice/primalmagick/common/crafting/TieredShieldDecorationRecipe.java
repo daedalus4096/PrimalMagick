@@ -2,12 +2,14 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredShieldItem;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -23,11 +25,11 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer inv, Level worldIn) {
+    public boolean matches(CraftingInput inv, Level worldIn) {
         ItemStack shieldStack = ItemStack.EMPTY;
         ItemStack bannerStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < inv.getContainerSize(); index++) {
+        for (int index = 0; index < inv.size(); index++) {
             ItemStack stack = inv.getItem(index);
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof BannerItem) {
@@ -48,11 +50,11 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
         ItemStack shieldStack = ItemStack.EMPTY;
         ItemStack bannerStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < inv.getContainerSize(); index++) {
+        for (int index = 0; index < inv.size(); index++) {
             ItemStack stack = inv.getItem(index);
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof BannerItem) {

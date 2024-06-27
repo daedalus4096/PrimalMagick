@@ -2,12 +2,12 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 
-public interface IConcoctingRecipe extends Recipe<Container>, IHasManaCost, IHasRequirement, IArcaneRecipeBookItem {
+public interface IConcoctingRecipe extends Recipe<CraftingInput>, IHasManaCost, IHasRequirement, IArcaneRecipeBookItem {
     @Override
     default RecipeType<?> getType() {
         return RecipeTypesPM.CONCOCTING.get();
