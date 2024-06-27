@@ -8,28 +8,41 @@ import com.verdantartifice.primalmagick.common.crafting.recipe_book.ServerPlaceA
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 
 /**
  * Interface for a menu that's compatible with the arcane recipe book.
  * 
  * @author Daedalus4096
  */
-public interface IArcaneRecipeBookMenu<C extends Container> {
+public interface IArcaneRecipeBookMenu<T extends RecipeInput, R extends Recipe<T>> {
     @SuppressWarnings("unchecked")
     default void handlePlacement(boolean shiftDown, RecipeHolder<?> recipe, ServerPlayer player) {
-        new ServerPlaceArcaneRecipe<C>(this).recipeClicked(player, (RecipeHolder<? extends Recipe<C>>)recipe, shiftDown);
+        RecipeHolder<R> recipeHolder = (RecipeHolder<R>)recipe;
+        this.beginPlacingRecipe();
+        
+        try {
+            new ServerPlaceArcaneRecipe<>(this).recipeClicked(player, recipeHolder, shiftDown);
+        } finally {
+            this.finishPlacingRecipe(recipeHolder);
+        }
     }
     
+    default void beginPlacingRecipe() {
+    }
+
+    default void finishPlacingRecipe(RecipeHolder<R> pRecipe) {
+    }
+
     void fillCraftSlotsStackedContents(StackedContents contents);
 
     void clearCraftingContent();
 
-    boolean recipeMatches(RecipeHolder<? extends Recipe<? super C>> recipe);
+    boolean recipeMatches(RecipeHolder<R> recipe);
 
     int getResultSlotIndex();
 

@@ -146,7 +146,7 @@ public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<Disso
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<? extends Recipe<? super Container>> recipe) {
+    public boolean recipeMatches(RecipeHolder<? extends Recipe<? super RecipeInput>> recipe) {
         if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
             return recipe.value().matches(new RecipeWrapper(modifiable), this.level);
         } else {

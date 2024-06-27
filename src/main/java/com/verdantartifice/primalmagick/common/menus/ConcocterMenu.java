@@ -22,6 +22,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -159,7 +160,7 @@ public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileE
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<? extends Recipe<? super Container>> recipe) {
+    public boolean recipeMatches(RecipeHolder<? extends Recipe<? super RecipeInput>> recipe) {
         if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
             return recipe.value().matches(new RecipeWrapper(modifiable), this.level);
         } else {

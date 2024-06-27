@@ -26,19 +26,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 
-public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe<Integer> {
+public class ServerPlaceArcaneRecipe<T extends RecipeInput, R extends Recipe<T>> implements PlaceRecipe<Integer> {
     protected static final Logger LOGGER = LogManager.getLogger();
     protected final StackedNbtContents stackedContents = new StackedNbtContents();
-    protected final IArcaneRecipeBookMenu<C> menu;
+    protected final IArcaneRecipeBookMenu<T, R> menu;
     protected Inventory inventory;
-    protected RecipeHolder<? extends Recipe<C>> activeRecipeHolder;
+    protected RecipeHolder<R> activeRecipeHolder;
     
-    public ServerPlaceArcaneRecipe(IArcaneRecipeBookMenu<C> menu) {
+    public ServerPlaceArcaneRecipe(IArcaneRecipeBookMenu<T, R> menu) {
         this.menu = menu;
     }
     
-    public void recipeClicked(ServerPlayer player, @Nullable RecipeHolder<? extends Recipe<C>> recipeHolder, boolean shiftDown) {
+    public void recipeClicked(ServerPlayer player, @Nullable RecipeHolder<R> recipeHolder, boolean shiftDown) {
         if (recipeHolder != null) {
             boolean inVanillaBook = player.getRecipeBook().contains(recipeHolder);
             boolean inArcaneBook = ArcaneRecipeBookManager.containsRecipe(player, recipeHolder);
@@ -72,7 +73,7 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
         this.menu.clearCraftingContent();
     }
     
-    protected void handleRecipeClicked(RecipeHolder<? extends Recipe<C>> recipeHolder, boolean shiftDown) {
+    protected void handleRecipeClicked(RecipeHolder<R> recipeHolder, boolean shiftDown) {
         boolean matches = this.menu.recipeMatches(recipeHolder);
         int i = this.stackedContents.getBiggestCraftableStack(recipeHolder, null);
         
@@ -105,9 +106,8 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
     }
 
     @Override
-    public void addItemToSlot(Iterator<Integer> iterator, int slotIndex, int count, int p_135418_, int p_135419_) {
+    public void addItemToSlot(Integer itemId, int slotIndex, int count, int p_135418_, int p_135419_) {
         Slot slot = this.menu.getSlot(slotIndex);
-        int itemId = iterator.next();
         ItemStack stack = StackedContents.fromStackingIndex(itemId);
         if (this.stackedContents.hasNbtData(itemId)) {
             stack.setTag(this.findMatchingTag(itemId, stack));

@@ -35,9 +35,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -51,6 +49,7 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -61,7 +60,6 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Definition of an infernal furnace tile entity.  Performs the smelting for the corresponding block.
@@ -195,8 +193,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
     
     private static Optional<RecipeHolder<SmeltingRecipe>> getActiveRecipe(Level level, InfernalFurnaceTileEntity entity) {
-        SimpleContainer testInv = new SimpleContainer(entity.getItem(INPUT_INV_INDEX, 0));
-        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, testInv, level);
+        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), level);
     }
     
     @Override
@@ -288,7 +285,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     private static boolean canBurn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipeHolder, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
         if (!entity.getItem(INPUT_INV_INDEX, 0).isEmpty() && recipeHolder != null) {
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<Container>)recipeHolder.value()).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
+            ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), registryAccess);
             if (recipeOutput.isEmpty()) {
                 return false;
             } else {
@@ -312,7 +309,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         if (recipeHolder != null && canBurn(registryAccess, recipeHolder, entity, maxFurnaceStackSize)) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<Container>)recipeHolder.value()).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
+            ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), registryAccess);
             ItemStack existingOutput = entity.getItem(OUTPUT_INV_INDEX, 0);
             if (existingOutput.isEmpty()) {
                 entity.setItem(OUTPUT_INV_INDEX, 0, recipeOutput.copy());
@@ -428,7 +425,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
 
     @Override
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(this.getItem(invIndex, slotIndex), stack);
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(this.getItem(invIndex, slotIndex), stack);
         super.setItem(invIndex, slotIndex, stack);
         if (invIndex == INPUT_INV_INDEX && !flag && this.hasLevel()) {
             this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);

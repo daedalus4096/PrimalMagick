@@ -15,7 +15,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -23,18 +22,18 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Server data container for the infernal furnace GUI.
  * 
  * @author Daedalus4096
  */
-public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<Container> {
+public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<SingleRecipeInput, AbstractCookingRecipe> {
     public static final ResourceLocation IGNYX_SLOT_TEXTURE = PrimalMagick.resource("item/empty_ignyx_slot");
     protected static final Component IGNYX_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.infernal_furnace.slot.ignyx");
 
@@ -118,9 +117,9 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<? extends Recipe<? super Container>> recipe) {
+    public boolean recipeMatches(RecipeHolder<AbstractCookingRecipe> recipe) {
         if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
-            return recipe.value().matches(new RecipeWrapper(modifiable), this.level);
+            return recipe.value().matches(new SingleRecipeInput(modifiable.getStackInSlot(0)), this.level);
         } else {
             return false;
         }
