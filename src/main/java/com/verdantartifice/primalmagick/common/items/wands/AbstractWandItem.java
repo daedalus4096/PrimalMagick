@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -326,8 +327,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
         
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         boolean showDetails = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.hasShiftDown() : false;
@@ -396,35 +397,25 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public int getUseDuration(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return 72000;
     }
     
     @Override
     public BlockPos getPositionInUse(ItemStack wandStack) {
-        // Look up the world coordinates of the wand-interactable tile entity currently in use from NBT, then query the world for it
-        if (wandStack.hasTag() && wandStack.getTag().contains("UsingX") && wandStack.getTag().contains("UsingY") && wandStack.getTag().contains("UsingZ")) {
-            return new BlockPos(wandStack.getTag().getInt("UsingX"), wandStack.getTag().getInt("UsingY"), wandStack.getTag().getInt("UsingZ"));
-        } else {
-            return null;
-        }
+        // Look up the world coordinates of the wand-interactable tile entity currently in use from data components
+        return wandStack.get(DataComponentsPM.WAND_USE_POSITION.get());
     }
     
     @Override
     public void setPositionInUse(ItemStack wandStack, BlockPos pos) {
         // Save the position of the wand-interactable tile entity so it can be looked up later
-        wandStack.addTagElement("UsingX", IntTag.valueOf(pos.getX()));
-        wandStack.addTagElement("UsingY", IntTag.valueOf(pos.getY()));
-        wandStack.addTagElement("UsingZ", IntTag.valueOf(pos.getZ()));
+        wandStack.set(DataComponentsPM.WAND_USE_POSITION.get(), pos.immutable());
     }
     
     @Override
     public void clearPositionInUse(ItemStack wandStack) {
-        if (wandStack.hasTag()) {
-            wandStack.getTag().remove("UsingX");
-            wandStack.getTag().remove("UsingY");
-            wandStack.getTag().remove("UsingZ");
-        }
+        wandStack.remove(DataComponentsPM.WAND_USE_POSITION.get());
     }
     
     protected static boolean isTargetWandInteractable(Level level, Player player, HitResult hit) {
@@ -525,7 +516,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                             // Trigger visual effects during channel
                             FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Sources.HALLOWED.getColor());
                         }
-                        if (this.getUseDuration(stack) - count >= WandTransforms.CHANNEL_DURATION) {
+                        if (this.getUseDuration(stack, living) - count >= WandTransforms.CHANNEL_DURATION) {
                             if (!level.isClientSide && player instanceof ServerPlayer) {
                                 // Only execute the transform on the server side
                                 transform.execute(level, player, wandPos);
@@ -546,7 +537,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         BlockPos wandPos = this.getPositionInUse(stack);
         if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !WAND_TRANSFORM_HINT_KEY.isKnownBy(player)) {
             for (IWandTransform transform : WandTransforms.getAll()) {
-                if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack) - timeLeft < WandTransforms.CHANNEL_DURATION) {
+                if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack, entityLiving) - timeLeft < WandTransforms.CHANNEL_DURATION) {
                     ResearchManager.completeResearch(player, WAND_TRANSFORM_HINT_KEY);
                     player.sendSystemMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN));
                     break;
