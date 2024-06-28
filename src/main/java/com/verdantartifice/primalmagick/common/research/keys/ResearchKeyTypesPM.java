@@ -3,10 +3,14 @@ package com.verdantartifice.primalmagick.common.research.keys;
 import java.util.function.Supplier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -21,7 +25,7 @@ public class ResearchKeyTypesPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<ResearchKeyType<ResearchDisciplineKey>> RESEARCH_DISCIPLINE = register("research_discipline", ResearchDisciplineKey.CODEC, ResearchDisciplineKey::fromNetworkInner);
+    public static final RegistryObject<ResearchKeyType<ResearchDisciplineKey>> RESEARCH_DISCIPLINE = register("research_discipline", ResearchDisciplineKey.CODEC, ResearchDisciplineKey.STREAM_CODEC);
     public static final RegistryObject<ResearchKeyType<ResearchEntryKey>> RESEARCH_ENTRY = register("research_entry", ResearchEntryKey.CODEC, ResearchEntryKey::fromNetworkInner);
     public static final RegistryObject<ResearchKeyType<ResearchStageKey>> RESEARCH_STAGE = register("research_stage", ResearchStageKey.CODEC, ResearchStageKey::fromNetworkInner);
     public static final RegistryObject<ResearchKeyType<ItemScanKey>> ITEM_SCAN = register("item_scan", ItemScanKey.CODEC, ItemScanKey::fromNetworkInner);
@@ -31,7 +35,7 @@ public class ResearchKeyTypesPM {
     public static final RegistryObject<ResearchKeyType<RuneEnchantmentKey>> RUNE_ENCHANTMENT = register("rune_enchantment", RuneEnchantmentKey.CODEC, RuneEnchantmentKey::fromNetworkInner);
     public static final RegistryObject<ResearchKeyType<RuneEnchantmentPartialKey>> RUNE_ENCHANTMENT_PARTIAL = register("rune_enchantment_partial", RuneEnchantmentPartialKey.CODEC, RuneEnchantmentPartialKey::fromNetworkInner);
     
-    protected static <T extends AbstractResearchKey<T>> RegistryObject<ResearchKeyType<T>> register(String id, Codec<T> codec, FriendlyByteBuf.Reader<T> networkReader) {
+    protected static <T extends AbstractResearchKey<T>> RegistryObject<ResearchKeyType<T>> register(String id, MapCodec<T> codec, StreamCodec<ByteBuf, T> networkReader) {
         return DEFERRED_TYPES.register(id, () -> new ResearchKeyType<T>(PrimalMagick.resource(id), codec, networkReader));
     }
 }

@@ -10,8 +10,10 @@ import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.Utf8String;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
@@ -23,6 +25,10 @@ import net.minecraft.world.entity.player.Player;
 public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
     public static Codec<AbstractResearchKey<?>> dispatchCodec() {
         return RegistryCodecs.codec(ResearchKeyTypesPM.TYPES).dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
+    }
+    
+    public static StreamCodec<ByteBuf, AbstractResearchKey<?>> dispatchStreamCodec() {
+        return RegistryCodecs.streamCodec(ResearchKeyTypesPM.TYPES).dispatch(AbstractResearchKey::getType, ResearchKeyType::streamCodec);
     }
     
     @Override
@@ -57,15 +63,14 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
         }
     }
     
-    public static AbstractResearchKey<?> fromNetwork(FriendlyByteBuf buf) {
-        ResourceLocation typeId = buf.readResourceLocation();
-        return ResearchKeyTypesPM.TYPES.get().getValue(typeId).networkReader().apply(buf);
+    public static AbstractResearchKey<?> fromNetwork(ByteBuf buf) {
+        ResourceLocation typeId = ResourceLocation.parse(Utf8String.read(buf, 32767));
+        return ResearchKeyTypesPM.TYPES.get().getValue(typeId).streamCodec().decode(buf);
     }
     
-    public void toNetwork(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.getType().id());
-        this.toNetworkInner(buf);
+    @SuppressWarnings("unchecked")
+    public void toNetwork(ByteBuf buf) {
+        Utf8String.write(buf, this.getType().id().toString(), 32767);
+        this.getType().streamCodec().encode(buf, (T)this);
     }
-    
-    protected abstract void toNetworkInner(FriendlyByteBuf buf);
 }

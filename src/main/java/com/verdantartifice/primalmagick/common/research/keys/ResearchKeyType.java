@@ -1,9 +1,10 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 
-public record ResearchKeyType<T extends AbstractResearchKey<T>>(ResourceLocation id, Codec<T> codec, FriendlyByteBuf.Reader<T> networkReader) {
+public record ResearchKeyType<T extends AbstractResearchKey<T>>(ResourceLocation id, MapCodec<T> codec, StreamCodec<ByteBuf, T> streamCodec) {
 }
