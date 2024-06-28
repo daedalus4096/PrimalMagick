@@ -12,9 +12,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.Requirement
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.Utf8String;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -64,13 +62,10 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
     }
     
     public static AbstractResearchKey<?> fromNetwork(ByteBuf buf) {
-        ResourceLocation typeId = ResourceLocation.parse(Utf8String.read(buf, 32767));
-        return ResearchKeyTypesPM.TYPES.get().getValue(typeId).streamCodec().decode(buf);
+        return AbstractResearchKey.dispatchStreamCodec().decode(buf);
     }
     
-    @SuppressWarnings("unchecked")
     public void toNetwork(ByteBuf buf) {
-        Utf8String.write(buf, this.getType().id().toString(), 32767);
-        this.getType().streamCodec().encode(buf, (T)this);
+        AbstractResearchKey.dispatchStreamCodec().encode(buf, this);
     }
 }
