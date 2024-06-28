@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandISTER;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
@@ -98,96 +99,72 @@ public class ModularWandItem extends AbstractWandItem {
     
     @Override
     public boolean isGlamoured(ItemStack stack) {
-        return stack.hasTag() && (stack.getTag().contains("coreAppearance") || stack.getTag().contains("capAppearance") || stack.getTag().contains("gemAppearance"));
+        return stack.has(DataComponentsPM.WAND_CORE_APPEARANCE.get()) || stack.has(DataComponentsPM.WAND_CAP_APPEARANCE.get()) || stack.has(DataComponentsPM.WAND_GEM_APPEARANCE.get());
     }
 
     @Nullable
     public WandCore getWandCore(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("core")) {
-            return WandCore.getWandCore(stack.getTag().getString("core"));
-        } else {
-            return null;
-        }
+        return stack.get(DataComponentsPM.WAND_CORE.get());
     }
     
     public void setWandCore(@Nonnull ItemStack stack, @Nonnull WandCore core) {
-        stack.addTagElement("core", StringTag.valueOf(core.getTag()));
+        stack.set(DataComponentsPM.WAND_CORE.get(), core);
     }
     
     @Nullable
     public WandCore getWandCoreAppearance(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("coreAppearance")) {
-            return WandCore.getWandCore(stack.getTag().getString("coreAppearance"));
-        } else {
-            return this.getWandCore(stack);
-        }
+        return stack.get(DataComponentsPM.WAND_CORE_APPEARANCE.get());
     }
     
     public void setWandCoreAppearance(@Nonnull ItemStack stack, @Nullable WandCore core) {
         if (core == null) {
-            stack.removeTagKey("coreAppearance");
+            stack.remove(DataComponentsPM.WAND_CORE_APPEARANCE.get());
         } else {
-            stack.addTagElement("coreAppearance", StringTag.valueOf(core.getTag()));
+            stack.set(DataComponentsPM.WAND_CORE_APPEARANCE.get(), core);
         }
     }
     
     @Nullable 
     public WandCap getWandCap(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("cap")) {
-            return WandCap.getWandCap(stack.getTag().getString("cap"));
-        } else {
-            return null;
-        }
+        return stack.get(DataComponentsPM.WAND_CAP.get());
     }
     
     public void setWandCap(@Nonnull ItemStack stack, @Nonnull WandCap cap) {
-        stack.addTagElement("cap", StringTag.valueOf(cap.getTag()));
+        stack.set(DataComponentsPM.WAND_CAP.get(), cap);
     }
     
     @Nullable 
     public WandCap getWandCapAppearance(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("capAppearance")) {
-            return WandCap.getWandCap(stack.getTag().getString("capAppearance"));
-        } else {
-            return this.getWandCap(stack);
-        }
+        return stack.get(DataComponentsPM.WAND_CAP_APPEARANCE.get());
     }
     
     public void setWandCapAppearance(@Nonnull ItemStack stack, @Nullable WandCap cap) {
         if (cap == null) {
-            stack.removeTagKey("capAppearance");
+            stack.remove(DataComponentsPM.WAND_CAP_APPEARANCE.get());
         } else {
-            stack.addTagElement("capAppearance", StringTag.valueOf(cap.getTag()));
+            stack.set(DataComponentsPM.WAND_CAP_APPEARANCE.get(), cap);
         }
     }
     
     @Nullable
     public WandGem getWandGem(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("gem")) {
-            return WandGem.getWandGem(stack.getTag().getString("gem"));
-        } else {
-            return null;
-        }
+        return stack.get(DataComponentsPM.WAND_GEM.get());
     }
     
     public void setWandGem(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
-        stack.addTagElement("gem", StringTag.valueOf(gem.getTag()));
+        stack.set(DataComponentsPM.WAND_GEM.get(), gem);
     }
     
     @Nullable
     public WandGem getWandGemAppearance(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("gemAppearance")) {
-            return WandGem.getWandGem(stack.getTag().getString("gemAppearance"));
-        } else {
-            return this.getWandGem(stack);
-        }
+        return stack.get(DataComponentsPM.WAND_GEM_APPEARANCE.get());
     }
     
     public void setWandGemAppearance(@Nonnull ItemStack stack, @Nullable WandGem gem) {
         if (gem == null) {
-            stack.removeTagKey("gemAppearance");
+            stack.remove(DataComponentsPM.WAND_GEM_APPEARANCE.get());
         } else {
-            stack.addTagElement("gemAppearance", StringTag.valueOf(gem.getTag()));
+            stack.set(DataComponentsPM.WAND_GEM_APPEARANCE.get(), gem);
         }
     }
     

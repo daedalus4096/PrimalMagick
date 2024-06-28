@@ -8,8 +8,6 @@ import java.util.List;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 
 /**
  * Item definition for a wand core.  May be used to construct modular wands.
@@ -22,18 +20,13 @@ public class WandCoreItem extends Item {
     protected final WandCore core;
 
     public WandCoreItem(WandCore core, Properties properties) {
-        super(properties);
+        super(properties.rarity(core.getRarity()));
         this.core = core;
         CORES.add(this);
     }
 
     public WandCore getWandCore() {
         return this.core;
-    }
-    
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        return this.core.getRarity();
     }
     
     public static Collection<WandCoreItem> getAllCores() {

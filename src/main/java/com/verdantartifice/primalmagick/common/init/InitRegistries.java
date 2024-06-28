@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.init;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
@@ -54,5 +55,6 @@ public class InitRegistries {
         ProjectMaterialTypesPM.init();
         RewardTypesPM.init();
         WeightFunctionTypesPM.init();
+        DataComponentsPM.init();
     }
 }
