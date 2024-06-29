@@ -2,16 +2,17 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
@@ -27,10 +28,16 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaItemUsedStatRequirement> implements IVanillaStatRequirement {
-    public static final Codec<VanillaItemUsedStatRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<VanillaItemUsedStatRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("item").xmap(loc -> ForgeRegistries.ITEMS.getValue(loc), item -> ForgeRegistries.ITEMS.getKey(item)).forGetter(req -> req.stat.getValue()),
             Codec.INT.fieldOf("threshold").forGetter(VanillaItemUsedStatRequirement::getThreshold)
         ).apply(instance, VanillaItemUsedStatRequirement::new));
+    public static final StreamCodec<ByteBuf, VanillaItemUsedStatRequirement> STREAM_CODEC = StreamCodec.composite(
+            ResourceLocation.STREAM_CODEC.map(loc -> ForgeRegistries.ITEMS.getValue(loc), item -> ForgeRegistries.ITEMS.getKey(item)),
+            req -> req.stat.getValue(),
+            ByteBufCodecs.VAR_INT,
+            VanillaItemUsedStatRequirement::getThreshold,
+            VanillaItemUsedStatRequirement::new);
     
     protected final Stat<Item> stat;
     protected final int threshold;
@@ -119,16 +126,5 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
     @Override
     protected RequirementType<VanillaItemUsedStatRequirement> getType() {
         return RequirementsPM.VANILLA_ITEM_USED_STAT.get();
-    }
-    
-    @Nonnull
-    static VanillaItemUsedStatRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        return new VanillaItemUsedStatRequirement(ForgeRegistries.ITEMS.getValue(buf.readResourceLocation()), buf.readVarInt());
-    }
-
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.getStatValueLoc());
-        buf.writeVarInt(this.threshold);
     }
 }

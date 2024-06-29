@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -19,8 +19,12 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class OrRequirement extends AbstractRequirement<OrRequirement> {
-    public static Codec<OrRequirement> codec() {
-        return AbstractRequirement.dispatchCodec().listOf().fieldOf("subRequirements").xmap(OrRequirement::new, req -> req.subs).codec();
+    public static MapCodec<OrRequirement> codec() {
+        return AbstractRequirement.dispatchCodec().listOf().fieldOf("subRequirements").xmap(OrRequirement::new, req -> req.subs);
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, OrRequirement> streamCodec() {
+        return AbstractRequirement.dispatchStreamCodec().apply(ByteBufCodecs.list()).map(OrRequirement::new, req -> req.subs);
     }
     
     protected final List<AbstractRequirement<?>> subs = new ArrayList<>();
@@ -77,15 +81,5 @@ public class OrRequirement extends AbstractRequirement<OrRequirement> {
     @Override
     protected RequirementType<OrRequirement> getType() {
         return RequirementsPM.OR.get();
-    }
-
-    @Nonnull
-    static OrRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        return new OrRequirement(buf.readList(AbstractRequirement::fromNetwork));
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeCollection(this.subs, (b, s) -> s.toNetwork(b));
     }
 }

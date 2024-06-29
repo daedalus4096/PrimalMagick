@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -19,8 +19,12 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class AndRequirement extends AbstractRequirement<AndRequirement> {
-    public static Codec<AndRequirement> codec() {
-        return AbstractRequirement.dispatchCodec().listOf().fieldOf("subRequirements").xmap(AndRequirement::new, req -> req.subs).codec();
+    public static MapCodec<AndRequirement> codec() {
+        return AbstractRequirement.dispatchCodec().listOf().fieldOf("subRequirements").xmap(AndRequirement::new, req -> req.subs);
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, AndRequirement> streamCodec() {
+        return AbstractRequirement.dispatchStreamCodec().apply(ByteBufCodecs.list()).map(AndRequirement::new, req -> req.subs);
     }
     
     protected final List<AbstractRequirement<?>> subs = new ArrayList<>();
@@ -77,15 +81,5 @@ public class AndRequirement extends AbstractRequirement<AndRequirement> {
     @Override
     protected RequirementType<AndRequirement> getType() {
         return RequirementsPM.AND.get();
-    }
-
-    @Nonnull
-    static AndRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        return new AndRequirement(buf.readList(AbstractRequirement::fromNetwork));
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeCollection(this.subs, (b, s) -> s.toNetwork(b));
     }
 }
