@@ -30,7 +30,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     public static final StreamCodec<ByteBuf, ResearchStageKey> STREAM_CODEC = StreamCodec.composite(
             ResourceKey.streamCodec(RegistryKeysPM.RESEARCH_ENTRIES),
             ResearchStageKey::getRootKey,
-            ByteBufCodecs.INT,
+            ByteBufCodecs.VAR_INT,
             ResearchStageKey::getStage,
             ResearchStageKey::new);
     

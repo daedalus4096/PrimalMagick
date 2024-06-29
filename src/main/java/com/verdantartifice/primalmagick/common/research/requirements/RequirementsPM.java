@@ -25,11 +25,11 @@ public class RequirementsPM {
     }
     
     public static final RegistryObject<RequirementType<ResearchRequirement>> RESEARCH = register("research", ResearchRequirement::codec, ResearchRequirement::streamCodec);
-    public static final RegistryObject<RequirementType<KnowledgeRequirement>> KNOWLEDGE = register("knowledge", () -> KnowledgeRequirement.CODEC, KnowledgeRequirement::fromNetworkInner);
-    public static final RegistryObject<RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", () -> ItemStackRequirement.CODEC, ItemStackRequirement::fromNetworkInner);
-    public static final RegistryObject<RequirementType<ItemTagRequirement>> ITEM_TAG = register("item_tag", () -> ItemTagRequirement.CODEC, ItemTagRequirement::fromNetworkInner);
-    public static final RegistryObject<RequirementType<StatRequirement>> STAT = register("stat", () -> StatRequirement.CODEC, StatRequirement::fromNetworkInner);
-    public static final RegistryObject<RequirementType<ExpertiseRequirement>> EXPERTISE = register("expertise", ExpertiseRequirement::codec, ExpertiseRequirement::fromNetworkInner);   
+    public static final RegistryObject<RequirementType<KnowledgeRequirement>> KNOWLEDGE = register("knowledge", () -> KnowledgeRequirement.CODEC, () -> KnowledgeRequirement.STREAM_CODEC);
+    public static final RegistryObject<RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", () -> ItemStackRequirement.CODEC, () -> ItemStackRequirement.STREAM_CODEC);
+    public static final RegistryObject<RequirementType<ItemTagRequirement>> ITEM_TAG = register("item_tag", () -> ItemTagRequirement.CODEC, () -> ItemTagRequirement.STREAM_CODEC);
+    public static final RegistryObject<RequirementType<StatRequirement>> STAT = register("stat", () -> StatRequirement.CODEC, () -> StatRequirement.STREAM_CODEC);
+    public static final RegistryObject<RequirementType<ExpertiseRequirement>> EXPERTISE = register("expertise", ExpertiseRequirement::codec, ExpertiseRequirement::streamCodec);   
     public static final RegistryObject<RequirementType<VanillaItemUsedStatRequirement>> VANILLA_ITEM_USED_STAT = register("vanilla_item_used_stat", () -> VanillaItemUsedStatRequirement.CODEC, VanillaItemUsedStatRequirement::fromNetworkInner);
     public static final RegistryObject<RequirementType<VanillaCustomStatRequirement>> VANILLA_CUSTOM_STAT = register("vanilla_custom_stat", () -> VanillaCustomStatRequirement.CODEC, VanillaCustomStatRequirement::fromNetworkInner);
     public static final RegistryObject<RequirementType<AndRequirement>> AND = register("and", AndRequirement::codec, AndRequirement::fromNetworkInner);
