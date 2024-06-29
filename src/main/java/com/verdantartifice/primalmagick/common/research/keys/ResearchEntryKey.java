@@ -70,9 +70,4 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
         ResearchEntryKey other = (ResearchEntryKey) obj;
         return Objects.equals(rootKey, other.rootKey);
     }
-    
-    @Nonnull
-    public static ResearchEntryKey fromNetwork(FriendlyByteBuf buf) {
-        return (ResearchEntryKey)AbstractResearchKey.fromNetwork(buf);
-    }
 }
