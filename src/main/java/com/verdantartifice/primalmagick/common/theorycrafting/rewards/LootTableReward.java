@@ -4,10 +4,14 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -25,11 +29,20 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
  * @author Daedalus4096
  */
 public class LootTableReward extends AbstractReward<LootTableReward> {
-    public static final Codec<LootTableReward> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<LootTableReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("lootTable").forGetter(r -> r.lootTable),
             ExtraCodecs.POSITIVE_INT.fieldOf("pullCount").forGetter(r -> r.pullCount),
             Codec.STRING.fieldOf("descTranslationKey").forGetter(r -> r.descTranslationKey)
         ).apply(instance, LootTableReward::new));
+    
+    public static final StreamCodec<ByteBuf, LootTableReward> STREAM_CODEC = StreamCodec.composite(
+            ResourceLocation.STREAM_CODEC,
+            reward -> reward.lootTable,
+            ByteBufCodecs.VAR_INT,
+            reward -> reward.pullCount,
+            ByteBufCodecs.STRING_UTF8,
+            reward -> reward.descTranslationKey,
+            LootTableReward::new);
 
     private final ResourceLocation lootTable;
     private final int pullCount;
@@ -78,18 +91,6 @@ public class LootTableReward extends AbstractReward<LootTableReward> {
         return Component.translatable("label.primalmagick.research_table.reward", this.pullCount, Component.translatable(this.descTranslationKey));
     }
 
-    @Nonnull
-    static LootTableReward fromNetworkInner(FriendlyByteBuf buf) {
-        return new LootTableReward(buf.readResourceLocation(), buf.readVarInt(), buf.readUtf());
-    }
-
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.lootTable);
-        buf.writeVarInt(this.pullCount);
-        buf.writeUtf(this.descTranslationKey);
-    }
-    
     public static Builder builder(ResourceLocation lootTable) {
         return new Builder(lootTable);
     }

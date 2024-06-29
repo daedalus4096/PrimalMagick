@@ -2,11 +2,12 @@ package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 
 import java.util.function.Supplier;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -21,11 +22,11 @@ public class RewardTypesPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<RewardType<ExperienceReward>> EXPERIENCE = register("experience", ExperienceReward.CODEC, ExperienceReward::fromNetworkInner);
-    public static final RegistryObject<RewardType<ItemReward>> ITEM = register("item", ItemReward.CODEC, ItemReward::fromNetworkInner);
-    public static final RegistryObject<RewardType<LootTableReward>> LOOT_TABLE = register("loot_table", LootTableReward.CODEC, LootTableReward::fromNetworkInner);
+    public static final RegistryObject<RewardType<ExperienceReward>> EXPERIENCE = register("experience", ExperienceReward.CODEC, ExperienceReward.STREAM_CODEC);
+    public static final RegistryObject<RewardType<ItemReward>> ITEM = register("item", ItemReward.CODEC, ItemReward.STREAM_CODEC);
+    public static final RegistryObject<RewardType<LootTableReward>> LOOT_TABLE = register("loot_table", LootTableReward.CODEC, LootTableReward.STREAM_CODEC);
 
-    protected static <T extends AbstractReward<T>> RegistryObject<RewardType<T>> register(String id, Codec<T> codec, FriendlyByteBuf.Reader<T> networkReader) {
-        return DEFERRED_TYPES.register(id, () -> new RewardType<T>(PrimalMagick.resource(id), codec, networkReader));
+    protected static <T extends AbstractReward<T>> RegistryObject<RewardType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+        return DEFERRED_TYPES.register(id, () -> new RewardType<T>(PrimalMagick.resource(id), codec, streamCodec));
     }
 }
