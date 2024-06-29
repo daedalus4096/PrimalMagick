@@ -3,10 +3,13 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 import java.util.function.Supplier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -21,7 +24,7 @@ public class RequirementsPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<RequirementType<ResearchRequirement>> RESEARCH = register("research", ResearchRequirement::codec, ResearchRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<ResearchRequirement>> RESEARCH = register("research", ResearchRequirement::codec, ResearchRequirement::streamCodec);
     public static final RegistryObject<RequirementType<KnowledgeRequirement>> KNOWLEDGE = register("knowledge", () -> KnowledgeRequirement.CODEC, KnowledgeRequirement::fromNetworkInner);
     public static final RegistryObject<RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", () -> ItemStackRequirement.CODEC, ItemStackRequirement::fromNetworkInner);
     public static final RegistryObject<RequirementType<ItemTagRequirement>> ITEM_TAG = register("item_tag", () -> ItemTagRequirement.CODEC, ItemTagRequirement::fromNetworkInner);
@@ -33,7 +36,7 @@ public class RequirementsPM {
     public static final RegistryObject<RequirementType<OrRequirement>> OR = register("or", OrRequirement::codec, OrRequirement::fromNetworkInner);
     public static final RegistryObject<RequirementType<QuorumRequirement>> QUORUM = register("quorum", QuorumRequirement::codec, QuorumRequirement::fromNetworkInner);
     
-    protected static <T extends AbstractRequirement<T>> RegistryObject<RequirementType<T>> register(String id, Supplier<Codec<T>> codecSupplier, FriendlyByteBuf.Reader<T> networkReader) {
-        return DEFERRED_TYPES.register(id, () -> new RequirementType<T>(PrimalMagick.resource(id), codecSupplier, networkReader));
+    protected static <T extends AbstractRequirement<T>> RegistryObject<RequirementType<T>> register(String id, Supplier<MapCodec<T>> codecSupplier, Supplier<StreamCodec<? super RegistryFriendlyByteBuf, T>> streamCodecSupplier) {
+        return DEFERRED_TYPES.register(id, () -> new RequirementType<T>(PrimalMagick.resource(id), codecSupplier, streamCodecSupplier));
     }
 }

@@ -14,8 +14,8 @@ import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -25,6 +25,10 @@ import net.minecraft.world.entity.player.Player;
 public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     public static Codec<AbstractRequirement<?>> dispatchCodec() {
         return RegistryCodecs.codec(RequirementsPM.TYPES).dispatch("requirement_type", AbstractRequirement::getType, type -> type.codecSupplier().get());
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, AbstractRequirement<?>> dispatchStreamCodec() {
+        return RegistryCodecs.streamCodec(RequirementsPM.TYPES).dispatch(AbstractRequirement::getType, type -> type.streamCodecSupplier().get());
     }
     
     public abstract boolean isMetBy(@Nullable Player player);
@@ -77,15 +81,11 @@ public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     
     protected abstract RequirementType<T> getType();
     
-    public static AbstractRequirement<?> fromNetwork(FriendlyByteBuf buf) {
-        ResourceLocation typeId = buf.readResourceLocation();
-        return RequirementsPM.TYPES.get().getValue(typeId).networkReader().apply(buf);
+    public static AbstractRequirement<?> fromNetwork(RegistryFriendlyByteBuf buf) {
+        return AbstractRequirement.dispatchStreamCodec().decode(buf);
     }
     
-    public void toNetwork(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.getType().id());
-        this.toNetworkInner(buf);
+    public void toNetwork(RegistryFriendlyByteBuf buf) {
+        AbstractRequirement.dispatchStreamCodec().encode(buf, this);
     }
-    
-    protected abstract void toNetworkInner(FriendlyByteBuf buf);
 }

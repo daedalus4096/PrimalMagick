@@ -32,7 +32,7 @@ public class ResearchKeyTypesPM {
     public static final RegistryObject<ResearchKeyType<RuneEnchantmentKey>> RUNE_ENCHANTMENT = register("rune_enchantment", RuneEnchantmentKey.CODEC, RuneEnchantmentKey.STREAM_CODEC);
     public static final RegistryObject<ResearchKeyType<RuneEnchantmentPartialKey>> RUNE_ENCHANTMENT_PARTIAL = register("rune_enchantment_partial", RuneEnchantmentPartialKey.CODEC, RuneEnchantmentPartialKey.STREAM_CODEC);
     
-    protected static <T extends AbstractResearchKey<T>> RegistryObject<ResearchKeyType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> networkReader) {
-        return DEFERRED_TYPES.register(id, () -> new ResearchKeyType<T>(PrimalMagick.resource(id), codec, networkReader));
+    protected static <T extends AbstractResearchKey<T>> RegistryObject<ResearchKeyType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+        return DEFERRED_TYPES.register(id, () -> new ResearchKeyType<T>(PrimalMagick.resource(id), codec, streamCodec));
     }
 }
