@@ -16,7 +16,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.Requirement
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -94,7 +94,7 @@ public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplin
     }
     
     @Nonnull
-    public static ResearchDisciplineKey fromNetwork(FriendlyByteBuf buf) {
+    public static ResearchDisciplineKey fromNetwork(RegistryFriendlyByteBuf buf) {
         return (ResearchDisciplineKey)AbstractResearchKey.fromNetwork(buf);
     }
 }

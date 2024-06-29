@@ -10,8 +10,8 @@ import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 
@@ -25,7 +25,7 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
         return RegistryCodecs.codec(ResearchKeyTypesPM.TYPES).dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
     }
     
-    public static StreamCodec<ByteBuf, AbstractResearchKey<?>> dispatchStreamCodec() {
+    public static StreamCodec<RegistryFriendlyByteBuf, AbstractResearchKey<?>> dispatchStreamCodec() {
         return RegistryCodecs.streamCodec(ResearchKeyTypesPM.TYPES).dispatch(AbstractResearchKey::getType, ResearchKeyType::streamCodec);
     }
     
@@ -61,11 +61,11 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
         }
     }
     
-    public static AbstractResearchKey<?> fromNetwork(ByteBuf buf) {
+    public static AbstractResearchKey<?> fromNetwork(RegistryFriendlyByteBuf buf) {
         return AbstractResearchKey.dispatchStreamCodec().decode(buf);
     }
     
-    public void toNetwork(ByteBuf buf) {
+    public void toNetwork(RegistryFriendlyByteBuf buf) {
         AbstractResearchKey.dispatchStreamCodec().encode(buf, this);
     }
 }

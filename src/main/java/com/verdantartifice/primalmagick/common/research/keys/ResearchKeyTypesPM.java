@@ -2,13 +2,10 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.function.Supplier;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -35,7 +32,7 @@ public class ResearchKeyTypesPM {
     public static final RegistryObject<ResearchKeyType<RuneEnchantmentKey>> RUNE_ENCHANTMENT = register("rune_enchantment", RuneEnchantmentKey.CODEC, RuneEnchantmentKey.STREAM_CODEC);
     public static final RegistryObject<ResearchKeyType<RuneEnchantmentPartialKey>> RUNE_ENCHANTMENT_PARTIAL = register("rune_enchantment_partial", RuneEnchantmentPartialKey.CODEC, RuneEnchantmentPartialKey.STREAM_CODEC);
     
-    protected static <T extends AbstractResearchKey<T>> RegistryObject<ResearchKeyType<T>> register(String id, MapCodec<T> codec, StreamCodec<ByteBuf, T> networkReader) {
+    protected static <T extends AbstractResearchKey<T>> RegistryObject<ResearchKeyType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> networkReader) {
         return DEFERRED_TYPES.register(id, () -> new ResearchKeyType<T>(PrimalMagick.resource(id), codec, networkReader));
     }
 }
