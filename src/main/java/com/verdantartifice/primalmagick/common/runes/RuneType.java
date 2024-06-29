@@ -1,10 +1,16 @@
 package com.verdantartifice.primalmagick.common.runes;
 
+import java.util.function.IntFunction;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.Codec;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 
 /**
@@ -13,17 +19,25 @@ import net.minecraft.util.StringRepresentable;
  * @author Daedalus4096
  */
 public enum RuneType implements StringRepresentable {
-    VERB("verb"),
-    NOUN("noun"),
-    SOURCE("source"),
-    POWER("power");
+    VERB(0, "verb"),
+    NOUN(1, "noun"),
+    SOURCE(2, "source"),
+    POWER(3, "power");
     
+    private static final IntFunction<RuneType> BY_ID = ByIdMap.continuous(RuneType::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
     public static final Codec<RuneType> CODEC = StringRepresentable.fromEnum(RuneType::values);
+    public static final StreamCodec<ByteBuf, RuneType> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, RuneType::getId);
 
+    private final int id;
     private final String name;
     
-    private RuneType(String str) {
+    private RuneType(int id, String str) {
+        this.id = id;
         this.name = str;
+    }
+    
+    public int getId() {
+        return this.id;
     }
 
     @Override

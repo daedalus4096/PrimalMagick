@@ -2,22 +2,23 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
-import javax.annotation.Nonnull;
-
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
-    public static final Codec<StackCraftedKey> CODEC = ItemStack.CODEC.fieldOf("stack").xmap(StackCraftedKey::new, key -> key.stack).codec();
+    public static final MapCodec<StackCraftedKey> CODEC = ItemStack.CODEC.fieldOf("stack").xmap(StackCraftedKey::new, key -> key.stack);
+    public static final StreamCodec<RegistryFriendlyByteBuf, StackCraftedKey> STREAM_CODEC = ItemStack.STREAM_CODEC.map(StackCraftedKey::new, key -> key.stack);
+    
     private static final String PREFIX = "[#]";
     
     protected final ItemStack stack;
@@ -56,7 +57,7 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
 
     @Override
     public int hashCode() {
-        return this.stack.hasTag() ? Objects.hash(ForgeRegistries.ITEMS.getKey(this.stack.getItem()), this.stack.getTag()) : Objects.hash(ForgeRegistries.ITEMS.getKey(this.stack.getItem()));
+        return Objects.hash(ForgeRegistries.ITEMS.getKey(this.stack.getItem()), this.stack.getComponents());
     }
 
     @Override
@@ -68,16 +69,6 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
         if (getClass() != obj.getClass())
             return false;
         StackCraftedKey other = (StackCraftedKey) obj;
-        return ItemStack.isSameItemSameTags(this.stack, other.stack);
-    }
-
-    @Nonnull
-    static StackCraftedKey fromNetworkInner(FriendlyByteBuf buf) {
-        return new StackCraftedKey(buf.readItem());
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeItemStack(this.stack, false);
+        return ItemStack.isSameItemSameComponents(this.stack, other.stack);
     }
 }

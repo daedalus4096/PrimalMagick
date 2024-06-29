@@ -2,23 +2,24 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 public class TagCraftedKey extends AbstractResearchKey<TagCraftedKey> {
-    public static final Codec<TagCraftedKey> CODEC = TagKey.codec(Registries.ITEM).fieldOf("tagKey").xmap(TagCraftedKey::new, key -> key.tagKey).codec();
+    public static final MapCodec<TagCraftedKey> CODEC = TagKey.codec(Registries.ITEM).fieldOf("tagKey").xmap(TagCraftedKey::new, key -> key.tagKey);
+    public static final StreamCodec<ByteBuf, TagCraftedKey> STREAM_CODEC = StreamCodecUtils.tagKey(Registries.ITEM).map(TagCraftedKey::new, key -> key.tagKey);
+    
     private static final String PREFIX = "[#]";
     
     protected final TagKey<Item> tagKey;
@@ -63,15 +64,5 @@ public class TagCraftedKey extends AbstractResearchKey<TagCraftedKey> {
             return false;
         TagCraftedKey other = (TagCraftedKey) obj;
         return Objects.equals(this.tagKey, other.tagKey);
-    }
-
-    @Nonnull
-    static TagCraftedKey fromNetworkInner(FriendlyByteBuf buf) {
-        return new TagCraftedKey(ItemTags.create(buf.readResourceLocation()));
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.tagKey.location());
     }
 }
