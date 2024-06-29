@@ -494,7 +494,7 @@ public class ResearchManager {
                             ResearchEntryKey finaleKey = finaleEntry.key();
                             if (!knowledge.isResearchKnown(finaleKey)) {
                                 boolean shouldUnlock = finaleEntry.finales().stream().map(k -> registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(k.getRootKey()))
-                                        .filter(Objects::nonNull).flatMap(d -> d.getEntryStream(registryAccess)).filter(e -> e.finales().isEmpty() && !e.finaleExempt()).allMatch(e -> e.isComplete(player));
+                                        .filter(Objects::nonNull).flatMap(d -> d.getEntryStream(registryAccess)).filter(e -> e.finales().isEmpty() && !e.flags().finaleExempt()).allMatch(e -> e.isComplete(player));
                                 if (shouldUnlock) {
                                     knowledge.addResearch(finaleKey);
                                     if (showPopups) {
