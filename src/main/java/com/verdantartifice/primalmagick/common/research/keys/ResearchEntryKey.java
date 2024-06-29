@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
-import javax.annotation.Nonnull;
-
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -13,7 +11,6 @@ import com.verdantartifice.primalmagick.common.research.requirements.Requirement
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
