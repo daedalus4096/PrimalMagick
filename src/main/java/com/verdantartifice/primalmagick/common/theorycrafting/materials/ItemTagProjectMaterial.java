@@ -6,19 +6,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
@@ -33,8 +35,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProjectMaterial> {
-    public static Codec<ItemTagProjectMaterial> codec() {
-        return RecordCodecBuilder.create(instance -> instance.group(
+    public static MapCodec<ItemTagProjectMaterial> codec() {
+        return RecordCodecBuilder.mapCodec(instance -> instance.group(
                 TagKey.codec(Registries.ITEM).fieldOf("tag").forGetter(ItemTagProjectMaterial::getTag),
                 ExtraCodecs.POSITIVE_INT.fieldOf("quantity").forGetter(ItemTagProjectMaterial::getQuantity),
                 Codec.BOOL.fieldOf("consumed").forGetter(ItemTagProjectMaterial::isConsumed),
@@ -42,6 +44,23 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
                 Codec.DOUBLE.fieldOf("bonusReward").forGetter(ItemTagProjectMaterial::getBonusReward),
                 AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ItemTagProjectMaterial::getRequirement)
             ).apply(instance, ItemTagProjectMaterial::new));
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, ItemTagProjectMaterial> streamCodec() {
+        return StreamCodec.composite(
+                StreamCodecUtils.tagKey(Registries.ITEM),
+                ItemTagProjectMaterial::getTag,
+                ByteBufCodecs.VAR_INT,
+                ItemTagProjectMaterial::getQuantity,
+                ByteBufCodecs.BOOL,
+                ItemTagProjectMaterial::isConsumed,
+                ByteBufCodecs.DOUBLE,
+                ItemTagProjectMaterial::getWeight,
+                ByteBufCodecs.DOUBLE,
+                ItemTagProjectMaterial::getBonusReward,
+                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()),
+                ItemTagProjectMaterial::getRequirement,
+                ItemTagProjectMaterial::new);
     }
     
     protected final TagKey<Item> tag;
@@ -131,18 +150,6 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
         return true;
     }
 
-    @Nonnull
-    static ItemTagProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
-        return new ItemTagProjectMaterial(ItemTags.create(buf.readResourceLocation()), buf.readVarInt(), buf.readBoolean(), weight, bonusReward, requirement);
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.tag.location());
-        buf.writeVarInt(this.quantity);
-        buf.writeBoolean(this.consumed);
-    }
-    
     public static Builder builder(TagKey<Item> tag) {
         return new Builder(tag);
     }

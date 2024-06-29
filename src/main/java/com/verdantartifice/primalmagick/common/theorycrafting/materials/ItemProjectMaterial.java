@@ -8,11 +8,15 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ExtraCodecs;
@@ -29,8 +33,8 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMaterial> {
-    public static Codec<ItemProjectMaterial> codec() { 
-        return RecordCodecBuilder.create(instance -> instance.group(
+    public static MapCodec<ItemProjectMaterial> codec() { 
+        return RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ItemStack.CODEC.fieldOf("stack").forGetter(ItemProjectMaterial::getItemStack),
                 Codec.BOOL.fieldOf("consumed").forGetter(ItemProjectMaterial::isConsumed),
                 Codec.BOOL.fieldOf("matchNBT").forGetter(material -> material.matchNBT),
@@ -39,6 +43,25 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
                 Codec.DOUBLE.fieldOf("bonusReward").forGetter(ItemProjectMaterial::getBonusReward),
                 AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ItemProjectMaterial::getRequirement)
             ).apply(instance, ItemProjectMaterial::new));
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, ItemProjectMaterial> streamCodec() {
+        return StreamCodecUtils.composite(
+                ItemStack.STREAM_CODEC,
+                ItemProjectMaterial::getItemStack,
+                ByteBufCodecs.BOOL,
+                ItemProjectMaterial::isConsumed,
+                ByteBufCodecs.BOOL,
+                mat -> mat.matchNBT,
+                ByteBufCodecs.VAR_INT,
+                ItemProjectMaterial::getAfterCrafting,
+                ByteBufCodecs.DOUBLE,
+                ItemProjectMaterial::getWeight,
+                ByteBufCodecs.DOUBLE,
+                ItemProjectMaterial::getBonusReward,
+                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()),
+                ItemProjectMaterial::getRequirement,
+                ItemProjectMaterial::new);
     }
     
     protected final ItemStack stack;
@@ -120,19 +143,6 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
                 && ItemStack.matches(stack, other.stack);
     }
 
-    @Nonnull
-    static ItemProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
-        return new ItemProjectMaterial(buf.readItem(), buf.readBoolean(), buf.readBoolean(), buf.readVarInt(), weight, bonusReward, requirement);
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeItemStack(this.stack, false);
-        buf.writeBoolean(this.consumed);
-        buf.writeBoolean(this.matchNBT);
-        buf.writeVarInt(this.afterCrafting);
-    }
-    
     public static Builder builder(ItemStack stack) {
         return new Builder(stack);
     }

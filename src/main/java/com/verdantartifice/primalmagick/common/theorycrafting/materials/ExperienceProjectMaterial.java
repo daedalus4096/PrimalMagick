@@ -3,13 +3,14 @@ package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -21,14 +22,29 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ExperienceProjectMaterial extends AbstractProjectMaterial<ExperienceProjectMaterial> {
-    public static Codec<ExperienceProjectMaterial> codec() { 
-        return RecordCodecBuilder.create(instance -> instance.group(
+    public static MapCodec<ExperienceProjectMaterial> codec() { 
+        return RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ExtraCodecs.POSITIVE_INT.fieldOf("levels").forGetter(ExperienceProjectMaterial::getLevels),
                 Codec.BOOL.fieldOf("consumed").forGetter(ExperienceProjectMaterial::isConsumed),
                 Codec.DOUBLE.fieldOf("weight").forGetter(ExperienceProjectMaterial::getWeight),
                 Codec.DOUBLE.fieldOf("bonusReward").forGetter(ExperienceProjectMaterial::getBonusReward),
                 AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ExperienceProjectMaterial::getRequirement)
             ).apply(instance, ExperienceProjectMaterial::new));
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, ExperienceProjectMaterial> streamCodec() {
+        return StreamCodec.composite(
+                ByteBufCodecs.VAR_INT,
+                ExperienceProjectMaterial::getLevels,
+                ByteBufCodecs.BOOL,
+                ExperienceProjectMaterial::isConsumed,
+                ByteBufCodecs.DOUBLE,
+                ExperienceProjectMaterial::getWeight,
+                ByteBufCodecs.DOUBLE,
+                ExperienceProjectMaterial::getBonusReward,
+                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()),
+                ExperienceProjectMaterial::getRequirement,
+                ExperienceProjectMaterial::new);
     }
 
     protected final int levels;
@@ -90,17 +106,6 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial<Experienc
         return true;
     }
 
-    @Nonnull
-    static ExperienceProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
-        return new ExperienceProjectMaterial(buf.readVarInt(), buf.readBoolean(), weight, bonusReward, requirement);
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeVarInt(this.levels);
-        buf.writeBoolean(this.consumed);
-    }
-    
     public static Builder builder(int levels) {
         return new Builder(levels);
     }
