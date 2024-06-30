@@ -19,7 +19,9 @@ import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableR
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
 
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -30,6 +32,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.common.Tags;
 
 /**
@@ -82,6 +85,8 @@ public class ProjectTemplates {
     }
     
     public static void bootstrap(BootstrapContext<ProjectTemplate> context) {
+        HolderGetter<BannerPattern> bannerPatternGetter = context.lookup(Registries.BANNER_PATTERN);
+        
         context.register(ADVANCED_ENCHANTING_STUDIES, ProjectTemplate.builder().rewardMultiplier(0.5D)
                 .requiredResearch(ResearchEntries.EXPERT_MANAWEAVING)
                 .requiredResearch(ResearchEntries.PRIMALITE)
@@ -505,7 +510,7 @@ public class ProjectTemplates {
                 .build());
         context.register(RAIDING_THE_RAIDERS, ProjectTemplate.builder().rewardMultiplier(0.5D)
                 .weightFunction(new ConstantWeight(5))
-                .material(ItemProjectMaterial.builder(Raid.getLeaderBannerInstance()).consumed().matchNbt().bonusReward(0.25D).weight(1).build())
+                .material(ItemProjectMaterial.builder(Raid.getLeaderBannerInstance(bannerPatternGetter)).consumed().matchNbt().bonusReward(0.25D).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.BLOODY_FLESH.get()).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.CROSSBOW).consumed().weight(3).build())
                 .material(ItemProjectMaterial.builder(Items.IRON_SWORD).consumed().weight(3).build())

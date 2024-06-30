@@ -4,6 +4,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+
 /**
  * An instance of a material in an initialized theorycrafting project.  Tracks whether the material
  * has been selected for use.
@@ -16,6 +20,15 @@ public class MaterialInstance {
                 AbstractProjectMaterial.dispatchCodec().fieldOf("materialDefinition").forGetter(MaterialInstance::getMaterialDefinition),
                 Codec.BOOL.fieldOf("selected").forGetter(MaterialInstance::isSelected)
             ).apply(instance, MaterialInstance::new));
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, MaterialInstance> streamCodec() {
+        return StreamCodec.composite(
+                AbstractProjectMaterial.dispatchStreamCodec(),
+                MaterialInstance::getMaterialDefinition,
+                ByteBufCodecs.BOOL,
+                MaterialInstance::isSelected,
+                MaterialInstance::new);
     }
     
     protected final AbstractProjectMaterial<?> materialDefinition;
