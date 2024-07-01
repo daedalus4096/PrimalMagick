@@ -82,7 +82,7 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
                 retVal.add(ampMod.getPropertyValue(SpellPropertiesPM.AMPLIFY_POWER.get()));
             });
             if (spellSource != null) {
-                int enchLevel = spellSource.getEnchantmentLevel(EnchantmentsPM.SPELL_POWER.get());
+                int enchLevel = spellSource.getEnchantments().getLevel(EnchantmentsPM.SPELL_POWER.get());
                 if (enchLevel > 0) {
                     retVal.add(enchLevel);
                 }
