@@ -263,7 +263,7 @@ public class SpellManager {
         if (spell != null) {
             ISpellVehicle vehicle = spell.getVehicle();
             if (vehicle != null) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getDetailTooltip())));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getDetailTooltip(spell, spellSource))));
             }
             
             ISpellPayload payload = spell.getPayload();

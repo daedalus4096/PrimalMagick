@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.spells.ISpellComponent;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
@@ -28,7 +29,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface ISpellPayload extends INBTSerializable<CompoundTag> {
+public interface ISpellPayload extends ISpellComponent, INBTSerializable<CompoundTag> {
     /**
      * Execute this spell payload upon the designated target.
      * 
@@ -41,14 +42,6 @@ public interface ISpellPayload extends INBTSerializable<CompoundTag> {
      * @param projectileEntity the entity carrying this spell payload, if it's a projectile
      */
     public void execute(@Nullable HitResult target, @Nullable Vec3 burstPoint, @Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, @Nullable Entity projectileEntity);
-    
-    /**
-     * Determine whether this payload has an effect that should be executed.  Should be true for all but
-     * placeholder payloads.
-     * 
-     * @return true if this payload has an effect that should be executed, false otherwise
-     */
-    public boolean isActive();
     
     /**
      * Get the primal source of the payload.  Determines the type of mana that must be spent to cast it.
@@ -73,55 +66,4 @@ public interface ISpellPayload extends INBTSerializable<CompoundTag> {
      * @param origin the origin position of the sound to be played
      */
     public void playSounds(@Nonnull Level world, @Nonnull BlockPos origin);
-    
-    /**
-     * Get a name-ordered list of properties used by this spell payload.
-     * 
-     * @return a name-ordered list of properties used by this spell payload
-     */
-    @Nonnull
-    public List<SpellProperty> getProperties();
-    
-    /**
-     * Get a specific property of the spell payload.
-     * 
-     * @param name the name of the property to retrieve
-     * @return the named property, or null if no such property is attached to this spell payload
-     */
-    @Nullable
-    public SpellProperty getProperty(String name);
-    
-    /**
-     * Get the value of a specific property of the spell payload.
-     * 
-     * @param name the name of the property value to retrieve
-     * @return the named property's value, or zero if no such property is attached to this spell payload
-     */
-    public int getPropertyValue(String name);
-    
-    /**
-     * Get a display text component containing the human-friendly name of this spell payload type.
-     * 
-     * @return the spell payload type name
-     */
-    @Nonnull
-    public Component getTypeName();
-    
-    /**
-     * Get a display text component to show in the details tooltip of the spell.
-     * 
-     * @return the spell payload details
-     */
-    public default Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return this.getTypeName();
-    }
-    
-    /**
-     * Get a display text component containing the human-friendly text to be used to identify the
-     * spell payload in the default of a spell package.
-     * 
-     * @return the spell payload's default name
-     */
-    @Nonnull
-    public Component getDefaultNamePiece();
 }
