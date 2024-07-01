@@ -38,8 +38,10 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -439,7 +441,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                         inv.setItem(index.intValue(), ingStack);
                     }
                 });
-                return craftingRecipe.getRemainingItems(inv);
+                return craftingRecipe.getRemainingItems(inv.asCraftInput());
             });
         } else {
             containerFuture = CompletableFuture.completedFuture(NonNullList.create());
@@ -528,12 +530,14 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         MutableObject<SourceList> retVal = new MutableObject<>(inputSources.copy());
         
         // Determine bonus affinities from NBT-attached potion data
-        Potion potion = PotionUtils.getPotion(stack);
-        if (potion != null && potion != Potions.EMPTY) {
-            IAffinity bonus = this.getAffinity(AffinityType.POTION_BONUS, ForgeRegistries.POTIONS.getKey(potion));
-            if (bonus != null) {
-                bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()));
-            }
+        if (stack.has(DataComponents.POTION_CONTENTS)) {
+            Optional<Holder<Potion>> potionHolderOpt = stack.get(DataComponents.POTION_CONTENTS).potion();
+            potionHolderOpt.ifPresent(potionHolder -> {
+                IAffinity bonus = this.getAffinity(AffinityType.POTION_BONUS, ForgeRegistries.POTIONS.getKey(potionHolder.value()));
+                if (bonus != null) {
+                    bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()));
+                }
+            });
         }
         
         // Determine bonus affinities from NBT-attached enchantment data

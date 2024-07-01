@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.concoctions;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
@@ -10,6 +11,8 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBo
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -23,7 +26,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -41,7 +44,7 @@ public class AlchemicalBombItem extends Item {
 
     @Override
     public ItemStack getDefaultInstance() {
-        return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(super.getDefaultInstance(), Potions.WATER), ConcoctionType.BOMB), FuseType.MEDIUM);
+        return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionContents.createItemStack(this, Potions.WATER), ConcoctionType.BOMB), FuseType.MEDIUM);
     }
 
     @Override
@@ -83,18 +86,21 @@ public class AlchemicalBombItem extends Item {
 
     @Override
     public String getDescriptionId(ItemStack stack) {
-        Potion potion = PotionUtils.getPotion(stack);
         ConcoctionType type = ConcoctionUtils.getConcoctionType(stack);
-        if (type == null) {
-            potion = Potions.EMPTY;
-            type = ConcoctionType.WATER;
+        if (stack.has(DataComponents.POTION_CONTENTS) && type != null) {
+            Optional<Holder<Potion>> potionHolderOpt = stack.get(DataComponents.POTION_CONTENTS).potion();
+            return Potion.getName(potionHolderOpt, this.getDescriptionId() + "." + type.getSerializedName() + ".effect.");
+        } else {
+            PotionContents fakeContents = new PotionContents(Potions.WATER);
+            return Potion.getName(fakeContents.potion(), this.getDescriptionId() + "." + type.getSerializedName() + ".effect.");
         }
-        return potion.getName(this.getDescriptionId() + "." + type.getSerializedName() + ".effect.");
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        PotionUtils.addPotionTooltip(stack, tooltip, 1.0F, worldIn == null ? 20.0F : worldIn.tickRateManager().tickrate());
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+        if (stack.has(DataComponents.POTION_CONTENTS)) {
+            PotionContents.addPotionTooltip(stack.get(DataComponents.POTION_CONTENTS).getAllEffects(), tooltip::add, 1.0F, context.tickRate());
+        }
         tooltip.add(Component.translatable("concoctions.primalmagick.charges_remaining", ConcoctionUtils.getCurrentDoses(stack)).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
         FuseType fuse = ConcoctionUtils.getFuseType(stack);
         if (fuse == null) {
@@ -106,7 +112,7 @@ public class AlchemicalBombItem extends Item {
 
     @Override
     public boolean isFoil(ItemStack stack) {
-        return super.isFoil(stack) || !PotionUtils.getMobEffects(stack).isEmpty();
+        return super.isFoil(stack) || (stack.has(DataComponents.POTION_CONTENTS) && stack.get(DataComponents.POTION_CONTENTS).hasEffects());
     }
 
     public static void registerCreativeTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier) {
@@ -116,7 +122,7 @@ public class AlchemicalBombItem extends Item {
             registryLookup.listElements().filter(potionRef -> {
                 return !potionRef.value().getEffects().isEmpty();
             }).map(potionRef -> {
-                return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(new ItemStack(item), potionRef.value()), ConcoctionType.BOMB), FuseType.MEDIUM);
+                return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionContents.createItemStack(item, potionRef), ConcoctionType.BOMB), FuseType.MEDIUM);
             }).forEach(stack -> {
                 output.accept(stack);
             });
