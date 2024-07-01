@@ -22,11 +22,11 @@ public class SpellVehiclesPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<SpellVehicleType<EmptySpellVehicle>> EMPTY = register("empty", EmptySpellVehicle.CODEC, EmptySpellVehicle.STREAM_CODEC);
-    public static final RegistryObject<SpellVehicleType<BoltSpellVehicle>> BOLT = register("bolt", BoltSpellVehicle.CODEC, BoltSpellVehicle.STREAM_CODEC);
-    public static final RegistryObject<SpellVehicleType<ProjectileSpellVehicle>> PROJECTILE = register("projectile", ProjectileSpellVehicle.CODEC, ProjectileSpellVehicle.STREAM_CODEC);
-    public static final RegistryObject<SpellVehicleType<SelfSpellVehicle>> SELF = register("self", SelfSpellVehicle.CODEC, SelfSpellVehicle.STREAM_CODEC);
-    public static final RegistryObject<SpellVehicleType<TouchSpellVehicle>> TOUCH = register("touch", TouchSpellVehicle.CODEC, TouchSpellVehicle.STREAM_CODEC);
+    public static final RegistryObject<SpellVehicleType<EmptySpellVehicle>> EMPTY = register(EmptySpellVehicle.TYPE, EmptySpellVehicle.CODEC, EmptySpellVehicle.STREAM_CODEC);
+    public static final RegistryObject<SpellVehicleType<BoltSpellVehicle>> BOLT = register(BoltSpellVehicle.TYPE, BoltSpellVehicle.CODEC, BoltSpellVehicle.STREAM_CODEC);
+    public static final RegistryObject<SpellVehicleType<ProjectileSpellVehicle>> PROJECTILE = register(ProjectileSpellVehicle.TYPE, ProjectileSpellVehicle.CODEC, ProjectileSpellVehicle.STREAM_CODEC);
+    public static final RegistryObject<SpellVehicleType<SelfSpellVehicle>> SELF = register(SelfSpellVehicle.TYPE, SelfSpellVehicle.CODEC, SelfSpellVehicle.STREAM_CODEC);
+    public static final RegistryObject<SpellVehicleType<TouchSpellVehicle>> TOUCH = register(TouchSpellVehicle.TYPE, TouchSpellVehicle.CODEC, TouchSpellVehicle.STREAM_CODEC);
     
     protected static <T extends AbstractSpellVehicle<T>> RegistryObject<SpellVehicleType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         return DEFERRED_TYPES.register(id, () -> new SpellVehicleType<T>(PrimalMagick.resource(id), codec, streamCodec));
