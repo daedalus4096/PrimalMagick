@@ -5,6 +5,8 @@ import java.util.function.Supplier;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
+import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -22,9 +24,9 @@ public class SpellModsPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<SpellModType<AmplifySpellMod>> AMPLIFY = register(AmplifySpellMod.TYPE, AmplifySpellMod.CODEC, AmplifySpellMod.STREAM_CODEC);
+    public static final RegistryObject<SpellModType<AmplifySpellMod>> AMPLIFY = register(AmplifySpellMod.TYPE, SpellPropertiesPM.AMPLIFY_POWER, AmplifySpellMod.CODEC, AmplifySpellMod.STREAM_CODEC);
     
-    protected static <T extends AbstractSpellMod<T>> RegistryObject<SpellModType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return DEFERRED_TYPES.register(id, () -> new SpellModType<T>(PrimalMagick.resource(id), codec, streamCodec));
+    protected static <T extends AbstractSpellMod<T>> RegistryObject<SpellModType<T>> register(String id, Supplier<SpellProperty> tiebreaker, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+        return DEFERRED_TYPES.register(id, () -> new SpellModType<T>(PrimalMagick.resource(id), tiebreaker, codec, streamCodec));
     }
 }

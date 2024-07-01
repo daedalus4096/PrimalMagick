@@ -63,11 +63,11 @@ public class AmplifySpellMod extends AbstractSpellMod<AmplifySpellMod> {
     @Override
     public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, ItemStack spellSource) {
         // Don't amplify self or take amplification from wand enchantments
-        return this.getPropertyValue(name);
+        return spell.getMod(this.getType()).orElseThrow().getPropertyValue(property);
     }
 
     @Override
-    protected SpellModType<AmplifySpellMod> getType() {
+    public SpellModType<AmplifySpellMod> getType() {
         return SpellModsPM.AMPLIFY.get();
     }
 }

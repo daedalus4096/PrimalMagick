@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.spells;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -8,6 +10,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.QuickenSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
 import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
@@ -37,7 +40,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @see {@link com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload}
  * @see {@link com.verdantartifice.primalmagick.common.spells.mods.ISpellMod}
  */
-public class SpellPackage implements INBTSerializable<CompoundTag> {
+public class SpellPackage {
     protected String name = "";
     protected ConfiguredSpellVehicle<?> vehicle = null;
     protected ConfiguredSpellPayload<?> payload = null;
@@ -67,45 +70,45 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
     }
 
     @Nullable
-    public ISpellVehicle getVehicle() {
+    public ConfiguredSpellVehicle<?> getVehicle() {
         return this.vehicle;
     }
 
-    public void setVehicle(@Nullable ISpellVehicle vehicle) {
+    public void setVehicle(@Nullable ConfiguredSpellVehicle<?> vehicle) {
         this.vehicle = vehicle;
     }
 
     @Nullable
-    public ISpellPayload getPayload() {
+    public ConfiguredSpellPayload<?> getPayload() {
         return this.payload;
     }
 
-    public void setPayload(@Nullable ISpellPayload payload) {
+    public void setPayload(@Nullable ConfiguredSpellPayload<?> payload) {
         this.payload = payload;
     }
 
     @Nullable
-    public ISpellMod getPrimaryMod() {
+    public ConfiguredSpellMod<?> getPrimaryMod() {
         return this.primaryMod;
     }
 
-    public void setPrimaryMod(@Nullable ISpellMod primaryMod) {
+    public void setPrimaryMod(@Nullable ConfiguredSpellMod<?> primaryMod) {
         this.primaryMod = primaryMod;
     }
 
     @Nullable
-    public ISpellMod getSecondaryMod() {
+    public ConfiguredSpellMod<?> getSecondaryMod() {
         return this.secondaryMod;
     }
 
-    public void setSecondaryMod(@Nullable ISpellMod secondaryMod) {
+    public void setSecondaryMod(@Nullable ConfiguredSpellMod<?> secondaryMod) {
         this.secondaryMod = secondaryMod;
     }
     
     public boolean isValid() {
         // A valid package has a name, a vehicle component, and a payload component; mods are optional
-        return this.vehicle != null && this.vehicle.isActive() &&
-                this.payload != null && this.payload.isActive() &&
+        return this.vehicle != null && this.vehicle.getComponent().isActive() &&
+                this.payload != null && this.payload.getComponent().isActive() &&
                 this.name != null && !this.name.isEmpty();
     }
 
@@ -157,12 +160,12 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
             return SourceList.EMPTY;
         }
         
-        int baseManaCost = this.payload.getBaseManaCost();
+        int baseManaCost = this.payload.getComponent().getBaseManaCost();
         if (baseManaCost == 0) {
             return SourceList.EMPTY;
         }
         
-        Source source = this.payload.getSource();
+        Source source = this.payload.getComponent().getSource();
         int baseModifier = 0;
         int multiplier = 1;
         
@@ -185,23 +188,23 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
     
     public void cast(Level world, LivingEntity caster, ItemStack spellSource) {
         if (this.payload != null) {
-            this.payload.playSounds(world, caster.blockPosition());
+            this.payload.getComponent().playSounds(world, caster.blockPosition());
         }
         if (this.vehicle != null) {
             if (caster instanceof Player player) {
                 ExpertiseManager.awardExpertise(player, this);
                 StatsManager.incrementValue(player, StatsPM.SPELLS_CAST);
             }
-            this.vehicle.execute(this, world, caster, spellSource);
+            this.vehicle.getComponent().execute(this, world, caster, spellSource);
         }
     }
     
     public int getActiveModCount() {
         int retVal = 0;
-        if (this.primaryMod != null && this.primaryMod.isActive()) {
+        if (this.primaryMod != null && this.primaryMod.getComponent().isActive()) {
             retVal++;
         }
-        if (this.secondaryMod != null && this.secondaryMod.isActive()) {
+        if (this.secondaryMod != null && this.secondaryMod.getComponent().isActive()) {
             retVal++;
         }
         return retVal;
@@ -210,37 +213,34 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
     @Nonnull
     public Rarity getRarity() {
         // A spell's rarity is based on how any mods it has
-        int mods = this.getActiveModCount();
-        switch (mods) {
-        case 2:
-            return Rarity.EPIC;
-        case 1:
-            return Rarity.RARE;
-        default:
-            return Rarity.UNCOMMON;
+        return switch (this.getActiveModCount()) {
+            case 2 -> Rarity.EPIC;
+            case 1 -> Rarity.RARE;
+            default -> Rarity.UNCOMMON;
+        };
+    }
+    
+    public Optional<ConfiguredSpellMod<?>> getMod(SpellModType<?> type) {
+        // Determine if either of the attached mod components are of the requested type
+        ConfiguredSpellMod<?> primary = this.primaryMod != null && this.primaryMod.getComponent().getType().equals(type) ? this.primaryMod : null;
+        ConfiguredSpellMod<?> secondary = this.secondaryMod != null && this.secondaryMod.getComponent().getType().equals(type) ? this.secondaryMod : null;
+        
+        if (primary != null && secondary != null) {
+            // If both mods are of the requested type, only return the one with a higher value in the tiebreaker property
+            SpellProperty tiebreaker = primary.getComponent().getType().tiebreaker().get();
+            return secondary.getPropertyValue(tiebreaker) > primary.getPropertyValue(tiebreaker) ? Optional.of(secondary) : Optional.of(primary);
+        } else if (primary != null) {
+            return Optional.of(primary);
+        } else {
+            return Optional.ofNullable(secondary);
         }
     }
     
-    @Nullable
-    public <T extends ISpellMod> T getMod(Class<T> clazz, String tiebreakerProperty) {
-        // Determine if either of the attached mod components are of the requested class
-        T primary = clazz.isInstance(this.primaryMod) ? clazz.cast(this.primaryMod) : null;
-        T secondary = clazz.isInstance(this.secondaryMod) ? clazz.cast(this.secondaryMod) : null;
-        
-        if (primary != null && secondary != null) {
-            // If both mods are of the requested type, only return the one with a higher value in the specified property
-            return secondary.getPropertyValue(tiebreakerProperty) > primary.getPropertyValue(tiebreakerProperty) ? secondary : primary;
-        } else if (primary != null) {
-            return primary;
-        } else {
-            return secondary;
-        }
-    }
     
     @Nullable
     public ResourceLocation getIcon() {
         if (this.payload != null) {
-            return this.payload.getSource().getImage();
+            return this.payload.getComponent().getSource().getImage();
         }
         return null;
     }

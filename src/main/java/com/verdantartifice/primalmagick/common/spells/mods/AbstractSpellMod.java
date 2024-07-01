@@ -4,10 +4,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -42,7 +45,7 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
         return RegistryCodecs.streamCodec(SpellModsPM.TYPES).dispatch(AbstractSpellMod::getType, SpellModType::streamCodec);
     }
     
-    protected abstract SpellModType<T> getType();
+    public abstract SpellModType<T> getType();
     
     /**
      * Get the type name for this spell mod.
@@ -70,22 +73,22 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
     }
 
     public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, @Nullable ItemStack spellSource) {
-        int retVal = this.getPropertyValue(name);
-        if (retVal > 0 && SpellPropertiesPM.PROPERTIES.get().tags().getTag(SpellPropertyTagsPM.AMPLIFIABLE).contains(property)) {
+        MutableInt retVal = new MutableInt(spell.getMod(this.getType()).orElseThrow().getPropertyValue(property));
+        if (retVal.intValue() > 0 && SpellPropertiesPM.PROPERTIES.get().tags().getTag(SpellPropertyTagsPM.AMPLIFIABLE).contains(property)) {
             // For power or duration properties greater than zero, increase the total result by
             // the power of any attached Amplify spell mod or Spell Power enchantment
-            AmplifySpellMod ampMod = spell.getMod(AmplifySpellMod.class, "power");
-            if (ampMod != null) {
-                retVal += ampMod.getPropertyValue("power");
-            }
+            Optional<ConfiguredSpellMod<?>> ampModOpt = spell.getMod(SpellModsPM.AMPLIFY.get());
+            ampModOpt.ifPresent(ampMod -> {
+                retVal.add(ampMod.getPropertyValue(SpellPropertiesPM.AMPLIFY_POWER.get()));
+            });
             if (spellSource != null) {
                 int enchLevel = spellSource.getEnchantmentLevel(EnchantmentsPM.SPELL_POWER.get());
                 if (enchLevel > 0) {
-                    retVal += enchLevel;
+                    retVal.add(enchLevel);
                 }
             }
         }
-        return retVal;
+        return retVal.intValue();
     }
     
     @Override

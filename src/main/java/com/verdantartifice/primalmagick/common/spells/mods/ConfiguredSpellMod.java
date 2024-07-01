@@ -5,7 +5,7 @@ import java.util.Map;
 import com.verdantartifice.primalmagick.common.spells.AbstractConfiguredSpellComponent;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
-public class ConfiguredSpellMod<T extends ISpellMod> extends AbstractConfiguredSpellComponent<T> {
+public class ConfiguredSpellMod<T extends AbstractSpellMod<T>> extends AbstractConfiguredSpellComponent<T> {
     public ConfiguredSpellMod(T mod) {
         super(mod);
     }
