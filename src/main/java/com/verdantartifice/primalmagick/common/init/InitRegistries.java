@@ -18,6 +18,8 @@ import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypesPM;
@@ -56,5 +58,7 @@ public class InitRegistries {
         RewardTypesPM.init();
         WeightFunctionTypesPM.init();
         DataComponentsPM.init();
+        SpellPropertiesPM.init();
+        SpellModsPM.init();
     }
 }

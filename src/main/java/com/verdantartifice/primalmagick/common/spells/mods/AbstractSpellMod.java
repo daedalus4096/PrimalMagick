@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,12 +9,21 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -21,12 +31,16 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractSpellMod implements ISpellMod {
-    protected final Map<String, SpellProperty> properties;
-
-    public AbstractSpellMod() {
-        this.properties = this.initProperties();
+public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements ISpellMod {
+    public static Codec<AbstractSpellMod<?>> dispatchCodec() {
+        return RegistryCodecs.codec(SpellModsPM.TYPES).dispatch("mod_type", AbstractSpellMod::getType, SpellModType::codec);
     }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellMod<?>> dispatchStreamCodec() {
+        return RegistryCodecs.streamCodec(SpellModsPM.TYPES).dispatch(AbstractSpellMod::getType, SpellModType::streamCodec);
+    }
+    
+    protected abstract SpellModType<T> getType();
     
     /**
      * Get the type name for this spell mod.
@@ -36,33 +50,6 @@ public abstract class AbstractSpellMod implements ISpellMod {
     protected abstract String getModType();
     
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putString("ModType", this.getModType());
-        for (Map.Entry<String, SpellProperty> entry : this.properties.entrySet()) {
-            nbt.putInt(entry.getKey(), entry.getValue().getValue());
-        }
-        return nbt;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        for (Map.Entry<String, SpellProperty> entry : this.properties.entrySet()) {
-            entry.getValue().setValue(nbt.getInt(entry.getKey()));
-        }
-    }
-
-    /**
-     * Initialize the property map for this spell mod.  Should create a maximum of two properties.
-     * 
-     * @return a map of property names to spell properties
-     */
-    @Nonnull
-    protected Map<String, SpellProperty> initProperties() {
-        return new HashMap<>();
-    }
-    
-    @Override
     public boolean isActive() {
         return true;
     }
@@ -70,19 +57,16 @@ public abstract class AbstractSpellMod implements ISpellMod {
     @Override
     public List<SpellProperty> getProperties() {
         // Sort properties by their display names
-        return this.properties.values().stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
-    }
-
-    @Override
-    public SpellProperty getProperty(String name) {
-        return this.properties.get(name);
-    }
-
-    @Override
-    public int getPropertyValue(String name) {
-        return this.properties.containsKey(name) ? this.properties.get(name).getValue() : 0;
+        return this.getPropertiesInner().stream().sorted(Comparator.comparing(SpellProperty::id)).collect(Collectors.toList());
     }
     
+    protected abstract List<SpellProperty> getPropertiesInner();
+
+    @Override
+    public SpellProperty getProperty(ResourceLocation id) {
+        return this.getPropertiesInner().stream().filter(prop -> prop.id().equals(id)).findFirst().orElse(null);
+    }
+
     public int getModdedPropertyValue(String name, SpellPackage spell, @Nullable ItemStack spellSource) {
         int retVal = this.getPropertyValue(name);
         if (retVal > 0 && ("power".equals(name) || "duration".equals(name))) {

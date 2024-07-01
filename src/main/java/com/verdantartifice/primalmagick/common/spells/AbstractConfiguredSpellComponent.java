@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.spells;
 
 import java.util.Map;
 
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.util.Mth;
 
 /**
@@ -12,16 +11,16 @@ import net.minecraft.util.Mth;
  */
 public abstract class AbstractConfiguredSpellComponent<T extends ISpellComponent> {
     protected final T component;
-    protected final Map<SpellProperty, Integer> configuredProperties;
+    protected final SpellPropertyConfiguration configuredProperties;
     
     protected AbstractConfiguredSpellComponent(T component) {
         this.component = component;
-        this.configuredProperties = new Object2IntOpenHashMap<SpellProperty>();
+        this.configuredProperties = SpellPropertyConfiguration.EMPTY.copy();
     }
     
     protected AbstractConfiguredSpellComponent(T component, Map<SpellProperty, Integer> configuredProperties) {
-        this(component);
-        this.configuredProperties.putAll(configuredProperties);
+        this.component = component;
+        this.configuredProperties = new SpellPropertyConfiguration(configuredProperties);
     }
     
     public T getComponent() {
@@ -35,7 +34,7 @@ public abstract class AbstractConfiguredSpellComponent<T extends ISpellComponent
     public void setPropertyValue(SpellProperty property, int value) {
         if (this.component.getProperties().contains(property)) {
             // Ensure that the given value respects this property's bounds
-            this.configuredProperties.put(property, Mth.clamp(value, property.min(), property.max()));
+            this.configuredProperties.set(property, Mth.clamp(value, property.min(), property.max()));
         }
     }
     
@@ -45,6 +44,6 @@ public abstract class AbstractConfiguredSpellComponent<T extends ISpellComponent
      * @return whether all of this component's properties have been configured with a value
      */
     public boolean isFullyConfigured() {
-        return this.component.getProperties().stream().allMatch(prop -> this.configuredProperties.containsKey(prop));
+        return this.component.getProperties().stream().allMatch(prop -> this.configuredProperties.contains(prop));
     }
 }

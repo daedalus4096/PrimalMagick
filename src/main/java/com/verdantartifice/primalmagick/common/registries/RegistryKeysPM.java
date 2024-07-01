@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyType;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialType;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType;
@@ -37,6 +38,7 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<WeightFunctionType<?>>> PROJECT_WEIGHT_FUNCTION_TYPES = key("project_weight_function_types");
     public static final ResourceKey<Registry<RuneEnchantmentDefinition>> RUNE_ENCHANTMENT_DEFINITIONS = key("rune_enchantment_definitions");
     public static final ResourceKey<Registry<SpellProperty>> SPELL_PROPERTIES = key("spell_properties");
+    public static final ResourceKey<Registry<SpellModType<?>>> SPELL_MOD_TYPES = key("spell_mods");
     
     private static <T> ResourceKey<Registry<T>> key(String name) {
         return ResourceKey.createRegistryKey(PrimalMagick.resource(name));

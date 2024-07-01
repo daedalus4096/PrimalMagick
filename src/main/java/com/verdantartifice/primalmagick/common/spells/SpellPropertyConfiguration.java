@@ -33,8 +33,20 @@ public class SpellPropertyConfiguration {
         this.propertyValues = new Object2IntOpenHashMap<>(values);
     }
     
+    public SpellPropertyConfiguration copy() {
+        return new SpellPropertyConfiguration(this);
+    }
+    
     public int get(SpellProperty property) {
-        return this.propertyValues.getOrDefault(property, 0);
+        return this.getOrDefault(property, 0);
+    }
+    
+    public int getOrDefault(SpellProperty property, int defaultValue) {
+        return this.propertyValues.getOrDefault(property, defaultValue);
+    }
+    
+    public boolean contains(SpellProperty property) {
+        return this.propertyValues.containsKey(property);
     }
     
     public void set(SpellProperty property, int value) {

@@ -1,14 +1,20 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -17,17 +23,17 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class AmplifySpellMod extends AbstractSpellMod {
+public class AmplifySpellMod extends AbstractSpellMod<AmplifySpellMod> {
+    public static final AmplifySpellMod INSTANCE = new AmplifySpellMod();
+    
+    public static final MapCodec<AmplifySpellMod> CODEC = MapCodec.unit(AmplifySpellMod.INSTANCE);
+    public static final StreamCodec<ByteBuf, AmplifySpellMod> STREAM_CODEC = StreamCodec.unit(AmplifySpellMod.INSTANCE);
+    
     public static final String TYPE = "amplify";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_AMPLIFY));
+    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.AMPLIFY_POWER.get());
 
     public AmplifySpellMod() {
-        super();
-    }
-    
-    public AmplifySpellMod(int power) {
-        super();
-        this.getProperty("power").setValue(power);
     }
     
     public static AbstractRequirement<?> getRequirement() {
@@ -35,20 +41,19 @@ public class AmplifySpellMod extends AbstractSpellMod {
     }
     
     @Override
-    protected Map<String, SpellProperty> initProperties() {
-        Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("power", new SpellProperty("power", "spells.primalmagick.property.power", 1, 5));
-        return propMap;
+    protected List<SpellProperty> getPropertiesInner() {
+        // TODO Auto-generated method stub
+        return null;
     }
-    
+
     @Override
-    public int getBaseManaCostModifier() {
+    public int getBaseManaCostModifier(SpellPropertyConfiguration properties) {
         return 0;
     }
     
     @Override
-    public int getManaCostMultiplier() {
-        return 1 + this.getPropertyValue("power");
+    public int getManaCostMultiplier(SpellPropertyConfiguration properties) {
+        return 1 + properties.getOrDefault(SpellPropertiesPM.AMPLIFY_POWER.get(), 0);
     }
 
     @Override
@@ -60,5 +65,10 @@ public class AmplifySpellMod extends AbstractSpellMod {
     public int getModdedPropertyValue(String name, SpellPackage spell, ItemStack spellSource) {
         // Don't amplify self or take amplification from wand enchantments
         return this.getPropertyValue(name);
+    }
+
+    @Override
+    protected SpellModType<AmplifySpellMod> getType() {
+        return SpellModsPM.AMPLIFY.get();
     }
 }

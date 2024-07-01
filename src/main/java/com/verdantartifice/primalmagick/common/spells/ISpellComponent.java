@@ -6,16 +6,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public interface ISpellComponent {
-    /**
-     * Get the type name for this spell component.
-     * 
-     * @return the type name for this spell component
-     */
-    String getType();
-    
     /**
      * Get a name-ordered list of properties used by this spell component.
      * 
@@ -27,11 +21,11 @@ public interface ISpellComponent {
     /**
      * Get a specific property of the spell component.
      * 
-     * @param name the name of the property to retrieve
+     * @param id the identifier of the property to retrieve
      * @return the named property, or null if no such property is attached to this spell component
      */
     @Nullable
-    SpellProperty getProperty(String name);
+    SpellProperty getProperty(ResourceLocation id);
     
     /**
      * Determine whether the spell component has an effect that should be executed.  Should be true for all but

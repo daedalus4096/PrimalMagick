@@ -25,6 +25,7 @@ public class SpellPropertiesPM {
     }
     
     public static final RegistryObject<SpellProperty> POWER = register("power", id -> new SpellProperty(id, "spells.primalmagick.property.power", 1, 5));
+    public static final RegistryObject<SpellProperty> AMPLIFY_POWER = register("amplify_power", id -> new SpellProperty(id, "spells.primalmagick.property.power", 1, 5));
     public static final RegistryObject<SpellProperty> BURST_POWER = register("burst_power", id -> new SpellProperty(id, "spells.primalmagick.property.power", 0, 5));
     public static final RegistryObject<SpellProperty> DURATION = register("duration", id -> new SpellProperty(id, "spells.primalmagick.property.duration", 0, 5));
     
