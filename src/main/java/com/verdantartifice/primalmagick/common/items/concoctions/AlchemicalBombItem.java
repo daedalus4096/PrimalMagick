@@ -91,6 +91,7 @@ public class AlchemicalBombItem extends Item {
             Optional<Holder<Potion>> potionHolderOpt = stack.get(DataComponents.POTION_CONTENTS).potion();
             return Potion.getName(potionHolderOpt, this.getDescriptionId() + "." + type.getSerializedName() + ".effect.");
         } else {
+            type = ConcoctionType.WATER;
             PotionContents fakeContents = new PotionContents(Potions.WATER);
             return Potion.getName(fakeContents.potion(), this.getDescriptionId() + "." + type.getSerializedName() + ".effect.");
         }
@@ -98,9 +99,7 @@ public class AlchemicalBombItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        if (stack.has(DataComponents.POTION_CONTENTS)) {
-            PotionContents.addPotionTooltip(stack.get(DataComponents.POTION_CONTENTS).getAllEffects(), tooltip::add, 1.0F, context.tickRate());
-        }
+        PotionContents.addPotionTooltip(stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getAllEffects(), tooltip::add, 1.0F, context.tickRate());
         tooltip.add(Component.translatable("concoctions.primalmagick.charges_remaining", ConcoctionUtils.getCurrentDoses(stack)).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
         FuseType fuse = ConcoctionUtils.getFuseType(stack);
         if (fuse == null) {
@@ -112,7 +111,7 @@ public class AlchemicalBombItem extends Item {
 
     @Override
     public boolean isFoil(ItemStack stack) {
-        return super.isFoil(stack) || (stack.has(DataComponents.POTION_CONTENTS) && stack.get(DataComponents.POTION_CONTENTS).hasEffects());
+        return super.isFoil(stack) || stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).hasEffects();
     }
 
     public static void registerCreativeTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier) {
