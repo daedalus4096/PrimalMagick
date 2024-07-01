@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.spells;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.util.Mth;
 
 /**
@@ -10,13 +10,22 @@ import net.minecraft.util.Mth;
  * 
  * @author Daedalus4096
  */
-public class ConfiguredSpellComponent {
-    protected final ISpellComponent component;
+public abstract class AbstractConfiguredSpellComponent<T extends ISpellComponent> {
+    protected final T component;
     protected final Map<SpellProperty, Integer> configuredProperties;
     
-    public ConfiguredSpellComponent(ISpellComponent component, Map<SpellProperty, Integer> configuredProperties) {
+    protected AbstractConfiguredSpellComponent(T component) {
         this.component = component;
-        this.configuredProperties = new HashMap<>(configuredProperties);
+        this.configuredProperties = new Object2IntOpenHashMap<SpellProperty>();
+    }
+    
+    protected AbstractConfiguredSpellComponent(T component, Map<SpellProperty, Integer> configuredProperties) {
+        this(component);
+        this.configuredProperties.putAll(configuredProperties);
+    }
+    
+    public T getComponent() {
+        return this.component;
     }
     
     public int getPropertyValue(SpellProperty property) {

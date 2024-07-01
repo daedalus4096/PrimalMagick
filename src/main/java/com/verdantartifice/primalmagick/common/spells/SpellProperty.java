@@ -1,6 +1,12 @@
 package com.verdantartifice.primalmagick.common.spells;
 
+import com.mojang.serialization.Codec;
+
+import io.netty.buffer.ByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * Definition of a spell property.  Spell components have zero to two properties that determine their
@@ -8,8 +14,16 @@ import net.minecraft.network.chat.Component;
  * 
  * @author Daedalus4096
  */
-public record SpellProperty(String name, String translationKey, int min, int max) {
+public record SpellProperty(ResourceLocation id, String translationKey, int min, int max) implements StringRepresentable {
+    public static final Codec<SpellProperty> CODEC = ResourceLocation.CODEC.xmap(SpellPropertiesPM::get, SpellProperty::id);
+    public static final StreamCodec<ByteBuf, SpellProperty> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(SpellPropertiesPM::get, SpellProperty::id);
+    
     public Component getDescription() {
         return Component.translatable(this.translationKey);
+    }
+
+    @Override
+    public String getSerializedName() {
+        return this.id.toString();
     }
 }

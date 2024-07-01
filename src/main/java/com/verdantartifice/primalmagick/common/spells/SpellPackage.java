@@ -5,9 +5,12 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.QuickenSpellMod;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
+import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -36,10 +39,10 @@ import net.minecraftforge.common.util.INBTSerializable;
  */
 public class SpellPackage implements INBTSerializable<CompoundTag> {
     protected String name = "";
-    protected ISpellVehicle vehicle = null;
-    protected ISpellPayload payload = null;
-    protected ISpellMod primaryMod = null;
-    protected ISpellMod secondaryMod = null;
+    protected ConfiguredSpellVehicle<?> vehicle = null;
+    protected ConfiguredSpellPayload<?> payload = null;
+    protected ConfiguredSpellMod<?> primaryMod = null;
+    protected ConfiguredSpellMod<?> secondaryMod = null;
     
     public SpellPackage() {}
     
