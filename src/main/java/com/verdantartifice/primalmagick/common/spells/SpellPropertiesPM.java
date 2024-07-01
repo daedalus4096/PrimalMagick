@@ -33,6 +33,7 @@ public class SpellPropertiesPM {
     public static final RegistryObject<SpellProperty> PRECISION = register("precision", id -> new SpellProperty(id, "spells.primalmagick.property.precision", 0, 5));
     public static final RegistryObject<SpellProperty> MINE_DURATION = register("mine_duration", id -> new SpellProperty(id, "spells.primalmagick.property.duration", 1, 5));
     public static final RegistryObject<SpellProperty> HASTE = register("haste", id -> new SpellProperty(id, "spells.primalmagick.property.haste", 1, 5));
+    public static final RegistryObject<SpellProperty> RANGE = register("range", id -> new SpellProperty(id, "spells.primalmagick.property.range", 1, 5));
     
     protected static RegistryObject<SpellProperty> register(String id, Function<ResourceLocation, SpellProperty> propertySupplier) {
         return DEFERRED_PROPERTIES.register(id, () -> propertySupplier.apply(PrimalMagick.resource(id)));

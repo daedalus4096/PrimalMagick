@@ -35,7 +35,7 @@ public abstract class AbstractRaycastSpellVehicle<T extends AbstractRaycastSpell
      * @param caster the entity that originally casted the spell
      * @return the distance, in blocks, that the spell vehicle should search
      */
-    protected abstract double getReachDistance(@Nonnull LivingEntity caster);
+    protected abstract double getReachDistance(@Nonnull LivingEntity caster, @Nonnull SpellPackage spell, @Nonnull ItemStack spellSource);
     
     protected void drawFx(@Nonnull Level world, @Nonnull SpellPackage spell, Vec3 source, Vec3 target) {
         // Do nothing by default
@@ -54,7 +54,7 @@ public abstract class AbstractRaycastSpellVehicle<T extends AbstractRaycastSpell
                 lookVectors.setValue(Arrays.asList(baseLookVector.normalize()));
             });
             
-            double reachDistance = this.getReachDistance(caster);
+            double reachDistance = this.getReachDistance(caster, spell, spellSource);
             Vec3 eyePos = caster.getEyePosition(1.0F);
             for (Vec3 lookVector : lookVectors.getValue()) {
                 Vec3 reachPos = eyePos.add(lookVector.scale(reachDistance));
