@@ -16,7 +16,9 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.tags.SpellPropertyTagsPM;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.CompoundTag;
@@ -67,9 +69,9 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
         return this.getPropertiesInner().stream().filter(prop -> prop.id().equals(id)).findFirst().orElse(null);
     }
 
-    public int getModdedPropertyValue(String name, SpellPackage spell, @Nullable ItemStack spellSource) {
+    public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, @Nullable ItemStack spellSource) {
         int retVal = this.getPropertyValue(name);
-        if (retVal > 0 && ("power".equals(name) || "duration".equals(name))) {
+        if (retVal > 0 && SpellPropertiesPM.PROPERTIES.get().tags().getTag(SpellPropertyTagsPM.AMPLIFIABLE).contains(property)) {
             // For power or duration properties greater than zero, increase the total result by
             // the power of any attached Amplify spell mod or Spell Power enchantment
             AmplifySpellMod ampMod = spell.getMod(AmplifySpellMod.class, "power");

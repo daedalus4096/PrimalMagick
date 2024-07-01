@@ -42,8 +42,7 @@ public class AmplifySpellMod extends AbstractSpellMod<AmplifySpellMod> {
     
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        // TODO Auto-generated method stub
-        return null;
+        return PROPERTIES;
     }
 
     @Override
@@ -62,7 +61,7 @@ public class AmplifySpellMod extends AbstractSpellMod<AmplifySpellMod> {
     }
     
     @Override
-    public int getModdedPropertyValue(String name, SpellPackage spell, ItemStack spellSource) {
+    public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, ItemStack spellSource) {
         // Don't amplify self or take amplification from wand enchantments
         return this.getPropertyValue(name);
     }

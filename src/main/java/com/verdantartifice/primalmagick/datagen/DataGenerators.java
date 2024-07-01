@@ -27,6 +27,7 @@ import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.SpellPropertyTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tips.TipDefinitionProvider;
 
 import net.minecraft.core.HolderLookup;
@@ -68,6 +69,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ItemTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new BiomeTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
