@@ -77,8 +77,7 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
         if (retVal.intValue() > 0 && !SpellPropertiesPM.AMPLIFY_POWER.get().equals(property) && SpellPropertiesPM.PROPERTIES.get().tags().getTag(SpellPropertyTagsPM.AMPLIFIABLE).contains(property)) {
             // For power or duration properties greater than zero, increase the total result by
             // the power of any attached Amplify spell mod or Spell Power enchantment
-            Optional<ConfiguredSpellMod<?>> ampModOpt = spell.getMod(SpellModsPM.AMPLIFY.get());
-            ampModOpt.ifPresent(ampMod -> {
+            spell.getMod(SpellModsPM.AMPLIFY.get()).ifPresent(ampMod -> {
                 retVal.add(ampMod.getPropertyValue(SpellPropertiesPM.AMPLIFY_POWER.get()));
             });
             if (spellSource != null) {

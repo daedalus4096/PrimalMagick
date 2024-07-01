@@ -1,20 +1,15 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.spells.ISpellComponent;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
-import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.INBTSerializable;
 
 /**
  * Primary interface for a spell vehicle.  Spell vehicles are what determine the target of a spell
@@ -24,7 +19,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface ISpellVehicle extends ISpellComponent, INBTSerializable<CompoundTag> {
+public interface ISpellVehicle extends ISpellComponent {
     /**
      * Execute this spell vehicle to determine the target of the spell, then execute the spell package's
      * payload if one is found.
@@ -41,14 +36,14 @@ public interface ISpellVehicle extends ISpellComponent, INBTSerializable<Compoun
      * 
      * @return the additive modifier for the spell package's cost
      */
-    public int getBaseManaCostModifier();
+    public int getBaseManaCostModifier(SpellPropertyConfiguration properties);
     
     /**
      * Get the multiplicative modifier to be applied to the spell mod's package's total cost.
      * 
      * @return the multiplicative modifier for the spell package's cost
      */
-    public int getManaCostMultiplier();
+    public int getManaCostMultiplier(SpellPropertyConfiguration properties);
     
     /**
      * Determine whether the spell vehicle deals its effect indirectly (i.e. via a projectile).

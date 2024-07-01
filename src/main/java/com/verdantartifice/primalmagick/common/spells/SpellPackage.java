@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.spells.mods.AbstractSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.QuickenSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
@@ -216,10 +217,11 @@ public class SpellPackage {
         };
     }
     
-    public Optional<ConfiguredSpellMod<?>> getMod(SpellModType<?> type) {
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractSpellMod<T>> Optional<ConfiguredSpellMod<T>> getMod(SpellModType<T> type) {
         // Determine if either of the attached mod components are of the requested type
-        ConfiguredSpellMod<?> primary = this.primaryMod != null && this.primaryMod.getComponent().getType().equals(type) ? this.primaryMod : null;
-        ConfiguredSpellMod<?> secondary = this.secondaryMod != null && this.secondaryMod.getComponent().getType().equals(type) ? this.secondaryMod : null;
+        ConfiguredSpellMod<T> primary = this.primaryMod != null && this.primaryMod.getComponent().getType().equals(type) ? (ConfiguredSpellMod<T>)this.primaryMod : null;
+        ConfiguredSpellMod<T> secondary = this.secondaryMod != null && this.secondaryMod.getComponent().getType().equals(type) ? (ConfiguredSpellMod<T>)this.secondaryMod : null;
         
         if (primary != null && secondary != null) {
             // If both mods are of the requested type, only return the one with a higher value in the tiebreaker property
