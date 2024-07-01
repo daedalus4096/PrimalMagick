@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractSpellPayload implements ISpellPayload {
+public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> implements ISpellPayload {
     protected static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("#######.##");
 
     protected final Map<String, SpellProperty> properties;

@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.Requirement
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehiclesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypesPM;
@@ -62,5 +63,6 @@ public class InitRegistries {
         SpellPropertiesPM.init();
         SpellModsPM.init();
         SpellVehiclesPM.init();
+        SpellPayloadsPM.init();
     }
 }

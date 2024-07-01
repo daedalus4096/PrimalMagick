@@ -1,25 +1,20 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.ISpellComponent;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
-import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.INBTSerializable;
 
 /**
  * Primary interface for a spell payload component.  Spell payloads define the primary effect of the
@@ -29,7 +24,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface ISpellPayload extends ISpellComponent, INBTSerializable<CompoundTag> {
+public interface ISpellPayload extends ISpellComponent {
     /**
      * Execute this spell payload upon the designated target.
      * 
@@ -57,7 +52,7 @@ public interface ISpellPayload extends ISpellComponent, INBTSerializable<Compoun
      * @return the base mana cost of the spell
      */
     @Nonnull
-    public int getBaseManaCost();
+    public int getBaseManaCost(SpellPropertyConfiguration properties);
     
     /**
      * Play the sound event corresponding to this spell payload.
