@@ -25,6 +25,11 @@ public class SpellModsPM {
     }
     
     public static final RegistryObject<SpellModType<AmplifySpellMod>> AMPLIFY = register(AmplifySpellMod.TYPE, SpellPropertiesPM.AMPLIFY_POWER, AmplifySpellMod.CODEC, AmplifySpellMod.STREAM_CODEC);
+    public static final RegistryObject<SpellModType<BurstSpellMod>> BURST = register(BurstSpellMod.TYPE, SpellPropertiesPM.RADIUS, BurstSpellMod.CODEC, BurstSpellMod.STREAM_CODEC);
+    public static final RegistryObject<SpellModType<EmptySpellMod>> EMPTY = register(EmptySpellMod.TYPE, SpellPropertiesPM.POWER, EmptySpellMod.CODEC, EmptySpellMod.STREAM_CODEC);
+    public static final RegistryObject<SpellModType<ForkSpellMod>> FORK = register(ForkSpellMod.TYPE, SpellPropertiesPM.FORKS, ForkSpellMod.CODEC, ForkSpellMod.STREAM_CODEC);
+    public static final RegistryObject<SpellModType<MineSpellMod>> MINE = register(MineSpellMod.TYPE, SpellPropertiesPM.MINE_DURATION, MineSpellMod.CODEC, MineSpellMod.STREAM_CODEC);
+    public static final RegistryObject<SpellModType<QuickenSpellMod>> QUICKEN = register(QuickenSpellMod.TYPE, SpellPropertiesPM.HASTE, QuickenSpellMod.CODEC, QuickenSpellMod.STREAM_CODEC);
     
     protected static <T extends AbstractSpellMod<T>> RegistryObject<SpellModType<T>> register(String id, Supplier<SpellProperty> tiebreaker, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         return DEFERRED_TYPES.register(id, () -> new SpellModType<T>(PrimalMagick.resource(id), tiebreaker, codec, streamCodec));

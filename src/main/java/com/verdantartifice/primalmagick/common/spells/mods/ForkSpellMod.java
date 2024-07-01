@@ -1,20 +1,25 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import com.verdantartifice.primalmagick.common.util.VectorUtils;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -27,18 +32,17 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class ForkSpellMod extends AbstractSpellMod {
+public class ForkSpellMod extends AbstractSpellMod<ForkSpellMod> {
+    public static final ForkSpellMod INSTANCE = new ForkSpellMod();
+    
+    public static final MapCodec<ForkSpellMod> CODEC = MapCodec.unit(ForkSpellMod.INSTANCE);
+    public static final StreamCodec<ByteBuf, ForkSpellMod> STREAM_CODEC = StreamCodec.unit(ForkSpellMod.INSTANCE);
+    
     public static final String TYPE = "fork";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_FORK));
+    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.FORKS.get(), SpellPropertiesPM.PRECISION.get());
 
     public ForkSpellMod() {
-        super();
-    }
-    
-    public ForkSpellMod(int forks, int precision) {
-        super();
-        this.getProperty("forks").setValue(forks);
-        this.getProperty("precision").setValue(precision);
     }
     
     public static AbstractRequirement<?> getRequirement() {
@@ -46,22 +50,24 @@ public class ForkSpellMod extends AbstractSpellMod {
     }
     
     @Override
-    protected Map<String, SpellProperty> initProperties() {
-        Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("forks", new SpellProperty("forks", "spells.primalmagick.property.forks", 2, 5));
-        propMap.put("precision", new SpellProperty("precision", "spells.primalmagick.property.precision", 0, 5));
-        return propMap;
+    public SpellModType<ForkSpellMod> getType() {
+        return SpellModsPM.FORK.get();
     }
 
     @Override
-    public int getBaseManaCostModifier() {
+    protected List<SpellProperty> getPropertiesInner() {
+        return PROPERTIES;
+    }
+
+    @Override
+    public int getBaseManaCostModifier(SpellPropertyConfiguration properties) {
         return 0;
     }
 
     @Override
-    public int getManaCostMultiplier() {
-        int forks = this.getPropertyValue("forks");
-        int precision = this.getPropertyValue("precision");
+    public int getManaCostMultiplier(SpellPropertyConfiguration properties) {
+        int forks = properties.get(SpellPropertiesPM.FORKS.get());
+        int precision = properties.get(SpellPropertiesPM.PRECISION.get());
         return 1 + (forks * forks) + (precision * precision);
     }
 
@@ -71,12 +77,12 @@ public class ForkSpellMod extends AbstractSpellMod {
     }
     
     @Nonnull
-    public List<Vec3> getDirectionUnitVectors(@Nonnull Vec3 dir, @Nonnull RandomSource rng) {
+    public List<Vec3> getDirectionUnitVectors(@Nonnull Vec3 dir, @Nonnull RandomSource rng, @Nonnull SpellPackage spell, @Nonnull ItemStack spellSource) {
         // Determine the direction vectors on which to execute the spell forks
         List<Vec3> retVal = new ArrayList<>();
         Vec3 normDir = dir.normalize();
-        int forks = this.getForkCount();
-        int degrees = this.getSpreadDegrees();
+        int forks = this.getForkCount(spell, spellSource);
+        int degrees = this.getSpreadDegrees(spell, spellSource);
         double offsetMagnitude = Math.tan(Math.toRadians(degrees)); // Vector offset length needed to produce a given degree angle
         
         for (int index = 0; index < forks; index++) {
@@ -88,21 +94,21 @@ public class ForkSpellMod extends AbstractSpellMod {
         return retVal;
     }
     
-    protected int getForkCount() {
-        return this.getPropertyValue("forks");
+    protected int getForkCount(SpellPackage spell, ItemStack spellSource) {
+        return spell.getMod(SpellModsPM.FORK.get()).orElseThrow().getPropertyValue(SpellPropertiesPM.FORKS.get());
     }
     
-    protected int getSpreadDegrees() {
-        int precision = this.getPropertyValue("precision");
+    protected int getSpreadDegrees(SpellPackage spell, ItemStack spellSource) {
+        int precision = spell.getMod(SpellModsPM.FORK.get()).orElseThrow().getPropertyValue(SpellPropertiesPM.PRECISION.get());
         return 10 + (15 * (5 - precision));  // 85, 70, 55, 40, 25, 10 degrees max from the given direction
     }
     
-    protected String getSpreadDegreesText() {
-        return "" + this.getSpreadDegrees() + "\u00B0";
+    protected String getSpreadDegreesText(SpellPackage spell, ItemStack spellSource) {
+        return "" + this.getSpreadDegrees(spell, spellSource) + "\u00B0";
     }
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getForkCount(), this.getSpreadDegreesText());
+        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getForkCount(spell, spellSource), this.getSpreadDegreesText(spell, spellSource));
     }
 }
