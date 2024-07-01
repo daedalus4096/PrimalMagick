@@ -74,7 +74,7 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
 
     public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, @Nullable ItemStack spellSource) {
         MutableInt retVal = new MutableInt(spell.getMod(this.getType()).orElseThrow().getPropertyValue(property));
-        if (retVal.intValue() > 0 && SpellPropertiesPM.PROPERTIES.get().tags().getTag(SpellPropertyTagsPM.AMPLIFIABLE).contains(property)) {
+        if (retVal.intValue() > 0 && !SpellPropertiesPM.AMPLIFY_POWER.get().equals(property) && SpellPropertiesPM.PROPERTIES.get().tags().getTag(SpellPropertyTagsPM.AMPLIFIABLE).contains(property)) {
             // For power or duration properties greater than zero, increase the total result by
             // the power of any attached Amplify spell mod or Spell Power enchantment
             Optional<ConfiguredSpellMod<?>> ampModOpt = spell.getMod(SpellModsPM.AMPLIFY.get());
