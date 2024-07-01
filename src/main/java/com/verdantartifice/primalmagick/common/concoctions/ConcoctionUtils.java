@@ -5,10 +5,11 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 
 /**
  * Helper methods for handling concoctions.
@@ -16,16 +17,16 @@ import net.minecraft.world.item.alchemy.PotionUtils;
  * @author Daedalus4096
  */
 public class ConcoctionUtils {
-    public static ItemStack newConcoction(Potion potion, ConcoctionType type) {
-        return setConcoctionType(PotionUtils.setPotion(new ItemStack(ItemsPM.CONCOCTION.get()), potion), type);
+    public static ItemStack newConcoction(Holder<Potion> potion, ConcoctionType type) {
+        return setConcoctionType(PotionContents.createItemStack(ItemsPM.CONCOCTION.get(), potion), type);
     }
     
-    public static ItemStack newBomb(Potion potion) {
+    public static ItemStack newBomb(Holder<Potion> potion) {
         return newBomb(potion, FuseType.MEDIUM);
     }
     
-    public static ItemStack newBomb(Potion potion, FuseType fuse) {
-        return setFuseType(setConcoctionType(PotionUtils.setPotion(new ItemStack(ItemsPM.ALCHEMICAL_BOMB.get()), potion), ConcoctionType.BOMB), fuse);
+    public static ItemStack newBomb(Holder<Potion> potion, FuseType fuse) {
+        return setFuseType(setConcoctionType(PotionContents.createItemStack(ItemsPM.ALCHEMICAL_BOMB.get(), potion), ConcoctionType.BOMB), fuse);
     }
     
     @Nullable
@@ -68,7 +69,7 @@ public class ConcoctionUtils {
     
     public static boolean hasBeneficialEffect(@Nonnull Potion potion) {
         for (MobEffectInstance instance : potion.getEffects()) {
-            if (instance.getEffect().isBeneficial()) {
+            if (instance.getEffect().value().isBeneficial()) {
                 return true;
             }
         }
