@@ -13,4 +13,13 @@ public class ConfiguredSpellPayload<T extends ISpellPayload> extends AbstractCon
     public ConfiguredSpellPayload(T payload, Map<SpellProperty, Integer> configuredProperties) {
         super(payload, configuredProperties);
     }
+
+    /**
+     * Get the base cost of the spell payload.
+     * 
+     * @return the base cost of the spell payload
+     */
+    public int getBaseManaCost() {
+        return this.component.getBaseManaCost(this.configuredProperties);
+    }
 }

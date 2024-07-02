@@ -5,12 +5,15 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.mods.AbstractSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.QuickenSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
@@ -38,6 +41,8 @@ import net.minecraft.world.level.Level;
  * @see {@link com.verdantartifice.primalmagick.common.spells.mods.ISpellMod}
  */
 public class SpellPackage {
+    private static final int BASE_COOLDOWN_TICKS = 30;
+    
     protected String name = "";
     protected ConfiguredSpellVehicle<?> vehicle = null;
     protected ConfiguredSpellPayload<?> payload = null;
@@ -141,12 +146,11 @@ public class SpellPackage {
 
     public int getCooldownTicks() {
         // Determine the length of the cooldown triggered by this spell; reduced by the Quicken mod
-        int retVal = 30;
-        QuickenSpellMod quickenMod = this.getMod(QuickenSpellMod.class, "haste");
-        if (quickenMod != null) {
-            retVal -= (5 * quickenMod.getPropertyValue("haste"));
-        }
-        return Mth.clamp(retVal, 0, 30);
+        MutableInt retVal = new MutableInt(BASE_COOLDOWN_TICKS);
+        this.getMod(SpellModsPM.QUICKEN.get()).ifPresent(quickenMod -> {
+            retVal.subtract(5 * quickenMod.getPropertyValue(SpellPropertiesPM.HASTE.get()));
+        });
+        return Mth.clamp(retVal.intValue(), 0, BASE_COOLDOWN_TICKS);
     }
     
     @Nonnull
@@ -157,7 +161,7 @@ public class SpellPackage {
             return SourceList.EMPTY;
         }
         
-        int baseManaCost = this.payload.getComponent().getBaseManaCost();
+        int baseManaCost = this.payload.getBaseManaCost();
         if (baseManaCost == 0) {
             return SourceList.EMPTY;
         }
