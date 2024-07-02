@@ -32,9 +32,12 @@ public class SpellPayloadsPM {
     public static final RegistryObject<SpellPayloadType<VoidDamageSpellPayload>> VOID_DAMAGE = register(VoidDamageSpellPayload.TYPE, VoidDamageSpellPayload.CODEC, VoidDamageSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<HolyDamageSpellPayload>> HOLY_DAMAGE = register(HolyDamageSpellPayload.TYPE, HolyDamageSpellPayload.CODEC, HolyDamageSpellPayload.STREAM_CODEC);
     
+    public static final RegistryObject<SpellPayloadType<BreakSpellPayload>> BREAK = register(BreakSpellPayload.TYPE, BreakSpellPayload.CODEC, BreakSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureStoneSpellPayload>> CONJURE_STONE = register(ConjureStoneSpellPayload.TYPE, ConjureStoneSpellPayload.CODEC, ConjureStoneSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureWaterSpellPayload>> CONJURE_WATER = register(ConjureWaterSpellPayload.TYPE, ConjureWaterSpellPayload.CODEC, ConjureWaterSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureLightSpellPayload>> CONJURE_LIGHT = register(ConjureLightSpellPayload.TYPE, ConjureLightSpellPayload.CODEC, ConjureLightSpellPayload.STREAM_CODEC);
+    public static final RegistryObject<SpellPayloadType<PolymorphWolfSpellPayload>> POLYMORPH_WOLF = register(PolymorphWolfSpellPayload.TYPE, PolymorphWolfSpellPayload.CODEC, PolymorphWolfSpellPayload.STREAM_CODEC);
+    public static final RegistryObject<SpellPayloadType<PolymorphSheepSpellPayload>> POLYMORPH_SHEEP = register(PolymorphSheepSpellPayload.TYPE, PolymorphSheepSpellPayload.CODEC, PolymorphSheepSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureAnimalSpellPayload>> CONJURE_ANIMAL = register(ConjureAnimalSpellPayload.TYPE, ConjureAnimalSpellPayload.CODEC, ConjureAnimalSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureLavaSpellPayload>> CONJURE_LAVA = register(ConjureLavaSpellPayload.TYPE, ConjureLavaSpellPayload.CODEC, ConjureLavaSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConsecrateSpellPayload>> CONSECRATE = register(ConsecrateSpellPayload.TYPE, ConsecrateSpellPayload.CODEC, ConsecrateSpellPayload.STREAM_CODEC);

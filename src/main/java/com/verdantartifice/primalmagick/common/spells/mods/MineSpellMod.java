@@ -36,7 +36,7 @@ public class MineSpellMod extends AbstractSpellMod<MineSpellMod> {
     
     public static final String TYPE = "mine";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_MINE));
-    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.MINE_DURATION.get());
+    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
 
     public MineSpellMod() {
     }
@@ -57,7 +57,7 @@ public class MineSpellMod extends AbstractSpellMod<MineSpellMod> {
 
     @Override
     public int getBaseManaCostModifier(SpellPropertyConfiguration properties) {
-        return properties.get(SpellPropertiesPM.MINE_DURATION.get());
+        return properties.get(SpellPropertiesPM.NON_ZERO_DURATION.get());
     }
     
     @Override
@@ -71,7 +71,7 @@ public class MineSpellMod extends AbstractSpellMod<MineSpellMod> {
     }
     
     public int getDurationMinutes(SpellPackage spell, ItemStack spellSource) {
-        int duration = spell.getMod(SpellModsPM.MINE.get()).orElseThrow().getPropertyValue(SpellPropertiesPM.MINE_DURATION.get());
+        int duration = spell.getMod(SpellModsPM.MINE.get()).orElseThrow().getPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get());
         return 4 * duration;
     }
 

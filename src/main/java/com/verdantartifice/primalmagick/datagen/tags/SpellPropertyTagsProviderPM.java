@@ -26,6 +26,6 @@ public class SpellPropertyTagsProviderPM extends IntrinsicHolderTagsProvider<Spe
 
     @Override
     protected void addTags(Provider pProvider) {
-        this.tag(SpellPropertyTagsPM.AMPLIFIABLE).add(SpellPropertiesPM.POWER.get(), SpellPropertiesPM.DURATION.get(), SpellPropertiesPM.BURST_POWER.get(), SpellPropertiesPM.MINE_DURATION.get());
+        this.tag(SpellPropertyTagsPM.AMPLIFIABLE).add(SpellPropertiesPM.POWER.get(), SpellPropertiesPM.DURATION.get(), SpellPropertiesPM.BURST_POWER.get(), SpellPropertiesPM.NON_ZERO_DURATION.get());
     }
 }
