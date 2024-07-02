@@ -1,5 +1,9 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -8,8 +12,12 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
@@ -20,7 +28,12 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class ConjureLightSpellPayload extends AbstractConjureBlockSpellPayload {
+public class ConjureLightSpellPayload extends AbstractConjureBlockSpellPayload<ConjureLightSpellPayload> {
+    public static final ConjureLightSpellPayload INSTANCE = new ConjureLightSpellPayload();
+    
+    public static final MapCodec<ConjureLightSpellPayload> CODEC = MapCodec.unit(ConjureLightSpellPayload.INSTANCE);
+    public static final StreamCodec<ByteBuf, ConjureLightSpellPayload> STREAM_CODEC = StreamCodec.unit(ConjureLightSpellPayload.INSTANCE);
+    
     public static final String TYPE = "conjure_light";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_LIGHT));
     
@@ -33,12 +46,22 @@ public class ConjureLightSpellPayload extends AbstractConjureBlockSpellPayload {
     }
 
     @Override
+    public SpellPayloadType<ConjureLightSpellPayload> getType() {
+        return SpellPayloadsPM.CONJURE_LIGHT.get();
+    }
+
+    @Override
+    protected List<SpellProperty> getPropertiesInner() {
+        return ImmutableList.of();
+    }
+
+    @Override
     public Source getSource() {
         return Sources.SUN;
     }
 
     @Override
-    public int getBaseManaCost() {
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
         return 10;
     }
 

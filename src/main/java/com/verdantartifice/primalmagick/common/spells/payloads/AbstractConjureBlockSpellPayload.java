@@ -28,16 +28,15 @@ import net.minecraftforge.event.ForgeEventFactory;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayload {
+public abstract class AbstractConjureBlockSpellPayload<T extends AbstractConjureBlockSpellPayload<T>> extends AbstractSpellPayload<T> {
     protected final BlockState targetState;
     protected final int count;
     
-    public AbstractConjureBlockSpellPayload(BlockState targetState) {
+    protected AbstractConjureBlockSpellPayload(BlockState targetState) {
         this(targetState, 1);
     }
     
-    public AbstractConjureBlockSpellPayload(BlockState targetState, int count) {
-        super();
+    protected AbstractConjureBlockSpellPayload(BlockState targetState, int count) {
         this.targetState = targetState;
         this.count = count;
     }
