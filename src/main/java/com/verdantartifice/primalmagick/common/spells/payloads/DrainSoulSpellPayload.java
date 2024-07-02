@@ -1,7 +1,10 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -10,10 +13,14 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -32,30 +39,30 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class DrainSoulSpellPayload extends AbstractSpellPayload {
+public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPayload> {
+    public static final DrainSoulSpellPayload INSTANCE = new DrainSoulSpellPayload();
+    
+    public static final MapCodec<DrainSoulSpellPayload> CODEC = MapCodec.unit(DrainSoulSpellPayload.INSTANCE);
+    public static final StreamCodec<ByteBuf, DrainSoulSpellPayload> STREAM_CODEC = StreamCodec.unit(DrainSoulSpellPayload.INSTANCE);
+    
     public static final String TYPE = "drain_soul";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_DRAIN_SOUL));
-    
-    public DrainSoulSpellPayload() {
-        super();
-    }
-    
-    public DrainSoulSpellPayload(int duration) {
-        super();
-        this.getProperty("duration").setValue(duration);
-    }
+    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
     }
     
     @Override
-    protected Map<String, SpellProperty> initProperties() {
-        Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("duration", new SpellProperty("duration", "spells.primalmagick.property.duration", 1, 5));
-        return propMap;
+    public SpellPayloadType<DrainSoulSpellPayload> getType() {
+        return SpellPayloadsPM.DRAIN_SOUL.get();
     }
-    
+
+    @Override
+    protected List<SpellProperty> getPropertiesInner() {
+        return PROPERTIES;
+    }
+
     @Override
     public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
@@ -75,8 +82,8 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public int getBaseManaCost() {
-        return 5 * this.getPropertyValue("duration");
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
+        return 5 * properties.get(SpellPropertiesPM.NON_ZERO_DURATION.get());
     }
 
     @Override
@@ -90,7 +97,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload {
     }
     
     protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
-        return 3 * this.getModdedPropertyValue("duration", spell, spellSource);
+        return 3 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource);
     }
 
     @Override

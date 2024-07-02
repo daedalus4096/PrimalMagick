@@ -21,7 +21,9 @@ public class SpellPayloadsPM {
     public static void init() {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
-
+    
+    public static final RegistryObject<SpellPayloadType<EmptySpellPayload>> EMPTY = register(EmptySpellPayload.TYPE, EmptySpellPayload.CODEC, EmptySpellPayload.STREAM_CODEC);
+    
     public static final RegistryObject<SpellPayloadType<EarthDamageSpellPayload>> EARTH_DAMAGE = register(EarthDamageSpellPayload.TYPE, EarthDamageSpellPayload.CODEC, EarthDamageSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<FrostDamageSpellPayload>> FROST_DAMAGE = register(FrostDamageSpellPayload.TYPE, FrostDamageSpellPayload.CODEC, FrostDamageSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<LightningDamageSpellPayload>> LIGHTNING_DAMAGE = register(LightningDamageSpellPayload.TYPE, LightningDamageSpellPayload.CODEC, LightningDamageSpellPayload.STREAM_CODEC);
@@ -35,11 +37,16 @@ public class SpellPayloadsPM {
     public static final RegistryObject<SpellPayloadType<BreakSpellPayload>> BREAK = register(BreakSpellPayload.TYPE, BreakSpellPayload.CODEC, BreakSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureStoneSpellPayload>> CONJURE_STONE = register(ConjureStoneSpellPayload.TYPE, ConjureStoneSpellPayload.CODEC, ConjureStoneSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureWaterSpellPayload>> CONJURE_WATER = register(ConjureWaterSpellPayload.TYPE, ConjureWaterSpellPayload.CODEC, ConjureWaterSpellPayload.STREAM_CODEC);
+    public static final RegistryObject<SpellPayloadType<ShearSpellPayload>> SHEAR = register(ShearSpellPayload.TYPE, ShearSpellPayload.CODEC, ShearSpellPayload.STREAM_CODEC);
+    public static final RegistryObject<SpellPayloadType<FlightSpellPayload>> FLIGHT = register(FlightSpellPayload.TYPE, FlightSpellPayload.CODEC, FlightSpellPayload.STREAM_CODEC);
+    public static final RegistryObject<SpellPayloadType<HealingSpellPayload>> HEALING = register(HealingSpellPayload.TYPE, HealingSpellPayload.CODEC, HealingSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureLightSpellPayload>> CONJURE_LIGHT = register(ConjureLightSpellPayload.TYPE, ConjureLightSpellPayload.CODEC, ConjureLightSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<PolymorphWolfSpellPayload>> POLYMORPH_WOLF = register(PolymorphWolfSpellPayload.TYPE, PolymorphWolfSpellPayload.CODEC, PolymorphWolfSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<PolymorphSheepSpellPayload>> POLYMORPH_SHEEP = register(PolymorphSheepSpellPayload.TYPE, PolymorphSheepSpellPayload.CODEC, PolymorphSheepSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureAnimalSpellPayload>> CONJURE_ANIMAL = register(ConjureAnimalSpellPayload.TYPE, ConjureAnimalSpellPayload.CODEC, ConjureAnimalSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConjureLavaSpellPayload>> CONJURE_LAVA = register(ConjureLavaSpellPayload.TYPE, ConjureLavaSpellPayload.CODEC, ConjureLavaSpellPayload.STREAM_CODEC);
+    public static final RegistryObject<SpellPayloadType<DrainSoulSpellPayload>> DRAIN_SOUL = register(DrainSoulSpellPayload.TYPE, DrainSoulSpellPayload.CODEC, DrainSoulSpellPayload.STREAM_CODEC);
+    public static final RegistryObject<SpellPayloadType<TeleportSpellPayload>> TELEPORT = register(TeleportSpellPayload.TYPE, TeleportSpellPayload.CODEC, TeleportSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<ConsecrateSpellPayload>> CONSECRATE = register(ConsecrateSpellPayload.TYPE, ConsecrateSpellPayload.CODEC, ConsecrateSpellPayload.STREAM_CODEC);
     
     protected static <T extends AbstractSpellPayload<T>> RegistryObject<SpellPayloadType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {

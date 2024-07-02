@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -11,9 +13,13 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -48,7 +54,12 @@ import net.minecraftforge.common.ToolActions;
  * 
  * @author Daedalus4096
  */
-public class ShearSpellPayload extends AbstractSpellPayload {
+public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
+    public static final ShearSpellPayload INSTANCE = new ShearSpellPayload();
+    
+    public static final MapCodec<ShearSpellPayload> CODEC = MapCodec.unit(ShearSpellPayload.INSTANCE);
+    public static final StreamCodec<ByteBuf, ShearSpellPayload> STREAM_CODEC = StreamCodec.unit(ShearSpellPayload.INSTANCE);
+    
     public static final String TYPE = "shear";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_SHEAR));
 
@@ -57,10 +68,20 @@ public class ShearSpellPayload extends AbstractSpellPayload {
     }
     
     @Override
+    public SpellPayloadType<ShearSpellPayload> getType() {
+        return SpellPayloadsPM.SHEAR.get();
+    }
+
+    @Override
+    protected List<SpellProperty> getPropertiesInner() {
+        return ImmutableList.of();
+    }
+
+    @Override
     public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         ItemStack fakeShears = new ItemStack(Items.SHEARS);
         RandomSource rand = world.random;
-        int treasureLevel = spellSource.getEnchantmentLevel(EnchantmentsPM.TREASURE.get());
+        int treasureLevel = spellSource.getEnchantments().getLevel(EnchantmentsPM.TREASURE.get());
         if (caster instanceof Player player) {
             if (target.getType() == HitResult.Type.ENTITY) {
                 EntityHitResult entityHitResult = (EntityHitResult)target;
@@ -126,7 +147,7 @@ public class ShearSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public int getBaseManaCost() {
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
         return 5;
     }
 

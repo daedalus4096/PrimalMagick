@@ -1,11 +1,19 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -20,12 +28,27 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class EmptySpellPayload extends AbstractSpellPayload {
+public class EmptySpellPayload extends AbstractSpellPayload<EmptySpellPayload> {
+    public static final EmptySpellPayload INSTANCE = new EmptySpellPayload();
+    
+    public static final MapCodec<EmptySpellPayload> CODEC = MapCodec.unit(EmptySpellPayload.INSTANCE);
+    public static final StreamCodec<ByteBuf, EmptySpellPayload> STREAM_CODEC = StreamCodec.unit(EmptySpellPayload.INSTANCE);
+    
     public static final String TYPE = "none";
 
     @Override
     public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         // Do nothing
+    }
+
+    @Override
+    public SpellPayloadType<EmptySpellPayload> getType() {
+        return SpellPayloadsPM.EMPTY.get();
+    }
+
+    @Override
+    protected List<SpellProperty> getPropertiesInner() {
+        return ImmutableList.of();
     }
 
     @Override
@@ -39,7 +62,7 @@ public class EmptySpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public int getBaseManaCost() {
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
         return 0;
     }
 
