@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.Map;
+import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -10,10 +12,14 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -30,28 +36,27 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class SolarDamageSpellPayload extends AbstractDamageSpellPayload {
+public class SolarDamageSpellPayload extends AbstractDamageSpellPayload<SolarDamageSpellPayload> {
+    public static final SolarDamageSpellPayload INSTANCE = new SolarDamageSpellPayload();
+    
+    public static final MapCodec<SolarDamageSpellPayload> CODEC = MapCodec.unit(SolarDamageSpellPayload.INSTANCE);
+    public static final StreamCodec<ByteBuf, SolarDamageSpellPayload> STREAM_CODEC = StreamCodec.unit(SolarDamageSpellPayload.INSTANCE);
+    
     public static final String TYPE = "solar_damage";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_SOLAR));
 
-    public SolarDamageSpellPayload() {
-        super();
-    }
-    
-    public SolarDamageSpellPayload(int power, int duration) {
-        super(power);
-        this.getProperty("duration").setValue(duration);
-    }
-    
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
     }
     
     @Override
-    protected Map<String, SpellProperty> initProperties() {
-        Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("duration", new SpellProperty("duration", "spells.primalmagick.property.duration", 0, 5));
-        return propMap;
+    protected List<SpellProperty> getPropertiesInner() {
+        return ImmutableList.<SpellProperty>builder().addAll(super.getPropertiesInner()).add(SpellPropertiesPM.DURATION.get()).build();
+    }
+
+    @Override
+    public SpellPayloadType<SolarDamageSpellPayload> getType() {
+        return SpellPayloadsPM.SOLAR_DAMAGE.get();
     }
 
     @Override
@@ -79,21 +84,21 @@ public class SolarDamageSpellPayload extends AbstractDamageSpellPayload {
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 20 * duration, 0));
                 if (entity.isInvertedHealAndHarm()) {
-                    entity.setSecondsOnFire(duration);
+                    entity.igniteForSeconds(duration);
                 }
             }
         }
     }
     
     @Override
-    public int getBaseManaCost() {
-        int power = this.getPropertyValue("power");
-        int duration = this.getPropertyValue("duration");
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
+        int power = properties.get(SpellPropertiesPM.POWER.get());
+        int duration = properties.get(SpellPropertiesPM.DURATION.get());
         return (1 << Math.max(0, power - 1)) + (duration == 0 ? 0 : (1 << Math.max(0, duration - 1)) >> 1);
     }
 
     protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
-        return 2 * this.getModdedPropertyValue("duration", spell, spellSource);
+        return 2 * this.getModdedPropertyValue(SpellPropertiesPM.DURATION.get(), spell, spellSource);
     }
 
     @Override
