@@ -71,10 +71,10 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle<BoltSpellVehic
     
     @Override
     protected void drawFx(Level world, SpellPackage spell, Vec3 source, Vec3 target) {
-        if (spell.getPayload() != null) {
+        if (spell.payload() != null) {
             // Show a bolt particle effect to every player in range
             PacketHandler.sendToAllAround(
-                    new SpellBoltPacket(source, target, spell.getPayload().getComponent().getSource().getColor()), 
+                    new SpellBoltPacket(source, target, spell.payload().getComponent().getSource().getColor()), 
                     world.dimension(), 
                     BlockPos.containing(source), 
                     64.0D);
@@ -82,7 +82,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle<BoltSpellVehic
     }
     
     protected int getRangeBlocks(SpellPackage spell, ItemStack spellSource) {
-        return 6 + (2 * spell.getVehicle().getPropertyValue(SpellPropertiesPM.RANGE.get()));
+        return 6 + (2 * spell.vehicle().getPropertyValue(SpellPropertiesPM.RANGE.get()));
     }
 
     @Override

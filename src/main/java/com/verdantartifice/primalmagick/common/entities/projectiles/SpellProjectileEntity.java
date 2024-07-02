@@ -41,9 +41,9 @@ public class SpellProjectileEntity extends AbstractArrow {
         super(EntityTypesPM.SPELL_PROJECTILE.get(), thrower, world, ItemStack.EMPTY);
         this.spell = spell;
         this.spellSource = spellSource == null ? null : spellSource.copy();
-        if (spell != null && spell.getPayload() != null) {
+        if (spell != null && spell.payload() != null) {
             // Store the spell payload's color for use in rendering
-            this.setColor(spell.getPayload().getSource().getColor());
+            this.setColor(spell.payload().getSource().getColor());
         }
     }
     
@@ -51,9 +51,9 @@ public class SpellProjectileEntity extends AbstractArrow {
         super(EntityTypesPM.SPELL_PROJECTILE.get(), x, y, z, world, ItemStack.EMPTY);
         this.spell = spell;
         this.spellSource = spellSource == null ? null : spellSource.copy();
-        if (spell != null && spell.getPayload() != null) {
+        if (spell != null && spell.payload() != null) {
             // Store the spell payload's color for use in rendering
-            this.setColor(spell.getPayload().getSource().getColor());
+            this.setColor(spell.payload().getSource().getColor());
         }
     }
     
@@ -74,10 +74,10 @@ public class SpellProjectileEntity extends AbstractArrow {
     public void tick() {
         super.tick();
         Level level = this.level();
-        if (!level.isClientSide && this.isAlive() && this.tickCount % 2 == 0 && this.spell != null && this.spell.getPayload() != null) {
+        if (!level.isClientSide && this.isAlive() && this.tickCount % 2 == 0 && this.spell != null && this.spell.payload() != null) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
-                    new SpellTrailPacket(this.position(), this.spell.getPayload().getSource().getColor()), 
+                    new SpellTrailPacket(this.position(), this.spell.payload().getSource().getColor()), 
                     level.dimension(), 
                     this.blockPosition(), 
                     64.0D);
@@ -92,7 +92,7 @@ public class SpellProjectileEntity extends AbstractArrow {
                 // Don't collide with other spell projectiles
                 return;
             }
-            if (this.spell != null && this.spell.getPayload() != null) {
+            if (this.spell != null && this.spell.payload() != null) {
                 LivingEntity shooter = (this.getOwner() instanceof LivingEntity) ? (LivingEntity)this.getOwner() : null;
                 SpellManager.executeSpellPayload(this.spell, result, level, shooter, this.spellSource, true, this);
             }

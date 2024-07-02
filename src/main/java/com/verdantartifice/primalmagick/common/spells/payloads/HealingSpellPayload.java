@@ -68,7 +68,7 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
         if (projectileEntity != null) {
             // If the spell was a projectile or a mine, then it's indirect now matter how it was deployed
             return DamageSourcesPM.sorcery(source.level(), this.getSource(), projectileEntity, source);
-        } else if (spell.getVehicle().getComponent().isIndirect()) {
+        } else if (spell.vehicle().getComponent().isIndirect()) {
             // If the spell vehicle is indirect but no projectile was given, then it's still indirect
             return DamageSourcesPM.sorcery(source.level(), this.getSource(), null, source);
         } else {

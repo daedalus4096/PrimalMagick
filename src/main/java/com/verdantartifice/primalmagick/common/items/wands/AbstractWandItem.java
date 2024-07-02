@@ -354,10 +354,10 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 for (int index = 0; index < spells.size(); index++) {
                     SpellPackage spell = spells.get(index);
                     if (index == activeIndex) {
-                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getName()));
+                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getDisplayName()));
                         tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, stack, true));
                     } else {
-                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getName()));
+                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getDisplayName()));
                     }
                 }
             }
@@ -383,7 +383,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             SpellPackage activeSpell = this.getActiveSpell(stack);
             Component activeSpellName = (activeSpell == null) ?
                     Component.translatable("tooltip.primalmagick.none") :
-                    activeSpell.getName();
+                    activeSpell.getDisplayName();
             tooltip.add(Component.translatable("tooltip.primalmagick.spells.short_wand_header", activeSpellName));
             
             // Add more info tooltip

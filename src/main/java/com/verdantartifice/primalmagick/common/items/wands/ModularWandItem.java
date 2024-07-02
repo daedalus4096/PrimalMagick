@@ -352,7 +352,7 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public boolean canAddSpell(ItemStack stack, SpellPackage spell) {
-        if (stack == null || spell == null || spell.getPayload() == null) {
+        if (stack == null || spell == null || spell.payload() == null) {
             return false;
         }
         
@@ -364,10 +364,10 @@ public class ModularWandItem extends AbstractWandItem {
         
         // Determine the payload sources of all spells to be included in the given wand
         List<Source> spellSources = this.getSpells(stack).stream()
-                .filter(p -> (p != null && p.getPayload() != null))
-                .map(p -> p.getPayload().getSource())
+                .filter(p -> (p != null && p.payload() != null))
+                .map(p -> p.payload().getSource())
                 .collect(Collectors.toCollection(() -> new ArrayList<>()));
-        spellSources.add(spell.getPayload().getSource());
+        spellSources.add(spell.payload().getSource());
         
         int coreSlots = this.getCoreSpellSlotCount(core);
         if (spellSources.size() < coreSlots + 1) {

@@ -288,14 +288,14 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         SpellProperty property = null;
         
         // Determine which property is to be changed
-        if (component == SpellComponent.VEHICLE && spell.getVehicle() != null) {
-            property = spell.getVehicle().getProperty(name);
-        } else if (component == SpellComponent.PAYLOAD && spell.getPayload() != null) {
-            property = spell.getPayload().getProperty(name);
-        } else if (component == SpellComponent.PRIMARY_MOD && spell.getPrimaryMod() != null) {
-            property = spell.getPrimaryMod().getProperty(name);
-        } else if (component == SpellComponent.SECONDARY_MOD && spell.getSecondaryMod() != null) {
-            property = spell.getSecondaryMod().getProperty(name);
+        if (component == SpellComponent.VEHICLE && spell.vehicle() != null) {
+            property = spell.vehicle().getProperty(name);
+        } else if (component == SpellComponent.PAYLOAD && spell.payload() != null) {
+            property = spell.payload().getProperty(name);
+        } else if (component == SpellComponent.PRIMARY_MOD && spell.primaryMod() != null) {
+            property = spell.primaryMod().getProperty(name);
+        } else if (component == SpellComponent.SECONDARY_MOD && spell.secondaryMod() != null) {
+            property = spell.secondaryMod().getProperty(name);
         }
         
         // Set and cache the changed value, then trigger a regeneration of the output item

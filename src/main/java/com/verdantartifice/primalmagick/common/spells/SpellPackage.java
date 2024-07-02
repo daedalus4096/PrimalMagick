@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.mods.AbstractSpellMod;
@@ -21,7 +23,10 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -40,14 +45,33 @@ import net.minecraft.world.level.Level;
  * @see {@link com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload}
  * @see {@link com.verdantartifice.primalmagick.common.spells.mods.ISpellMod}
  */
-public class SpellPackage {
+public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, ConfiguredSpellPayload<?> payload, Optional<ConfiguredSpellMod<?>> primaryMod, Optional<ConfiguredSpellMod<?>> secondaryMod) {
     private static final int BASE_COOLDOWN_TICKS = 30;
     
-    protected String name = "";
-    protected ConfiguredSpellVehicle<?> vehicle = null;
-    protected ConfiguredSpellPayload<?> payload = null;
-    protected ConfiguredSpellMod<?> primaryMod = null;
-    protected ConfiguredSpellMod<?> secondaryMod = null;
+    public static Codec<SpellPackage> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                Codec.STRING.fieldOf("name").forGetter(SpellPackage::name),
+                ConfiguredSpellVehicle.codec().fieldOf("vehicle").forGetter(SpellPackage::vehicle),
+                ConfiguredSpellPayload.codec().fieldOf("payload").forGetter(SpellPackage::payload),
+                ConfiguredSpellMod.codec().optionalFieldOf("primaryMod").forGetter(SpellPackage::primaryMod),
+                ConfiguredSpellMod.codec().optionalFieldOf("secondaryMod").forGetter(SpellPackage::secondaryMod)
+            ).apply(instance, SpellPackage::new));
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, SpellPackage> streamCodec() {
+        return StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8,
+                SpellPackage::name,
+                ConfiguredSpellVehicle.streamCodec(),
+                SpellPackage::vehicle,
+                ConfiguredSpellPayload.streamCodec(),
+                SpellPackage::payload,
+                ByteBufCodecs.optional(ConfiguredSpellMod.streamCodec()),
+                SpellPackage::primaryMod,
+                ByteBufCodecs.optional(ConfiguredSpellMod.streamCodec()),
+                SpellPackage::secondaryMod,
+                SpellPackage::new);
+    }
     
     public SpellPackage() {}
     
@@ -60,7 +84,7 @@ public class SpellPackage {
     }
     
     @Nonnull
-    public Component getName() {
+    public Component getDisplayName() {
         // Color spell names according to their rarity, like with items
         return Component.literal(this.name).withStyle(this.getRarity().color());
     }
@@ -90,7 +114,7 @@ public class SpellPackage {
     }
 
     @Nullable
-    public ConfiguredSpellMod<?> getPrimaryMod() {
+    public ConfiguredSpellMod<?> primaryMod() {
         return this.primaryMod;
     }
 
@@ -99,7 +123,7 @@ public class SpellPackage {
     }
 
     @Nullable
-    public ConfiguredSpellMod<?> getSecondaryMod() {
+    public ConfiguredSpellMod<?> secondaryMod() {
         return this.secondaryMod;
     }
 
@@ -245,5 +269,56 @@ public class SpellPackage {
             return this.payload.getComponent().getSource().getImage();
         }
         return null;
+    }
+    
+    public static class Builder {
+        protected String name = "";
+        protected ConfiguredSpellVehicle.Builder vehicleBuilder = null;
+        protected ConfiguredSpellPayload.Builder payloadBuilder = null;
+        protected Optional<ConfiguredSpellMod.Builder> primaryModBuilder = Optional.empty();
+        protected Optional<ConfiguredSpellMod.Builder> secondaryModBuilder = Optional.empty();
+        
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+        
+        public ConfiguredSpellVehicle.Builder vehicle() {
+            this.vehicleBuilder = new ConfiguredSpellVehicle.Builder(this);
+            return this.vehicleBuilder;
+        }
+        
+        public ConfiguredSpellPayload.Builder payload() {
+            this.payloadBuilder = new ConfiguredSpellPayload.Builder(this);
+            return this.payloadBuilder;
+        }
+        
+        public ConfiguredSpellMod.Builder primaryMod() {
+            ConfiguredSpellMod.Builder retVal = new ConfiguredSpellMod.Builder(this);
+            this.primaryModBuilder = Optional.of(retVal);
+            return retVal;
+        }
+        
+        public ConfiguredSpellMod.Builder secondaryMod() {
+            ConfiguredSpellMod.Builder retVal = new ConfiguredSpellMod.Builder(this);
+            this.secondaryModBuilder = Optional.of(retVal);
+            return retVal;
+        }
+        
+        private void validate() {
+            if (this.name == null) {
+                throw new IllegalStateException("No name for spell package");
+            } else if (this.vehicleBuilder == null) {
+                throw new IllegalStateException("No vehicle for spell package " + this.name);
+            } else if (this.payloadBuilder == null) {
+                throw new IllegalStateException("No payload for spell package " + this.name);
+            }
+        }
+        
+        public SpellPackage build() {
+            this.validate();
+            return new SpellPackage(this.name, this.vehicleBuilder.build(), this.payloadBuilder.build(), this.primaryModBuilder.map(ConfiguredSpellMod.Builder::build), 
+                    this.secondaryModBuilder.map(ConfiguredSpellMod.Builder::build));
+        }
     }
 }

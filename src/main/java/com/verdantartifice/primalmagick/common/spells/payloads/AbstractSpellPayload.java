@@ -71,7 +71,7 @@ public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> im
     }
     
     public int getModdedPropertyValue(@Nonnull SpellProperty property, @Nonnull SpellPackage spell, @Nullable ItemStack spellSource) {
-        MutableInt retVal = new MutableInt(spell.getPayload().getPropertyValue(property));
+        MutableInt retVal = new MutableInt(spell.payload().getPropertyValue(property));
         if (retVal.intValue() > 0 && !SpellPropertiesPM.AMPLIFY_POWER.get().equals(property) && SpellPropertiesPM.PROPERTIES.get().tags().getTag(SpellPropertyTagsPM.AMPLIFIABLE).contains(property)) {
             // For power or duration properties greater than zero, increase the total result by
             // the power of any attached Amplify spell mod or Spell Power enchantment

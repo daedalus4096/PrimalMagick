@@ -60,7 +60,7 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle<ProjectileSpell
 
     @Override
     public void execute(SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
-        if (spell.getPayload() != null) {
+        if (spell.payload() != null) {
             Vec3 baseLookVector = caster.getViewVector(1.0F);
             MutableObject<List<Vec3>> lookVectors = new MutableObject<>();
             spell.getMod(SpellModsPM.FORK.get()).ifPresentOrElse(forkMod -> {

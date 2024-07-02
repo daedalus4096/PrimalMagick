@@ -23,6 +23,11 @@ public abstract class AbstractConfiguredSpellComponent<T extends ISpellComponent
         this.configuredProperties = new SpellPropertyConfiguration(configuredProperties);
     }
     
+    protected AbstractConfiguredSpellComponent(T component, SpellPropertyConfiguration configuredProperties) {
+        this.component = component;
+        this.configuredProperties = new SpellPropertyConfiguration(configuredProperties);
+    }
+    
     public T getComponent() {
         return this.component;
     }
@@ -44,6 +49,6 @@ public abstract class AbstractConfiguredSpellComponent<T extends ISpellComponent
      * @return whether all of this component's properties have been configured with a value
      */
     public boolean isFullyConfigured() {
-        return this.component.getProperties().stream().allMatch(prop -> this.configuredProperties.contains(prop));
+        return this.component != null && this.component.getProperties().stream().allMatch(prop -> this.configuredProperties.contains(prop));
     }
 }

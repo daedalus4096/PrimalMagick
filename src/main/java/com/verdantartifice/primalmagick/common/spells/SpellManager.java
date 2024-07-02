@@ -205,7 +205,7 @@ public class SpellManager {
                 if (spell == null) {
                     player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell.none"));
                 } else {
-                    player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getName()));
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getDisplayName()));
                 }
             }
         }
@@ -214,7 +214,7 @@ public class SpellManager {
     public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull HitResult result, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, 
             boolean allowMine, @Nullable Entity projectileEntity) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
-        if (!world.isClientSide && spell.getPayload() != null) {
+        if (!world.isClientSide && spell.payload() != null) {
             Vec3 hitVec = result.getLocation();
             BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");
             MineSpellMod mineMod = spell.getMod(MineSpellMod.class, "duration");
@@ -222,7 +222,7 @@ public class SpellManager {
             // Trigger spell impact FX on the clients of every player in range
             int radius = (burstMod == null || (allowMine && mineMod != null)) ? 1 : burstMod.getPropertyValue("radius");
             PacketHandler.sendToAllAround(
-                    new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
+                    new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.payload().getSource().getColor()), 
                     world.dimension(), 
                     BlockPos.containing(hitVec), 
                     64.0D);
@@ -236,11 +236,11 @@ public class SpellManager {
                 // If the spell package has the burst mod, calculate the set of affected blocks/entities and execute the payload on each
                 Set<HitResult> targetSet = burstMod.getBurstTargets(result, spell, spellSource, world);
                 for (HitResult target : targetSet) {
-                    spell.getPayload().execute(target, hitVec, spell, world, caster, spellSource, null);
+                    spell.payload().execute(target, hitVec, spell, world, caster, spellSource, null);
                 }
             } else {
                 // Otherwise, just execute the payload on the given target
-                spell.getPayload().execute(result, null, spell, world, caster, spellSource, null);
+                spell.payload().execute(result, null, spell, world, caster, spellSource, null);
             }
         }
     }
@@ -261,18 +261,18 @@ public class SpellManager {
         List<Component> retVal = new ArrayList<>();
         Component leader = indent ? Component.literal("    ") : Component.literal("");
         if (spell != null) {
-            ISpellVehicle vehicle = spell.getVehicle();
+            ISpellVehicle vehicle = spell.vehicle();
             if (vehicle != null) {
                 retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getDetailTooltip(spell, spellSource))));
             }
             
-            ISpellPayload payload = spell.getPayload();
+            ISpellPayload payload = spell.payload();
             if (payload != null) {
                 retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getDetailTooltip(spell, spellSource))));
             }
             
-            ISpellMod primary = spell.getPrimaryMod();
-            ISpellMod secondary = spell.getSecondaryMod();
+            ISpellMod primary = spell.primaryMod();
+            ISpellMod secondary = spell.secondaryMod();
             if (primary != null && primary.isActive() && secondary != null && secondary.isActive()) {
                 retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.getDetailTooltip(spell, spellSource), secondary.getDetailTooltip(spell, spellSource))));
             } else if (primary != null && primary.isActive()) {

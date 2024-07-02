@@ -60,7 +60,7 @@ public class SelfSpellVehicle extends AbstractSpellVehicle<SelfSpellVehicle> {
 
     @Override
     public void execute(SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
-        if (spell.getPayload() != null) {
+        if (spell.payload() != null) {
             HitResult result = new EntityHitResult(caster, caster.getEyePosition(1.0F));
             
             // Determine how many times the caster should be affected by the spell payload
