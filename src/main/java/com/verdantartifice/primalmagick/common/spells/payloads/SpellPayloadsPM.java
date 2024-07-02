@@ -21,7 +21,9 @@ public class SpellPayloadsPM {
     public static void init() {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
-    
+
+    public static final RegistryObject<SpellPayloadType<EarthDamageSpellPayload>> EARTH_DAMAGE = register(EarthDamageSpellPayload.TYPE, EarthDamageSpellPayload.CODEC, EarthDamageSpellPayload.STREAM_CODEC);
+    public static final RegistryObject<SpellPayloadType<FrostDamageSpellPayload>> FROST_DAMAGE = register(FrostDamageSpellPayload.TYPE, FrostDamageSpellPayload.CODEC, FrostDamageSpellPayload.STREAM_CODEC);
     public static final RegistryObject<SpellPayloadType<FlameDamageSpellPayload>> FLAME_DAMAGE = register(FlameDamageSpellPayload.TYPE, FlameDamageSpellPayload.CODEC, FlameDamageSpellPayload.STREAM_CODEC);
     
     protected static <T extends AbstractSpellPayload<T>> RegistryObject<SpellPayloadType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
