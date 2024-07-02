@@ -4,9 +4,8 @@ import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionOwnerH
 import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionOwnerHurtTargetGoal;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.EarthDamageSpellPayload;
-import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,15 +34,8 @@ public abstract class AbstractEarthPixieEntity extends AbstractPixieEntity imple
     }
 
     @Override
-    protected SpellPackage createSpellPackage() {
-        SpellPackage spell = new SpellPackage("Pixie Bolt");
-        BoltSpellVehicle vehicle = new BoltSpellVehicle();
-        vehicle.getProperty("range").setValue(5);
-        spell.setVehicle(vehicle);
-        EarthDamageSpellPayload payload = new EarthDamageSpellPayload();
-        payload.getProperty("power").setValue(this.getSpellPower());
-        spell.setPayload(payload);
-        return spell;
+    protected AbstractSpellPayload<?> getSpellPayload() {
+        return EarthDamageSpellPayload.INSTANCE;
     }
 
     @Override

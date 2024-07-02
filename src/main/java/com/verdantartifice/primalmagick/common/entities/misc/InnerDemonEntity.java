@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.SinCrashEnti
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.BloodDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ProjectileSpellVehicle;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
@@ -97,14 +98,11 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     
     @Nonnull
     protected SpellPackage getSpellPackage() {
-        SpellPackage spell = new SpellPackage("Blood Ball");
-        ProjectileSpellVehicle vehicle = new ProjectileSpellVehicle();
-        spell.setVehicle(vehicle);
-        BloodDamageSpellPayload payload = new BloodDamageSpellPayload();
         Difficulty difficulty = this.level().getDifficulty();
-        payload.getProperty("power").setValue(difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 5 : 3));
-        spell.setPayload(payload);
-        return spell;
+        return SpellPackage.builder().name("Blood Ball")
+                .vehicle().type(ProjectileSpellVehicle.INSTANCE).end()
+                .payload().type(BloodDamageSpellPayload.INSTANCE).with(SpellPropertiesPM.POWER.get(), difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 5 : 3)).end()
+                .build();
     }
 
     @Override

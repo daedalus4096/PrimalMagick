@@ -75,10 +75,6 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
     
     public SpellPackage() {}
     
-    public SpellPackage(String name) {
-        this.setName(name);
-    }
-    
     public SpellPackage(CompoundTag tag) {
         this.deserializeNBT(tag);
     }
@@ -87,48 +83,6 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
     public Component getDisplayName() {
         // Color spell names according to their rarity, like with items
         return Component.literal(this.name).withStyle(this.getRarity().color());
-    }
-    
-    public void setName(@Nullable String name) {
-        if (name != null) {
-            this.name = name;
-        }
-    }
-
-    @Nullable
-    public ConfiguredSpellVehicle<?> getVehicle() {
-        return this.vehicle;
-    }
-
-    public void setVehicle(@Nullable ConfiguredSpellVehicle<?> vehicle) {
-        this.vehicle = vehicle;
-    }
-
-    @Nullable
-    public ConfiguredSpellPayload<?> getPayload() {
-        return this.payload;
-    }
-
-    public void setPayload(@Nullable ConfiguredSpellPayload<?> payload) {
-        this.payload = payload;
-    }
-
-    @Nullable
-    public ConfiguredSpellMod<?> primaryMod() {
-        return this.primaryMod;
-    }
-
-    public void setPrimaryMod(@Nullable ConfiguredSpellMod<?> primaryMod) {
-        this.primaryMod = primaryMod;
-    }
-
-    @Nullable
-    public ConfiguredSpellMod<?> secondaryMod() {
-        return this.secondaryMod;
-    }
-
-    public void setSecondaryMod(@Nullable ConfiguredSpellMod<?> secondaryMod) {
-        this.secondaryMod = secondaryMod;
     }
     
     public boolean isValid() {
@@ -199,13 +153,13 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
             baseModifier += this.vehicle.getBaseManaCostModifier();
             multiplier *= this.vehicle.getManaCostMultiplier();
         }
-        if (this.primaryMod != null) {
-            baseModifier += this.primaryMod.getBaseManaCostModifier();
-            multiplier *= this.primaryMod.getManaCostMultiplier();
+        if (this.primaryMod.isPresent()) {
+            baseModifier += this.primaryMod.get().getBaseManaCostModifier();
+            multiplier *= this.primaryMod.get().getManaCostMultiplier();
         }
-        if (this.secondaryMod != null) {
-            baseModifier += this.secondaryMod.getBaseManaCostModifier();
-            multiplier *= this.secondaryMod.getManaCostMultiplier();
+        if (this.secondaryMod.isPresent()) {
+            baseModifier += this.secondaryMod.get().getBaseManaCostModifier();
+            multiplier *= this.secondaryMod.get().getManaCostMultiplier();
         }
         
         return SourceList.EMPTY.add(source, (baseManaCost + baseModifier) * multiplier);
@@ -225,14 +179,10 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
     }
     
     public int getActiveModCount() {
-        int retVal = 0;
-        if (this.primaryMod != null && this.primaryMod.getComponent().isActive()) {
-            retVal++;
-        }
-        if (this.secondaryMod != null && this.secondaryMod.getComponent().isActive()) {
-            retVal++;
-        }
-        return retVal;
+        MutableInt retVal = new MutableInt(0);
+        this.primaryMod.filter(mod -> mod.getComponent().isActive()).ifPresent($ -> retVal.increment());
+        this.secondaryMod.filter(mod -> mod.getComponent().isActive()).ifPresent($ -> retVal.increment());
+        return retVal.intValue();
     }
     
     @Nonnull
@@ -248,8 +198,8 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
     @SuppressWarnings("unchecked")
     public <T extends AbstractSpellMod<T>> Optional<ConfiguredSpellMod<T>> getMod(SpellModType<T> type) {
         // Determine if either of the attached mod components are of the requested type
-        ConfiguredSpellMod<T> primary = this.primaryMod != null && this.primaryMod.getComponent().getType().equals(type) ? (ConfiguredSpellMod<T>)this.primaryMod : null;
-        ConfiguredSpellMod<T> secondary = this.secondaryMod != null && this.secondaryMod.getComponent().getType().equals(type) ? (ConfiguredSpellMod<T>)this.secondaryMod : null;
+        ConfiguredSpellMod<T> primary = this.primaryMod.isPresent() && this.primaryMod.get().getComponent().getType().equals(type) ? (ConfiguredSpellMod<T>)this.primaryMod.get() : null;
+        ConfiguredSpellMod<T> secondary = this.secondaryMod.isPresent() && this.secondaryMod.get().getComponent().getType().equals(type) ? (ConfiguredSpellMod<T>)this.secondaryMod.get() : null;
         
         if (primary != null && secondary != null) {
             // If both mods are of the requested type, only return the one with a higher value in the tiebreaker property
@@ -269,6 +219,10 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
             return this.payload.getComponent().getSource().getImage();
         }
         return null;
+    }
+    
+    public static Builder builder() {
+        return new Builder();
     }
     
     public static class Builder {
