@@ -22,7 +22,7 @@ public class SpellPayloadsPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    // TODO
+    public static final RegistryObject<SpellPayloadType<FlameDamageSpellPayload>> FLAME_DAMAGE = register(FlameDamageSpellPayload.TYPE, FlameDamageSpellPayload.CODEC, FlameDamageSpellPayload.STREAM_CODEC);
     
     protected static <T extends AbstractSpellPayload<T>> RegistryObject<SpellPayloadType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         return DEFERRED_TYPES.register(id, () -> new SpellPayloadType<T>(PrimalMagick.resource(id), codec, streamCodec));
