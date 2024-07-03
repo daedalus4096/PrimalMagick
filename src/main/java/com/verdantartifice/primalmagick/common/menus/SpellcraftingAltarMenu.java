@@ -19,7 +19,6 @@ import com.verdantartifice.primalmagick.common.menus.slots.SpellcraftingResultSl
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.SpellComponent;
-import com.verdantartifice.primalmagick.common.spells.SpellFactory;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
@@ -29,7 +28,6 @@ import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
 import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.EmptySpellPayload;
-import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadType;
 import com.verdantartifice.primalmagick.common.spells.vehicles.AbstractSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
@@ -136,13 +134,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     
     protected SpellPackage makeFinalSpellPackage() {
         // Assemble the final spell package from the input types and properties
-        SpellPackage spell = new SpellPackage();
-        spell.setName(this.getSpellName());
-        spell.setVehicle(this.getSpellVehicleComponent());
-        spell.setPayload(this.getSpellPayloadComponent());
-        spell.setPrimaryMod(this.getSpellPrimaryModComponent());
-        spell.setSecondaryMod(this.getSpellSecondaryModComponent());
-        return spell;
+        return new SpellPackage(this.getSpellName(), this.getSpellVehicleComponent(), this.getSpellPayloadComponent(), this.getSpellPrimaryModComponent(), this.getSpellSecondaryModComponent());
     }
     
     public String getSpellName() {
@@ -153,11 +145,11 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     public Component getDefaultSpellName() {
         // Don't use getSpellPackage here, or it will cause infinite recursion
         Component vehiclePiece = this.getSpellVehicleComponent().getComponent().getDefaultNamePiece();
-        Component payloadPiece = this.getSpellPayloadComponent().getDefaultNamePiece();
-        Component primaryModPiece = this.getSpellPrimaryModComponent().getDefaultNamePiece();
-        Component secondaryModPiece = this.getSpellSecondaryModComponent().getDefaultNamePiece();
-        boolean primaryActive = this.getSpellPrimaryModComponent().isActive();
-        boolean secondaryActive = this.getSpellSecondaryModComponent().isActive();
+        Component payloadPiece = this.getSpellPayloadComponent().getComponent().getDefaultNamePiece();
+        Optional<Component> primaryModPiece = this.getSpellPrimaryModComponent().map(csm -> csm.getComponent().getDefaultNamePiece());
+        Optional<Component> secondaryModPiece = this.getSpellSecondaryModComponent().map(csm -> csm.getComponent().getDefaultNamePiece());
+        boolean primaryActive = primaryModPiece.isPresent();
+        boolean secondaryActive = secondaryModPiece.isPresent();
         if (vehiclePiece == null || payloadPiece == null || vehiclePiece.getString().isEmpty() || payloadPiece.getString().isEmpty()) {
             // If the constructed spell is invalid, don't show a default name
             return Component.literal("");
@@ -166,13 +158,13 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
             return Component.translatable("spells.primalmagick.default_name_format.mods.0", vehiclePiece, payloadPiece);
         } else if (primaryActive && secondaryActive) {
             // Two mods selected
-            return Component.translatable("spells.primalmagick.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
+            return Component.translatable("spells.primalmagick.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece.get(), secondaryModPiece.get());
         } else if (primaryActive) {
             // Only a primary mod selected
-            return Component.translatable("spells.primalmagick.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
+            return Component.translatable("spells.primalmagick.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece.get());
         } else {
             // Only a secondary mod selected
-            return Component.translatable("spells.primalmagick.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
+            return Component.translatable("spells.primalmagick.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece.get());
         }
     }
     
@@ -300,25 +292,10 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         });
     }
     
-    public void setSpellPropertyValue(SpellComponent component, String name, int value) {
-        SpellPackage spell = this.getSpellPackage();
-        SpellProperty property = null;
-        
-        // Determine which property is to be changed
-        if (component == SpellComponent.VEHICLE && spell.vehicle() != null) {
-            property = spell.vehicle().getProperty(name);
-        } else if (component == SpellComponent.PAYLOAD && spell.payload() != null) {
-            property = spell.payload().getProperty(name);
-        } else if (component == SpellComponent.PRIMARY_MOD && spell.primaryMod() != null) {
-            property = spell.primaryMod().getProperty(name);
-        } else if (component == SpellComponent.SECONDARY_MOD && spell.secondaryMod() != null) {
-            property = spell.secondaryMod().getProperty(name);
-        }
-        
+    public void setSpellPropertyValue(SpellComponent component, SpellProperty property, int value) {
         // Set and cache the changed value, then trigger a regeneration of the output item
-        if (property != null) {
-            property.setValue(value);
-            this.spellPropertyCache.get(component).put(name, value);
+        if (component != null && property != null) {
+            this.spellPropertyCache.get(component).put(property, value);
             this.containerLevelAccess.execute((world, blockPos) -> {
                 this.slotChangedCraftingGrid(world);
             });
