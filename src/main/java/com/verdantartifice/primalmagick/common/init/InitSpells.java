@@ -42,7 +42,9 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.TouchSpellVehicle
  * determines the order in which they appear in the spellcrafting GUI.
  * 
  * @author Daedalus4096
+ * @deprecated
  */
+@Deprecated
 public class InitSpells {
     public static void initSpells() {
         registerSpellVehicleTypes();
