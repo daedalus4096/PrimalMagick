@@ -113,7 +113,7 @@ public class SpellMineEntity extends Entity {
         
         this.spell = null;
         if (compound.contains("Spell", Tag.TAG_COMPOUND)) {
-            this.spell = new SpellPackage(compound.getCompound("Spell"));
+            this.spell = SpellPackage.deserializeNBT(compound.getCompound("Spell"));
         }
         if (this.spell != null && !this.spell.isValid()) {
             this.spell = null;

@@ -6,6 +6,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -13,7 +15,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.mods.AbstractSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
-import com.verdantartifice.primalmagick.common.spells.mods.QuickenSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
@@ -22,7 +23,8 @@ import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -47,6 +49,7 @@ import net.minecraft.world.level.Level;
  */
 public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, ConfiguredSpellPayload<?> payload, Optional<ConfiguredSpellMod<?>> primaryMod, Optional<ConfiguredSpellMod<?>> secondaryMod) {
     private static final int BASE_COOLDOWN_TICKS = 30;
+    private static final Logger LOGGER = LogManager.getLogger();
     
     public static Codec<SpellPackage> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
@@ -73,12 +76,6 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
                 SpellPackage::new);
     }
     
-    public SpellPackage() {}
-    
-    public SpellPackage(CompoundTag tag) {
-        this.deserializeNBT(tag);
-    }
-    
     @Nonnull
     public Component getDisplayName() {
         // Color spell names according to their rarity, like with items
@@ -92,34 +89,14 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
                 this.name != null && !this.name.isEmpty();
     }
 
-    @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        if (this.name != null) {
-            nbt.putString("SpellName", this.name);
-        }
-        if (this.vehicle != null) {
-            nbt.put("SpellVehicle", this.vehicle.serializeNBT());
-        }
-        if (this.payload != null) {
-            nbt.put("SpellPayload", this.payload.serializeNBT());
-        }
-        if (this.primaryMod != null) {
-            nbt.put("PrimaryMod", this.primaryMod.serializeNBT());
-        }
-        if (this.secondaryMod != null) {
-            nbt.put("SecondaryMod", this.secondaryMod.serializeNBT());
-        }
-        return nbt;
+    @Nullable
+    public Tag serializeNBT() {
+        return codec().encodeStart(NbtOps.INSTANCE, this).resultOrPartial(LOGGER::error).orElse(null);
     }
-
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        this.name = nbt.getString("SpellName");
-        this.vehicle = nbt.contains("SpellVehicle") ? SpellFactory.getVehicleFromNBT(nbt.getCompound("SpellVehicle")) : null;
-        this.payload = nbt.contains("SpellPayload") ? SpellFactory.getPayloadFromNBT(nbt.getCompound("SpellPayload")) : null;
-        this.primaryMod = nbt.contains("PrimaryMod") ? SpellFactory.getModFromNBT(nbt.getCompound("PrimaryMod")) : null;
-        this.secondaryMod = nbt.contains("SecondaryMod") ? SpellFactory.getModFromNBT(nbt.getCompound("SecondaryMod")) : null;
+    
+    @Nullable
+    public static SpellPackage deserializeNBT(Tag nbt) {
+        return codec().parse(NbtOps.INSTANCE, nbt).resultOrPartial(LOGGER::error).orElse(null);
     }
 
     public int getCooldownTicks() {
