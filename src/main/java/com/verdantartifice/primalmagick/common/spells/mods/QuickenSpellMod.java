@@ -31,11 +31,12 @@ public class QuickenSpellMod extends AbstractSpellMod<QuickenSpellMod> {
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_QUICKEN));
     protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.HASTE.get());
 
-    public QuickenSpellMod() {
-    }
-    
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
+    }
+    
+    public static QuickenSpellMod getInstance() {
+        return INSTANCE;
     }
     
     @Override

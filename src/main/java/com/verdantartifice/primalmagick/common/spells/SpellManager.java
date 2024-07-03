@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.MineSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
@@ -131,9 +132,12 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<String> getModTypes(@Nullable Player player) {
+    public static List<SpellModType<?>> getModTypes(@Nullable Player player) {
         // Compute a list of spell mod types that the given player is able to use
-        return getFilteredTypes(player, MOD_TYPES, MOD_RESEARCH_SUPPLIERS);
+        return SpellModsPM.TYPES.get().getValues().stream()
+                .filter(type -> type.requirementSupplier().get() == null || type.requirementSupplier().get().isMetBy(player))
+                .sorted(Comparator.comparing(SpellModType::sortOrder))
+                .toList();
     }
     
     @Nullable

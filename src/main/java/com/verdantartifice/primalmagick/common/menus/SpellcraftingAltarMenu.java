@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,11 +23,15 @@ import com.verdantartifice.primalmagick.common.spells.SpellFactory;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.mods.AbstractSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.AbstractSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
-import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.EmptySpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -177,9 +182,15 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         });
     }
     
+    @Nonnull
     protected ConfiguredSpellVehicle<?> getSpellVehicleComponent() {
         // Construct a new spell vehicle from the saved type index and populate it with any cached properties
-        AbstractSpellVehicle<?> baseVehicle = SpellManager.getVehicleTypes(this.player).get(this.getSpellVehicleTypeIndex()).instanceSupplier().get();
+        int index = this.getSpellVehicleTypeIndex();
+        List<SpellVehicleType<?>> types = SpellManager.getVehicleTypes(this.player);
+        if (index < 0 || index >= types.size()) {
+            return new ConfiguredSpellVehicle<>(EmptySpellVehicle.INSTANCE);
+        }
+        AbstractSpellVehicle<?> baseVehicle = types.get(index).instanceSupplier().get();
         Map<SpellProperty, Integer> properties = new HashMap<>();
         this.spellPropertyCache.get(SpellComponent.VEHICLE).forEach((prop, val) -> {
             if (baseVehicle.getProperties().contains(prop)) {
@@ -230,17 +241,21 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         });
     }
     
-    protected ISpellMod getSpellPrimaryModComponent() {
+    protected Optional<ConfiguredSpellMod<?>> getSpellPrimaryModComponent() {
         // Construct a new spell mod from the saved type index and populate it with any cached properties
-        ISpellMod retVal = SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellPrimaryModTypeIndex()));
-        if (retVal != null) {
-            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.PRIMARY_MOD).entrySet()) {
-                if (retVal.getProperty(entry.getKey()) != null) {
-                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
-                }
-            }
+        int index = this.getSpellPrimaryModTypeIndex();
+        List<SpellModType<?>> types = SpellManager.getModTypes(this.player);
+        if (index < 0 || index >= types.size()) {
+            return Optional.empty();
         }
-        return retVal;
+        AbstractSpellMod<?> baseMod = types.get(index).instanceSupplier().get();
+        Map<SpellProperty, Integer> properties = new HashMap<>();
+        this.spellPropertyCache.get(SpellComponent.PRIMARY_MOD).forEach((prop, val) -> {
+            if (baseMod.getProperties().contains(prop)) {
+                properties.put(prop, val);
+            }
+        });
+        return Optional.of(new ConfiguredSpellMod<>(baseMod, properties));
     }
     
     public int getSpellPrimaryModTypeIndex() {

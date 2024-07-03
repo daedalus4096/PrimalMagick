@@ -42,11 +42,12 @@ public class ForkSpellMod extends AbstractSpellMod<ForkSpellMod> {
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_FORK));
     protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.FORKS.get(), SpellPropertiesPM.PRECISION.get());
 
-    public ForkSpellMod() {
-    }
-    
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
+    }
+    
+    public static ForkSpellMod getInstance() {
+        return INSTANCE;
     }
     
     @Override

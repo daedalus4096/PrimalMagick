@@ -26,9 +26,10 @@ public class EmptySpellMod extends AbstractSpellMod<EmptySpellMod> {
     
     public static final String TYPE = "none";
 
-    public EmptySpellMod() {
+    public static EmptySpellMod getInstance() {
+        return INSTANCE;
     }
-
+    
     @Override
     public SpellModType<EmptySpellMod> getType() {
         return SpellModsPM.EMPTY.get();

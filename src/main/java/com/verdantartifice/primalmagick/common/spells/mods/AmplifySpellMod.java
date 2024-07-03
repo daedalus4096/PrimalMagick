@@ -33,11 +33,12 @@ public class AmplifySpellMod extends AbstractSpellMod<AmplifySpellMod> {
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_AMPLIFY));
     protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.AMPLIFY_POWER.get());
 
-    public AmplifySpellMod() {
-    }
-    
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
+    }
+    
+    public static AmplifySpellMod getInstance() {
+        return INSTANCE;
     }
     
     @Override
