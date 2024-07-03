@@ -57,6 +57,10 @@ public class EmptySpellVehicle extends AbstractSpellVehicle<EmptySpellVehicle> {
     public static AbstractRequirement<?> getRequirement() {
         return null;
     }
+    
+    public static EmptySpellVehicle getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public boolean isIndirect() {

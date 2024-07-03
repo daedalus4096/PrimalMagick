@@ -44,6 +44,10 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle<BoltSpellVehic
         return REQUIREMENT;
     }
 
+    public static BoltSpellVehicle getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public SpellVehicleType<BoltSpellVehicle> getType() {
         return SpellVehiclesPM.BOLT.get();

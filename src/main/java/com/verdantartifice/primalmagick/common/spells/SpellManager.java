@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.spells;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,8 @@ import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPa
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
+import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehiclesPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -85,9 +88,12 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<String> getVehicleTypes(@Nullable Player player) {
+    public static List<SpellVehicleType<?>> getVehicleTypes(@Nullable Player player) {
         // Compute a list of spell vehicle types that the given player is able to use
-        return getFilteredTypes(player, VEHICLE_TYPES, VEHICLE_RESEARCH_SUPPLIERS);
+        return SpellVehiclesPM.TYPES.get().getValues().stream()
+                .filter(type -> type.requirementSupplier().get() == null || type.requirementSupplier().get().isMetBy(player))
+                .sorted(Comparator.comparing(SpellVehicleType::sortOrder))
+                .toList();
     }
     
     @Nullable

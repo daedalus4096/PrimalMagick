@@ -43,6 +43,10 @@ public class SelfSpellVehicle extends AbstractSpellVehicle<SelfSpellVehicle> {
         return REQUIREMENT;
     }
 
+    public static SelfSpellVehicle getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public SpellVehicleType<SelfSpellVehicle> getType() {
         return SpellVehiclesPM.SELF.get();

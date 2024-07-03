@@ -43,6 +43,10 @@ public class ProjectileSpellVehicle extends AbstractSpellVehicle<ProjectileSpell
         return REQUIREMENT;
     }
     
+    public static ProjectileSpellVehicle getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public SpellVehicleType<ProjectileSpellVehicle> getType() {
         return SpellVehiclesPM.PROJECTILE.get();

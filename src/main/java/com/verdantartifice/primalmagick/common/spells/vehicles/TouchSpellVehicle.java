@@ -36,6 +36,10 @@ public class TouchSpellVehicle extends AbstractRaycastSpellVehicle<TouchSpellVeh
         return REQUIREMENT;
     }
 
+    public static TouchSpellVehicle getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public SpellVehicleType<TouchSpellVehicle> getType() {
         return SpellVehiclesPM.TOUCH.get();

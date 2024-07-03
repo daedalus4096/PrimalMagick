@@ -24,6 +24,8 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
+import com.verdantartifice.primalmagick.common.spells.vehicles.AbstractSpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
@@ -68,7 +70,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     protected int spellPrimaryModTypeIndex = 0;
     protected int spellSecondaryModTypeIndex = 0;
     protected SpellPackage spellPackageCache = null;
-    protected Map<SpellComponent, Map<String, Integer>> spellPropertyCache = new HashMap<>();
+    protected Map<SpellComponent, Map<SpellProperty, Integer>> spellPropertyCache = new HashMap<>();
 
     public SpellcraftingAltarMenu(int windowId, Inventory inv, BlockPos tilePos) {
         this(windowId, inv, tilePos, null);
@@ -142,7 +144,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     @Nonnull
     public Component getDefaultSpellName() {
         // Don't use getSpellPackage here, or it will cause infinite recursion
-        Component vehiclePiece = this.getSpellVehicleComponent().getDefaultNamePiece();
+        Component vehiclePiece = this.getSpellVehicleComponent().getComponent().getDefaultNamePiece();
         Component payloadPiece = this.getSpellPayloadComponent().getDefaultNamePiece();
         Component primaryModPiece = this.getSpellPrimaryModComponent().getDefaultNamePiece();
         Component secondaryModPiece = this.getSpellSecondaryModComponent().getDefaultNamePiece();
@@ -175,17 +177,16 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         });
     }
     
-    protected ISpellVehicle getSpellVehicleComponent() {
+    protected ConfiguredSpellVehicle<?> getSpellVehicleComponent() {
         // Construct a new spell vehicle from the saved type index and populate it with any cached properties
-        ISpellVehicle retVal = SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes(this.player).get(this.getSpellVehicleTypeIndex()));
-        if (retVal != null) {
-            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.VEHICLE).entrySet()) {
-                if (retVal.getProperty(entry.getKey()) != null) {
-                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
-                }
+        AbstractSpellVehicle<?> baseVehicle = SpellManager.getVehicleTypes(this.player).get(this.getSpellVehicleTypeIndex()).instanceSupplier().get();
+        Map<SpellProperty, Integer> properties = new HashMap<>();
+        this.spellPropertyCache.get(SpellComponent.VEHICLE).forEach((prop, val) -> {
+            if (baseVehicle.getProperties().contains(prop)) {
+                properties.put(prop, val);
             }
-        }
-        return retVal;
+        });
+        return new ConfiguredSpellVehicle<>(baseVehicle, properties);
     }
     
     public int getSpellVehicleTypeIndex() {
@@ -399,8 +400,8 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
             Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
             if (opt.isPresent() && opt.get().value() instanceof SpellcraftingRecipe recipe) {
                 // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
-                if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
-                    stack = recipe.assemble(this.scrollInv, world.registryAccess());
+                if (recipe.matches(this.scrollInv.asCraftInput(), world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
+                    stack = recipe.assemble(this.scrollInv.asCraftInput(), world.registryAccess());
                     if (stack != null && stack.getItem() instanceof SpellScrollItem) {
                         ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getSpellPackage());
                     }
