@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -19,9 +20,13 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.spells.mods.BurstSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.MineSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
+import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -216,13 +221,13 @@ public class SpellManager {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
         if (!world.isClientSide && spell.payload() != null) {
             Vec3 hitVec = result.getLocation();
-            BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");
-            MineSpellMod mineMod = spell.getMod(MineSpellMod.class, "duration");
+            ConfiguredSpellMod<BurstSpellMod> burstMod = spell.getMod(SpellModsPM.BURST.get()).orElse(null);
+            ConfiguredSpellMod<MineSpellMod> mineMod = spell.getMod(SpellModsPM.MINE.get()).orElse(null);
             
             // Trigger spell impact FX on the clients of every player in range
-            int radius = (burstMod == null || (allowMine && mineMod != null)) ? 1 : burstMod.getPropertyValue("radius");
+            int radius = (burstMod == null || (allowMine && mineMod != null)) ? 1 : burstMod.getPropertyValue(SpellPropertiesPM.RADIUS.get());
             PacketHandler.sendToAllAround(
-                    new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.payload().getSource().getColor()), 
+                    new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.payload().getComponent().getSource().getColor()), 
                     world.dimension(), 
                     BlockPos.containing(hitVec), 
                     64.0D);
@@ -230,17 +235,17 @@ public class SpellManager {
             if (allowMine && mineMod != null) {
                 // If the spell package has the Mine mod and mines are allowed (i.e. this payload wasn't triggered by an existing mine),
                 // spawn a new mine
-                SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, spellSource, mineMod.getDurationMinutes(spell, spellSource));
+                SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, spellSource, mineMod.getComponent().getDurationMinutes(spell, spellSource));
                 world.addFreshEntity(mineEntity);
             } else if (burstMod != null) {
                 // If the spell package has the burst mod, calculate the set of affected blocks/entities and execute the payload on each
-                Set<HitResult> targetSet = burstMod.getBurstTargets(result, spell, spellSource, world);
+                Set<HitResult> targetSet = burstMod.getComponent().getBurstTargets(result, spell, spellSource, world);
                 for (HitResult target : targetSet) {
-                    spell.payload().execute(target, hitVec, spell, world, caster, spellSource, null);
+                    spell.payload().getComponent().execute(target, hitVec, spell, world, caster, spellSource, null);
                 }
             } else {
                 // Otherwise, just execute the payload on the given target
-                spell.payload().execute(result, null, spell, world, caster, spellSource, null);
+                spell.payload().getComponent().execute(result, null, spell, world, caster, spellSource, null);
             }
         }
     }
@@ -261,24 +266,25 @@ public class SpellManager {
         List<Component> retVal = new ArrayList<>();
         Component leader = indent ? Component.literal("    ") : Component.literal("");
         if (spell != null) {
-            ISpellVehicle vehicle = spell.vehicle();
+            ConfiguredSpellVehicle<?> vehicle = spell.vehicle();
             if (vehicle != null) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getComponent().getDetailTooltip(spell, spellSource))));
             }
             
-            ISpellPayload payload = spell.payload();
+            ConfiguredSpellPayload<?> payload = spell.payload();
             if (payload != null) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getComponent().getDetailTooltip(spell, spellSource))));
             }
             
-            ISpellMod primary = spell.primaryMod();
-            ISpellMod secondary = spell.secondaryMod();
-            if (primary != null && primary.isActive() && secondary != null && secondary.isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.getDetailTooltip(spell, spellSource), secondary.getDetailTooltip(spell, spellSource))));
-            } else if (primary != null && primary.isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", primary.getDetailTooltip(spell, spellSource))));
-            } else if (secondary != null && secondary.isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", secondary.getDetailTooltip(spell, spellSource))));
+            Optional<ConfiguredSpellMod<?>> primary = spell.primaryMod();
+            Optional<ConfiguredSpellMod<?>> secondary = spell.secondaryMod();
+            if (primary.isPresent() && primary.get().getComponent().isActive() && secondary.isPresent() && secondary.get().getComponent().isActive()) {
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.get().getComponent().getDetailTooltip(spell, spellSource),
+                        secondary.get().getComponent().getDetailTooltip(spell, spellSource))));
+            } else if (primary.isPresent() && primary.get().getComponent().isActive()) {
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", primary.get().getComponent().getDetailTooltip(spell, spellSource))));
+            } else if (secondary.isPresent() && secondary.get().getComponent().isActive()) {
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", secondary.get().getComponent().getDetailTooltip(spell, spellSource))));
             }
             
             retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));
