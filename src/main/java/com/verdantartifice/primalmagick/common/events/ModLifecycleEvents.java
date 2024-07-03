@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.init.InitAttunements;
 import com.verdantartifice.primalmagick.common.init.InitCauldron;
+import com.verdantartifice.primalmagick.common.init.InitEnchantments;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;
 import com.verdantartifice.primalmagick.common.init.InitResearch;
 import com.verdantartifice.primalmagick.common.init.InitSpells;
@@ -34,6 +35,7 @@ public class ModLifecycleEvents {
         InitSpells.initSpells();
         InitCauldron.initCauldronInteractions();
         InitAdvancements.initCriteria();
+        InitEnchantments.initEffects();
         
         LootConditionTypesPM.register();
 

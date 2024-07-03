@@ -1,9 +1,24 @@
 package com.verdantartifice.primalmagick.common.enchantments;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.enchantments.effects.Lifesteal;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import net.minecraft.advancements.critereon.DamageSourcePredicate;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.EnchantmentTarget;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
+import net.minecraft.world.item.enchantment.effects.Ignite;
+import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -15,13 +30,8 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class EnchantmentsPM {
-    private static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, PrimalMagick.MODID);
+    public static final ResourceKey<Enchantment> LIFESTEAL = key("lifesteal");
     
-    public static void init() {
-        ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
-    }
-    
-    public static final RegistryObject<Enchantment> LIFESTEAL = ENCHANTMENTS.register("lifesteal", () -> new LifestealEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> ENDERLOCK = ENCHANTMENTS.register("enderlock", () -> new EnderlockEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> JUDGMENT = ENCHANTMENTS.register("judgment", () -> new JudgmentEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> ENDERPORT = ENCHANTMENTS.register("enderport", () -> new EnderportEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
@@ -42,4 +52,38 @@ public class EnchantmentsPM {
     public static final RegistryObject<Enchantment> BULWARK = ENCHANTMENTS.register("bulwark", () -> new BulwarkEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.OFFHAND));
     public static final RegistryObject<Enchantment> MAGICK_PROTECTION = ENCHANTMENTS.register("magick_protection", () -> new MagickProtectionEnchantment(Enchantment.Rarity.UNCOMMON, new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}));
     public static final RegistryObject<Enchantment> GUILLOTINE = ENCHANTMENTS.register("guillotine", () -> new GuillotineEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
+
+    public static void bootstrap(BootstrapContext<Enchantment> pContext) {
+        HolderGetter<Item> itemHolderGetter = pContext.lookup(Registries.ITEM);
+
+        register(
+                pContext,
+                LIFESTEAL,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.LIFESTEAL_ENCHANTABLE),
+                                2,
+                                5,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                ).withEffect(
+                        EnchantmentEffectComponents.POST_ATTACK,
+                        EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM,
+                        new Lifesteal(LevelBasedValue.perLevel(0.2F)),
+                        DamageSourceCondition.hasDamageSource(DamageSourcePredicate.Builder.damageType().isDirect(true))
+                )
+        );
+    }
+    
+    private static void register(BootstrapContext<Enchantment> pContext, ResourceKey<Enchantment> pKey, Enchantment.Builder pBuilder) {
+        pContext.register(pKey, pBuilder.build(pKey.location()));
+    }
+
+    private static ResourceKey<Enchantment> key(String pName) {
+        return ResourceKey.create(Registries.ENCHANTMENT, PrimalMagick.resource(pName));
+    }
 }
