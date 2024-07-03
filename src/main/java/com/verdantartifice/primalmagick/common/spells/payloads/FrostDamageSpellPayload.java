@@ -52,6 +52,10 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload<FrostDam
         return REQUIREMENT;
     }
     
+    public static FrostDamageSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     protected List<SpellProperty> getPropertiesInner() {
         return ImmutableList.<SpellProperty>builder().addAll(super.getPropertiesInner()).add(SpellPropertiesPM.DURATION.get()).build();

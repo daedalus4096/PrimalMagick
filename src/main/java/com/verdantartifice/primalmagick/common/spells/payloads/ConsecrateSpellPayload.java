@@ -46,6 +46,10 @@ public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload<Con
         return REQUIREMENT;
     }
     
+    public static ConsecrateSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<ConsecrateSpellPayload> getType() {
         return SpellPayloadsPM.CONSECRATE.get();

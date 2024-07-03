@@ -41,6 +41,10 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload<HolyDamag
         return REQUIREMENT;
     }
     
+    public static HolyDamageSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<HolyDamageSpellPayload> getType() {
         return SpellPayloadsPM.HOLY_DAMAGE.get();

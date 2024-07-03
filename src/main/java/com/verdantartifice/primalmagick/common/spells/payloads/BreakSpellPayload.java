@@ -56,6 +56,10 @@ public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
         return REQUIREMENT;
     }
     
+    public static BreakSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<BreakSpellPayload> getType() {
         return SpellPayloadsPM.BREAK.get();

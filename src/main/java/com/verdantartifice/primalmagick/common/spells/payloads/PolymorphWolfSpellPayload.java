@@ -34,6 +34,10 @@ public class PolymorphWolfSpellPayload extends AbstractPolymorphSpellPayload<Pol
         return REQUIREMENT;
     }
     
+    public static PolymorphWolfSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<PolymorphWolfSpellPayload> getType() {
         return SpellPayloadsPM.POLYMORPH_WOLF.get();

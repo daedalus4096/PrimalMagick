@@ -54,6 +54,10 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
         return REQUIREMENT;
     }
     
+    public static HealingSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<HealingSpellPayload> getType() {
         return SpellPayloadsPM.HEALING.get();

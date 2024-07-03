@@ -53,6 +53,10 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
         return REQUIREMENT;
     }
     
+    public static DrainSoulSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<DrainSoulSpellPayload> getType() {
         return SpellPayloadsPM.DRAIN_SOUL.get();

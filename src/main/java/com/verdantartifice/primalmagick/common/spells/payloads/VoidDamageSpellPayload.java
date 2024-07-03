@@ -50,6 +50,10 @@ public class VoidDamageSpellPayload extends AbstractDamageSpellPayload<VoidDamag
         return REQUIREMENT;
     }
     
+    public static VoidDamageSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     protected List<SpellProperty> getPropertiesInner() {
         return ImmutableList.<SpellProperty>builder().addAll(super.getPropertiesInner()).add(SpellPropertiesPM.DURATION.get()).build();

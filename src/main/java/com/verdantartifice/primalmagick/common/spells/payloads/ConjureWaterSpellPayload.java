@@ -45,6 +45,10 @@ public class ConjureWaterSpellPayload extends AbstractConjureFluidSpellPayload<C
         return REQUIREMENT;
     }
 
+    public static ConjureWaterSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<ConjureWaterSpellPayload> getType() {
         return SpellPayloadsPM.CONJURE_WATER.get();

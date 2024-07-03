@@ -53,6 +53,10 @@ public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload>
         return REQUIREMENT;
     }
     
+    public static FlightSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<FlightSpellPayload> getType() {
         return SpellPayloadsPM.FLIGHT.get();

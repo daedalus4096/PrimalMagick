@@ -28,6 +28,8 @@ import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadType;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
@@ -48,6 +50,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.IForgeRegistry;
 
 /**
  * Primary access point for spell-related methods.  Also stores defined spell component data in static registries.
@@ -88,13 +91,17 @@ public class SpellManager {
         return retVal;
     }
     
+    protected static <T extends ISpellComponentType> List<T> getFilteredTypes(@Nullable Player player, Supplier<IForgeRegistry<T>> registrySupplier) {
+        // Compute a list of spell component types that the given player is able to use
+        return registrySupplier.get().getValues().stream()
+                .filter(type -> type.requirementSupplier().get() == null || type.requirementSupplier().get().isMetBy(player))
+                .sorted(Comparator.comparing(T::sortOrder))
+                .toList();
+    }
+    
     @Nonnull
     public static List<SpellVehicleType<?>> getVehicleTypes(@Nullable Player player) {
-        // Compute a list of spell vehicle types that the given player is able to use
-        return SpellVehiclesPM.TYPES.get().getValues().stream()
-                .filter(type -> type.requirementSupplier().get() == null || type.requirementSupplier().get().isMetBy(player))
-                .sorted(Comparator.comparing(SpellVehicleType::sortOrder))
-                .toList();
+        return getFilteredTypes(player, SpellVehiclesPM.TYPES);
     }
     
     @Nullable
@@ -112,9 +119,8 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<String> getPayloadTypes(@Nullable Player player) {
-        // Compute a list of spell payload types that the given player is able to use
-        return getFilteredTypes(player, PAYLOAD_TYPES, PAYLOAD_RESEARCH_SUPPLIERS);
+    public static List<SpellPayloadType<?>> getPayloadTypes(@Nullable Player player) {
+        return getFilteredTypes(player, SpellPayloadsPM.TYPES);
     }
     
     @Nullable
@@ -133,11 +139,7 @@ public class SpellManager {
     
     @Nonnull
     public static List<SpellModType<?>> getModTypes(@Nullable Player player) {
-        // Compute a list of spell mod types that the given player is able to use
-        return SpellModsPM.TYPES.get().getValues().stream()
-                .filter(type -> type.requirementSupplier().get() == null || type.requirementSupplier().get().isMetBy(player))
-                .sorted(Comparator.comparing(SpellModType::sortOrder))
-                .toList();
+        return getFilteredTypes(player, SpellModsPM.TYPES);
     }
     
     @Nullable

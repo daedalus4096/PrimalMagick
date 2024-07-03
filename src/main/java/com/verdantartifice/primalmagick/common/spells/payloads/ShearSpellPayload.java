@@ -67,6 +67,10 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
         return REQUIREMENT;
     }
     
+    public static ShearSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<ShearSpellPayload> getType() {
         return SpellPayloadsPM.SHEAR.get();

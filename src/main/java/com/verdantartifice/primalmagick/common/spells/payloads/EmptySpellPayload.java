@@ -41,6 +41,10 @@ public class EmptySpellPayload extends AbstractSpellPayload<EmptySpellPayload> {
         // Do nothing
     }
 
+    public static EmptySpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<EmptySpellPayload> getType() {
         return SpellPayloadsPM.EMPTY.get();

@@ -47,6 +47,10 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload<FlameDam
         return REQUIREMENT;
     }
     
+    public static FlameDamageSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     protected List<SpellProperty> getPropertiesInner() {
         return ImmutableList.<SpellProperty>builder().addAll(super.getPropertiesInner()).add(SpellPropertiesPM.DURATION.get()).build();

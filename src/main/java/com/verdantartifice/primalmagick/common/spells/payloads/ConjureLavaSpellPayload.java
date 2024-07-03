@@ -45,6 +45,10 @@ public class ConjureLavaSpellPayload extends AbstractConjureFluidSpellPayload<Co
         return REQUIREMENT;
     }
 
+    public static ConjureLavaSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<ConjureLavaSpellPayload> getType() {
         return SpellPayloadsPM.CONJURE_LAVA.get();

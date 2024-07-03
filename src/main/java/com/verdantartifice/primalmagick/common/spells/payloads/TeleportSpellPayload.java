@@ -47,6 +47,10 @@ public class TeleportSpellPayload extends AbstractSpellPayload<TeleportSpellPayl
         return REQUIREMENT;
     }
 
+    public static TeleportSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<TeleportSpellPayload> getType() {
         return SpellPayloadsPM.TELEPORT.get();

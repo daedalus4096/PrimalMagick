@@ -34,6 +34,10 @@ public class PolymorphSheepSpellPayload extends AbstractPolymorphSpellPayload<Po
         return REQUIREMENT;
     }
     
+    public static PolymorphSheepSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<PolymorphSheepSpellPayload> getType() {
         return SpellPayloadsPM.POLYMORPH_SHEEP.get();

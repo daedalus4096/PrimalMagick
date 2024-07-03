@@ -39,6 +39,10 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload<BloodDam
         return REQUIREMENT;
     }
     
+    public static BloodDamageSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<BloodDamageSpellPayload> getType() {
         return SpellPayloadsPM.BLOOD_DAMAGE.get();

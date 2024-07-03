@@ -45,6 +45,10 @@ public class ConjureLightSpellPayload extends AbstractConjureBlockSpellPayload<C
         return REQUIREMENT;
     }
 
+    public static ConjureLightSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<ConjureLightSpellPayload> getType() {
         return SpellPayloadsPM.CONJURE_LIGHT.get();

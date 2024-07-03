@@ -49,6 +49,10 @@ public class SolarDamageSpellPayload extends AbstractDamageSpellPayload<SolarDam
         return REQUIREMENT;
     }
     
+    public static SolarDamageSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     protected List<SpellProperty> getPropertiesInner() {
         return ImmutableList.<SpellProperty>builder().addAll(super.getPropertiesInner()).add(SpellPropertiesPM.DURATION.get()).build();

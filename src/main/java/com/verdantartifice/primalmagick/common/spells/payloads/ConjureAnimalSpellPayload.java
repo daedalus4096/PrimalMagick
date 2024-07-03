@@ -88,6 +88,10 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload<ConjureAnima
         return REQUIREMENT;
     }
     
+    public static ConjureAnimalSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<ConjureAnimalSpellPayload> getType() {
         return SpellPayloadsPM.CONJURE_ANIMAL.get();

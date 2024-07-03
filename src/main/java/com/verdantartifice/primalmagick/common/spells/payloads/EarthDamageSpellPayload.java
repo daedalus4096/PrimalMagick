@@ -43,6 +43,10 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload<EarthDam
         return REQUIREMENT;
     }
     
+    public static EarthDamageSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<EarthDamageSpellPayload> getType() {
         return SpellPayloadsPM.EARTH_DAMAGE.get();

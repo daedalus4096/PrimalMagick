@@ -39,6 +39,10 @@ public class LightningDamageSpellPayload extends AbstractDamageSpellPayload<Ligh
         return REQUIREMENT;
     }
     
+    public static LightningDamageSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
     @Override
     public SpellPayloadType<LightningDamageSpellPayload> getType() {
         return SpellPayloadsPM.LIGHTNING_DAMAGE.get();
