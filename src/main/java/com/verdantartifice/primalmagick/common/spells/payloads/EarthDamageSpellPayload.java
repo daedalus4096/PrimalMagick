@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -8,9 +9,13 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -25,22 +30,28 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
+public class EarthDamageSpellPayload extends AbstractDamageSpellPayload<EarthDamageSpellPayload> {
+    public static final EarthDamageSpellPayload INSTANCE = new EarthDamageSpellPayload();
+    
+    public static final MapCodec<EarthDamageSpellPayload> CODEC = MapCodec.unit(EarthDamageSpellPayload.INSTANCE);
+    public static final StreamCodec<ByteBuf, EarthDamageSpellPayload> STREAM_CODEC = StreamCodec.unit(EarthDamageSpellPayload.INSTANCE);
+    
     public static final String TYPE = "earth_damage";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.BASIC_SORCERY));
-    
-    public EarthDamageSpellPayload() {
-        super();
-    }
-    
-    public EarthDamageSpellPayload(int power) {
-        super(power);
-    }
     
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
     }
     
+    public static EarthDamageSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
+    @Override
+    public SpellPayloadType<EarthDamageSpellPayload> getType() {
+        return SpellPayloadsPM.EARTH_DAMAGE.get();
+    }
+
     @Override
     protected String getPayloadType() {
         return TYPE;
@@ -55,7 +66,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
+            if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity livingTarget) {
                 Vec3 knockbackVec;
                 if (entityTarget.getEntity().equals(caster)) {
                     // If for some reason the caster targets themselves, knock them directly backward
@@ -66,7 +77,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
                     Vec3 knockbackSource = burstPoint == null || burstPoint.equals(target.getLocation()) ? caster.getEyePosition(1.0F) : burstPoint;
                     knockbackVec = target.getLocation().subtract(knockbackSource).scale(-1.0D).normalize();
                 }
-                ((LivingEntity)entityTarget.getEntity()).knockback(0.25F * this.getTotalDamage(entityTarget.getEntity(), spell, spellSource), knockbackVec.x, knockbackVec.z);
+                livingTarget.knockback(0.25F * this.getTotalDamage(entityTarget.getEntity(), spell, spellSource), knockbackVec.x, knockbackVec.z);
             }
         }
     }
@@ -77,8 +88,8 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload {
     }
     
     @Override
-    public int getBaseManaCost() {
-        int power = this.getPropertyValue("power");
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
+        int power = properties.get(SpellPropertiesPM.POWER.get());
         return (1 << Math.max(0, power - 1)) + ((1 << Math.max(0, power - 1)) >> 1);
     }
 

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandISTER;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -272,25 +273,14 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public List<SpellPackage> getSpells(ItemStack stack) {
-        // Deserialize the list of inscribed spells from the given wand stack's NBT data
-        List<SpellPackage> retVal = new ArrayList<>();
-        if (stack != null) {
-            ListTag spellTagsList = stack.getTag().getList("Spells", Tag.TAG_COMPOUND);
-            for (int index = 0; index < spellTagsList.size(); index++) {
-                CompoundTag spellTag = spellTagsList.getCompound(index);
-                SpellPackage newSpell = new SpellPackage(spellTag);
-                if (newSpell != null) {
-                    retVal.add(newSpell);
-                }
-            }
-        }
-        return retVal;
+        // Deserialize the list of inscribed spells from the given wand stack's data
+        return ImmutableList.copyOf(stack.getOrDefault(DataComponentsPM.SPELL_PACKAGE_LIST.get(), ImmutableList.of()));
     }
     
     @Override
     public int getSpellCount(ItemStack stack) {
         if (stack != null) {
-            return stack.getTag().getList("Spells", Tag.TAG_COMPOUND).size();
+            return stack.getOrDefault(DataComponentsPM.SPELL_PACKAGE_LIST.get(), ImmutableList.of()).size();
         } else {
             return 0;
         }
@@ -320,7 +310,7 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public int getActiveSpellIndex(ItemStack stack) {
         // Return -1 if no active spell is selected
-        return (stack != null && stack.getTag().contains("ActiveSpell")) ? stack.getTag().getInt("ActiveSpell") : -1;
+        return stack.getOrDefault(DataComponentsPM.ACTIVE_SPELL_INDEX.get(), -1);
     }
     
     @Override
@@ -328,11 +318,10 @@ public class ModularWandItem extends AbstractWandItem {
         // Deserialize the active inscribed spell from the given wand stack's NBT data
         SpellPackage retVal = null;
         if (stack != null) {
-            ListTag spellTagsList = stack.getTag().getList("Spells", Tag.TAG_COMPOUND);
+            List<SpellPackage> spellList = stack.get(DataComponentsPM.SPELL_PACKAGE_LIST.get());
             int index = this.getActiveSpellIndex(stack);
-            if (index >= 0 && index < spellTagsList.size()) {
-                CompoundTag spellTag = spellTagsList.getCompound(index);
-                retVal = new SpellPackage(spellTag);
+            if (spellList != null && index >= 0 && index < spellList.size()) {
+                retVal = spellList.get(index);
             }
         }
         return retVal;
@@ -344,7 +333,7 @@ public class ModularWandItem extends AbstractWandItem {
             return false;
         } else if (index >= -1 && index < this.getSpells(stack).size()) {
             // -1 is a valid value and means "no active spell"
-            stack.addTagElement("ActiveSpell", IntTag.valueOf(index));
+            stack.set(DataComponentsPM.ACTIVE_SPELL_INDEX.get(), index);
             return true;
         }
         return false;
@@ -352,7 +341,7 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public boolean canAddSpell(ItemStack stack, SpellPackage spell) {
-        if (stack == null || spell == null || spell.getPayload() == null) {
+        if (stack == null || spell == null || spell.payload() == null) {
             return false;
         }
         
@@ -364,10 +353,10 @@ public class ModularWandItem extends AbstractWandItem {
         
         // Determine the payload sources of all spells to be included in the given wand
         List<Source> spellSources = this.getSpells(stack).stream()
-                .filter(p -> (p != null && p.getPayload() != null))
-                .map(p -> p.getPayload().getSource())
+                .filter(p -> (p != null && p.payload() != null))
+                .map(p -> p.payload().getComponent().getSource())
                 .collect(Collectors.toCollection(() -> new ArrayList<>()));
-        spellSources.add(spell.getPayload().getSource());
+        spellSources.add(spell.payload().getComponent().getSource());
         
         int coreSlots = this.getCoreSpellSlotCount(core);
         if (spellSources.size() < coreSlots + 1) {
@@ -385,15 +374,9 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public boolean addSpell(ItemStack stack, SpellPackage spell) {
         if (this.canAddSpell(stack, spell)) {
-            // Save the given spell into the wand stack's NBT data
-            if (!stack.getTag().contains("Spells")) {
-                ListTag newList = new ListTag();
-                newList.add(spell.serializeNBT());
-                stack.addTagElement("Spells", newList);
-                return true;
-            } else {
-                return stack.getTag().getList("Spells", Tag.TAG_COMPOUND).add(spell.serializeNBT());
-            }
+            // Save the given spell into the wand stack's data
+            stack.set(DataComponentsPM.SPELL_PACKAGE_LIST.get(), ImmutableList.<SpellPackage>builder().addAll(this.getSpells(stack)).add(spell).build());
+            return true;
         } else {
             return false;
         }
@@ -401,7 +384,8 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public void clearSpells(ItemStack stack) {
-        stack.getTag().remove("Spells");
+        stack.remove(DataComponentsPM.SPELL_PACKAGE_LIST.get());
+        stack.remove(DataComponentsPM.ACTIVE_SPELL_INDEX.get());
     }
 
     @Override

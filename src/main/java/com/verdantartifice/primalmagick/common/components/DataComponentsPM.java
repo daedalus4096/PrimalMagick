@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.common.components;
 
+import java.util.List;
 import java.util.function.UnaryOperator;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
+import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -33,6 +35,10 @@ public class DataComponentsPM {
     public static final RegistryObject<DataComponentType<ConcoctionType>> CONCOCTION_TYPE = register("concoction_type", builder -> builder.persistent(ConcoctionType.CODEC).networkSynchronized(ConcoctionType.STREAM_CODEC));
     public static final RegistryObject<DataComponentType<Integer>> CONCOCTION_DOSES = register("concoction_doses", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
     public static final RegistryObject<DataComponentType<FuseType>> FUSE_TYPE = register("fuse_type", builder -> builder.persistent(FuseType.CODEC).networkSynchronized(FuseType.STREAM_CODEC));
+    
+    public static final RegistryObject<DataComponentType<SpellPackage>> SPELL_PACKAGE = register("spell_package", builder -> builder.persistent(SpellPackage.codec()).networkSynchronized(SpellPackage.streamCodec()));
+    public static final RegistryObject<DataComponentType<List<SpellPackage>>> SPELL_PACKAGE_LIST = register("spell_package_list", builder -> builder.persistent(SpellPackage.codec().listOf()).networkSynchronized(SpellPackage.streamCodec().apply(ByteBufCodecs.list())));
+    public static final RegistryObject<DataComponentType<Integer>> ACTIVE_SPELL_INDEX = register("active_spell_index", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
     
     public static final RegistryObject<DataComponentType<WandCore>> WAND_CORE = register("wand_core", builder -> builder.persistent(WandCore.CODEC).networkSynchronized(WandCore.STREAM_CODEC));
     public static final RegistryObject<DataComponentType<WandCap>> WAND_CAP = register("wand_cap", builder -> builder.persistent(WandCap.CODEC).networkSynchronized(WandCap.STREAM_CODEC));

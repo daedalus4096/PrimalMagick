@@ -30,11 +30,10 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayload {
+public abstract class AbstractConjureFluidSpellPayload<T extends AbstractConjureFluidSpellPayload<T>> extends AbstractSpellPayload<T> {
     protected final FlowingFluid fluid;
     
-    public AbstractConjureFluidSpellPayload(FlowingFluid fluid) {
-        super();
+    protected AbstractConjureFluidSpellPayload(FlowingFluid fluid) {
         this.fluid = fluid;
     }
     

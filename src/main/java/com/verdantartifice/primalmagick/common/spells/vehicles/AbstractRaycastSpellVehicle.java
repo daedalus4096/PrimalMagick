@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.apache.commons.lang3.mutable.MutableObject;
+
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
-import com.verdantartifice.primalmagick.common.spells.mods.ForkSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 
 import net.minecraft.world.entity.LivingEntity;
@@ -26,14 +28,14 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
+public abstract class AbstractRaycastSpellVehicle<T extends AbstractRaycastSpellVehicle<T>> extends AbstractSpellVehicle<T> {
     /**
      * Determine how far out the spell vehicle should look for a target along its direction vector.
      * 
      * @param caster the entity that originally casted the spell
      * @return the distance, in blocks, that the spell vehicle should search
      */
-    protected abstract double getReachDistance(@Nonnull LivingEntity caster);
+    protected abstract double getReachDistance(@Nonnull LivingEntity caster, @Nonnull SpellPackage spell, @Nonnull ItemStack spellSource);
     
     protected void drawFx(@Nonnull Level world, @Nonnull SpellPackage spell, Vec3 source, Vec3 target) {
         // Do nothing by default
@@ -41,21 +43,20 @@ public abstract class AbstractRaycastSpellVehicle extends AbstractSpellVehicle {
     
     @Override
     public void execute(SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
-        if (spell.getPayload() != null) {
-            ForkSpellMod forkMod = spell.getMod(ForkSpellMod.class, "forks");
+        if (spell.payload() != null) {
             Vec3 baseLookVector = caster.getViewVector(1.0F);
-            List<Vec3> lookVectors;
-            if (forkMod == null) {
-                // If no Fork mod is in the spell package, use the caster's line of sight for the direction vector
-                lookVectors = Arrays.asList(baseLookVector.normalize());
-            } else {
+            MutableObject<List<Vec3>> lookVectors = new MutableObject<>();
+            spell.getMod(SpellModsPM.FORK.get()).ifPresentOrElse(forkMod -> {
                 // If a Fork mod is in the spell package, calculate a direction vector for each fork, based on the caster's line of sight
-                lookVectors = forkMod.getDirectionUnitVectors(baseLookVector, world.random);
-            }
+                lookVectors.setValue(forkMod.getComponent().getDirectionUnitVectors(baseLookVector, world.random, spell, spellSource));
+            }, () -> {
+                // If no Fork mod is in the spell package, use the caster's line of sight for the direction vector
+                lookVectors.setValue(Arrays.asList(baseLookVector.normalize()));
+            });
             
-            double reachDistance = this.getReachDistance(caster);
+            double reachDistance = this.getReachDistance(caster, spell, spellSource);
             Vec3 eyePos = caster.getEyePosition(1.0F);
-            for (Vec3 lookVector : lookVectors) {
+            for (Vec3 lookVector : lookVectors.getValue()) {
                 Vec3 reachPos = eyePos.add(lookVector.scale(reachDistance));
                 AABB aabb = caster.getBoundingBox().expandTowards(lookVector.scale(reachDistance)).inflate(1.0D, 1.0D, 1.0D);
                 

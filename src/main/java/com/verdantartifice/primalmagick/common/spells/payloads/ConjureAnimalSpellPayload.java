@@ -1,5 +1,9 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -8,11 +12,15 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
@@ -36,9 +44,18 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
+public class ConjureAnimalSpellPayload extends AbstractSpellPayload<ConjureAnimalSpellPayload> {
+    public static final ConjureAnimalSpellPayload INSTANCE = new ConjureAnimalSpellPayload();
+    
+    public static final MapCodec<ConjureAnimalSpellPayload> CODEC = MapCodec.unit(ConjureAnimalSpellPayload.INSTANCE);
+    public static final StreamCodec<ByteBuf, ConjureAnimalSpellPayload> STREAM_CODEC = StreamCodec.unit(ConjureAnimalSpellPayload.INSTANCE);
+    
     public static final String TYPE = "conjure_animal";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_ANIMAL));
+    
+    // TODO Update with new animals from patch
+    // TODO Datapack-ify animal conjuration data?
+    // TODO Add quantity property to allow summoning more than one animal?
     protected static final WeightedRandomBag<EntityType<?>> LAND_ANIMALS = Util.make(new WeightedRandomBag<>(), bag -> {
         bag.add(EntityType.BAT, 2);
         bag.add(EntityType.CAT, 5);
@@ -67,14 +84,24 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
         bag.add(EntityType.TURTLE, 5);
     });
     
-    public ConjureAnimalSpellPayload() {
-        super();
-    }
-    
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
     }
     
+    public static ConjureAnimalSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
+    @Override
+    public SpellPayloadType<ConjureAnimalSpellPayload> getType() {
+        return SpellPayloadsPM.CONJURE_ANIMAL.get();
+    }
+
+    @Override
+    protected List<SpellProperty> getPropertiesInner() {
+        return ImmutableList.of();
+    }
+
     @Override
     public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (burstPoint != null) {
@@ -106,7 +133,7 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public int getBaseManaCost() {
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
         return 100;
     }
 

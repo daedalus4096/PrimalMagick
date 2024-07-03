@@ -54,9 +54,9 @@ public class SpellMineEntity extends Entity {
         this.spellSource = spellSource.copy();
         this.casterId = caster.getUUID();
         this.setLifespan(20 * 60 * durationMinutes);
-        if (spell != null && spell.getPayload() != null) {
+        if (spell != null && spell.payload() != null) {
             // Store the spell payload's color for use in rendering
-            this.setColor(spell.getPayload().getSource().getColor());
+            this.setColor(spell.payload().getSource().getColor());
         }
     }
     
@@ -113,13 +113,13 @@ public class SpellMineEntity extends Entity {
         
         this.spell = null;
         if (compound.contains("Spell", Tag.TAG_COMPOUND)) {
-            this.spell = new SpellPackage(compound.getCompound("Spell"));
+            this.spell = SpellPackage.deserializeNBT(compound.getCompound("Spell"));
         }
         if (this.spell != null && !this.spell.isValid()) {
             this.spell = null;
         }
-        if (this.spell != null && this.spell.getPayload() != null) {
-            this.setColor(this.spell.getPayload().getSource().getColor());
+        if (this.spell != null && this.spell.payload() != null) {
+            this.setColor(this.spell.payload().getSource().getColor());
         }
         
         this.spellSource = null;
@@ -168,8 +168,8 @@ public class SpellMineEntity extends Entity {
                 for (Entity entity : entityList) {
                     if (entity.isAlive()) {
                         // If found, execute the spell payload on them then remove self
-                        if (this.spell != null && this.spell.getPayload() != null) {
-                            this.spell.getPayload().playSounds(level, this.blockPosition());
+                        if (this.spell != null && this.spell.payload() != null) {
+                            this.spell.payload().playSounds(level, this.blockPosition());
                         }
                         if (this.getCaster() != null) {
                             SpellManager.executeSpellPayload(this.spell, new EntityHitResult(entity, this.position().add(0.0D, 0.5D, 0.0D)), level, this.getCaster(), this.spellSource, false, this);

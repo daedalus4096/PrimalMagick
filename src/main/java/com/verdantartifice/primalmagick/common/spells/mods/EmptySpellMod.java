@@ -1,6 +1,15 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
+
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 
 /**
  * Definition of an empty spell mod.  This mod has no effect and is not valid in spells.  Its only
@@ -9,11 +18,26 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
  * 
  * @author Daedalus4096
  */
-public class EmptySpellMod extends AbstractSpellMod {
+public class EmptySpellMod extends AbstractSpellMod<EmptySpellMod> {
+    public static final EmptySpellMod INSTANCE = new EmptySpellMod();
+    
+    public static final MapCodec<EmptySpellMod> CODEC = MapCodec.unit(EmptySpellMod.INSTANCE);
+    public static final StreamCodec<ByteBuf, EmptySpellMod> STREAM_CODEC = StreamCodec.unit(EmptySpellMod.INSTANCE);
+    
     public static final String TYPE = "none";
 
-    public EmptySpellMod() {
-        super();
+    public static EmptySpellMod getInstance() {
+        return INSTANCE;
+    }
+    
+    @Override
+    public SpellModType<EmptySpellMod> getType() {
+        return SpellModsPM.EMPTY.get();
+    }
+
+    @Override
+    protected List<SpellProperty> getPropertiesInner() {
+        return ImmutableList.of();
     }
     
     @Override
@@ -31,12 +55,12 @@ public class EmptySpellMod extends AbstractSpellMod {
     }
     
     @Override
-    public int getBaseManaCostModifier() {
+    public int getBaseManaCostModifier(SpellPropertyConfiguration properties) {
         return 0;
     }
-    
+
     @Override
-    public int getManaCostMultiplier() {
+    public int getManaCostMultiplier(SpellPropertyConfiguration properties) {
         return 1;
     }
 }

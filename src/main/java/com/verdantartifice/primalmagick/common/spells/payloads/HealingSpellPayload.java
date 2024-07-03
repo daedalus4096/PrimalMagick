@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -11,10 +13,14 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -34,35 +40,39 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class HealingSpellPayload extends AbstractSpellPayload {
+public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayload> {
+    public static final HealingSpellPayload INSTANCE = new HealingSpellPayload();
+    
+    public static final MapCodec<HealingSpellPayload> CODEC = MapCodec.unit(HealingSpellPayload.INSTANCE);
+    public static final StreamCodec<ByteBuf, HealingSpellPayload> STREAM_CODEC = StreamCodec.unit(HealingSpellPayload.INSTANCE);
+    
     public static final String TYPE = "healing";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_HEALING));
+    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.POWER.get());
 
-    public HealingSpellPayload() {
-        super();
-    }
-    
-    public HealingSpellPayload(int power) {
-        super();
-        this.getProperty("power").setValue(power);
-    }
-    
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
     }
     
-    @Override
-    protected Map<String, SpellProperty> initProperties() {
-        Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("power", new SpellProperty("power", "spells.primalmagick.property.power", 1, 5));
-        return propMap;
+    public static HealingSpellPayload getInstance() {
+        return INSTANCE;
     }
     
+    @Override
+    public SpellPayloadType<HealingSpellPayload> getType() {
+        return SpellPayloadsPM.HEALING.get();
+    }
+
+    @Override
+    protected List<SpellProperty> getPropertiesInner() {
+        return PROPERTIES;
+    }
+
     protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
         if (projectileEntity != null) {
             // If the spell was a projectile or a mine, then it's indirect now matter how it was deployed
             return DamageSourcesPM.sorcery(source.level(), this.getSource(), projectileEntity, source);
-        } else if (spell.getVehicle().isIndirect()) {
+        } else if (spell.vehicle().getComponent().isIndirect()) {
             // If the spell vehicle is indirect but no projectile was given, then it's still indirect
             return DamageSourcesPM.sorcery(source.level(), this.getSource(), null, source);
         } else {
@@ -104,8 +114,8 @@ public class HealingSpellPayload extends AbstractSpellPayload {
     }
 
     @Override
-    public int getBaseManaCost() {
-        int power = this.getPropertyValue("power");
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
+        int power = properties.get(SpellPropertiesPM.POWER.get());
         return (1 << Math.max(0, power - 1)) + ((1 << Math.max(0, power - 1)) >> 1);
     }
 
@@ -120,7 +130,7 @@ public class HealingSpellPayload extends AbstractSpellPayload {
     }
 
     protected int getBaseAmount(SpellPackage spell, ItemStack spellSource) {
-        return 2 * this.getModdedPropertyValue("power", spell, spellSource);
+        return 2 * this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource);
     }
 
     @Override

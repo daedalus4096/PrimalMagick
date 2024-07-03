@@ -1,17 +1,7 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.common.spells.SpellPackage;
-import com.verdantartifice.primalmagick.common.spells.SpellProperty;
-
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.INBTSerializable;
+import com.verdantartifice.primalmagick.common.spells.ISpellComponent;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
 /**
  * Primary interface for a spell mod component.  Spell mods typically alter the functionality of spells in
@@ -22,77 +12,18 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public interface ISpellMod extends INBTSerializable<CompoundTag> {
-    /**
-     * Determine whether the spell mod has an effect that should be executed.  Should be true for all but
-     * placeholder spell mods.
-     * 
-     * @return true if the spell mod has an effect that should be executed, false otherwise
-     */
-    public boolean isActive();
-    
-    /**
-     * Get a name-ordered list of properties used by this spell mod.
-     * 
-     * @return a name-ordered list of properties used by this spell mod
-     */
-    @Nonnull
-    public List<SpellProperty> getProperties();
-    
-    /**
-     * Get a specific property of the spell mod.
-     * 
-     * @param name the name of the property to retrieve
-     * @return the named property, or null if no such property is attached to this spell mod
-     */
-    @Nullable
-    public SpellProperty getProperty(String name);
-    
-    /**
-     * Get the value of a specific property of the spell mod.
-     * 
-     * @param name the name of the property value to retrieve
-     * @return the named property's value, or zero if no such property is attached to this spell mod
-     */
-    public int getPropertyValue(String name);
-    
-    /**
-     * Get a display text component containing the human-friendly name of this spell mod type.
-     * 
-     * @return the spell mod type name
-     */
-    @Nonnull
-    public Component getTypeName();
-    
-    /**
-     * Get a display text component to show in the details tooltip of the spell.
-     * 
-     * @return the spell mod details
-     */
-    public default Component getDetailTooltip(SpellPackage spell, @Nullable ItemStack spellSource) {
-        return this.getTypeName();
-    }
-    
-    /**
-     * Get a display text component containing the human-friendly text to be used to identify the
-     * spell mod in the default of a spell package.
-     * 
-     * @return the spell mod's default name
-     */
-    @Nonnull
-    public Component getDefaultNamePiece();
-    
+public interface ISpellMod extends ISpellComponent {
     /**
      * Get the additive modifier to be applied to the spell mod's package's base cost.
      * 
      * @return the additive modifier for the spell package's cost
      */
-    public int getBaseManaCostModifier();
+    public int getBaseManaCostModifier(SpellPropertyConfiguration properties);
     
     /**
      * Get the multiplicative modifier to be applied to the spell mod's package's total cost.
      * 
      * @return the multiplicative modifier for the spell package's cost
      */
-    public int getManaCostMultiplier();
+    public int getManaCostMultiplier(SpellPropertyConfiguration properties);
 }

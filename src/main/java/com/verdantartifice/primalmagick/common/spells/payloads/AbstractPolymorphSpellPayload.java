@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -9,7 +10,9 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -34,23 +37,14 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagick.common.misc.EntitySwapper}
  */
-public abstract class AbstractPolymorphSpellPayload extends AbstractSpellPayload {
-    public AbstractPolymorphSpellPayload() {
-        super();
-    }
-    
-    public AbstractPolymorphSpellPayload(int duration) {
-        super();
-        this.getProperty("duration").setValue(duration);
-    }
-    
+public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphSpellPayload<T>> extends AbstractSpellPayload<T> {
+    private static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
+
     @Override
-    protected Map<String, SpellProperty> initProperties() {
-        Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("duration", new SpellProperty("duration", "spells.primalmagick.property.duration", 1, 5));
-        return propMap;
+    protected List<SpellProperty> getPropertiesInner() {
+        return PROPERTIES;
     }
-    
+
     protected abstract EntityType<?> getNewEntityType();
     
     @Override
@@ -73,8 +67,8 @@ public abstract class AbstractPolymorphSpellPayload extends AbstractSpellPayload
     }
 
     @Override
-    public int getBaseManaCost() {
-        return 5 * this.getPropertyValue("duration");
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
+        return 5 * properties.get(SpellPropertiesPM.NON_ZERO_DURATION.get());
     }
     
     protected abstract SoundEvent getCastSoundEvent();
@@ -85,7 +79,7 @@ public abstract class AbstractPolymorphSpellPayload extends AbstractSpellPayload
     }
 
     protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
-        return 6 * this.getModdedPropertyValue("duration", spell, spellSource);
+        return 6 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource);
     }
 
     @Override

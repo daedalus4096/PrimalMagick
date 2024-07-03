@@ -6,7 +6,7 @@ public class SpellPackageRadialMenuItem extends ImageRadialMenuItem {
     private final SpellPackage spellPackage;
     
     public SpellPackageRadialMenuItem(GenericRadialMenu owner, int slot, SpellPackage spell) {
-        super(owner, slot, spell.getIcon(), spell.getName());
+        super(owner, slot, spell.getIcon(), spell.getDisplayName());
         this.spellPackage = spell;
     }
     

@@ -1,28 +1,34 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nonnull;
-
+import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Base class for a spell vehicle.  Handles property management and serialization.
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractSpellVehicle implements ISpellVehicle {
-    protected final Map<String, SpellProperty> properties;
-    
-    public AbstractSpellVehicle() {
-        this.properties = this.initProperties();
+public abstract class AbstractSpellVehicle<T extends AbstractSpellVehicle<T>> implements ISpellVehicle {
+    public static Codec<AbstractSpellVehicle<?>> dispatchCodec() {
+        return RegistryCodecs.codec(SpellVehiclesPM.TYPES).dispatch("mod_type", AbstractSpellVehicle::getType, SpellVehicleType::codec);
     }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellVehicle<?>> dispatchStreamCodec() {
+        return RegistryCodecs.streamCodec(SpellVehiclesPM.TYPES).dispatch(AbstractSpellVehicle::getType, SpellVehicleType::streamCodec);
+    }
+    
+    public abstract SpellVehicleType<T> getType();
 
     /**
      * Get the type name for this spell vehicle.
@@ -31,23 +37,6 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
      */
     protected abstract String getVehicleType();
 
-    @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putString("VehicleType", this.getVehicleType());
-        for (Map.Entry<String, SpellProperty> entry : this.properties.entrySet()) {
-            nbt.putInt(entry.getKey(), entry.getValue().getValue());
-        }
-        return nbt;
-    }
-    
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        for (Map.Entry<String, SpellProperty> entry : this.properties.entrySet()) {
-            entry.getValue().setValue(nbt.getInt(entry.getKey()));
-        }
-    }
-    
     @Override
     public boolean isActive() {
         return true;
@@ -64,40 +53,27 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
     }
     
     @Override
-    public int getBaseManaCostModifier() {
+    public int getBaseManaCostModifier(SpellPropertyConfiguration properties) {
         // No change by default
         return 0;
     }
 
     @Override
-    public int getManaCostMultiplier() {
+    public int getManaCostMultiplier(SpellPropertyConfiguration properties) {
         // No multiplication by default
         return 1;
     }
 
-    /**
-     * Initialize the property map for this spell vehicle.  Should create a maximum of two properties.
-     * 
-     * @return a map of property names to spell properties
-     */
-    @Nonnull
-    protected Map<String, SpellProperty> initProperties() {
-        return new HashMap<>();
-    }
-    
     @Override
     public List<SpellProperty> getProperties() {
         // Sort properties by their display names
-        return this.properties.values().stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
+        return this.getPropertiesInner().stream().sorted(Comparator.comparing(SpellProperty::id)).collect(Collectors.toList());
     }
 
-    @Override
-    public SpellProperty getProperty(String name) {
-        return this.properties.get(name);
-    }
+    protected abstract List<SpellProperty> getPropertiesInner();
 
     @Override
-    public int getPropertyValue(String name) {
-        return this.properties.containsKey(name) ? this.properties.get(name).getValue() : 0;
+    public SpellProperty getProperty(ResourceLocation id) {
+        return this.getPropertiesInner().stream().filter(prop -> prop.id().equals(id)).findFirst().orElse(null);
     }
 }

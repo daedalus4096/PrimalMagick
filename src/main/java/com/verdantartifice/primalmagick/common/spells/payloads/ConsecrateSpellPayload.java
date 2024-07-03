@@ -1,5 +1,9 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -7,8 +11,12 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
@@ -21,7 +29,12 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagick.common.blocks.misc.ConsecrationFieldBlock}
  */
-public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload {
+public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload<ConsecrateSpellPayload> {
+    public static final ConsecrateSpellPayload INSTANCE = new ConsecrateSpellPayload();
+    
+    public static final MapCodec<ConsecrateSpellPayload> CODEC = MapCodec.unit(ConsecrateSpellPayload.INSTANCE);
+    public static final StreamCodec<ByteBuf, ConsecrateSpellPayload> STREAM_CODEC = StreamCodec.unit(ConsecrateSpellPayload.INSTANCE);
+    
     public static final String TYPE = "consecrate";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONSECRATE));
 
@@ -33,13 +46,27 @@ public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload {
         return REQUIREMENT;
     }
     
+    public static ConsecrateSpellPayload getInstance() {
+        return INSTANCE;
+    }
+    
+    @Override
+    public SpellPayloadType<ConsecrateSpellPayload> getType() {
+        return SpellPayloadsPM.CONSECRATE.get();
+    }
+
+    @Override
+    protected List<SpellProperty> getPropertiesInner() {
+        return ImmutableList.of();
+    }
+
     @Override
     public Source getSource() {
         return Sources.HALLOWED;
     }
 
     @Override
-    public int getBaseManaCost() {
+    public int getBaseManaCost(SpellPropertyConfiguration properties) {
         return 25;
     }
 
