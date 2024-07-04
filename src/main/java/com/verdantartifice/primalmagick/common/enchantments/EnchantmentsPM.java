@@ -1,11 +1,14 @@
 package com.verdantartifice.primalmagick.common.enchantments;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.effects.EffectsPM;
+import com.verdantartifice.primalmagick.common.enchantments.effects.ApplyConstantMobEffect;
 import com.verdantartifice.primalmagick.common.enchantments.effects.Lifesteal;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -31,8 +34,8 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> LIFESTEAL = key("lifesteal");
+    public static final ResourceKey<Enchantment> ENDERLOCK = key("enderlock");
     
-    public static final RegistryObject<Enchantment> ENDERLOCK = ENCHANTMENTS.register("enderlock", () -> new EnderlockEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> JUDGMENT = ENCHANTMENTS.register("judgment", () -> new JudgmentEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> ENDERPORT = ENCHANTMENTS.register("enderport", () -> new EnderportEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> REGROWTH = ENCHANTMENTS.register("regrowth", () -> new RegrowthEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values()));
@@ -61,7 +64,7 @@ public class EnchantmentsPM {
                 LIFESTEAL,
                 Enchantment.enchantment(
                         Enchantment.definition(
-                                itemHolderGetter.getOrThrow(ItemTagsPM.LIFESTEAL_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.MELEE_ENCHANTABLE),
                                 2,
                                 5,
                                 Enchantment.dynamicCost(5, 10),
@@ -75,6 +78,30 @@ public class EnchantmentsPM {
                         EnchantmentTarget.VICTIM,
                         new Lifesteal(LevelBasedValue.perLevel(0.2F)),
                         DamageSourceCondition.hasDamageSource(DamageSourcePredicate.Builder.damageType().isDirect(true))
+                )
+        );
+        register(
+                pContext,
+                ENDERLOCK,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.MELEE_ENCHANTABLE),
+                                2,
+                                5,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                ).withEffect(
+                        EnchantmentEffectComponents.POST_ATTACK,
+                        EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM,
+                        new ApplyConstantMobEffect(
+                                EffectsPM.ENDERLOCK.getHolder().get(),
+                                LevelBasedValue.perLevel(0F, 40F),
+                                LevelBasedValue.constant(0F)
+                        )
                 )
         );
     }

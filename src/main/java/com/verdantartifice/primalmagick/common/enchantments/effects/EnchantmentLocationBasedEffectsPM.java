@@ -9,6 +9,7 @@ import net.minecraft.world.item.enchantment.effects.EnchantmentLocationBasedEffe
 public class EnchantmentLocationBasedEffectsPM {
     public static void bootstrap(Registry<MapCodec<? extends EnchantmentLocationBasedEffect>> registry) {
         register(registry, "lifesteal", Lifesteal.CODEC);
+        register(registry, "apply_constant_mob_effect", ApplyConstantMobEffect.CODEC);
     }
     
     private static void register(Registry<MapCodec<? extends EnchantmentLocationBasedEffect>> registry, String name, MapCodec<? extends EnchantmentLocationBasedEffect> codec) {

@@ -9,6 +9,7 @@ import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
 public class EnchantmentEntityEffectsPM {
     public static void bootstrap(Registry<MapCodec<? extends EnchantmentEntityEffect>> registry) {
         register(registry, "lifesteal", Lifesteal.CODEC);
+        register(registry, "apply_constant_mob_effect", ApplyConstantMobEffect.CODEC);
     }
     
     private static void register(Registry<MapCodec<? extends EnchantmentEntityEffect>> registry, String name, MapCodec<? extends EnchantmentEntityEffect> codec) {
