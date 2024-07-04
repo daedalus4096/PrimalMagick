@@ -7,12 +7,16 @@ import com.verdantartifice.primalmagick.common.enchantments.effects.Lifesteal;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.EntityTypePredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
@@ -20,8 +24,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentTarget;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
+import net.minecraft.world.item.enchantment.effects.AddValue;
 import net.minecraft.world.item.enchantment.effects.Ignite;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -35,8 +42,8 @@ import net.minecraftforge.registries.RegistryObject;
 public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> LIFESTEAL = key("lifesteal");
     public static final ResourceKey<Enchantment> ENDERLOCK = key("enderlock");
+    public static final ResourceKey<Enchantment> JUDGMENT = key("judgment");
     
-    public static final RegistryObject<Enchantment> JUDGMENT = ENCHANTMENTS.register("judgment", () -> new JudgmentEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> ENDERPORT = ENCHANTMENTS.register("enderport", () -> new EnderportEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> REGROWTH = ENCHANTMENTS.register("regrowth", () -> new RegrowthEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values()));
     public static final RegistryObject<Enchantment> AEGIS = ENCHANTMENTS.register("aegis", () -> new AegisEnchantment(Enchantment.Rarity.VERY_RARE, new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}));
@@ -58,6 +65,7 @@ public class EnchantmentsPM {
 
     public static void bootstrap(BootstrapContext<Enchantment> pContext) {
         HolderGetter<Item> itemHolderGetter = pContext.lookup(Registries.ITEM);
+        HolderGetter<Enchantment> enchantmentHolderGetter = pContext.lookup(Registries.ENCHANTMENT);
 
         register(
                 pContext,
@@ -72,7 +80,8 @@ public class EnchantmentsPM {
                                 4,
                                 EquipmentSlotGroup.MAINHAND
                         )
-                ).withEffect(
+                )
+                .withEffect(
                         EnchantmentEffectComponents.POST_ATTACK,
                         EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM,
@@ -93,14 +102,39 @@ public class EnchantmentsPM {
                                 4,
                                 EquipmentSlotGroup.MAINHAND
                         )
-                ).withEffect(
+                )
+                .withEffect(
                         EnchantmentEffectComponents.POST_ATTACK,
                         EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM,
                         new ApplyConstantMobEffect(
                                 EffectsPM.ENDERLOCK.getHolder().get(),
-                                LevelBasedValue.perLevel(0F, 40F),
+                                LevelBasedValue.perLevel(40F),
                                 LevelBasedValue.constant(0F)
+                        )
+                )
+        );
+        register(
+                pContext,
+                JUDGMENT,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.MELEE_ENCHANTABLE),
+                                1,
+                                5,
+                                Enchantment.dynamicCost(10, 10),
+                                Enchantment.dynamicCost(35, 10),
+                                8,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                )
+                .exclusiveWith(enchantmentHolderGetter.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE))
+                .withEffect(EnchantmentEffectComponents.DAMAGE, new AddValue(LevelBasedValue.perLevel(1.0F, 0.5F)))
+                .withEffect(
+                        EnchantmentEffectComponents.DAMAGE,
+                        new AddValue(LevelBasedValue.perLevel(2.5F)),
+                        LootItemEntityPropertyCondition.hasProperties(
+                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EntityTypeTags.SENSITIVE_TO_SMITE))
                         )
                 )
         );
