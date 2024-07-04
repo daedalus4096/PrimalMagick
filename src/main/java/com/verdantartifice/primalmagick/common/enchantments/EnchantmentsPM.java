@@ -4,30 +4,37 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.effects.ApplyConstantMobEffect;
 import com.verdantartifice.primalmagick.common.enchantments.effects.Lifesteal;
+import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.EntityTypePredicate;
+import net.minecraft.advancements.critereon.TagPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentTarget;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.item.enchantment.effects.AddValue;
+import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
 import net.minecraft.world.item.enchantment.effects.Ignite;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.AllOfCondition;
 import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -46,6 +53,7 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> JUDGMENT = key("judgment");
     public static final ResourceKey<Enchantment> ENDERPORT = key("enderport");
     public static final ResourceKey<Enchantment> REGROWTH = key("regrowth");
+    public static final ResourceKey<Enchantment> AEGIS = key("aegis");
     
     public static final RegistryObject<Enchantment> AEGIS = ENCHANTMENTS.register("aegis", () -> new AegisEnchantment(Enchantment.Rarity.VERY_RARE, new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}));
     public static final RegistryObject<Enchantment> MANA_EFFICIENCY = ENCHANTMENTS.register("mana_efficiency", () -> new ManaEfficiencyEnchantment(Enchantment.Rarity.COMMON, EquipmentSlot.MAINHAND));
@@ -170,6 +178,108 @@ public class EnchantmentsPM {
                         )
                 )
                 // TODO Move Regrowth effect here from PlayerEvents if possible
+        );
+        register(
+                pContext,
+                AEGIS,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
+                                1,
+                                4,
+                                Enchantment.dynamicCost(10, 11),
+                                Enchantment.dynamicCost(18, 11),
+                                8,
+                                EquipmentSlotGroup.ARMOR
+                        )
+                )
+                .exclusiveWith(enchantmentHolderGetter.getOrThrow(EnchantmentTags.ARMOR_EXCLUSIVE))
+                .withEffect(
+                        // Fire damage reduction
+                        EnchantmentEffectComponents.DAMAGE_PROTECTION,
+                        new AddValue(LevelBasedValue.perLevel(2.0F)),
+                        AllOfCondition.allOf(
+                            DamageSourceCondition.hasDamageSource(
+                                DamageSourcePredicate.Builder.damageType()
+                                    .tag(TagPredicate.is(DamageTypeTags.IS_FIRE))
+                                    .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY))
+                            )
+                        )
+                )
+                .withEffect(
+                        // Fire burn time reduction
+                        EnchantmentEffectComponents.ATTRIBUTES,
+                        new EnchantmentAttributeEffect(
+                            ResourceLocation.withDefaultNamespace("enchantment.fire_protection"),
+                            Attributes.BURNING_TIME,
+                            LevelBasedValue.perLevel(-0.15F),
+                            AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                        )
+                )
+                .withEffect(
+                        // Fall damage reduction
+                        EnchantmentEffectComponents.DAMAGE_PROTECTION,
+                        new AddValue(LevelBasedValue.perLevel(3.0F)),
+                        DamageSourceCondition.hasDamageSource(
+                            DamageSourcePredicate.Builder.damageType()
+                                .tag(TagPredicate.is(DamageTypeTags.IS_FALL))
+                                .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY))
+                        )
+                )
+                .withEffect(
+                        // Blast damage reduction
+                        EnchantmentEffectComponents.DAMAGE_PROTECTION,
+                        new AddValue(LevelBasedValue.perLevel(2.0F)),
+                        DamageSourceCondition.hasDamageSource(
+                            DamageSourcePredicate.Builder.damageType()
+                                .tag(TagPredicate.is(DamageTypeTags.IS_EXPLOSION))
+                                .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY))
+                        )
+                )
+                .withEffect(
+                        // Blast knockback reduction
+                        EnchantmentEffectComponents.ATTRIBUTES,
+                        new EnchantmentAttributeEffect(
+                            ResourceLocation.withDefaultNamespace("enchantment.blast_protection"),
+                            Attributes.EXPLOSION_KNOCKBACK_RESISTANCE,
+                            LevelBasedValue.perLevel(0.15F),
+                            AttributeModifier.Operation.ADD_VALUE
+                        )
+                )
+                .withEffect(
+                        // Projectile damage reduction
+                        EnchantmentEffectComponents.DAMAGE_PROTECTION,
+                        new AddValue(LevelBasedValue.perLevel(2.0F)),
+                        DamageSourceCondition.hasDamageSource(
+                            DamageSourcePredicate.Builder.damageType()
+                                .tag(TagPredicate.is(DamageTypeTags.IS_PROJECTILE))
+                                .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY))
+                        )
+                )
+                .withEffect(
+                        // Magick damage reduction
+                        EnchantmentEffectComponents.DAMAGE_PROTECTION,
+                        new AddValue(LevelBasedValue.perLevel(2.0F)),
+                        DamageSourceCondition.hasDamageSource(
+                            DamageSourcePredicate.Builder.damageType()
+                                .tag(TagPredicate.is(DamageTypeTagsPM.IS_MAGIC))
+                                .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY))
+                        )
+                )
+                .withEffect(
+                        // Default damage reduction for anything not covered by the other effects
+                        EnchantmentEffectComponents.DAMAGE_PROTECTION,
+                        new AddValue(LevelBasedValue.perLevel(1.0F)),
+                        DamageSourceCondition.hasDamageSource(
+                            DamageSourcePredicate.Builder.damageType()
+                                .tag(TagPredicate.isNot(DamageTypeTags.IS_FIRE))
+                                .tag(TagPredicate.isNot(DamageTypeTags.IS_FALL))
+                                .tag(TagPredicate.isNot(DamageTypeTags.IS_EXPLOSION))
+                                .tag(TagPredicate.isNot(DamageTypeTags.IS_PROJECTILE))
+                                .tag(TagPredicate.isNot(DamageTypeTagsPM.IS_MAGIC))
+                                .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY))
+                        )
+                )
         );
     }
     
