@@ -54,9 +54,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> ENDERPORT = key("enderport");
     public static final ResourceKey<Enchantment> REGROWTH = key("regrowth");
     public static final ResourceKey<Enchantment> AEGIS = key("aegis");
+    public static final ResourceKey<Enchantment> MANA_EFFICIENCY = key("mana_efficiency");
     
-    public static final RegistryObject<Enchantment> AEGIS = ENCHANTMENTS.register("aegis", () -> new AegisEnchantment(Enchantment.Rarity.VERY_RARE, new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}));
-    public static final RegistryObject<Enchantment> MANA_EFFICIENCY = ENCHANTMENTS.register("mana_efficiency", () -> new ManaEfficiencyEnchantment(Enchantment.Rarity.COMMON, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> SPELL_POWER = ENCHANTMENTS.register("spell_power", () -> new SpellPowerEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> TREASURE = ENCHANTMENTS.register("treasure", () -> new TreasureEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> BLUDGEONING = ENCHANTMENTS.register("bludgeoning", () -> new BludgeoningEnchantment(Enchantment.Rarity.COMMON, EquipmentSlot.MAINHAND));
@@ -278,6 +277,22 @@ public class EnchantmentsPM {
                                 .tag(TagPredicate.isNot(DamageTypeTags.IS_PROJECTILE))
                                 .tag(TagPredicate.isNot(DamageTypeTagsPM.IS_MAGIC))
                                 .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY))
+                        )
+                )
+        );
+        register(
+                pContext,
+                MANA_EFFICIENCY,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
+                                10,
+                                5,
+                                Enchantment.dynamicCost(1, 10),
+                                Enchantment.dynamicCost(51, 10),
+                                1,
+                                EquipmentSlotGroup.MAINHAND
                         )
                 )
         );
