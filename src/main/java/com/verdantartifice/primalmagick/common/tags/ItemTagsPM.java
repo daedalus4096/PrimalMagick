@@ -76,7 +76,8 @@ public class ItemTagsPM {
     public static final TagKey<Item> STORAGE_BLOCKS_HEXIUM = tag("storage_blocks/hexium");
     public static final TagKey<Item> STORAGE_BLOCKS_HALLOWSTEEL = tag("storage_blocks/hallowsteel");
     
-    public static final TagKey<Item> MELEE_ENCHANTABLE = tag("enchantable/lifesteal");
+    public static final TagKey<Item> MELEE_ENCHANTABLE = tag("enchantable/melee");
+    public static final TagKey<Item> ARCHERY_ENCHANTABLE = tag("enchantable/archery");
     public static final TagKey<Item> STAFF_ENCHANTABLE = tag("enchantable/staff");
     public static final TagKey<Item> WAND_ENCHANTABLE = tag("enchantable/wand");
 

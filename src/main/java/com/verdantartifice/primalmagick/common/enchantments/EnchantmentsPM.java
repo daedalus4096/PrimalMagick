@@ -43,8 +43,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> LIFESTEAL = key("lifesteal");
     public static final ResourceKey<Enchantment> ENDERLOCK = key("enderlock");
     public static final ResourceKey<Enchantment> JUDGMENT = key("judgment");
+    public static final ResourceKey<Enchantment> ENDERPORT = key("enderport");
     
-    public static final RegistryObject<Enchantment> ENDERPORT = ENCHANTMENTS.register("enderport", () -> new EnderportEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> REGROWTH = ENCHANTMENTS.register("regrowth", () -> new RegrowthEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values()));
     public static final RegistryObject<Enchantment> AEGIS = ENCHANTMENTS.register("aegis", () -> new AegisEnchantment(Enchantment.Rarity.VERY_RARE, new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}));
     public static final RegistryObject<Enchantment> MANA_EFFICIENCY = ENCHANTMENTS.register("mana_efficiency", () -> new ManaEfficiencyEnchantment(Enchantment.Rarity.COMMON, EquipmentSlot.MAINHAND));
@@ -137,6 +137,22 @@ public class EnchantmentsPM {
                                 LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EntityTypeTags.SENSITIVE_TO_SMITE))
                         )
                 )
+        );
+        register(
+                pContext,
+                ENDERPORT,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.ARCHERY_ENCHANTABLE),
+                                2,
+                                1,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                )
+                // TODO Move Enderport effect here from CombatEvents if possible
         );
     }
     
