@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
@@ -44,8 +45,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> ENDERLOCK = key("enderlock");
     public static final ResourceKey<Enchantment> JUDGMENT = key("judgment");
     public static final ResourceKey<Enchantment> ENDERPORT = key("enderport");
+    public static final ResourceKey<Enchantment> REGROWTH = key("regrowth");
     
-    public static final RegistryObject<Enchantment> REGROWTH = ENCHANTMENTS.register("regrowth", () -> new RegrowthEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values()));
     public static final RegistryObject<Enchantment> AEGIS = ENCHANTMENTS.register("aegis", () -> new AegisEnchantment(Enchantment.Rarity.VERY_RARE, new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}));
     public static final RegistryObject<Enchantment> MANA_EFFICIENCY = ENCHANTMENTS.register("mana_efficiency", () -> new ManaEfficiencyEnchantment(Enchantment.Rarity.COMMON, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> SPELL_POWER = ENCHANTMENTS.register("spell_power", () -> new SpellPowerEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
@@ -153,6 +154,22 @@ public class EnchantmentsPM {
                         )
                 )
                 // TODO Move Enderport effect here from CombatEvents if possible
+        );
+        register(
+                pContext,
+                REGROWTH,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTags.DURABILITY_ENCHANTABLE),
+                                1,
+                                1,
+                                Enchantment.constantCost(30),
+                                Enchantment.constantCost(90),
+                                8,
+                                EquipmentSlotGroup.ANY
+                        )
+                )
+                // TODO Move Regrowth effect here from PlayerEvents if possible
         );
     }
     
