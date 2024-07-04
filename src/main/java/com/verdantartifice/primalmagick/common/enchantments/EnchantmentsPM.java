@@ -55,8 +55,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> REGROWTH = key("regrowth");
     public static final ResourceKey<Enchantment> AEGIS = key("aegis");
     public static final ResourceKey<Enchantment> MANA_EFFICIENCY = key("mana_efficiency");
+    public static final ResourceKey<Enchantment> SPELL_POWER = key("spell_power");
     
-    public static final RegistryObject<Enchantment> SPELL_POWER = ENCHANTMENTS.register("spell_power", () -> new SpellPowerEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> TREASURE = ENCHANTMENTS.register("treasure", () -> new TreasureEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> BLUDGEONING = ENCHANTMENTS.register("bludgeoning", () -> new BludgeoningEnchantment(Enchantment.Rarity.COMMON, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> REVERBERATION = ENCHANTMENTS.register("reverberation", () -> new DiggingAreaEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
@@ -292,6 +292,22 @@ public class EnchantmentsPM {
                                 Enchantment.dynamicCost(1, 10),
                                 Enchantment.dynamicCost(51, 10),
                                 1,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                )
+        );
+        register(
+                pContext,
+                SPELL_POWER,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
+                                2,
+                                5,
+                                Enchantment.dynamicCost(10, 10),
+                                Enchantment.dynamicCost(35, 10),
+                                4,
                                 EquipmentSlotGroup.MAINHAND
                         )
                 )
