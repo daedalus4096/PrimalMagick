@@ -33,7 +33,6 @@ import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipe
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.enchantments.VerdantEnchantment;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
@@ -640,7 +639,8 @@ public class PlayerEvents {
                         }
                         
                         // Damage the stack and cancel the rest of the hoe functionality.
-                        int damage = (VerdantEnchantment.BASE_DAMAGE_PER_USE >> (enchantLevel - 1));
+                        final int baseDamage = 8;
+                        int damage = (baseDamage >> (enchantLevel - 1));
                         if (damage > 0) {
                             stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
                         }
