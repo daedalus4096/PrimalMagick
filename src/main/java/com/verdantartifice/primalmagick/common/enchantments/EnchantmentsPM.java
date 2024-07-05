@@ -21,6 +21,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -56,8 +57,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> AEGIS = key("aegis");
     public static final ResourceKey<Enchantment> MANA_EFFICIENCY = key("mana_efficiency");
     public static final ResourceKey<Enchantment> SPELL_POWER = key("spell_power");
+    public static final ResourceKey<Enchantment> TREASURE = key("treasure");
     
-    public static final RegistryObject<Enchantment> TREASURE = ENCHANTMENTS.register("treasure", () -> new TreasureEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> BLUDGEONING = ENCHANTMENTS.register("bludgeoning", () -> new BludgeoningEnchantment(Enchantment.Rarity.COMMON, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> REVERBERATION = ENCHANTMENTS.register("reverberation", () -> new DiggingAreaEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> BOUNTY = ENCHANTMENTS.register("bounty", () -> new BountyEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
@@ -309,6 +310,31 @@ public class EnchantmentsPM {
                                 Enchantment.dynamicCost(35, 10),
                                 4,
                                 EquipmentSlotGroup.MAINHAND
+                        )
+                )
+        );
+        register(
+                pContext,
+                TREASURE,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
+                                2,
+                                3,
+                                Enchantment.dynamicCost(15, 9),
+                                Enchantment.dynamicCost(65, 9),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                )
+                .withEffect(
+                        EnchantmentEffectComponents.EQUIPMENT_DROPS,
+                        EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM,
+                        new AddValue(LevelBasedValue.perLevel(0.01F)),
+                        LootItemEntityPropertyCondition.hasProperties(
+                            LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EntityType.PLAYER))
                         )
                 )
         );
