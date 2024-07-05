@@ -77,6 +77,10 @@ public class EnchantmentsPM {
         HolderGetter<Item> itemHolderGetter = pContext.lookup(Registries.ITEM);
         HolderGetter<Enchantment> enchantmentHolderGetter = pContext.lookup(Registries.ENCHANTMENT);
 
+        /*
+         * Definition of an enchantment that steals life from entities wounded by this weapon.  Gives a
+         * twenty percent chance per level to heal one point.
+         */
         register(
                 pContext,
                 LIFESTEAL,
@@ -99,6 +103,10 @@ public class EnchantmentsPM {
                         DamageSourceCondition.hasDamageSource(DamageSourcePredicate.Builder.damageType().isDirect(true))
                 )
         );
+        
+        /*
+         * Definition of an enchantment that prevents entities from teleporting for a brief time.
+         */
         register(
                 pContext,
                 ENDERLOCK,
@@ -124,6 +132,10 @@ public class EnchantmentsPM {
                         )
                 )
         );
+        
+        /*
+         * Definition of a rune enchantment that combines the effects of Sharpness and Smite.
+         */
         register(
                 pContext,
                 JUDGMENT,
@@ -148,6 +160,10 @@ public class EnchantmentsPM {
                         )
                 )
         );
+        
+        /*
+         * Definition of an enchantment that teleports the shooter of an arrow to the impact location.
+         */
         register(
                 pContext,
                 ENDERPORT,
@@ -164,6 +180,10 @@ public class EnchantmentsPM {
                 )
                 // TODO Move Enderport effect here from CombatEvents if possible
         );
+        
+        /*
+         * Definition of an enchantment that slowly mends equipment over time.
+         */
         register(
                 pContext,
                 REGROWTH,
@@ -180,6 +200,11 @@ public class EnchantmentsPM {
                 )
                 // TODO Move Regrowth effect here from PlayerEvents if possible
         );
+        
+        /*
+         * Definition of a rune enchantment that combines the damage reduction of the base five protection
+         * enchantments plus Magick Protection.
+         */
         register(
                 pContext,
                 AEGIS,
@@ -282,6 +307,11 @@ public class EnchantmentsPM {
                         )
                 )
         );
+        
+        /*
+         * Definition of a mana efficiency enchantment that can be applied to wands or staves.  Decreases
+         * mana consumed when crafting or casting spells.
+         */
         register(
                 pContext,
                 MANA_EFFICIENCY,
@@ -298,6 +328,10 @@ public class EnchantmentsPM {
                         )
                 )
         );
+        
+        /*
+         * Definition of a wand enchantment that mimics and stacks with the effect of the Amplify spell mod.
+         */
         register(
                 pContext,
                 SPELL_POWER,
@@ -314,6 +348,10 @@ public class EnchantmentsPM {
                         )
                 )
         );
+        
+        /*
+         * Definition of a loot bonus enchantment that can be applied to wands and staves.
+         */
         register(
                 pContext,
                 TREASURE,
@@ -339,6 +377,10 @@ public class EnchantmentsPM {
                         )
                 )
         );
+        
+        /*
+         * Definition of a melee damage boosting enchantment for magickal staves.
+         */
         register(
                 pContext,
                 BLUDGEONING,
@@ -357,6 +399,10 @@ public class EnchantmentsPM {
                 .exclusiveWith(enchantmentHolderGetter.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.DAMAGE, new AddValue(LevelBasedValue.perLevel(1.0F, 0.5F)))
         );
+        
+        /*
+         * Definition of an enchantment that increases the planar digging area of a digging tool.
+         */
         register(
                 pContext,
                 REVERBERATION,
@@ -373,6 +419,11 @@ public class EnchantmentsPM {
                 )
                 .exclusiveWith(enchantmentHolderGetter.getOrThrow(EnchantmentTagsPM.DIGGING_AREA_EXCLUSIVE))
         );
+        
+        /*
+         * Definition of an enchantment that grants bonus rolls when fishing or harvesting crops.  Note
+         * that unlike Luck of the Sea, this increases the quantity of items gained, not quality.
+         */
         register(
                 pContext,
                 BOUNTY,
@@ -388,6 +439,11 @@ public class EnchantmentsPM {
                         )
                 )
         );
+        
+        /*
+         * Definition of an enchantment that causes adjacent, identical blocks to be broken in a chain
+         * when digging with the enchanted tool.
+         */
         register(
                 pContext,
                 DISINTEGRATION,
