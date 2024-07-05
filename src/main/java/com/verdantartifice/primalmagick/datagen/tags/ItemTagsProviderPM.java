@@ -53,12 +53,17 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTags.SAPLINGS).add(ItemsPM.MOONWOOD_SAPLING.get(), ItemsPM.SUNWOOD_SAPLING.get(), ItemsPM.HALLOWOOD_SAPLING.get());
         this.tag(ItemTags.SHOVELS).add(ItemsPM.PRIMALITE_SHOVEL.get(), ItemsPM.HEXIUM_SHOVEL.get(), ItemsPM.HALLOWSTEEL_SHOVEL.get(), ItemsPM.PRIMAL_SHOVEL.get());
         this.tag(ItemTags.SWORDS).add(ItemsPM.PRIMALITE_SWORD.get(), ItemsPM.HEXIUM_SWORD.get(), ItemsPM.HALLOWSTEEL_SWORD.get(), ItemsPM.FORBIDDEN_SWORD.get());
-        this.tag(ItemTags.TRIDENT_ENCHANTABLE).addTag(Tags.Items.TOOLS_TRIDENTS);
         this.tag(ItemTags.TRIMMABLE_ARMOR).addTag(ItemTagsPM.RUNIC_TRIMMABLE_ARMOR).add(ItemsPM.PRIMALITE_CHEST.get(), ItemsPM.PRIMALITE_FEET.get(), ItemsPM.PRIMALITE_HEAD.get(), ItemsPM.PRIMALITE_LEGS.get(), ItemsPM.HEXIUM_CHEST.get(), ItemsPM.HEXIUM_FEET.get(), ItemsPM.HEXIUM_HEAD.get(), ItemsPM.HEXIUM_LEGS.get(), ItemsPM.HALLOWSTEEL_CHEST.get(), ItemsPM.HALLOWSTEEL_FEET.get(), ItemsPM.HALLOWSTEEL_HEAD.get(), ItemsPM.HALLOWSTEEL_LEGS.get());
         this.tag(ItemTags.WALLS).add(ItemsPM.MARBLE_WALL.get(), ItemsPM.MARBLE_BRICK_WALL.get(), ItemsPM.MARBLE_ENCHANTED_WALL.get(), ItemsPM.MARBLE_ENCHANTED_BRICK_WALL.get(), ItemsPM.MARBLE_SMOKED_WALL.get(), ItemsPM.MARBLE_SMOKED_BRICK_WALL.get());
         this.tag(ItemTags.WOODEN_SLABS).add(ItemsPM.MOONWOOD_SLAB.get(), ItemsPM.SUNWOOD_SLAB.get(), ItemsPM.HALLOWOOD_SLAB.get());
         this.tag(ItemTags.WOODEN_STAIRS).add(ItemsPM.MOONWOOD_STAIRS.get(), ItemsPM.SUNWOOD_STAIRS.get(), ItemsPM.HALLOWOOD_STAIRS.get());
-        
+
+        this.tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOWS);
+        this.tag(ItemTags.CROSSBOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_CROSSBOWS);
+        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOWS).addTag(Tags.Items.TOOLS_CROSSBOWS).addTag(Tags.Items.TOOLS_FISHING_RODS).addTag(Tags.Items.TOOLS_TRIDENTS);
+        this.tag(ItemTags.FISHING_ENCHANTABLE).addTag(Tags.Items.TOOLS_FISHING_RODS);
+        this.tag(ItemTags.TRIDENT_ENCHANTABLE).addTag(Tags.Items.TOOLS_TRIDENTS);
+
         // Add entries to Forge tags
         this.tag(Tags.Items.ARMORS_HELMETS).addTag(ItemTagsPM.ROBES_HELMETS).add(ItemsPM.PRIMALITE_HEAD.get(), ItemsPM.HEXIUM_HEAD.get(), ItemsPM.HALLOWSTEEL_HEAD.get());
         this.tag(Tags.Items.ARMORS_CHESTPLATES).addTag(ItemTagsPM.ROBES_CHESTPLATES).add(ItemsPM.PRIMALITE_CHEST.get(), ItemsPM.HEXIUM_CHEST.get(), ItemsPM.HALLOWSTEEL_CHEST.get());
@@ -195,5 +200,7 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTagsPM.ARCHERY_ENCHANTABLE).addTag(ItemTags.BOW_ENCHANTABLE).addTag(ItemTags.CROSSBOW_ENCHANTABLE);
         this.tag(ItemTagsPM.STAFF_ENCHANTABLE).add(ItemsPM.MODULAR_STAFF.get());
         this.tag(ItemTagsPM.WAND_ENCHANTABLE).addTag(ItemTagsPM.STAFF_ENCHANTABLE).add(ItemsPM.MUNDANE_WAND.get(), ItemsPM.MODULAR_WAND.get());
+        this.tag(ItemTagsPM.HOE_ENCHANTABLE).addTag(ItemTags.HOES);
+        this.tag(ItemTagsPM.BOUNTY_ENCHANTABLE).addTag(ItemTags.FISHING_ENCHANTABLE).addTag(ItemTagsPM.HOE_ENCHANTABLE);
     }
 }
