@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
@@ -86,8 +87,8 @@ public class ModularWandItem extends AbstractWandItem {
     }
 
     @Override
-    public double getTotalCostModifier(ItemStack stack, Player player, Source source) {
-        double mod = super.getTotalCostModifier(stack, player, source);
+    public double getTotalCostModifier(ItemStack stack, Player player, Source source, HolderLookup.Provider registries) {
+        double mod = super.getTotalCostModifier(stack, player, source, registries);
         
         // Subtract discount for wand core alignment, if any
         WandCore core = this.getWandCore(stack);
