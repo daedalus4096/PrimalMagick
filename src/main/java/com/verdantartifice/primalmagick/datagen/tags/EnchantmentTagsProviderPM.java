@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.datagen.tags;
 import java.util.concurrent.CompletableFuture;
 
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagick.common.tags.EnchantmentTagsPM;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
@@ -18,6 +19,12 @@ public class EnchantmentTagsProviderPM extends EnchantmentTagsProvider {
     @Override
     protected void addTags(Provider pProvider) {
         // TODO Does enchantment tooltip order need to be registered here as well?
+        
+        // Add enchantments to vanilla tags
+        this.tag(EnchantmentTags.ARMOR_EXCLUSIVE).add(EnchantmentsPM.AEGIS);
         this.tag(EnchantmentTags.DAMAGE_EXCLUSIVE).add(EnchantmentsPM.JUDGMENT);
+        
+        // Define mod custom tags
+        this.tag(EnchantmentTagsPM.DIGGING_AREA_EXCLUSIVE).add(EnchantmentsPM.REVERBERATION);
     }
 }

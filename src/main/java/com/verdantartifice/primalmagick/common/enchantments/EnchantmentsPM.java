@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.effects.ApplyConstantMobEffect;
 import com.verdantartifice.primalmagick.common.enchantments.effects.Lifesteal;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
+import com.verdantartifice.primalmagick.common.tags.EnchantmentTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
@@ -59,8 +60,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> SPELL_POWER = key("spell_power");
     public static final ResourceKey<Enchantment> TREASURE = key("treasure");
     public static final ResourceKey<Enchantment> BLUDGEONING = key("bludgeoning");
+    public static final ResourceKey<Enchantment> REVERBERATION = key("reverberation");
     
-    public static final RegistryObject<Enchantment> REVERBERATION = ENCHANTMENTS.register("reverberation", () -> new DiggingAreaEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> BOUNTY = ENCHANTMENTS.register("bounty", () -> new BountyEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> DISINTEGRATION = ENCHANTMENTS.register("disintegration", () -> new DiggingAreaEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> VERDANT = ENCHANTMENTS.register("verdant", () -> new VerdantEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
@@ -355,6 +356,22 @@ public class EnchantmentsPM {
                 )
                 .exclusiveWith(enchantmentHolderGetter.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.DAMAGE, new AddValue(LevelBasedValue.perLevel(1.0F, 0.5F)))
+        );
+        register(
+                pContext,
+                REVERBERATION,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                                1,
+                                4,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                8,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                )
+                .exclusiveWith(enchantmentHolderGetter.getOrThrow(EnchantmentTagsPM.DIGGING_AREA_EXCLUSIVE))
         );
     }
     
