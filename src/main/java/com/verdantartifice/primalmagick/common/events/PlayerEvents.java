@@ -62,6 +62,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
@@ -395,7 +396,7 @@ public class PlayerEvents {
     
     protected static void handleRegrowth(Player player) {
         for (ItemStack stack : player.getAllSlots()) {
-            if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack)) {
+            if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack, player.level().holderLookup(Registries.ENCHANTMENT))) {
                 stack.hurtAndBreak(-1, player, p -> {});
             }
         }

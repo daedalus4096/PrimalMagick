@@ -14,6 +14,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  */
 public class EnchantmentTagsPM {
     public static final TagKey<Enchantment> DIGGING_AREA_EXCLUSIVE = create("exclusive_set/digging_area");
+    public static final TagKey<Enchantment> RUNE_EXCLUSIVE_ENCHANTMENTS = create("rune_exclusive_enchantments");
     
     private static TagKey<Enchantment> create(String name) {
         return TagKey.create(Registries.ENCHANTMENT, PrimalMagick.resource(name));

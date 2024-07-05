@@ -80,6 +80,7 @@ public class EnchantmentsPM {
                 Enchantment.enchantment(
                         Enchantment.definition(
                                 itemHolderGetter.getOrThrow(ItemTagsPM.MELEE_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
                                 2,
                                 5,
                                 Enchantment.dynamicCost(5, 10),
@@ -106,6 +107,7 @@ public class EnchantmentsPM {
                 Enchantment.enchantment(
                         Enchantment.definition(
                                 itemHolderGetter.getOrThrow(ItemTagsPM.MELEE_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
                                 2,
                                 5,
                                 Enchantment.dynamicCost(5, 10),
@@ -618,6 +620,7 @@ public class EnchantmentsPM {
                 GUILLOTINE,
                 Enchantment.enchantment(
                         Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTags.SHARP_WEAPON_ENCHANTABLE),
                                 itemHolderGetter.getOrThrow(ItemTags.SHARP_WEAPON_ENCHANTABLE),
                                 2,
                                 5,
