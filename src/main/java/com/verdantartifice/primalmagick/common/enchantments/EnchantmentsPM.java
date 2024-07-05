@@ -70,8 +70,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> SOULPIERCING = key("soulpiercing");
     public static final ResourceKey<Enchantment> ESSENCE_THIEF = key("essence_thief");
     public static final ResourceKey<Enchantment> BULWARK = key("bulwark");
+    public static final ResourceKey<Enchantment> MAGICK_PROTECTION = key("magick_protection");
     
-    public static final RegistryObject<Enchantment> MAGICK_PROTECTION = ENCHANTMENTS.register("magick_protection", () -> new MagickProtectionEnchantment(Enchantment.Rarity.UNCOMMON, new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}));
     public static final RegistryObject<Enchantment> GUILLOTINE = ENCHANTMENTS.register("guillotine", () -> new GuillotineEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
 
     public static void bootstrap(BootstrapContext<Enchantment> pContext) {
@@ -587,6 +587,35 @@ public class EnchantmentsPM {
                         )
                 )
                 // TODO Move Bulwark effect here from EntityEvents if possible
+        );
+        
+        /*
+         * Definition of an enchantment that reduces magick damage taken.
+         */
+        register(
+                pContext,
+                MAGICK_PROTECTION,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
+                                5,
+                                4,
+                                Enchantment.dynamicCost(5, 8),
+                                Enchantment.dynamicCost(13, 8),
+                                2,
+                                EquipmentSlotGroup.ARMOR
+                        )
+                )
+                .withEffect(
+                        EnchantmentEffectComponents.DAMAGE_PROTECTION,
+                        new AddValue(LevelBasedValue.perLevel(2.0F)),
+                        DamageSourceCondition.hasDamageSource(
+                            DamageSourcePredicate.Builder.damageType()
+                                .tag(TagPredicate.is(DamageTypeTagsPM.IS_MAGIC))
+                                .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY))
+                        )
+                )
         );
     }
     
