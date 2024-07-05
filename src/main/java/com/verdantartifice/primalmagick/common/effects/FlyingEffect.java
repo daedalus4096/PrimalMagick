@@ -23,7 +23,7 @@ public class FlyingEffect extends MobEffect {
     }
 
     @Override
-    public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+    public boolean applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         // End flying effect on the last tick, because there's no equivalent to onEffectStarted for effects ending
         Level level = pLivingEntity.level();
         if (!level.isClientSide && pLivingEntity instanceof ServerPlayer player) {
@@ -35,6 +35,7 @@ public class FlyingEffect extends MobEffect {
             }
             player.onUpdateAbilities();   // Send ability changes to clients
         }
+        return true;
     }
 
     @Override

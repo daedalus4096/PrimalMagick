@@ -223,9 +223,10 @@ public class CombatEvents {
     @SubscribeEvent
     public static void onArrowImpact(ProjectileImpactEvent event) {
         // If the shooter has the Enderport enchantment, teleport to the hit location
+        // TODO Could the Enderport effect be converted to an enchantment effect component?
         Entity shooter = event.getProjectile().getOwner();
-        if (shooter instanceof LivingEntity && EnchantmentHelperPM.hasEnderport((LivingEntity)shooter)) {
-            EntityUtils.teleportEntity((LivingEntity)shooter, event.getProjectile().level(), event.getRayTraceResult().getLocation());
+        if (shooter instanceof LivingEntity livingShooter && EnchantmentHelperPM.hasEnderport(livingShooter)) {
+            EntityUtils.teleportEntity(livingShooter, event.getProjectile().level(), event.getRayTraceResult().getLocation());
         }
 
         // Handle the Soulpiercing enchantment
