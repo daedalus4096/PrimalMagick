@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration
 import com.verdantartifice.primalmagick.common.util.VectorUtils;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.RandomSource;
@@ -109,7 +110,7 @@ public class ForkSpellMod extends AbstractSpellMod<ForkSpellMod> {
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
         return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getForkCount(spell, spellSource), this.getSpreadDegreesText(spell, spellSource));
     }
 }

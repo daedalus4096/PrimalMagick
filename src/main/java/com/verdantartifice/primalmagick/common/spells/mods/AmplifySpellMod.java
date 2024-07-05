@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 
@@ -62,7 +63,7 @@ public class AmplifySpellMod extends AbstractSpellMod<AmplifySpellMod> {
     }
     
     @Override
-    public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, ItemStack spellSource) {
+    public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
         // Don't amplify self or take amplification from wand enchantments
         return spell.getMod(this.getType()).orElseThrow().getPropertyValue(property);
     }

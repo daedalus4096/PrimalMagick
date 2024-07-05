@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
@@ -74,8 +75,8 @@ public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload>
             if (entityTarget.getEntity() instanceof LivingEntity) {
                 // Grant the potion effect
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
-                int ticks = 20 * this.getDurationSeconds(spell, spellSource);
-                entity.addEffect(new MobEffectInstance(EffectsPM.FLYING.get(), ticks));
+                int ticks = 20 * this.getDurationSeconds(spell, spellSource, world.registryAccess());
+                entity.addEffect(new MobEffectInstance(EffectsPM.FLYING.getHolder().get(), ticks));
             }
         }
     }
@@ -100,12 +101,12 @@ public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload>
         return TYPE;
     }
     
-    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
-        return 3 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource);
+    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return 3 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource, registries);
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource, registries)));
     }
 }

@@ -1,30 +1,24 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
-import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
-import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.tags.SpellPropertyTagsPM;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
@@ -72,7 +66,7 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
         return this.getPropertiesInner().stream().filter(prop -> prop.id().equals(id)).findFirst().orElse(null);
     }
 
-    public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, @Nullable ItemStack spellSource) {
+    public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, @Nullable ItemStack spellSource, HolderLookup.Provider registries) {
         MutableInt retVal = new MutableInt(spell.getMod(this.getType()).orElseThrow().getPropertyValue(property));
         if (retVal.intValue() > 0 && !SpellPropertiesPM.AMPLIFY_POWER.get().equals(property) && SpellPropertiesPM.PROPERTIES.get().tags().getTag(SpellPropertyTagsPM.AMPLIFIABLE).contains(property)) {
             // For power or duration properties greater than zero, increase the total result by
@@ -81,7 +75,7 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
                 retVal.add(ampMod.getPropertyValue(SpellPropertiesPM.AMPLIFY_POWER.get()));
             });
             if (spellSource != null) {
-                int enchLevel = spellSource.getEnchantments().getLevel(EnchantmentsPM.SPELL_POWER.get());
+                int enchLevel = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.SPELL_POWER, registries.lookupOrThrow(Registries.ENCHANTMENT));
                 if (enchLevel > 0) {
                     retVal.add(enchLevel);
                 }

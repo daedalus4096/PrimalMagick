@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.LivingEntity;
@@ -90,7 +91,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle<BoltSpellVehic
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
         return Component.translatable("spells.primalmagick.vehicle." + this.getVehicleType() + ".detail_tooltip", this.getRangeBlocks(spell, spellSource));
     }
 

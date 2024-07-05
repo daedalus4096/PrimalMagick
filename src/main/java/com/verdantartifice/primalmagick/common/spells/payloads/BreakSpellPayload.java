@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -17,10 +17,10 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-import com.verdantartifice.primalmagick.common.spells.mods.BurstSpellMod;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -79,8 +79,9 @@ public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
             BlockState state = world.getBlockState(pos);
             float durability = (float)Math.sqrt(100.0F * state.getDestroySpeed(world, pos));
             boolean silk = (spell.payload().getPropertyValue(SpellPropertiesPM.SILK_TOUCH.get()) == 1);
-            int treasure = spellSource.getEnchantments().getLevel(EnchantmentsPM.TREASURE.get());
-            BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource)).target(pos, state).durability(durability).player(player).tool(spellSource).silkTouch(silk).fortune(treasure).alwaysDrop().build();
+            int treasure = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.TREASURE, world.registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
+            BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, world.registryAccess()))
+                    .target(pos, state).durability(durability).player(player).tool(spellSource).silkTouch(silk).fortune(treasure).alwaysDrop().build();
             BlockBreaker.schedule(world, 1, breaker);
         }
     }

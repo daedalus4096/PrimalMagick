@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -19,6 +20,7 @@ import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -85,7 +87,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
     public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         ItemStack fakeShears = new ItemStack(Items.SHEARS);
         RandomSource rand = world.random;
-        int treasureLevel = spellSource.getEnchantments().getLevel(EnchantmentsPM.TREASURE.get());
+        int treasureLevel = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.TREASURE, world.holderLookup(Registries.ENCHANTMENT));
         if (caster instanceof Player player) {
             if (target.getType() == HitResult.Type.ENTITY) {
                 EntityHitResult entityHitResult = (EntityHitResult)target;

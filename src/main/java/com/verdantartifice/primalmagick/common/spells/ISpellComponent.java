@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +49,7 @@ public interface ISpellComponent {
      * 
      * @return the spell component details
      */
-    default Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+    default Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
         return this.getTypeName();
     }
     

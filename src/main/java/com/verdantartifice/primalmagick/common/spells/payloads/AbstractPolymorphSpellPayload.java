@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
@@ -55,7 +56,7 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
                 // Create and enqueue an entity swapper for the target entity
                 UUID entityId = entityTarget.getEntity().getUUID();
                 CompoundTag originalData = entityTarget.getEntity().saveWithoutId(new CompoundTag());
-                int ticks = 20 * this.getDurationSeconds(spell, spellSource);
+                int ticks = 20 * this.getDurationSeconds(spell, spellSource, world.registryAccess());
                 EntitySwapper.enqueue(world, new EntitySwapper(entityId, this.getNewEntityType(), originalData, Optional.of(Integer.valueOf(ticks)), 0));
             }
         }
@@ -78,12 +79,12 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
         world.playSound(null, origin, this.getCastSoundEvent(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
-    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
-        return 6 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource);
+    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return 6 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource, registries);
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource, registries)));
     }
 }

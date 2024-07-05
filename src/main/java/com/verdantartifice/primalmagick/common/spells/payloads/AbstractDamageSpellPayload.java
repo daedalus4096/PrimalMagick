@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,8 +37,8 @@ public abstract class AbstractDamageSpellPayload<T extends AbstractDamageSpellPa
         return PROPERTIES;
     }
 
-    protected float getBaseDamage(SpellPackage spell, ItemStack spellSource) {
-        return 4.0F + (3.0F * this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource));
+    protected float getBaseDamage(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return 4.0F + (3.0F * this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, registries));
     }
     
     /**
@@ -48,8 +49,8 @@ public abstract class AbstractDamageSpellPayload<T extends AbstractDamageSpellPa
      * @param spellSource the wand or scroll containing the spell package
      * @return the total amount of damage to be done
      */
-    protected float getTotalDamage(Entity target, SpellPackage spell, @Nullable ItemStack spellSource) {
-        float damage = this.getBaseDamage(spell, spellSource);
+    protected float getTotalDamage(Entity target, SpellPackage spell, @Nullable ItemStack spellSource, HolderLookup.Provider registries) {
+        float damage = this.getBaseDamage(spell, spellSource, registries);
         if (target instanceof Player) {
             // Spells do half damage against other players
             damage *= 0.5F;
@@ -76,7 +77,7 @@ public abstract class AbstractDamageSpellPayload<T extends AbstractDamageSpellPa
             EntityHitResult entityTarget = (EntityHitResult)target;
             if (entityTarget.getEntity() != null) {
                 // Damage the target entity
-                entityTarget.getEntity().hurt(this.getDamageSource(caster, spell, projectileEntity), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource));
+                entityTarget.getEntity().hurt(this.getDamageSource(caster, spell, projectileEntity), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource, world.registryAccess()));
                 
                 // Update the caster's last hurt mob
                 if (caster != null) {

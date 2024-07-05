@@ -38,6 +38,7 @@ import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -274,29 +275,29 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, @Nonnull ItemStack spellSource, boolean indent) {
+    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, @Nonnull ItemStack spellSource, boolean indent, HolderLookup.Provider registries) {
         List<Component> retVal = new ArrayList<>();
         Component leader = indent ? Component.literal("    ") : Component.literal("");
         if (spell != null) {
             ConfiguredSpellVehicle<?> vehicle = spell.vehicle();
             if (vehicle != null) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getComponent().getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getComponent().getDetailTooltip(spell, spellSource, registries))));
             }
             
             ConfiguredSpellPayload<?> payload = spell.payload();
             if (payload != null) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getComponent().getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getComponent().getDetailTooltip(spell, spellSource, registries))));
             }
             
             Optional<ConfiguredSpellMod<?>> primary = spell.primaryMod();
             Optional<ConfiguredSpellMod<?>> secondary = spell.secondaryMod();
             if (primary.isPresent() && primary.get().getComponent().isActive() && secondary.isPresent() && secondary.get().getComponent().isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.get().getComponent().getDetailTooltip(spell, spellSource),
-                        secondary.get().getComponent().getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.get().getComponent().getDetailTooltip(spell, spellSource, registries),
+                        secondary.get().getComponent().getDetailTooltip(spell, spellSource, registries))));
             } else if (primary.isPresent() && primary.get().getComponent().isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", primary.get().getComponent().getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", primary.get().getComponent().getDetailTooltip(spell, spellSource, registries))));
             } else if (secondary.isPresent() && secondary.get().getComponent().isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", secondary.get().getComponent().getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", secondary.get().getComponent().getDetailTooltip(spell, spellSource, registries))));
             }
             
             retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));

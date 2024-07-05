@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
@@ -61,8 +62,8 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload<HolyDamag
     }
 
     @Override
-    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
-        float damage = super.getTotalDamage(target, spell, spellSource);
+    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        float damage = super.getTotalDamage(target, spell, spellSource, registries);
         if (target instanceof LivingEntity livingTarget && livingTarget.isInvertedHealAndHarm()) {
             // Deal double damage to undead entities
             damage += damage;
@@ -82,7 +83,7 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload<HolyDamag
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource, registries)));
     }
 }

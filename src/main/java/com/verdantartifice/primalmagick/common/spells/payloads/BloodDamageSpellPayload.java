@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
@@ -59,8 +60,8 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload<BloodDam
     }
     
     @Override
-    protected float getBaseDamage(SpellPackage spell, ItemStack spellSource) {
-        return 3.0F + (2.0F * this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource));
+    protected float getBaseDamage(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return 3.0F + (2.0F * this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, registries));
     }
 
     @Override
@@ -75,7 +76,7 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload<BloodDam
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource, registries)));
     }
 }

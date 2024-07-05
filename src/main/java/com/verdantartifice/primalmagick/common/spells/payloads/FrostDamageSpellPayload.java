@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
@@ -82,9 +83,9 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload<FrostDam
     }
 
     @Override
-    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource) {
-        float retVal = super.getTotalDamage(target, spell, spellSource);
-        // TODO Make a tag for this
+    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        float retVal = super.getTotalDamage(target, spell, spellSource, registries);
+        // TODO Make a tag for frost damage sensitivity
         if (target.getType() == EntityType.ENDERMAN) {
             // Endermen are hurt by water
             retVal *= 1.5F;
@@ -94,11 +95,11 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload<FrostDam
 
     @Override
     protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
-        int duration = this.getDurationSeconds(spell, spellSource);
+        int duration = this.getDurationSeconds(spell, spellSource, world.registryAccess());
         if (target != null && target.getType() == HitResult.Type.ENTITY && duration > 0) {
             EntityHitResult entityTarget = (EntityHitResult)target;
             if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
-                int potency = (int)((1.0F + this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource)) / 3.0F);   // 0, 1, 1, 1, 2
+                int potency = (int)((1.0F + this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, world.registryAccess())) / 3.0F);   // 0, 1, 1, 1, 2
                 ((LivingEntity)entityTarget.getEntity()).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * duration, potency));
             }
         }
@@ -111,13 +112,13 @@ public class FrostDamageSpellPayload extends AbstractDamageSpellPayload<FrostDam
         return (1 << Math.max(0, power - 1)) + (duration == 0 ? 0 : (1 << Math.max(0, duration - 1)) >> 1);
     }
 
-    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
-        return 2 * this.getModdedPropertyValue(SpellPropertiesPM.DURATION.get(), spell, spellSource);
+    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return 2 * this.getModdedPropertyValue(SpellPropertiesPM.DURATION.get(), spell, spellSource, registries);
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource)),
-                DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource, registries)),
+                DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource, registries)));
     }
 }

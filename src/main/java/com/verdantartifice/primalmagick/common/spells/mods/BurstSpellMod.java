@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.Entity;
@@ -94,7 +95,7 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
         Vec3 hitVec = origin.getLocation();
         BlockPos hitPos = BlockPos.containing(hitVec);
         int radius = this.getRadiusBlocks(spell, spellSource);
-        int power = this.getBlastPower(spell, spellSource);
+        int power = this.getBlastPower(spell, spellSource, world.registryAccess());
         double sqRadius = (double)(radius * radius);
         int searchRadius = radius + 1;
         Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.BlockInteraction.KEEP);
@@ -150,12 +151,12 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
         return spell.getMod(SpellModsPM.BURST.get()).orElseThrow().getPropertyValue(SpellPropertiesPM.RADIUS.get());
     }
     
-    protected int getBlastPower(SpellPackage spell, ItemStack spellSource) {
-        return 5 + (3 * this.getModdedPropertyValue(SpellPropertiesPM.BURST_POWER.get(), spell, spellSource));
+    protected int getBlastPower(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return 5 + (3 * this.getModdedPropertyValue(SpellPropertiesPM.BURST_POWER.get(), spell, spellSource, registries));
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getRadiusBlocks(spell, spellSource), this.getBlastPower(spell, spellSource));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getRadiusBlocks(spell, spellSource), this.getBlastPower(spell, spellSource, registries));
     }
 }
