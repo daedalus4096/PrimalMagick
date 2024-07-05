@@ -67,8 +67,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> VERDANT = key("verdant");
     public static final ResourceKey<Enchantment> LUCKY_STRIKE = key("lucky_strike");
     public static final ResourceKey<Enchantment> RENDING = key("rending");
+    public static final ResourceKey<Enchantment> SOULPIERCING = key("soulpiercing");
     
-    public static final RegistryObject<Enchantment> SOULPIERCING = ENCHANTMENTS.register("soulpiercing", () -> new SoulpiercingEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> ESSENCE_THIEF = ENCHANTMENTS.register("essence_thief", () -> new EssenceThiefEnchantment(Enchantment.Rarity.RARE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND}));
     public static final RegistryObject<Enchantment> BULWARK = ENCHANTMENTS.register("bulwark", () -> new BulwarkEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.OFFHAND));
     public static final RegistryObject<Enchantment> MAGICK_PROTECTION = ENCHANTMENTS.register("magick_protection", () -> new MagickProtectionEnchantment(Enchantment.Rarity.UNCOMMON, new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}));
@@ -527,6 +527,25 @@ public class EnchantmentsPM {
                                 LevelBasedValue.constant(120F),
                                 LevelBasedValue.constant(1F),
                                 LevelBasedValue.perLevel(1F)
+                        )
+                )
+        );
+        
+        /*
+         * Definition of an enchantment that causes the target to drop soul slivers when struck.
+         */
+        register(
+                pContext,
+                SOULPIERCING,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.ARCHERY_ENCHANTABLE),
+                                2,
+                                4,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
                         )
                 )
         );
