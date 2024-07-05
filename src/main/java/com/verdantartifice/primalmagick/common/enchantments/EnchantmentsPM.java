@@ -14,7 +14,6 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.EntityTypePredicate;
 import net.minecraft.advancements.critereon.TagPredicate;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -24,7 +23,6 @@ import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -35,15 +33,10 @@ import net.minecraft.world.item.enchantment.EnchantmentTarget;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.item.enchantment.effects.AddValue;
 import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
-import net.minecraft.world.item.enchantment.effects.Ignite;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.AllOfCondition;
 import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 /**
  * Deferred registry for mod enchantments.
@@ -71,9 +64,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> ESSENCE_THIEF = key("essence_thief");
     public static final ResourceKey<Enchantment> BULWARK = key("bulwark");
     public static final ResourceKey<Enchantment> MAGICK_PROTECTION = key("magick_protection");
+    public static final ResourceKey<Enchantment> GUILLOTINE = key("guillotine");
     
-    public static final RegistryObject<Enchantment> GUILLOTINE = ENCHANTMENTS.register("guillotine", () -> new GuillotineEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
-
     public static void bootstrap(BootstrapContext<Enchantment> pContext) {
         HolderGetter<Item> itemHolderGetter = pContext.lookup(Registries.ITEM);
         HolderGetter<Enchantment> enchantmentHolderGetter = pContext.lookup(Registries.ENCHANTMENT);
@@ -614,6 +606,25 @@ public class EnchantmentsPM {
                             DamageSourcePredicate.Builder.damageType()
                                 .tag(TagPredicate.is(DamageTypeTagsPM.IS_MAGIC))
                                 .tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY))
+                        )
+                )
+        );
+        
+        /*
+         * Definition of an enchantment that gives some entities a chance to drop their heads when killed.
+         */
+        register(
+                pContext,
+                GUILLOTINE,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTags.SHARP_WEAPON_ENCHANTABLE),
+                                2,
+                                5,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
                         )
                 )
         );
