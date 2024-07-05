@@ -82,6 +82,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> WAND_ENCHANTABLE = tag("enchantable/wand");
     public static final TagKey<Item> HOE_ENCHANTABLE = tag("enchantable/hoe");
     public static final TagKey<Item> BOUNTY_ENCHANTABLE = tag("enchantable/bounty");
+    public static final TagKey<Item> RENDING_ENCHANTABLE = tag("enchantable/rending");
 
     private static TagKey<Item> tag(String name) {
         return ItemTags.create(PrimalMagick.resource(name));

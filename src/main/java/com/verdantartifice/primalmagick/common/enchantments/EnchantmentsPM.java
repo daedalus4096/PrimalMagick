@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.enchantments;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.effects.ApplyConstantMobEffect;
+import com.verdantartifice.primalmagick.common.enchantments.effects.ApplyStackingMobEffect;
 import com.verdantartifice.primalmagick.common.enchantments.effects.Lifesteal;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.EnchantmentTagsPM;
@@ -65,8 +66,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> DISINTEGRATION = key("disintegration");
     public static final ResourceKey<Enchantment> VERDANT = key("verdant");
     public static final ResourceKey<Enchantment> LUCKY_STRIKE = key("lucky_strike");
+    public static final ResourceKey<Enchantment> RENDING = key("rending");
     
-    public static final RegistryObject<Enchantment> RENDING = ENCHANTMENTS.register("rending", () -> new RendingEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> SOULPIERCING = ENCHANTMENTS.register("soulpiercing", () -> new SoulpiercingEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> ESSENCE_THIEF = ENCHANTMENTS.register("essence_thief", () -> new EssenceThiefEnchantment(Enchantment.Rarity.RARE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND}));
     public static final RegistryObject<Enchantment> BULWARK = ENCHANTMENTS.register("bulwark", () -> new BulwarkEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.OFFHAND));
@@ -496,6 +497,36 @@ public class EnchantmentsPM {
                                 Enchantment.dynamicCost(20, 10),
                                 4,
                                 EquipmentSlotGroup.MAINHAND
+                        )
+                )
+        );
+        
+        /*
+         * Definition of an enchantment that applies a stacking bleed damage-over-time effect to the target.
+         */
+        register(
+                pContext,
+                RENDING,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.RENDING_ENCHANTABLE),
+                                2,
+                                4,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                )
+                .withEffect(
+                        EnchantmentEffectComponents.POST_ATTACK,
+                        EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM,
+                        new ApplyStackingMobEffect(
+                                EffectsPM.BLEEDING.getHolder().get(),
+                                LevelBasedValue.constant(120F),
+                                LevelBasedValue.constant(1F),
+                                LevelBasedValue.perLevel(1F)
                         )
                 )
         );

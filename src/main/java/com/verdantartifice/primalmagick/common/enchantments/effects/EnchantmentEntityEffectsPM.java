@@ -10,6 +10,7 @@ public class EnchantmentEntityEffectsPM {
     public static void bootstrap(Registry<MapCodec<? extends EnchantmentEntityEffect>> registry) {
         register(registry, "lifesteal", Lifesteal.CODEC);
         register(registry, "apply_constant_mob_effect", ApplyConstantMobEffect.CODEC);
+        register(registry, "apply_stacking_mob_effect", ApplyStackingMobEffect.CODEC);
     }
     
     private static void register(Registry<MapCodec<? extends EnchantmentEntityEffect>> registry, String name, MapCodec<? extends EnchantmentEntityEffect> codec) {

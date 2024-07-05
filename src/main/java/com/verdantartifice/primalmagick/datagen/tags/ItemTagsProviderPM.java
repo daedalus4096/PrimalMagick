@@ -202,5 +202,6 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTagsPM.WAND_ENCHANTABLE).addTag(ItemTagsPM.STAFF_ENCHANTABLE).add(ItemsPM.MUNDANE_WAND.get(), ItemsPM.MODULAR_WAND.get());
         this.tag(ItemTagsPM.HOE_ENCHANTABLE).addTag(ItemTags.HOES);
         this.tag(ItemTagsPM.BOUNTY_ENCHANTABLE).addTag(ItemTags.FISHING_ENCHANTABLE).addTag(ItemTagsPM.HOE_ENCHANTABLE);
+        this.tag(ItemTagsPM.RENDING_ENCHANTABLE).addTag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(ItemTags.TRIDENT_ENCHANTABLE);
     }
 }
