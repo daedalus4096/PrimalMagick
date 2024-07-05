@@ -69,8 +69,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> RENDING = key("rending");
     public static final ResourceKey<Enchantment> SOULPIERCING = key("soulpiercing");
     public static final ResourceKey<Enchantment> ESSENCE_THIEF = key("essence_thief");
+    public static final ResourceKey<Enchantment> BULWARK = key("bulwark");
     
-    public static final RegistryObject<Enchantment> BULWARK = ENCHANTMENTS.register("bulwark", () -> new BulwarkEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.OFFHAND));
     public static final RegistryObject<Enchantment> MAGICK_PROTECTION = ENCHANTMENTS.register("magick_protection", () -> new MagickProtectionEnchantment(Enchantment.Rarity.UNCOMMON, new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}));
     public static final RegistryObject<Enchantment> GUILLOTINE = ENCHANTMENTS.register("guillotine", () -> new GuillotineEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
 
@@ -567,6 +567,26 @@ public class EnchantmentsPM {
                                 EquipmentSlotGroup.HAND
                         )
                 )
+        );
+        
+        /*
+         * Definition of an enchantment that grants reduction to all incoming damage while blocking.
+         */
+        register(
+                pContext,
+                BULWARK,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.SHIELD_ENCHANTABLE),
+                                2,
+                                4,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                4,
+                                EquipmentSlotGroup.OFFHAND
+                        )
+                )
+                // TODO Move Bulwark effect here from EntityEvents if possible
         );
     }
     
