@@ -62,8 +62,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> BLUDGEONING = key("bludgeoning");
     public static final ResourceKey<Enchantment> REVERBERATION = key("reverberation");
     public static final ResourceKey<Enchantment> BOUNTY = key("bounty");
+    public static final ResourceKey<Enchantment> DISINTEGRATION = key("disintegration");
     
-    public static final RegistryObject<Enchantment> DISINTEGRATION = ENCHANTMENTS.register("disintegration", () -> new DiggingAreaEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> VERDANT = ENCHANTMENTS.register("verdant", () -> new VerdantEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> LUCKY_STRIKE = ENCHANTMENTS.register("lucky_strike", () -> new LuckyStrikeEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> RENDING = ENCHANTMENTS.register("rending", () -> new RendingEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
@@ -387,6 +387,22 @@ public class EnchantmentsPM {
                                 EquipmentSlotGroup.MAINHAND
                         )
                 )
+        );
+        register(
+                pContext,
+                DISINTEGRATION,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                                1,
+                                4,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                8,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                )
+                .exclusiveWith(enchantmentHolderGetter.getOrThrow(EnchantmentTagsPM.DIGGING_AREA_EXCLUSIVE))
         );
     }
     
