@@ -64,8 +64,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> BOUNTY = key("bounty");
     public static final ResourceKey<Enchantment> DISINTEGRATION = key("disintegration");
     public static final ResourceKey<Enchantment> VERDANT = key("verdant");
+    public static final ResourceKey<Enchantment> LUCKY_STRIKE = key("lucky_strike");
     
-    public static final RegistryObject<Enchantment> LUCKY_STRIKE = ENCHANTMENTS.register("lucky_strike", () -> new LuckyStrikeEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> RENDING = ENCHANTMENTS.register("rending", () -> new RendingEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> SOULPIERCING = ENCHANTMENTS.register("soulpiercing", () -> new SoulpiercingEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> ESSENCE_THIEF = ENCHANTMENTS.register("essence_thief", () -> new EssenceThiefEnchantment(Enchantment.Rarity.RARE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND}));
@@ -471,6 +471,25 @@ public class EnchantmentsPM {
                 Enchantment.enchantment(
                         Enchantment.definition(
                                 itemHolderGetter.getOrThrow(ItemTagsPM.HOE_ENCHANTABLE),
+                                2,
+                                4,
+                                Enchantment.dynamicCost(5, 10),
+                                Enchantment.dynamicCost(20, 10),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                )
+        );
+        
+        /*
+         * Definition of an enchantment that grants a chance of bonus nuggets when mining tag-defined ores.
+         */
+        register(
+                pContext,
+                LUCKY_STRIKE,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTags.MINING_LOOT_ENCHANTABLE),
                                 2,
                                 4,
                                 Enchantment.dynamicCost(5, 10),
