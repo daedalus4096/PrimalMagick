@@ -58,8 +58,8 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> MANA_EFFICIENCY = key("mana_efficiency");
     public static final ResourceKey<Enchantment> SPELL_POWER = key("spell_power");
     public static final ResourceKey<Enchantment> TREASURE = key("treasure");
+    public static final ResourceKey<Enchantment> BLUDGEONING = key("bludgeoning");
     
-    public static final RegistryObject<Enchantment> BLUDGEONING = ENCHANTMENTS.register("bludgeoning", () -> new BludgeoningEnchantment(Enchantment.Rarity.COMMON, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> REVERBERATION = ENCHANTMENTS.register("reverberation", () -> new DiggingAreaEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> BOUNTY = ENCHANTMENTS.register("bounty", () -> new BountyEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
     public static final RegistryObject<Enchantment> DISINTEGRATION = ENCHANTMENTS.register("disintegration", () -> new DiggingAreaEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.MAINHAND));
@@ -337,6 +337,24 @@ public class EnchantmentsPM {
                             LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EntityType.PLAYER))
                         )
                 )
+        );
+        register(
+                pContext,
+                BLUDGEONING,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.STAFF_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.STAFF_ENCHANTABLE),
+                                10,
+                                5,
+                                Enchantment.dynamicCost(1, 11),
+                                Enchantment.dynamicCost(21, 11),
+                                1,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                )
+                .exclusiveWith(enchantmentHolderGetter.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE))
+                .withEffect(EnchantmentEffectComponents.DAMAGE, new AddValue(LevelBasedValue.perLevel(1.0F, 0.5F)))
         );
     }
     
