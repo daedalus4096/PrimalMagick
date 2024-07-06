@@ -58,35 +58,30 @@ public class RuneEnchantmentDefinitions {
     public static final ResourceKey<RuneEnchantmentDefinition> SOUL_SPEED = createKey(Enchantments.SOUL_SPEED);
     public static final ResourceKey<RuneEnchantmentDefinition> SWIFT_SNEAK = createKey(Enchantments.SWIFT_SNEAK);
 
-    public static final ResourceKey<RuneEnchantmentDefinition> LIFESTEAL = createKey(EnchantmentsPM.LIFESTEAL.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> ENDERLOCK = createKey(EnchantmentsPM.ENDERLOCK.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> JUDGMENT = createKey(EnchantmentsPM.JUDGMENT.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> ENDERPORT = createKey(EnchantmentsPM.ENDERPORT.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> REGROWTH = createKey(EnchantmentsPM.REGROWTH.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> AEGIS = createKey(EnchantmentsPM.AEGIS.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> MANA_EFFICIENCY = createKey(EnchantmentsPM.MANA_EFFICIENCY.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> SPELL_POWER = createKey(EnchantmentsPM.SPELL_POWER.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> TREASURE = createKey(EnchantmentsPM.TREASURE.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> BLUDGEONING = createKey(EnchantmentsPM.BLUDGEONING.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> REVERBERATION = createKey(EnchantmentsPM.REVERBERATION.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> BOUNTY = createKey(EnchantmentsPM.BOUNTY.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> DISINTEGRATION = createKey(EnchantmentsPM.DISINTEGRATION.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> VERDANT = createKey(EnchantmentsPM.VERDANT.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> LUCKY_STRIKE = createKey(EnchantmentsPM.LUCKY_STRIKE.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> RENDING = createKey(EnchantmentsPM.RENDING.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> SOULPIERCING = createKey(EnchantmentsPM.SOULPIERCING.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> ESSENCE_THIEF = createKey(EnchantmentsPM.ESSENCE_THIEF.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> BULWARK = createKey(EnchantmentsPM.BULWARK.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> MAGICK_PROTECTION = createKey(EnchantmentsPM.MAGICK_PROTECTION.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> GUILLOTINE = createKey(EnchantmentsPM.GUILLOTINE.get());
+    public static final ResourceKey<RuneEnchantmentDefinition> LIFESTEAL = createKey(EnchantmentsPM.LIFESTEAL);
+    public static final ResourceKey<RuneEnchantmentDefinition> ENDERLOCK = createKey(EnchantmentsPM.ENDERLOCK);
+    public static final ResourceKey<RuneEnchantmentDefinition> JUDGMENT = createKey(EnchantmentsPM.JUDGMENT);
+    public static final ResourceKey<RuneEnchantmentDefinition> ENDERPORT = createKey(EnchantmentsPM.ENDERPORT);
+    public static final ResourceKey<RuneEnchantmentDefinition> REGROWTH = createKey(EnchantmentsPM.REGROWTH);
+    public static final ResourceKey<RuneEnchantmentDefinition> AEGIS = createKey(EnchantmentsPM.AEGIS);
+    public static final ResourceKey<RuneEnchantmentDefinition> MANA_EFFICIENCY = createKey(EnchantmentsPM.MANA_EFFICIENCY);
+    public static final ResourceKey<RuneEnchantmentDefinition> SPELL_POWER = createKey(EnchantmentsPM.SPELL_POWER);
+    public static final ResourceKey<RuneEnchantmentDefinition> TREASURE = createKey(EnchantmentsPM.TREASURE);
+    public static final ResourceKey<RuneEnchantmentDefinition> BLUDGEONING = createKey(EnchantmentsPM.BLUDGEONING);
+    public static final ResourceKey<RuneEnchantmentDefinition> REVERBERATION = createKey(EnchantmentsPM.REVERBERATION);
+    public static final ResourceKey<RuneEnchantmentDefinition> BOUNTY = createKey(EnchantmentsPM.BOUNTY);
+    public static final ResourceKey<RuneEnchantmentDefinition> DISINTEGRATION = createKey(EnchantmentsPM.DISINTEGRATION);
+    public static final ResourceKey<RuneEnchantmentDefinition> VERDANT = createKey(EnchantmentsPM.VERDANT);
+    public static final ResourceKey<RuneEnchantmentDefinition> LUCKY_STRIKE = createKey(EnchantmentsPM.LUCKY_STRIKE);
+    public static final ResourceKey<RuneEnchantmentDefinition> RENDING = createKey(EnchantmentsPM.RENDING);
+    public static final ResourceKey<RuneEnchantmentDefinition> SOULPIERCING = createKey(EnchantmentsPM.SOULPIERCING);
+    public static final ResourceKey<RuneEnchantmentDefinition> ESSENCE_THIEF = createKey(EnchantmentsPM.ESSENCE_THIEF);
+    public static final ResourceKey<RuneEnchantmentDefinition> BULWARK = createKey(EnchantmentsPM.BULWARK);
+    public static final ResourceKey<RuneEnchantmentDefinition> MAGICK_PROTECTION = createKey(EnchantmentsPM.MAGICK_PROTECTION);
+    public static final ResourceKey<RuneEnchantmentDefinition> GUILLOTINE = createKey(EnchantmentsPM.GUILLOTINE);
 
-    public static ResourceKey<RuneEnchantmentDefinition> createKey(Enchantment ench) {
-        ResourceLocation enchLoc = ForgeRegistries.ENCHANTMENTS.getKey(ench);
-        if (enchLoc == null) {
-            throw new IllegalArgumentException("Unknown enchantment while creating rune definition key");
-        } else {
-            return ResourceKey.create(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, enchLoc);
-        }
+    public static ResourceKey<RuneEnchantmentDefinition> createKey(ResourceKey<Enchantment> ench) {
+        return ResourceKey.create(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, ench.location());
     }
     
     public static void bootstrap(BootstrapContext<RuneEnchantmentDefinition> context) {
