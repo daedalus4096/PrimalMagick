@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.loot_modifiers;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -23,12 +26,17 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.FishingHookPredicate;
+import net.minecraft.advancements.critereon.ItemEnchantmentsPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.ItemSubPredicates;
 import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -50,12 +58,13 @@ import net.minecraftforge.common.loot.LootTableIdCondition;
  * @author Daedalus4096
  */
 public class LootModifierProvider extends GlobalLootModifierProvider {
-    public LootModifierProvider(PackOutput packOutput) {
-        super(packOutput, PrimalMagick.MODID);
+    public LootModifierProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
+        super(packOutput, PrimalMagick.MODID, registries);
     }
 
     @Override
-    protected void start() {
+    protected void start(HolderLookup.Provider registries) {
+        HolderLookup.RegistryLookup<Enchantment> enchLookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         this.add("bloody_flesh", new BloodyFleshModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOODY_FLESH)).build(),
@@ -65,16 +74,16 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
         this.add("bounty_farming", new BountyFarmingModifier(
                 new LootItemCondition[] {
                         MatchBlockTag.builder(BlockTagsPM.BOUNTY_CROPS).build(),
-                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.Ints.atLeast(1)))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().withSubPredicate(ItemSubPredicates.ENCHANTMENTS, ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchLookup.getOrThrow(EnchantmentsPM.BOUNTY), MinMaxBounds.Ints.atLeast(1)))))).build()
                 }, 0.25F));
         this.add("bounty_fishing", new BountyFishingModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(FishingHookPredicate.inOpenWater(true))).build(),
-                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.Ints.atLeast(1)))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().withSubPredicate(ItemSubPredicates.ENCHANTMENTS, ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchLookup.getOrThrow(EnchantmentsPM.BOUNTY), MinMaxBounds.Ints.atLeast(1)))))).build()
                 }, 0.25F));
         this.add("lucky_strike", new BonusNuggetModifier(
                 new LootItemCondition[] {
-                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().withSubPredicate(ItemSubPredicates.ENCHANTMENTS, ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchLookup.getOrThrow(EnchantmentsPM.LUCKY_STRIKE), MinMaxBounds.Ints.atLeast(1)))))).build()
                 }, ImmutableMap.<TagKey<Block>, TagKey<Item>>builder()
                     .put(Tags.Blocks.ORES_IRON, Tags.Items.NUGGETS_IRON)
                     .put(Tags.Blocks.ORES_GOLD, Tags.Items.NUGGETS_GOLD)

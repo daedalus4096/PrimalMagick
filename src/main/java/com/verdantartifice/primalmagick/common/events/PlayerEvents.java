@@ -626,7 +626,7 @@ public class PlayerEvents {
     public static void onUseHoe(BlockEvent.BlockToolModificationEvent event) {
         UseOnContext context = event.getContext();
         ItemStack stack = context.getItemInHand();
-        int enchantLevel = stack.getEnchantmentLevel(EnchantmentsPM.VERDANT.get());
+        int enchantLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.VERDANT, context.getPlayer().registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
         if (!event.isSimulated() && event.getToolAction().equals(ToolActions.HOE_TILL) && enchantLevel > 0) {
             Player player = event.getPlayer();
             Level level = context.getLevel();
