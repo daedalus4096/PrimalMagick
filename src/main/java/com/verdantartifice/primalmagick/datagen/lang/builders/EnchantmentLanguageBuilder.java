@@ -4,20 +4,20 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Helper for specifying enchantment-related localizations in a structured way.
  * 
  * @author Daedalus4096
  */
-public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<Enchantment, EnchantmentLanguageBuilder> {
-    public EnchantmentLanguageBuilder(Enchantment ench, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(ench, ench::getDescriptionId, untracker, adder);
+public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<Enchantment>, EnchantmentLanguageBuilder> {
+    public EnchantmentLanguageBuilder(ResourceKey<Enchantment> enchKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
+        super(enchKey, () -> Util.makeDescriptionId("enchantment", enchKey.location()), untracker, adder);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<Enchantm
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(Enchantment base) {
-        return Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.getKey(base));
+    protected ResourceLocation getBaseRegistryKey(ResourceKey<Enchantment> base) {
+        return Objects.requireNonNull(base).location();
     }
 
     public EnchantmentLanguageBuilder description(String value) {

@@ -772,9 +772,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SANGUINE_CORE_INNER_DEMON).name("Sanguine Core: Inner Demon").build();
         this.item(ItemsPM.SKYGLASS_FLASK).name("Skyglass Flask").build();
         this.item(ItemsPM.CONCOCTION)
-            .concoctionName(ConcoctionType.WATER, Potions.EMPTY, "Uncraftable Concoction")
             .concoctionName(ConcoctionType.WATER, Potions.WATER, "Water Flask")
-            .concoctionName(ConcoctionType.TINCTURE, Potions.EMPTY, "Uncraftable Tincture")
             .concoctionName(ConcoctionType.TINCTURE, Potions.NIGHT_VISION, "Tincture of Night Vision")
             .concoctionName(ConcoctionType.TINCTURE, Potions.INVISIBILITY, "Tincture of Invisibility")
             .concoctionName(ConcoctionType.TINCTURE, Potions.LEAPING, "Tincture of Leaping")
@@ -792,7 +790,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .concoctionName(ConcoctionType.TINCTURE, Potions.LUCK, "Tincture of Luck")
             .concoctionName(ConcoctionType.TINCTURE, Potions.TURTLE_MASTER, "Tincture of the Turtle Master")
             .concoctionName(ConcoctionType.TINCTURE, Potions.SLOW_FALLING, "Tincture of Slow Falling")
-            .concoctionName(ConcoctionType.PHILTER, Potions.EMPTY, "Uncraftable Philter")
             .concoctionName(ConcoctionType.PHILTER, Potions.NIGHT_VISION, "Philter of Night Vision")
             .concoctionName(ConcoctionType.PHILTER, Potions.INVISIBILITY, "Philter of Invisibility")
             .concoctionName(ConcoctionType.PHILTER, Potions.LEAPING, "Philter of Leaping")
@@ -810,7 +807,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .concoctionName(ConcoctionType.PHILTER, Potions.LUCK, "Philter of Luck")
             .concoctionName(ConcoctionType.PHILTER, Potions.TURTLE_MASTER, "Philter of the Turtle Master")
             .concoctionName(ConcoctionType.PHILTER, Potions.SLOW_FALLING, "Philter of Slow Falling")
-            .concoctionName(ConcoctionType.ELIXIR, Potions.EMPTY, "Uncraftable Elixir")
             .concoctionName(ConcoctionType.ELIXIR, Potions.NIGHT_VISION, "Elixir of Night Vision")
             .concoctionName(ConcoctionType.ELIXIR, Potions.INVISIBILITY, "Elixir of Invisibility")
             .concoctionName(ConcoctionType.ELIXIR, Potions.LEAPING, "Elixir of Leaping")
@@ -831,7 +827,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         this.item(ItemsPM.BOMB_CASING).name("Bomb Casing").build();
         this.item(ItemsPM.ALCHEMICAL_BOMB)
-            .concoctionName(ConcoctionType.BOMB, Potions.EMPTY, "Uncraftable Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.WATER, "Water Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.NIGHT_VISION, "Night Vision Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.INVISIBILITY, "Invisibility Bomb")
