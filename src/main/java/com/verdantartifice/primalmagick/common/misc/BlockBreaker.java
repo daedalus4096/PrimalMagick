@@ -10,10 +10,13 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CommandBlock;
@@ -167,70 +171,71 @@ public class BlockBreaker {
      * @see {@link net.minecraft.server.management.PlayerInteractionManager#tryHarvestBlock(BlockPos)}
      */
     protected boolean doHarvest(@Nonnull Level world) {
-        if (world.isClientSide || !(this.player instanceof ServerPlayer)) {
-            return false;
-        }
-        ServerPlayer serverPlayer = (ServerPlayer)this.player;
-        ServerLevel serverWorld = (ServerLevel)world;
-        int exp = this.skipEvent ? 0 : ForgeHooks.onBlockBreakEvent(world, serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer, this.pos);
-        if (exp == -1) {
-            return false;
-        } else {
-            BlockEntity tile = world.getBlockEntity(this.pos);
-            BlockState state = world.getBlockState(this.pos);
-            Block block = state.getBlock();
-            
-            // If the experience for the block was zero because the player is using a Break spell and thus the wrong tool type, recalculate
-            if (exp == 0 && !ForgeHooks.isCorrectToolForDrops(state, this.player)) {
-                exp = state.getExpDrop(world, world.random, this.pos, this.getFortuneLevel(), this.getSilkTouchLevel());
-            }
-            
-            if ((block instanceof CommandBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !serverPlayer.canUseGameMasterBlocks()) {
-                world.sendBlockUpdated(this.pos, state, state, Block.UPDATE_ALL);
-                return false;
-            } else if (serverPlayer.getMainHandItem().onBlockStartBreak(this.pos, serverPlayer)) {
-                return false;
-            } else if (serverPlayer.blockActionRestricted(world, this.pos, serverPlayer.gameMode.getGameModeForPlayer())) {
+        if (!world.isClientSide && this.player instanceof ServerPlayer serverPlayer && world instanceof ServerLevel serverWorld) {
+            int exp = this.skipEvent ? 0 : ForgeHooks.onBlockBreakEvent(world, serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer, this.pos);
+            if (exp == -1) {
                 return false;
             } else {
-                world.levelEvent(null, 2001, this.pos, Block.getId(state));
-                if (serverPlayer.gameMode.isCreative()) {
-                    this.removeBlock(world, false);
-                    return true;
+                BlockEntity tile = world.getBlockEntity(this.pos);
+                BlockState state = world.getBlockState(this.pos);
+                Block block = state.getBlock();
+                
+                // If the experience for the block was zero because the player is using a Break spell and thus the wrong tool type, recalculate
+                if (exp == 0 && !ForgeHooks.isCorrectToolForDrops(state, this.player)) {
+                    exp = state.getExpDrop(world, world.random, this.pos, this.getFortuneLevel(this.player.registryAccess()), this.getSilkTouchLevel(this.player.registryAccess()));
+                }
+                
+                if ((block instanceof CommandBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !serverPlayer.canUseGameMasterBlocks()) {
+                    world.sendBlockUpdated(this.pos, state, state, Block.UPDATE_ALL);
+                    return false;
+                } else if (serverPlayer.getMainHandItem().onBlockStartBreak(this.pos, serverPlayer)) {
+                    return false;
+                } else if (serverPlayer.blockActionRestricted(world, this.pos, serverPlayer.gameMode.getGameModeForPlayer())) {
+                    return false;
                 } else {
-                    boolean canHarvest = (this.alwaysDrop || state.canHarvestBlock(world, this.pos, serverPlayer));
-                    boolean success = this.removeBlock(world, canHarvest);
-                    if (success && canHarvest) {
-                        block.playerDestroy(world, serverPlayer, this.pos, state, tile, this.getHarvestTool(serverPlayer));
+                    world.levelEvent(null, 2001, this.pos, Block.getId(state));
+                    if (serverPlayer.gameMode.isCreative()) {
+                        this.removeBlock(world, false);
+                        return true;
+                    } else {
+                        boolean canHarvest = (this.alwaysDrop || state.canHarvestBlock(world, this.pos, serverPlayer));
+                        boolean success = this.removeBlock(world, canHarvest);
+                        if (success && canHarvest) {
+                            block.playerDestroy(world, serverPlayer, this.pos, state, tile, this.getHarvestTool(serverPlayer));
+                        }
+                        if (success && exp > 0) {
+                            block.popExperience(serverWorld, this.pos, exp);
+                        }
+                        return true;
                     }
-                    if (success && exp > 0) {
-                        block.popExperience(serverWorld, this.pos, exp);
-                    }
-                    return true;
                 }
             }
+        } else {
+            return false;
         }
     }
     
-    protected int getFortuneLevel() {
+    protected int getFortuneLevel(HolderLookup.Provider registries) {
+        HolderLookup<Enchantment> enchHolderGetter = registries.lookupOrThrow(Registries.ENCHANTMENT);
         if (this.fortuneOverride.isPresent()) {
             return this.fortuneOverride.get();
         } else if (!this.tool.isEmpty()) {
             if (this.tool.getItem() instanceof IWand) {
-                return this.tool.getEnchantmentLevel(EnchantmentsPM.TREASURE.get());
+                return EnchantmentHelperPM.getEnchantmentLevel(this.tool, EnchantmentsPM.TREASURE, enchHolderGetter);
             } else {
-                return this.tool.getEnchantmentLevel(Enchantments.FORTUNE);
+                return EnchantmentHelperPM.getEnchantmentLevel(this.tool, Enchantments.FORTUNE, enchHolderGetter);
             }
         } else {
             return 0;
         }
     }
     
-    protected int getSilkTouchLevel() {
+    protected int getSilkTouchLevel(HolderLookup.Provider registries) {
+        HolderLookup<Enchantment> enchHolderGetter = registries.lookupOrThrow(Registries.ENCHANTMENT);
         if (this.silkTouchOverride.isPresent()) {
             return this.silkTouchOverride.get() ? 1 : 0;
         } else if (!this.tool.isEmpty()) {
-            return this.tool.getEnchantmentLevel(Enchantments.SILK_TOUCH);
+            return EnchantmentHelperPM.getEnchantmentLevel(this.tool, Enchantments.SILK_TOUCH, enchHolderGetter);
         } else {
             return 0;
         }
@@ -248,19 +253,15 @@ public class BlockBreaker {
             stack = player.getMainHandItem().copy();
         }
         if (this.silkTouchOverride.isPresent() || this.fortuneOverride.isPresent()) {
-            Map<Enchantment, Integer> enchantMap = EnchantmentHelper.getEnchantments(stack);
-            this.silkTouchOverride.ifPresent(silk -> {
-                if (silk) {
-                    enchantMap.put(Enchantments.SILK_TOUCH, 1);
-                }
+            HolderLookup<Enchantment> enchHolderLookup = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+            ItemEnchantments.Mutable enchantments = new ItemEnchantments.Mutable(stack.getEnchantments());
+            enchHolderLookup.get(Enchantments.SILK_TOUCH).ifPresent(silkTouchHolder -> {
+                this.silkTouchOverride.filter(silk -> silk).ifPresent($ -> enchantments.upgrade(silkTouchHolder, 1));
             });
-            this.fortuneOverride.ifPresent(fortune -> {
-                int newFortune = Math.max(fortune, enchantMap.getOrDefault(Enchantments.FORTUNE, 0));
-                if (newFortune > 0) {
-                    enchantMap.put(Enchantments.FORTUNE, newFortune);
-                }
+            enchHolderLookup.get(Enchantments.FORTUNE).ifPresent(fortuneHolder -> {
+                this.fortuneOverride.filter(fortune -> fortune > 0).ifPresent(fortune -> enchantments.upgrade(fortuneHolder, fortune));
             });
-            EnchantmentHelper.setEnchantments(enchantMap, stack);
+            EnchantmentHelper.setEnchantments(stack, enchantments.toImmutable());
         }
         return stack;
     }

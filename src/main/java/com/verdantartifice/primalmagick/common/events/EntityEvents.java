@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.EnderwardBlock;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -15,6 +16,7 @@ import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -27,7 +29,6 @@ import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
@@ -50,7 +51,7 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onEnderEntityTeleport(EntityTeleportEvent.EnderEntity event) {
         // Prevent the teleport if the teleporter is afflicted with Enderlock
-        if (event.isCancelable() && event.getEntityLiving().hasEffect(EffectsPM.ENDERLOCK.get())) {
+        if (event.isCancelable() && event.getEntityLiving().hasEffect(EffectsPM.ENDERLOCK.getHolder().get())) {
             event.setCanceled(true);
         }
         
@@ -61,7 +62,7 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onEnderPearlTeleport(EntityTeleportEvent.EnderPearl event) {
         // Prevent the teleport if the teleporter is afflicted with Enderlock
-        if (event.isCancelable() && event.getPlayer().hasEffect(EffectsPM.ENDERLOCK.get())) {
+        if (event.isCancelable() && event.getPlayer().hasEffect(EffectsPM.ENDERLOCK.getHolder().get())) {
             event.setCanceled(true);
         }
         
@@ -72,7 +73,7 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onChorusFruitTeleport(EntityTeleportEvent.ChorusFruit event) {
         // Prevent the teleport if the teleporter is afflicted with Enderlock
-        if (event.isCancelable() && event.getEntityLiving().hasEffect(EffectsPM.ENDERLOCK.get())) {
+        if (event.isCancelable() && event.getEntityLiving().hasEffect(EffectsPM.ENDERLOCK.getHolder().get())) {
             event.setCanceled(true);
         }
         
@@ -143,9 +144,9 @@ public class EntityEvents {
         LivingEntity entity = event.getEntity();
         ItemStack stack = event.getItem();
         int currentDuration = event.getDuration();
-        int maxDuration = stack.getUseDuration();
+        int maxDuration = stack.getUseDuration(entity);
         int delta = maxDuration - currentDuration;
-        int enchantLevel = stack.getEnchantmentLevel(EnchantmentsPM.BULWARK.get());
+        int enchantLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.BULWARK, entity.registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
         if (stack.getItem() instanceof ShieldItem && delta > 0 && delta % 5 == 0 && enchantLevel > 0) {
             MobEffectInstance effectInstance = entity.getEffect(MobEffects.DAMAGE_RESISTANCE);
             int amplifier = (effectInstance == null) ? 0 : Mth.clamp(1 + effectInstance.getAmplifier(), 0, enchantLevel - 1);
@@ -160,7 +161,8 @@ public class EntityEvents {
         if (source != null && source.is(DamageTypeTagsPM.IS_MAGIC)) {
             Entity caster = source.getEntity();
             if (caster != null && caster instanceof LivingEntity living) {
-                event.setLootingLevel(Math.max(event.getLootingLevel(), EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.TREASURE.get(), living)));
+                int treasureLevel = EnchantmentHelperPM.getEquippedEnchantmentLevel(living, EnchantmentsPM.TREASURE);
+                event.setLootingLevel(Math.max(event.getLootingLevel(), treasureLevel));
             }
         }
     }

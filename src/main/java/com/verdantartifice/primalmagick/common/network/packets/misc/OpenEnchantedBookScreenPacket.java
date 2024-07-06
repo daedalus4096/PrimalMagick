@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
+import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -19,14 +20,10 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class OpenEnchantedBookScreenPacket implements IMessageToClient {
-    protected final ResourceKey<?> bookKey;
+    protected final Holder<Enchantment> enchantment;
     
-    public OpenEnchantedBookScreenPacket(Enchantment ench) {
-        this.bookKey = ForgeRegistries.ENCHANTMENTS.getResourceKey(ench).orElseThrow();
-    }
-    
-    private OpenEnchantedBookScreenPacket(ResourceKey<?> bookKey) {
-        this.bookKey = bookKey;
+    public OpenEnchantedBookScreenPacket(Holder<Enchantment> ench) {
+        this.enchantment = ench;
     }
     
     public static NetworkDirection direction() {
