@@ -10,20 +10,24 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchantmentBonusAffinityBuilder {
-    protected final ResourceLocation targetId;
+    protected final HolderLookup.Provider registries;
+    protected final ResourceKey<Enchantment> targetId;
     protected SourceList.Builder multiplierValues = SourceList.builder();
 
-    protected EnchantmentBonusAffinityBuilder(@Nonnull Enchantment target) {
-        this.targetId = ForgeRegistries.ENCHANTMENTS.getKey(target);
+    protected EnchantmentBonusAffinityBuilder(HolderLookup.Provider registries, ResourceKey<Enchantment> target) {
+        this.registries = registries;
+        this.targetId = target;
     }
     
-    public static EnchantmentBonusAffinityBuilder enchantmentBonusAffinity(@Nonnull Enchantment target) {
-        return new EnchantmentBonusAffinityBuilder(target);
+    public static EnchantmentBonusAffinityBuilder enchantmentBonusAffinity(HolderLookup.Provider registries, ResourceKey<Enchantment> target) {
+        return new EnchantmentBonusAffinityBuilder(registries, target);
     }
     
     public EnchantmentBonusAffinityBuilder multiplier(SourceList multiplierValues) {
@@ -44,13 +48,13 @@ public class EnchantmentBonusAffinityBuilder {
         if (this.targetId == null) {
             throw new IllegalStateException("No target enchantment for affinity " + id.toString());
         }
-        if (!ForgeRegistries.ENCHANTMENTS.containsKey(this.targetId)) {
+        if (this.registries.lookupOrThrow(Registries.ENCHANTMENT).get(this.targetId).isEmpty()) {
             throw new IllegalStateException("Unknown target enchantment " + this.targetId.toString() + " for affinity " + id.toString());
         }
     }
     
     public void build(Consumer<IFinishedAffinity> consumer) {
-        this.build(consumer, this.targetId);
+        this.build(consumer, this.targetId.location());
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {
@@ -59,7 +63,7 @@ public class EnchantmentBonusAffinityBuilder {
     
     public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new EnchantmentBonusAffinityBuilder.Result(id, this.targetId, this.multiplierValues.build()));
+        consumer.accept(new EnchantmentBonusAffinityBuilder.Result(id, this.targetId.location(), this.multiplierValues.build()));
     }
     
     public static class Result implements IFinishedAffinity {

@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -31,34 +32,38 @@ import net.minecraft.world.level.block.Blocks;
 public class AffinityProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();
     protected final PackOutput packOutput;
-    
-    public AffinityProvider(PackOutput packOutput) {
+    protected final CompletableFuture<HolderLookup.Provider> lookupProviderFuture;
+
+    public AffinityProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProviderFuture) {
         this.packOutput = packOutput;
+        this.lookupProviderFuture = lookupProviderFuture;
     }
 
     @Override
     public CompletableFuture<?> run(CachedOutput cache) {
-        ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
-        Map<AffinityType, Map<ResourceLocation, IFinishedAffinity>> map = new HashMap<>();
-        this.registerAffinities((affinity) -> {
-            if (map.computeIfAbsent(affinity.getType(), (type) -> { return new HashMap<>(); }).put(affinity.getId(), affinity) != null) {
-                LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
-            }
-        });
-        map.entrySet().forEach(typeEntry -> {
-            typeEntry.getValue().entrySet().forEach(affinityEntry -> {
-                IFinishedAffinity affinity = affinityEntry.getValue();
-                futuresBuilder.add(DataProvider.saveStable(cache, affinity.getAffinityJson(), this.getPath(this.packOutput, affinity.getType(), affinityEntry.getKey())));
+        return this.lookupProviderFuture.thenCompose(p -> {
+            ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
+            Map<AffinityType, Map<ResourceLocation, IFinishedAffinity>> map = new HashMap<>();
+            this.registerAffinities(p, affinity -> {
+                if (map.computeIfAbsent(affinity.getType(), (type) -> { return new HashMap<>(); }).put(affinity.getId(), affinity) != null) {
+                    LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
+                }
             });
+            map.entrySet().forEach(typeEntry -> {
+                typeEntry.getValue().entrySet().forEach(affinityEntry -> {
+                    IFinishedAffinity affinity = affinityEntry.getValue();
+                    futuresBuilder.add(DataProvider.saveStable(cache, affinity.getAffinityJson(), this.getPath(this.packOutput, affinity.getType(), affinityEntry.getKey())));
+                });
+            });
+            return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
         });
-        return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
     }
 
     private Path getPath(PackOutput output, AffinityType affinityType, ResourceLocation entryLoc) {
         return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("affinities").resolve(affinityType.getFolder()).resolve(entryLoc.getPath() + ".json");
     }
     
-    protected void registerAffinities(Consumer<IFinishedAffinity> consumer) {
+    protected void registerAffinities(HolderLookup.Provider lookupProvider, Consumer<IFinishedAffinity> consumer) {
         SourceList auraUnit = SourceList.builder().withEarth(1).withSea(1).withSky(1).withSun(1).withMoon(1).build();
         
         // Define vanilla item affinities
@@ -1039,64 +1044,64 @@ public class AffinityProvider implements DataProvider {
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_SLOW_FALLING).bonus(Sources.SKY, 5).build(consumer);
         
         // Define enchantment bonuses
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.PROTECTION).multiplier(Sources.EARTH).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.FIRE_PROTECTION).multiplier(Sources.INFERNAL).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.FEATHER_FALLING).multiplier(Sources.SKY).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.BLAST_PROTECTION).multiplier(Sources.MOON).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.PROJECTILE_PROTECTION).multiplier(Sources.SKY).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.RESPIRATION).multiplier(Sources.SEA).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.AQUA_AFFINITY).multiplier(Sources.SEA).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.THORNS).multiplier(Sources.BLOOD).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.DEPTH_STRIDER).multiplier(Sources.SEA).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.FROST_WALKER).multiplier(Sources.SEA).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.BINDING_CURSE).multiplier(Sources.VOID).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.SHARPNESS).multiplier(Sources.BLOOD).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.SMITE).multiplier(Sources.HALLOWED).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.BANE_OF_ARTHROPODS).multiplier(Sources.BLOOD).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.KNOCKBACK).multiplier(Sources.EARTH).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.FIRE_ASPECT).multiplier(Sources.INFERNAL).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.LOOTING).multiplier(Sources.MOON).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.SWEEPING_EDGE).multiplier(Sources.SKY).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.EFFICIENCY).multiplier(Sources.EARTH).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.SILK_TOUCH).multiplier(Sources.MOON).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.UNBREAKING).multiplier(Sources.EARTH).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.FORTUNE).multiplier(Sources.MOON).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.POWER).multiplier(Sources.BLOOD).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.PUNCH).multiplier(Sources.BLOOD).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.FLAME).multiplier(Sources.INFERNAL).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.INFINITY).multiplier(Sources.VOID).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.LUCK_OF_THE_SEA).multiplier(Sources.MOON).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.LURE).multiplier(Sources.SEA).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.LOYALTY).multiplier(Sources.SKY).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.IMPALING).multiplier(Sources.BLOOD).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.RIPTIDE).multiplier(Sources.SEA).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.CHANNELING).multiplier(Sources.SKY).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.MULTISHOT).multiplier(Sources.SKY).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.QUICK_CHARGE).multiplier(Sources.SKY).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.PIERCING).multiplier(Sources.BLOOD).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.MENDING).multiplier(Sources.SUN).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(Enchantments.VANISHING_CURSE).multiplier(Sources.VOID).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.LIFESTEAL.get()).multiplier(Sources.BLOOD).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.ENDERLOCK.get()).multiplier(Sources.VOID).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.JUDGMENT.get()).multiplier(Sources.HALLOWED).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.ENDERPORT.get()).multiplier(Sources.VOID).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.REGROWTH.get()).multiplier(Sources.HALLOWED).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.AEGIS.get()).multiplier(Sources.HALLOWED).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.MANA_EFFICIENCY.get()).multiplier(Sources.VOID).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.SPELL_POWER.get()).multiplier(Sources.INFERNAL).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.TREASURE.get()).multiplier(Sources.MOON).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.BLUDGEONING.get()).multiplier(Sources.EARTH).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.REVERBERATION.get()).multiplier(Sources.EARTH).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.BOUNTY.get()).multiplier(Sources.SEA).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.DISINTEGRATION.get()).multiplier(Sources.SKY).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.VERDANT.get()).multiplier(Sources.SUN).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.LUCKY_STRIKE.get()).multiplier(Sources.MOON).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.RENDING.get()).multiplier(Sources.BLOOD).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.SOULPIERCING.get()).multiplier(Sources.INFERNAL).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.ESSENCE_THIEF.get()).multiplier(Sources.VOID).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.BULWARK.get()).multiplier(Sources.HALLOWED).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.MAGICK_PROTECTION.get()).multiplier(Sources.VOID).build(consumer);
-        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(EnchantmentsPM.GUILLOTINE.get()).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.PROTECTION).multiplier(Sources.EARTH).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.FIRE_PROTECTION).multiplier(Sources.INFERNAL).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.FEATHER_FALLING).multiplier(Sources.SKY).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.BLAST_PROTECTION).multiplier(Sources.MOON).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.PROJECTILE_PROTECTION).multiplier(Sources.SKY).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.RESPIRATION).multiplier(Sources.SEA).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.AQUA_AFFINITY).multiplier(Sources.SEA).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.THORNS).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.DEPTH_STRIDER).multiplier(Sources.SEA).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.FROST_WALKER).multiplier(Sources.SEA).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.BINDING_CURSE).multiplier(Sources.VOID).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.SHARPNESS).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.SMITE).multiplier(Sources.HALLOWED).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.BANE_OF_ARTHROPODS).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.KNOCKBACK).multiplier(Sources.EARTH).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.FIRE_ASPECT).multiplier(Sources.INFERNAL).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.LOOTING).multiplier(Sources.MOON).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.SWEEPING_EDGE).multiplier(Sources.SKY).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.EFFICIENCY).multiplier(Sources.EARTH).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.SILK_TOUCH).multiplier(Sources.MOON).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.UNBREAKING).multiplier(Sources.EARTH).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.FORTUNE).multiplier(Sources.MOON).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.POWER).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.PUNCH).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.FLAME).multiplier(Sources.INFERNAL).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.INFINITY).multiplier(Sources.VOID).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.LUCK_OF_THE_SEA).multiplier(Sources.MOON).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.LURE).multiplier(Sources.SEA).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.LOYALTY).multiplier(Sources.SKY).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.IMPALING).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.RIPTIDE).multiplier(Sources.SEA).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.CHANNELING).multiplier(Sources.SKY).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.MULTISHOT).multiplier(Sources.SKY).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.QUICK_CHARGE).multiplier(Sources.SKY).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.PIERCING).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.MENDING).multiplier(Sources.SUN).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, Enchantments.VANISHING_CURSE).multiplier(Sources.VOID).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.LIFESTEAL).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.ENDERLOCK).multiplier(Sources.VOID).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.JUDGMENT).multiplier(Sources.HALLOWED).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.ENDERPORT).multiplier(Sources.VOID).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.REGROWTH).multiplier(Sources.HALLOWED).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.AEGIS).multiplier(Sources.HALLOWED).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.MANA_EFFICIENCY).multiplier(Sources.VOID).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.SPELL_POWER).multiplier(Sources.INFERNAL).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.TREASURE).multiplier(Sources.MOON).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.BLUDGEONING).multiplier(Sources.EARTH).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.REVERBERATION).multiplier(Sources.EARTH).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.BOUNTY).multiplier(Sources.SEA).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.DISINTEGRATION).multiplier(Sources.SKY).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.VERDANT).multiplier(Sources.SUN).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.LUCKY_STRIKE).multiplier(Sources.MOON).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.RENDING).multiplier(Sources.BLOOD).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.SOULPIERCING).multiplier(Sources.INFERNAL).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.ESSENCE_THIEF).multiplier(Sources.VOID).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.BULWARK).multiplier(Sources.HALLOWED).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.MAGICK_PROTECTION).multiplier(Sources.VOID).build(consumer);
+        EnchantmentBonusAffinityBuilder.enchantmentBonusAffinity(lookupProvider, EnchantmentsPM.GUILLOTINE).multiplier(Sources.BLOOD).build(consumer);
     }
 
     @Override
