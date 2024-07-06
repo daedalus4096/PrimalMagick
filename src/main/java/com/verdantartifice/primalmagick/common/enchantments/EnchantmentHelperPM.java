@@ -26,8 +26,8 @@ public class EnchantmentHelperPM {
         }
     }
     
-    public static int getEnchantmentLevel(ItemStack stack, ResourceKey<Enchantment> enchantment, HolderLookup<Enchantment> holderLookup) {
-        Optional<Holder.Reference<Enchantment>> holderOpt = holderLookup.get(enchantment);
+    public static int getEnchantmentLevel(ItemStack stack, ResourceKey<Enchantment> enchantment, HolderLookup.Provider registries) {
+        Optional<Holder.Reference<Enchantment>> holderOpt = registries.lookupOrThrow(Registries.ENCHANTMENT).get(enchantment);
         if (holderOpt.isPresent()) {
             return stack.getEnchantments().getLevel(holderOpt.get());
         } else {
@@ -39,7 +39,7 @@ public class EnchantmentHelperPM {
         return getEquippedEnchantmentLevel(entity, EnchantmentsPM.ENDERPORT) > 0;
     }
     
-    public static boolean hasRegrowth(ItemStack stack, HolderLookup<Enchantment> holderLookup) {
-        return getEnchantmentLevel(stack, EnchantmentsPM.REGROWTH, holderLookup) > 0;
+    public static boolean hasRegrowth(ItemStack stack, HolderLookup.Provider registries) {
+        return getEnchantmentLevel(stack, EnchantmentsPM.REGROWTH, registries) > 0;
     }
 }

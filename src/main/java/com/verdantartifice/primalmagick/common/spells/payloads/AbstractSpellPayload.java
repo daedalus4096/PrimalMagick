@@ -21,7 +21,6 @@ import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.tags.SpellPropertyTagsPM;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
@@ -75,7 +74,7 @@ public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> im
                 retVal.add(ampMod.getPropertyValue(SpellPropertiesPM.AMPLIFY_POWER.get()));
             });
             if (spellSource != null) {
-                int enchLevel = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.SPELL_POWER, registries.lookupOrThrow(Registries.ENCHANTMENT));
+                int enchLevel = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.SPELL_POWER, registries);
                 if (enchLevel > 0) {
                     retVal.add(enchLevel);
                 }

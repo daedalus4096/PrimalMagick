@@ -25,7 +25,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.EntitySelectorsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -237,7 +236,7 @@ public class CombatEvents {
             if (targetEntity instanceof LivingEntity target) {
                 if (shooter instanceof LivingEntity livingShooter) {
                     // If the target can have its soul pierced, spawn some soul slivers
-                    int soulpiercingLevel = EnchantmentHelperPM.getEnchantmentLevel(livingShooter.getMainHandItem(), EnchantmentsPM.SOULPIERCING, livingShooter.registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
+                    int soulpiercingLevel = EnchantmentHelperPM.getEnchantmentLevel(livingShooter.getMainHandItem(), EnchantmentsPM.SOULPIERCING, livingShooter.registryAccess());
                     if (soulpiercingLevel > 0) {
                         MobEffectInstance soulpiercedInstance = new MobEffectInstance(EffectsPM.SOULPIERCED.getHolder().get(), 12000, 0, false, false);
                         if (target.canBeAffected(soulpiercedInstance) && !target.hasEffect(soulpiercedInstance.getEffect())) {

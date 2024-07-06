@@ -291,7 +291,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         double modifier = this.getBaseCostModifier(stack);
         
         // Subtract discounts from wand enchantments
-        int efficiencyLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.MANA_EFFICIENCY, registries.lookupOrThrow(Registries.ENCHANTMENT));
+        int efficiencyLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.MANA_EFFICIENCY, registries);
         if (efficiencyLevel > 0) {
             modifier -= (0.02D * efficiencyLevel);
         }

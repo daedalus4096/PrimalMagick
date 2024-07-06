@@ -216,14 +216,13 @@ public class BlockBreaker {
     }
     
     protected int getFortuneLevel(HolderLookup.Provider registries) {
-        HolderLookup<Enchantment> enchHolderGetter = registries.lookupOrThrow(Registries.ENCHANTMENT);
         if (this.fortuneOverride.isPresent()) {
             return this.fortuneOverride.get();
         } else if (!this.tool.isEmpty()) {
             if (this.tool.getItem() instanceof IWand) {
-                return EnchantmentHelperPM.getEnchantmentLevel(this.tool, EnchantmentsPM.TREASURE, enchHolderGetter);
+                return EnchantmentHelperPM.getEnchantmentLevel(this.tool, EnchantmentsPM.TREASURE, registries);
             } else {
-                return EnchantmentHelperPM.getEnchantmentLevel(this.tool, Enchantments.FORTUNE, enchHolderGetter);
+                return EnchantmentHelperPM.getEnchantmentLevel(this.tool, Enchantments.FORTUNE, registries);
             }
         } else {
             return 0;
@@ -231,11 +230,10 @@ public class BlockBreaker {
     }
     
     protected int getSilkTouchLevel(HolderLookup.Provider registries) {
-        HolderLookup<Enchantment> enchHolderGetter = registries.lookupOrThrow(Registries.ENCHANTMENT);
         if (this.silkTouchOverride.isPresent()) {
             return this.silkTouchOverride.get() ? 1 : 0;
         } else if (!this.tool.isEmpty()) {
-            return EnchantmentHelperPM.getEnchantmentLevel(this.tool, Enchantments.SILK_TOUCH, enchHolderGetter);
+            return EnchantmentHelperPM.getEnchantmentLevel(this.tool, Enchantments.SILK_TOUCH, registries);
         } else {
             return 0;
         }

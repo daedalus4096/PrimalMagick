@@ -16,7 +16,6 @@ import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -146,7 +145,7 @@ public class EntityEvents {
         int currentDuration = event.getDuration();
         int maxDuration = stack.getUseDuration(entity);
         int delta = maxDuration - currentDuration;
-        int enchantLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.BULWARK, entity.registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
+        int enchantLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.BULWARK, entity.registryAccess());
         if (stack.getItem() instanceof ShieldItem && delta > 0 && delta % 5 == 0 && enchantLevel > 0) {
             MobEffectInstance effectInstance = entity.getEffect(MobEffects.DAMAGE_RESISTANCE);
             int amplifier = (effectInstance == null) ? 0 : Mth.clamp(1 + effectInstance.getAmplifier(), 0, enchantLevel - 1);

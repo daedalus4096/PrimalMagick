@@ -23,7 +23,6 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
@@ -66,7 +65,7 @@ public class BlockEvents {
     
     private static void triggerReverberation(Level world, BlockPos pos, BlockState state, Player player, ItemStack tool) {
         // Trigger block breakers if the player has a Reverberation tool in the main hand
-        int enchLevel = EnchantmentHelperPM.getEnchantmentLevel(tool, EnchantmentsPM.REVERBERATION, world.holderLookup(Registries.ENCHANTMENT));
+        int enchLevel = EnchantmentHelperPM.getEnchantmentLevel(tool, EnchantmentsPM.REVERBERATION, world.registryAccess());
         if (enchLevel <= 0) {
             return;
         }
@@ -110,7 +109,7 @@ public class BlockEvents {
     
     private static void triggerDisintegration(Level world, BlockPos pos, BlockState state, Player player, ItemStack tool) {
         // Trigger block breakers if the player has a Reverberation tool in the main hand
-        int enchLevel = EnchantmentHelperPM.getEnchantmentLevel(tool, EnchantmentsPM.DISINTEGRATION, world.holderLookup(Registries.ENCHANTMENT));
+        int enchLevel = EnchantmentHelperPM.getEnchantmentLevel(tool, EnchantmentsPM.DISINTEGRATION, world.registryAccess());
         if (enchLevel <= 0) {
             return;
         }

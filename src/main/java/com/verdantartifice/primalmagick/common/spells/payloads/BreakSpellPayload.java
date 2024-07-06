@@ -20,7 +20,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -79,7 +78,7 @@ public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
             BlockState state = world.getBlockState(pos);
             float durability = (float)Math.sqrt(100.0F * state.getDestroySpeed(world, pos));
             boolean silk = (spell.payload().getPropertyValue(SpellPropertiesPM.SILK_TOUCH.get()) == 1);
-            int treasure = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.TREASURE, world.registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
+            int treasure = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.TREASURE, world.registryAccess());
             BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, world.registryAccess()))
                     .target(pos, state).durability(durability).player(player).tool(spellSource).silkTouch(silk).fortune(treasure).alwaysDrop().build();
             BlockBreaker.schedule(world, 1, breaker);

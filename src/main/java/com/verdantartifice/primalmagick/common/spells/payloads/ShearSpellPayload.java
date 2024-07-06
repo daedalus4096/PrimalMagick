@@ -20,7 +20,6 @@ import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -87,7 +86,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
     public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         ItemStack fakeShears = new ItemStack(Items.SHEARS);
         RandomSource rand = world.random;
-        int treasureLevel = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.TREASURE, world.holderLookup(Registries.ENCHANTMENT));
+        int treasureLevel = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.TREASURE, world.registryAccess());
         if (caster instanceof Player player) {
             if (target.getType() == HitResult.Type.ENTITY) {
                 EntityHitResult entityHitResult = (EntityHitResult)target;
