@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -29,6 +30,7 @@ import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -61,8 +63,8 @@ import net.minecraftforge.common.crafting.conditions.TrueCondition;
  * @author Daedalus4096
  */
 public class Recipes extends RecipeProvider {
-    public Recipes(PackOutput packOutput) {
-        super(packOutput);
+    public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
+        super(packOutput, registries);
     }
     
     private static ICondition tagsNotEmpty(List<TagKey<Item>> tags) {
@@ -6252,7 +6254,7 @@ public class Recipes extends RecipeProvider {
     }
     
     protected void registerPrimalToolRecipes(RecipeOutput consumer) {
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_SHOVEL.get().getDefaultInstance())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_SHOVEL.get().getDefaultEnchantedInstance(consumer.registry()))
             .addIngredient(ItemsPM.PRIMALITE_SHOVEL.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get(), 2)
             .addIngredient(ItemsPM.RUNE_EARTH.get())
@@ -6264,7 +6266,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_FISHING_ROD.get().getDefaultInstance())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_FISHING_ROD.get().getDefaultEnchantedInstance(consumer.registry()))
             .addIngredient(ItemsPM.PRIMALITE_FISHING_ROD.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get(), 2)
             .addIngredient(ItemsPM.RUNE_SEA.get())
@@ -6276,7 +6278,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.SEA, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_AXE.get().getDefaultInstance())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_AXE.get().getDefaultEnchantedInstance(consumer.registry()))
             .addIngredient(ItemsPM.PRIMALITE_AXE.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get(), 2)
             .addIngredient(ItemsPM.RUNE_SKY.get())
@@ -6288,7 +6290,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.SKY, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_HOE.get().getDefaultInstance())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_HOE.get().getDefaultEnchantedInstance(consumer.registry()))
             .addIngredient(ItemsPM.PRIMALITE_HOE.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get(), 2)
             .addIngredient(ItemsPM.RUNE_SUN.get())
@@ -6300,7 +6302,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.SUN, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_PICKAXE.get().getDefaultInstance())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_PICKAXE.get().getDefaultEnchantedInstance(consumer.registry()))
             .addIngredient(ItemsPM.PRIMALITE_PICKAXE.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get(), 2)
             .addIngredient(ItemsPM.RUNE_MOON.get())
@@ -6312,7 +6314,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_TRIDENT.get().getDefaultInstance())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_TRIDENT.get().getDefaultEnchantedInstance(consumer.registry()))
             .addIngredient(ItemsPM.HEXIUM_TRIDENT.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get(), 2)
             .addIngredient(ItemsPM.RUNE_BLOOD.get())
@@ -6323,7 +6325,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_BOW.get().getDefaultInstance())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_BOW.get().getDefaultEnchantedInstance(consumer.registry()))
             .addIngredient(ItemsPM.HEXIUM_BOW.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get(), 2)
             .addIngredient(ItemsPM.RUNE_INFERNAL.get())
@@ -6334,7 +6336,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_SWORD.get().getDefaultInstance())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_SWORD.get().getDefaultEnchantedInstance(consumer.registry()))
             .addIngredient(ItemsPM.HEXIUM_SWORD.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get(), 2)
             .addIngredient(ItemsPM.RUNE_VOID.get())
@@ -6346,7 +6348,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.VOID, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.SACRED_SHIELD.get().getDefaultInstance())
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.SACRED_SHIELD.get().getDefaultEnchantedInstance(consumer.registry()))
             .addIngredient(ItemsPM.HALLOWSTEEL_SHIELD.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_HALLOWED.get(), 2)
             .addIngredient(ItemsPM.RUNE_HALLOWED.get())

@@ -1,26 +1,27 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
+import java.util.Map;
+
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagick.common.items.IEnchantedByDefault;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
  * Definition for a bow made of the magickal metal hexium which comes pre-enchanted with Soulpiercing.
  * 
  * @author Daedalus4096
  */
-public class ForbiddenBowItem extends TieredBowItem {
+public class ForbiddenBowItem extends TieredBowItem implements IEnchantedByDefault {
     public ForbiddenBowItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);
     }
 
     @Override
-    public ItemStack getDefaultInstance() {
-        ItemStack stack = new ItemStack(this);
-        EnchantmentHelper.setEnchantments(ImmutableMap.of(EnchantmentsPM.SOULPIERCING.get(), 2), stack);
-        return stack;
+    public Map<ResourceKey<Enchantment>, Integer> getDefaultEnchantments() {
+        return ImmutableMap.of(EnchantmentsPM.SOULPIERCING, 2);
     }
 }
