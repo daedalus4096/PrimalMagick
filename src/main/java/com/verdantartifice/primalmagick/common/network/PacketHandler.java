@@ -87,18 +87,19 @@ public class PacketHandler {
                 .play()
                     .clientbound()
                         .addMain(SyncKnowledgePacket.class, SyncKnowledgePacket.STREAM_CODEC, SyncKnowledgePacket::onMessage)
+                        .addMain(WandPoofPacket.class, WandPoofPacket.STREAM_CODEC, WandPoofPacket::onMessage)
+                        .addMain(ManaSparklePacket.class, ManaSparklePacket.STREAM_CODEC, ManaSparklePacket::onMessage)
                     .serverbound()
                         .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
+                        .addMain(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
+                        .addMain(ScanItemPacket.class, ScanItemPacket.STREAM_CODEC, ScanItemPacket::onMessage)
+                        .addMain(ScanPositionPacket.class, ScanPositionPacket.STREAM_CODEC, ScanPositionPacket::onMessage)
             .build();
     
     public static void registerMessages() {
+        // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
         LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
         INSTANCE
-            .messageBuilder(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.direction()).encoder(SyncResearchFlagsPacket::encode).decoder(SyncResearchFlagsPacket::decode).consumerMainThread(SyncResearchFlagsPacket::onMessage).add()
-            .messageBuilder(WandPoofPacket.class, WandPoofPacket.direction()).encoder(WandPoofPacket::encode).decoder(WandPoofPacket::decode).consumerMainThread(WandPoofPacket::onMessage).add()
-            .messageBuilder(ManaSparklePacket.class, ManaSparklePacket.direction()).encoder(ManaSparklePacket::encode).decoder(ManaSparklePacket::decode).consumerMainThread(ManaSparklePacket::onMessage).add()
-            .messageBuilder(ScanItemPacket.class, ScanItemPacket.direction()).encoder(ScanItemPacket::encode).decoder(ScanItemPacket::decode).consumerMainThread(ScanItemPacket::onMessage).add()
-            .messageBuilder(ScanPositionPacket.class, ScanPositionPacket.direction()).encoder(ScanPositionPacket::encode).decoder(ScanPositionPacket::decode).consumerMainThread(ScanPositionPacket::onMessage).add()
             .messageBuilder(AnalysisActionPacket.class, AnalysisActionPacket.direction()).encoder(AnalysisActionPacket::encode).decoder(AnalysisActionPacket::decode).consumerMainThread(AnalysisActionPacket::onMessage).add()
             .messageBuilder(SyncCooldownsPacket.class, SyncCooldownsPacket.direction()).encoder(SyncCooldownsPacket::encode).decoder(SyncCooldownsPacket::decode).consumerMainThread(SyncCooldownsPacket::onMessage).add()
             .messageBuilder(CycleActiveSpellPacket.class, CycleActiveSpellPacket.direction()).encoder(CycleActiveSpellPacket::encode).decoder(CycleActiveSpellPacket::decode).consumerMainThread(CycleActiveSpellPacket::onMessage).add()

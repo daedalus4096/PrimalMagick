@@ -6,9 +6,9 @@ import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a mana sparkle particle effect on the client.
@@ -16,17 +16,17 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class ManaSparklePacket implements IMessageToClient {
-    protected double x1;
-    protected double y1;
-    protected double z1;
-    protected double x2;
-    protected double y2;
-    protected double z2;
-    protected int maxAge;
-    protected int color;
+    public static final StreamCodec<RegistryFriendlyByteBuf, ManaSparklePacket> STREAM_CODEC = StreamCodec.ofMember(ManaSparklePacket::encode, ManaSparklePacket::decode);
 
-    public ManaSparklePacket() {}
-    
+    protected final double x1;
+    protected final double y1;
+    protected final double z1;
+    protected final double x2;
+    protected final double y2;
+    protected final double z2;
+    protected final int maxAge;
+    protected final int color;
+
     public ManaSparklePacket(double x1, double y1, double z1, double x2, double y2, double z2, int maxAge, int color) {
         this.x1 = x1;
         this.y1 = y1;
@@ -42,11 +42,7 @@ public class ManaSparklePacket implements IMessageToClient {
         this(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D, targetX, targetY, targetZ, maxAge, color);
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(ManaSparklePacket message, FriendlyByteBuf buf) {
+    public static void encode(ManaSparklePacket message, RegistryFriendlyByteBuf buf) {
         buf.writeDouble(message.x1);
         buf.writeDouble(message.y1);
         buf.writeDouble(message.z1);
@@ -57,17 +53,8 @@ public class ManaSparklePacket implements IMessageToClient {
         buf.writeVarInt(message.color);
     }
     
-    public static ManaSparklePacket decode(FriendlyByteBuf buf) {
-        ManaSparklePacket message = new ManaSparklePacket();
-        message.x1 = buf.readDouble();
-        message.y1 = buf.readDouble();
-        message.z1 = buf.readDouble();
-        message.x2 = buf.readDouble();
-        message.y2 = buf.readDouble();
-        message.z2 = buf.readDouble();
-        message.maxAge = buf.readVarInt();
-        message.color = buf.readVarInt();
-        return message;
+    public static ManaSparklePacket decode(RegistryFriendlyByteBuf buf) {
+        return new ManaSparklePacket(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt(), buf.readVarInt());
     }
     
     public static void onMessage(ManaSparklePacket message, CustomPayloadEvent.Context ctx) {

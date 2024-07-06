@@ -7,12 +7,12 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to trigger a server-side scan of a given item stack.  Used by the arcanometer for
@@ -21,30 +21,22 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class ScanItemPacket implements IMessageToServer {
+    public static final StreamCodec<RegistryFriendlyByteBuf, ScanItemPacket> STREAM_CODEC = StreamCodec.ofMember(ScanItemPacket::encode, ScanItemPacket::decode);
+
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected ItemStack stack;
-    
-    public ScanItemPacket() {
-        this.stack = ItemStack.EMPTY;
-    }
+    protected final ItemStack stack;
     
     public ScanItemPacket(ItemStack stack) {
         this.stack = stack;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
+    public static void encode(ScanItemPacket message, RegistryFriendlyByteBuf buf) {
+        ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, message.stack);
     }
     
-    public static void encode(ScanItemPacket message, FriendlyByteBuf buf) {
-        buf.writeItem(message.stack);
-    }
-    
-    public static ScanItemPacket decode(FriendlyByteBuf buf) {
-        ScanItemPacket message = new ScanItemPacket();
-        message.stack = buf.readItem();
-        return message;
+    public static ScanItemPacket decode(RegistryFriendlyByteBuf buf) {
+        return new ScanItemPacket(ItemStack.OPTIONAL_STREAM_CODEC.decode(buf));
     }
     
     public static void onMessage(ScanItemPacket message, CustomPayloadEvent.Context ctx) {

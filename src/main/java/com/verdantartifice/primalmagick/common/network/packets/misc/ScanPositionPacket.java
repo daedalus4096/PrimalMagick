@@ -20,14 +20,14 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to trigger a server-side scan of a particular block in the world.  Used by the
@@ -36,35 +36,25 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class ScanPositionPacket implements IMessageToServer {
+    public static final StreamCodec<RegistryFriendlyByteBuf, ScanPositionPacket> STREAM_CODEC = StreamCodec.ofMember(ScanPositionPacket::encode, ScanPositionPacket::decode);
+
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected BlockPos pos;
-    protected ItemStack toolStack;
-    
-    public ScanPositionPacket() {
-        this.pos = BlockPos.ZERO;
-        this.toolStack = ItemStack.EMPTY;
-    }
+    protected final BlockPos pos;
+    protected final ItemStack toolStack;
     
     public ScanPositionPacket(@Nonnull BlockPos pos, @Nonnull ItemStack toolStack) {
         this.pos = pos;
         this.toolStack = toolStack;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
+    public static void encode(ScanPositionPacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeBlockPos(message.pos);
+        ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, message.toolStack);
     }
     
-    public static void encode(ScanPositionPacket message, FriendlyByteBuf buf) {
-        buf.writeLong(message.pos.asLong());
-        buf.writeItem(message.toolStack);
-    }
-    
-    public static ScanPositionPacket decode(FriendlyByteBuf buf) {
-        ScanPositionPacket message = new ScanPositionPacket();
-        message.pos = BlockPos.of(buf.readLong());
-        message.toolStack = buf.readItem();
-        return message;
+    public static ScanPositionPacket decode(RegistryFriendlyByteBuf buf) {
+        return new ScanPositionPacket(buf.readBlockPos(), ItemStack.OPTIONAL_STREAM_CODEC.decode(buf));
     }
     
     public static void onMessage(ScanPositionPacket message, CustomPayloadEvent.Context ctx) {

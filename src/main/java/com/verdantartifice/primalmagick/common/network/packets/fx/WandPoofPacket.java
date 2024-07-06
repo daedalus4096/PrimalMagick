@@ -8,9 +8,9 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a wand poof particle effect on the client.
@@ -18,14 +18,14 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class WandPoofPacket implements IMessageToClient {
-    protected double x;
-    protected double y;
-    protected double z;
-    protected int color;
-    protected boolean sound;
-    protected byte face;
-    
-    public WandPoofPacket() {}
+    public static final StreamCodec<RegistryFriendlyByteBuf, WandPoofPacket> STREAM_CODEC = StreamCodec.ofMember(WandPoofPacket::encode, WandPoofPacket::decode);
+
+    protected final double x;
+    protected final double y;
+    protected final double z;
+    protected final int color;
+    protected final boolean sound;
+    protected final Direction face;
     
     public WandPoofPacket(double x, double y, double z, int color, boolean sound, @Nullable Direction facing) {
         this.x = x;
@@ -33,42 +33,27 @@ public class WandPoofPacket implements IMessageToClient {
         this.z = z;
         this.color = color;
         this.sound = sound;
-        this.face = facing == null ? (byte)-1 : (byte)facing.get3DDataValue();
+        this.face = facing;
     }
     
     public WandPoofPacket(@Nonnull BlockPos pos, int color, boolean sound, @Nullable Direction facing) {
         this(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, color, sound, facing);
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(WandPoofPacket message, FriendlyByteBuf buf) {
+    public static void encode(WandPoofPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
         buf.writeDouble(message.z);
         buf.writeVarInt(message.color);
         buf.writeBoolean(message.sound);
-        buf.writeByte(message.face);
+        buf.writeEnum(message.face);
     }
     
-    public static WandPoofPacket decode(FriendlyByteBuf buf) {
-        WandPoofPacket message = new WandPoofPacket();
-        message.x = buf.readDouble();
-        message.y = buf.readDouble();
-        message.z = buf.readDouble();
-        message.color = buf.readVarInt();
-        message.sound = buf.readBoolean();
-        message.face = buf.readByte();
-        return message;
+    public static WandPoofPacket decode(RegistryFriendlyByteBuf buf) {
+        return new WandPoofPacket(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt(), buf.readBoolean(), buf.readEnum(Direction.class));
     }
     
     public static void onMessage(WandPoofPacket message, CustomPayloadEvent.Context ctx) {
-        Direction side = null;
-        if (message.face >= 0) {
-            side = Direction.from3DDataValue(message.face);
-        }
-        FxDispatcher.INSTANCE.wandPoof(message.x, message.y, message.z, message.color, message.sound, side);
+        FxDispatcher.INSTANCE.wandPoof(message.x, message.y, message.z, message.color, message.sound, message.face);
     }
 }
