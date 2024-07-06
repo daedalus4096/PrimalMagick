@@ -13,10 +13,10 @@ import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to progress a research entry to its next stage on the server.
@@ -24,6 +24,8 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SyncProgressPacket implements IMessageToServer {
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncProgressPacket> STREAM_CODEC = StreamCodec.ofMember(SyncProgressPacket::encode, SyncProgressPacket::decode);
+
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected final ResearchEntryKey key;
@@ -40,11 +42,7 @@ public class SyncProgressPacket implements IMessageToServer {
         this.noPopups = noPopups;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(SyncProgressPacket message, FriendlyByteBuf buf) {
+    public static void encode(SyncProgressPacket message, RegistryFriendlyByteBuf buf) {
         message.key.toNetwork(buf);
         buf.writeBoolean(message.firstSync);
         buf.writeBoolean(message.runChecks);
@@ -52,7 +50,7 @@ public class SyncProgressPacket implements IMessageToServer {
         buf.writeBoolean(message.noPopups);
     }
     
-    public static SyncProgressPacket decode(FriendlyByteBuf buf) {
+    public static SyncProgressPacket decode(RegistryFriendlyByteBuf buf) {
         return new SyncProgressPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
     }
     

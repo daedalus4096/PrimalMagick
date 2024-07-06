@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.Requirement
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -66,5 +67,9 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
             return false;
         ResearchEntryKey other = (ResearchEntryKey) obj;
         return Objects.equals(rootKey, other.rootKey);
+    }
+    
+    public static ResearchEntryKey fromNetwork(RegistryFriendlyByteBuf buf) {
+        return (ResearchEntryKey)AbstractResearchKey.fromNetwork(buf);
     }
 }

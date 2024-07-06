@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.common.network;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
@@ -72,6 +75,7 @@ import net.minecraftforge.network.SimpleChannel;
  * @author Daedalus4096
  */
 public class PacketHandler {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final int PROTOCOL_VERSION = 1;
     
     private static final SimpleChannel INSTANCE = ChannelBuilder
@@ -79,12 +83,17 @@ public class PacketHandler {
             .clientAcceptedVersions(VersionTest.exact(PROTOCOL_VERSION))
             .serverAcceptedVersions(VersionTest.exact(PROTOCOL_VERSION))
             .networkProtocolVersion(PROTOCOL_VERSION)
-            .simpleChannel();
+            .simpleChannel()
+                .play()
+                    .clientbound()
+                        .addMain(SyncKnowledgePacket.class, SyncKnowledgePacket.STREAM_CODEC, SyncKnowledgePacket::onMessage)
+                    .serverbound()
+                        .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
+            .build();
     
     public static void registerMessages() {
+        LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
         INSTANCE
-            .messageBuilder(SyncKnowledgePacket.class, SyncKnowledgePacket.direction()).encoder(SyncKnowledgePacket::encode).decoder(SyncKnowledgePacket::decode).consumerMainThread(SyncKnowledgePacket::onMessage).add()
-            .messageBuilder(SyncProgressPacket.class, SyncProgressPacket.direction()).encoder(SyncProgressPacket::encode).decoder(SyncProgressPacket::decode).consumerMainThread(SyncProgressPacket::onMessage).add()
             .messageBuilder(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.direction()).encoder(SyncResearchFlagsPacket::encode).decoder(SyncResearchFlagsPacket::decode).consumerMainThread(SyncResearchFlagsPacket::onMessage).add()
             .messageBuilder(WandPoofPacket.class, WandPoofPacket.direction()).encoder(WandPoofPacket::encode).decoder(WandPoofPacket::decode).consumerMainThread(WandPoofPacket::onMessage).add()
             .messageBuilder(ManaSparklePacket.class, ManaSparklePacket.direction()).encoder(ManaSparklePacket::encode).decoder(ManaSparklePacket::decode).consumerMainThread(ManaSparklePacket::onMessage).add()
