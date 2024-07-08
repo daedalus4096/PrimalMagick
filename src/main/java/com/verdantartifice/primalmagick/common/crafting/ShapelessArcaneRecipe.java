@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -12,10 +13,9 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -101,8 +101,8 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingI
 
     public static class Serializer implements RecipeSerializer<ShapelessArcaneRecipe> {
         @Override
-        public Codec<ShapelessArcaneRecipe> codec() {
-            return RecordCodecBuilder.create(instance -> instance.group(
+        public MapCodec<ShapelessArcaneRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(instance -> instance.group(
                     Codec.STRING.optionalFieldOf("group", "").forGetter(sar -> sar.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
@@ -120,47 +120,55 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingI
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
                     ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
-                    ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
+                    ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
                 ).apply(instance, ShapelessArcaneRecipe::new)
             );
         }
-        
+
         @Override
-        public ShapelessArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
+        public StreamCodec<RegistryFriendlyByteBuf, ShapelessArcaneRecipe> streamCodec() {
+            return StreamCodec.of(ShapelessArcaneRecipe.Serializer::toNetwork, ShapelessArcaneRecipe.Serializer::fromNetwork);
+        }
+        
+        private static ShapelessArcaneRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             String group = buffer.readUtf();
-            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
+            Optional<AbstractRequirement<?>> requirement = buffer.readBoolean() ? Optional.ofNullable(AbstractRequirement.dispatchStreamCodec().decode(buffer)) : Optional.empty();
             
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             
             int count = buffer.readVarInt();
             NonNullList<Ingredient> ingredients = NonNullList.withSize(count, Ingredient.EMPTY);
-            for (int index = 0; index < ingredients.size(); index++) {
-                ingredients.set(index, Ingredient.fromNetwork(buffer));
-            }
+            ingredients.replaceAll(ing -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
             
             Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
-            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey::fromNetwork);
+            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey.STREAM_CODEC);
             
-            ItemStack result = buffer.readItem();
+            ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
             return new ShapelessArcaneRecipe(group, result, ingredients, requirement, manaCosts, baseExpOverride, bonusExpOverride, expGroup, discOverride);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, ShapelessArcaneRecipe recipe) {
+        private static void toNetwork(RegistryFriendlyByteBuf buffer, ShapelessArcaneRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
+            recipe.requirement.ifPresentOrElse(req -> {
+                buffer.writeBoolean(true);
+                AbstractRequirement.dispatchStreamCodec().encode(buffer, req);
+            }, () -> {
+                buffer.writeBoolean(false);
+            });
             SourceList.toNetwork(buffer, recipe.manaCosts);
+            
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems) {
-                ingredient.toNetwork(buffer);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
             }
+            
             buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
-            buffer.writeOptional(recipe.disciplineOverride, (b, d) -> d.toNetwork(b));
-            buffer.writeItem(recipe.output);
+            buffer.writeOptional(recipe.disciplineOverride, ResearchDisciplineKey.STREAM_CODEC);
+            ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
         }
     }
 }
