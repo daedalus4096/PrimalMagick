@@ -1,15 +1,15 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -63,7 +63,7 @@ public class DissolutionRecipe extends AbstractStackCraftingRecipe<CraftingInput
     }
 
     public static class Serializer implements RecipeSerializer<DissolutionRecipe> {
-        protected static final Codec<DissolutionRecipe> CODEC = RecordCodecBuilder.create(instance -> {
+        protected static final MapCodec<DissolutionRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> {
             return instance.group(
                     Codec.STRING.optionalFieldOf("group", "").forGetter(dr -> dr.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(dr -> dr.output),
@@ -72,26 +72,21 @@ public class DissolutionRecipe extends AbstractStackCraftingRecipe<CraftingInput
                 ).apply(instance, DissolutionRecipe::new);
         });
         
+        protected static final StreamCodec<RegistryFriendlyByteBuf, DissolutionRecipe> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8, r -> r.group,
+                ItemStack.STREAM_CODEC, r -> r.output,
+                Ingredient.CONTENTS_STREAM_CODEC, r -> r.ingredient,
+                SourceList.STREAM_CODEC, r -> r.manaCosts,
+                DissolutionRecipe::new);
+        
         @Override
-        public Codec<DissolutionRecipe> codec() {
+        public MapCodec<DissolutionRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public DissolutionRecipe fromNetwork(FriendlyByteBuf buffer) {
-            String group = buffer.readUtf();
-            SourceList manaCosts = SourceList.fromNetwork(buffer);
-            Ingredient ing = Ingredient.fromNetwork(buffer);
-            ItemStack result = buffer.readItem();
-            return new DissolutionRecipe(group, result, ing, manaCosts);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, DissolutionRecipe recipe) {
-            buffer.writeUtf(recipe.group);
-            SourceList.toNetwork(buffer, recipe.manaCosts);
-            recipe.ingredient.toNetwork(buffer);
-            buffer.writeItem(recipe.output);
+        public StreamCodec<RegistryFriendlyByteBuf, DissolutionRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
     }
 }
