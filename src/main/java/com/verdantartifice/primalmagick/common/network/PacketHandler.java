@@ -89,23 +89,23 @@ public class PacketHandler {
                         .addMain(SyncKnowledgePacket.class, SyncKnowledgePacket.STREAM_CODEC, SyncKnowledgePacket::onMessage)
                         .addMain(WandPoofPacket.class, WandPoofPacket.STREAM_CODEC, WandPoofPacket::onMessage)
                         .addMain(ManaSparklePacket.class, ManaSparklePacket.STREAM_CODEC, ManaSparklePacket::onMessage)
+                        .addMain(SyncCooldownsPacket.class, SyncCooldownsPacket.STREAM_CODEC, SyncCooldownsPacket::onMessage)
                     .serverbound()
                         .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                         .addMain(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
                         .addMain(ScanItemPacket.class, ScanItemPacket.STREAM_CODEC, ScanItemPacket::onMessage)
                         .addMain(ScanPositionPacket.class, ScanPositionPacket.STREAM_CODEC, ScanPositionPacket::onMessage)
+                        .addMain(AnalysisActionPacket.class, AnalysisActionPacket.STREAM_CODEC, AnalysisActionPacket::onMessage)
+                        .addMain(CycleActiveSpellPacket.class, CycleActiveSpellPacket.STREAM_CODEC, CycleActiveSpellPacket::onMessage)
+                        .addMain(SetSpellNamePacket.class, SetSpellNamePacket.STREAM_CODEC, SetSpellNamePacket::onMessage)
+                        .addMain(SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket.STREAM_CODEC, SetSpellComponentTypeIndexPacket::onMessage)
+                        .addMain(SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket.STREAM_CODEC, SetSpellComponentPropertyPacket::onMessage)
             .build();
     
     public static void registerMessages() {
         // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
         LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
         INSTANCE
-            .messageBuilder(AnalysisActionPacket.class, AnalysisActionPacket.direction()).encoder(AnalysisActionPacket::encode).decoder(AnalysisActionPacket::decode).consumerMainThread(AnalysisActionPacket::onMessage).add()
-            .messageBuilder(SyncCooldownsPacket.class, SyncCooldownsPacket.direction()).encoder(SyncCooldownsPacket::encode).decoder(SyncCooldownsPacket::decode).consumerMainThread(SyncCooldownsPacket::onMessage).add()
-            .messageBuilder(CycleActiveSpellPacket.class, CycleActiveSpellPacket.direction()).encoder(CycleActiveSpellPacket::encode).decoder(CycleActiveSpellPacket::decode).consumerMainThread(CycleActiveSpellPacket::onMessage).add()
-            .messageBuilder(SetSpellNamePacket.class, SetSpellNamePacket.direction()).encoder(SetSpellNamePacket::encode).decoder(SetSpellNamePacket::decode).consumerMainThread(SetSpellNamePacket::onMessage).add()
-            .messageBuilder(SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket.direction()).encoder(SetSpellComponentTypeIndexPacket::encode).decoder(SetSpellComponentTypeIndexPacket::decode).consumerMainThread(SetSpellComponentTypeIndexPacket::onMessage).add()
-            .messageBuilder(SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket.direction()).encoder(SetSpellComponentPropertyPacket::encode).decoder(SetSpellComponentPropertyPacket::decode).consumerMainThread(SetSpellComponentPropertyPacket::onMessage).add()
             .messageBuilder(SpellTrailPacket.class, SpellTrailPacket.direction()).encoder(SpellTrailPacket::encode).decoder(SpellTrailPacket::decode).consumerMainThread(SpellTrailPacket::onMessage).add()
             .messageBuilder(SpellImpactPacket.class, SpellImpactPacket.direction()).encoder(SpellImpactPacket::encode).decoder(SpellImpactPacket::decode).consumerMainThread(SpellImpactPacket::onMessage).add()
             .messageBuilder(TileToClientPacket.class, TileToClientPacket.direction()).encoder(TileToClientPacket::encode).decoder(TileToClientPacket::decode).consumerMainThread(TileToClientPacket::onMessage).add()

@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 import com.verdantartifice.primalmagick.common.menus.AnalysisTableMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to trigger a server-side scan of the slotted item on an analysis table.  Necessary to
@@ -15,28 +15,20 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class AnalysisActionPacket implements IMessageToServer {
-    protected int windowId;
-    
-    public AnalysisActionPacket() {
-        this.windowId = -1;
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, AnalysisActionPacket> STREAM_CODEC = StreamCodec.ofMember(AnalysisActionPacket::encode, AnalysisActionPacket::decode);
+
+    protected final int windowId;
     
     public AnalysisActionPacket(int windowId) {
         this.windowId = windowId;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(AnalysisActionPacket message, FriendlyByteBuf buf) {
+    public static void encode(AnalysisActionPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeVarInt(message.windowId);
     }
     
-    public static AnalysisActionPacket decode(FriendlyByteBuf buf) {
-        AnalysisActionPacket message = new AnalysisActionPacket();
-        message.windowId = buf.readVarInt();
-        return message;
+    public static AnalysisActionPacket decode(RegistryFriendlyByteBuf buf) {
+        return new AnalysisActionPacket(buf.readVarInt());
     }
     
     public static void onMessage(AnalysisActionPacket message, CustomPayloadEvent.Context ctx) {
