@@ -61,7 +61,7 @@ public class ShapelessTagRecipe extends AbstractTagCraftingRecipe<CraftingInput>
     public static class Serializer implements RecipeSerializer<ShapelessTagRecipe> {
         protected static final Codec<ShapelessTagRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(sar -> sar.group),
                     CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(sar -> sar.category),
                     TagKey.codec(Registries.ITEM).fieldOf("outputTag").forGetter(sar -> sar.outputTag),
                     Codec.INT.fieldOf("outputAmount").forGetter(sar -> sar.outputAmount),

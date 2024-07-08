@@ -12,7 +12,6 @@ import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 
 /**
  * Advancement criterion that is triggered when the player reaches a given threshold of attunement, either lasting
@@ -31,7 +30,7 @@ public class AttunementThresholdTrigger extends SimpleCriterionTrigger<Attunemen
     
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<Source> source, Optional<AttunementThreshold> lasting, Optional<AttunementThreshold> ephemeral) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<AttunementThresholdTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(AttunementThresholdTrigger.TriggerInstance::player),
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(AttunementThresholdTrigger.TriggerInstance::player),
                 Source.CODEC.optionalFieldOf("source").forGetter(AttunementThresholdTrigger.TriggerInstance::source),
                 AttunementThreshold.CODEC.optionalFieldOf("lasting").forGetter(AttunementThresholdTrigger.TriggerInstance::lasting),
                 AttunementThreshold.CODEC.optionalFieldOf("ephemeral").forGetter(AttunementThresholdTrigger.TriggerInstance::ephemeral)

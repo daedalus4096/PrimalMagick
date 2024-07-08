@@ -32,7 +32,7 @@ public class RunescribingTrigger extends SimpleCriterionTrigger<RunescribingTrig
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ResourceLocation> enchantmentIdOpt) implements SimpleCriterionTrigger.SimpleInstance {
         public static Codec<RunescribingTrigger.TriggerInstance> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(RunescribingTrigger.TriggerInstance::player), 
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(RunescribingTrigger.TriggerInstance::player), 
                     ResourceLocation.CODEC.optionalFieldOf("enchantmentId").forGetter(RunescribingTrigger.TriggerInstance::enchantmentIdOpt)
                 ).apply(instance, RunescribingTrigger.TriggerInstance::new));
         }

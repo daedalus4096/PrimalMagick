@@ -68,7 +68,7 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<CraftingInpu
     public static class Serializer implements RecipeSerializer<DissolutionTagRecipe> {
         protected static final Codec<DissolutionTagRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(dr -> dr.group),
                     TagKey.codec(Registries.ITEM).fieldOf("outputTag").forGetter(dr -> dr.outputTag),
                     Codec.INT.fieldOf("outputAmount").forGetter(dr -> dr.outputAmount),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),

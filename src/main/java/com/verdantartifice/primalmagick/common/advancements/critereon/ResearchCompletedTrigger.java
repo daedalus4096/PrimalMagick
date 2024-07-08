@@ -44,7 +44,7 @@ public class ResearchCompletedTrigger extends SimpleCriterionTrigger<ResearchCom
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, AbstractResearchKey<?> researchKey) implements SimpleCriterionTrigger.SimpleInstance {
         public static Codec<ResearchCompletedTrigger.TriggerInstance> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(ResearchCompletedTrigger.TriggerInstance::player), 
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(ResearchCompletedTrigger.TriggerInstance::player), 
                     AbstractResearchKey.dispatchCodec().fieldOf("researchKey").forGetter(ResearchCompletedTrigger.TriggerInstance::researchKey)
                 ).apply(instance, ResearchCompletedTrigger.TriggerInstance::new));
         }

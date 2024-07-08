@@ -125,7 +125,7 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<CraftingInput> imp
         @Override
         public Codec<RitualRecipe> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(rr -> rr.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);

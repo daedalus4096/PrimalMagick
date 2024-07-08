@@ -65,7 +65,7 @@ public class DissolutionRecipe extends AbstractStackCraftingRecipe<CraftingInput
     public static class Serializer implements RecipeSerializer<DissolutionRecipe> {
         protected static final Codec<DissolutionRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(dr -> dr.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(dr -> dr.output),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(dr -> dr.manaCosts)

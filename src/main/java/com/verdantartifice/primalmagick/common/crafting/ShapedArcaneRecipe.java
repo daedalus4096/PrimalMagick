@@ -125,7 +125,7 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingInpu
         @Override
         public Codec<ShapedArcaneRecipe> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(r -> r.group),
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(r -> r.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(r -> r.output),
                     ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
                     AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(r -> r.requirement),

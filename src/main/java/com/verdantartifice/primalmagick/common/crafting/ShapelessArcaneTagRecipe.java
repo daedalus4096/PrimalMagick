@@ -106,7 +106,7 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
         @Override
         public Codec<ShapelessArcaneTagRecipe> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(sar -> sar.group),
                     TagKey.codec(Registries.ITEM).fieldOf("outputTag").forGetter(sar -> sar.outputTag),
                     Codec.INT.fieldOf("outputAmount").forGetter(sar -> sar.outputAmount),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {

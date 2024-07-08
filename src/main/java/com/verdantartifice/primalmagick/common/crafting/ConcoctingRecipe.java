@@ -67,7 +67,7 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<CraftingInput>
         @Override
         public Codec<ConcoctingRecipe> codec() { 
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(sar -> sar.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);

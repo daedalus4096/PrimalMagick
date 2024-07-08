@@ -12,7 +12,6 @@ import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.Level;
 
 /**
@@ -32,8 +31,8 @@ public class RecallStoneTrigger extends SimpleCriterionTrigger<RecallStoneTrigge
     
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ResourceKey<Level>> dimension) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<RecallStoneTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(RecallStoneTrigger.TriggerInstance::player), 
-                ExtraCodecs.strictOptionalField(ResourceKey.codec(Registries.DIMENSION), "dimension").forGetter(RecallStoneTrigger.TriggerInstance::dimension)
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(RecallStoneTrigger.TriggerInstance::player), 
+                ResourceKey.codec(Registries.DIMENSION).optionalFieldOf("dimension").forGetter(RecallStoneTrigger.TriggerInstance::dimension)
             ).apply(instance, RecallStoneTrigger.TriggerInstance::new));
         
         public static Criterion<RecallStoneTrigger.TriggerInstance> anywhere() {

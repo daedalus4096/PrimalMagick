@@ -105,7 +105,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<CraftingInput
         @Override
         public Codec<RunecarvingRecipe> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(rr -> rr.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter(rr -> rr.ingredient1),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient2").forGetter(rr -> rr.ingredient2),
