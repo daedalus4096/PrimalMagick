@@ -90,6 +90,11 @@ public class PacketHandler {
                         .addMain(WandPoofPacket.class, WandPoofPacket.STREAM_CODEC, WandPoofPacket::onMessage)
                         .addMain(ManaSparklePacket.class, ManaSparklePacket.STREAM_CODEC, ManaSparklePacket::onMessage)
                         .addMain(SyncCooldownsPacket.class, SyncCooldownsPacket.STREAM_CODEC, SyncCooldownsPacket::onMessage)
+                        .addMain(SpellTrailPacket.class, SpellTrailPacket.STREAM_CODEC, SpellTrailPacket::onMessage)
+                        .addMain(SpellImpactPacket.class, SpellImpactPacket.STREAM_CODEC, SpellImpactPacket::onMessage)
+                        .addMain(TileToClientPacket.class, TileToClientPacket.STREAM_CODEC, TileToClientPacket::onMessage)
+                        .addMain(TeleportArrivalPacket.class, TeleportArrivalPacket.STREAM_CODEC, TeleportArrivalPacket::onMessage)
+                        .addMain(SpellBoltPacket.class, SpellBoltPacket.STREAM_CODEC, SpellBoltPacket::onMessage)
                     .serverbound()
                         .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                         .addMain(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
@@ -100,18 +105,13 @@ public class PacketHandler {
                         .addMain(SetSpellNamePacket.class, SetSpellNamePacket.STREAM_CODEC, SetSpellNamePacket::onMessage)
                         .addMain(SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket.STREAM_CODEC, SetSpellComponentTypeIndexPacket::onMessage)
                         .addMain(SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket.STREAM_CODEC, SetSpellComponentPropertyPacket::onMessage)
+                        .addMain(TileToServerPacket.class, TileToServerPacket.STREAM_CODEC, TileToServerPacket::onMessage)
             .build();
     
     public static void registerMessages() {
         // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
         LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
         INSTANCE
-            .messageBuilder(SpellTrailPacket.class, SpellTrailPacket.direction()).encoder(SpellTrailPacket::encode).decoder(SpellTrailPacket::decode).consumerMainThread(SpellTrailPacket::onMessage).add()
-            .messageBuilder(SpellImpactPacket.class, SpellImpactPacket.direction()).encoder(SpellImpactPacket::encode).decoder(SpellImpactPacket::decode).consumerMainThread(SpellImpactPacket::onMessage).add()
-            .messageBuilder(TileToClientPacket.class, TileToClientPacket.direction()).encoder(TileToClientPacket::encode).decoder(TileToClientPacket::decode).consumerMainThread(TileToClientPacket::onMessage).add()
-            .messageBuilder(TileToServerPacket.class, TileToServerPacket.direction()).encoder(TileToServerPacket::encode).decoder(TileToServerPacket::decode).consumerMainThread(TileToServerPacket::onMessage).add()
-            .messageBuilder(TeleportArrivalPacket.class, TeleportArrivalPacket.direction()).encoder(TeleportArrivalPacket::encode).decoder(TeleportArrivalPacket::decode).consumerMainThread(TeleportArrivalPacket::onMessage).add()
-            .messageBuilder(SpellBoltPacket.class, SpellBoltPacket.direction()).encoder(SpellBoltPacket::encode).decoder(SpellBoltPacket::decode).consumerMainThread(SpellBoltPacket::onMessage).add()
             .messageBuilder(SyncStatsPacket.class, SyncStatsPacket.direction()).encoder(SyncStatsPacket::encode).decoder(SyncStatsPacket::decode).consumerMainThread(SyncStatsPacket::onMessage).add()
             .messageBuilder(SyncAttunementsPacket.class, SyncAttunementsPacket.direction()).encoder(SyncAttunementsPacket::encode).decoder(SyncAttunementsPacket::decode).consumerMainThread(SyncAttunementsPacket::onMessage).add()
             .messageBuilder(ResetFallDistancePacket.class, ResetFallDistancePacket.direction()).encoder(ResetFallDistancePacket::encode).decoder(ResetFallDistancePacket::decode).consumerMainThread(ResetFallDistancePacket::onMessage).add()

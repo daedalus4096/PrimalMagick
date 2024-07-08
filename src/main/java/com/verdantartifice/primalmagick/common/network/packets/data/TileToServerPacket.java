@@ -5,11 +5,11 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to sync tile entity data from the client to the server.  Primarily used to request a sync of
@@ -18,33 +18,23 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class TileToServerPacket implements IMessageToServer {
-    protected BlockPos pos;
-    protected CompoundTag data;
-    
-    public TileToServerPacket() {
-        this.pos = BlockPos.ZERO;
-        this.data = null;
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, TileToServerPacket> STREAM_CODEC = StreamCodec.ofMember(TileToServerPacket::encode, TileToServerPacket::decode);
+
+    protected final BlockPos pos;
+    protected final CompoundTag data;
     
     public TileToServerPacket(BlockPos pos, CompoundTag data) {
         this.pos = pos;
         this.data = data;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(TileToServerPacket message, FriendlyByteBuf buf) {
+    public static void encode(TileToServerPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeBlockPos(message.pos);
         buf.writeNbt(message.data);
     }
     
-    public static TileToServerPacket decode(FriendlyByteBuf buf) {
-        TileToServerPacket message = new TileToServerPacket();
-        message.pos = buf.readBlockPos();
-        message.data = buf.readNbt();
-        return message;
+    public static TileToServerPacket decode(RegistryFriendlyByteBuf buf) {
+        return new TileToServerPacket(buf.readBlockPos(), buf.readNbt());
     }
     
     @SuppressWarnings("deprecation")

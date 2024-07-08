@@ -4,10 +4,10 @@ import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a spell bolt particle effect on the client.
@@ -15,16 +15,16 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SpellBoltPacket implements IMessageToClient {
-    protected double x1;
-    protected double y1;
-    protected double z1;
-    protected double x2;
-    protected double y2;
-    protected double z2;
-    protected int color;
+    public static final StreamCodec<RegistryFriendlyByteBuf, SpellBoltPacket> STREAM_CODEC = StreamCodec.ofMember(SpellBoltPacket::encode, SpellBoltPacket::decode);
 
-    public SpellBoltPacket() {}
-    
+    protected final double x1;
+    protected final double y1;
+    protected final double z1;
+    protected final double x2;
+    protected final double y2;
+    protected final double z2;
+    protected final int color;
+
     public SpellBoltPacket(double x1, double y1, double z1, double x2, double y2, double z2, int color) {
         this.x1 = x1;
         this.y1 = y1;
@@ -43,11 +43,7 @@ public class SpellBoltPacket implements IMessageToClient {
         this(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, color);
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(SpellBoltPacket message, FriendlyByteBuf buf) {
+    public static void encode(SpellBoltPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeDouble(message.x1);
         buf.writeDouble(message.y1);
         buf.writeDouble(message.z1);
@@ -57,16 +53,8 @@ public class SpellBoltPacket implements IMessageToClient {
         buf.writeVarInt(message.color);
     }
     
-    public static SpellBoltPacket decode(FriendlyByteBuf buf) {
-        SpellBoltPacket message = new SpellBoltPacket();
-        message.x1 = buf.readDouble();
-        message.y1 = buf.readDouble();
-        message.z1 = buf.readDouble();
-        message.x2 = buf.readDouble();
-        message.y2 = buf.readDouble();
-        message.z2 = buf.readDouble();
-        message.color = buf.readVarInt();
-        return message;
+    public static SpellBoltPacket decode(RegistryFriendlyByteBuf buf) {
+        return new SpellBoltPacket(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt());
     }
     
     public static void onMessage(SpellBoltPacket message, CustomPayloadEvent.Context ctx) {
