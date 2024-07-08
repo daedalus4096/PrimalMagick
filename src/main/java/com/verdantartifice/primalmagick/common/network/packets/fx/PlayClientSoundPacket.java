@@ -3,14 +3,14 @@ package com.verdantartifice.primalmagick.common.network.packets.fx;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -19,45 +19,36 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class PlayClientSoundPacket implements IMessageToClient {
-    protected String eventLoc;
-    protected float volume;
-    protected float pitch;
-    
-    public PlayClientSoundPacket() {
-        this.eventLoc = "";
-        this.volume = 0.0F;
-        this.pitch = 0.0F;
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, PlayClientSoundPacket> STREAM_CODEC = StreamCodec.ofMember(PlayClientSoundPacket::encode, PlayClientSoundPacket::decode);
+
+    protected final ResourceLocation eventLoc;
+    protected final float volume;
+    protected final float pitch;
     
     public PlayClientSoundPacket(SoundEvent event, float volume, float pitch) {
-        this.eventLoc = ForgeRegistries.SOUND_EVENTS.getKey(event).toString();
+        this(ForgeRegistries.SOUND_EVENTS.getKey(event), volume, pitch);
+    }
+    
+    protected PlayClientSoundPacket(ResourceLocation eventLoc, float volume, float pitch) {
+        this.eventLoc = eventLoc;
         this.volume = volume;
         this.pitch = pitch;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(PlayClientSoundPacket message, FriendlyByteBuf buf) {
-        buf.writeUtf(message.eventLoc);
+    public static void encode(PlayClientSoundPacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeResourceLocation(message.eventLoc);
         buf.writeFloat(message.volume);
         buf.writeFloat(message.pitch);
     }
     
-    public static PlayClientSoundPacket decode(FriendlyByteBuf buf) {
-        PlayClientSoundPacket message = new PlayClientSoundPacket();
-        message.eventLoc = buf.readUtf();
-        message.volume = buf.readFloat();
-        message.pitch = buf.readFloat();
-        return message;
+    public static PlayClientSoundPacket decode(RegistryFriendlyByteBuf buf) {
+        return new PlayClientSoundPacket(buf.readResourceLocation(), buf.readFloat(), buf.readFloat());
     }
     
     public static void onMessage(PlayClientSoundPacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-        ResourceLocation eventLoc = ResourceLocation.tryParse(message.eventLoc);
-        if (eventLoc != null && ForgeRegistries.SOUND_EVENTS.containsKey(eventLoc)) {
-            player.playSound(ForgeRegistries.SOUND_EVENTS.getValue(eventLoc), message.volume, message.pitch);
+        if (message.eventLoc != null && ForgeRegistries.SOUND_EVENTS.containsKey(message.eventLoc)) {
+            player.playSound(ForgeRegistries.SOUND_EVENTS.getValue(message.eventLoc), message.volume, message.pitch);
         }
     }
 }

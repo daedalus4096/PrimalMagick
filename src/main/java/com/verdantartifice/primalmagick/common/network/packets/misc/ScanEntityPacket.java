@@ -7,13 +7,13 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -23,30 +23,26 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ScanEntityPacket implements IMessageToServer {
+    public static final StreamCodec<RegistryFriendlyByteBuf, ScanEntityPacket> STREAM_CODEC = StreamCodec.ofMember(ScanEntityPacket::encode, ScanEntityPacket::decode);
+
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected EntityType<?> type;
-    
-    public ScanEntityPacket() {
-        this.type = null;
-    }
+    protected final EntityType<?> type;
     
     public ScanEntityPacket(EntityType<?> type) {
         this.type = type;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
+    protected ScanEntityPacket(ResourceLocation typeLoc) {
+        this.type = ForgeRegistries.ENTITY_TYPES.getValue(typeLoc);
     }
     
-    public static void encode(ScanEntityPacket message, FriendlyByteBuf buf) {
-        buf.writeUtf(ForgeRegistries.ENTITY_TYPES.getKey(message.type).toString());
+    public static void encode(ScanEntityPacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeResourceLocation(ForgeRegistries.ENTITY_TYPES.getKey(message.type));
     }
     
-    public static ScanEntityPacket decode(FriendlyByteBuf buf) {
-        ScanEntityPacket message = new ScanEntityPacket();
-        message.type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(buf.readUtf()));
-        return message;
+    public static ScanEntityPacket decode(RegistryFriendlyByteBuf buf) {
+        return new ScanEntityPacket(buf.readResourceLocation());
     }
     
     public static void onMessage(ScanEntityPacket message, CustomPayloadEvent.Context ctx) {

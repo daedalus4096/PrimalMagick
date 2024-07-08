@@ -97,6 +97,11 @@ public class PacketHandler {
                         .addMain(SpellBoltPacket.class, SpellBoltPacket.STREAM_CODEC, SpellBoltPacket::onMessage)
                         .addMain(SyncStatsPacket.class, SyncStatsPacket.STREAM_CODEC, SyncStatsPacket::onMessage)
                         .addMain(SyncAttunementsPacket.class, SyncAttunementsPacket.STREAM_CODEC, SyncAttunementsPacket::onMessage)
+                        .addMain(PlayClientSoundPacket.class, PlayClientSoundPacket.STREAM_CODEC, PlayClientSoundPacket::onMessage)
+                        .addMain(OfferingChannelPacket.class, OfferingChannelPacket.STREAM_CODEC, OfferingChannelPacket::onMessage)
+                        .addMain(PropMarkerPacket.class, PropMarkerPacket.STREAM_CODEC, PropMarkerPacket::onMessage)
+                        .addMain(RemovePropMarkerPacket.class, RemovePropMarkerPacket.STREAM_CODEC, RemovePropMarkerPacket::onMessage)
+                        .addMain(SyncCompanionsPacket.class, SyncCompanionsPacket.STREAM_CODEC, SyncCompanionsPacket::onMessage)
                     .serverbound()
                         .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                         .addMain(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
@@ -112,18 +117,13 @@ public class PacketHandler {
                         .addMain(StartProjectPacket.class, StartProjectPacket.STREAM_CODEC, StartProjectPacket::onMessage)
                         .addMain(CompleteProjectPacket.class, CompleteProjectPacket.STREAM_CODEC, CompleteProjectPacket::onMessage)
                         .addMain(SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket.STREAM_CODEC, SetProjectMaterialSelectionPacket::onMessage)
+                        .addMain(ScanEntityPacket.class, ScanEntityPacket.STREAM_CODEC, ScanEntityPacket::onMessage)
             .build();
     
     public static void registerMessages() {
         // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
         LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
         INSTANCE
-            .messageBuilder(PlayClientSoundPacket.class, PlayClientSoundPacket.direction()).encoder(PlayClientSoundPacket::encode).decoder(PlayClientSoundPacket::decode).consumerMainThread(PlayClientSoundPacket::onMessage).add()
-            .messageBuilder(OfferingChannelPacket.class, OfferingChannelPacket.direction()).encoder(OfferingChannelPacket::encode).decoder(OfferingChannelPacket::decode).consumerMainThread(OfferingChannelPacket::onMessage).add()
-            .messageBuilder(PropMarkerPacket.class, PropMarkerPacket.direction()).encoder(PropMarkerPacket::encode).decoder(PropMarkerPacket::decode).consumerMainThread(PropMarkerPacket::onMessage).add()
-            .messageBuilder(RemovePropMarkerPacket.class, RemovePropMarkerPacket.direction()).encoder(RemovePropMarkerPacket::encode).decoder(RemovePropMarkerPacket::decode).consumerMainThread(RemovePropMarkerPacket::onMessage).add()
-            .messageBuilder(SyncCompanionsPacket.class, SyncCompanionsPacket.direction()).encoder(SyncCompanionsPacket::encode).decoder(SyncCompanionsPacket::decode).consumerMainThread(SyncCompanionsPacket::onMessage).add()
-            .messageBuilder(ScanEntityPacket.class, ScanEntityPacket.direction()).encoder(ScanEntityPacket::encode).decoder(ScanEntityPacket::decode).consumerMainThread(ScanEntityPacket::onMessage).add()
             .messageBuilder(PotionExplosionPacket.class, PotionExplosionPacket.direction()).encoder(PotionExplosionPacket::encode).decoder(PotionExplosionPacket::decode).consumerMainThread(PotionExplosionPacket::onMessage).add()
             .messageBuilder(UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.direction()).encoder(UpdateAffinitiesPacket::encode).decoder(UpdateAffinitiesPacket::decode).consumerMainThread(UpdateAffinitiesPacket::onMessage).add()
             .messageBuilder(SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket.direction()).encoder(SyncArcaneRecipeBookPacket::encode).decoder(SyncArcaneRecipeBookPacket::decode).consumerMainThread(SyncArcaneRecipeBookPacket::onMessage).add()
