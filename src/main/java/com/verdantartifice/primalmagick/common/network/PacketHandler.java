@@ -95,6 +95,8 @@ public class PacketHandler {
                         .addMain(TileToClientPacket.class, TileToClientPacket.STREAM_CODEC, TileToClientPacket::onMessage)
                         .addMain(TeleportArrivalPacket.class, TeleportArrivalPacket.STREAM_CODEC, TeleportArrivalPacket::onMessage)
                         .addMain(SpellBoltPacket.class, SpellBoltPacket.STREAM_CODEC, SpellBoltPacket::onMessage)
+                        .addMain(SyncStatsPacket.class, SyncStatsPacket.STREAM_CODEC, SyncStatsPacket::onMessage)
+                        .addMain(SyncAttunementsPacket.class, SyncAttunementsPacket.STREAM_CODEC, SyncAttunementsPacket::onMessage)
                     .serverbound()
                         .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                         .addMain(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
@@ -106,18 +108,16 @@ public class PacketHandler {
                         .addMain(SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket.STREAM_CODEC, SetSpellComponentTypeIndexPacket::onMessage)
                         .addMain(SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket.STREAM_CODEC, SetSpellComponentPropertyPacket::onMessage)
                         .addMain(TileToServerPacket.class, TileToServerPacket.STREAM_CODEC, TileToServerPacket::onMessage)
+                        .addMain(ResetFallDistancePacket.class, ResetFallDistancePacket.STREAM_CODEC, ResetFallDistancePacket::onMessage)
+                        .addMain(StartProjectPacket.class, StartProjectPacket.STREAM_CODEC, StartProjectPacket::onMessage)
+                        .addMain(CompleteProjectPacket.class, CompleteProjectPacket.STREAM_CODEC, CompleteProjectPacket::onMessage)
+                        .addMain(SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket.STREAM_CODEC, SetProjectMaterialSelectionPacket::onMessage)
             .build();
     
     public static void registerMessages() {
         // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
         LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
         INSTANCE
-            .messageBuilder(SyncStatsPacket.class, SyncStatsPacket.direction()).encoder(SyncStatsPacket::encode).decoder(SyncStatsPacket::decode).consumerMainThread(SyncStatsPacket::onMessage).add()
-            .messageBuilder(SyncAttunementsPacket.class, SyncAttunementsPacket.direction()).encoder(SyncAttunementsPacket::encode).decoder(SyncAttunementsPacket::decode).consumerMainThread(SyncAttunementsPacket::onMessage).add()
-            .messageBuilder(ResetFallDistancePacket.class, ResetFallDistancePacket.direction()).encoder(ResetFallDistancePacket::encode).decoder(ResetFallDistancePacket::decode).consumerMainThread(ResetFallDistancePacket::onMessage).add()
-            .messageBuilder(StartProjectPacket.class, StartProjectPacket.direction()).encoder(StartProjectPacket::encode).decoder(StartProjectPacket::decode).consumerMainThread(StartProjectPacket::onMessage).add()
-            .messageBuilder(CompleteProjectPacket.class, CompleteProjectPacket.direction()).encoder(CompleteProjectPacket::encode).decoder(CompleteProjectPacket::decode).consumerMainThread(CompleteProjectPacket::onMessage).add()
-            .messageBuilder(SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket.direction()).encoder(SetProjectMaterialSelectionPacket::encode).decoder(SetProjectMaterialSelectionPacket::decode).consumerMainThread(SetProjectMaterialSelectionPacket::onMessage).add()
             .messageBuilder(PlayClientSoundPacket.class, PlayClientSoundPacket.direction()).encoder(PlayClientSoundPacket::encode).decoder(PlayClientSoundPacket::decode).consumerMainThread(PlayClientSoundPacket::onMessage).add()
             .messageBuilder(OfferingChannelPacket.class, OfferingChannelPacket.direction()).encoder(OfferingChannelPacket::encode).decoder(OfferingChannelPacket::decode).consumerMainThread(OfferingChannelPacket::onMessage).add()
             .messageBuilder(PropMarkerPacket.class, PropMarkerPacket.direction()).encoder(PropMarkerPacket::encode).decoder(PropMarkerPacket::decode).consumerMainThread(PropMarkerPacket::onMessage).add()

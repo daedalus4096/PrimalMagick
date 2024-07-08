@@ -6,12 +6,12 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to sync attunements capability data from the server to the client.
@@ -19,36 +19,32 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SyncAttunementsPacket implements IMessageToClient {
-    protected CompoundTag data;
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncAttunementsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncAttunementsPacket::encode, SyncAttunementsPacket::decode);
 
-    public SyncAttunementsPacket() {
-        this.data = null;
-    }
-    
+    protected final CompoundTag data;
+
     public SyncAttunementsPacket(Player player) {
         IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-        this.data = (attunements != null) ? attunements.serializeNBT() : null;
+        this.data = (attunements != null) ? attunements.serializeNBT(player.registryAccess()) : null;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
+    protected SyncAttunementsPacket(CompoundTag data) {
+        this.data = data;
     }
     
-    public static void encode(SyncAttunementsPacket message, FriendlyByteBuf buf) {
+    public static void encode(SyncAttunementsPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeNbt(message.data);
     }
     
-    public static SyncAttunementsPacket decode(FriendlyByteBuf buf) {
-        SyncAttunementsPacket message = new SyncAttunementsPacket();
-        message.data = buf.readNbt();
-        return message;
+    public static SyncAttunementsPacket decode(RegistryFriendlyByteBuf buf) {
+        return new SyncAttunementsPacket(buf.readNbt());
     }
     
     public static void onMessage(SyncAttunementsPacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
         if (attunements != null) {
-            attunements.deserializeNBT(message.data);
+            attunements.deserializeNBT(player.registryAccess(), message.data);
         }
     }
 }

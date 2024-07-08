@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to reset the server-side fall distance of the sending player.
@@ -12,15 +12,13 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class ResetFallDistancePacket implements IMessageToServer {
+    public static final StreamCodec<RegistryFriendlyByteBuf, ResetFallDistancePacket> STREAM_CODEC = StreamCodec.ofMember(ResetFallDistancePacket::encode, ResetFallDistancePacket::decode);
+
     public ResetFallDistancePacket() {}
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
+    public static void encode(ResetFallDistancePacket message, RegistryFriendlyByteBuf buf) {}
     
-    public static void encode(ResetFallDistancePacket message, FriendlyByteBuf buf) {}
-    
-    public static ResetFallDistancePacket decode(FriendlyByteBuf buf) {
+    public static ResetFallDistancePacket decode(RegistryFriendlyByteBuf buf) {
         return new ResetFallDistancePacket();
     }
     

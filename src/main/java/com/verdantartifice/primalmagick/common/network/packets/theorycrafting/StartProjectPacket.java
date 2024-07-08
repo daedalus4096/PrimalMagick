@@ -5,10 +5,10 @@ import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to start a research project on the server in the research table GUI.
@@ -16,28 +16,20 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class StartProjectPacket implements IMessageToServer {
-    protected int windowId;
+    public static final StreamCodec<RegistryFriendlyByteBuf, StartProjectPacket> STREAM_CODEC = StreamCodec.ofMember(StartProjectPacket::encode, StartProjectPacket::decode);
 
-    public StartProjectPacket() {
-        this.windowId = -1;
-    }
-    
+    protected final int windowId;
+
     public StartProjectPacket(int windowId) {
         this.windowId = windowId;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
+    public static void encode(StartProjectPacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeVarInt(message.windowId);
     }
     
-    public static void encode(StartProjectPacket message, FriendlyByteBuf buf) {
-        buf.writeInt(message.windowId);
-    }
-    
-    public static StartProjectPacket decode(FriendlyByteBuf buf) {
-        StartProjectPacket message = new StartProjectPacket();
-        message.windowId = buf.readInt();
-        return message;
+    public static StartProjectPacket decode(RegistryFriendlyByteBuf buf) {
+        return new StartProjectPacket(buf.readVarInt());
     }
     
     public static void onMessage(StartProjectPacket message, CustomPayloadEvent.Context ctx) {

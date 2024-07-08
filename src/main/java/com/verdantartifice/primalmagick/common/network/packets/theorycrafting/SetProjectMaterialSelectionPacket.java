@@ -4,10 +4,10 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to update the selection status of a research project's materials in the research table GUI.
@@ -15,33 +15,24 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SetProjectMaterialSelectionPacket implements IMessageToServer {
-    protected int index;
-    protected boolean selected;
-    
-    public SetProjectMaterialSelectionPacket() {
-        this.index = -1;
-        this.selected = false;
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, SetProjectMaterialSelectionPacket> STREAM_CODEC = StreamCodec.ofMember(
+            SetProjectMaterialSelectionPacket::encode, SetProjectMaterialSelectionPacket::decode);
+
+    protected final int index;
+    protected final boolean selected;
     
     public SetProjectMaterialSelectionPacket(int index, boolean selected) {
         this.index = index;
         this.selected = selected;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(SetProjectMaterialSelectionPacket message, FriendlyByteBuf buf) {
-        buf.writeInt(message.index);
+    public static void encode(SetProjectMaterialSelectionPacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeVarInt(message.index);
         buf.writeBoolean(message.selected);
     }
     
-    public static SetProjectMaterialSelectionPacket decode(FriendlyByteBuf buf) {
-        SetProjectMaterialSelectionPacket message = new SetProjectMaterialSelectionPacket();
-        message.index = buf.readInt();
-        message.selected = buf.readBoolean();
-        return message;
+    public static SetProjectMaterialSelectionPacket decode(RegistryFriendlyByteBuf buf) {
+        return new SetProjectMaterialSelectionPacket(buf.readVarInt(), buf.readBoolean());
     }
     
     public static void onMessage(SetProjectMaterialSelectionPacket message, CustomPayloadEvent.Context ctx) {

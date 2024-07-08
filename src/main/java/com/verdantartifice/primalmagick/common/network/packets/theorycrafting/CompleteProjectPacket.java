@@ -13,12 +13,12 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to complete a research project on the server in the research table GUI.
@@ -26,28 +26,20 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class CompleteProjectPacket implements IMessageToServer {
-    protected int windowId;
+    public static final StreamCodec<RegistryFriendlyByteBuf, CompleteProjectPacket> STREAM_CODEC = StreamCodec.ofMember(CompleteProjectPacket::encode, CompleteProjectPacket::decode);
 
-    public CompleteProjectPacket() {
-        this.windowId = -1;
-    }
-    
+    protected final int windowId;
+
     public CompleteProjectPacket(int windowId) {
         this.windowId = windowId;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
+    public static void encode(CompleteProjectPacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeVarInt(message.windowId);
     }
     
-    public static void encode(CompleteProjectPacket message, FriendlyByteBuf buf) {
-        buf.writeInt(message.windowId);
-    }
-    
-    public static CompleteProjectPacket decode(FriendlyByteBuf buf) {
-        CompleteProjectPacket message = new CompleteProjectPacket();
-        message.windowId = buf.readInt();
-        return message;
+    public static CompleteProjectPacket decode(RegistryFriendlyByteBuf buf) {
+        return new CompleteProjectPacket(buf.readVarInt());
     }
     
     public static void onMessage(CompleteProjectPacket message, CustomPayloadEvent.Context ctx) {
