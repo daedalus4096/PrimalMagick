@@ -3,17 +3,19 @@ package com.verdantartifice.primalmagick.common.crafting;
 import java.util.Optional;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -103,8 +105,8 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<CraftingInput
 
     public static class Serializer implements RecipeSerializer<RunecarvingRecipe> {
         @Override
-        public Codec<RunecarvingRecipe> codec() {
-            return RecordCodecBuilder.create(instance -> instance.group(
+        public MapCodec<RunecarvingRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(instance -> instance.group(
                     Codec.STRING.optionalFieldOf("group", "").forGetter(rr -> rr.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter(rr -> rr.ingredient1),
@@ -113,36 +115,24 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<CraftingInput
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
                     ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
-                    ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
+                    ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
                 ).apply(instance, RunecarvingRecipe::new)
             );
         }
         
         @Override
-        public RunecarvingRecipe fromNetwork(FriendlyByteBuf buffer) {
-            String group = buffer.readUtf();
-            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
-            Ingredient ing1 = Ingredient.fromNetwork(buffer);
-            Ingredient ing2 = Ingredient.fromNetwork(buffer);
-            Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
-            Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
-            Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
-            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey::fromNetwork);
-            ItemStack result = buffer.readItem();
-            return new RunecarvingRecipe(group, result, ing1, ing2, requirement, baseExpOverride, bonusExpOverride, expGroup, discOverride);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, RunecarvingRecipe recipe) {
-            buffer.writeUtf(recipe.group);
-            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
-            recipe.ingredient1.toNetwork(buffer);
-            recipe.ingredient2.toNetwork(buffer);
-            buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
-            buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
-            buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
-            buffer.writeOptional(recipe.disciplineOverride, (b, d) -> d.toNetwork(b));
-            buffer.writeItem(recipe.output);
+        public StreamCodec<RegistryFriendlyByteBuf, RunecarvingRecipe> streamCodec() {
+            return StreamCodecUtils.composite(
+                    ByteBufCodecs.STRING_UTF8, r -> r.group,
+                    ItemStack.STREAM_CODEC, r -> r.output,
+                    Ingredient.CONTENTS_STREAM_CODEC, r -> r.ingredient1,
+                    Ingredient.CONTENTS_STREAM_CODEC, r -> r.ingredient2,
+                    ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), r -> r.requirement,
+                    ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.baseExpertiseOverride,
+                    ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.bonusExpertiseOverride,
+                    ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC), r -> r.expertiseGroup,
+                    ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC), r -> r.disciplineOverride,
+                    RunecarvingRecipe::new);
         }
     }
 }
