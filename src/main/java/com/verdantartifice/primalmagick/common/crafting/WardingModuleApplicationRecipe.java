@@ -1,12 +1,10 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
@@ -70,7 +68,7 @@ public class WardingModuleApplicationRecipe extends CustomRecipe {
         if (armorStack.isEmpty()) {
             return armorStack;
         } else if (moduleStack.getItem() instanceof WardingModuleItem module && module.hasWard()) {
-            armorStack.addTagElement(WardingModuleItem.TAG_NAME, IntTag.valueOf(module.getWardLevel()));
+            armorStack.set(DataComponentsPM.WARD_LEVEL.get(), module.getWardLevel());
             return armorStack;
         } else {
             return ItemStack.EMPTY;

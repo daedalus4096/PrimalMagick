@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
@@ -70,11 +71,11 @@ public class WardingModuleItem extends Item implements ITieredDevice {
     }
     
     public static boolean hasWardAttached(ItemStack stack) {
-        return stack.is(ItemTagsPM.WARDABLE_ARMOR) && stack.hasTag() && stack.getTag().contains(TAG_NAME) && getAttachedWardLevel(stack) > 0;
+        return stack.is(ItemTagsPM.WARDABLE_ARMOR) && stack.getOrDefault(DataComponentsPM.WARD_LEVEL.get(), 0) > 0;
     }
     
     public static int getAttachedWardLevel(ItemStack stack) {
-        return stack.getTag().getInt(TAG_NAME);
+        return stack.getOrDefault(DataComponentsPM.WARD_LEVEL.get(), 0);
     }
     
     public static List<Supplier<? extends Item>> getApplicableItems() {

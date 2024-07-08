@@ -50,6 +50,8 @@ public class DataComponentsPM {
     
     public static final RegistryObject<DataComponentType<BlockPos>> WAND_USE_POSITION = register("wand_use_position", builder -> builder.persistent(BlockPos.CODEC).networkSynchronized(BlockPos.STREAM_CODEC));
     
+    public static final RegistryObject<DataComponentType<Integer>> WARD_LEVEL = register("ward_level", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+    
     private static <T> RegistryObject<DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> operator) {
         return DATA_COMPONENT_TYPES.register(name, () -> operator.apply(DataComponentType.builder()).build());
     }
