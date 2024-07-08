@@ -9,12 +9,12 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger the opening of of a static book on the client.
@@ -22,6 +22,9 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class OpenStaticBookScreenPacket implements IMessageToClient {
+    public static final StreamCodec<RegistryFriendlyByteBuf, OpenStaticBookScreenPacket> STREAM_CODEC = StreamCodec.ofMember(OpenStaticBookScreenPacket::encode, OpenStaticBookScreenPacket::decode);
+
+    // TODO Can this be strongly typed as a ResourceKey<BookDefinition> instead?
     protected final ResourceKey<?> bookKey;
     protected final ResourceKey<BookLanguage> languageId;
     protected final int translatedComprehension;
@@ -42,18 +45,14 @@ public class OpenStaticBookScreenPacket implements IMessageToClient {
         this.bookType = bookType;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(OpenStaticBookScreenPacket message, FriendlyByteBuf buf) {
+    public static void encode(OpenStaticBookScreenPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeResourceKey(message.bookKey);
         buf.writeResourceKey(message.languageId);
         buf.writeVarInt(message.translatedComprehension);
         buf.writeEnum(message.bookType);
     }
     
-    public static OpenStaticBookScreenPacket decode(FriendlyByteBuf buf) {
+    public static OpenStaticBookScreenPacket decode(RegistryFriendlyByteBuf buf) {
         return new OpenStaticBookScreenPacket(buf.readResourceKey(RegistryKeysPM.BOOKS), buf.readResourceKey(RegistryKeysPM.BOOK_LANGUAGES), buf.readVarInt(), buf.readEnum(BookType.class));
     }
     

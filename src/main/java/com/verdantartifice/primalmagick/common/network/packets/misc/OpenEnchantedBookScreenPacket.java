@@ -6,13 +6,13 @@ import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.core.Holder;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Packet sent from the server to trigger the opening of of an enchanted book on the client.
@@ -20,22 +20,24 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class OpenEnchantedBookScreenPacket implements IMessageToClient {
-    protected final Holder<Enchantment> enchantment;
+    public static final StreamCodec<RegistryFriendlyByteBuf, OpenEnchantedBookScreenPacket> STREAM_CODEC = StreamCodec.ofMember(OpenEnchantedBookScreenPacket::encode, OpenEnchantedBookScreenPacket::decode);
+
+    protected final ResourceKey<Enchantment> bookKey;
     
     public OpenEnchantedBookScreenPacket(Holder<Enchantment> ench) {
-        this.enchantment = ench;
+        this.bookKey = ench.unwrapKey().orElse(null);
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
+    protected OpenEnchantedBookScreenPacket(ResourceKey<Enchantment> enchKey) {
+        this.bookKey = enchKey;
     }
     
-    public static void encode(OpenEnchantedBookScreenPacket message, FriendlyByteBuf buf) {
+    public static void encode(OpenEnchantedBookScreenPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeResourceKey(message.bookKey);
     }
     
-    public static OpenEnchantedBookScreenPacket decode(FriendlyByteBuf buf) {
-        return new OpenEnchantedBookScreenPacket(buf.readResourceKey(ForgeRegistries.Keys.ENCHANTMENTS));
+    public static OpenEnchantedBookScreenPacket decode(RegistryFriendlyByteBuf buf) {
+        return new OpenEnchantedBookScreenPacket(buf.readResourceKey(Registries.ENCHANTMENT));
     }
     
     public static void onMessage(OpenEnchantedBookScreenPacket message, CustomPayloadEvent.Context ctx) {

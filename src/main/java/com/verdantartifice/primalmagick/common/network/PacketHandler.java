@@ -108,6 +108,11 @@ public class PacketHandler {
                         .addMain(PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.STREAM_CODEC, PlaceGhostArcaneRecipePacket::onMessage)
                         .addMain(SpellcraftingRunePacket.class, SpellcraftingRunePacket.STREAM_CODEC, SpellcraftingRunePacket::onMessage)
                         .addMain(OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket.STREAM_CODEC, OpenGrimoireScreenPacket::onMessage)
+                        .addMain(SyncWardPacket.class, SyncWardPacket.STREAM_CODEC, SyncWardPacket::onMessage)
+                        .addMain(OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket.STREAM_CODEC, OpenStaticBookScreenPacket::onMessage)
+                        .addMain(OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket.STREAM_CODEC, OpenEnchantedBookScreenPacket::onMessage)
+                        .addMain(SyncLinguisticsPacket.class, SyncLinguisticsPacket.STREAM_CODEC, SyncLinguisticsPacket::onMessage)
+                        .addMain(ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.STREAM_CODEC, ContainerSetVarintDataPacket::onMessage)
                     .serverbound()
                         .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                         .addMain(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
@@ -136,11 +141,6 @@ public class PacketHandler {
         // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
         LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
         INSTANCE
-            .messageBuilder(SyncWardPacket.class, SyncWardPacket.direction()).encoder(SyncWardPacket::encode).decoder(SyncWardPacket::decode).consumerMainThread(SyncWardPacket::onMessage).add()
-            .messageBuilder(OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket.direction()).encoder(OpenStaticBookScreenPacket::encode).decoder(OpenStaticBookScreenPacket::decode).consumerMainThread(OpenStaticBookScreenPacket::onMessage).add()
-            .messageBuilder(OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket.direction()).encoder(OpenEnchantedBookScreenPacket::encode).decoder(OpenEnchantedBookScreenPacket::decode).consumerMainThread(OpenEnchantedBookScreenPacket::onMessage).add()
-            .messageBuilder(SyncLinguisticsPacket.class, SyncLinguisticsPacket.direction()).encoder(SyncLinguisticsPacket::encode).decoder(SyncLinguisticsPacket::decode).consumerMainThread(SyncLinguisticsPacket::onMessage).add()
-            .messageBuilder(ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.direction()).encoder(ContainerSetVarintDataPacket::encode).decoder(ContainerSetVarintDataPacket::decode).consumerMainThread(ContainerSetVarintDataPacket::onMessage).add()
             .messageBuilder(ChangeScribeTableModePacket.class, ChangeScribeTableModePacket.direction()).encoder(ChangeScribeTableModePacket::encode).decoder(ChangeScribeTableModePacket::decode).consumerMainThread(ChangeScribeTableModePacket::onMessage).add()
             .messageBuilder(TranscribeActionPacket.class, TranscribeActionPacket.direction()).encoder(TranscribeActionPacket::encode).decoder(TranscribeActionPacket::decode).consumerMainThread(TranscribeActionPacket::onMessage).add()
             .messageBuilder(StudyVocabularyActionPacket.class, StudyVocabularyActionPacket.direction()).encoder(StudyVocabularyActionPacket::encode).decoder(StudyVocabularyActionPacket::decode).consumerMainThread(StudyVocabularyActionPacket::onMessage).add()
