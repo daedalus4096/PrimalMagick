@@ -4,14 +4,15 @@ import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
@@ -59,7 +60,7 @@ public class ShapelessTagRecipe extends AbstractTagCraftingRecipe<CraftingInput>
     }
 
     public static class Serializer implements RecipeSerializer<ShapelessTagRecipe> {
-        protected static final Codec<ShapelessTagRecipe> CODEC = RecordCodecBuilder.create(instance -> {
+        protected static final MapCodec<ShapelessTagRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> {
             return instance.group(
                     Codec.STRING.optionalFieldOf("group", "").forGetter(sar -> sar.group),
                     CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(sar -> sar.category),
@@ -79,36 +80,37 @@ public class ShapelessTagRecipe extends AbstractTagCraftingRecipe<CraftingInput>
         });
         
         @Override
-        public Codec<ShapelessTagRecipe> codec() {
+        public MapCodec<ShapelessTagRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public ShapelessTagRecipe fromNetwork(FriendlyByteBuf pBuffer) {
-            String group = pBuffer.readUtf(32767);
+        public StreamCodec<RegistryFriendlyByteBuf, ShapelessTagRecipe> streamCodec() {
+            return StreamCodec.of(ShapelessTagRecipe.Serializer::toNetwork, ShapelessTagRecipe.Serializer::fromNetwork);
+        }
+
+        private static ShapelessTagRecipe fromNetwork(RegistryFriendlyByteBuf pBuffer) {
+            String group = pBuffer.readUtf();
             CraftingBookCategory category = pBuffer.readEnum(CraftingBookCategory.class);
             
             int count = pBuffer.readVarInt();
             NonNullList<Ingredient> ingredients = NonNullList.withSize(count, Ingredient.EMPTY);
-            for (int index = 0; index < ingredients.size(); index++) {
-                ingredients.set(index, Ingredient.fromNetwork(pBuffer));
-            }
+            ingredients.replaceAll(ing -> Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer));
             
-            TagKey<Item> resultTag = TagKey.create(Registries.ITEM, pBuffer.readResourceLocation());
+            TagKey<Item> resultTag = StreamCodecUtils.tagKey(Registries.ITEM).decode(pBuffer);
             int resultAmount = pBuffer.readVarInt();
             
             return new ShapelessTagRecipe(group, category, resultTag, resultAmount, ingredients);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, ShapelessTagRecipe pRecipe) {
+        private static void toNetwork(RegistryFriendlyByteBuf pBuffer, ShapelessTagRecipe pRecipe) {
             pBuffer.writeUtf(pRecipe.group);
             pBuffer.writeEnum(pRecipe.category);
             pBuffer.writeVarInt(pRecipe.recipeItems.size());
             for (Ingredient ingredient : pRecipe.recipeItems) {
-                ingredient.toNetwork(pBuffer);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, ingredient);
             }
-            pBuffer.writeResourceLocation(pRecipe.outputTag.location());
+            StreamCodecUtils.tagKey(Registries.ITEM).encode(pBuffer, pRecipe.outputTag);
             pBuffer.writeVarInt(pRecipe.outputAmount);
         }
     }
