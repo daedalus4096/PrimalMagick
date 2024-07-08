@@ -3,17 +3,19 @@ package com.verdantartifice.primalmagick.common.crafting;
 import java.util.Optional;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -123,8 +125,8 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingInpu
 
     public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
         @Override
-        public Codec<ShapedArcaneRecipe> codec() {
-            return RecordCodecBuilder.create(instance -> instance.group(
+        public MapCodec<ShapedArcaneRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(instance -> instance.group(
                     Codec.STRING.optionalFieldOf("group", "").forGetter(r -> r.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(r -> r.output),
                     ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
@@ -133,35 +135,23 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingInpu
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
                     ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
-                    ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
+                    ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
             ).apply(instance, ShapedArcaneRecipe::new));
         }
 
         @Override
-        public ShapedArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
-            String group = buffer.readUtf();
-            ShapedRecipePattern pattern = ShapedRecipePattern.fromNetwork(buffer);
-            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
-            SourceList manaCosts = SourceList.fromNetwork(buffer);
-            Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
-            Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
-            Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
-            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey::fromNetwork);
-            ItemStack stack = buffer.readItem();
-            return new ShapedArcaneRecipe(group, stack, pattern, requirement, manaCosts, baseExpOverride, bonusExpOverride, expGroup, discOverride);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, ShapedArcaneRecipe recipe) {
-            buffer.writeUtf(recipe.group);
-            recipe.pattern.toNetwork(buffer);
-            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
-            SourceList.toNetwork(buffer, recipe.manaCosts);
-            buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
-            buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
-            buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
-            buffer.writeOptional(recipe.disciplineOverride, (b, d) -> d.toNetwork(b));
-            buffer.writeItem(recipe.output);
+        public StreamCodec<RegistryFriendlyByteBuf, ShapedArcaneRecipe> streamCodec() {
+            return StreamCodecUtils.composite(
+                    ByteBufCodecs.STRING_UTF8, r -> r.group,
+                    ItemStack.STREAM_CODEC, r -> r.output,
+                    ShapedRecipePattern.STREAM_CODEC, r -> r.pattern,
+                    ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), r -> r.requirement,
+                    SourceList.STREAM_CODEC, r -> r.manaCosts,
+                    ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.baseExpertiseOverride,
+                    ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.bonusExpertiseOverride,
+                    ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC), r -> r.expertiseGroup,
+                    ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC), r -> r.disciplineOverride,
+                    ShapedArcaneRecipe::new);
         }
     }
 }
