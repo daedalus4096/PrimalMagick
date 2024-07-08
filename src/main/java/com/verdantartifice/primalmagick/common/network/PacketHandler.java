@@ -102,6 +102,10 @@ public class PacketHandler {
                         .addMain(PropMarkerPacket.class, PropMarkerPacket.STREAM_CODEC, PropMarkerPacket::onMessage)
                         .addMain(RemovePropMarkerPacket.class, RemovePropMarkerPacket.STREAM_CODEC, RemovePropMarkerPacket::onMessage)
                         .addMain(SyncCompanionsPacket.class, SyncCompanionsPacket.STREAM_CODEC, SyncCompanionsPacket::onMessage)
+                        .addMain(PotionExplosionPacket.class, PotionExplosionPacket.STREAM_CODEC, PotionExplosionPacket::onMessage)
+                        .addMain(UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.STREAM_CODEC, UpdateAffinitiesPacket::onMessage)
+                        .addMain(SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket.STREAM_CODEC, SyncArcaneRecipeBookPacket::onMessage)
+                        .addMain(PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.STREAM_CODEC, PlaceGhostArcaneRecipePacket::onMessage)
                     .serverbound()
                         .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                         .addMain(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
@@ -118,19 +122,15 @@ public class PacketHandler {
                         .addMain(CompleteProjectPacket.class, CompleteProjectPacket.STREAM_CODEC, CompleteProjectPacket::onMessage)
                         .addMain(SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket.STREAM_CODEC, SetProjectMaterialSelectionPacket::onMessage)
                         .addMain(ScanEntityPacket.class, ScanEntityPacket.STREAM_CODEC, ScanEntityPacket::onMessage)
+                        .addMain(PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket.STREAM_CODEC, PlaceArcaneRecipePacket::onMessage)
+                        .addMain(SeenArcaneRecipePacket.class, SeenArcaneRecipePacket.STREAM_CODEC, SeenArcaneRecipePacket::onMessage)
+                        .addMain(ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket.STREAM_CODEC, ChangeArcaneRecipeBookSettingsPacket::onMessage)
             .build();
     
     public static void registerMessages() {
         // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
         LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
         INSTANCE
-            .messageBuilder(PotionExplosionPacket.class, PotionExplosionPacket.direction()).encoder(PotionExplosionPacket::encode).decoder(PotionExplosionPacket::decode).consumerMainThread(PotionExplosionPacket::onMessage).add()
-            .messageBuilder(UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.direction()).encoder(UpdateAffinitiesPacket::encode).decoder(UpdateAffinitiesPacket::decode).consumerMainThread(UpdateAffinitiesPacket::onMessage).add()
-            .messageBuilder(SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket.direction()).encoder(SyncArcaneRecipeBookPacket::encode).decoder(SyncArcaneRecipeBookPacket::decode).consumerMainThread(SyncArcaneRecipeBookPacket::onMessage).add()
-            .messageBuilder(PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket.direction()).encoder(PlaceArcaneRecipePacket::encode).decoder(PlaceArcaneRecipePacket::decode).consumerMainThread(PlaceArcaneRecipePacket::onMessage).add()
-            .messageBuilder(PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.direction()).encoder(PlaceGhostArcaneRecipePacket::encode).decoder(PlaceGhostArcaneRecipePacket::decode).consumerMainThread(PlaceGhostArcaneRecipePacket::onMessage).add()
-            .messageBuilder(SeenArcaneRecipePacket.class, SeenArcaneRecipePacket.direction()).encoder(SeenArcaneRecipePacket::encode).decoder(SeenArcaneRecipePacket::decode).consumerMainThread(SeenArcaneRecipePacket::onMessage).add()
-            .messageBuilder(ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket.direction()).encoder(ChangeArcaneRecipeBookSettingsPacket::encode).decoder(ChangeArcaneRecipeBookSettingsPacket::decode).consumerMainThread(ChangeArcaneRecipeBookSettingsPacket::onMessage).add()
             .messageBuilder(SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket.direction()).encoder(SetResearchTopicHistoryPacket::encode).decoder(SetResearchTopicHistoryPacket::decode).consumerMainThread(SetResearchTopicHistoryPacket::onMessage).add()
             .messageBuilder(SpellcraftingRunePacket.class, SpellcraftingRunePacket.direction()).encoder(SpellcraftingRunePacket::encode).decoder(SpellcraftingRunePacket::decode).consumerMainThread(SpellcraftingRunePacket::onMessage).add()
             .messageBuilder(SetActiveSpellPacket.class, SetActiveSpellPacket.direction()).encoder(SetActiveSpellPacket::encode).decoder(SetActiveSpellPacket::decode).consumerMainThread(SetActiveSpellPacket::onMessage).add()

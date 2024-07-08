@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagick.common.network.packets.fx;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a potion explosion particle effect on the client.
@@ -14,13 +14,13 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class PotionExplosionPacket implements IMessageToClient {
-    protected double x;
-    protected double y;
-    protected double z;
-    protected int color;
-    protected boolean isInstant;
-    
-    public PotionExplosionPacket() {}
+    public static final StreamCodec<RegistryFriendlyByteBuf, PotionExplosionPacket> STREAM_CODEC = StreamCodec.ofMember(PotionExplosionPacket::encode, PotionExplosionPacket::decode);
+
+    protected final double x;
+    protected final double y;
+    protected final double z;
+    protected final int color;
+    protected final boolean isInstant;
     
     public PotionExplosionPacket(double x, double y, double z, int color, boolean isInstant) {
         this.x = x;
@@ -34,11 +34,7 @@ public class PotionExplosionPacket implements IMessageToClient {
         this(vec.x, vec.y, vec.z, color, isInstant);
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(PotionExplosionPacket message, FriendlyByteBuf buf) {
+    public static void encode(PotionExplosionPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
         buf.writeDouble(message.z);
@@ -46,14 +42,8 @@ public class PotionExplosionPacket implements IMessageToClient {
         buf.writeBoolean(message.isInstant);
     }
     
-    public static PotionExplosionPacket decode(FriendlyByteBuf buf) {
-        PotionExplosionPacket message = new PotionExplosionPacket();
-        message.x = buf.readDouble();
-        message.y = buf.readDouble();
-        message.z = buf.readDouble();
-        message.color = buf.readVarInt();
-        message.isInstant = buf.readBoolean();
-        return message;
+    public static PotionExplosionPacket decode(RegistryFriendlyByteBuf buf) {
+        return new PotionExplosionPacket(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt(), buf.readBoolean());
     }
     
     public static void onMessage(PotionExplosionPacket message, CustomPayloadEvent.Context ctx) {

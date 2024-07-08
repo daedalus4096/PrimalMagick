@@ -3,12 +3,12 @@ package com.verdantartifice.primalmagick.common.network.packets.recipe_book;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet that informs the server that a given recipe has been seen by the player.
@@ -16,28 +16,24 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SeenArcaneRecipePacket implements IMessageToServer {
-    protected ResourceLocation recipeId;
-    
-    public SeenArcaneRecipePacket() {
-        this.recipeId = null;
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, SeenArcaneRecipePacket> STREAM_CODEC = StreamCodec.ofMember(SeenArcaneRecipePacket::encode, SeenArcaneRecipePacket::decode);
+
+    protected final ResourceLocation recipeId;
     
     public SeenArcaneRecipePacket(RecipeHolder<?> recipe) {
-        this.recipeId = recipe.id();
+        this(recipe.id());
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
+    public SeenArcaneRecipePacket(ResourceLocation recipeId) {
+        this.recipeId = recipeId;
     }
     
-    public static void encode(SeenArcaneRecipePacket message, FriendlyByteBuf buf) {
+    public static void encode(SeenArcaneRecipePacket message, RegistryFriendlyByteBuf buf) {
         buf.writeResourceLocation(message.recipeId);
     }
     
-    public static SeenArcaneRecipePacket decode(FriendlyByteBuf buf) {
-        SeenArcaneRecipePacket message = new SeenArcaneRecipePacket();
-        message.recipeId = buf.readResourceLocation();
-        return message;
+    public static SeenArcaneRecipePacket decode(RegistryFriendlyByteBuf buf) {
+        return new SeenArcaneRecipePacket(buf.readResourceLocation());
     }
     
     public static void onMessage(SeenArcaneRecipePacket message, CustomPayloadEvent.Context ctx) {
