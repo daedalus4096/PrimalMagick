@@ -13,6 +13,9 @@ import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -27,6 +30,7 @@ import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -40,66 +44,66 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
-    public LibraryLootTables() {
-        super(LootTablesPM::library);
+    public LibraryLootTables(HolderLookup.Provider registries) {
+        super(registries, LootTablesPM::library);
     }
     
     @Override
-    protected void addTables(BiConsumer<ResourceLocation, Builder> writer) {
+    protected void addTables(BiConsumer<ResourceKey<LootTable>, Builder> writer) {
         // Register top level loot tables
         this.registerLootTable(writer, LootTablesPM.LIBRARY_EARTH, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_EARTH).setWeight(40))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SKY).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SUN).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_EARTH).setWeight(40))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SKY).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SUN).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
                 .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_SEA, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SEA).setWeight(40))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SKY).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_MOON).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SEA).setWeight(40))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SKY).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_MOON).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
                 .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_SKY, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SKY).setWeight(40))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_EARTH).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SEA).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SKY).setWeight(40))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_EARTH).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SEA).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
                 .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_SUN, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SUN).setWeight(40))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_MOON).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_EARTH).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SUN).setWeight(40))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_MOON).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_EARTH).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
                 .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_MOON, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_MOON).setWeight(40))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SUN).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SEA).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_MOON).setWeight(40))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SUN).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SEA).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
                 .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_FORBIDDEN, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(5))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(20))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(5))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(20))
                 .add(EmptyLootItem.emptyItem().setWeight(20))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_WELCOME, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
                 .add(autoTranslatingBook(BooksPM.WELCOME))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_WARNING, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
                 .add(autoTranslatingBook(BooksPM.WARNING))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_HIDDEN, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(UniformGenerator.between(5F, 10F))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(5))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(20))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(5))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(20))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_ARCHAEOLOGY, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.EARTH, 1))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SEA, 1))
@@ -115,42 +119,42 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.EARTH, 12))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.EARTH, 6))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.EARTH, 2))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_SEA, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.SEA, 12))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SEA, 6))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SEA, 2))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_SKY, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.SKY, 12))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SKY, 6))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SKY, 2))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_SUN, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.SUN, 12))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SUN, 6))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SUN, 2))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_MOON, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.MOON, 12))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.MOON, 6))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.MOON, 2))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_TRADE, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.TRADE, 12))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.TRADE, 6))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.TRADE, 2))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_FORBIDDEN, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.FORBIDDEN, 6))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.FORBIDDEN, 10))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.FORBIDDEN, 4))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_HALLOWED, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.HALLOWED, 4))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.HALLOWED, 6))
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.HALLOWED, 10))
-                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
 
         // Register catalog component loot tables
         LootPool.Builder commonPool = LootPool.lootPool().add(book(BooksPM.SOURCE_PRIMER, Rarity.COMMON, 1));
@@ -170,16 +174,17 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
 
         // Generate treasure catalog loot table
         LootPool.Builder enchPool = LootPool.lootPool();
-        ForgeRegistries.ENCHANTMENTS.getEntries().stream().filter(e -> e.getKey().location().getNamespace().equals(PrimalMagick.MODID)).map(e -> e.getValue()).forEach(ench -> {
-            enchPool.add(enchantedBook(ench));
+        var enchLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+        enchLookup.listElements().filter(enchRef -> enchRef.key().location().getNamespace().equals(PrimalMagick.MODID)).forEach(enchRef -> {
+            enchPool.add(enchantedBook(enchRef));
         });
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(enchPool));
     }
     
     @SuppressWarnings("deprecation")
-    protected static LootPoolEntryContainer.Builder<?> catalog(ResourceLocation lootTable, ResourceKey<BookLanguage> languageKey, int weight) {
+    protected static LootPoolEntryContainer.Builder<?> catalog(ResourceKey<LootTable> lootTable, ResourceKey<BookLanguage> languageKey, int weight) {
         CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, languageKey.location().toString()));
-        return LootTableReference.lootTableReference(lootTable).setWeight(weight).apply(SetNbtFunction.setTag(tag));
+        return NestedLootTable.lootTableReference(lootTable).setWeight(weight).apply(SetNbtFunction.setTag(tag));
     }
     
     @SuppressWarnings("deprecation")
@@ -194,8 +199,8 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         return LootItem.lootTableItem(itemSupplier.get()).setWeight(weight).apply(SetNbtFunction.setTag(tag));
     }
     
-    protected static LootPoolEntryContainer.Builder<?> enchantedBook(Enchantment ench) {
-        return LootItem.lootTableItem(Items.BOOK).setWeight(ench.getRarity().getWeight()).apply(new EnchantRandomlyFunction.Builder().withEnchantment(ench));
+    protected static LootPoolEntryContainer.Builder<?> enchantedBook(Holder<Enchantment> ench) {
+        return LootItem.lootTableItem(Items.BOOK).setWeight(ench.value().definition().weight()).apply(new EnchantRandomlyFunction.Builder().withEnchantment(ench));
     }
     
     @SuppressWarnings("deprecation")

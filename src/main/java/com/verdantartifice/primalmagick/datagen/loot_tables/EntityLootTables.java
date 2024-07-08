@@ -13,20 +13,20 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -41,8 +41,8 @@ public class EntityLootTables extends EntityLootSubProvider {
 
     protected final Set<ResourceLocation> registeredEntities = new HashSet<>();
     
-    public EntityLootTables() {
-        super(FeatureFlags.REGISTRY.allFlags());
+    public EntityLootTables(HolderLookup.Provider registries) {
+        super(FeatureFlags.REGISTRY.allFlags(), registries);
     }
 
     private void checkExpectations() {
@@ -71,7 +71,7 @@ public class EntityLootTables extends EntityLootSubProvider {
     }
 
     @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> writer) {
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> writer) {
         super.generate(writer);
         this.checkExpectations();
     }
@@ -91,7 +91,7 @@ public class EntityLootTables extends EntityLootSubProvider {
         this.registerEmptyLootTable(EntityTypesPM.SIN_CRASH.get());
         this.registerEmptyLootTable(EntityTypesPM.SIN_CRYSTAL.get());
         this.registerEmptyLootTable(EntityTypesPM.FLYING_CARPET.get());
-        this.registerLootTable(EntityTypesPM.TREEFOLK.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.HEARTWOOD.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))).apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE))).apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))));
+        this.registerLootTable(EntityTypesPM.TREEFOLK.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.HEARTWOOD.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))).apply(SmeltItemFunction.smelted().when(this.shouldSmeltLoot())).apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F))))));
         this.registerLootTable(EntityTypesPM.INNER_DEMON.get(), LootTable.lootTable()); // Loot dropped by Inner Demons is special, so use an empty table
         this.registerLootTable(EntityTypesPM.FRIENDLY_WITCH.get(), LootTable.lootTable());  // No loot dropped by Friendly Witches, so use an empty table
         this.registerLootTable(EntityTypesPM.PRIMALITE_GOLEM.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.PRIMALITE_INGOT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 5.0F))))));

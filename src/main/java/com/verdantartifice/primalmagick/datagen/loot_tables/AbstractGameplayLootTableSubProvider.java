@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -22,11 +23,13 @@ import net.minecraft.world.level.storage.loot.LootTable;
 public abstract class AbstractGameplayLootTableSubProvider implements LootTableSubProvider {
     protected static final Logger LOGGER = LogManager.getLogger();
 
+    protected final HolderLookup.Provider registries;
     protected final Map<ResourceKey<LootTable>, LootTable.Builder> lootTables = new HashMap<>();
     protected final Set<ResourceKey<LootTable>> registeredLootTableTypes = new HashSet<>();
     protected final Supplier<Set<ResourceKey<LootTable>>> expectedTableSupplier;
     
-    protected AbstractGameplayLootTableSubProvider(Supplier<Set<ResourceKey<LootTable>>> expectedTableSupplier) {
+    protected AbstractGameplayLootTableSubProvider(HolderLookup.Provider registries, Supplier<Set<ResourceKey<LootTable>>> expectedTableSupplier) {
+        this.registries = registries;
         this.expectedTableSupplier = expectedTableSupplier;
     }
 
