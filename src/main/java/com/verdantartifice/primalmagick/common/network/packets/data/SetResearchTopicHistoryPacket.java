@@ -11,10 +11,10 @@ import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicFact
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to sync the last active grimoire research topic from the client to the server.
@@ -22,13 +22,12 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SetResearchTopicHistoryPacket implements IMessageToServer {
-    protected CompoundTag data;
-    
-    public SetResearchTopicHistoryPacket() {
-        this.data = null;
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, SetResearchTopicHistoryPacket> STREAM_CODEC = StreamCodec.ofMember(SetResearchTopicHistoryPacket::encode, SetResearchTopicHistoryPacket::decode);
+
+    protected final CompoundTag data;
     
     public SetResearchTopicHistoryPacket(AbstractResearchTopic current, List<AbstractResearchTopic> history) {
+        // TODO Replace this with a dispatched stream codec
         this.data = new CompoundTag();
         this.data.put("Current", current.serializeNBT());
         ListTag list = new ListTag();
@@ -38,18 +37,16 @@ public class SetResearchTopicHistoryPacket implements IMessageToServer {
         this.data.put("History", list);
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
+    protected SetResearchTopicHistoryPacket(CompoundTag data) {
+        this.data = data;
     }
     
-    public static void encode(SetResearchTopicHistoryPacket message, FriendlyByteBuf buf) {
+    public static void encode(SetResearchTopicHistoryPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeNbt(message.data);
     }
     
-    public static SetResearchTopicHistoryPacket decode(FriendlyByteBuf buf) {
-        SetResearchTopicHistoryPacket message = new SetResearchTopicHistoryPacket();
-        message.data = buf.readNbt();
-        return message;
+    public static SetResearchTopicHistoryPacket decode(RegistryFriendlyByteBuf buf) {
+        return new SetResearchTopicHistoryPacket(buf.readNbt());
     }
     
     public static void onMessage(SetResearchTopicHistoryPacket message, CustomPayloadEvent.Context ctx) {

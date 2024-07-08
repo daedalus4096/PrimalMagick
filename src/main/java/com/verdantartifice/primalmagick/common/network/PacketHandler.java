@@ -106,6 +106,8 @@ public class PacketHandler {
                         .addMain(UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.STREAM_CODEC, UpdateAffinitiesPacket::onMessage)
                         .addMain(SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket.STREAM_CODEC, SyncArcaneRecipeBookPacket::onMessage)
                         .addMain(PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.STREAM_CODEC, PlaceGhostArcaneRecipePacket::onMessage)
+                        .addMain(SpellcraftingRunePacket.class, SpellcraftingRunePacket.STREAM_CODEC, SpellcraftingRunePacket::onMessage)
+                        .addMain(OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket.STREAM_CODEC, OpenGrimoireScreenPacket::onMessage)
                     .serverbound()
                         .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                         .addMain(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
@@ -125,17 +127,15 @@ public class PacketHandler {
                         .addMain(PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket.STREAM_CODEC, PlaceArcaneRecipePacket::onMessage)
                         .addMain(SeenArcaneRecipePacket.class, SeenArcaneRecipePacket.STREAM_CODEC, SeenArcaneRecipePacket::onMessage)
                         .addMain(ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket.STREAM_CODEC, ChangeArcaneRecipeBookSettingsPacket::onMessage)
+                        .addMain(SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket.STREAM_CODEC, SetResearchTopicHistoryPacket::onMessage)
+                        .addMain(SetActiveSpellPacket.class, SetActiveSpellPacket.STREAM_CODEC, SetActiveSpellPacket::onMessage)
+                        .addMain(WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket.STREAM_CODEC, WithdrawCaskEssencePacket::onMessage)
             .build();
     
     public static void registerMessages() {
         // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
         LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
         INSTANCE
-            .messageBuilder(SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket.direction()).encoder(SetResearchTopicHistoryPacket::encode).decoder(SetResearchTopicHistoryPacket::decode).consumerMainThread(SetResearchTopicHistoryPacket::onMessage).add()
-            .messageBuilder(SpellcraftingRunePacket.class, SpellcraftingRunePacket.direction()).encoder(SpellcraftingRunePacket::encode).decoder(SpellcraftingRunePacket::decode).consumerMainThread(SpellcraftingRunePacket::onMessage).add()
-            .messageBuilder(SetActiveSpellPacket.class, SetActiveSpellPacket.direction()).encoder(SetActiveSpellPacket::encode).decoder(SetActiveSpellPacket::decode).consumerMainThread(SetActiveSpellPacket::onMessage).add()
-            .messageBuilder(WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket.direction()).encoder(WithdrawCaskEssencePacket::encode).decoder(WithdrawCaskEssencePacket::decode).consumerMainThread(WithdrawCaskEssencePacket::onMessage).add()
-            .messageBuilder(OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket.direction()).encoder(OpenGrimoireScreenPacket::encode).decoder(OpenGrimoireScreenPacket::decode).consumerMainThread(OpenGrimoireScreenPacket::onMessage).add()
             .messageBuilder(SyncWardPacket.class, SyncWardPacket.direction()).encoder(SyncWardPacket::encode).decoder(SyncWardPacket::decode).consumerMainThread(SyncWardPacket::onMessage).add()
             .messageBuilder(OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket.direction()).encoder(OpenStaticBookScreenPacket::encode).decoder(OpenStaticBookScreenPacket::decode).consumerMainThread(OpenStaticBookScreenPacket::onMessage).add()
             .messageBuilder(OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket.direction()).encoder(OpenEnchantedBookScreenPacket::encode).decoder(OpenEnchantedBookScreenPacket::decode).consumerMainThread(OpenEnchantedBookScreenPacket::onMessage).add()
