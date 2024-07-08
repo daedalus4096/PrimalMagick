@@ -8,9 +8,10 @@ import com.verdantartifice.primalmagick.common.books.grids.GridDefinitionLoader;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to update linguistics comprehension grid JSON data on the client from the server.
@@ -18,6 +19,8 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class UpdateLinguisticsGridsPacket implements IMessageToClient {
+    public static final StreamCodec<RegistryFriendlyByteBuf, UpdateLinguisticsGridsPacket> STREAM_CODEC = StreamCodec.ofMember(UpdateLinguisticsGridsPacket::encode, UpdateLinguisticsGridsPacket::decode);
+
     protected final Map<ResourceLocation, GridDefinition> gridDefs;
     
     public UpdateLinguisticsGridsPacket(Map<ResourceLocation, GridDefinition> gridDefs) {
@@ -29,20 +32,13 @@ public class UpdateLinguisticsGridsPacket implements IMessageToClient {
         int mapSize = buf.readVarInt();
         for (int index = 0; index < mapSize; index++) {
             ResourceLocation loc = buf.readResourceLocation();
+            // TODO Replace this with a stream codec
             GridDefinition gridDef = GridDefinition.SERIALIZER.fromNetwork(buf);
             this.gridDefs.put(loc, gridDef);
         }
     }
     
-    public Map<ResourceLocation, GridDefinition> getGridDefinitions() {
-        return this.gridDefs;
-    }
-    
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(UpdateLinguisticsGridsPacket message, FriendlyByteBuf buf) {
+    public static void encode(UpdateLinguisticsGridsPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeVarInt(message.gridDefs.size());
         for (Map.Entry<ResourceLocation, GridDefinition> entry : message.gridDefs.entrySet()) {
             buf.writeResourceLocation(entry.getKey());
@@ -50,11 +46,11 @@ public class UpdateLinguisticsGridsPacket implements IMessageToClient {
         }
     }
     
-    public static UpdateLinguisticsGridsPacket decode(FriendlyByteBuf buf) {
+    public static UpdateLinguisticsGridsPacket decode(RegistryFriendlyByteBuf buf) {
         return new UpdateLinguisticsGridsPacket(buf);
     }
     
     public static void onMessage(UpdateLinguisticsGridsPacket message, CustomPayloadEvent.Context ctx) {
-        GridDefinitionLoader.createInstance().replaceGridDefinitions(message.getGridDefinitions());
+        GridDefinitionLoader.createInstance().replaceGridDefinitions(message.gridDefs);
     }
 }

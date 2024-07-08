@@ -5,10 +5,10 @@ import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to change the active mode of the scribe table GUI for the player.
@@ -16,24 +16,22 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class ChangeScribeTableModePacket implements IMessageToServer {
-    protected int windowId;
-    protected ScribeTableMode newMode;
+    public static final StreamCodec<RegistryFriendlyByteBuf, ChangeScribeTableModePacket> STREAM_CODEC = StreamCodec.ofMember(ChangeScribeTableModePacket::encode, ChangeScribeTableModePacket::decode);
+
+    protected final int windowId;
+    protected final ScribeTableMode newMode;
     
     public ChangeScribeTableModePacket(int windowId, ScribeTableMode newMode) {
         this.windowId = windowId;
         this.newMode = newMode;
     }
 
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(ChangeScribeTableModePacket message, FriendlyByteBuf buf) {
+    public static void encode(ChangeScribeTableModePacket message, RegistryFriendlyByteBuf buf) {
         buf.writeInt(message.windowId);
         buf.writeEnum(message.newMode);
     }
     
-    public static ChangeScribeTableModePacket decode(FriendlyByteBuf buf) {
+    public static ChangeScribeTableModePacket decode(RegistryFriendlyByteBuf buf) {
         return new ChangeScribeTableModePacket(buf.readInt(), buf.readEnum(ScribeTableMode.class));
     }
     

@@ -113,6 +113,7 @@ public class PacketHandler {
                         .addMain(OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket.STREAM_CODEC, OpenEnchantedBookScreenPacket::onMessage)
                         .addMain(SyncLinguisticsPacket.class, SyncLinguisticsPacket.STREAM_CODEC, SyncLinguisticsPacket::onMessage)
                         .addMain(ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.STREAM_CODEC, ContainerSetVarintDataPacket::onMessage)
+                        .addMain(UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.STREAM_CODEC, UpdateLinguisticsGridsPacket::onMessage)
                     .serverbound()
                         .addMain(SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                         .addMain(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
@@ -135,18 +136,15 @@ public class PacketHandler {
                         .addMain(SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket.STREAM_CODEC, SetResearchTopicHistoryPacket::onMessage)
                         .addMain(SetActiveSpellPacket.class, SetActiveSpellPacket.STREAM_CODEC, SetActiveSpellPacket::onMessage)
                         .addMain(WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket.STREAM_CODEC, WithdrawCaskEssencePacket::onMessage)
+                        .addMain(ChangeScribeTableModePacket.class, ChangeScribeTableModePacket.STREAM_CODEC, ChangeScribeTableModePacket::onMessage)
+                        .addMain(TranscribeActionPacket.class, TranscribeActionPacket.STREAM_CODEC, TranscribeActionPacket::onMessage)
+                        .addMain(StudyVocabularyActionPacket.class, StudyVocabularyActionPacket.STREAM_CODEC, StudyVocabularyActionPacket::onMessage)
+                        .addMain(UnlockGridNodeActionPacket.class, UnlockGridNodeActionPacket.STREAM_CODEC, UnlockGridNodeActionPacket::onMessage)
             .build();
     
     public static void registerMessages() {
         // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
         LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
-        INSTANCE
-            .messageBuilder(ChangeScribeTableModePacket.class, ChangeScribeTableModePacket.direction()).encoder(ChangeScribeTableModePacket::encode).decoder(ChangeScribeTableModePacket::decode).consumerMainThread(ChangeScribeTableModePacket::onMessage).add()
-            .messageBuilder(TranscribeActionPacket.class, TranscribeActionPacket.direction()).encoder(TranscribeActionPacket::encode).decoder(TranscribeActionPacket::decode).consumerMainThread(TranscribeActionPacket::onMessage).add()
-            .messageBuilder(StudyVocabularyActionPacket.class, StudyVocabularyActionPacket.direction()).encoder(StudyVocabularyActionPacket::encode).decoder(StudyVocabularyActionPacket::decode).consumerMainThread(StudyVocabularyActionPacket::onMessage).add()
-            .messageBuilder(UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.direction()).encoder(UpdateLinguisticsGridsPacket::encode).decoder(UpdateLinguisticsGridsPacket::decode).consumerMainThread(UpdateLinguisticsGridsPacket::onMessage).add()
-            .messageBuilder(UnlockGridNodeActionPacket.class, UnlockGridNodeActionPacket.direction()).encoder(UnlockGridNodeActionPacket::encode).decoder(UnlockGridNodeActionPacket::decode).consumerMainThread(UnlockGridNodeActionPacket::onMessage).add()
-            ;
     }
     
     public static void sendToServer(IMessageToServer message) {
