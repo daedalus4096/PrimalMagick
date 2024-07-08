@@ -10,20 +10,17 @@ import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
-import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
-import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -34,13 +31,14 @@ import net.minecraftforge.registries.ForgeRegistries;
  * satisfies the requirement for a specified prop.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.item.crafting.Ingredient}
+ * @see {@link net.minecraft.world.item.crafting.Ingredient}
  */
 public class BlockIngredient implements Predicate<Block> {
     public static final BlockIngredient EMPTY = new BlockIngredient(Stream.empty());
     
     public static final Codec<BlockIngredient> CODEC = codec(true);
     public static final Codec<BlockIngredient> CODEC_NONEMPTY = codec(false);
+    public static final StreamCodec<RegistryFriendlyByteBuf, BlockIngredient> CONTENTS_STREAM_CODEC = StreamCodec.of(BlockIngredient::toNetwork, BlockIngredient::fromNetwork);
     
     protected final BlockIngredient.Value[] acceptedBlocks;
     protected Block[] matchingBlocks = null;
@@ -85,19 +83,14 @@ public class BlockIngredient implements Predicate<Block> {
         }
     }
     
-    public void write(FriendlyByteBuf buf) {
-        this.determineMatchingBlocks();
-        buf.writeVarInt(this.matchingBlocks.length);
-        for (int index = 0; index < this.matchingBlocks.length; index++) {
-            buf.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(this.matchingBlocks[index]));
+    private static void toNetwork(RegistryFriendlyByteBuf buf, BlockIngredient ing) {
+        ing.determineMatchingBlocks();
+        buf.writeVarInt(ing.matchingBlocks.length);
+        for (int index = 0; index < ing.matchingBlocks.length; index++) {
+            buf.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(ing.matchingBlocks[index]));
         }
     }
     
-    public JsonElement toJson(boolean pAllowEmpty) {
-        Codec<BlockIngredient> codec = pAllowEmpty ? CODEC : CODEC_NONEMPTY;
-        return Util.getOrThrow(codec.encodeStart(JsonOps.INSTANCE, this), IllegalStateException::new);
-     }
-
     public boolean isEmpty() {
         return this.acceptedBlocks.length == 0;
      }
@@ -125,7 +118,7 @@ public class BlockIngredient implements Predicate<Block> {
         return fromBlockListStream(Stream.of(new BlockIngredient.TagValue(tag)));
     }
     
-    public static BlockIngredient read(FriendlyByteBuf buf) {
+    private static BlockIngredient fromNetwork(RegistryFriendlyByteBuf buf) {
         int size = buf.readVarInt();
         return fromBlockListStream(Stream.generate(() -> {
             ResourceLocation loc = buf.readResourceLocation();
@@ -139,7 +132,7 @@ public class BlockIngredient implements Predicate<Block> {
                     DataResult.error(() -> "Block array cannot be empty, at least one block must be defined") :
                     DataResult.success(valueList.toArray(BlockIngredient.Value[]::new));
         }, List::of);
-        return ExtraCodecs.either(innerCodec, BlockIngredient.Value.CODEC).flatComapMap(either -> {
+        return Codec.either(innerCodec, BlockIngredient.Value.CODEC).flatComapMap(either -> {
             return either.map(BlockIngredient::new, val -> new BlockIngredient(new BlockIngredient.Value[] {val}));
         }, ing -> {
             if (ing.acceptedBlocks.length == 1) {
@@ -153,7 +146,7 @@ public class BlockIngredient implements Predicate<Block> {
     }
     
     protected interface Value {
-        Codec<BlockIngredient.Value> CODEC = ExtraCodecs.xor(BlockIngredient.SingleBlockValue.CODEC, BlockIngredient.TagValue.CODEC).xmap(either -> {
+        Codec<BlockIngredient.Value> CODEC = Codec.xor(BlockIngredient.SingleBlockValue.CODEC, BlockIngredient.TagValue.CODEC).xmap(either -> {
             return either.map(l -> l, r -> r);
         }, val -> {
             if (val instanceof BlockIngredient.SingleBlockValue sbv) {
