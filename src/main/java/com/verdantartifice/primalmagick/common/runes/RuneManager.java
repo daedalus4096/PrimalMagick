@@ -256,7 +256,7 @@ public class RuneManager {
      * @param enchant the enchantment to query
      * @return true if the enchantment has a rune combination defined for it, false otherwise
      */
-    public static boolean hasRuneDefinition(RegistryAccess registryAccess, Enchantment enchant) {
+    public static boolean hasRuneDefinition(RegistryAccess registryAccess, Holder<Enchantment> enchant) {
         return getRuneEnchantments(registryAccess).contains(enchant);
     }
     

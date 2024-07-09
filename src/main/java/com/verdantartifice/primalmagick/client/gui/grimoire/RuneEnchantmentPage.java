@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.runes.RuneType;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -32,15 +33,15 @@ public class RuneEnchantmentPage extends AbstractPage {
     protected static final ResourceLocation OVERLAY = PrimalMagick.resource("textures/gui/grimoire_overlay.png");
     protected static final ResearchEntryKey UNKNOWN_RUNE_KEY = new ResearchEntryKey(ResearchEntries.UNKNOWN_RUNE);
     
-    protected Enchantment enchant;
+    protected Holder<Enchantment> enchant;
     protected List<IPageElement> contents = new ArrayList<>();
     protected boolean firstPage;
     
-    public RuneEnchantmentPage(Enchantment enchant) {
+    public RuneEnchantmentPage(Holder<Enchantment> enchant) {
         this(enchant, false);
     }
     
-    public RuneEnchantmentPage(Enchantment enchant, boolean first) {
+    public RuneEnchantmentPage(Holder<Enchantment> enchant, boolean first) {
         this.enchant = enchant;
         this.firstPage = first;
     }
@@ -60,7 +61,7 @@ public class RuneEnchantmentPage extends AbstractPage {
     
     @Override
     protected Component getTitleText() {
-        return Component.translatable(this.enchant.getDescriptionId());
+        return this.enchant.value().description();
     }
     
     @Override

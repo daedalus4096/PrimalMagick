@@ -12,6 +12,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -21,15 +22,15 @@ import net.minecraft.world.item.enchantment.Enchantment;
 public class EnchantmentExpertiseWidget extends AbstractWidget {
     protected static final ResourceLocation ICON_LOC = PrimalMagick.resource("textures/research/expertise_expert.png");
     
-    protected final Enchantment enchantment;
+    protected final Holder<Enchantment> enchantment;
     
-    public EnchantmentExpertiseWidget(Enchantment ench, int x, int y) {
+    public EnchantmentExpertiseWidget(Holder<Enchantment> ench, int x, int y) {
         super(x, y, 16, 16, Component.empty());
         this.enchantment = ench;
         this.setTooltip(Tooltip.create(makeTooltipComponent(ench)));
     }
     
-    protected static Component makeTooltipComponent(Enchantment ench) {
+    protected static Component makeTooltipComponent(Holder<Enchantment> ench) {
         Minecraft mc = Minecraft.getInstance();
         MutableComponent retVal = Component.empty();
         

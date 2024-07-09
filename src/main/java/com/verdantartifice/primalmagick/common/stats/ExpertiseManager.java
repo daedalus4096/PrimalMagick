@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -194,7 +195,7 @@ public class ExpertiseManager {
      * @param player the player to receive the expertise
      * @param enchantment the enchantment that was runescribed
      */
-    public static void awardExpertise(@Nullable Player player, @Nullable Enchantment enchantment) {
+    public static void awardExpertise(@Nullable Player player, Holder<Enchantment> enchantment) {
         if (player != null && enchantment != null) {
             ResearchDisciplineKey discKey = new ResearchDisciplineKey(ResearchDisciplines.RUNEWORKING);
             RuneManager.getRuneDefinition(player.level().registryAccess(), enchantment).ifPresent(runeEnchDef -> {
@@ -222,7 +223,7 @@ public class ExpertiseManager {
         return maxTierOpt;
     }
     
-    public static boolean isBonusEligible(Player player, Enchantment enchantment) {
+    public static boolean isBonusEligible(Player player, Holder<Enchantment> enchantment) {
         ResourceLocation enchKey = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
         if (player != null && enchKey != null) {
             IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
@@ -233,7 +234,7 @@ public class ExpertiseManager {
         return false;
     }
     
-    protected static void markCrafted(Player player, Enchantment enchantment) {
+    protected static void markCrafted(Player player, Holder<Enchantment> enchantment) {
         ResourceLocation enchKey = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
         if (player != null && enchKey != null) {
             IPlayerStats stats = PrimalMagickCapabilities.getStats(player);

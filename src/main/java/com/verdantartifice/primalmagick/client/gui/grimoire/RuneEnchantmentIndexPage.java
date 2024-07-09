@@ -47,7 +47,7 @@ public class RuneEnchantmentIndexPage extends AbstractPage {
         return Collections.unmodifiableList(this.contents);
     }
     
-    public boolean addEnchantment(Enchantment enchant) {
+    public boolean addEnchantment(Holder<Enchantment> enchant) {
         return this.contents.add(enchant);
     }
 
@@ -64,7 +64,7 @@ public class RuneEnchantmentIndexPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a button to the screen for each enchantment in the page's contents
         for (Holder<Enchantment> enchant : this.getEnchantments()) {
-            Component text = Component.translatable(enchant.value().description());
+            Component text = enchant.value().description();
             screen.addWidgetToScreen(new RuneEnchantmentButton(x + 12 + (side * 140), y, text, screen, enchant));
             y += 12;
         }
