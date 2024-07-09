@@ -4,11 +4,17 @@ import java.util.function.Function;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -24,6 +30,9 @@ public record BookLanguage(ResourceLocation languageId, Style style, int complex
             Codec.BOOL.fieldOf("autoTranslate").forGetter(BookLanguage::autoTranslate)
         ).apply(instance, BookLanguage::new));
     public static final Codec<BookLanguage> NETWORK_CODEC = DIRECT_CODEC;   // TODO Modify if some language data is not necessary on the client
+    
+    public static final Codec<Holder<BookLanguage>> HOLDER_CODEC = RegistryFixedCodec.create(RegistryKeysPM.BOOK_LANGUAGES);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<BookLanguage>> STREAM_CODEC = ByteBufCodecs.holderRegistry(RegistryKeysPM.BOOK_LANGUAGES);
     
     private static final Function<BookLanguage, String> MEMOIZED_NAME_ID = Util.memoize(BookLanguage::getNameIdInner);
     private static final Function<BookLanguage, String> MEMOIZED_DESCRIPTION_ID = Util.memoize(BookLanguage::getDescriptionIdInner);

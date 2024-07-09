@@ -5,6 +5,8 @@ import java.util.function.UnaryOperator;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.books.BookDefinition;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -13,6 +15,7 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -31,6 +34,9 @@ public class DataComponentsPM {
     public static void init() {
         DATA_COMPONENT_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
+    
+    public static final RegistryObject<DataComponentType<Holder<BookDefinition>>> BOOK_DEFINITION = register("book_definition", builder -> builder.persistent(BookDefinition.HOLDER_CODEC).networkSynchronized(BookDefinition.STREAM_CODEC));
+    public static final RegistryObject<DataComponentType<Holder<BookLanguage>>> BOOK_LANGUAGE = register("book_language", builder -> builder.persistent(BookLanguage.HOLDER_CODEC).networkSynchronized(BookLanguage.STREAM_CODEC));
     
     public static final RegistryObject<DataComponentType<ConcoctionType>> CONCOCTION_TYPE = register("concoction_type", builder -> builder.persistent(ConcoctionType.CODEC).networkSynchronized(ConcoctionType.STREAM_CODEC));
     public static final RegistryObject<DataComponentType<Integer>> CONCOCTION_DOSES = register("concoction_doses", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
