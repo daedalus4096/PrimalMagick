@@ -37,6 +37,9 @@ public class DataComponentsPM {
     
     public static final RegistryObject<DataComponentType<Holder<BookDefinition>>> BOOK_DEFINITION = register("book_definition", builder -> builder.persistent(BookDefinition.HOLDER_CODEC).networkSynchronized(BookDefinition.STREAM_CODEC));
     public static final RegistryObject<DataComponentType<Holder<BookLanguage>>> BOOK_LANGUAGE = register("book_language", builder -> builder.persistent(BookLanguage.HOLDER_CODEC).networkSynchronized(BookLanguage.STREAM_CODEC));
+    public static final RegistryObject<DataComponentType<String>> AUTHOR_OVERRIDE = register("author_override", builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+    public static final RegistryObject<DataComponentType<Integer>> BOOK_GENERATION = register("book_generation", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+    public static final RegistryObject<DataComponentType<Integer>> TRANSLATED_COMPREHENSION = register("translated_comprehension", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
     
     public static final RegistryObject<DataComponentType<ConcoctionType>> CONCOCTION_TYPE = register("concoction_type", builder -> builder.persistent(ConcoctionType.CODEC).networkSynchronized(ConcoctionType.STREAM_CODEC));
     public static final RegistryObject<DataComponentType<Integer>> CONCOCTION_DOSES = register("concoction_doses", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));

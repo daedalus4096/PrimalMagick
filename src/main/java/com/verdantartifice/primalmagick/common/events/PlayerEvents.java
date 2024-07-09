@@ -569,8 +569,7 @@ public class PlayerEvents {
         ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM);
         
         // Construct the dream journal item
-        ItemStack journal = StaticBookItem.make(ItemsPM.STATIC_BOOK, Optional.of(BooksPM.DREAM_JOURNAL), Optional.of(BookLanguagesPM.DEFAULT), Optional.of(player.getName().getString()), 
-                OptionalInt.empty(), OptionalInt.empty());
+        ItemStack journal = StaticBookItem.builder(ItemsPM.STATIC_BOOK, player.registryAccess()).book(BooksPM.DREAM_JOURNAL).language(BookLanguagesPM.DEFAULT).author(player.getName().getString()).build();
         
         // Give the dream journal to the player and announce it
         if (!player.addItem(journal)) {
