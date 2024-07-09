@@ -197,7 +197,7 @@ public class StaticBookItem extends Item {
                     Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
                     Optional<Integer> translatedComprehension = getTranslatedComprehension(pStack);
                     int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, langHolder));
-                    double percentage = BookHelper.getBookComprehension(new BookView(Either.left(defHolder), langHolder, comprehension), pContext.registries());
+                    double percentage = BookHelper.getBookComprehension(new BookView(Either.left(defHolder), langHolder, comprehension));
                     pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
                     if (translatedComprehension.isPresent()) {
                         if (translatedComprehension.get() >= langHolder.get().complexity()) {

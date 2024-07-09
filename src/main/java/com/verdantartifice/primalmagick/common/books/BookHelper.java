@@ -8,14 +8,11 @@ import java.util.stream.Stream;
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
 
 import net.minecraft.Util;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringDecomposer;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
