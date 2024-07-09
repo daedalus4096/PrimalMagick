@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
 import java.awt.Color;
+import java.util.Comparator;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
@@ -12,6 +13,7 @@ import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEntity;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -160,7 +162,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                     } else {
                         // When activating a full lectern while not sneaking, read the book
                         if (player instanceof ServerPlayer serverPlayer) {
-                            EnchantmentHelper.getEnchantments(bookStack).entrySet().stream().sorted((e1, e2) -> -Integer.compare(e1.getValue(), e2.getValue())).findFirst().ifPresent(entry -> {
+                            bookStack.getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
                                 PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey()), serverPlayer);
                             });
                         }
