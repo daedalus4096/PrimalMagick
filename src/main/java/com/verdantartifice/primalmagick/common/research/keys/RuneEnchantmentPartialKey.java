@@ -10,22 +10,21 @@ import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 
-import io.netty.buffer.ByteBuf;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantmentPartialKey> {
     public static final MapCodec<RuneEnchantmentPartialKey> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ResourceKey.codec(Registries.ENCHANTMENT).fieldOf("enchantKey").forGetter(key -> key.enchantKey),
+            Enchantment.CODEC.fieldOf("enchant").forGetter(key -> key.enchant),
             RuneType.CODEC.fieldOf("runeType").forGetter(key -> key.runeType)
         ).apply(instance, RuneEnchantmentPartialKey::new));
-    public static final StreamCodec<ByteBuf, RuneEnchantmentPartialKey> STREAM_CODEC = StreamCodec.composite(
-            ResourceKey.streamCodec(Registries.ENCHANTMENT),
-            key -> key.enchantKey,
+    public static final StreamCodec<RegistryFriendlyByteBuf, RuneEnchantmentPartialKey> STREAM_CODEC = StreamCodec.composite(
+            Enchantment.STREAM_CODEC,
+            key -> key.enchant,
             RuneType.STREAM_CODEC,
             key -> key.runeType,
             RuneEnchantmentPartialKey::new);
@@ -33,11 +32,11 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
     private static final String PREFIX = "&";
     private static final ResourceLocation ICON_TUBE = PrimalMagick.resource("textures/research/research_tube.png");
 
-    protected final ResourceKey<Enchantment> enchantKey;
+    protected final Holder<Enchantment> enchant;
     protected final RuneType runeType;
     
-    public RuneEnchantmentPartialKey(ResourceKey<Enchantment> enchant, RuneType runeType) {
-        this.enchantKey = Preconditions.checkNotNull(enchant);
+    public RuneEnchantmentPartialKey(Holder<Enchantment> enchant, RuneType runeType) {
+        this.enchant = Preconditions.checkNotNull(enchant);
         this.runeType = Preconditions.checkNotNull(runeType);
         if (this.runeType == RuneType.POWER) {
             throw new IllegalArgumentException("Rune type may not be a power rune");
@@ -46,7 +45,7 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
 
     @Override
     public String toString() {
-        return PREFIX + this.enchantKey.location().toString() + "." + this.runeType.getSerializedName();
+        return PREFIX + this.enchant.unwrapKey().get().location().toString() + "." + this.runeType.getSerializedName();
     }
 
     @Override
@@ -66,7 +65,7 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.enchantKey, this.runeType);
+        return Objects.hash(this.enchant, this.runeType);
     }
 
     @Override
@@ -78,6 +77,6 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
         if (getClass() != obj.getClass())
             return false;
         RuneEnchantmentPartialKey other = (RuneEnchantmentPartialKey) obj;
-        return this.enchantKey.equals(other.enchantKey) && this.runeType == other.runeType;
+        return this.enchant.equals(other.enchant) && this.runeType == other.runeType;
     }
 }

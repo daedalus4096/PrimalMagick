@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RuneEnchantm
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -22,7 +23,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 public class RuneEnchantmentIndexPage extends AbstractPage {
     public static final OtherResearchTopic TOPIC = new OtherResearchTopic("rune_enchantments", 0);
 
-    protected List<Enchantment> contents = new ArrayList<>();
+    protected List<Holder<Enchantment>> contents = new ArrayList<>();
     protected boolean firstPage;
 
     public RuneEnchantmentIndexPage() {
@@ -42,7 +43,7 @@ public class RuneEnchantmentIndexPage extends AbstractPage {
     }
     
     @Nonnull
-    public List<Enchantment> getEnchantments() {
+    public List<Holder<Enchantment>> getEnchantments() {
         return Collections.unmodifiableList(this.contents);
     }
     
@@ -62,8 +63,8 @@ public class RuneEnchantmentIndexPage extends AbstractPage {
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a button to the screen for each enchantment in the page's contents
-        for (Enchantment enchant : this.getEnchantments()) {
-            Component text = Component.translatable(enchant.getDescriptionId());
+        for (Holder<Enchantment> enchant : this.getEnchantments()) {
+            Component text = Component.translatable(enchant.value().description());
             screen.addWidgetToScreen(new RuneEnchantmentButton(x + 12 + (side * 140), y, text, screen, enchant));
             y += 12;
         }

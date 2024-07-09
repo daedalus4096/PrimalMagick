@@ -961,7 +961,7 @@ public class GrimoireScreen extends Screen {
         RuneEnchantmentIndexPage tempPage = new RuneEnchantmentIndexPage(true);
         Minecraft mc = Minecraft.getInstance();
 
-        for (Enchantment enchant : RuneManager.getRuneEnchantmentsSorted(mc.level.registryAccess())) {
+        for (Holder<Enchantment> enchant : RuneManager.getRuneEnchantmentsSorted(mc.level.registryAccess())) {
             List<AbstractResearchKey<?>> researchKeys = List.of(
                     new RuneEnchantmentKey(enchant), 
                     new RuneEnchantmentPartialKey(enchant, RuneType.VERB),

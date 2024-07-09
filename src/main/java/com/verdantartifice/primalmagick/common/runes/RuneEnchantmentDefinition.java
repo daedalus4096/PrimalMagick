@@ -15,10 +15,9 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Class encapsulating a data-defined definition for a rune enchantment.  These definitions specify the
@@ -26,10 +25,10 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public record RuneEnchantmentDefinition(Enchantment result, VerbRune verb, NounRune noun, SourceRune source, Optional<AbstractRequirement<?>> requirementOpt) {
+public record RuneEnchantmentDefinition(Holder<Enchantment> result, VerbRune verb, NounRune noun, SourceRune source, Optional<AbstractRequirement<?>> requirementOpt) {
     public static Codec<RuneEnchantmentDefinition> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
-                ResourceLocation.CODEC.fieldOf("result").xmap(loc -> ForgeRegistries.ENCHANTMENTS.getValue(loc), ench -> ForgeRegistries.ENCHANTMENTS.getKey(ench)).forGetter(RuneEnchantmentDefinition::result),
+                Enchantment.CODEC.fieldOf("result").forGetter(RuneEnchantmentDefinition::result),
                 VerbRune.CODEC.fieldOf("verb").forGetter(RuneEnchantmentDefinition::verb),
                 NounRune.CODEC.fieldOf("noun").forGetter(RuneEnchantmentDefinition::noun),
                 SourceRune.CODEC.fieldOf("source").forGetter(RuneEnchantmentDefinition::source),
@@ -37,26 +36,22 @@ public record RuneEnchantmentDefinition(Enchantment result, VerbRune verb, NounR
             ).apply(instance, RuneEnchantmentDefinition::new));
     }
     
-    public ResourceLocation getId() {
-        return ForgeRegistries.ENCHANTMENTS.getKey(this.result);
-    }
-    
     public List<Rune> getRunes() {
         return List.of(this.verb(), this.noun(), this.source());
     }
     
-    public static Builder builder(Enchantment ench) {
+    public static Builder builder(Holder<Enchantment> ench) {
         return new Builder(ench);
     }
     
     public static class Builder {
-        protected final Enchantment result;
+        protected final Holder<Enchantment> result;
         protected VerbRune verb;
         protected NounRune noun;
         protected SourceRune source;
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
         
-        public Builder(Enchantment result) {
+        public Builder(Holder<Enchantment> result) {
             this.result = Preconditions.checkNotNull(result);
         }
         

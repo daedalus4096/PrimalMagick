@@ -7,12 +7,11 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Datapack registry for the mod's definitions of rune combination enchantments.
@@ -167,12 +166,10 @@ public class RuneEnchantmentDefinitions {
     }
     
     private static Holder.Reference<RuneEnchantmentDefinition> register(BootstrapContext<RuneEnchantmentDefinition> context, ResourceKey<RuneEnchantmentDefinition> key, 
-            Function<Enchantment, RuneEnchantmentDefinition> supplier) {
-        Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(key.location());
-        if (ench == null) {
-            throw new IllegalArgumentException("Unknown enchantment while registering rune definition: " + key.toString());
-        } else {
-            return context.register(key, supplier.apply(ench));
-        }
+            Function<Holder<Enchantment>, RuneEnchantmentDefinition> supplier) {
+        ResourceKey<Enchantment> enchKey = ResourceKey.create(Registries.ENCHANTMENT, key.location());
+        Holder.Reference<Enchantment> enchHolder = context.lookup(Registries.ENCHANTMENT).get(enchKey).orElseThrow(
+                () -> new IllegalArgumentException("Unknown enchantment while registering rune definition: " + key.toString()));
+        return context.register(key, supplier.apply(enchHolder));
     }
 }

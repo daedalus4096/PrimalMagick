@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -262,11 +263,11 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
     }
     
     protected void grantHints(ItemStack stack) {
-        Set<Enchantment> enchants = EnchantmentHelper.getEnchantments(stack).keySet();
+        Set<Holder<Enchantment>> enchants = stack.getEnchantments().keySet();
         
         this.worldPosCallable.execute((level, pos) -> {
             MutableInt hintCount = new MutableInt(0);
-            for (Enchantment enchant : enchants) {
+            for (Holder<Enchantment> enchant : enchants) {
                 RuneManager.getRuneDefinition(level.registryAccess(), enchant).ifPresent(definition -> {
                     RuneEnchantmentKey fullResearch = new RuneEnchantmentKey(enchant);
                     if (!fullResearch.isKnownBy(this.player)) {

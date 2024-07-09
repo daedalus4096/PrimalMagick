@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.research.topics;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.StringRepresentable;
@@ -42,7 +43,7 @@ public abstract class AbstractResearchTopic implements INBTSerializable<Compound
     }
     
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag retVal = new CompoundTag();
         retVal.putString("Type", this.type.getSerializedName());
         retVal.putString("Data", this.data);
@@ -51,7 +52,7 @@ public abstract class AbstractResearchTopic implements INBTSerializable<Compound
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
         // Type is set by the constructor
         this.data = nbt.getString("Data");
         this.page = nbt.getInt("Page");
