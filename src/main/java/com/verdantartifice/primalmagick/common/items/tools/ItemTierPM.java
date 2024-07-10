@@ -2,44 +2,44 @@ package com.verdantartifice.primalmagick.common.items.tools;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.misc.HarvestLevel;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
-import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Definition of tiered item materials for the mod.
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
 public enum ItemTierPM implements Tier {
-    PRIMALITE(HarvestLevel.IRON.getLevel(), 800, 7.5F, 2.5F, 18, () -> {
+    PRIMALITE(BlockTags.INCORRECT_FOR_IRON_TOOL, 800, 7.5F, 2.5F, 18, () -> {
         return Ingredient.of(ItemTagsPM.INGOTS_PRIMALITE);
     }),
-    HEXIUM(HarvestLevel.DIAMOND.getLevel(), 1600, 9.5F, 4.0F, 23, () -> {
+    HEXIUM(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 1600, 9.5F, 4.0F, 23, () -> {
         return Ingredient.of(ItemTagsPM.INGOTS_HEXIUM);
     }),
-    HALLOWSTEEL(HarvestLevel.DIAMOND.getLevel(), 2400, 11.5F, 5.5F, 28, () -> {
+    HALLOWSTEEL(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2400, 11.5F, 5.5F, 28, () -> {
         return Ingredient.of(ItemTagsPM.INGOTS_HALLOWSTEEL);
     });
 
-    private final int harvestLevel;
+    private final TagKey<Block> incorrectBlocks;
     private final int maxUses;
     private final float efficiency;
     private final float attackDamage;
     private final int enchantability;
-    private final LazyLoadedValue<Ingredient> repairMaterial;
+    private final Supplier<Ingredient> repairMaterial;
 
-    private ItemTierPM(int harvestLevel, int maxUses, float efficiency, float attackDamage, int enchantability, Supplier<Ingredient> repairMaterial) {
-        this.harvestLevel = harvestLevel;
+    private ItemTierPM(TagKey<Block> incorrectBlocks, int maxUses, float efficiency, float attackDamage, int enchantability, Supplier<Ingredient> repairMaterial) {
+        this.incorrectBlocks = incorrectBlocks;
         this.maxUses = maxUses;
         this.efficiency = efficiency;
         this.attackDamage = attackDamage;
         this.enchantability = enchantability;
-        this.repairMaterial = new LazyLoadedValue<>(repairMaterial);
+        this.repairMaterial = repairMaterial;
     }
 
     @Override
@@ -58,11 +58,6 @@ public enum ItemTierPM implements Tier {
     }
 
     @Override
-    public int getLevel() {
-        return this.harvestLevel;
-    }
-
-    @Override
     public int getEnchantmentValue() {
         return this.enchantability;
     }
@@ -70,5 +65,10 @@ public enum ItemTierPM implements Tier {
     @Override
     public Ingredient getRepairIngredient() {
         return this.repairMaterial.get();
+    }
+
+    @Override
+    public TagKey<Block> getIncorrectBlocksForDrops() {
+        return this.incorrectBlocks;
     }
 }
