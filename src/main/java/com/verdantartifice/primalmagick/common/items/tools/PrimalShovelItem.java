@@ -18,8 +18,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class PrimalShovelItem extends ShovelItem implements IEnchantedByDefault {
-    public PrimalShovelItem(Tier tier, float attackDamageIn, float attackSpeedIn, Item.Properties builder) {
-        super(tier, attackDamageIn, attackSpeedIn, builder);
+    public PrimalShovelItem(Tier tier, Item.Properties builder) {
+        super(tier, builder);
     }
 
     @Override

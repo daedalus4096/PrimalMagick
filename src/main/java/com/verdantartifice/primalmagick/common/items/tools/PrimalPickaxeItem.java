@@ -18,8 +18,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class PrimalPickaxeItem extends PickaxeItem implements IEnchantedByDefault {
-    public PrimalPickaxeItem(Tier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builder) {
-        super(tier, attackDamageIn, attackSpeedIn, builder);
+    public PrimalPickaxeItem(Tier tier, Item.Properties builder) {
+        super(tier, builder);
     }
 
     @Override
