@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.runes.SourceRune;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -22,7 +23,7 @@ import net.minecraft.world.item.armortrim.ArmorTrim;
 public class RobeArmorItem extends ArmorItem implements IManaDiscountGear {
     protected final int manaDiscount;
     
-    public RobeArmorItem(ArmorMaterial material, ArmorItem.Type type, int manaDiscount, Item.Properties properties) {
+    public RobeArmorItem(Holder<ArmorMaterial> material, ArmorItem.Type type, int manaDiscount, Item.Properties properties) {
         super(material, type, properties);
         this.manaDiscount = manaDiscount;
     }
