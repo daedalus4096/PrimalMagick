@@ -317,7 +317,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     @Override
     public void unpackLootTable(Player player) {
         if (this.lootTable != null && this.level.getServer() != null) {
-            LootTable loot = this.level.getServer().getLootData().getLootTable(this.lootTable);
+            LootTable loot = this.level.getServer().reloadableRegistries().getLootTable(this.lootTable);
             if (player instanceof ServerPlayer serverPlayer) {
                 CriteriaTriggers.GENERATE_LOOT.trigger(serverPlayer, this.lootTable);
             }

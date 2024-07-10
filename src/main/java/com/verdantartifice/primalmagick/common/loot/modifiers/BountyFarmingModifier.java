@@ -37,7 +37,7 @@ public class BountyFarmingModifier extends LootModifier {
     @SuppressWarnings("deprecation")
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        LootTable table = context.getLevel().getServer().getLootData().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
+        LootTable table = context.getLevel().getServer().reloadableRegistries().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
         int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.BOUNTY.get(), context.getParamOrNull(LootContextParams.TOOL));
         for (int index = 0; index < enchantmentLevel; index++) {
             if (context.getRandom().nextFloat() < this.chance) {
