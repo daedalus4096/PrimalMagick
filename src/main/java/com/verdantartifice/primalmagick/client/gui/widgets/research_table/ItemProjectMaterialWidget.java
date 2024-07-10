@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
@@ -61,7 +62,7 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget<Ite
         }
         textList.add(nameComponent);
         if (ItemStack.shouldShowInTooltip(stack.getHideFlags(), ItemStack.TooltipPart.ADDITIONAL)) {
-            stack.getItem().appendHoverText(stack, mc.level, textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
+            stack.getItem().appendHoverText(stack, Item.TooltipContext.of(mc.level), textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
         }
         return textList;
     }

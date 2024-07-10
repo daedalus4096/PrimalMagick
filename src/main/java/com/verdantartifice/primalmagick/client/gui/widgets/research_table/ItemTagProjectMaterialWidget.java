@@ -69,7 +69,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
         }
         textList.add(nameComponent);
         if (ItemStack.shouldShowInTooltip(stack.getHideFlags(), ItemStack.TooltipPart.ADDITIONAL)) {
-            stack.getItem().appendHoverText(stack, mc.level, textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
+            stack.getItem().appendHoverText(stack, Item.TooltipContext.of(mc.level), textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
         }
         return textList;
     }
