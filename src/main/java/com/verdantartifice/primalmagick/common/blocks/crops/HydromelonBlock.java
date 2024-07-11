@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -54,9 +55,7 @@ public class HydromelonBlock extends Block {
                 } else {
                     pLevel.setBlock(pPos, Blocks.WATER.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
                 }
-                pPlayer.getItemInHand(pHand).hurtAndBreak(1, pPlayer, (p) -> {
-                    p.broadcastBreakEvent(pHand);
-                });
+                pPlayer.getItemInHand(pHand).hurtAndBreak(1, pPlayer, LivingEntity.getSlotForHand(pHand));
             }
             return InteractionResult.SUCCESS;
         } else {

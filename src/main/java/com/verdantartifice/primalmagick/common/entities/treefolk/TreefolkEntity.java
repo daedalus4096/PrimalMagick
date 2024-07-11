@@ -185,9 +185,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
             if (!level.isClientSide) {
                 this.igniteForSeconds(10);
                 this.setLastHurtByMob(player);
-                stack.hurtAndBreak(1, player, p -> {
-                    p.broadcastBreakEvent(hand);
-                });
+                stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         } else if (!level.isClientSide) {

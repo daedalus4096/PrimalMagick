@@ -78,6 +78,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -395,9 +396,11 @@ public class PlayerEvents {
     }
     
     protected static void handleRegrowth(Player player) {
-        for (ItemStack stack : player.getAllSlots()) {
-            if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack, player.level().registryAccess())) {
-                stack.hurtAndBreak(-1, player, p -> {});
+        if (player.level() instanceof ServerLevel serverLevel) {
+            for (ItemStack stack : player.getAllSlots()) {
+                if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack, player.level().registryAccess())) {
+                    stack.hurtAndBreak(-1, serverLevel, player instanceof ServerPlayer serverPlayer ? serverPlayer : null, item -> {});
+                }
             }
         }
     }
@@ -642,7 +645,7 @@ public class PlayerEvents {
                         final int baseDamage = 8;
                         int damage = (baseDamage >> (enchantLevel - 1));
                         if (damage > 0) {
-                            stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
+                            stack.hurtAndBreak(damage, player, LivingEntity.getSlotForHand(context.getHand()));
                         }
                         
                         // Explicitly set the final block state in the event so that the hoe's useOn method does not return PASS and

@@ -19,6 +19,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.entity.player.Inventory;
@@ -162,11 +164,11 @@ public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTa
     
     public void consumeWritingImplements() {
         // Don't consume if in creative mode
-        if (!this.player.getAbilities().instabuild) {
+        if (!this.player.hasInfiniteMaterials()) {
             // Consume ink, if applicable
             ItemStack inkStack = this.getWritingImplementStack();
-            if (!inkStack.isEmpty() && inkStack.getItem() instanceof IWritingImplement inkItem && inkItem.isDamagedOnUse()) {
-                inkStack.hurtAndBreak(1, this.player, (player) -> {});
+            if (!inkStack.isEmpty() && inkStack.getItem() instanceof IWritingImplement inkItem && inkItem.isDamagedOnUse() && this.player.level() instanceof ServerLevel serverLevel) {
+                inkStack.hurtAndBreak(1, serverLevel, this.player instanceof ServerPlayer serverPlayer ? serverPlayer : null, item -> {});
             }
 
             // Consume paper

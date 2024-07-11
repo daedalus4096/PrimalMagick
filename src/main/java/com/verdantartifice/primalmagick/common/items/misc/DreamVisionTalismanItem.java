@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -119,11 +121,11 @@ public class DreamVisionTalismanItem extends Item {
      */
     public boolean doDrain(ItemStack stack, Player player) {
         Level level = player.level();
-        if (!level.isClientSide && this.isReadyToDrain(stack)) {
+        if (!level.isClientSide && level instanceof ServerLevel serverLevel && this.isReadyToDrain(stack)) {
             if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
                 this.setStoredExp(stack, 0);
-                stack.hurtAndBreak(1, player, p -> {
-                    p.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.break").withStyle(ChatFormatting.RED), false);
+                stack.hurtAndBreak(1, serverLevel, player instanceof ServerPlayer serverPlayer ? serverPlayer : null, item -> {
+                    player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.break").withStyle(ChatFormatting.RED), false);
                 });
                 return true;
             }
