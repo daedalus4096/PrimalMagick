@@ -11,8 +11,10 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
@@ -52,7 +54,8 @@ public class BlockIngredientWidget extends AbstractWidget {
     protected void updateTooltip() {
         if (!ItemStack.isSameItemSameComponents(this.currentStack, this.lastStack)) {
             Minecraft mc = Minecraft.getInstance();
-            this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.currentStack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
+            this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.currentStack.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, 
+                    mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
         }
     }
     
@@ -64,9 +67,13 @@ public class BlockIngredientWidget extends AbstractWidget {
                 // Cycle through each matching stack of the ingredient and display them one at a time
                 int index = (int)((System.currentTimeMillis() / 1000L) % matching.length);
                 Block block = matching[index];
-                return (block != null) ? 
-                        new ItemStack(block) : 
-                        new ItemStack(Blocks.BARRIER).setHoverName(Component.translatable("grimoire.primalmagick.missing_block"));
+                if (block == null) {
+                    ItemStack retVal = new ItemStack(Blocks.BARRIER);
+                    retVal.set(DataComponents.CUSTOM_NAME, Component.translatable("grimoire.primalmagick.missing_block"));
+                    return retVal;
+                } else {
+                    return new ItemStack(block);
+                }
             }
         }
         return ItemStack.EMPTY;

@@ -136,7 +136,7 @@ public class GuiUtils {
     
     public static void renderItemTooltip(GuiGraphics guiGraphics, ItemStack stack, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
-        List<Component> lines = stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
+        List<Component> lines = stack.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
         guiGraphics.renderComponentTooltip(mc.font, lines, x, y, stack);
     }
     
