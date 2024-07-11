@@ -119,9 +119,9 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(ANGER_TIME, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(ANGER_TIME, 0);
     }
 
     @Override

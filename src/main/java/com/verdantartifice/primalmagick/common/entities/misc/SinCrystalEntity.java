@@ -51,9 +51,9 @@ public class SinCrystalEntity extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.getEntityData().define(BEAM_TARGET, Optional.empty());
-        this.getEntityData().define(DAMAGE_CLOUD, Optional.empty());
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        pBuilder.define(BEAM_TARGET, Optional.empty());
+        pBuilder.define(DAMAGE_CLOUD, Optional.empty());
     }
 
     @Override

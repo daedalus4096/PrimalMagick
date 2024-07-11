@@ -49,10 +49,10 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     }
     
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(LOYALTY_LEVEL, (byte)0);
-        this.entityData.define(HAS_GLINT, false);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(LOYALTY_LEVEL, (byte)0);
+        pBuilder.define(HAS_GLINT, false);
     }
 
     @Override

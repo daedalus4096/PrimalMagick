@@ -87,9 +87,9 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_IS_DANCING, false);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(DATA_IS_DANCING, false);
     }
     
     public boolean isAngry() {

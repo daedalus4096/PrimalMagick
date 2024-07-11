@@ -44,9 +44,9 @@ public class ManaArrowEntity extends AbstractArrow {
     }
     
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(SOURCE_TAG, "");
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(SOURCE_TAG, "");
     }
 
     public void setSource(Source source) {

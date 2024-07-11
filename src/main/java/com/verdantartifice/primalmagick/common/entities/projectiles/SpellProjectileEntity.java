@@ -101,9 +101,9 @@ public class SpellProjectileEntity extends AbstractArrow {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(COLOR, 0xFFFFFF);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(COLOR, 0xFFFFFF);
     }
 
     @Override

@@ -39,9 +39,9 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(OWNER_UNIQUE_ID, Optional.empty());
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(OWNER_UNIQUE_ID, Optional.empty());
     }
 
     @Override

@@ -99,10 +99,10 @@ public class SpellMineEntity extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.getEntityData().define(COLOR, 0xFFFFFF);
-        this.getEntityData().define(ARMED, Boolean.FALSE);
-        this.getEntityData().define(LIFESPAN, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        pBuilder.define(COLOR, 0xFFFFFF);
+        pBuilder.define(ARMED, Boolean.FALSE);
+        pBuilder.define(LIFESPAN, 0);
     }
 
     @Override
