@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.client.fx.particles;
 
-import java.util.Locale;
-
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 /**
  * Particle data for potion explosions.
@@ -18,26 +17,13 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class PotionExplosionParticleData implements ParticleOptions {
-    public static final Codec<PotionExplosionParticleData> CODEC = RecordCodecBuilder.create((instance) -> {
-        return instance.group(Codec.BOOL.fieldOf("instant").forGetter((data) -> {
-            return data.isInstant;
-        })).apply(instance, PotionExplosionParticleData::new);
+    public static final MapCodec<PotionExplosionParticleData> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
+        return instance.group(Codec.BOOL.fieldOf("instant").forGetter(data -> data.isInstant)).apply(instance, PotionExplosionParticleData::new);
     });
     
-    @SuppressWarnings("deprecation")
-    public static final ParticleOptions.Deserializer<PotionExplosionParticleData> DESERIALIZER = new ParticleOptions.Deserializer<PotionExplosionParticleData>() {
-        @Override
-        public PotionExplosionParticleData fromCommand(ParticleType<PotionExplosionParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException {
-            reader.expect(' ');
-            boolean instant = reader.readBoolean();
-            return new PotionExplosionParticleData(instant);
-        }
-
-        @Override
-        public PotionExplosionParticleData fromNetwork(ParticleType<PotionExplosionParticleData> particleTypeIn, FriendlyByteBuf buffer) {
-            return new PotionExplosionParticleData(buffer.readBoolean());
-        }
-    };
+    public static final StreamCodec<ByteBuf, PotionExplosionParticleData> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.BOOL, data -> data.isInstant,
+            PotionExplosionParticleData::new);
     
     protected final boolean isInstant;
     
@@ -45,19 +31,17 @@ public class PotionExplosionParticleData implements ParticleOptions {
         this.isInstant = isInstant;
     }
 
+    public static MapCodec<PotionExplosionParticleData> codec(ParticleType<PotionExplosionParticleData> pParticleType) {
+        return CODEC;
+    }
+
+    public static StreamCodec<? super RegistryFriendlyByteBuf, PotionExplosionParticleData> streamCodec(ParticleType<PotionExplosionParticleData> pParticleType) {
+        return STREAM_CODEC;
+    }
+
     @Override
     public ParticleType<?> getType() {
         return ParticleTypesPM.POTION_EXPLOSION.get();
-    }
-
-    @Override
-    public void writeToNetwork(FriendlyByteBuf buffer) {
-        buffer.writeBoolean(this.isInstant);
-    }
-
-    @Override
-    public String writeToString() {
-        return String.format(Locale.ROOT, "%s %b", ForgeRegistries.PARTICLE_TYPES.getKey(this.getType()), this.isInstant);
     }
 
     public boolean isInstant() {
