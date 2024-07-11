@@ -87,7 +87,7 @@ public class GuiUtils {
             guiGraphics.pose().translate(x + 8, y + 8, 150);
             
             try {
-                guiGraphics.pose().mulPoseMatrix((new Matrix4f()).scaling(1.0F, -1.0F, 1.0F));
+                guiGraphics.pose().mulPose((new Matrix4f()).scaling(1.0F, -1.0F, 1.0F));
                 guiGraphics.pose().scale(16.0F, 16.0F, 16.0F);
                 scaleOpt.ifPresent(scale -> {
                     guiGraphics.pose().scale((float)scale.x, (float)scale.y, (float)scale.z);
@@ -112,8 +112,8 @@ public class GuiUtils {
                 crashreportcategory.setDetail("Item Damage", () -> {
                     return String.valueOf(stack.getDamageValue());
                 });
-                crashreportcategory.setDetail("Item NBT", () -> {
-                    return String.valueOf((Object)stack.getTag());
+                crashreportcategory.setDetail("Item Components", () -> {
+                    return String.valueOf(stack.getComponents());
                 });
                 crashreportcategory.setDetail("Item Foil", () -> {
                     return String.valueOf(stack.hasFoil());
@@ -197,10 +197,10 @@ public class GuiUtils {
         TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(imageLoc);
         MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
         VertexConsumer builder = buffer.getBuffer(RenderType.cutout());
-        builder.vertex(x + 0.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU0(), sprite.getV1()).uv2(240, 240).normal(1, 0, 0).endVertex();
-        builder.vertex(x + 16.0D, y + 16.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU1(), sprite.getV1()).uv2(240, 240).normal(1, 0, 0).endVertex();
-        builder.vertex(x + 16.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU1(), sprite.getV0()).uv2(240, 240).normal(1, 0, 0).endVertex();
-        builder.vertex(x + 0.0D, y + 0.0D, z).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU0(), sprite.getV0()).uv2(240, 240).normal(1, 0, 0).endVertex();
+        builder.addVertex(x + 0.0F, y + 16.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
+        builder.addVertex(x + 16.0F, y + 16.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU1(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
+        builder.addVertex(x + 16.0F, y + 0.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU1(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
+        builder.addVertex(x + 0.0F, y + 0.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
         buffer.endBatch();
 
         guiGraphics.pose().popPose();
@@ -251,10 +251,10 @@ public class GuiUtils {
                 TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(texLoc);
                 VertexConsumer builder = buffers.getBuffer(RenderType.cutout());
                 Matrix4f matrix = poseStack.last().pose();
-                builder.vertex(matrix, 0.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU0(), sprite.getV1()).uv2(240, 240).normal(1, 0, 0).endVertex();
-                builder.vertex(matrix, 16.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU1(), sprite.getV1()).uv2(240, 240).normal(1, 0, 0).endVertex();
-                builder.vertex(matrix, 16.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU1(), sprite.getV0()).uv2(240, 240).normal(1, 0, 0).endVertex();
-                builder.vertex(matrix, 0.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU0(), sprite.getV0()).uv2(240, 240).normal(1, 0, 0).endVertex();
+                builder.addVertex(matrix, 0.0F, 16.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
+                builder.addVertex(matrix, 16.0F, 16.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU1(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
+                builder.addVertex(matrix, 16.0F, 0.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU1(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
+                builder.addVertex(matrix, 0.0F, 0.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
 
                 String amountStr = Integer.toString(amount);
                 int amountWidth = mc.font.width(amountStr);
