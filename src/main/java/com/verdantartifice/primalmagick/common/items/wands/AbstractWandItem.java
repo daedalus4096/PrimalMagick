@@ -34,8 +34,6 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -82,10 +80,10 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the given wand stack has infinite mana, return that
             return -1;
         } else {
-            // Otherwise get the current centimana for that source from the stack's NBT tag
+            // Otherwise get the current centimana for that source from the stack's data
             int retVal = 0;
-            if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getId().toString())) {
-                retVal = stack.getTag().getInt(source.getId().toString());
+            if (stack != null && source != null) {
+                retVal = stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY).getAmount(source);
             }
             return retVal;
         }
@@ -97,7 +95,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the given wand stack has infinte mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
-            // Otherwise show the current real mana for that source from the stack's NBT tag
+            // Otherwise show the current real mana for that source from the stack's data
             return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
@@ -105,16 +103,15 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public SourceList getAllMana(ItemStack stack) {
         SourceList retVal = SourceList.EMPTY;
+        SourceList stored = stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY);
         boolean isInfinite = this.getMaxMana(stack) == -1;
         for (Source source : Sources.getAllSorted()) {
             if (isInfinite) {
                 // If the stack has infinite mana, set that into the returned source list (not merge; it would keep the default zero)
                 retVal = retVal.set(source, -1);
-            } else if (stack.hasTag() && stack.getTag().contains(source.getId().toString())) {
-                // Otherwise, merge the current centimana into the returned source list
-                retVal = retVal.merge(source, stack.getTag().getInt(source.getId().toString()));
             } else {
-                retVal = retVal.merge(source, 0);
+                // Otherwise, merge the current centimana into the returned source list
+                retVal = retVal.merge(source, stored.getAmount(source));
             }
         }
         return retVal;
@@ -126,14 +123,14 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the given wand stack has infinte mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
-            // Otherwise show the max centimana for that source from the stack's NBT tag
+            // Otherwise show the max centimana for that source from the stack's data
             return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
     
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
-        // Save the given amount of centimana for the given source into the stack's NBT tag
-        stack.addTagElement(source.getId().toString(), IntTag.valueOf(amount));
+        // Save the given amount of centimana for the given source into the stack's data
+        stack.update(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY, mana -> mana.set(source, amount));
     }
 
     @Override

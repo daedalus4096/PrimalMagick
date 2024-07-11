@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
@@ -46,6 +47,7 @@ public class DataComponentsPM {
     public static final RegistryObject<DataComponentType<FuseType>> FUSE_TYPE = register("fuse_type", builder -> builder.persistent(FuseType.CODEC).networkSynchronized(FuseType.STREAM_CODEC));
     
     public static final RegistryObject<DataComponentType<Integer>> MANA_DISCOUNT = register("mana_discount", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+    public static final RegistryObject<DataComponentType<SourceList>> STORED_CENTIMANA = register("stored_centimana", builder -> builder.persistent(SourceList.CODEC).networkSynchronized(SourceList.STREAM_CODEC));
     
     public static final RegistryObject<DataComponentType<SpellPackage>> SPELL_PACKAGE = register("spell_package", builder -> builder.persistent(SpellPackage.codec()).networkSynchronized(SpellPackage.streamCodec()));
     public static final RegistryObject<DataComponentType<List<SpellPackage>>> SPELL_PACKAGE_LIST = register("spell_package_list", builder -> builder.persistent(SpellPackage.codec().listOf()).networkSynchronized(SpellPackage.streamCodec().apply(ByteBufCodecs.list())));
