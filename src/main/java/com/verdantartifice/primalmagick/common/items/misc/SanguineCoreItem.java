@@ -11,7 +11,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
 /**
  * Definition of a non-blank sanguine core.  Slotted into a sanguine crucible to determine what
@@ -40,7 +39,7 @@ public class SanguineCoreItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltip, flagIn);
-        tooltip.add(Component.translatable("tooltip.primalmagick.sanguine_core.1", this.getMaxDamage(stack) - this.getDamage(stack) + 1));
+        tooltip.add(Component.translatable("tooltip.primalmagick.sanguine_core.1", stack.getMaxDamage() - stack.getDamageValue() + 1));
         tooltip.add(Component.translatable("tooltip.primalmagick.sanguine_core.2", this.soulsPerSpawn));
     }
 
