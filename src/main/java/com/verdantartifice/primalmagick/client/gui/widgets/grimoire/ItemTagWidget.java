@@ -71,7 +71,7 @@ public class ItemTagWidget extends AbstractWidget {
     }
     
     protected void updateTooltip() {
-        if (!ItemStack.isSameItemSameTags(this.currentStack, this.lastStack)) {
+        if (!ItemStack.isSameItemSameComponents(this.currentStack, this.lastStack)) {
             Minecraft mc = Minecraft.getInstance();
             this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.currentStack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
         }

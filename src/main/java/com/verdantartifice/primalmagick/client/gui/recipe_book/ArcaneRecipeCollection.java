@@ -43,7 +43,7 @@ public class ArcaneRecipeCollection {
         ItemStack referenceStack = recipeHolders.get(0).value().getResultItem(registryAccess);
         for (int index = 1; index < recipeHolders.size(); index++) {
             ItemStack stack = recipeHolders.get(index).value().getResultItem(registryAccess);
-            if (!ItemStack.isSameItemSameTags(referenceStack, stack)) {
+            if (!ItemStack.isSameItemSameComponents(referenceStack, stack)) {
                 return false;
             }
         }

@@ -202,7 +202,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
             ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
             if (currentOutput.isEmpty()) {
                 this.setItem(OUTPUT_INV_INDEX, 0, recipeOutput);
-            } else if (ItemStack.isSameItemSameTags(recipeOutput, currentOutput)) {
+            } else if (ItemStack.isSameItemSameComponents(recipeOutput, currentOutput)) {
                 currentOutput.grow(recipeOutput.getCount());
             }
             
@@ -220,7 +220,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
+        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.setChanged();

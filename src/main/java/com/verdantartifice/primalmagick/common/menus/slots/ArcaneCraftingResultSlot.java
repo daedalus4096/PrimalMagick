@@ -138,7 +138,7 @@ public class ArcaneCraftingResultSlot extends Slot {
             if (!remainingStack.isEmpty()) {
                 if (materialStack.isEmpty()) {
                     this.craftingInventory.setItem(index, remainingStack);
-                } else if (ItemStack.isSameItemSameTags(materialStack, remainingStack)) {
+                } else if (ItemStack.isSameItemSameComponents(materialStack, remainingStack)) {
                     remainingStack.grow(materialStack.getCount());
                     this.craftingInventory.setItem(index, remainingStack);
                 } else if (!this.player.getInventory().add(remainingStack)) {

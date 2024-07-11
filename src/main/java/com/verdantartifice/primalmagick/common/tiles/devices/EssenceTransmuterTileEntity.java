@@ -276,7 +276,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
+        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.nextOutputSource = null;

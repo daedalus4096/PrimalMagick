@@ -145,7 +145,7 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
                         
                         // Add the result book to the output slot if there's room, then shrink the blank book stack
                         ItemStack existingStack = this.getItem(OUTPUT_INV_INDEX, 0);
-                        if (ItemStack.isSameItemSameTags(resultStack, existingStack) && existingStack.getCount() < existingStack.getMaxStackSize()) {
+                        if (ItemStack.isSameItemSameComponents(resultStack, existingStack) && existingStack.getCount() < existingStack.getMaxStackSize()) {
                             existingStack.grow(1);
                             blankStack.shrink(1);
                             this.setChanged();

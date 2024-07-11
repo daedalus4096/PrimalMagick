@@ -116,7 +116,7 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, slotStack);
         if (invIndex == INPUT_INV_INDEX && !flag) {
             this.chargeTime = 0;
             this.setChanged();
