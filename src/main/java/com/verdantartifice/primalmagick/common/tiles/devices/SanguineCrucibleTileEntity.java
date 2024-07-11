@@ -93,8 +93,17 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
                     entity.souls -= core.getSoulsPerSpawn();
                     
                     if (!level.isClientSide) {
-                        if (!entity.getItem(INPUT_INV_INDEX, 0).isDamageableItem() || entity.getItem(INPUT_INV_INDEX, 0).hurt(1, level.random, null)) {
-                            entity.getItem(INPUT_INV_INDEX, 0).shrink(1);
+                        ItemStack coreStack = entity.getItem(INPUT_INV_INDEX, 0);
+                        if (coreStack.isDamageableItem()) {
+                            int newDamage = coreStack.getDamageValue() + 1;
+                            if (newDamage >= coreStack.getMaxDamage()) {
+                                coreStack.shrink(1);
+                                entity.updateLitState();
+                            } else {
+                                coreStack.setDamageValue(newDamage);
+                            }
+                        } else {
+                            coreStack.shrink(1);
                             entity.updateLitState();
                         }
                         

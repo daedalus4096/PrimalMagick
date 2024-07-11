@@ -4,9 +4,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -92,8 +90,13 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
                 retVal.set(index, inputStack.getCraftingRemainingItem());
             } else if (inputStack.getItem() instanceof IWritingImplement pen) {
                 ItemStack leftoverStack = inputStack.copyWithCount(1);
-                if (pen.isDamagedOnUse() && leftoverStack.hurt(1, RANDOM, null)) {
-                    leftoverStack = ItemStack.EMPTY;
+                if (pen.isDamagedOnUse()) {
+                    int newDamage = leftoverStack.getDamageValue() + 1;
+                    if (newDamage >= leftoverStack.getMaxDamage()) {
+                        leftoverStack = ItemStack.EMPTY;
+                    } else {
+                        leftoverStack.setDamageValue(newDamage);
+                    }
                 }
                 retVal.set(index, leftoverStack);
             }
