@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
@@ -24,7 +25,6 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.item.Items;
@@ -32,6 +32,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraftforge.common.Tags;
 
 /**
@@ -474,7 +475,7 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(Items.GOLDEN_SHOVEL).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.GOLDEN_SWORD).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.LIGHT_WEIGHTED_PRESSURE_PLATE).consumed().weight(1).build())
-                .otherReward(LootTableReward.builder(ResourceLocation.withDefaultNamespace("gameplay/piglin_bartering")).description("label.primalmagick.loot_table.piglin_bartering.desc").build())
+                .otherReward(LootTableReward.builder(BuiltInLootTables.PIGLIN_BARTERING).description("label.primalmagick.loot_table.piglin_bartering.desc").build())
                 .build());
         context.register(PORTAL_DETRITUS, ProjectTemplate.builder().aid(Blocks.NETHER_PORTAL).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
                 .weightFunction(new ConstantWeight(5))
@@ -505,7 +506,7 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(Items.DIORITE).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.SHEARS).consumed().weight(1).build())
                 .material(ItemTagProjectMaterial.builder(ItemTags.BEDS).consumed().weight(1).build())
-                .otherReward(LootTableReward.builder(PrimalMagick.resource("gameplay/theorycrafting/prosperous_trade")).description("label.primalmagick.loot_table.prosperous_trade.desc").build())
+                .otherReward(LootTableReward.builder(LootTablesPM.THEORYCRAFTING_PROSPEROUS_TRADE).description("label.primalmagick.loot_table.prosperous_trade.desc").build())
                 .build());
         context.register(RAIDING_THE_RAIDERS, ProjectTemplate.builder().rewardMultiplier(0.5D)
                 .weightFunction(new ConstantWeight(5))
@@ -574,7 +575,7 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(Items.DIAMOND_AXE).consumed().bonusReward(0.25D).weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.DIAMOND_PICKAXE).consumed().bonusReward(0.25D).weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.DIAMOND_SWORD).consumed().bonusReward(0.25D).weight(1).build())
-                .otherReward(LootTableReward.builder(PrimalMagick.resource("gameplay/theorycrafting/rich_trade")).description("label.primalmagick.loot_table.rich_trade.desc").build())
+                .otherReward(LootTableReward.builder(LootTablesPM.THEORYCRAFTING_RICH_TRADE).description("label.primalmagick.loot_table.rich_trade.desc").build())
                 .build());
         context.register(RITUAL_PRACTICE, ProjectTemplate.builder()
                 .quorumResearch(2, ResearchEntries.MANAFRUIT, ResearchEntries.RITUAL_CANDLES, ResearchEntries.INCENSE_BRAZIER, ResearchEntries.DOWSING_ROD)
@@ -645,7 +646,7 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(Items.STONE, 2).consumed().weight(1).build())
                 .material(ItemTagProjectMaterial.builder(ItemTags.WOOL).quantity(2).consumed().weight(1).build())
                 .material(ItemTagProjectMaterial.builder(Tags.Items.DYES).quantity(2).consumed().weight(1).build())
-                .otherReward(LootTableReward.builder(PrimalMagick.resource("gameplay/theorycrafting/trade")).description("label.primalmagick.loot_table.trade.desc").build())
+                .otherReward(LootTableReward.builder(LootTablesPM.THEORYCRAFTING_TRADE).description("label.primalmagick.loot_table.trade.desc").build())
                 .build());
         context.register(WAND_TINKERING, ProjectTemplate.builder().requiredResearch(ResearchEntries.BASIC_MANAWEAVING)
                 .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.MASTER_MANAWEAVING, -2).build())
