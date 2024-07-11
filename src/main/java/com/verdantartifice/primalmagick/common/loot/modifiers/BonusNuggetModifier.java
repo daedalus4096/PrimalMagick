@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 
@@ -28,7 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class BonusNuggetModifier extends LootModifier {
-    public static final Codec<BonusNuggetModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).and(inst.group(
+    public static final MapCodec<BonusNuggetModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst).and(inst.group(
                 Codec.unboundedMap(TagKey.codec(Registries.BLOCK), TagKey.codec(Registries.ITEM)).fieldOf("nuggetMap").forGetter(m -> m.nuggetMap),
                 Codec.FLOAT.fieldOf("chance").forGetter(m -> m.chance)
             )).apply(inst, BonusNuggetModifier::new));
@@ -62,7 +63,7 @@ public class BonusNuggetModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

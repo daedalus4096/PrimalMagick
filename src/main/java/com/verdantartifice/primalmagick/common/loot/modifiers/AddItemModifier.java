@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import java.util.stream.IntStream;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -23,9 +23,9 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class AddItemModifier extends LootModifier {
     protected static final UniformInt DEFAULT_ROLLS = UniformInt.of(1, 1);
-    public static final Codec<AddItemModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst)
+    public static final MapCodec<AddItemModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst)
             .and(ForgeRegistries.ITEMS.getCodec().fieldOf("item").forGetter(m -> m.item))
-            .and(UniformInt.CODEC.optionalFieldOf("rolls", DEFAULT_ROLLS).forGetter(m -> m.rolls))
+            .and(UniformInt.CODEC.codec().optionalFieldOf("rolls", DEFAULT_ROLLS).forGetter(m -> m.rolls))
             .apply(inst, AddItemModifier::new));
     
     protected final Item item;
@@ -49,7 +49,7 @@ public class AddItemModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
@@ -25,7 +26,7 @@ import net.minecraftforge.common.loot.LootModifier;
  * @author Daedalus4096
  */
 public class BountyFishingModifier extends LootModifier {
-    public static final Codec<BountyFishingModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).and(Codec.FLOAT.fieldOf("chance").forGetter(m -> m.chance)).apply(inst, BountyFishingModifier::new));
+    public static final MapCodec<BountyFishingModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst).and(Codec.FLOAT.fieldOf("chance").forGetter(m -> m.chance)).apply(inst, BountyFishingModifier::new));
 
     protected final float chance;
     
@@ -50,7 +51,7 @@ public class BountyFishingModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

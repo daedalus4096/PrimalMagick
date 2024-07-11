@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -27,7 +27,7 @@ import net.minecraftforge.common.loot.LootModifier;
  * @author Daedalus4096
  */
 public class EssenceThiefModifier extends LootModifier {
-    public static final Codec<EssenceThiefModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).apply(inst, EssenceThiefModifier::new));
+    public static final MapCodec<EssenceThiefModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst).apply(inst, EssenceThiefModifier::new));
 
     public EssenceThiefModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -71,7 +71,7 @@ public class EssenceThiefModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

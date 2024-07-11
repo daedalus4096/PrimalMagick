@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 import org.jetbrains.annotations.NotNull;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 
@@ -24,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class GuillotineModifier extends LootModifier {
-    public static final Codec<GuillotineModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst)
+    public static final MapCodec<GuillotineModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst)
             .and(ForgeRegistries.ITEMS.getCodec().fieldOf("item").forGetter(m -> m.item))
             .and(Codec.FLOAT.fieldOf("chance").forGetter(m -> m.chance))
             .apply(inst, GuillotineModifier::new));
@@ -63,7 +64,7 @@ public class GuillotineModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.loot.conditions;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.registries.Registries;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
  * @author Daedalus4096
  */
 public class MatchBlockTag implements LootItemCondition {
-    public static final Codec<MatchBlockTag> CODEC = RecordCodecBuilder.create(instance -> {
+    public static final MapCodec<MatchBlockTag> CODEC = RecordCodecBuilder.mapCodec(instance -> {
         return instance.group(TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(mbt -> mbt.tag)).apply(instance, MatchBlockTag::new);
     });
     
