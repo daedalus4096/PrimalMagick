@@ -144,7 +144,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
                 IWand wand = (IWand)wandStack.getItem();
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.SKY) - entity.manaStorage.getManaStored(Sources.SKY);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Sources.SKY, centimanaToTransfer)) {
+                if (wand.consumeMana(wandStack, null, Sources.SKY, centimanaToTransfer, level.registryAccess())) {
                     entity.manaStorage.receiveMana(Sources.SKY, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }

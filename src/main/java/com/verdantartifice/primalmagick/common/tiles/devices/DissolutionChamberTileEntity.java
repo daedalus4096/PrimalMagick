@@ -144,7 +144,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.EARTH) - entity.manaStorage.getManaStored(Sources.EARTH);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Sources.EARTH, centimanaToTransfer)) {
+                if (wand.consumeMana(wandStack, null, Sources.EARTH, centimanaToTransfer, level.registryAccess())) {
                     entity.manaStorage.receiveMana(Sources.EARTH, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }

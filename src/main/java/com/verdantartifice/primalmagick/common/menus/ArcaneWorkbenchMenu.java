@@ -219,7 +219,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
             return false;
         }
         IWand wand = (IWand)stack.getItem();
-        return wand.containsRealMana(stack, player, recipe.getManaCosts());
+        return wand.containsRealMana(stack, player, recipe.getManaCosts(), player.registryAccess());
     }
 
     @Override

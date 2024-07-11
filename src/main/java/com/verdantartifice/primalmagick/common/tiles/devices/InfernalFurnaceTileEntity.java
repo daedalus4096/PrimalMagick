@@ -214,7 +214,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.INFERNAL) - entity.manaStorage.getManaStored(Sources.INFERNAL);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Sources.INFERNAL, centimanaToTransfer)) {
+                if (wand.consumeMana(wandStack, null, Sources.INFERNAL, centimanaToTransfer, level.registryAccess())) {
                     entity.manaStorage.receiveMana(Sources.INFERNAL, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }

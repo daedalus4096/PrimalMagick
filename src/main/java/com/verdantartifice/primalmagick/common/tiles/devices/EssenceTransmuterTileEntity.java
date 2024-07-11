@@ -193,7 +193,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.MOON) - entity.manaStorage.getManaStored(Sources.MOON);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Sources.MOON, centimanaToTransfer)) {
+                if (wand.consumeMana(wandStack, null, Sources.MOON, centimanaToTransfer, level.registryAccess())) {
                     entity.manaStorage.receiveMana(Sources.MOON, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
