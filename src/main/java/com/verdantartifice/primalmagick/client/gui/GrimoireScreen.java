@@ -380,9 +380,9 @@ public class GrimoireScreen extends Screen {
                 completeList.add(entry);
             } else if (entry.isInProgress(mc.player)) {
                 inProgressList.add(entry);
-            } else if (!entry.hidden() && entry.isAvailable(mc.player)) {
+            } else if (!entry.flags().hidden() && entry.isAvailable(mc.player)) {
                 availableList.add(entry);
-            } else if (!entry.hidden() && entry.isUpcoming(mc.player)) {
+            } else if (!entry.flags().hidden() && entry.isUpcoming(mc.player)) {
                 upcomingList.add(entry);
             }
         }
