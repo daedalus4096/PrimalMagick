@@ -139,7 +139,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
         double z = (double)this.worldPosition.getZ() + (SPAWN_RANGE * (this.level.random.nextDouble() - this.level.random.nextDouble())) + 0.5D;
         BlockPos spawnPos = BlockPos.containing(x, y, z);
         
-        if (this.level.noCollision(entityType.getAABB(x, y, z))) {
+        if (this.level.noCollision(entityType.getSpawnAABB(x, y, z))) {
             ServerLevel serverWorld = (ServerLevel)this.level;
             Entity entity = entityType.spawn(serverWorld, (ItemStack)null, (Player)null, spawnPos, MobSpawnType.SPAWNER, true, !Objects.equals(this.worldPosition, spawnPos));
             if (entity == null) {
@@ -148,7 +148,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
             entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), this.level.random.nextFloat() * 360.0F, 0.0F);
             
             if (entity instanceof Mob mobEntity) {
-                ForgeEventFactory.onFinalizeSpawn(mobEntity, serverWorld, this.level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null, null);
+                ForgeEventFactory.onFinalizeSpawn(mobEntity, serverWorld, this.level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null);
             }
             
             PacketHandler.sendToAllAround(new WandPoofPacket(x, y, z, Color.WHITE.getRGB(), true, Direction.UP), this.level.dimension(), entity.blockPosition(), 32.0D);
