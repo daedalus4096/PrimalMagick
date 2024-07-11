@@ -79,7 +79,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected ArcaneRecipeBookTabButton selectedTab;
     protected StateSwitchingButton filterButton;
     protected final Object filterButtonLock = new Object();
-    protected IArcaneRecipeBookMenu<?> menu;
+    protected IArcaneRecipeBookMenu<?, ?> menu;
     protected Minecraft mc;
     @Nullable
     protected EditBox searchBox;
@@ -95,7 +95,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected boolean useFurnaceStyle;
     protected boolean isLoading = true;
 
-    public void init(int width, int height, Minecraft mc, boolean tooNarrow, boolean useFurnaceStyle, IArcaneRecipeBookMenu<?> menu) {
+    public void init(int width, int height, Minecraft mc, boolean tooNarrow, boolean useFurnaceStyle, IArcaneRecipeBookMenu<?, ?> menu) {
         this.mc = mc;
         this.width = width;
         this.height = height;
@@ -539,8 +539,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     }
 
     @Override
-    public void addItemToSlot(Iterator<Ingredient> iterator, int slotIndex, int count, int p_135418_, int p_135419_) {
-        Ingredient ingredient = iterator.next();
+    public void addItemToSlot(Ingredient ingredient, int slotIndex, int count, int p_135418_, int p_135419_) {
         if (!ingredient.isEmpty()) {
             Slot slot = this.menu.getSlots().get(slotIndex);
             this.ghostRecipe.addIngredient(ingredient, slot.x, slot.y);

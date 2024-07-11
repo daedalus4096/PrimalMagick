@@ -31,7 +31,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     public static final int TICKS_TO_SWAP = 30;
     protected static final Component MORE_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.moreRecipes");
     
-    protected IArcaneRecipeBookMenu<?> menu;
+    protected IArcaneRecipeBookMenu<?, ?> menu;
     protected ArcaneRecipeBook book;
     protected ArcaneRecipeCollection collection;
     protected float time;
@@ -45,7 +45,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     public void init(ArcaneRecipeCollection recipeCollection, ArcaneRecipeBookPage page) {
         Minecraft mc = page.getMinecraft();
         this.collection = recipeCollection;
-        this.menu = mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?> recipeBookMenu ? recipeBookMenu : null;
+        this.menu = mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?, ?> recipeBookMenu ? recipeBookMenu : null;
         this.book = page.getArcaneRecipeBook();
         List<RecipeHolder<?>> list = this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType()));
         
