@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
@@ -20,6 +21,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
@@ -32,7 +34,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * 
  * @author Daedalus4096
  */
-public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileEntity> implements IArcaneRecipeBookMenu<Container> {
+public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileEntity> implements IArcaneRecipeBookMenu<CraftingInput, IConcoctingRecipe> {
     protected final ContainerData concocterData;
     protected final Slot wandSlot;
     
@@ -160,7 +162,7 @@ public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileE
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<? extends Recipe<? super RecipeInput>> recipe) {
+    public boolean recipeMatches(RecipeHolder<IConcoctingRecipe> recipe) {
         if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
             return recipe.value().matches(new RecipeWrapper(modifiable), this.level);
         } else {
