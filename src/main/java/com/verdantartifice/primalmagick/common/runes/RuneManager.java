@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.google.common.collect.ImmutableList;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
@@ -23,15 +24,13 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 /**
  * Primary access point for rune-related methods.
@@ -39,8 +38,6 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
  * @author Daedalus4096
  */
 public class RuneManager {
-    private static final String RUNE_TAG_NAME = PrimalMagick.MODID + ":runes";
-    
     /**
      * Gets the set of enchantments that can be replicated with runes.
      * 
@@ -164,22 +161,22 @@ public class RuneManager {
      * @param addition the second enchantment map
      * @return the merged enchantment map
      */
-    public static Map<Holder<Enchantment>, Integer> mergeEnchantments(@Nonnull Map<Holder<Enchantment>, Integer> original, @Nonnull Map<Holder<Enchantment>, Integer> addition) {
+    public static ItemEnchantments mergeEnchantments(@Nonnull ItemEnchantments original, @Nonnull Map<Holder<Enchantment>, Integer> addition) {
         // Start with the original map as a base
-        Map<Holder<Enchantment>, Integer> retVal = new HashMap<>(original);
+        ItemEnchantments.Mutable retVal = new ItemEnchantments.Mutable(original);
         
         for (Map.Entry<Holder<Enchantment>, Integer> entry : addition.entrySet()) {
-            if (retVal.containsKey(entry.getKey())) {
+            if (retVal.keySet().contains(entry.getKey())) {
                 // If the original already contains the enchantment to be added, set its value to the higher of the two levels
-                retVal.put(entry.getKey(), Math.max(original.getOrDefault(entry.getKey(), 0), entry.getValue()));
+                retVal.upgrade(entry.getKey(), Math.max(original.getLevel(entry.getKey()), entry.getValue()));
             } else if (EnchantmentHelper.isEnchantmentCompatible(original.keySet(), entry.getKey())) {
                 // Only add the addition enchantment if it's compatible with all those in the current output set
-                retVal.put(entry.getKey(), entry.getValue());
+                retVal.upgrade(entry.getKey(), entry.getValue());
                 
             }
         }
         
-        return retVal;
+        return retVal.toImmutable();
     }
     
     /**
@@ -189,11 +186,7 @@ public class RuneManager {
      * @return true if the item stack has one or more runes applied, false otherwise
      */
     public static boolean hasRunes(@Nullable ItemStack stack) {
-        if (stack == null || stack.isEmpty() || !stack.hasTag()) {
-            return false;
-        } else {
-            return !stack.getTag().getList(RUNE_TAG_NAME, Tag.TAG_STRING).isEmpty();
-        }
+        return !getRunes(stack).isEmpty();
     }
     
     /**
@@ -204,21 +197,7 @@ public class RuneManager {
      */
     @Nonnull
     public static List<Rune> getRunes(@Nullable ItemStack stack) {
-        if (stack == null || stack.isEmpty() || !stack.hasTag()) {
-            return Collections.emptyList();
-        }
-        
-        List<Rune> retVal = new ArrayList<>();
-        ListTag tagList = stack.getTag().getList(RUNE_TAG_NAME, Tag.TAG_STRING);
-        for (int index = 0; index < tagList.size(); index++) {
-            String tagStr = tagList.getString(index);
-            Rune rune = Rune.getRune(ResourceLocation.parse(tagStr));
-            if (rune != null) {
-                retVal.add(rune);
-            }
-        }
-        
-        return retVal;
+        return stack == null ? ImmutableList.of() : stack.getOrDefault(DataComponentsPM.INSCRIBED_RUNES.get(), ImmutableList.of());
     }
     
     /**
@@ -229,13 +208,7 @@ public class RuneManager {
      */
     public static void setRunes(@Nullable ItemStack stack, @Nullable List<Rune> runes) {
         if (stack != null && !stack.isEmpty() && runes != null && !runes.isEmpty()) {
-            ListTag tagList = new ListTag();
-            for (Rune rune : runes) {
-                if (rune != null) {
-                    tagList.add(StringTag.valueOf(rune.getId().toString()));
-                }
-            }
-            stack.addTagElement(RUNE_TAG_NAME, tagList);
+            stack.set(DataComponentsPM.INSCRIBED_RUNES.get(), runes);
         }
     }
     
@@ -246,7 +219,7 @@ public class RuneManager {
      */
     public static void clearRunes(@Nullable ItemStack stack) {
         if (stack != null) {
-            stack.removeTagKey(RUNE_TAG_NAME);
+            stack.remove(DataComponentsPM.INSCRIBED_RUNES.get());
         }
     }
     

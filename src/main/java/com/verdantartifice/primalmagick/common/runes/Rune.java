@@ -13,6 +13,8 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 
@@ -24,6 +26,7 @@ import net.minecraft.world.item.Rarity;
  */
 public abstract class Rune {
     public static final Codec<Rune> CODEC = ResourceLocation.CODEC.xmap(Rune::getRune, Rune::getId);
+    public static final StreamCodec<ByteBuf, Rune> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(Rune::getRune, Rune::getId);
     
     protected static final Map<ResourceLocation, Rune> REGISTRY = new HashMap<>();
     
