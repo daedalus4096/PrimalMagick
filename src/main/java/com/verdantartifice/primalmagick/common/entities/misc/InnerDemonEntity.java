@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
@@ -145,7 +146,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     @Override
     public boolean doHurtTarget(Entity entityIn) {
         boolean retVal = super.doHurtTarget(entityIn);
-        entityIn.setSecondsOnFire(5);
+        entityIn.igniteForSeconds(5);
         return retVal;
     }
 
@@ -174,8 +175,8 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     }
 
     @Override
-    protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn) {
-        super.dropCustomDeathLoot(source, looting, recentlyHitIn);
+    protected void dropCustomDeathLoot(ServerLevel serverLevel, DamageSource source, boolean recentlyHitIn) {
+        super.dropCustomDeathLoot(serverLevel, source, recentlyHitIn);
         ItemEntity itemEntity = this.spawnAtLocation(ItemsPM.HALLOWED_ORB.get());
         if (itemEntity != null) {
             itemEntity.setExtendedLifetime();
@@ -202,7 +203,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     }
 
     @Override
-    public boolean canChangeDimensions() {
+    public boolean canUsePortal(boolean pAllowPassengers) {
         return false;
     }
     

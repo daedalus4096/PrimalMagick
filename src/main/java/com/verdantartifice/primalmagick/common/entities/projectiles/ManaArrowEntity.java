@@ -56,7 +56,7 @@ public class ManaArrowEntity extends AbstractArrow {
         } else if (source == Sources.SKY) {
             this.setNoGravity(true);
         } else if (source == Sources.INFERNAL) {
-            this.setSecondsOnFire(100);
+            this.igniteForSeconds(100);
         } else if (source == Sources.HALLOWED) {
             this.setBaseDamage(this.getBaseDamage() + 1);
         }
@@ -115,18 +115,18 @@ public class ManaArrowEntity extends AbstractArrow {
             target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 50));
         } else if (source == Sources.SUN) {
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 50));
-            if (target.getMobType() == MobType.UNDEAD) {
-                target.setSecondsOnFire(3);
+            if (target.isInvertedHealAndHarm()) {
+                target.igniteForSeconds(3);
             }
         } else if (source == Sources.MOON) {
             target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 50));
         } else if (source == Sources.BLOOD) {
-            target.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 50));
+            target.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.getHolder().get(), 50));
         } else if (source == Sources.VOID) {
             target.addEffect(new MobEffectInstance(MobEffects.WITHER, 50));
         } else if (source == Sources.HALLOWED) {
-            if (target.getMobType() == MobType.UNDEAD) {
-                target.setSecondsOnFire(3);
+            if (target.isInvertedHealAndHarm()) {
+                target.igniteForSeconds(3);
             }
         }
     }
