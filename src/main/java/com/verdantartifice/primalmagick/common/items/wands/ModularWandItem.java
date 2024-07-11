@@ -23,11 +23,7 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -111,6 +107,7 @@ public class ModularWandItem extends AbstractWandItem {
     
     public void setWandCore(@Nonnull ItemStack stack, @Nonnull WandCore core) {
         stack.set(DataComponentsPM.WAND_CORE.get(), core);
+        stack.set(DataComponents.RARITY, this.calculateRarity(stack));
     }
     
     @Nullable
@@ -133,6 +130,7 @@ public class ModularWandItem extends AbstractWandItem {
     
     public void setWandCap(@Nonnull ItemStack stack, @Nonnull WandCap cap) {
         stack.set(DataComponentsPM.WAND_CAP.get(), cap);
+        stack.set(DataComponents.RARITY, this.calculateRarity(stack));
     }
     
     @Nullable 
@@ -155,6 +153,7 @@ public class ModularWandItem extends AbstractWandItem {
     
     public void setWandGem(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
         stack.set(DataComponentsPM.WAND_GEM.get(), gem);
+        stack.set(DataComponents.RARITY, this.calculateRarity(stack));
     }
     
     @Nullable
@@ -187,9 +186,8 @@ public class ModularWandItem extends AbstractWandItem {
         return Component.translatable("item.primalmagick.modular_wand", gemName, capName, coreName);
     }
     
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        // A modular wand's rarity is the highest of those of its components
+    protected Rarity calculateRarity(ItemStack stack) {
+        // A modular wand's unenchanted rarity is the highest of those of its components
         Rarity retVal = Rarity.COMMON;
         WandCore core = this.getWandCore(stack);
         if (core != null && core.getRarity().compareTo(retVal) > 0) {
@@ -203,22 +201,7 @@ public class ModularWandItem extends AbstractWandItem {
         if (gem != null && gem.getRarity().compareTo(retVal) > 0) {
             retVal = gem.getRarity();
         }
-        
-        // Increase rarity if enchanted
-        if (stack.isEnchanted()) {
-            switch (retVal) {
-            case COMMON:
-            case UNCOMMON:
-                return Rarity.RARE;
-            case RARE:
-                return Rarity.EPIC;
-            case EPIC:
-            default:
-                return retVal;
-            }
-        } else {
-            return retVal;
-        }
+        return retVal;
     }
     
     @Override
