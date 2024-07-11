@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +30,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Wrapper around {@link StatsManager} specifically for dealing with expertise stats.
@@ -70,7 +70,7 @@ public class ExpertiseManager {
     
     protected static int getThresholdByEnchantmentsRunescribed(RegistryAccess registryAccess, ResearchTier tier) {
         MutableInt retVal = new MutableInt(0);
-        ForgeRegistries.ENCHANTMENTS.getValues().forEach(ench -> {
+        registryAccess.registryOrThrow(Registries.ENCHANTMENT).holders().forEach(ench -> {
             RuneManager.getRuneDefinition(registryAccess, ench).ifPresent(runeEnchDef -> {
                 // Only consider rune enchantment definitions with a research tier lower than the given one
                 getRuneEnchantmentTier(registryAccess, runeEnchDef).filter(enchTier -> enchTier.compareTo(tier) < 0).ifPresent(enchTier -> {
@@ -224,7 +224,7 @@ public class ExpertiseManager {
     }
     
     public static boolean isBonusEligible(Player player, Holder<Enchantment> enchantment) {
-        ResourceLocation enchKey = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+        ResourceLocation enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
         if (player != null && enchKey != null) {
             IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
             if (stats != null) {
@@ -235,7 +235,7 @@ public class ExpertiseManager {
     }
     
     protected static void markCrafted(Player player, Holder<Enchantment> enchantment) {
-        ResourceLocation enchKey = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+        ResourceLocation enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
         if (player != null && enchKey != null) {
             IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
             if (stats != null) {
