@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.entities.ai.goals.FollowCompanion
 import com.verdantartifice.primalmagick.common.entities.companions.AbstractCompanionEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -52,6 +53,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
@@ -230,10 +232,14 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
         this.level().broadcastEntityEvent(this, (byte)4);
         float rawDamage = (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
         float damage = ((int)rawDamage > 0) ? (rawDamage / 2.0F) + (float)this.random.nextInt((int)rawDamage) : rawDamage;
-        boolean flag = entityIn.hurt(this.level().damageSources().mobAttack(this), damage);
+        DamageSource damageSource = this.damageSources().mobAttack(this);
+        boolean flag = entityIn.hurt(damageSource, damage);
         if (flag) {
+            // FIXME Factor in knockback resistance
             entityIn.setDeltaMovement(entityIn.getDeltaMovement().add(0.0D, 0.4D, 0.0D));
-            this.doEnchantDamageEffects(this, entityIn);
+            if (this.level() instanceof ServerLevel serverlevel) {
+                EnchantmentHelper.doPostAttackEffects(serverlevel, entityIn, damageSource);
+            }
         }
         this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);
         return flag;
@@ -334,12 +340,6 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     @Override
     public Vec3 getLeashOffset() {
         return new Vec3(0.0D, (double)(0.875F * this.getEyeHeight()), (double)(this.getBbWidth() * 0.4F));
-    }
-
-    @Override
-    public boolean canBeAffected(MobEffectInstance potioneffectIn) {
-        MobEffect effect = potioneffectIn.getEffect();
-        return (effect == MobEffects.POISON || effect == EffectsPM.BLEEDING.get()) ? false : super.canBeAffected(potioneffectIn);
     }
 
     public static enum Cracks {

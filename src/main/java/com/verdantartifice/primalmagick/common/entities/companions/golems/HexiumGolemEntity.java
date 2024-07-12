@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.entities.companions.golems;
 
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
+import com.verdantartifice.primalmagick.common.tags.MobEffectTagsPM;
 
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -32,5 +34,10 @@ public class HexiumGolemEntity extends AbstractEnchantedGolemEntity {
     @Override
     protected float getRepairHealAmount() {
         return 37.5F;
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance pMobEffect) {
+        return pMobEffect.getEffect().is(MobEffectTagsPM.IMMUNITY_HEXIUM_GOLEM) ? false : super.canBeAffected(pMobEffect);
     }
 }
