@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.worldgen.structures.library;
 
 import java.util.Optional;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -29,11 +29,11 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
  * @see {@link net.minecraft.world.level.levelgen.structure.structures.NetherFossilStructure}
  */
 public class NetherLibraryStructure extends Structure {
-    public static final Codec<NetherLibraryStructure> CODEC = RecordCodecBuilder.<NetherLibraryStructure>mapCodec(instance -> 
-            instance.group(NetherLibraryStructure.settingsCodec(instance),
-                    ResourceKey.codec(RegistryKeysPM.CULTURES).fieldOf("culture_key").forGetter(library -> library.cultureKey),
-                    HeightProvider.CODEC.fieldOf("height").forGetter(library -> library.height)
-            ).apply(instance, NetherLibraryStructure::new)).codec();
+    public static final MapCodec<NetherLibraryStructure> CODEC = RecordCodecBuilder.<NetherLibraryStructure>mapCodec(instance -> instance.group(
+            NetherLibraryStructure.settingsCodec(instance),
+            ResourceKey.codec(RegistryKeysPM.CULTURES).fieldOf("culture_key").forGetter(library -> library.cultureKey),
+            HeightProvider.CODEC.fieldOf("height").forGetter(library -> library.height)
+        ).apply(instance, NetherLibraryStructure::new));
 
     private final HeightProvider height;
     private final ResourceKey<Culture> cultureKey;

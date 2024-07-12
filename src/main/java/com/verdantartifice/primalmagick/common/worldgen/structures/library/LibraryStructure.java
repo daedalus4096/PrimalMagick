@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.worldgen.structures.library;
 
 import java.util.Optional;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -23,10 +23,10 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
  * @see {@link net.minecraft.world.level.levelgen.structure.structures.IglooStructure}
  */
 public class LibraryStructure extends Structure {
-    public static final Codec<LibraryStructure> CODEC = RecordCodecBuilder.<LibraryStructure>mapCodec(instance -> 
-            instance.group(LibraryStructure.settingsCodec(instance),
-                    ResourceKey.codec(RegistryKeysPM.CULTURES).fieldOf("culture_key").forGetter(library -> library.cultureKey)
-            ).apply(instance, LibraryStructure::new)).codec();
+    public static final MapCodec<LibraryStructure> CODEC = RecordCodecBuilder.<LibraryStructure>mapCodec(instance -> instance.group(
+            LibraryStructure.settingsCodec(instance),
+            ResourceKey.codec(RegistryKeysPM.CULTURES).fieldOf("culture_key").forGetter(library -> library.cultureKey)
+        ).apply(instance, LibraryStructure::new));
 
     private final ResourceKey<Culture> cultureKey;
     
