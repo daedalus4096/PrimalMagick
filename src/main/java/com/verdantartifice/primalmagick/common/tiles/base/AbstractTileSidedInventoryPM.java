@@ -16,9 +16,11 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -56,7 +58,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     protected final NonNullList<LazyOptional<IItemHandler>> itemHandlerOpts;
     protected final NonNullList<List<ContainerListener>> listeners;
     
-    protected ResourceLocation lootTable;
+    protected ResourceKey<LootTable> lootTable;
     protected long lootTableSeed;
 
     public AbstractTileSidedInventoryPM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -234,7 +236,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                 }
             } else if (pTag.contains("Items")) {
                 // Compatibility layer for tiles that used to be AbstractTileInventoryPM instances pre-4.0.8
-                // TODO Remove in next major revision
+                // FIXME Remove in next major revision
                 int legacySize = 0;
                 for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
                     legacySize += this.getInventorySize(invIndex);
@@ -252,8 +254,10 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
      * when it's first loaded into the new format.
      * 
      * @param legacyItems the list of all items loaded for this tile in the legacy format
+     * @deprecated
      */
-    // TODO Remove in next major revision
+    // FIXME Remove in next major revision
+    @Deprecated(since = "4.0.2", forRemoval = true)
     protected abstract void loadLegacyItems(NonNullList<ItemStack> legacyItems);
 
     @Override
@@ -309,7 +313,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     }
 
     @Override
-    public void setLootTable(ResourceLocation lootTable, long lootTableSeed) {
+    public void setLootTable(ResourceKey<LootTable> lootTable, long lootTableSeed) {
         this.lootTable = lootTable;
         this.lootTableSeed = lootTableSeed;
     }
@@ -348,7 +352,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
 
     protected boolean tryLoadLootTable(CompoundTag pTag) {
         if (pTag.contains("LootTable", Tag.TAG_STRING)) {
-            this.lootTable = ResourceLocation.parse(pTag.getString("LootTable"));
+            this.lootTable = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(pTag.getString("LootTable")));
             this.lootTableSeed = pTag.getLong("LootTableSeed");
             return true;
         } else {
@@ -360,7 +364,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         if (this.lootTable == null) {
             return false;
         } else {
-            pTag.putString("LootTable", this.lootTable.toString());
+            pTag.putString("LootTable", this.lootTable.location().toString());
             if (this.lootTableSeed != 0L) {
                 pTag.putLong("LootTableSeed", this.lootTableSeed);
             }
