@@ -274,7 +274,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    public boolean canBeLeashed(Player player) {
+    public boolean canBeLeashed() {
         return false;
     }
 
