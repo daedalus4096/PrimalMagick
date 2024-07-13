@@ -65,6 +65,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -198,8 +199,8 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.active = compound.getBoolean("Active");
         this.currentStepComplete = compound.getBoolean("CurrentStepComplete");
         this.activeCount = compound.getInt("ActiveCount");
@@ -239,8 +240,8 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putBoolean("Active", this.active);
         compound.putBoolean("CurrentStepComplete", this.currentStepComplete);
         compound.putInt("ActiveCount", this.activeCount);
@@ -413,7 +414,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
         for (ItemStack offering : offerings) {
             inv.setItem(offeringIndex++, offering);
         }
-        Optional<RecipeHolder<IRitualRecipe>> recipeOpt = this.level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), inv, this.level);
+        Optional<RecipeHolder<IRitualRecipe>> recipeOpt = this.level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), inv.asCraftInput(), this.level);
         if (recipeOpt.isPresent()) {
             // Determine if the player has the research and mana to start this recipe
             RecipeHolder<IRitualRecipe> recipe = recipeOpt.get();
@@ -976,7 +977,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 int damage = 5 + Mth.floor(Math.sqrt(Math.abs(Math.min(0.0F, this.stability))) / 2.0D);
                 int amp = Math.max(0, damage - 6);
                 target.hurt(target.damageSources().magic(), damage);
-                target.addEffect(new MobEffectInstance(EffectsPM.MANA_IMPEDANCE.get(), 12000, amp));
+                target.addEffect(new MobEffectInstance(EffectsPM.MANA_IMPEDANCE.getHolder().get(), 12000, amp));
                 this.doMishapEffects(target.blockPosition(), index == 0); // Only play sounds once
                 if (!allTargets) {
                     break;

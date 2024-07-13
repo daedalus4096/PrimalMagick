@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.LongTag;
@@ -291,21 +292,21 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
         this.fontSiphonTime = compound.getInt("FontSiphonTime");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        this.manaStorage.deserializeNBT(registries, compound.getCompound("ManaStorage"));
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
         compound.putInt("FontSiphonTime", this.fontSiphonTime);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
     }
 
     @Override

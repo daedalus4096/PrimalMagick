@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.ItemTags;
@@ -91,14 +92,14 @@ public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    public void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(pTag, pRegistries);
         this.lastInteractedSlot = pTag.getInt("LastInteractedSlot");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.saveAdditional(pTag, pRegistries);
         pTag.putInt("LastInteractedSlot", this.lastInteractedSlot);
     }
 
