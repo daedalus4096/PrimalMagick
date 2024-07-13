@@ -100,7 +100,7 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 if (slot == 0) {
-                    return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack, this.tile.getLevel().registryAccess()).map(lang -> lang.is(BookLanguageTagsPM.ANCIENT)).orElse(false);
+                    return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).map(lang -> lang.is(BookLanguageTagsPM.ANCIENT)).orElse(false);
                 } else if (slot == 1) {
                     return stack.is(Items.WRITABLE_BOOK);
                 } else {
@@ -131,16 +131,16 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
             ItemStack sourceStack = this.getItem(INPUT_INV_INDEX, 0);
             ItemStack blankStack = this.getItem(INPUT_INV_INDEX, 1);
             if (sourceStack.is(ItemTagsPM.STATIC_BOOKS) && blankStack.is(Items.WRITABLE_BOOK)) {
-                Optional<Holder.Reference<BookLanguage>> sourceLanguageOpt = StaticBookItem.getBookLanguage(sourceStack, level.registryAccess());
+                Optional<Holder<BookLanguage>> sourceLanguageOpt = StaticBookItem.getBookLanguage(sourceStack);
                 int sourceGeneration = StaticBookItem.getGeneration(sourceStack);
                 if (sourceLanguageOpt.isPresent() && sourceLanguageOpt.get().is(BookLanguageTagsPM.ANCIENT) && sourceGeneration < StaticBookItem.MAX_GENERATION) {
                     PrimalMagickCapabilities.getLinguistics(serverPlayer).ifPresent(linguistics -> {
                         // Construct the translated result book if all prerequisites are met
                         ItemStack resultStack = sourceStack.copyWithCount(1);
-                        int playerComprehension = linguistics.getComprehension(sourceLanguageOpt.get().key().location());
+                        int playerComprehension = linguistics.getComprehension(sourceLanguageOpt.get().unwrapKey().get().location());
                         int sourceComprehension = StaticBookItem.getTranslatedComprehension(sourceStack).orElse(0);
                         int maxComprehension = Math.max(playerComprehension, sourceComprehension);
-                        StaticBookItem.setTranslatedComprehension(resultStack, maxComprehension <= 0 ? OptionalInt.empty() : OptionalInt.of(maxComprehension));
+                        StaticBookItem.setTranslatedComprehension(resultStack, maxComprehension <= 0 ? Optional.empty() : Optional.of(maxComprehension));
                         StaticBookItem.setGeneration(resultStack, sourceGeneration + 1);
                         
                         // Add the result book to the output slot if there's room, then shrink the blank book stack

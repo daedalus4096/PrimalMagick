@@ -145,7 +145,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.superchargeTime = compound.getInt("SuperchargeTime");
         this.superchargeTimeTotal = compound.getInt("SuperchargeTimeTotal");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        this.manaStorage.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ManaStorage"));
         
         CompoundTag recipesUsedTag = compound.getCompound("RecipesUsed");
         for (String key : recipesUsedTag.getAllKeys()) {
@@ -160,7 +160,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.putInt("SuperchargeTime", this.superchargeTime);
         compound.putInt("SuperchargeTimeTotal", this.superchargeTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        compound.put("ManaStorage", this.manaStorage.serializeNBT(this.getLevel().registryAccess()));
         
         CompoundTag recipesUsedTag = new CompoundTag();
         this.recipesUsed.forEach((key, value) -> {

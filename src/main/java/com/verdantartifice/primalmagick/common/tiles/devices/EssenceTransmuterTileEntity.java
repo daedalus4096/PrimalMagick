@@ -124,13 +124,14 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         this.researchCache = new TileResearchCache();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
-        this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
+        this.manaStorage.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ManaStorage"));
+        this.researchCache.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ResearchCache"));
         this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(ResourceLocation.parse(compound.getString("NextSource"))) : null;
         
         this.ownerUUID = null;
@@ -142,13 +143,14 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
-        compound.put("ResearchCache", this.researchCache.serializeNBT());
+        compound.put("ManaStorage", this.manaStorage.serializeNBT(this.getLevel().registryAccess()));
+        compound.put("ResearchCache", this.researchCache.serializeNBT(this.getLevel().registryAccess()));
         if (this.nextOutputSource != null) {
             compound.putString("NextSource", this.nextOutputSource.getId().toString());
         }

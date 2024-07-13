@@ -104,7 +104,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         super.load(compound);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        this.manaStorage.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ManaStorage"));
     }
 
     @Override
@@ -112,7 +112,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         super.saveAdditional(compound);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        compound.put("ManaStorage", this.manaStorage.serializeNBT(this.getLevel().registryAccess()));
     }
 
     @Override

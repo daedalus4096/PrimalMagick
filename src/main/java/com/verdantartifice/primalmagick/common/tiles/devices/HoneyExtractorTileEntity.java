@@ -99,7 +99,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
         super.load(compound);
         this.spinTime = compound.getInt("SpinTime");
         this.spinTimeTotal = compound.getInt("SpinTimeTotal");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        this.manaStorage.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ManaStorage"));
     }
 
     @Override
@@ -107,7 +107,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
         super.saveAdditional(compound);
         compound.putInt("SpinTime", this.spinTime);
         compound.putInt("SpinTimeTotal", this.spinTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        compound.put("ManaStorage", this.manaStorage.serializeNBT(this.getLevel().registryAccess()));
     }
 
     @Override
