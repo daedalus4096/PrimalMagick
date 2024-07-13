@@ -14,6 +14,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public interface IPlayerAttunements extends INBTSerializable<CompoundTag> {
     /**
      * Remove all attunement data from the player.

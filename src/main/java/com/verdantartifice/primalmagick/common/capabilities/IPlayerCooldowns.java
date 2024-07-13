@@ -11,6 +11,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public interface IPlayerCooldowns extends INBTSerializable<CompoundTag> {
     /**
      * Determine if the given cooldown type is active, rendering that ability unusable.

@@ -17,6 +17,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public interface ITileResearchCache extends INBTSerializable<CompoundTag> {
     /**
      * Remove all research from the cache.

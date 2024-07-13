@@ -15,6 +15,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public interface IPlayerStats extends INBTSerializable<CompoundTag> {
     /**
      * Remove all statistics data from the player.

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,7 +37,7 @@ public class PlayerArcaneRecipeBook implements IPlayerArcaneRecipeBook {
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag retVal = new CompoundTag();
         retVal.put("Book", this.book.toNbt());
         retVal.putLong("SyncTimestamp", System.currentTimeMillis());
@@ -44,7 +45,7 @@ public class PlayerArcaneRecipeBook implements IPlayerArcaneRecipeBook {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt, RecipeManager recipeManager) {
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt, RecipeManager recipeManager) {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
@@ -79,13 +80,13 @@ public class PlayerArcaneRecipeBook implements IPlayerArcaneRecipeBook {
         }
 
         @Override
-        public CompoundTag serializeNBT() {
-            return this.instance.serializeNBT();
+        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+            return this.instance.serializeNBT(registries);
         }
 
         @Override
-        public void deserializeNBT(CompoundTag nbt) {
-            this.instance.deserializeNBT(nbt, this.recipeManager);
+        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+            this.instance.deserializeNBT(registries, nbt, this.recipeManager);
         }
     }
 }

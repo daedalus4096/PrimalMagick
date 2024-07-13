@@ -62,6 +62,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -441,63 +442,66 @@ public class PlayerEvents {
         }
     }
     
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void playerCloneEvent(PlayerEvent.Clone event) {
         // Preserve player capability data between deaths or returns from the End
         event.getOriginal().reviveCaps();   // FIXME Workaround for a Forge issue
         
+        RegistryAccess registryAccess = event.getEntity().registryAccess();
+        
         try {
-            CompoundTag nbtKnowledge = PrimalMagickCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getKnowledge(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtKnowledge);
+            CompoundTag nbtKnowledge = PrimalMagickCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getKnowledge(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtKnowledge);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtCooldowns = PrimalMagickCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getCooldowns(event.getEntity()).deserializeNBT(nbtCooldowns);
+            CompoundTag nbtCooldowns = PrimalMagickCapabilities.getCooldowns(event.getOriginal()).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getCooldowns(event.getEntity()).deserializeNBT(registryAccess, nbtCooldowns);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtStats = PrimalMagickCapabilities.getStats(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getStats(event.getEntity()).deserializeNBT(nbtStats);
+            CompoundTag nbtStats = PrimalMagickCapabilities.getStats(event.getOriginal()).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getStats(event.getEntity()).deserializeNBT(registryAccess, nbtStats);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtAttunements = PrimalMagickCapabilities.getAttunements(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getAttunements(event.getEntity()).deserializeNBT(nbtAttunements);
+            CompoundTag nbtAttunements = PrimalMagickCapabilities.getAttunements(event.getOriginal()).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getAttunements(event.getEntity()).deserializeNBT(registryAccess, nbtAttunements);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtCompanions = PrimalMagickCapabilities.getCompanions(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getCompanions(event.getEntity()).deserializeNBT(nbtCompanions);
+            CompoundTag nbtCompanions = PrimalMagickCapabilities.getCompanions(event.getOriginal()).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getCompanions(event.getEntity()).deserializeNBT(registryAccess, nbtCompanions);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getArcaneRecipeBook(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getEntity().level().getRecipeManager());
+            CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getArcaneRecipeBook(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtRecipeBook, event.getEntity().level().getRecipeManager());
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} arcane recipe book", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtWard = PrimalMagickCapabilities.getWard(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getWard(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtWard);
+            CompoundTag nbtWard = PrimalMagickCapabilities.getWard(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getWard(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtWard);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} ward", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtLinguistics = PrimalMagickCapabilities.getLinguistics(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getLinguistics(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtLinguistics);
+            CompoundTag nbtLinguistics = PrimalMagickCapabilities.getLinguistics(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getLinguistics(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtLinguistics);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} linguistics", event.getOriginal().getName().getString());
         }

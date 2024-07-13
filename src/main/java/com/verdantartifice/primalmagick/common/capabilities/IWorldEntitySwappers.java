@@ -15,6 +15,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public interface IWorldEntitySwappers extends INBTSerializable<CompoundTag> {
     /**
      * Add the given entity swapper to the world's queue.

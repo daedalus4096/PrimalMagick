@@ -14,6 +14,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public interface IPlayerWard extends INBTSerializable<CompoundTag> {
     /**
      * Gets the list of equipment slots which count toward player maximum ward.

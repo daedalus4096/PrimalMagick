@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectFactory;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -62,7 +63,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
 
     @Override
     @Nonnull
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         
         // Serialize known research, including stage number and attached flags
@@ -110,13 +111,13 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Serialize last active grimoire topic, if any
         if (this.topic != null) {
-            rootTag.put("topic", this.topic.serializeNBT());
+            rootTag.put("topic", this.topic.serializeNBT(registries));
         }
         
         // Serialize grimoire topic history
         ListTag historyList = new ListTag();
         for (AbstractResearchTopic topic : this.topicHistory) {
-            historyList.add(topic.serializeNBT());
+            historyList.add(topic.serializeNBT(registries));
         }
         rootTag.put("topicHistory", historyList);
         
@@ -126,7 +127,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public synchronized void deserializeNBT(@Nullable CompoundTag nbt) {
+    public synchronized void deserializeNBT(HolderLookup.Provider registries, @Nullable CompoundTag nbt) {
         if (nbt == null || nbt.getLong("syncTimestamp") <= this.syncTimestamp) {
             return;
         }
@@ -436,14 +437,16 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             }
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public CompoundTag serializeNBT() {
-            return instance.serializeNBT();
+        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+            return instance.serializeNBT(registries);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public void deserializeNBT(CompoundTag nbt) {
-            instance.deserializeNBT(nbt);
+        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+            instance.deserializeNBT(registries, nbt);
         }
     }
 }

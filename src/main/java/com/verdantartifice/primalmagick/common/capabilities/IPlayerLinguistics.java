@@ -19,6 +19,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
     public static final int MAX_STUDY_COUNT = 3;
     

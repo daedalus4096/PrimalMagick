@@ -16,6 +16,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public interface IPlayerCompanions extends INBTSerializable<CompoundTag> {
     /**
      * Adds the given entity ID for the given companion type to the player's data.  Removes and returns

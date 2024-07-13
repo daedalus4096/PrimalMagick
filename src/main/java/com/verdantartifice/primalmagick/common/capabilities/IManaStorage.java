@@ -10,6 +10,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
 public interface IManaStorage extends INBTSerializable<CompoundTag> {
     /**
      * Adds mana of the given source to the storage.  Returns quantity of centimana that was accepted.
