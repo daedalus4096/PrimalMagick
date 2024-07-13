@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -23,6 +24,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @author Daedalus4096
  */
 @SuppressWarnings("deprecation")
+@AutoRegisterCapability
 public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
     /**
      * Remove all research from the player.

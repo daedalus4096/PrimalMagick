@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -12,6 +13,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @author Daedalus4096
  */
 @SuppressWarnings("deprecation")
+@AutoRegisterCapability
 public interface IPlayerCooldowns extends INBTSerializable<CompoundTag> {
     /**
      * Determine if the given cooldown type is active, rendering that ability unusable.

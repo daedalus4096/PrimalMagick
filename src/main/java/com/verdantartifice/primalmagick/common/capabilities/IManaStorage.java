@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -11,6 +12,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @author Daedalus4096
  */
 @SuppressWarnings("deprecation")
+@AutoRegisterCapability
 public interface IManaStorage extends INBTSerializable<CompoundTag> {
     /**
      * Adds mana of the given source to the storage.  Returns quantity of centimana that was accepted.

@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -20,6 +21,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @author Daedalus4096
  */
 @SuppressWarnings("deprecation")
+@AutoRegisterCapability
 public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
     public static final int MAX_STUDY_COUNT = 3;
     
