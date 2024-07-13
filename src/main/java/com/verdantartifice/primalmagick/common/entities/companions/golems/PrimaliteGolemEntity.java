@@ -23,7 +23,13 @@ public class PrimaliteGolemEntity extends AbstractEnchantedGolemEntity {
     }
 
     public static AttributeSupplier.Builder getAttributeModifiers() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0D).add(Attributes.ARMOR, 2.0D).add(Attributes.MOVEMENT_SPEED, 0.3D).add(Attributes.KNOCKBACK_RESISTANCE, 1.0D).add(Attributes.ATTACK_DAMAGE, 15.0D);
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 100.0D)
+                .add(Attributes.ARMOR, 2.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
+                .add(Attributes.ATTACK_DAMAGE, 15.0D)
+                .add(Attributes.STEP_HEIGHT, 1.0D);
     }
 
     @Override

@@ -23,7 +23,13 @@ public class HexiumGolemEntity extends AbstractEnchantedGolemEntity {
     }
 
     public static AttributeSupplier.Builder getAttributeModifiers() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 150.0D).add(Attributes.ARMOR, 4.0D).add(Attributes.MOVEMENT_SPEED, 0.3D).add(Attributes.KNOCKBACK_RESISTANCE, 1.0D).add(Attributes.ATTACK_DAMAGE, 20.0D);
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 150.0D)
+                .add(Attributes.ARMOR, 4.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
+                .add(Attributes.ATTACK_DAMAGE, 20.0D)
+                .add(Attributes.STEP_HEIGHT, 1.0D);
     }
 
     @Override

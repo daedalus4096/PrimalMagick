@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions.CompanionType;
-import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionOwnerHurtByTargetGoal;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionOwnerHurtTargetGoal;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionStayGoal;
@@ -15,7 +14,6 @@ import com.verdantartifice.primalmagick.common.entities.ai.goals.FollowCompanion
 import com.verdantartifice.primalmagick.common.entities.companions.AbstractCompanionEntity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -33,9 +31,6 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -77,7 +72,6 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
 
     public AbstractEnchantedGolemEntity(EntityType<? extends AbstractEnchantedGolemEntity> type, Level worldIn) {
         super(type, worldIn);
-        this.setMaxUpStep(1.0F);
     }
 
     @Override
