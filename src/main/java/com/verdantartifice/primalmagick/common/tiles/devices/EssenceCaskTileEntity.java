@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
@@ -208,8 +209,8 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.loadContentsNbt(compound);
     }
     
@@ -226,8 +227,8 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.put("CaskContents", this.getContentsNbt());
     }
     

@@ -11,8 +11,8 @@ import com.verdantartifice.primalmagick.common.network.packets.data.TileToClient
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -51,22 +51,15 @@ public abstract class AbstractTilePM extends BlockEntity {
     }
     
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag retVal = new CompoundTag();
-        this.saveAdditional(retVal);
+        this.saveAdditional(retVal, registries);
         return retVal;
     }
     
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-    
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) {
-            this.load(pkt.getTag());
-        }
     }
     
     /**

@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -95,19 +96,19 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.spinTime = compound.getInt("SpinTime");
         this.spinTimeTotal = compound.getInt("SpinTimeTotal");
-        this.manaStorage.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ManaStorage"));
+        this.manaStorage.deserializeNBT(registries, compound.getCompound("ManaStorage"));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("SpinTime", this.spinTime);
         compound.putInt("SpinTimeTotal", this.spinTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT(this.getLevel().registryAccess()));
+        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
     }
 
     @Override

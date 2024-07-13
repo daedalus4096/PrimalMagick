@@ -15,6 +15,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -222,8 +223,8 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    public void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(pTag, pRegistries);
         for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
             this.inventories.get(invIndex).clear();
         }
@@ -232,7 +233,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                 ListTag listTag = pTag.getList("TileSidedInventoriesPM", Tag.TAG_COMPOUND);
                 for (int invIndex = 0; invIndex < this.getInventoryCount() && invIndex < listTag.size(); invIndex++) {
                     CompoundTag invTag = listTag.getCompound(invIndex);
-                    ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex));
+                    ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex), pRegistries);
                 }
             } else if (pTag.contains("Items")) {
                 // Compatibility layer for tiles that used to be AbstractTileInventoryPM instances pre-4.0.8
@@ -242,7 +243,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                     legacySize += this.getInventorySize(invIndex);
                 }
                 NonNullList<ItemStack> legacyItems = NonNullList.withSize(legacySize, ItemStack.EMPTY);
-                ContainerHelper.loadAllItems(pTag, legacyItems);
+                ContainerHelper.loadAllItems(pTag, legacyItems, pRegistries);
                 this.loadLegacyItems(legacyItems);
             }
         }
@@ -261,13 +262,13 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     protected abstract void loadLegacyItems(NonNullList<ItemStack> legacyItems);
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.saveAdditional(pTag, pRegistries);
         ListTag listTag = new ListTag();
         if (!this.trySaveLootTable(pTag)) {
             for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
                 CompoundTag invTag = new CompoundTag();
-                ContainerHelper.saveAllItems(invTag, this.inventories.get(invIndex));
+                ContainerHelper.saveAllItems(invTag, this.inventories.get(invIndex), pRegistries);
                 listTag.add(invIndex, invTag);
             }
         }

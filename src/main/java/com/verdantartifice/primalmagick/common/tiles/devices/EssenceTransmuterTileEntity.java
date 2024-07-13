@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -126,12 +127,12 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
 
     @SuppressWarnings("deprecation")
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        this.manaStorage.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ManaStorage"));
-        this.researchCache.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ResearchCache"));
+        this.manaStorage.deserializeNBT(registries, compound.getCompound("ManaStorage"));
+        this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(ResourceLocation.parse(compound.getString("NextSource"))) : null;
         
         this.ownerUUID = null;
@@ -145,12 +146,12 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
 
     @SuppressWarnings("deprecation")
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT(this.getLevel().registryAccess()));
-        compound.put("ResearchCache", this.researchCache.serializeNBT(this.getLevel().registryAccess()));
+        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
+        compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.nextOutputSource != null) {
             compound.putString("NextSource", this.nextOutputSource.getId().toString());
         }

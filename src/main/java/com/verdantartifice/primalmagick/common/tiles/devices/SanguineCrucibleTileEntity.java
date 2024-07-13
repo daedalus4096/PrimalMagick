@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -63,16 +64,16 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.souls = compound.getInt("Souls");
         this.fluidAmount = compound.getInt("FluidAmount");
         this.charge = compound.getInt("Charge");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("Souls", this.souls);
         compound.putInt("FluidAmount", this.fluidAmount);
         compound.putInt("Charge", this.charge);

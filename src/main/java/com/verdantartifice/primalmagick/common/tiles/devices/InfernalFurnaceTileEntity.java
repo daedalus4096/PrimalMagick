@@ -27,6 +27,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -139,13 +140,13 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.superchargeTime = compound.getInt("SuperchargeTime");
         this.superchargeTimeTotal = compound.getInt("SuperchargeTimeTotal");
-        this.manaStorage.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ManaStorage"));
+        this.manaStorage.deserializeNBT(registries, compound.getCompound("ManaStorage"));
         
         CompoundTag recipesUsedTag = compound.getCompound("RecipesUsed");
         for (String key : recipesUsedTag.getAllKeys()) {
@@ -154,13 +155,13 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.putInt("SuperchargeTime", this.superchargeTime);
         compound.putInt("SuperchargeTimeTotal", this.superchargeTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT(this.getLevel().registryAccess()));
+        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
         
         CompoundTag recipesUsedTag = new CompoundTag();
         this.recipesUsed.forEach((key, value) -> {

@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -193,16 +194,16 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.items.clear();
-        ContainerHelper.loadAllItems(compound, this.items);
+        ContainerHelper.loadAllItems(compound, this.items, registries);
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
-        ContainerHelper.saveAllItems(compound, this.items);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
+        ContainerHelper.saveAllItems(compound, this.items, registries);
     }
 
     @Override
