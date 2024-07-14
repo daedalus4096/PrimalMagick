@@ -15,6 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -42,10 +43,10 @@ public class RayTraceUtils {
      * @return a raytrace result containing the first block/entity being moused over by the player
      */
     @Nullable
-    public static HitResult getMouseOver(Level level) {
+    public static HitResult getMouseOver(Level level, Player player) {
         Minecraft mc = Minecraft.getInstance();
         Entity viewEntity = mc.getCameraEntity();
-        double reachDistance = mc.gameMode.hasFarPickRange() ? 6.0D : (double)mc.gameMode.getPickRange();
+        double reachDistance = player.blockInteractionRange();
         Vec3 eyePos = viewEntity.getEyePosition(1.0F);
         
         // Calculate the square of the distance to search in the raytrace; limit to the square distance of the current mouseover block

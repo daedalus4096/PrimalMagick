@@ -130,16 +130,16 @@ public class ClientModLifecycleEvents {
 
                 @Override
                 public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int seed) {
-                    if (entity == null || !(entity instanceof Player)) {
-                        return 0.0F;
-                    } else {
+                    if (entity instanceof Player player) {
                         // If the currently moused-over block/item has not yet been scanned, raise the antennae
-                        if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(world), world, (Player)entity)) {
+                        if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(world, player), world, (Player)entity)) {
                             this.incrementScanState();
                         } else {
                             this.decrementScanState();
                         }
                         return scanState;
+                    } else {
+                        return 0F;
                     }
                 }
                 
