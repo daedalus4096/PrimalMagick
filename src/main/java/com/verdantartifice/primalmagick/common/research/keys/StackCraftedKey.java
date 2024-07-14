@@ -6,7 +6,6 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
-import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -28,7 +27,7 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
             throw new IllegalArgumentException("Item stack may not be null or empty");
         }
         this.stack = stack.copyWithCount(1);    // Preserve the stack NBT but not its count
-        ResearchManager.addCraftingReference(ItemUtils.getHashCode(this.stack));
+        ResearchManager.addCraftingReference(this.hashCode());
     }
     
     public StackCraftedKey(ItemLike itemLike) {
@@ -37,7 +36,7 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
     
     @Override
     public String toString() {
-        return PREFIX + ItemUtils.getHashCode(this.stack);
+        return PREFIX + this.hashCode();
     }
 
     @Override

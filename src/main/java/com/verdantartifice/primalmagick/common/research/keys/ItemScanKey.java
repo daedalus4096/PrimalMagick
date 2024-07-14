@@ -5,7 +5,6 @@ import java.util.Objects;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
-import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -35,7 +34,7 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
     
     @Override
     public String toString() {
-        return PREFIX + ItemUtils.getHashCode(this.stack, true);
+        return PREFIX + this.hashCode();
     }
 
     @Override

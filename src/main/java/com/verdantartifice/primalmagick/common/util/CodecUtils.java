@@ -13,7 +13,6 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 
 import net.minecraft.Util;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,7 +26,7 @@ public class CodecUtils {
         }
     }, DataResult::success);
 
-    public static final Codec<Block> BLOCK_NONAIR_CODEC = ExtraCodecs.validate(ForgeRegistries.BLOCKS.getCodec(), block -> {
+    public static final Codec<Block> BLOCK_NONAIR_CODEC = ForgeRegistries.BLOCKS.getCodec().validate(block -> {
         return block == Blocks.AIR ? DataResult.error(() -> "Block must not be minecraft:air") : DataResult.success(block);
     });
     
