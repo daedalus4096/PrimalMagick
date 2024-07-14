@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 public class GameEvents {
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void onGameEventLowest(VanillaGameEvent event) {
-        if (!event.isCanceled() && event.getCause() instanceof Player player && event.getVanillaEvent() == GameEvent.SHEAR) {
+        if (!event.isCanceled() && event.getCause() instanceof Player player && event.getVanillaEvent() == GameEvent.SHEAR.value()) {
             // Grant appropriate stat when the player shears something
             StatsManager.incrementValue(player, StatsPM.SHEARS_USED);
         }
