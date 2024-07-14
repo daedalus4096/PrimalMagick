@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import java.util.List;
 
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
@@ -37,7 +38,7 @@ public class DreamVisionTalismanItem extends Item {
      * @return the amount of experience stored in the given talisman
      */
     public int getStoredExp(ItemStack stack) {
-        return stack.getOrCreateTag().getInt("StoredExp");
+        return stack.getOrDefault(DataComponentsPM.STORED_EXPERIENCE.get(), 0);
     }
     
     /**
@@ -62,7 +63,7 @@ public class DreamVisionTalismanItem extends Item {
     }
     
     protected void setStoredExp(ItemStack stack, int toSet) {
-        stack.getOrCreateTag().putInt("StoredExp", toSet);
+        stack.set(DataComponentsPM.STORED_EXPERIENCE.get(), toSet);
     }
     
     /**
@@ -82,7 +83,7 @@ public class DreamVisionTalismanItem extends Item {
      * @return whether the given talisman is currently active
      */
     public boolean isActive(ItemStack stack) {
-        return !stack.getOrCreateTag().getBoolean("Disabled");
+        return stack.getOrDefault(DataComponentsPM.ENABLED.get(), true);
     }
     
     /**
@@ -92,7 +93,7 @@ public class DreamVisionTalismanItem extends Item {
      * @param active whether the talisman should capture experience
      */
     public void setActive(ItemStack stack, boolean active) {
-        stack.getOrCreateTag().putBoolean("Disabled", !active);
+        stack.set(DataComponentsPM.ENABLED.get(), active);
     }
 
     /**
