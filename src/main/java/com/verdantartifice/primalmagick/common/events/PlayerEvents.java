@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 
@@ -63,7 +62,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
@@ -96,7 +94,6 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -211,9 +208,9 @@ public class PlayerEvents {
         IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
         if (cooldowns != null) {
             long remaining = cooldowns.getRemainingCooldown(CooldownType.DEATH_SAVE);
-            if (remaining > 0 && !player.hasEffect(EffectsPM.WEAKENED_SOUL.get())) {
+            if (remaining > 0 && !player.hasEffect(EffectsPM.WEAKENED_SOUL.getHolder().get())) {
                 // If the player's death save is on cooldown but they've cleared their marker debuff, reapply it
-                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.get(), Mth.ceil(remaining / 50.0F), 0, true, false, true));
+                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder().get(), Mth.ceil(remaining / 50.0F), 0, true, false, true));
             }
         }
     }
@@ -674,7 +671,6 @@ public class PlayerEvents {
         if ( !level.isClientSide && 
              target.getType() == EntityType.WITCH && 
              stack.getItem() instanceof NameTagItem && 
-             stack.hasCustomHoverName() && 
              stack.getHoverName().getString().equals(FriendlyWitchEntity.HONORED_NAME)) {
             CompoundTag originalData = target.saveWithoutId(new CompoundTag());
             EntitySwapper.enqueue(level, new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
