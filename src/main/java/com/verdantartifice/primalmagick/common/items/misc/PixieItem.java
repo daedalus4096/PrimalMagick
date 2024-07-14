@@ -49,7 +49,7 @@ public class PixieItem extends ForgeSpawnEggItem {
             Direction dir = context.getClickedFace();
             BlockState state = level.getBlockState(pos);
             Player player = context.getPlayer();
-            EntityType<?> entityType = this.getType(stack.getTag());
+            EntityType<?> entityType = this.getType(stack);
             
             BlockPos spawnPos = state.getCollisionShape(level, pos).isEmpty() ? pos : pos.relative(dir);
             Entity spawned = entityType.spawn(serverLevel, stack, player, spawnPos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(pos, spawnPos) && dir == Direction.UP);
