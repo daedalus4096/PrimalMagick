@@ -17,7 +17,7 @@ public class PrimaliteTridentEntity extends AbstractTridentEntity {
     private static final ItemStack DEFAULT_THROWN_STACK = new ItemStack(ItemsPM.PRIMALITE_TRIDENT.get());
     
     public PrimaliteTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
-        super(type, worldIn, DEFAULT_THROWN_STACK);
+        super(type, worldIn);
     }
     
     public PrimaliteTridentEntity(Level worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
@@ -27,5 +27,10 @@ public class PrimaliteTridentEntity extends AbstractTridentEntity {
     @Override
     public double getBaseDamage() {
         return 9.5D;
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return DEFAULT_THROWN_STACK;
     }
 }

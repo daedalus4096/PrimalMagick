@@ -17,7 +17,7 @@ public class HallowsteelTridentEntity extends AbstractTridentEntity {
     private static final ItemStack DEFAULT_THROWN_STACK = new ItemStack(ItemsPM.HALLOWSTEEL_TRIDENT.get());
     
     public HallowsteelTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
-        super(type, worldIn, DEFAULT_THROWN_STACK);
+        super(type, worldIn);
     }
     
     public HallowsteelTridentEntity(Level worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
@@ -27,5 +27,10 @@ public class HallowsteelTridentEntity extends AbstractTridentEntity {
     @Override
     public double getBaseDamage() {
         return 12.5D;
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return DEFAULT_THROWN_STACK;
     }
 }

@@ -17,7 +17,7 @@ public class ForbiddenTridentEntity extends AbstractTridentEntity {
     private static final ItemStack DEFAULT_THROWN_STACK = new ItemStack(ItemsPM.FORBIDDEN_TRIDENT.get());
     
     public ForbiddenTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
-        super(type, worldIn, DEFAULT_THROWN_STACK);
+        super(type, worldIn);
     }
     
     public ForbiddenTridentEntity(Level worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
@@ -27,5 +27,10 @@ public class ForbiddenTridentEntity extends AbstractTridentEntity {
     @Override
     public double getBaseDamage() {
         return 11.0D;
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return DEFAULT_THROWN_STACK;
     }
 }
