@@ -36,6 +36,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -122,14 +123,15 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         this.researchCache = new TileResearchCache();
     }
     
+    @SuppressWarnings("deprecation")
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
-        this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
+        this.manaStorage.deserializeNBT(registries, compound.getCompound("ManaStorage"));
+        this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
@@ -137,13 +139,14 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
-        compound.put("ResearchCache", this.researchCache.serializeNBT());
+        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
+        compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.ownerUUID != null) {
             compound.putUUID("OwnerUUID", this.ownerUUID);
         }

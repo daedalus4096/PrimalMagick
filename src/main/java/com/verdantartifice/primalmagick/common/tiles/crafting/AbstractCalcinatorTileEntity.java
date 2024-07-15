@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -193,15 +194,16 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         return this.burnTime > 0;
     }
     
+    @SuppressWarnings("deprecation")
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         
         this.burnTime = compound.getInt("BurnTime");
         this.burnTimeTotal = compound.getInt("BurnTimeTotal");
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
-        this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
+        this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
@@ -212,14 +214,15 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         }
     }
     
+    @SuppressWarnings("deprecation")
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("BurnTime", this.burnTime);
         compound.putInt("BurnTimeTotal", this.burnTimeTotal);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
-        compound.put("ResearchCache", this.researchCache.serializeNBT());
+        compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
         }
