@@ -68,7 +68,7 @@ public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
 
             try {
                 // Instantiate grid definition from serializer, then attempt to register it
-                GridDefinition.CODEC.parse(JsonOps.INSTANCE, entry.getValue()).resultOrPartial(LOGGER::error).ifPresent(gridDef -> {
+                GridDefinition.codec().parse(JsonOps.INSTANCE, entry.getValue()).resultOrPartial(LOGGER::error).ifPresent(gridDef -> {
                     if (gridDef == null || !LinguisticsManager.registerGridDefinition(location, gridDef)) {
                         LOGGER.error("Failed to register linguistics grid definition {}", location);
                     }

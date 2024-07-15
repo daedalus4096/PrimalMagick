@@ -8,6 +8,10 @@ import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractRewar
 import com.verdantartifice.primalmagick.common.books.grids.rewards.EmptyReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
 
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+
 /**
  * Class encapsulating a data-defined node definition for a linguistics grid.  These definitions
  * determine the contents of each node of a specific linguistics comprehension grid.
@@ -15,10 +19,19 @@ import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
  * @author Daedalus4096
  */
 public class GridNodeDefinition {
-    public static final Codec<GridNodeDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.INT.fieldOf("vocabularyCost").forGetter(d -> d.vocabularyCost),
-            AbstractReward.dispatchCodec().fieldOf("reward").forGetter(d -> d.reward)
-        ).apply(instance, GridNodeDefinition::new));
+    public static Codec<GridNodeDefinition> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                Codec.INT.fieldOf("vocabularyCost").forGetter(d -> d.vocabularyCost),
+                AbstractReward.dispatchCodec().fieldOf("reward").forGetter(d -> d.reward)
+            ).apply(instance, GridNodeDefinition::new));
+    }
+
+    public static StreamCodec<RegistryFriendlyByteBuf, GridNodeDefinition> streamCodec() {
+        return StreamCodec.composite(
+                ByteBufCodecs.VAR_INT, d -> d.vocabularyCost,
+                AbstractReward.dispatchStreamCodec(), d -> d.reward,
+                GridNodeDefinition::new);
+    }
     
     protected int vocabularyCost;
     protected AbstractReward<?> reward;

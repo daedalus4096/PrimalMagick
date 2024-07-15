@@ -2,12 +2,15 @@ package com.verdantartifice.primalmagick.common.util;
 
 import java.util.function.Function;
 
+import org.joml.Vector2i;
+
 import com.mojang.datafixers.util.Function7;
 import com.mojang.datafixers.util.Function8;
 import com.mojang.datafixers.util.Function9;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Registry;
+import net.minecraft.network.VarInt;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +20,19 @@ public class StreamCodecUtils {
     public static <T> StreamCodec<ByteBuf, TagKey<T>> tagKey(ResourceKey<? extends Registry<T>> pRegistry) {
         return ResourceLocation.STREAM_CODEC.map(loc -> TagKey.create(pRegistry, loc), TagKey::location);
     }
+    
+    public static final StreamCodec<ByteBuf, Vector2i> VECTOR2I = new StreamCodec<ByteBuf, Vector2i>() {
+        @Override
+        public Vector2i decode(ByteBuf pBuffer) {
+            return new Vector2i(VarInt.read(pBuffer), VarInt.read(pBuffer));
+        }
+
+        @Override
+        public void encode(ByteBuf pBuffer, Vector2i pValue) {
+            VarInt.write(pBuffer, pValue.x());
+            VarInt.write(pBuffer, pValue.y());
+        }
+    };
 
     public static <B, C, T1, T2, T3, T4, T5, T6, T7> StreamCodec<B, C> composite(
             final StreamCodec<? super B, T1> pCodec1,

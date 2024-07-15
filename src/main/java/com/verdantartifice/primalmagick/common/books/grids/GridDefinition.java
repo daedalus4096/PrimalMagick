@@ -12,7 +12,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
@@ -28,12 +32,23 @@ public class GridDefinition {
     public static final int MIN_POS = 0;
     public static final int MAX_POS = 7;
     
-    public static final Codec<GridDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("key").forGetter(GridDefinition::getKey),
-            ResourceKey.codec(RegistryKeysPM.BOOK_LANGUAGES).fieldOf("language").forGetter(GridDefinition::getLanguage),
-            CodecUtils.VECTOR2I.fieldOf("startPos").forGetter(GridDefinition::getStartPos),
-            ExtraCodecs.strictUnboundedMap(CodecUtils.VECTOR2I, GridNodeDefinition.CODEC).fieldOf("nodes").forGetter(GridDefinition::getNodes)
-        ).apply(instance, GridDefinition::new));
+    public static Codec<GridDefinition> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ResourceLocation.CODEC.fieldOf("key").forGetter(GridDefinition::getKey),
+                ResourceKey.codec(RegistryKeysPM.BOOK_LANGUAGES).fieldOf("language").forGetter(GridDefinition::getLanguage),
+                CodecUtils.VECTOR2I.fieldOf("startPos").forGetter(GridDefinition::getStartPos),
+                ExtraCodecs.strictUnboundedMap(CodecUtils.VECTOR2I, GridNodeDefinition.codec()).fieldOf("nodes").forGetter(GridDefinition::getNodes)
+            ).apply(instance, GridDefinition::new));
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, GridDefinition> streamCodec() {
+        return StreamCodec.composite(
+                ResourceLocation.STREAM_CODEC, GridDefinition::getKey,
+                ResourceKey.streamCodec(RegistryKeysPM.BOOK_LANGUAGES), GridDefinition::getLanguage,
+                StreamCodecUtils.VECTOR2I, GridDefinition::getStartPos,
+                ByteBufCodecs.map(HashMap::new, StreamCodecUtils.VECTOR2I, GridNodeDefinition.streamCodec()), GridDefinition::getNodes,
+                GridDefinition::new);
+    }
     
     protected ResourceLocation key;
     protected ResourceKey<BookLanguage> language;

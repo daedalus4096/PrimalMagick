@@ -14,11 +14,10 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.mutable.MutableLong;
 import org.apache.commons.lang3.mutable.MutableObject;
-import org.joml.Vector2ic;
+import org.joml.Vector2i;
 
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
-import com.verdantartifice.primalmagick.common.books.grids.IGridDefinitionSerializer;
 import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -40,7 +39,6 @@ public class LinguisticsManager {
     // Set of unique IDs of players that need their linguistics data synced to their client
     private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
     
-    public static final IGridDefinitionSerializer GRID_DEFINITION_SERIALIZER = new GridDefinition.Serializer();
     protected static final Map<ResourceLocation, GridDefinition> GRID_DEFINITIONS = new HashMap<>();
 
     public static boolean isSyncScheduled(@Nullable Player player) {
@@ -231,8 +229,8 @@ public class LinguisticsManager {
         return GRID_DEFINITIONS.get(gridKey);
     }
     
-    protected static Set<Vector2ic> getUnlockedGridNodes(@Nullable Player player, @Nullable ResourceLocation gridKey) {
-        MutableObject<Set<Vector2ic>> retVal = new MutableObject<>(Collections.emptySet());
+    protected static Set<Vector2i> getUnlockedGridNodes(@Nullable Player player, @Nullable ResourceLocation gridKey) {
+        MutableObject<Set<Vector2i>> retVal = new MutableObject<>(Collections.emptySet());
         if (player != null && gridKey != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
                 retVal.setValue(linguistics.getUnlockedNodes(gridKey));
