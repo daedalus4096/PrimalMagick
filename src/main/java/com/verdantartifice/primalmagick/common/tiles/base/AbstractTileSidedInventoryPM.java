@@ -20,6 +20,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -176,7 +177,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                     CompoundTag slotTag = new CompoundTag();
                     slotTag.putByte("Inv", (byte)invIndex);
                     slotTag.putByte("Slot", (byte)slotIndex);
-                    stack.save(slotTag);
+                    ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, stack).resultOrPartial(LOGGER::error).ifPresent(tag -> slotTag.put("Item", tag));
                     tagList.add(slotTag);
                 }
             }
@@ -215,8 +216,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                 byte invIndex = slotTag.getByte("Inv");
                 byte slotIndex = slotTag.getByte("Slot");
                 if (this.isSyncedSlot(invIndex, slotIndex)) {
-                    ItemStack stack = ItemStack.of(slotTag);
-                    this.syncedInventories.get(invIndex).set(slotIndex, stack);
+                    ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, slotTag.getCompound("Item")).resultOrPartial(LOGGER::error).ifPresent(stack -> this.syncedInventories.get(invIndex).set(slotIndex, stack));
                 }
             }
         }
