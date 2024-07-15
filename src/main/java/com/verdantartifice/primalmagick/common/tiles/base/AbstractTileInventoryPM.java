@@ -15,6 +15,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
@@ -152,7 +153,7 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
                     // Only include populated, sync-tagged slots to lessen packet size
                     CompoundTag slotTag = new CompoundTag();
                     slotTag.putByte("Slot", (byte)index);
-                    stack.save(slotTag);
+                    ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, stack).resultOrPartial(LOGGER::error).ifPresent(tag -> slotTag.put("Item", tag));
                     tagList.add(slotTag);
                 }
             }
@@ -187,7 +188,7 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
                 CompoundTag slotTag = tagList.getCompound(index);
                 byte slotIndex = slotTag.getByte("Slot");
                 if (this.isSyncedSlot(slotIndex)) {
-                    this.syncedItems.set(slotIndex, ItemStack.of(slotTag));
+                    ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, slotTag.getCompound("Item")).resultOrPartial(LOGGER::error).ifPresent(stack -> this.syncedItems.set(slotIndex, stack));
                 }
             }
         }
