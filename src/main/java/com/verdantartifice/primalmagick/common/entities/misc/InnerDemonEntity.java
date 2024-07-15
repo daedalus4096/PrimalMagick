@@ -45,6 +45,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 
 /**
@@ -224,7 +225,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
                 double dx = level.random.nextGaussian() * SIN_CRASH_RANGE * (level.random.nextBoolean() ? 1.0D : -1.0D);
                 double dy = -1.0D * (double)this.getEyeHeight();
                 double dz = level.random.nextGaussian() * SIN_CRASH_RANGE * (level.random.nextBoolean() ? 1.0D : -1.0D);
-                SinCrashEntity crash = new SinCrashEntity(level, this, dx, dy, dz);
+                SinCrashEntity crash = new SinCrashEntity(level, this, new Vec3(dx, dy, dz));
                 crash.moveTo(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);
                 level.addFreshEntity(crash);
             }

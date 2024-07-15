@@ -32,28 +32,28 @@ public class SpellProjectileEntity extends AbstractArrow {
     protected final ItemStack spellSource;
     
     public SpellProjectileEntity(EntityType<? extends AbstractArrow> type, Level worldIn) {
-        super(type, worldIn, ItemStack.EMPTY);
+        super(type, worldIn);
         this.spell = null;
         this.spellSource = null;
     }
     
     public SpellProjectileEntity(Level world, LivingEntity thrower, SpellPackage spell, @Nullable ItemStack spellSource) {
-        super(EntityTypesPM.SPELL_PROJECTILE.get(), thrower, world, ItemStack.EMPTY);
+        super(EntityTypesPM.SPELL_PROJECTILE.get(), thrower, world, ItemStack.EMPTY, null);
         this.spell = spell;
         this.spellSource = spellSource == null ? null : spellSource.copy();
         if (spell != null && spell.payload() != null) {
             // Store the spell payload's color for use in rendering
-            this.setColor(spell.payload().getSource().getColor());
+            this.setColor(spell.payload().getComponent().getSource().getColor());
         }
     }
     
     public SpellProjectileEntity(Level world, double x, double y, double z, SpellPackage spell, @Nullable ItemStack spellSource) {
-        super(EntityTypesPM.SPELL_PROJECTILE.get(), x, y, z, world, ItemStack.EMPTY);
+        super(EntityTypesPM.SPELL_PROJECTILE.get(), x, y, z, world, ItemStack.EMPTY, null);
         this.spell = spell;
         this.spellSource = spellSource == null ? null : spellSource.copy();
         if (spell != null && spell.payload() != null) {
             // Store the spell payload's color for use in rendering
-            this.setColor(spell.payload().getSource().getColor());
+            this.setColor(spell.payload().getComponent().getSource().getColor());
         }
     }
     
@@ -77,7 +77,7 @@ public class SpellProjectileEntity extends AbstractArrow {
         if (!level.isClientSide && this.isAlive() && this.tickCount % 2 == 0 && this.spell != null && this.spell.payload() != null) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
-                    new SpellTrailPacket(this.position(), this.spell.payload().getSource().getColor()), 
+                    new SpellTrailPacket(this.position(), this.spell.payload().getComponent().getSource().getColor()), 
                     level.dimension(), 
                     this.blockPosition(), 
                     64.0D);
@@ -109,5 +109,10 @@ public class SpellProjectileEntity extends AbstractArrow {
     @Override
     protected float getWaterInertia() {
         return 0.99F;
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return ItemStack.EMPTY;
     }
 }

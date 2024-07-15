@@ -5,11 +5,15 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -31,6 +35,8 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public class SpellMineEntity extends Entity {
+    private static final Logger LOGGER = LogManager.getLogger();
+    
     protected static final EntityDataAccessor<Integer> COLOR = SynchedEntityData.defineId(SpellMineEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> ARMED = SynchedEntityData.defineId(SpellMineEntity.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Integer> LIFESPAN = SynchedEntityData.defineId(SpellMineEntity.class, EntityDataSerializers.INT);
@@ -56,7 +62,7 @@ public class SpellMineEntity extends Entity {
         this.setLifespan(20 * 60 * durationMinutes);
         if (spell != null && spell.payload() != null) {
             // Store the spell payload's color for use in rendering
-            this.setColor(spell.payload().getSource().getColor());
+            this.setColor(spell.payload().getComponent().getSource().getColor());
         }
     }
     
@@ -119,12 +125,12 @@ public class SpellMineEntity extends Entity {
             this.spell = null;
         }
         if (this.spell != null && this.spell.payload() != null) {
-            this.setColor(this.spell.payload().getSource().getColor());
+            this.setColor(this.spell.payload().getComponent().getSource().getColor());
         }
         
         this.spellSource = null;
         if (compound.contains("SpellSource", Tag.TAG_COMPOUND)) {
-            this.spellSource = ItemStack.of(compound.getCompound("SpellSource"));
+            this.spellSource = ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, compound.getCompound("SpellSource")).resultOrPartial(LOGGER::error).orElse(ItemStack.EMPTY);
         }
         
         this.currentLife = compound.getInt("CurrentLife");
@@ -140,7 +146,7 @@ public class SpellMineEntity extends Entity {
             compound.put("Spell", this.spell.serializeNBT());
         }
         if (this.spellSource != null) {
-            compound.put("SpellSource", this.spellSource.serializeNBT());
+            ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, this.spellSource).resultOrPartial(LOGGER::error).ifPresent(tag -> compound.put("SpellSource", tag));
         }
         compound.putInt("CurrentLife", this.currentLife);
         compound.putInt("Lifespan", this.getLifespan());
@@ -169,7 +175,7 @@ public class SpellMineEntity extends Entity {
                     if (entity.isAlive()) {
                         // If found, execute the spell payload on them then remove self
                         if (this.spell != null && this.spell.payload() != null) {
-                            this.spell.payload().playSounds(level, this.blockPosition());
+                            this.spell.payload().getComponent().playSounds(level, this.blockPosition());
                         }
                         if (this.getCaster() != null) {
                             SpellManager.executeSpellPayload(this.spell, new EntityHitResult(entity, this.position().add(0.0D, 0.5D, 0.0D)), level, this.getCaster(), this.spellSource, false, this);
