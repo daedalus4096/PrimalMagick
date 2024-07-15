@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.Culture;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyType;
@@ -43,6 +44,7 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<SpellModType<?>>> SPELL_MOD_TYPES = key("spell_mod_types");
     public static final ResourceKey<Registry<SpellVehicleType<?>>> SPELL_VEHICLE_TYPES = key("spell_vehicle_types");
     public static final ResourceKey<Registry<SpellPayloadType<?>>> SPELL_PAYLOAD_TYPES = key("spell_payload_types");
+    public static final ResourceKey<Registry<GridRewardType<?>>> GRID_REWARD_TYPES = key("grid_reward_types");
     
     private static <T> ResourceKey<Registry<T>> key(String name) {
         return ResourceKey.createRegistryKey(PrimalMagick.resource(name));

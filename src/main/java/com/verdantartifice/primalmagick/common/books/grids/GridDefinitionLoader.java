@@ -10,10 +10,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-import com.verdantartifice.primalmagick.common.books.grids.rewards.AttunementReward;
-import com.verdantartifice.primalmagick.common.books.grids.rewards.ComprehensionReward;
-import com.verdantartifice.primalmagick.common.books.grids.rewards.EmptyReward;
-import com.verdantartifice.primalmagick.common.books.grids.rewards.KnowledgeReward;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -48,12 +44,6 @@ public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
     public static GridDefinitionLoader createInstance() {
         if (INSTANCE == null) {
             INSTANCE = new GridDefinitionLoader();
-            
-            // Initialize reward serialization mappings while we're at it, as the classloader requires it to happen somewhere
-            EmptyReward.init();
-            AttunementReward.init();
-            ComprehensionReward.init();
-            KnowledgeReward.init();
         }
         return INSTANCE;
     }
