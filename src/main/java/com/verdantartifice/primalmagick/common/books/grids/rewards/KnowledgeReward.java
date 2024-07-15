@@ -5,14 +5,17 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Verify;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -22,19 +25,19 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class KnowledgeReward extends AbstractReward {
-    public static final String TYPE = "knowledge";
-    public static final IRewardSerializer<KnowledgeReward> SERIALIZER = new Serializer();
+public class KnowledgeReward extends AbstractReward<KnowledgeReward> {
+    public static final MapCodec<KnowledgeReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            KnowledgeType.CODEC.fieldOf("knowledgeType").forGetter(r -> r.knowledgeType),
+            Codec.INT.fieldOf("levels").forGetter(r -> r.levels)
+        ).apply(instance, KnowledgeReward::new));
+    public static final StreamCodec<ByteBuf, KnowledgeReward> STREAM_CODEC = StreamCodec.composite(
+            KnowledgeType.STREAM_CODEC, r -> r.knowledgeType,
+            ByteBufCodecs.VAR_INT, r -> r.levels,
+            KnowledgeReward::new);
 
     private KnowledgeType knowledgeType;
     private int levels;
     private Optional<Component> levelsText;
-    
-    public static void init() {
-        AbstractReward.register(TYPE, KnowledgeReward::fromNBT, SERIALIZER);
-    }
-    
-    private KnowledgeReward() {}
     
     protected KnowledgeReward(@Nonnull KnowledgeType type, int levels) {
         Verify.verifyNotNull(type, "Invalid knowledge type for knowledge reward");
@@ -42,12 +45,11 @@ public class KnowledgeReward extends AbstractReward {
         this.setLevels(levels);
     }
     
-    public static KnowledgeReward fromNBT(CompoundTag tag) {
-        KnowledgeReward retVal = new KnowledgeReward();
-        retVal.deserializeNBT(tag);
-        return retVal;
+    @Override
+    protected GridRewardType<KnowledgeReward> getType() {
+        return GridRewardTypesPM.KNOWLEDGE.get();
     }
-    
+
     protected void setLevels(int levels) {
         this.levels = levels;
         this.levelsText = levels > 1 ? Optional.of(Component.literal(Integer.toString(levels))) : Optional.empty();
@@ -73,52 +75,5 @@ public class KnowledgeReward extends AbstractReward {
     @Override
     public Optional<Component> getAmountText() {
         return this.levelsText;
-    }
-
-    @Override
-    public String getRewardType() {
-        return TYPE;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public IRewardSerializer<KnowledgeReward> getSerializer() {
-        return SERIALIZER;
-    }
-
-    @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = super.serializeNBT();
-        tag.putString("KnowledgeType", this.knowledgeType.getSerializedName());
-        tag.putInt("Levels", this.levels);
-        return tag;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        super.deserializeNBT(nbt);
-        this.knowledgeType = KnowledgeType.fromName(nbt.getString("KnowledgeType"));
-        Verify.verifyNotNull(this.knowledgeType, "Invalid knowledge type for knowledge reward");
-        this.setLevels(nbt.getInt("Levels"));
-    }
-
-    public static class Serializer implements IRewardSerializer<KnowledgeReward> {
-        @Override
-        public KnowledgeReward read(ResourceLocation templateId, JsonObject json) {
-            KnowledgeType type = KnowledgeType.fromName(json.getAsJsonPrimitive("knowledge_type").getAsString());
-            int levels = json.getAsJsonPrimitive("levels").getAsInt();
-            return new KnowledgeReward(type, levels);
-        }
-
-        @Override
-        public KnowledgeReward fromNetwork(FriendlyByteBuf buf) {
-            return new KnowledgeReward(KnowledgeType.fromName(buf.readUtf()), buf.readVarInt());
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, KnowledgeReward reward) {
-            buf.writeUtf(reward.knowledgeType.getSerializedName());
-            buf.writeVarInt(reward.levels);
-        }
     }
 }

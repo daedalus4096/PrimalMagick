@@ -23,6 +23,9 @@ public class GridRewardTypesPM {
     }
     
     public static final RegistryObject<GridRewardType<AttunementReward>> ATTUNEMENT = register("attunement", AttunementReward.CODEC, AttunementReward.STREAM_CODEC);
+    public static final RegistryObject<GridRewardType<ComprehensionReward>> COMPREHENSION = register("comprehension", ComprehensionReward.CODEC, ComprehensionReward.STREAM_CODEC);
+    public static final RegistryObject<GridRewardType<EmptyReward>> EMPTY = register("empty", EmptyReward.CODEC, EmptyReward.STREAM_CODEC);
+    public static final RegistryObject<GridRewardType<KnowledgeReward>> KNOWLEDGE = register("knowledge", KnowledgeReward.CODEC, KnowledgeReward.STREAM_CODEC);
     
     protected static <T extends AbstractReward<T>> RegistryObject<GridRewardType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         return DEFERRED_TYPES.register(id, () -> new GridRewardType<T>(PrimalMagick.resource(id), codec, streamCodec));
