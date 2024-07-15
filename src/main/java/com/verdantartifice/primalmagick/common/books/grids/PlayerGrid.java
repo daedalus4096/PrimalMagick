@@ -34,7 +34,7 @@ import net.minecraft.world.level.Level;
 public class PlayerGrid {
     protected final Player player;
     protected final GridDefinition definition;
-    protected final Set<Vector2ic> unlocked = new HashSet<>();
+    protected final Set<Vector2i> unlocked = new HashSet<>();
     protected long lastModified = 0L;
     
     public PlayerGrid(Player player, GridDefinition definition) {
@@ -42,7 +42,7 @@ public class PlayerGrid {
         this.definition = definition;
     }
     
-    public PlayerGrid(Player player, GridDefinition definition, Set<Vector2ic> unlocked, long lastModified) {
+    public PlayerGrid(Player player, GridDefinition definition, Set<Vector2i> unlocked, long lastModified) {
         this(player, definition);
         this.unlocked.addAll(unlocked);
         this.lastModified = lastModified;
@@ -79,7 +79,7 @@ public class PlayerGrid {
         return this.unlock(new Vector2i(x, y), registryAccess);
     }
     
-    public boolean unlock(Vector2ic node, RegistryAccess registryAccess) {
+    public boolean unlock(Vector2i node, RegistryAccess registryAccess) {
         if (!this.isUnlockable(node)) {
             return false;
         }
@@ -123,7 +123,7 @@ public class PlayerGrid {
         }
     }
     
-    public boolean isUnlockable(Vector2ic node) {
+    public boolean isUnlockable(Vector2i node) {
         if (node == null) {
             // Can't unlock a null node
             return false;
@@ -144,7 +144,7 @@ public class PlayerGrid {
         return true;
     }
     
-    protected static boolean areAdjacent(Vector2ic vec1, Vector2ic vec2) {
+    protected static boolean areAdjacent(Vector2i vec1, Vector2i vec2) {
         return vec1 != null && vec2 != null && vec1.gridDistance(vec2) == 1;
     }
 }
