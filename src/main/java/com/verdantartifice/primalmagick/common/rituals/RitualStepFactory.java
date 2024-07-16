@@ -2,6 +2,9 @@ package com.verdantartifice.primalmagick.common.rituals;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.rituals.steps.AbstractRitualStep;
+import com.verdantartifice.primalmagick.common.rituals.steps.UniversalRitualStep;
+
 import net.minecraft.nbt.CompoundTag;
 
 /**

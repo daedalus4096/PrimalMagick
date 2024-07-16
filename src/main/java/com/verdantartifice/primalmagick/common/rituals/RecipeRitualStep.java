@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.rituals;
 
+import com.verdantartifice.primalmagick.common.rituals.steps.AbstractRitualStep;
+
 import net.minecraft.nbt.CompoundTag;
 
 /**
