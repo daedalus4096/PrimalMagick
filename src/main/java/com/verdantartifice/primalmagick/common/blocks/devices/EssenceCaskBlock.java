@@ -12,7 +12,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -86,7 +85,6 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
         return createTickerHelper(type, TileEntityTypesPM.ESSENCE_CASK.get(), EssenceCaskTileEntity::tick);
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Drop the tile entity's inventory into the world when the block is replaced
@@ -111,7 +109,7 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the essence cask
             BlockEntity tile = level.getBlockEntity(pos);

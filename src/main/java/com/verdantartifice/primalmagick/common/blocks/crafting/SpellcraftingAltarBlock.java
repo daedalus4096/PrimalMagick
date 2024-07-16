@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -82,7 +81,7 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock {
     }
     
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
         if (!worldIn.isClientSide) {
             BlockEntity blockEntity = worldIn.getBlockEntity(pos);
             if (blockEntity instanceof SpellcraftingAltarTileEntity altarTile && player instanceof ServerPlayer serverPlayer) {
