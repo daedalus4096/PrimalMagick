@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -20,12 +18,15 @@ import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
+import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -40,6 +41,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -117,10 +119,11 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
             
             private int getExperienceFromItem(ItemStack stack) {
                 int total = 0;
-                Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
-                for (Map.Entry<Enchantment, Integer> entry : map.entrySet()) {
-                    if (!entry.getKey().isCurse()) {
-                        total += entry.getKey().getMinCost(entry.getValue());
+                for (var entry : EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet()) {
+                    Holder<Enchantment> enchHolder = entry.getKey();
+                    int val = entry.getIntValue();
+                    if (!enchHolder.is(EnchantmentTags.CURSE)) {
+                        total += enchHolder.value().getMinCost(val);
                     }
                 }
                 return total;
@@ -151,93 +154,27 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
         }
     }
 
-    public ItemStack removeNonCurses(ItemStack stack, int damage, int count) {
-        ItemStack retVal = stack.copyWithCount(count);
-        retVal.removeTagKey("Enchantments");
-        retVal.removeTagKey("StoredEnchantments");
-        if (damage > 0) {
-            retVal.setDamageValue(damage);
-        } else {
-            retVal.removeTagKey("Damage");
+    public ItemStack removeNonCurses(ItemStack pItem) {
+        ItemEnchantments enchantments = EnchantmentHelper.updateEnchantments(pItem, updater -> updater.removeIf(enchHolder -> !enchHolder.is(EnchantmentTags.CURSE)));
+        if (pItem.is(Items.ENCHANTED_BOOK) && enchantments.isEmpty()) {
+            pItem = pItem.transmuteCopy(Items.BOOK);
         }
 
-        Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter((entry) -> {
-            return entry.getKey().isCurse();
-        }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        EnchantmentHelper.setEnchantments(map, retVal);
-        retVal.setRepairCost(0);
-        if (retVal.is(Items.ENCHANTED_BOOK) && map.size() == 0) {
-            retVal = new ItemStack(Items.BOOK);
-            if (stack.hasCustomHoverName()) {
-                retVal.setHoverName(stack.getHoverName());
-            }
+        int cost = 0;
+        for (int index = 0; index < enchantments.size(); index++) {
+            cost = AnvilMenu.calculateIncreasedRepairCost(cost);
         }
 
-        for (int i = 0; i < map.size(); ++i) {
-            retVal.setRepairCost(AnvilMenu.calculateIncreasedRepairCost(retVal.getBaseRepairCost()));
-        }
+        pItem.set(DataComponents.REPAIR_COST, cost);
 
         // Remove any runes applied to the item(s)
-        RuneManager.clearRunes(retVal);
+        RuneManager.clearRunes(pItem);
         
-        return retVal;
+        return pItem;
     }
     
     public void createResult() {
-        ItemStack itemstack = this.repairSlots.getItem(0);
-        ItemStack itemstack1 = this.repairSlots.getItem(1);
-        boolean flag = !itemstack.isEmpty() || !itemstack1.isEmpty();
-        boolean flag1 = !itemstack.isEmpty() && !itemstack1.isEmpty();
-        
-        if (!flag) {
-            this.resultSlots.setItem(0, ItemStack.EMPTY);
-        } else {
-            // Process even non-enchanted items, as long as they have runes attached
-            boolean flag2 = !itemstack.isEmpty() && !itemstack.is(Items.ENCHANTED_BOOK) && !itemstack.isEnchanted() && !RuneManager.hasRunes(itemstack) || 
-                            !itemstack1.isEmpty() && !itemstack1.is(Items.ENCHANTED_BOOK) && !itemstack1.isEnchanted() && !RuneManager.hasRunes(itemstack1);
-            if (itemstack.getCount() > 1 || itemstack1.getCount() > 1 || !flag1 && flag2) {
-                this.resultSlots.setItem(0, ItemStack.EMPTY);
-                this.broadcastChanges();
-                return;
-            }
-
-            int j = 1;
-            int i;
-            ItemStack itemstack2;
-            if (flag1) {
-                if (!itemstack.is(itemstack1.getItem())) {
-                    this.resultSlots.setItem(0, ItemStack.EMPTY);
-                    this.broadcastChanges();
-                    return;
-                }
-
-                int k = itemstack.getMaxDamage() - itemstack.getDamageValue();
-                int l = itemstack.getMaxDamage() - itemstack1.getDamageValue();
-                int i1 = k + l + itemstack.getMaxDamage() * 5 / 100;
-                i = Math.max(itemstack.getMaxDamage() - i1, 0);
-                itemstack2 = this.mergeEnchants(itemstack, itemstack1);
-                if (!itemstack2.isRepairable()) i = itemstack.getDamageValue();
-                if (!itemstack2.isDamageableItem() || !itemstack2.isRepairable()) {
-                    if (!ItemStack.matches(itemstack, itemstack1)) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
-                        this.broadcastChanges();
-                        return;
-                    }
-                    j = 2;
-                }
-            } else {
-                boolean flag3 = !itemstack.isEmpty();
-                i = flag3 ? itemstack.getDamageValue() : itemstack1.getDamageValue();
-                itemstack2 = flag3 ? itemstack : itemstack1;
-            }
-            
-            if (j > itemstack2.getMaxStackSize()) {
-                // Skip the repair if the result would give an item stack with a count not normally obtainable
-                this.resultSlots.setItem(0, ItemStack.EMPTY);
-            } else {
-                this.resultSlots.setItem(0, this.removeNonCurses(itemstack2, i, j));
-            }
-        }
+        this.resultSlots.setItem(0, this.computeResult(this.repairSlots.getItem(0), this.repairSlots.getItem(1)));
 
         this.broadcastChanges();
         
@@ -249,6 +186,62 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
         });
     }
     
+    private ItemStack computeResult(ItemStack pInputItem, ItemStack pAdditionalItem) {
+        var event = net.minecraftforge.event.ForgeEventFactory.onGrindstoneChange(pInputItem, pAdditionalItem, this.resultSlots, -1);
+        if (event.isCanceled()) {
+            this.xp = -1;
+            return ItemStack.EMPTY;
+        } else if (!event.getOutput().isEmpty()) {
+            this.xp = event.getXp();
+            return event.getOutput();
+        } else {
+            this.xp = Integer.MIN_VALUE;
+        }
+
+        boolean flag = !pInputItem.isEmpty() || !pAdditionalItem.isEmpty();
+        if (!flag) {
+            return ItemStack.EMPTY;
+        } else if (pInputItem.getCount() <= 1 && pAdditionalItem.getCount() <= 1) {
+            boolean flag1 = !pInputItem.isEmpty() && !pAdditionalItem.isEmpty();
+            if (!flag1) {
+                ItemStack itemstack = !pInputItem.isEmpty() ? pInputItem : pAdditionalItem;
+                return !EnchantmentHelper.hasAnyEnchantments(itemstack) ? ItemStack.EMPTY : this.removeNonCurses(itemstack.copy());
+            } else {
+                return this.mergeItems(pInputItem, pAdditionalItem);
+            }
+        } else {
+            return ItemStack.EMPTY;
+        }
+    }
+
+    private ItemStack mergeItems(ItemStack pInputItem, ItemStack pAdditionalItem) {
+        if (!pInputItem.is(pAdditionalItem.getItem())) {
+            return ItemStack.EMPTY;
+        } else {
+            int i = Math.max(pInputItem.getMaxDamage(), pAdditionalItem.getMaxDamage());
+            int j = pInputItem.getMaxDamage() - pInputItem.getDamageValue();
+            int k = pAdditionalItem.getMaxDamage() - pAdditionalItem.getDamageValue();
+            int l = j + k + i * 5 / 100;
+            int i1 = 1;
+            if (!pInputItem.isDamageableItem()) {
+                if (pInputItem.getMaxStackSize() < 2 || !ItemStack.matches(pInputItem, pAdditionalItem)) {
+                    return ItemStack.EMPTY;
+                }
+
+                i1 = 2;
+            }
+
+            ItemStack itemstack = pInputItem.copyWithCount(i1);
+            if (itemstack.isDamageableItem()) {
+                itemstack.set(DataComponents.MAX_DAMAGE, i);
+                itemstack.setDamageValue(Math.max(i - l, 0));
+            }
+
+            this.mergeEnchants(itemstack, pAdditionalItem);
+            return this.removeNonCurses(itemstack);
+        }
+    }
+
     @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
@@ -302,15 +295,17 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
     }
     
     public ItemStack mergeEnchants(ItemStack pCopyTo, ItemStack pCopyFrom) {
-        ItemStack itemstack = pCopyTo.copy();
-        Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(pCopyFrom);
-        for (Map.Entry<Enchantment, Integer> entry : map.entrySet()) {
-            Enchantment enchantment = entry.getKey();
-            if (!enchantment.isCurse() || EnchantmentHelper.getTagEnchantmentLevel(enchantment, itemstack) == 0) {
-                itemstack.enchant(enchantment, entry.getValue());
+        ItemStack retVal = pCopyTo.copy();
+        EnchantmentHelper.updateEnchantments(pCopyTo, updater -> {
+            ItemEnchantments enchantments = EnchantmentHelper.getEnchantmentsForCrafting(pCopyFrom);
+            for (Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
+                Holder<Enchantment> holder = entry.getKey();
+                if (!holder.is(EnchantmentTags.CURSE) || updater.getLevel(holder) == 0) {
+                    updater.upgrade(holder, entry.getIntValue());
+                }
             }
-        }
-        return itemstack;
+        });
+        return retVal;
     }
 
     @Override
