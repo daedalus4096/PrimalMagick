@@ -16,6 +16,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -65,35 +66,41 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (player != null && player.getItemInHand(handIn).isEmpty() && !state.getValue(FILLED)) {
-            // If using an empty hand on an unfilled bloodletter, cut the player
-            if (!worldIn.isClientSide) {
-                player.hurt(DamageSourcesPM.bleeding(worldIn), 2.0F);
-                worldIn.setBlock(pos, state.setValue(FILLED, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
-                
-                // If this block is awaiting activation for an altar, notify it
-                if (this.isPropOpen(state, worldIn, pos)) {
-                    this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus());
-                }
-            }
-            return InteractionResult.SUCCESS;
-        } else if (player != null && player.getItemInHand(handIn).getItem() == Items.WATER_BUCKET && state.getValue(FILLED)) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player != null && stack.is(Items.WATER_BUCKET) && state.getValue(FILLED)) {
             // If using a water bucket on a filled bloodletter, clean it out
             worldIn.playSound(player, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isClientSide) {
-                if (!player.getAbilities().instabuild) {
+                if (!player.hasInfiniteMaterials()) {
                     player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
                 }
                 worldIn.setBlock(pos, state.setValue(FILLED, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
+            }
+            return ItemInteractionResult.SUCCESS;
+        } else {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+    }
+    
+    @Override
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+        if (pPlayer != null && !pState.getValue(FILLED)) {
+            // If using an empty hand on an unfilled bloodletter, cut the player
+            if (!pLevel.isClientSide) {
+                pPlayer.hurt(DamageSourcesPM.bleeding(pLevel), 2.0F);
+                pLevel.setBlock(pPos, pState.setValue(FILLED, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
+                
+                // If this block is awaiting activation for an altar, notify it
+                if (this.isPropOpen(pState, pLevel, pPos)) {
+                    this.onPropActivated(pState, pLevel, pPos, this.getUsageStabilityBonus());
+                }
             }
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.PASS;
         }
     }
-    
-    @SuppressWarnings("deprecation")
+
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced

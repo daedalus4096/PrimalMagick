@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.misc;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
@@ -15,6 +16,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -93,31 +95,49 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if (pLevel.getBlockEntity(pPos) instanceof CarvedBookshelfTileEntity tile) {
-            Optional<Vec2> coordsOpt = getRelativeHitCoordinatesForBlockFace(pHit, pState.getValue(FACING));
-            if (coordsOpt.isPresent()) {
-                int slot = getHitSlot(coordsOpt.get());
-                if (pState.getValue(SLOT_OCCUPIED_PROPERTIES.get(slot))) {
-                    // If a book is in the slot, remove it from the shelf
-                    removeBook(pLevel, pPos, pPlayer, tile, slot);
-                    return InteractionResult.sidedSuccess(pLevel.isClientSide);
-                } else {
-                    ItemStack handStack = pPlayer.getItemInHand(pHand);
-                    if (handStack.is(ItemTags.BOOKSHELF_BOOKS)) {
-                        // If the slot is empty and the player is holding a book, add it to the shelf
-                        addBook(pLevel, pPos, pPlayer, tile, handStack, slot);
-                        return InteractionResult.sidedSuccess(pLevel.isClientSide);
-                    } else {
-                        return InteractionResult.CONSUME;
-                    }
-                }
+            if (!pStack.is(ItemTags.BOOKSHELF_BOOKS)) {
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             } else {
+                OptionalInt slotOpt = this.getHitSlot(pHitResult, pState);
+                if (slotOpt.isEmpty()) {
+                    return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+                } else if (pState.getValue(SLOT_OCCUPIED_PROPERTIES.get(slotOpt.getAsInt()))) {
+                    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                } else {
+                    addBook(pLevel, pPos, pPlayer, tile, pStack, slotOpt.getAsInt());
+                    return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
+                }
+            }
+        } else {
+            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+        }
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+        if (pLevel.getBlockEntity(pPos) instanceof CarvedBookshelfTileEntity tile) {
+            OptionalInt slotOpt = this.getHitSlot(pHitResult, pState);
+            if (slotOpt.isEmpty()) {
                 return InteractionResult.PASS;
+            } else if (!pState.getValue(SLOT_OCCUPIED_PROPERTIES.get(slotOpt.getAsInt()))) {
+                return InteractionResult.CONSUME;
+            } else {
+                removeBook(pLevel, pPos, pPlayer, tile, slotOpt.getAsInt());
+                return InteractionResult.sidedSuccess(pLevel.isClientSide);
             }
         } else {
             return InteractionResult.PASS;
         }
+    }
+
+    private OptionalInt getHitSlot(BlockHitResult pHitReselt, BlockState pState) {
+        return getRelativeHitCoordinatesForBlockFace(pHitReselt, pState.getValue(HorizontalDirectionalBlock.FACING)).map(hitPos -> {
+            int i = hitPos.y >= 0.5F ? 0 : 1;
+            int j = getSection(hitPos.x);
+            return OptionalInt.of(j + i * BOOKS_PER_ROW);
+        }).orElseGet(OptionalInt::empty);
     }
 
     private static void addBook(Level pLevel, BlockPos pPos, Player pPlayer, CarvedBookshelfTileEntity tile, ItemStack bookStack, int slot) {
@@ -159,12 +179,6 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
         }
     }
 
-    private static int getHitSlot(Vec2 hitPos) {
-        int i = hitPos.y >= 0.5F ? 0 : 1;
-        int j = getSection(hitPos.x);
-        return j + (i * BOOKS_PER_ROW);
-    }
-    
     private static int getSection(float x) {
         if (x < 0.375F) {
             return 0;
@@ -175,7 +189,6 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         // Drop the tile entity's inventory into the world when the block is replaced
