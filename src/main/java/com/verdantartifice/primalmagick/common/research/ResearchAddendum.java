@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -116,7 +117,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
             return this;
         }
         
-        public Builder siblingEnchantment(ResourceKey<Enchantment> runeEnchantment) {
+        public Builder siblingEnchantment(Holder<Enchantment> runeEnchantment) {
             this.siblings.add(new RuneEnchantmentKey(runeEnchantment));
             return this;
         }
