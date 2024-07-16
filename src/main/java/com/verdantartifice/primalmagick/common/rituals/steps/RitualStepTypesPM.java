@@ -24,10 +24,9 @@ public class RitualStepTypesPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    // TODO Add actions
-    public static final RegistryObject<RitualStepType<OfferingRitualStep>> OFFERING = register("offering", OfferingRitualStep.CODEC, OfferingRitualStep.STREAM_CODEC, null);
-    public static final RegistryObject<RitualStepType<PropRitualStep>> PROP = register("prop", PropRitualStep.CODEC, PropRitualStep.STREAM_CODEC, null);
-    public static final RegistryObject<RitualStepType<UniversalRitualStep>> UNIVERSAL = register("universal", UniversalRitualStep.CODEC, UniversalRitualStep.STREAM_CODEC, null);
+    public static final RegistryObject<RitualStepType<OfferingRitualStep>> OFFERING = register("offering", OfferingRitualStep.CODEC, OfferingRitualStep.STREAM_CODEC, RitualAltarTileEntity::doOfferingStep);
+    public static final RegistryObject<RitualStepType<PropRitualStep>> PROP = register("prop", PropRitualStep.CODEC, PropRitualStep.STREAM_CODEC, RitualAltarTileEntity::doPropStep);
+    public static final RegistryObject<RitualStepType<UniversalRitualStep>> UNIVERSAL = register("universal", UniversalRitualStep.CODEC, UniversalRitualStep.STREAM_CODEC, RitualAltarTileEntity::doUniversalPropStep);
     
     protected static <T extends AbstractRitualStep<T>> RegistryObject<RitualStepType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec,
             BiFunction<RitualAltarTileEntity, T, Boolean> action) {

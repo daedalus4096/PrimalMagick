@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.rituals.steps;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
+import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -22,4 +23,9 @@ public abstract class AbstractRitualStep<T extends AbstractRitualStep<T>> {
     
     public abstract boolean isValid();
     public abstract RitualStepType<T> getType();
+    
+    @SuppressWarnings("unchecked")
+    public boolean execute(RitualAltarTileEntity altar) {
+        return this.getType().action().apply(altar, (T)this);
+    }
 }
