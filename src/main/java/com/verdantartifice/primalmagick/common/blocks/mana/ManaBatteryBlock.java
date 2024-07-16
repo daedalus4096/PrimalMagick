@@ -72,7 +72,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the battery
             BlockEntity tile = pLevel.getBlockEntity(pPos);

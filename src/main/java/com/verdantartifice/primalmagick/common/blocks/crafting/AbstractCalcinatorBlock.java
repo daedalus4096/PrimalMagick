@@ -69,7 +69,7 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     }
     
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
         if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the calcinator
             BlockEntity tile = worldIn.getBlockEntity(pos);
@@ -93,7 +93,6 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
         }
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Drop the tile entity's inventory into the world when the block is replaced

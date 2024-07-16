@@ -109,7 +109,7 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the essence cask
             BlockEntity tile = level.getBlockEntity(pos);

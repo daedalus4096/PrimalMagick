@@ -65,7 +65,7 @@ public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDe
     }
     
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
         if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the altar
             BlockEntity tile = worldIn.getBlockEntity(pos);
