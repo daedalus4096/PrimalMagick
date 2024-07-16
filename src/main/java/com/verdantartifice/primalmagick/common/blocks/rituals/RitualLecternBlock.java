@@ -23,11 +23,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -122,16 +122,14 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
         builder.add(FACING, HAS_BOOK);
     }
     
-    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack handStack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RitualLecternTileEntity lecternTile) {
+            if (worldIn.getBlockEntity(pos) instanceof RitualLecternTileEntity lecternTile) {
                 ItemStack bookStack = lecternTile.getItem();
-                if (bookStack.isEmpty() && player.getItemInHand(handIn).is(Items.ENCHANTED_BOOK)) {
+                if (bookStack.isEmpty() && handStack.is(Items.ENCHANTED_BOOK)) {
                     // When activating an empty lectern with an enchanted book in hand, place it on the lectern
-                    ItemStack stack = player.getItemInHand(handIn).copyWithCount(1);
+                    ItemStack stack = handStack.copyWithCount(1);
                     lecternTile.setItem(stack);
                     player.getItemInHand(handIn).shrink(1);
                     if (player.getItemInHand(handIn).getCount() <= 0) {
@@ -146,7 +144,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                         this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus());
                     }
 
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 } else if (!bookStack.isEmpty()) {
                     if (player.isSecondaryUseActive()) {
                         // When activating a full lectern while sneaking, pick up the book
@@ -158,10 +156,42 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                         player.getInventory().setChanged();
                         worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                         worldIn.setBlock(pos, state.setValue(HAS_BOOK, Boolean.FALSE), Block.UPDATE_ALL);
-                        return InteractionResult.SUCCESS;
+                        return ItemInteractionResult.SUCCESS;
                     } else {
                         // When activating a full lectern while not sneaking, read the book
                         if (player instanceof ServerPlayer serverPlayer) {
+                            bookStack.getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
+                                PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey()), serverPlayer);
+                            });
+                        }
+                        return ItemInteractionResult.SUCCESS;
+                    }
+                }
+            }
+        }
+        return super.useItemOn(handStack, state, worldIn, pos, player, handIn, hit);
+    }
+    
+    @Override
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+        if (!pLevel.isClientSide) {
+            if (pLevel.getBlockEntity(pPos) instanceof RitualLecternTileEntity lecternTile) {
+                ItemStack bookStack = lecternTile.getItem();
+                if (!bookStack.isEmpty()) {
+                    if (pPlayer.isSecondaryUseActive()) {
+                        // When activating a full lectern while sneaking, pick up the book
+                        ItemStack stack = bookStack.copy();
+                        lecternTile.setItem(ItemStack.EMPTY);
+                        if (!pPlayer.getInventory().add(stack)) {
+                            pPlayer.drop(stack, false);
+                        }
+                        pPlayer.getInventory().setChanged();
+                        pLevel.playSound(null, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
+                        pLevel.setBlock(pPos, pState.setValue(HAS_BOOK, Boolean.FALSE), Block.UPDATE_ALL);
+                        return InteractionResult.SUCCESS;
+                    } else {
+                        // When activating a full lectern while not sneaking, read the book
+                        if (pPlayer instanceof ServerPlayer serverPlayer) {
                             bookStack.getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
                                 PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey()), serverPlayer);
                             });
@@ -171,10 +201,9 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                 }
             }
         }
-        return super.use(state, worldIn, pos, player, handIn, hit);
+        return super.useWithoutItem(pState, pLevel, pPos, pPlayer, pHitResult);
     }
-    
-    @SuppressWarnings("deprecation")
+
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
@@ -192,7 +221,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     }
     
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
     

@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -53,18 +54,17 @@ public class AutoChargerBlock extends BaseEntityBlock {
 
     @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity charger) {
-                ItemStack stack = player.getItemInHand(handIn);
                 if (charger.getItem().isEmpty() && (stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())) {
                     // If a wand is in hand and the charger is empty, deposit the wand
                     charger.setItem(stack);
                     player.setItemInHand(handIn, ItemStack.EMPTY);
                     player.getInventory().setChanged();
                     level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 } else if (!charger.getItem().isEmpty() && stack.isEmpty()) {
                     // If the hand is empty and a wand is in the charger, remove the wand
                     ItemStack chargerStack = charger.getItem();
@@ -72,11 +72,11 @@ public class AutoChargerBlock extends BaseEntityBlock {
                     player.setItemInHand(handIn, chargerStack);
                     player.getInventory().setChanged();
                     level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 }
             }
         }
-        return super.use(state, level, pos, player, handIn, hit);
+        return super.useItemOn(stack, state, level, pos, player, handIn, hit);
     }
     
     @SuppressWarnings("deprecation")
