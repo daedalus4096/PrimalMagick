@@ -21,10 +21,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.FlintAndSteelItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -107,33 +109,39 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     }
     
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (player != null && player.getItemInHand(handIn).getItem() instanceof FlintAndSteelItem && !state.getValue(LIT)) {
-            // If using a flint-and-steel on an unlit candle, light it
-            worldIn.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
-            if (!worldIn.isClientSide) {
-                worldIn.setBlock(pos, state.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
-                player.getItemInHand(handIn).hurtAndBreak(1, player, LivingEntity.getSlotForHand(handIn));
-                
-                // If this block is awaiting activation for an altar, notify it
-                if (this.isPropOpen(state, worldIn, pos)) {
-                    this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus());
-                }
-            }
-            return InteractionResult.SUCCESS;
-        } else if (player != null && player.getItemInHand(handIn).isEmpty() && state.getValue(LIT)) {
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+        if (pPlayer != null && pState.getValue(LIT)) {
             // If using an empty hand on a lit candle, snuff it
-            worldIn.playSound(player, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (!worldIn.isClientSide) {
-                worldIn.setBlock(pos, state.setValue(LIT, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
+            pLevel.playSound(pPlayer, pPos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!pLevel.isClientSide) {
+                pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.PASS;
         }
     }
-    
-    @SuppressWarnings("deprecation")
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+        if (pPlayer != null && pStack.is(Items.FLINT_AND_STEEL) && !pState.getValue(LIT)) {
+            // If using a flint-and-steel on an unlit candle, light it
+            pLevel.playSound(pPlayer, pPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 0.8F + (pLevel.random.nextFloat() * 0.4F));
+            if (!pLevel.isClientSide) {
+                pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
+                pPlayer.getItemInHand(pHand).hurtAndBreak(1, pPlayer, LivingEntity.getSlotForHand(pHand));
+                
+                // If this block is awaiting activation for an altar, notify it
+                if (this.isPropOpen(pState, pLevel, pPos)) {
+                    this.onPropActivated(pState, pLevel, pPos, this.getUsageStabilityBonus());
+                }
+            }
+            return ItemInteractionResult.SUCCESS;
+        } else {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+    }
+
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced

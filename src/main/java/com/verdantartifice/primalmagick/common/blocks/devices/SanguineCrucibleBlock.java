@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -105,7 +106,6 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
         return createTickerHelper(type, TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), SanguineCrucibleTileEntity::tick);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (!worldIn.isClientSide) {
@@ -126,28 +126,32 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        ItemStack stack = player.getItemInHand(handIn);
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        if (!worldIn.isClientSide && tile instanceof SanguineCrucibleTileEntity crucibleTile) {
-            if (stack.getItem() instanceof SanguineCoreItem && !crucibleTile.hasCore()) {
-                crucibleTile.setItem(stack.copy());
-                stack.shrink(1);
-                worldIn.playSound(null, pos, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON, SoundSource.BLOCKS, 0.3F, 0.6F);
-                worldIn.setBlock(pos, state.setValue(LIT, true), Block.UPDATE_ALL_IMMEDIATE);
-                return InteractionResult.SUCCESS;
-            } else if (player.isSecondaryUseActive() && stack.isEmpty() && crucibleTile.hasCore()) {
-                popResource(worldIn, pos.relative(hit.getDirection()), crucibleTile.removeItem(1));
-                worldIn.playSound(null, pos, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundSource.BLOCKS, 0.3F, 0.5F);
-                worldIn.setBlock(pos, state.setValue(LIT, false), Block.UPDATE_ALL_IMMEDIATE);
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+        if (!pLevel.isClientSide && pLevel.getBlockEntity(pPos) instanceof SanguineCrucibleTileEntity crucibleTile) {
+            if (pPlayer.isSecondaryUseActive() && crucibleTile.hasCore()) {
+                popResource(pLevel, pPos.relative(pHitResult.getDirection()), crucibleTile.removeItem(1));
+                pLevel.playSound(null, pPos, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundSource.BLOCKS, 0.3F, 0.5F);
+                pLevel.setBlock(pPos, pState.setValue(LIT, false), Block.UPDATE_ALL_IMMEDIATE);
                 return InteractionResult.SUCCESS;
             }
         }
-
         return InteractionResult.PASS;
     }
 
-    @SuppressWarnings("deprecation")
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+        if (!pLevel.isClientSide && pLevel.getBlockEntity(pPos) instanceof SanguineCrucibleTileEntity crucibleTile) {
+            if (pStack.getItem() instanceof SanguineCoreItem && !crucibleTile.hasCore()) {
+                crucibleTile.setItem(pStack.copyWithCount(1));
+                pStack.shrink(1);
+                pLevel.playSound(null, pPos, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON, SoundSource.BLOCKS, 0.3F, 0.6F);
+                pLevel.setBlock(pPos, pState.setValue(LIT, true), Block.UPDATE_ALL_IMMEDIATE);
+                return ItemInteractionResult.SUCCESS;
+            }
+        }
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Drop the tile entity's inventory into the world when the block is replaced

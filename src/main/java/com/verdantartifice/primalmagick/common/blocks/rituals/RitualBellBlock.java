@@ -21,7 +21,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -165,7 +164,6 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
         return null;
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         BellAttachType attachment = stateIn.getValue(ATTACHMENT);
@@ -186,7 +184,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     }
     
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
     
@@ -208,7 +206,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     }
     
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
         return this.tryRing(worldIn, state, hit, player) ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
     
@@ -259,7 +257,6 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
         }
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
