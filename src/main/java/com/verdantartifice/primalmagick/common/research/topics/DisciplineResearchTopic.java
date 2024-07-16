@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.research.topics;
 
-import javax.annotation.Nullable;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -27,16 +25,15 @@ public class DisciplineResearchTopic extends AbstractResearchTopic<DisciplineRes
             ByteBufCodecs.VAR_INT, DisciplineResearchTopic::getPage,
             DisciplineResearchTopic::new);
     
-    protected final ResearchDisciplineKey data;
+    protected final ResearchDisciplineKey discipline;
     
     public DisciplineResearchTopic(ResearchDisciplineKey disciplineKey, int page) {
         super(page);
-        this.data = disciplineKey;
+        this.discipline = disciplineKey;
     }
     
-    @Nullable
     public ResearchDisciplineKey getDiscipline() {
-        return this.data;
+        return this.discipline;
     }
 
     @Override
@@ -46,6 +43,6 @@ public class DisciplineResearchTopic extends AbstractResearchTopic<DisciplineRes
 
     @Override
     public DisciplineResearchTopic withPage(int newPage) {
-        return new DisciplineResearchTopic(this.data, newPage);
+        return new DisciplineResearchTopic(this.discipline, newPage);
     }
 }

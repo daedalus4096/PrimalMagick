@@ -1,25 +1,48 @@
 package com.verdantartifice.primalmagick.common.research.topics;
 
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 /**
  * Research topic that points to a mod research entry in the Grimoire.
  * 
  * @author Daedalus4096
  */
-public class EntryResearchTopic extends AbstractResearchTopic {
+public class EntryResearchTopic extends AbstractResearchTopic<EntryResearchTopic> {
+    public static final MapCodec<EntryResearchTopic> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            ResearchEntryKey.CODEC.fieldOf("entry").forGetter(EntryResearchTopic::getEntry),
+            Codec.INT.fieldOf("page").forGetter(EntryResearchTopic::getPage)
+        ).apply(instance, EntryResearchTopic::new));
+    
+    public static final StreamCodec<ByteBuf, EntryResearchTopic> STREAM_CODEC = StreamCodec.composite(
+            ResearchEntryKey.STREAM_CODEC, EntryResearchTopic::getEntry,
+            ByteBufCodecs.VAR_INT, EntryResearchTopic::getPage,
+            EntryResearchTopic::new);
+    
+    protected final ResearchEntryKey entry;
+    
     public EntryResearchTopic(ResearchEntryKey entryKey, int page) {
-        super(AbstractResearchTopic.Type.RESEARCH_ENTRY, entryKey.getRootKey().location().toString(), page);
+        super(page);
+        this.entry = entryKey;
     }
     
-    @Nullable
-    public ResearchEntryKey getData() {
-        return new ResearchEntryKey(ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, ResourceLocation.parse(this.data)));
+    public ResearchEntryKey getEntry() {
+        return this.entry;
+    }
+
+    @Override
+    public ResearchTopicType<EntryResearchTopic> getType() {
+        return ResearchTopicTypesPM.RESEARCH_ENTRY.get();
+    }
+
+    @Override
+    public EntryResearchTopic withPage(int newPage) {
+        return new EntryResearchTopic(this.entry, newPage);
     }
 }
