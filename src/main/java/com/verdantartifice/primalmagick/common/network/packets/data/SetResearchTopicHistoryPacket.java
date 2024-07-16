@@ -1,17 +1,13 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
-import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicFactory;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
@@ -24,44 +20,30 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
 public class SetResearchTopicHistoryPacket implements IMessageToServer {
     public static final StreamCodec<RegistryFriendlyByteBuf, SetResearchTopicHistoryPacket> STREAM_CODEC = StreamCodec.ofMember(SetResearchTopicHistoryPacket::encode, SetResearchTopicHistoryPacket::decode);
 
-    protected final CompoundTag data;
+    protected final AbstractResearchTopic<?> current;
+    protected final List<AbstractResearchTopic<?>> history;
     
-    public SetResearchTopicHistoryPacket(AbstractResearchTopic current, List<AbstractResearchTopic> history) {
-        // TODO Replace this with a dispatched stream codec
-        this.data = new CompoundTag();
-        this.data.put("Current", current.serializeNBT());
-        ListTag list = new ListTag();
-        for (AbstractResearchTopic topic : history) {
-            list.add(topic.serializeNBT());
-        }
-        this.data.put("History", list);
-    }
-    
-    protected SetResearchTopicHistoryPacket(CompoundTag data) {
-        this.data = data;
+    public SetResearchTopicHistoryPacket(AbstractResearchTopic<?> current, List<AbstractResearchTopic<?>> history) {
+        this.current = current;
+        this.history = history;
     }
     
     public static void encode(SetResearchTopicHistoryPacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeNbt(message.data);
+        AbstractResearchTopic.dispatchStreamCodec().encode(buf, message.current);
+        AbstractResearchTopic.dispatchStreamCodec().apply(ByteBufCodecs.list()).encode(buf, message.history);
     }
     
     public static SetResearchTopicHistoryPacket decode(RegistryFriendlyByteBuf buf) {
-        return new SetResearchTopicHistoryPacket(buf.readNbt());
+        return new SetResearchTopicHistoryPacket(
+                AbstractResearchTopic.dispatchStreamCodec().decode(buf),
+                AbstractResearchTopic.dispatchStreamCodec().apply(ByteBufCodecs.list()).decode(buf));
     }
     
     public static void onMessage(SetResearchTopicHistoryPacket message, CustomPayloadEvent.Context ctx) {
         ServerPlayer player = ctx.getSender();
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-            knowledge.setLastResearchTopic(ResearchTopicFactory.deserializeNBT(message.data.getCompound("Current")));
-            List<AbstractResearchTopic> historyList = new LinkedList<>();
-            ListTag historyTag = message.data.getList("History", Tag.TAG_COMPOUND);
-            for (int index = 0; index < historyTag.size(); index++) {
-                AbstractResearchTopic topic = ResearchTopicFactory.deserializeNBT(historyTag.getCompound(index));
-                if (topic != null) {
-                    historyList.add(topic);
-                }
-            }
-            knowledge.setResearchTopicHistory(historyList);
+            knowledge.setLastResearchTopic(message.current);
+            knowledge.setResearchTopicHistory(message.history);
         });
     }
 }

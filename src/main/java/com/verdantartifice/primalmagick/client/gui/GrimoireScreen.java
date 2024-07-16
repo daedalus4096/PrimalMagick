@@ -98,7 +98,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * GUI screen for the grimoire research browser.
@@ -193,19 +192,19 @@ public class GrimoireScreen extends Screen {
     protected void initPages() {
         // Parse grimoire pages based on the current topic
         this.pages.clear();
-        AbstractResearchTopic topic = this.knowledge.getLastResearchTopic();
+        AbstractResearchTopic<?> topic = this.knowledge.getLastResearchTopic();
         if (topic instanceof MainIndexResearchTopic) {
             this.parseIndexPages();
         } else if (topic instanceof DisciplineResearchTopic discTopic) {
             this.parseDisciplinePages(discTopic.getDiscipline());
         } else if (topic instanceof EntryResearchTopic entryTopic) {
-            this.parseEntryPages(entryTopic.getData());
+            this.parseEntryPages(entryTopic.getEntry());
         } else if (topic instanceof SourceResearchTopic sourceTopic) {
-            this.parseAttunementPage(sourceTopic.getData());
+            this.parseAttunementPage(sourceTopic.getSource());
         } else if (topic instanceof EnchantmentResearchTopic enchTopic) {
-            this.parseRuneEnchantmentPage(enchTopic.getData());
+            this.parseRuneEnchantmentPage(enchTopic.getEnchantment());
         } else if (topic instanceof LanguageResearchTopic langTopic) {
-            this.parseLinguisticsPage(langTopic.getData());
+            this.parseLinguisticsPage(langTopic.getLanguage());
         } else if (topic instanceof OtherResearchTopic otherTopic) {
             String data = otherTopic.getData();
             if (this.isIndexKey(data)) {
@@ -1189,7 +1188,7 @@ public class GrimoireScreen extends Screen {
     public boolean goBack() {
         // Pop the last viewed topic off the history stack and open a new screen for it
         if (!this.knowledge.getResearchTopicHistory().isEmpty()) {
-            AbstractResearchTopic lastTopic = this.knowledge.getResearchTopicHistory().pop();
+            AbstractResearchTopic<?> lastTopic = this.knowledge.getResearchTopicHistory().pop();
             this.knowledge.setLastResearchTopic(lastTopic);
             this.getMinecraft().setScreen(new GrimoireScreen());
             return true;
@@ -1197,11 +1196,11 @@ public class GrimoireScreen extends Screen {
         return false;
     }
     
-    public void gotoTopic(AbstractResearchTopic newTopic) {
+    public void gotoTopic(AbstractResearchTopic<?> newTopic) {
         this.gotoTopic(newTopic, true);
     }
     
-    public void gotoTopic(AbstractResearchTopic newTopic, boolean allowRepeatInHistory) {
+    public void gotoTopic(AbstractResearchTopic<?> newTopic, boolean allowRepeatInHistory) {
         if (allowRepeatInHistory || !this.knowledge.getLastResearchTopic().equals(newTopic)) {
             this.pushCurrentHistoryTopic();
         }
@@ -1275,11 +1274,11 @@ public class GrimoireScreen extends Screen {
         this.knowledge.getResearchTopicHistory().push(this.knowledge.getLastResearchTopic().withPage(this.getCurrentPage()));
     }
     
-    public void setTopic(AbstractResearchTopic newTopic) {
+    public void setTopic(AbstractResearchTopic<?> newTopic) {
         this.knowledge.setLastResearchTopic(newTopic);
     }
     
-    public List<AbstractResearchTopic> getHistoryView() {
+    public List<AbstractResearchTopic<?>> getHistoryView() {
         return this.knowledge.getResearchTopicHistory().subList(0, Math.min(this.knowledge.getResearchTopicHistory().size(), HISTORY_LIMIT));
     }
     

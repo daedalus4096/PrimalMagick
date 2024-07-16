@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicFactory;
 
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -22,14 +21,6 @@ public class MenuTypesPM {
         MENU_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    /**
-     * @deprecated
-     */
-    @SuppressWarnings("removal")
-    @Deprecated(since = "4.0.2", forRemoval = true)
-    public static final RegistryObject<MenuType<GrimoireMenu>> GRIMOIRE = MENU_TYPES.register("grimoire", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new GrimoireMenu(windowId, ResearchTopicFactory.decode(data), ResearchTopicFactory.decodeHistory(data));
-    }));
     public static final RegistryObject<MenuType<ArcaneWorkbenchMenu>> ARCANE_WORKBENCH = MENU_TYPES.register("arcane_workbench", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new ArcaneWorkbenchMenu(windowId, inv);
     }));
