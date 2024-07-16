@@ -13,7 +13,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
 /**
@@ -79,15 +80,15 @@ public class FollowCompanionOwnerGoal extends Goal {
     @Override
     public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.entity.getPathfindingMalus(BlockPathTypes.WATER);
-        this.entity.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.oldWaterCost = this.entity.getPathfindingMalus(PathType.WATER);
+        this.entity.setPathfindingMalus(PathType.WATER, 0.0F);
     }
 
     @Override
     public void stop() {
         this.owner = null;
         this.navigator.stop();
-        this.entity.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.entity.setPathfindingMalus(PathType.WATER, this.oldWaterCost);
     }
 
     @Override
@@ -130,8 +131,9 @@ public class FollowCompanionOwnerGoal extends Goal {
     }
     
     protected boolean isTeleportFriendlyBlock(BlockPos pos) {
-        BlockPathTypes type = WalkNodeEvaluator.getBlockPathTypeStatic(this.world, pos.mutable());
-        if (type != BlockPathTypes.WALKABLE) {
+        PathfindingContext context = new PathfindingContext(this.world, this.entity);
+        PathType type = WalkNodeEvaluator.getPathTypeStatic(context, pos.mutable());
+        if (type != PathType.WALKABLE) {
             return false;
         } else {
             BlockState blockstate = this.world.getBlockState(pos.below());
