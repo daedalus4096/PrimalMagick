@@ -2,24 +2,50 @@ package com.verdantartifice.primalmagick.common.research.topics;
 
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 /**
  * Research topic that points to a mod research discipline in the Grimoire.
  * 
  * @author Daedalus4096
  */
-public class DisciplineResearchTopic extends AbstractResearchTopic {
+public class DisciplineResearchTopic extends AbstractResearchTopic<DisciplineResearchTopic> {
+    public static final MapCodec<DisciplineResearchTopic> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            ResearchDisciplineKey.CODEC.fieldOf("data").forGetter(DisciplineResearchTopic::getDiscipline),
+            Codec.INT.fieldOf("page").forGetter(DisciplineResearchTopic::getPage)
+        ).apply(instance, DisciplineResearchTopic::new));
+    
+    public static final StreamCodec<ByteBuf, DisciplineResearchTopic> STREAM_CODEC = StreamCodec.composite(
+            ResearchDisciplineKey.STREAM_CODEC, DisciplineResearchTopic::getDiscipline,
+            ByteBufCodecs.VAR_INT, DisciplineResearchTopic::getPage,
+            DisciplineResearchTopic::new);
+    
+    protected final ResearchDisciplineKey data;
+    
     public DisciplineResearchTopic(ResearchDisciplineKey disciplineKey, int page) {
-        super(AbstractResearchTopic.Type.RESEARCH_DISCIPLINE, disciplineKey.getRootKey().location().toString(), page);
+        super(page);
+        this.data = disciplineKey;
     }
     
     @Nullable
-    public ResearchDisciplineKey getData() {
-        return new ResearchDisciplineKey(ResourceKey.create(RegistryKeysPM.RESEARCH_DISCIPLINES, ResourceLocation.parse(this.data)));
+    public ResearchDisciplineKey getDiscipline() {
+        return this.data;
+    }
+
+    @Override
+    public ResearchTopicType<DisciplineResearchTopic> getType() {
+        return ResearchTopicTypesPM.DISCIPLINE.get();
+    }
+
+    @Override
+    public DisciplineResearchTopic withPage(int newPage) {
+        return new DisciplineResearchTopic(this.data, newPage);
     }
 }

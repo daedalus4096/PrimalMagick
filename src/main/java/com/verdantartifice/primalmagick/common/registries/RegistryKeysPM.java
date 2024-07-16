@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyType;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
+import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicType;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
@@ -45,6 +46,7 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<SpellVehicleType<?>>> SPELL_VEHICLE_TYPES = key("spell_vehicle_types");
     public static final ResourceKey<Registry<SpellPayloadType<?>>> SPELL_PAYLOAD_TYPES = key("spell_payload_types");
     public static final ResourceKey<Registry<GridRewardType<?>>> GRID_REWARD_TYPES = key("grid_reward_types");
+    public static final ResourceKey<Registry<ResearchTopicType<?>>> RESEARCH_TOPIC_TYPES = key("research_topics");
     
     private static <T> ResourceKey<Registry<T>> key(String name) {
         return ResourceKey.createRegistryKey(PrimalMagick.resource(name));

@@ -197,7 +197,7 @@ public class GrimoireScreen extends Screen {
         if (topic instanceof MainIndexResearchTopic) {
             this.parseIndexPages();
         } else if (topic instanceof DisciplineResearchTopic discTopic) {
-            this.parseDisciplinePages(discTopic.getData());
+            this.parseDisciplinePages(discTopic.getDiscipline());
         } else if (topic instanceof EntryResearchTopic entryTopic) {
             this.parseEntryPages(entryTopic.getData());
         } else if (topic instanceof SourceResearchTopic sourceTopic) {
