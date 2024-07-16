@@ -30,7 +30,7 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
         ListTag swapperList = new ListTag();
         for (EntitySwapper swapper : this.swappers) {
             if (swapper != null) {
-                swapperList.add(swapper.serializeNBT());
+                swapperList.add(swapper.serializeNBT(registries));
             }
         }
         rootTag.put("Swappers", swapperList);
@@ -46,7 +46,7 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
         ListTag swapperList = nbt.getList("Swappers", Tag.TAG_COMPOUND);
         for (int index = 0; index < swapperList.size(); index++) {
             CompoundTag swapperTag = swapperList.getCompound(index);
-            EntitySwapper swapper = new EntitySwapper(swapperTag);
+            EntitySwapper swapper = new EntitySwapper(registries, swapperTag);
             if (swapper.isValid()) {
                 // Only accept valid swappers
                 this.swappers.offer(swapper);
