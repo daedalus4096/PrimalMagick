@@ -7,6 +7,7 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.runes.Rune;
@@ -70,6 +71,8 @@ public class DataComponentsPM {
     public static final RegistryObject<DataComponentType<BlockPos>> WAND_USE_POSITION = register("wand_use_position", builder -> builder.persistent(BlockPos.CODEC).networkSynchronized(BlockPos.STREAM_CODEC));
     
     public static final RegistryObject<DataComponentType<Integer>> WARD_LEVEL = register("ward_level", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+    
+    public static final RegistryObject<DataComponentType<ManaStorage>> CAPABILITY_MANA_STORAGE = register("capability_mana_storage", builder -> builder.persistent(ManaStorage.CODEC).networkSynchronized(ManaStorage.STREAM_CODEC));
     
     private static <T> RegistryObject<DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> operator) {
         return DATA_COMPONENT_TYPES.register(name, () -> operator.apply(DataComponentType.builder()).build());
