@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
@@ -22,7 +23,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
@@ -56,7 +59,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     protected int processTime;
     protected int processTimeTotal;
     protected ManaStorage manaStorage;
-    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chamberData = new ContainerData() {
@@ -105,7 +108,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        this.manaStorage.deserializeNBT(this.getLevel().registryAccess(), compound.getCompound("ManaStorage"));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
 
     @Override
@@ -113,7 +116,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
     }
 
     @Override
@@ -347,5 +350,22 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         
         // Slot 2 was the wand item stack
         this.setItem(WAND_INV_INDEX, 0, legacyItems.get(2));
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+        super.applyImplicitComponents(pComponentInput);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+    }
+
+    @Override
+    protected void collectImplicitComponents(Builder pComponents) {
+        super.collectImplicitComponents(pComponents);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag pTag) {
+        pTag.remove("ManaStorage");
     }
 }

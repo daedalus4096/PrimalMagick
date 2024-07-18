@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
@@ -39,7 +40,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -74,7 +77,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     protected ITileResearchCache researchCache;
     protected UUID ownerUUID;
 
-    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
     protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
@@ -130,7 +133,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
-        this.manaStorage.deserializeNBT(registries, compound.getCompound("ManaStorage"));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
         this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         
         this.ownerUUID = null;
@@ -145,7 +148,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         super.saveAdditional(compound, registries);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
         compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.ownerUUID != null) {
             compound.putUUID("OwnerUUID", this.ownerUUID);
@@ -458,5 +461,22 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         
         // Slot 10 was the output item stack
         this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(MAX_INPUT_ITEMS + 1));
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+        super.applyImplicitComponents(pComponentInput);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+    }
+
+    @Override
+    protected void collectImplicitComponents(Builder pComponents) {
+        super.collectImplicitComponents(pComponents);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag pTag) {
+        pTag.remove("ManaStorage");
     }
 }

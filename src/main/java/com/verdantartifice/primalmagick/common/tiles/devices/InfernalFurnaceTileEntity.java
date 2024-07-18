@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -30,7 +31,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -83,7 +86,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     protected int processTimeTotal;
     protected int litGraceTicks;
     protected ManaStorage manaStorage;
-    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
 
@@ -146,7 +149,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.superchargeTime = compound.getInt("SuperchargeTime");
         this.superchargeTimeTotal = compound.getInt("SuperchargeTimeTotal");
-        this.manaStorage.deserializeNBT(registries, compound.getCompound("ManaStorage"));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
         
         CompoundTag recipesUsedTag = compound.getCompound("RecipesUsed");
         for (String key : recipesUsedTag.getAllKeys()) {
@@ -161,7 +164,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.putInt("SuperchargeTime", this.superchargeTime);
         compound.putInt("SuperchargeTimeTotal", this.superchargeTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
         
         CompoundTag recipesUsedTag = new CompoundTag();
         this.recipesUsed.forEach((key, value) -> {
@@ -535,5 +538,22 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
 
         // Slot 3 was the wand item stack
         this.setItem(FUEL_INV_INDEX, 1, legacyItems.get(3));
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+        super.applyImplicitComponents(pComponentInput);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+    }
+
+    @Override
+    protected void collectImplicitComponents(Builder pComponents) {
+        super.collectImplicitComponents(pComponents);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag pTag) {
+        pTag.remove("ManaStorage");
     }
 }

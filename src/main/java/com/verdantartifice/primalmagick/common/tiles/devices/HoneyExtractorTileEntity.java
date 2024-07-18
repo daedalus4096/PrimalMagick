@@ -103,7 +103,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
         super.loadAdditional(compound, registries);
         this.spinTime = compound.getInt("SpinTime");
         this.spinTimeTotal = compound.getInt("SpinTimeTotal");
-        this.manaStorage = ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).orElseThrow();
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
 
     @Override

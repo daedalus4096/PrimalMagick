@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterMenu;
@@ -37,7 +38,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -76,7 +79,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     protected ITileResearchCache researchCache;
     protected Source nextOutputSource;
     
-    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
     protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
@@ -131,7 +134,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        this.manaStorage.deserializeNBT(registries, compound.getCompound("ManaStorage"));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
         this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(ResourceLocation.parse(compound.getString("NextSource"))) : null;
         
@@ -150,7 +153,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
         compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.nextOutputSource != null) {
             compound.putString("NextSource", this.nextOutputSource.getId().toString());
@@ -455,5 +458,22 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         
         // Slot 10 was the wand item stack
         this.setItem(WAND_INV_INDEX, 0, legacyItems.get(OUTPUT_CAPACITY + 1));
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+        super.applyImplicitComponents(pComponentInput);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+    }
+
+    @Override
+    protected void collectImplicitComponents(Builder pComponents) {
+        super.collectImplicitComponents(pComponents);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag pTag) {
+        pTag.remove("ManaStorage");
     }
 }

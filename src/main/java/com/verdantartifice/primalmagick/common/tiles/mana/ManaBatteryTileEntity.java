@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
@@ -26,8 +27,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.LongTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -58,7 +61,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     protected int chargeTimeTotal;
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
-    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     protected final Set<BlockPos> fontLocations = new HashSet<>();
 
@@ -297,7 +300,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
         this.fontSiphonTime = compound.getInt("FontSiphonTime");
-        this.manaStorage.deserializeNBT(registries, compound.getCompound("ManaStorage"));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
     
     @Override
@@ -306,7 +309,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
         compound.putInt("FontSiphonTime", this.fontSiphonTime);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT(registries));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
     }
 
     @Override
@@ -435,5 +438,22 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         
         // Slot 1 was the charge item stack
         this.setItem(CHARGE_INV_INDEX, 0, legacyItems.get(1));
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+        super.applyImplicitComponents(pComponentInput);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+    }
+
+    @Override
+    protected void collectImplicitComponents(Builder pComponents) {
+        super.collectImplicitComponents(pComponents);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag pTag) {
+        pTag.remove("ManaStorage");
     }
 }
