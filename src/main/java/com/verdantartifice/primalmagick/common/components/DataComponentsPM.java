@@ -74,6 +74,8 @@ public class DataComponentsPM {
     
     public static final RegistryObject<DataComponentType<ManaStorage>> CAPABILITY_MANA_STORAGE = register("capability_mana_storage", builder -> builder.persistent(ManaStorage.CODEC).networkSynchronized(ManaStorage.STREAM_CODEC));
     
+    public static final RegistryObject<DataComponentType<Long>> LAST_UPDATED = register("last_updated", builder -> builder.persistent(Codec.LONG).networkSynchronized(ByteBufCodecs.VAR_LONG));
+    
     private static <T> RegistryObject<DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> operator) {
         return DATA_COMPONENT_TYPES.register(name, () -> operator.apply(DataComponentType.builder()).build());
     }

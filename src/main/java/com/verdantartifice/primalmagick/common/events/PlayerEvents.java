@@ -21,13 +21,14 @@ import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
@@ -95,7 +96,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -409,17 +409,15 @@ public class PlayerEvents {
                 for (EquipmentSlot slot : wardCap.getApplicableSlots()) {
                     ItemStack slotStack = player.getItemBySlot(slot);
                     if (!slotStack.isEmpty()) {
-                        LazyOptional<IManaStorage> manaCapOpt = slotStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE);
-                        if (manaCapOpt.isPresent()) {
-                            IManaStorage manaCap = manaCapOpt.orElseThrow(IllegalArgumentException::new);
-                            if (manaCap.getManaStored(Sources.EARTH) >= WardingModuleItem.REGEN_COST) {
-                                // Consume mana from warded armor stacks to regenerate a single point of ward
-                                manaCap.extractMana(Sources.EARTH, WardingModuleItem.REGEN_COST, false);
-                                wardCap.incrementCurrentWard();
-                                wardCap.sync(player);
-                                player.connection.send(new ClientboundSetEquipmentPacket(player.getId(), List.of(Pair.of(slot, slotStack.copy()))));
-                                break;
-                            }
+                        ManaStorage manaCap = slotStack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
+                        if (manaCap != null && manaCap.getManaStored(Sources.EARTH) >= WardingModuleItem.REGEN_COST) {
+                            // Consume mana from warded armor stacks to regenerate a single point of ward
+                            manaCap.extractMana(Sources.EARTH, WardingModuleItem.REGEN_COST, false);
+                            slotStack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), manaCap);
+                            wardCap.incrementCurrentWard();
+                            wardCap.sync(player);
+                            player.connection.send(new ClientboundSetEquipmentPacket(player.getId(), List.of(Pair.of(slot, slotStack.copy()))));
+                            break;
                         }
                     }
                 }

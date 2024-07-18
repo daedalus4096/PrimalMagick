@@ -7,7 +7,8 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -73,12 +74,13 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
                     if (chargeStack.getItem() instanceof IWand) {
                         // NOTE: Normally this method is called with a count that's descending, but the method doesn't actually care
                         tile.onWandUseTick(chargeStack, level, null, chargerCenter, entity.chargeTime);
-                    } else {
-                        chargeStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(manaCap -> {
-                            if (entity.chargeTime % 5 == 0) {
+                    } else if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+                        if (entity.chargeTime % 5 == 0) {
+                            chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
                                 tile.doSiphon(manaCap, level, null, chargerCenter, 100);    // TODO Get the stack's max charge rate somehow
-                            }
-                        });
+                                return manaCap;
+                            });
+                        }
                     }
                 }
             }
@@ -147,7 +149,7 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
         retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
-                return stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+                return stack.getItem() instanceof IWand || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
             }
         });
 

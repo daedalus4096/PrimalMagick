@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.mana;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -52,13 +51,12 @@ public class AutoChargerBlock extends BaseEntityBlock {
         return createTickerHelper(type, TileEntityTypesPM.AUTO_CHARGER.get(), AutoChargerTileEntity::tick);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity charger) {
-                if (charger.getItem().isEmpty() && (stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())) {
+                if (charger.getItem().isEmpty() && (stack.getItem() instanceof IWand || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))) {
                     // If a wand is in hand and the charger is empty, deposit the wand
                     charger.setItem(stack);
                     player.setItemInHand(handIn, ItemStack.EMPTY);
@@ -79,7 +77,6 @@ public class AutoChargerBlock extends BaseEntityBlock {
         return super.useItemOn(stack, state, level, pos, player, handIn, hit);
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Drop the tile entity's inventory into the world when the block is replaced

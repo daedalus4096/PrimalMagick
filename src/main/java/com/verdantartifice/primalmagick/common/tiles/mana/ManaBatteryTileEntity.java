@@ -29,7 +29,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.LongTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -269,7 +268,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
             if (outputStack.getItem() instanceof IWand wand) {
                 return wand.getMana(outputStack, source) < wand.getMaxMana(outputStack);
             } else {
-                return outputStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+                return outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
             }
         }
         return false;
@@ -283,13 +282,14 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
                 int leftoverRealMana = wand.addRealMana(outputStack, source, realManaToTransfer);
                 int transferedCentimana = 100 * (realManaToTransfer - leftoverRealMana);
                 this.manaStorage.extractMana(source, transferedCentimana, false);
-            } else {
-                outputStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(stackManaStorage -> {
+            } else if (outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+                outputStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, stackManaStorage -> {
                     int centimanaToTransfer = Math.min(this.getBatteryTransferCap(), this.manaStorage.getManaStored(source));
                     int transferedCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
                     this.manaStorage.extractMana(source, transferedCentimana, false);
+                    return stackManaStorage;
                 });
-                outputStack.getOrCreateTag().put("LastUpdated", LongTag.valueOf(System.currentTimeMillis()));   // FIXME Is there a better way of marking this stack as dirty?
+                outputStack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
             }
         }
     }
@@ -424,7 +424,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         retVal.set(CHARGE_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(CHARGE_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
-                return (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+                return (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
             }
         });
 

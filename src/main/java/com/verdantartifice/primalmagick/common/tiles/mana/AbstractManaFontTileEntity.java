@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
-import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -108,13 +108,13 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
         }
     }
     
-    public void doSiphon(IManaStorage container, Level level, Player player, Vec3 targetPos, int maxTransferCentimana) {
-        if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock) {
+    public void doSiphon(ManaStorage manaCap, Level level, Player player, Vec3 targetPos, int maxTransferCentimana) {
+        if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock && manaCap != null) {
             Source source = fontBlock.getSource();
             if (source != null) {
                 // Transfer mana from the font to the container
                 int tap = Math.min(this.mana, maxTransferCentimana / 100);
-                int realManaTransfered = container.receiveMana(source, tap * 100, false) / 100;
+                int realManaTransfered = manaCap.receiveMana(source, tap * 100, false) / 100;
                 if (realManaTransfered > 0) {
                     this.mana -= realManaTransfered;
                     StatsManager.incrementValue(player, StatsPM.MANA_SIPHONED, realManaTransfered);

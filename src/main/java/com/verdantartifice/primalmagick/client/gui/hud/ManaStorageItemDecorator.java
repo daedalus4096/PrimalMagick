@@ -3,7 +3,8 @@ package com.verdantartifice.primalmagick.client.gui.hud;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.Font;
@@ -28,7 +29,8 @@ public class ManaStorageItemDecorator implements IItemDecorator {
     
     @Override
     public boolean render(GuiGraphics guiGraphics, Font font, ItemStack stack, int xOffset, int yOffset) {
-        stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).filter(manaCap -> manaCap.canStore(this.source)).ifPresent(manaCap -> {
+        ManaStorage manaCap = stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
+        if (manaCap != null && manaCap.canStore(this.source)) {
             int width = this.getBarWidth(stack, this.source);
             int color = this.getBarColor(stack, this.source);
             int xPos = xOffset + 2;
@@ -41,14 +43,17 @@ public class ManaStorageItemDecorator implements IItemDecorator {
                 guiGraphics.fill(RenderType.guiOverlay(), xPos, yPos, xPos + 13, yPos + 2, -16777216);
                 guiGraphics.fill(RenderType.guiOverlay(), xPos, yPos, xPos + width, yPos + 1, color | -16777216);
             }
-        });
+        }
         return false;
     }
 
     protected int getBarWidth(ItemStack stack, Source source) {
-        return stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).filter(manaCap -> manaCap.canStore(this.source)).map(manaCap -> {
+        ManaStorage manaCap = stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
+        if (manaCap != null && manaCap.canStore(this.source)) {
             return Math.round((float)manaCap.getManaStored(source) * 13.0F / (float)manaCap.getMaxManaStored(source));
-        }).orElse(0);
+        } else {
+            return 0;
+        }
     }
     
     protected int getBarColor(ItemStack stack, Source source) {
