@@ -12,7 +12,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -114,12 +113,6 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltip, flagIn);
         ManaContainerHelper.appendHoverText(stack, tooltip);
-    }
-
-    @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        super.setPlacedBy(worldIn, pos, state, placer, stack);
-        ManaContainerHelper.setManaOnPlace(worldIn, pos, stack);
     }
 
     @Override
