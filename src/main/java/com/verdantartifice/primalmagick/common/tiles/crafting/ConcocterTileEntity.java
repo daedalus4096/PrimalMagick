@@ -46,7 +46,6 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -56,6 +55,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
@@ -246,13 +246,16 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
                 // Don't consider fuse length when testing item inputs for recipe determination
                 testInv.setItem(index, ConcoctionUtils.isBomb(invStack) ? ConcoctionUtils.setFuseType(invStack.copy(), FuseType.MEDIUM) : invStack);
             }
-            IConcoctingRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING.get(), testInv, level).map(RecipeHolder::value).orElse(null);
-            if (entity.canConcoct(realInv, level.registryAccess(), recipe)) {
+            CraftingInput realInput = CraftingInput.of(IConcoctingRecipe.MAX_WIDTH, IConcoctingRecipe.MAX_HEIGHT, realInv.getItems());
+            CraftingInput testInput = CraftingInput.of(IConcoctingRecipe.MAX_WIDTH, IConcoctingRecipe.MAX_HEIGHT, testInv.getItems());
+            
+            IConcoctingRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING.get(), testInput, level).map(RecipeHolder::value).orElse(null);
+            if (entity.canConcoct(realInput, level.registryAccess(), recipe)) {
                 entity.cookTime++;
                 if (entity.cookTime >= entity.cookTimeTotal) {
                     entity.cookTime = 0;
                     entity.cookTimeTotal = entity.getCookTimeTotal();
-                    entity.doConcoction(realInv, level.registryAccess(), recipe);
+                    entity.doConcoction(realInput, level.registryAccess(), recipe);
                     shouldMarkDirty = true;
                 }
             } else {
@@ -268,7 +271,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         }
     }
     
-    protected boolean canConcoct(Container inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
+    protected boolean canConcoct(CraftingInput inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
         if (!inputInv.isEmpty() && recipe != null) {
             ItemStack output = recipe.getResultItem(registryAccess);
             if (output.isEmpty()) {
@@ -295,7 +298,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         }
     }
     
-    protected void doConcoction(Container inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
+    protected void doConcoction(CraftingInput inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
         if (recipe != null && this.canConcoct(inputInv, registryAccess, recipe)) {
             ItemStack recipeOutput = recipe.assemble(inputInv, registryAccess);
             ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
@@ -305,7 +308,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
                 currentOutput.grow(recipeOutput.getCount());
             }
             
-            for (int index = 0; index < inputInv.getContainerSize(); index++) {
+            for (int index = 0; index < inputInv.size(); index++) {
                 ItemStack stack = inputInv.getItem(index);
                 if (!stack.isEmpty()) {
                     stack.shrink(1);
