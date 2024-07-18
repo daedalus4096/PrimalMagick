@@ -110,13 +110,13 @@ public class ArcaneCraftingResultSlot extends Slot {
         // Get the remaining items from the recipe, checking arcane recipes first, then vanilla recipes
         Level level = thePlayer.level();
         NonNullList<ItemStack> remainingList;
-        Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory, level);
+        Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory.asCraftInput(), level);
         if (arcaneOptional.isPresent()) {
-            remainingList = arcaneOptional.get().value().getRemainingItems(this.craftingInventory);
+            remainingList = arcaneOptional.get().value().getRemainingItems(this.craftingInventory.asCraftInput());
         } else {
-            Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory, level);
+            Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory.asCraftInput(), level);
             if (vanillaOptional.isPresent()) {
-                remainingList = vanillaOptional.get().value().getRemainingItems(this.craftingInventory);
+                remainingList = vanillaOptional.get().value().getRemainingItems(this.craftingInventory.asCraftInput());
             } else {
                 remainingList = NonNullList.withSize(this.craftingInventory.getContainerSize(), ItemStack.EMPTY);
                 for (int index = 0; index < remainingList.size(); index++) {
