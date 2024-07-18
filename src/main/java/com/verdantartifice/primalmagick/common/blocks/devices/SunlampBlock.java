@@ -95,7 +95,6 @@ public class SunlampBlock extends BaseEntityBlock {
         return Block.canSupportCenter(worldIn, pos.relative(dir), dir.getOpposite());
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         return stateIn.getValue(ATTACHMENT) == facing && !stateIn.canSurvive(worldIn, currentPos) ? 
@@ -104,7 +103,7 @@ public class SunlampBlock extends BaseEntityBlock {
     }
     
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
     
@@ -118,7 +117,6 @@ public class SunlampBlock extends BaseEntityBlock {
         return createTickerHelper(type, TileEntityTypesPM.SUNLAMP.get(), SunlampTileEntity::tick);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         this.getGlowField(worldIn.registryAccess()).ifPresent(glow -> {

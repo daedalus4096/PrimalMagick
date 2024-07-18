@@ -166,7 +166,6 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
         }
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
         if (adjacentBlockState.getBlock() == state.getBlock()) {
@@ -181,14 +180,13 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
         return super.skipRendering(state, adjacentBlockState, side);
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
     
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
     
