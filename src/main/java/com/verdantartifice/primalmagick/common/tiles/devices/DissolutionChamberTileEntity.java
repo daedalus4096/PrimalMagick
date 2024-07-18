@@ -28,9 +28,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -39,6 +37,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -154,7 +153,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
                 }
             }
 
-            SimpleContainer testInv = new SimpleContainer(entity.getItem(INPUT_INV_INDEX, 0));
+            SingleRecipeInput testInv = new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0));
             RecipeHolder<IDissolutionRecipe> recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION.get(), testInv, level).orElse(null);
             if (entity.canDissolve(testInv, level.registryAccess(), recipe)) {
                 entity.processTime++;
@@ -175,7 +174,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         }
     }
     
-    protected boolean canDissolve(Container inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
+    protected boolean canDissolve(SingleRecipeInput inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
         if (!inputInv.isEmpty() && recipe != null) {
             ItemStack output = recipe.value().getResultItem(registryAccess);
             if (output.isEmpty()) {
@@ -200,7 +199,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         }
     }
     
-    protected void doDissolve(Container inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
+    protected void doDissolve(SingleRecipeInput inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
         if (recipe != null && this.canDissolve(inputInv, registryAccess, recipe)) {
             ItemStack recipeOutput = recipe.value().assemble(inputInv, registryAccess);
             ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
@@ -210,7 +209,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
                 currentOutput.grow(recipeOutput.getCount());
             }
             
-            for (int index = 0; index < inputInv.getContainerSize(); index++) {
+            for (int index = 0; index < inputInv.size(); index++) {
                 ItemStack stack = inputInv.getItem(index);
                 if (!stack.isEmpty()) {
                     stack.shrink(1);

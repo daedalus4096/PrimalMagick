@@ -3,11 +3,11 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 
-public interface IDissolutionRecipe extends Recipe<CraftingInput>, IHasManaCost, IArcaneRecipeBookItem {
+public interface IDissolutionRecipe extends Recipe<SingleRecipeInput>, IHasManaCost, IArcaneRecipeBookItem {
     @Override
     default RecipeType<?> getType() {
         return RecipeTypesPM.DISSOLUTION.get();

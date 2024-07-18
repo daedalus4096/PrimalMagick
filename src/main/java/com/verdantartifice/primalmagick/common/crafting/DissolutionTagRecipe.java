@@ -15,9 +15,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
 /**
@@ -26,7 +26,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<CraftingInput> implements IDissolutionRecipe {
+public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<SingleRecipeInput> implements IDissolutionRecipe {
     protected final Ingredient ingredient;
     protected final SourceList manaCosts;
     
@@ -37,12 +37,12 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<CraftingInpu
     }
 
     @Override
-    public boolean matches(CraftingInput inv, Level level) {
+    public boolean matches(SingleRecipeInput inv, Level level) {
         return this.ingredient.test(inv.getItem(0));
     }
 
     @Override
-    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+    public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider registries) {
         return this.getResultItem(registries).copy();
     }
 
