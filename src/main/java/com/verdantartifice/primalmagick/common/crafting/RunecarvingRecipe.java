@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
@@ -17,7 +18,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -28,7 +28,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IRunecarvingRecipe {
+public class RunecarvingRecipe extends AbstractStackCraftingRecipe<RunecarvingRecipeInput> implements IRunecarvingRecipe {
     protected final Optional<AbstractRequirement<?>> requirement;
     protected final Ingredient ingredient1;
     protected final Ingredient ingredient2;
@@ -50,12 +50,12 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<CraftingInput
     }
 
     @Override
-    public boolean matches(CraftingInput inv, Level worldIn) {
+    public boolean matches(RunecarvingRecipeInput inv, Level worldIn) {
         return this.ingredient1.test(inv.getItem(0)) && this.ingredient2.test(inv.getItem(1));
     }
 
     @Override
-    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+    public ItemStack assemble(RunecarvingRecipeInput inv, HolderLookup.Provider registries) {
         return this.getResultItem(registries).copy();
     }
 

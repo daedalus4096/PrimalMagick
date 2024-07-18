@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
@@ -170,11 +171,15 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.inventoryUpdateListener.run();
     };
     
+    private static RunecarvingRecipeInput createRecipeInput(Container inventory) {
+        return new RunecarvingRecipeInput(inventory.getItem(0), inventory.getItem(1));
+    }
+    
     protected void updateAvailableRecipes(Container inventoryIn, ItemStack slabStack, ItemStack lapisStack) {
         this.recipes.clear();
         this.selectedRecipe.set(-1);
         this.outputSlot.set(ItemStack.EMPTY);
-        this.recipes = this.level.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), inventoryIn, this.level).stream()
+        this.recipes = this.level.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), createRecipeInput(inventoryIn), this.level).stream()
                 .filter(r -> r != null && (r.value().getRequirement().isEmpty() || r.value().getRequirement().get().isMetBy(this.player)))
                 .collect(Collectors.toList());
     }
@@ -182,7 +187,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     protected void updateRecipeResultSlot(RegistryAccess registryAccess) {
         if (!this.recipes.isEmpty() && this.tileInvWrapper.isPresent()) {
             IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get()).value();
-            this.outputSlot.set(recipe.assemble(this.tileInvWrapper.get(), registryAccess));
+            this.outputSlot.set(recipe.assemble(createRecipeInput(this.tileInvWrapper.get()), registryAccess));
         } else {
             this.outputSlot.set(ItemStack.EMPTY);
         }
