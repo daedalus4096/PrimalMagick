@@ -19,7 +19,7 @@ import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.StackedNbtContents;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.StackedComponentContents;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
@@ -87,7 +87,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected ClientRecipeBook vanillaBook;
     protected ClientArcaneRecipeBook arcaneBook;
     protected final ArcaneRecipeBookPage recipeBookPage = new ArcaneRecipeBookPage();
-    protected final StackedNbtContents stackedContents = new StackedNbtContents();
+    protected final StackedComponentContents stackedContents = new StackedComponentContents();
     protected int timesInventoryChanged;
     protected boolean ignoreTextInput;
     protected boolean visible;

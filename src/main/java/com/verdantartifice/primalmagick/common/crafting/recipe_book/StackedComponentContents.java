@@ -7,24 +7,24 @@ import javax.annotation.Nullable;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * An extension of StackedContents that also tracks the NBT data of each of the stacks
+ * An extension of StackedContents that also tracks the component data of each of the stacks
  * for each item type.
  * 
  * @author Daedalus4096
  */
-public class StackedNbtContents extends StackedContents {
-    protected final Int2ObjectMap<List<CompoundTag>> nbtData = new Int2ObjectOpenHashMap<>();
+public class StackedComponentContents extends StackedContents {
+    protected final Int2ObjectMap<List<DataComponentMap>> nbtData = new Int2ObjectOpenHashMap<>();
 
     @Override
     public void accountStack(ItemStack stack, int maxCount) {
         super.accountStack(stack, maxCount);
-        if (!stack.isEmpty() && stack.hasTag()) {
-            this.nbtData.computeIfAbsent(getStackingIndex(stack), key -> new ArrayList<>()).add(stack.getTag());
+        if (!stack.isEmpty() && !stack.getComponents().isEmpty()) {
+            this.nbtData.computeIfAbsent(getStackingIndex(stack), key -> new ArrayList<>()).add(stack.getComponents());
         }
     }
 
@@ -35,11 +35,11 @@ public class StackedNbtContents extends StackedContents {
     }
     
     @Nullable
-    public List<CompoundTag> getNbtData(int itemId) {
+    public List<DataComponentMap> getComponentData(int itemId) {
         return this.nbtData.get(itemId);
     }
     
-    public boolean hasNbtData(int itemId) {
+    public boolean hasComponentData(int itemId) {
         return this.nbtData.containsKey(itemId) && !this.nbtData.get(itemId).isEmpty();
     }
 }

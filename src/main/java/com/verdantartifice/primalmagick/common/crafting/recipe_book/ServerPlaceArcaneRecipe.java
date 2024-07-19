@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting.recipe_book;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -15,10 +14,9 @@ import com.verdantartifice.primalmagick.common.network.packets.recipe_book.Place
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.Slot;
@@ -30,7 +28,7 @@ import net.minecraft.world.item.crafting.RecipeInput;
 
 public class ServerPlaceArcaneRecipe<T extends RecipeInput, R extends Recipe<T>> implements PlaceRecipe<Integer> {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected final StackedNbtContents stackedContents = new StackedNbtContents();
+    protected final StackedComponentContents stackedContents = new StackedComponentContents();
     protected final IArcaneRecipeBookMenu<T, R> menu;
     protected Inventory inventory;
     protected RecipeHolder<R> activeRecipeHolder;
@@ -109,8 +107,8 @@ public class ServerPlaceArcaneRecipe<T extends RecipeInput, R extends Recipe<T>>
     public void addItemToSlot(Integer itemId, int slotIndex, int count, int p_135418_, int p_135419_) {
         Slot slot = this.menu.getSlot(slotIndex);
         ItemStack stack = StackedContents.fromStackingIndex(itemId);
-        if (this.stackedContents.hasNbtData(itemId)) {
-            stack.setTag(this.findMatchingTag(itemId, stack));
+        if (this.stackedContents.hasComponentData(itemId)) {
+            stack.applyComponents(this.findMatchingData(itemId, stack));
         }
         if (!stack.isEmpty()) {
             for (int index = 0; index < count; index++) {
@@ -119,19 +117,19 @@ public class ServerPlaceArcaneRecipe<T extends RecipeInput, R extends Recipe<T>>
         }
     }
     
-    protected CompoundTag findMatchingTag(int itemId, ItemStack baseStack) {
+    protected DataComponentMap findMatchingData(int itemId, ItemStack baseStack) {
         ItemStack workingStack = baseStack.copy();
         if (this.activeRecipeHolder != null && this.activeRecipeHolder.value() != null) {
-            for (CompoundTag tag : this.stackedContents.getNbtData(itemId)) {
+            for (DataComponentMap data : this.stackedContents.getComponentData(itemId)) {
                 for (Ingredient ing : this.activeRecipeHolder.value().getIngredients()) {
-                    workingStack.setTag(tag);
+                    workingStack.applyComponents(data);
                     if (ing.test(workingStack)) {
-                        return tag;
+                        return data;
                     }
                 }
             }
         }
-        return new CompoundTag();
+        return DataComponentMap.EMPTY;
     }
 
     protected int getStackSize(boolean shiftDown, int stackSize, boolean matches) {
