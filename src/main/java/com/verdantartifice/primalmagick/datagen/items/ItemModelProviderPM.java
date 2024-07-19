@@ -30,7 +30,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.FishingRodItem;
@@ -523,9 +522,9 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         return lookupProvider.lookupOrThrow(Registries.TRIM_MATERIAL).getOrThrow(key);
     }
     
-    private String getArmorTrimColorPaletteSuffix(Holder<TrimMaterial> trimMaterial, ArmorMaterial armorMaterial) {
-        Map<ArmorMaterials, String> map = trimMaterial.value().overrideArmorMaterials();
-        return armorMaterial instanceof ArmorMaterials && map.containsKey(armorMaterial) ? map.get(armorMaterial) : trimMaterial.value().assetName();
+    private String getArmorTrimColorPaletteSuffix(Holder<TrimMaterial> trimMaterial, Holder<ArmorMaterial> armorMaterial) {
+        Map<Holder<ArmorMaterial>, String> map = trimMaterial.value().overrideArmorMaterials();
+        return map.containsKey(armorMaterial) ? map.get(armorMaterial) : trimMaterial.value().assetName();
     }
     
     private ItemModelBuilderPM itemWithOverlay(Item item) {
