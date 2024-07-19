@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntit
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -22,12 +21,9 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeInput;
-import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Server data container for the concocter GUI.
@@ -160,14 +156,18 @@ public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileE
             this.getSlot(index).set(ItemStack.EMPTY);
         }
     }
+    
+    private static CraftingInput createRecipeInput(IItemHandler container) {
+        NonNullList<ItemStack> items = NonNullList.withSize(container.getSlots(), ItemStack.EMPTY);
+        for (int index = 0; index < container.getSlots(); index++) {
+            items.set(index, container.getStackInSlot(index));
+        }
+        return CraftingInput.of(IConcoctingRecipe.MAX_WIDTH, IConcoctingRecipe.MAX_HEIGHT, items);
+    }
 
     @Override
     public boolean recipeMatches(RecipeHolder<IConcoctingRecipe> recipe) {
-        if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
-            return recipe.value().matches(new RecipeWrapper(modifiable), this.level);
-        } else {
-            return false;
-        }
+        return recipe.value().matches(createRecipeInput(this.getTileInventory(Direction.UP)), this.level);
     }
 
     @Override
