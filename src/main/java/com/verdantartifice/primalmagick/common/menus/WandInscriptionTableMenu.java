@@ -172,8 +172,8 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
             Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
             if (opt.isPresent() && opt.get().value() instanceof WandInscriptionRecipe recipe) {
                 // If the inputs are valid for inscribing a spell onto a wand, show the output
-                if (recipe.matches(this.componentInv, world)) {
-                    stack = recipe.assemble(this.componentInv, world.registryAccess());
+                if (recipe.matches(this.componentInv.asCraftInput(), world)) {
+                    stack = recipe.assemble(this.componentInv.asCraftInput(), world.registryAccess());
                 }
             }
             
