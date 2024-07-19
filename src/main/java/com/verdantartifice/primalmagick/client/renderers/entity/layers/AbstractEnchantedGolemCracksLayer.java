@@ -28,7 +28,7 @@ public abstract class AbstractEnchantedGolemCracksLayer<T extends AbstractEnchan
             Cracks cracks = entitylivingbaseIn.getCrackLevel();
             if (cracks != Cracks.NONE) {
                 ResourceLocation tex = this.getTextureMap().get(cracks);
-                renderColoredCutoutModel(this.getParentModel(), tex, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, 1.0F, 1.0F, 1.0F);
+                renderColoredCutoutModel(this.getParentModel(), tex, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, -1);
             }
         }
     }

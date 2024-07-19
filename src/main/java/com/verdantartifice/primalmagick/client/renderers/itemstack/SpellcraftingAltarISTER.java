@@ -67,7 +67,7 @@ public class SpellcraftingAltarISTER extends BlockEntityWithoutLevelRenderer {
             matrixStack.mulPose(Axis.YP.rotationDegrees(90F));  // Model rotation correction
             matrixStack.scale(1.0F, -1.0F, -1.0F);
             VertexConsumer ringBuilder = RING_MATERIAL.buffer(buffer, RenderType::entitySolid);
-            this.model.renderToBuffer(matrixStack, ringBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.model.renderToBuffer(matrixStack, ringBuilder, combinedLight, combinedOverlay, -1);
             matrixStack.popPose();
         }
     }

@@ -54,7 +54,7 @@ public abstract class AbstractTieredTridentISTER extends BlockEntityWithoutLevel
                 matrixStack.pushPose();
                 matrixStack.scale(1.0F, -1.0F, -1.0F);
                 VertexConsumer ivertexbuilder1 = ItemRenderer.getFoilBufferDirect(buffer, this.model.renderType(this.getTextureLocation()), false, stack.hasFoil());
-                this.model.renderToBuffer(matrixStack, ivertexbuilder1, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                this.model.renderToBuffer(matrixStack, ivertexbuilder1, combinedLight, combinedOverlay, -1);
                 matrixStack.popPose();
             }
         }

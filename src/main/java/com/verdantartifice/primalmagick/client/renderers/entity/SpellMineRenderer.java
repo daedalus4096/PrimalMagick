@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -16,6 +14,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 
 /**
@@ -39,11 +38,9 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
         float yaw = Mth.rotLerp(entity.yRotO, entity.getYRot(), partialTicks);
         float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
         float ticks = (float)entity.tickCount + partialTicks;
-        Color c = new Color(entity.getColor());
-        float r = (float)c.getRed() / 255.0F;
-        float g = (float)c.getGreen() / 255.0F;
-        float b = (float)c.getBlue() / 255.0F;
         float alphaFactor = entity.isArmed() ? 0.25F : 1.0F;    // Fade out the mine if it's armed
+        int coreColor = FastColor.ARGB32.color(FastColor.as8BitChannel(1.0F * alphaFactor), entity.getColor());
+        int glowColor = FastColor.ARGB32.color(FastColor.as8BitChannel(0.5F * alphaFactor), entity.getColor());
         double bob = 0.25D * Mth.sin(ticks * 0.1F);      // Calculate a vertical bobbing displacement
         matrixStack.pushPose();
         matrixStack.translate(0.0D, 0.5D + bob, 0.0D);
@@ -53,10 +50,10 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
         matrixStack.scale(-0.5F, -0.5F, 0.5F);
         this.model.setupAnim(entity, 0.0F, 0.0F, 0.0F, yaw, pitch);
         VertexConsumer coreVertexBuilder = buffer.getBuffer(this.model.renderType(TEXTURE));
-        this.model.renderToBuffer(matrixStack, coreVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F * alphaFactor);  // Render the core of the mine
+        this.model.renderToBuffer(matrixStack, coreVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, coreColor);  // Render the core of the mine
         matrixStack.scale(1.5F, 1.5F, 1.5F);
         VertexConsumer glowVertexBuilder = buffer.getBuffer(TRANSLUCENT_TYPE);
-        this.model.renderToBuffer(matrixStack, glowVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 0.5F * alphaFactor);  // Render the transparent glow of the mine
+        this.model.renderToBuffer(matrixStack, glowVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, glowColor);  // Render the transparent glow of the mine
         matrixStack.popPose();
         super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
     }
