@@ -18,20 +18,16 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeInput;
-import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Server data container for the dissolution chamber GUI.
  * 
  * @author Daedalus4096
  */
-public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<DissolutionChamberTileEntity> implements IArcaneRecipeBookMenu<CraftingInput, IDissolutionRecipe> {
+public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<DissolutionChamberTileEntity> implements IArcaneRecipeBookMenu<SingleRecipeInput, IDissolutionRecipe> {
     protected final ContainerData chamberData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
@@ -149,11 +145,7 @@ public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<Disso
 
     @Override
     public boolean recipeMatches(RecipeHolder<IDissolutionRecipe> recipe) {
-        if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
-            return recipe.value().matches(new RecipeWrapper(modifiable), this.level);
-        } else {
-            return false;
-        }
+        return recipe.value().matches(new SingleRecipeInput(this.getTileInventory(Direction.UP).getStackInSlot(0)), this.level);
     }
 
     @Override
