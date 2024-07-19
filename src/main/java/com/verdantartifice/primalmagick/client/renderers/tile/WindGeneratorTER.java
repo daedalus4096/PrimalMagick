@@ -28,12 +28,11 @@ public class WindGeneratorTER implements BlockEntityRenderer<WindGeneratorTileEn
     }
 
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
-        renderer.vertex(stack.last().pose(), x, y, z)
-                .color(r, g, b, 1.0F)
-                .uv(u, v)
-                .uv2(240, 240)
-                .normal(1, 0, 0)
-                .endVertex();
+        renderer.addVertex(stack.last().pose(), x, y, z)
+                .setColor(r, g, b, 1.0F)
+                .setUv(u, v)
+                .setUv2(240, 240)
+                .setNormal(1, 0, 0);
     }
     
     @Override

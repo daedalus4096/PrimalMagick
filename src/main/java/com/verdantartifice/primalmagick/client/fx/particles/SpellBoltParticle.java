@@ -103,8 +103,8 @@ public class SpellBoltParticle extends Particle {
             // Move the endpoints of each segment along their computed motion path before rendering to make the bolt move
             segment.perturb(this.perturbList.get(index), this.perturbList.get(index + 1));
             
-            lineBuilder.vertex(segment.getStart().x, segment.getStart().y, segment.getStart().z).color(this.rCol, this.gCol, this.bCol, 0.5F).endVertex();
-            lineBuilder.vertex(segment.getEnd().x, segment.getEnd().y, segment.getEnd().z).color(this.rCol, this.gCol, this.bCol, 0.5F).endVertex();
+            lineBuilder.addVertex((float)segment.getStart().x, (float)segment.getStart().y, (float)segment.getStart().z).setColor(this.rCol, this.gCol, this.bCol, 0.5F);
+            lineBuilder.addVertex((float)segment.getEnd().x, (float)segment.getEnd().y, (float)segment.getEnd().z).setColor(this.rCol, this.gCol, this.bCol, 0.5F);
         }
         buffer.endBatch(ThickLinesRenderType.THICK_LINES);
         
