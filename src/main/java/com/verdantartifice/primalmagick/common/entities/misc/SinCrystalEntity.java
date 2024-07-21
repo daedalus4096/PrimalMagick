@@ -88,9 +88,7 @@ public class SinCrystalEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
-        if (compound.contains("BeamTarget", Tag.TAG_COMPOUND)) {
-            this.setBeamTarget(NbtUtils.readBlockPos(compound.getCompound("BeamTarget")));
-        }
+        NbtUtils.readBlockPos(compound, "BeamTarget").ifPresent(this::setBeamTarget);
         if (compound.contains("DamageCloudUUID", Tag.TAG_COMPOUND)) {
             this.setDamageCloud(compound.getUUID("DamageCloudUUID"));
         }
