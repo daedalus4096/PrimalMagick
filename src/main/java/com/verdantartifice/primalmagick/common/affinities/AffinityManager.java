@@ -56,8 +56,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -539,15 +538,13 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
         
         // Determine bonus affinities from NBT-attached enchantment data
-        Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
-        if (enchants != null && !enchants.isEmpty()) {
-            for (Enchantment enchant : enchants.keySet()) {
-                IAffinity bonus = this.getAffinity(AffinityType.ENCHANTMENT_BONUS, ForgeRegistries.ENCHANTMENTS.getKey(enchant));
-                if (bonus != null) {
-                    bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()).thenApply(enchBonus -> enchBonus.multiply(enchants.get(enchant))));
-                }
+        ItemEnchantments enchants = stack.getEnchantments();
+        enchants.entrySet().forEach(entry -> {
+            IAffinity bonus = this.getAffinity(AffinityType.ENCHANTMENT_BONUS, entry.getKey().unwrapKey().get().location());
+            if (bonus != null) {
+                bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()).thenApply(enchBonus -> enchBonus.multiply(entry.getIntValue())));
             }
-        }
+        });
         
         // Add any detected bonus affinities to the original input
         return Util.sequence(bonusFutures).thenApply(bonusList -> {
