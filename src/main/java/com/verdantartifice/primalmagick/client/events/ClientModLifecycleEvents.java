@@ -197,7 +197,7 @@ public class ClientModLifecycleEvents {
                 if (entity == null) {
                     return 0.0F;
                 } else {
-                    return entity.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F;
+                    return entity.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 20.0F;
                 }
             };
             ItemProperties.register(ItemsPM.PRIMALITE_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
