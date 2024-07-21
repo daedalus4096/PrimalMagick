@@ -23,6 +23,7 @@ public class SyncCompanionsPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
+    @SuppressWarnings("deprecation")
     public SyncCompanionsPacket(Player player) {
         IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
         this.data = (companions != null) ? companions.serializeNBT(player.registryAccess()) : null;
@@ -40,6 +41,7 @@ public class SyncCompanionsPacket implements IMessageToClient {
         return new SyncCompanionsPacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncCompanionsPacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);

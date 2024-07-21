@@ -22,6 +22,7 @@ public class SyncLinguisticsPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
+    @SuppressWarnings("deprecation")
     public SyncLinguisticsPacket(Player player) {
         IPlayerLinguistics linguistics = PrimalMagickCapabilities.getLinguistics(player).orElse(null);
         this.data = (linguistics != null) ? linguistics.serializeNBT(player.registryAccess()) : null;
@@ -39,6 +40,7 @@ public class SyncLinguisticsPacket implements IMessageToClient {
         return new SyncLinguisticsPacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncLinguisticsPacket message, CustomPayloadEvent.Context ctx) {
         Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
         PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {

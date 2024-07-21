@@ -23,6 +23,7 @@ public class SyncAttunementsPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
+    @SuppressWarnings("deprecation")
     public SyncAttunementsPacket(Player player) {
         IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
         this.data = (attunements != null) ? attunements.serializeNBT(player.registryAccess()) : null;
@@ -40,6 +41,7 @@ public class SyncAttunementsPacket implements IMessageToClient {
         return new SyncAttunementsPacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncAttunementsPacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);

@@ -21,6 +21,7 @@ public class SyncWardPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
+    @SuppressWarnings("deprecation")
     public SyncWardPacket(Player player) {
         if (PrimalMagickCapabilities.getWard(player).isPresent()) {
             this.data = PrimalMagickCapabilities.getWard(player).resolve().get().serializeNBT(player.registryAccess());
@@ -41,6 +42,7 @@ public class SyncWardPacket implements IMessageToClient {
         return new SyncWardPacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncWardPacket message, CustomPayloadEvent.Context ctx) {
         Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
         if (player != null) {

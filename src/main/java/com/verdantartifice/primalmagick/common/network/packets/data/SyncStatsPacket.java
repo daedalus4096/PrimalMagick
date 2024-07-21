@@ -23,6 +23,7 @@ public class SyncStatsPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
+    @SuppressWarnings("deprecation")
     public SyncStatsPacket(Player player) {
         IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
         this.data = (stats != null) ? stats.serializeNBT(player.registryAccess()) : null;
@@ -40,6 +41,7 @@ public class SyncStatsPacket implements IMessageToClient {
         return new SyncStatsPacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncStatsPacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         IPlayerStats stats = PrimalMagickCapabilities.getStats(player);

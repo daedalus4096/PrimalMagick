@@ -29,6 +29,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
 
     protected final CompoundTag data;
     
+    @SuppressWarnings("deprecation")
     public SyncKnowledgePacket(Player player) {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
         this.data = knowledge.serializeNBT(player.registryAccess());
@@ -46,6 +47,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
         return new SyncKnowledgePacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncKnowledgePacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {

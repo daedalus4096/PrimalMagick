@@ -23,6 +23,7 @@ public class SyncCooldownsPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
+    @SuppressWarnings("deprecation")
     public SyncCooldownsPacket(Player player) {
         IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
         this.data = (cooldowns != null) ? cooldowns.serializeNBT(player.registryAccess()) : null;
@@ -40,6 +41,7 @@ public class SyncCooldownsPacket implements IMessageToClient {
         return new SyncCooldownsPacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncCooldownsPacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
