@@ -47,7 +47,6 @@ public abstract class AbstractPhasingBlock extends Block {
         return super.getStateForPlacement(context).setValue(PHASE, phase);
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         // Periodically check to see if the block's phase needs to be updated
@@ -58,7 +57,6 @@ public abstract class AbstractPhasingBlock extends Block {
         }
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         // Immediately check to see if the block's phase needs to be updated when one of its neighbors changes

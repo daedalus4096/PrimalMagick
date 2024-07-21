@@ -78,7 +78,6 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
         builder.add(FACING, POWERED);
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);

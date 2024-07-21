@@ -48,7 +48,6 @@ public abstract class AbstractPhasingStairsBlock extends StairBlock {
         return super.getStateForPlacement(context).setValue(PHASE, phase);
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         // Periodically check to see if the block's phase needs to be updated
