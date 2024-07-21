@@ -8,9 +8,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -51,18 +54,17 @@ public class GuillotineModifier extends LootModifier {
     }
 
     private static int getEnchantLevel(LootContext context) {
-        if (context.getParamOrNull(LootContextParams.KILLER_ENTITY) instanceof LivingEntity killer) {
-            // Get the highest enchantment level among held items that could hold the Essence Thief enchantment
-            return EnchantmentsPM.GUILLOTINE.get().getSlotItems(killer).values().stream().mapToInt(GuillotineModifier::getEnchantLevel).max().orElse(0);
+        if (context.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity killer) {
+            // Get the highest enchantment level among held items that could hold the Guillotine enchantment
+            Holder<Enchantment> ench = context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.GUILLOTINE);
+            return ench.value().getSlotItems(killer).values().stream().mapToInt(stack -> {
+                return stack.getEnchantments().getLevel(ench);
+            }).max().orElse(0);
         } else {
             return 0;
         }
     }
     
-    private static int getEnchantLevel(ItemStack stack) {
-        return stack.getEnchantmentLevel(EnchantmentsPM.GUILLOTINE.get());
-    }
-
     @Override
     public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;

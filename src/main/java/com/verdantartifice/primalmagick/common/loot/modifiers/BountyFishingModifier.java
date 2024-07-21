@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -39,7 +40,7 @@ public class BountyFishingModifier extends LootModifier {
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         LootTable table = context.getLevel().getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
-        int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.BOUNTY.get(), context.getParamOrNull(LootContextParams.TOOL));
+        int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.BOUNTY), context.getParamOrNull(LootContextParams.TOOL));
         for (int index = 0; index < enchantmentLevel; index++) {
             if (context.getRandom().nextFloat() < this.chance) {
                 List<ItemStack> bonusList = new ArrayList<>();

@@ -47,7 +47,7 @@ public class BonusNuggetModifier extends LootModifier {
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
         ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
-        int enchantmentLevel = tool == null ? 0 : tool.getEnchantmentLevel(EnchantmentsPM.LUCKY_STRIKE.get());
+        int enchantmentLevel = tool == null ? 0 : tool.getEnchantments().getLevel(context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.LUCKY_STRIKE));
         if (state != null && enchantmentLevel > 0) {
             this.nuggetMap.forEach((blockTag, itemTag) -> {
                 if (state.is(blockTag) && ForgeRegistries.ITEMS.tags().isKnownTagName(itemTag)) {

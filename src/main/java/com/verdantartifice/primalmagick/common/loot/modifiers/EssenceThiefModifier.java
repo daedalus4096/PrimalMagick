@@ -13,8 +13,11 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -58,18 +61,17 @@ public class EssenceThiefModifier extends LootModifier {
     }
     
     private static int getEnchantLevel(LootContext context) {
-        if (context.getParamOrNull(LootContextParams.KILLER_ENTITY) instanceof LivingEntity killer) {
+        if (context.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity killer) {
             // Get the highest enchantment level among held items that could hold the Essence Thief enchantment
-            return EnchantmentsPM.ESSENCE_THIEF.get().getSlotItems(killer).values().stream().mapToInt(EssenceThiefModifier::getEnchantLevel).max().orElse(0);
+            Holder<Enchantment> ench = context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.ESSENCE_THIEF);
+            return ench.value().getSlotItems(killer).values().stream().mapToInt(stack -> {
+                return stack.getEnchantments().getLevel(ench);
+            }).max().orElse(0);
         } else {
             return 0;
         }
     }
     
-    private static int getEnchantLevel(ItemStack stack) {
-        return stack.getEnchantmentLevel(EnchantmentsPM.ESSENCE_THIEF.get());
-    }
-
     @Override
     public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
