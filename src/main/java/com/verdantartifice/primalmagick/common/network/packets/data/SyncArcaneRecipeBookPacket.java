@@ -25,7 +25,7 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
     
     public SyncArcaneRecipeBookPacket(Player player) {
         if (PrimalMagickCapabilities.getArcaneRecipeBook(player).isPresent()) {
-            this.data = PrimalMagickCapabilities.getArcaneRecipeBook(player).resolve().get().serializeNBT();
+            this.data = PrimalMagickCapabilities.getArcaneRecipeBook(player).resolve().get().serializeNBT(player.registryAccess());
         } else {
             this.data = null;
         }
@@ -47,7 +47,7 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         if (player != null) {
             PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
-                recipeBook.deserializeNBT(message.data, player.level().getRecipeManager());
+                recipeBook.deserializeNBT(player.registryAccess(), message.data, player.level().getRecipeManager());
             });
             ArcaneSearchRegistry.populate();
         }
