@@ -58,13 +58,14 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
         generator.addProvider(event.includeClient(), new TipDefinitionProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput()));
+        generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput(), event.getLookupProvider()));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
                 BlockLootTables.getSubProviderEntry(), 
                 EntityLootTables.getSubProviderEntry(), 
                 TreefolkBarteringLootTables.getSubProviderEntry(), 
                 TheorycraftingRewardLootTables.getSubProviderEntry(), 
-                LibraryLootTables.getSubProviderEntry()))));
+                LibraryLootTables.getSubProviderEntry()),
+            event.getLookupProvider())));
         BlockTagsProviderPM blockTagsProvider = new BlockTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new ItemTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
@@ -74,7 +75,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), event.getLookupProvider()));
-        generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
+        generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput(), event.getLookupProvider()));
         CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(generator.getPackOutput(), intermediate, event.getExistingFileHelper(), List.of(
                 new StoryAdvancementsPM())));
