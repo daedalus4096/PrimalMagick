@@ -157,7 +157,7 @@ public class StaticBookItem extends Item {
         return stack;
     }
     
-    private static BookView makeBookView(ItemStack pStack, HolderLookup.Provider registries) {
+    public static BookView makeBookView(ItemStack pStack, HolderLookup.Provider registries) {
         Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
         Holder<BookDefinition> book = getBookDefinition(pStack).orElseGet(() -> registries.lookupOrThrow(RegistryKeysPM.BOOKS).getOrThrow(BooksPM.TEST_BOOK));
         Holder<BookLanguage> lang = getBookLanguage(pStack).orElseGet(() -> registries.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getOrThrow(BookLanguagesPM.DEFAULT));
@@ -223,7 +223,7 @@ public class StaticBookItem extends Item {
             getBookDefinition(stack).ifPresentOrElse(bookDefHolder -> {
                 getBookLanguage(stack).ifPresentOrElse(langHolder -> {
                     LinguisticsManager.markRead(pPlayer, bookDefHolder, langHolder);
-                    PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack, this.bookType), serverPlayer);
+                    PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack, this.bookType, pLevel.registryAccess()), serverPlayer);
                 }, () -> {
                     LOGGER.error("No book language found when opening static book stack {}", stack.toString());
                 });

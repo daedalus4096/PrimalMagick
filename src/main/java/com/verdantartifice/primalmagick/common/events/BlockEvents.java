@@ -193,14 +193,14 @@ public class BlockEvents {
             } else if (lecternEntity.getBook().is(ItemsPM.STATIC_BOOK.get())) {
                 // Open the static book screen
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-                    PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(lecternEntity.getBook(), BookType.BOOK), serverPlayer);
+                    PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(lecternEntity.getBook(), BookType.BOOK, player.registryAccess()), serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
             } else if (lecternEntity.getBook().is(Items.ENCHANTED_BOOK)) {
                 // Open the enchanted book screen
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     lecternEntity.getBook().getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
-                        PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey()), serverPlayer);
+                        PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer);
                     });
                 }
                 return InteractionResult.SUCCESS;

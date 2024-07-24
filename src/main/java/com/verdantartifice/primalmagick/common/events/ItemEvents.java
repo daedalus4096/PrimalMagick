@@ -48,7 +48,7 @@ public class ItemEvents {
         // Get the entry for the most powerful enchantment on the book, if any
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             stack.getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
-                PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey()), serverPlayer);
+                PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer);
             });
         }
         return InteractionResult.SUCCESS;

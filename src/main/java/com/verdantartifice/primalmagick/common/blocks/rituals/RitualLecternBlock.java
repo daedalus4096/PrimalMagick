@@ -161,7 +161,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                         // When activating a full lectern while not sneaking, read the book
                         if (player instanceof ServerPlayer serverPlayer) {
                             bookStack.getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
-                                PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey()), serverPlayer);
+                                PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer);
                             });
                         }
                         return ItemInteractionResult.SUCCESS;
@@ -193,7 +193,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                         // When activating a full lectern while not sneaking, read the book
                         if (pPlayer instanceof ServerPlayer serverPlayer) {
                             bookStack.getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
-                                PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey()), serverPlayer);
+                                PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), pPlayer.registryAccess()), serverPlayer);
                             });
                         }
                         return InteractionResult.SUCCESS;
