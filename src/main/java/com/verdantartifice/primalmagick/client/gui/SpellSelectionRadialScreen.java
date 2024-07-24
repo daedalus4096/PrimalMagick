@@ -33,6 +33,7 @@ public class SpellSelectionRadialScreen extends Screen {
     private final List<RadialMenuItem> cachedMenuItems = new ArrayList<>();
     private final ImageRadialMenuItem noSpellMenuItem;
 
+    // FIXME Disable crosshair GUI overlay layer while radial screen is active
     public SpellSelectionRadialScreen() {
         super(Component.empty());
         Minecraft mc = Minecraft.getInstance();
