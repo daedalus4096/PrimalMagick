@@ -44,7 +44,7 @@ public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
     private int points;
     private Optional<Component> pointsText = Optional.empty();
     
-    protected ComprehensionReward(ResourceKey<BookLanguage> language, int points) {
+    public ComprehensionReward(ResourceKey<BookLanguage> language, int points) {
         Verify.verifyNotNull(language, "Invalid language for comprehension reward");
         this.language = language;
         this.setPoints(points);

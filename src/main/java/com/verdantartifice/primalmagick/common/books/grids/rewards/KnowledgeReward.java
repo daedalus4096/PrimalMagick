@@ -39,7 +39,7 @@ public class KnowledgeReward extends AbstractReward<KnowledgeReward> {
     private int levels;
     private Optional<Component> levelsText;
     
-    protected KnowledgeReward(@Nonnull KnowledgeType type, int levels) {
+    public KnowledgeReward(@Nonnull KnowledgeType type, int levels) {
         Verify.verifyNotNull(type, "Invalid knowledge type for knowledge reward");
         this.knowledgeType = type;
         this.setLevels(levels);

@@ -39,7 +39,7 @@ public class AttunementReward extends AbstractReward<AttunementReward> {
     private int points;
     private Optional<Component> pointsText = Optional.empty();
 
-    protected AttunementReward(Source source, int points) {
+    public AttunementReward(Source source, int points) {
         Verify.verifyNotNull(source, "Invalid source for attunement reward");
         this.source = source;
         this.setPoints(points);

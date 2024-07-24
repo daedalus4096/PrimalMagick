@@ -2,11 +2,18 @@ package com.verdantartifice.primalmagick.datagen.linguistics;
 
 import javax.annotation.Nonnull;
 
-import com.google.gson.JsonObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.KnowledgeReward;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 
 public class KnowledgeRewardBuilder {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     private final KnowledgeType knowledgeType;
     private int levels;
     
@@ -48,10 +55,8 @@ public class KnowledgeRewardBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
-            json.addProperty("type", KnowledgeReward.TYPE);
-            json.addProperty("knowledge_type", this.knowledgeType.getSerializedName());
-            json.addProperty("levels", this.levels);
+        public JsonElement serialize() {
+            return AbstractReward.dispatchCodec().encodeStart(JsonOps.INSTANCE, new KnowledgeReward(this.knowledgeType, this.levels)).resultOrPartial(LOGGER::error).orElseThrow();
         }
     }
 }

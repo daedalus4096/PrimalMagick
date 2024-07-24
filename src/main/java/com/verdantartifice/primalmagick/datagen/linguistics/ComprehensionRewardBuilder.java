@@ -4,14 +4,21 @@ import java.util.OptionalInt;
 
 import javax.annotation.Nonnull;
 
-import com.google.gson.JsonObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.ComprehensionReward;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 public class ComprehensionRewardBuilder {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     protected final ResourceKey<BookLanguage> language;
     protected int points;
     
@@ -53,10 +60,8 @@ public class ComprehensionRewardBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
-            json.addProperty("type", ComprehensionReward.TYPE);
-            json.addProperty("language", this.language.location().toString());
-            json.addProperty("points", this.points);
+        public JsonElement serialize() {
+            return AbstractReward.dispatchCodec().encodeStart(JsonOps.INSTANCE, new ComprehensionReward(this.language, this.points)).resultOrPartial(LOGGER::error).orElseThrow();
         }
 
         @Override
