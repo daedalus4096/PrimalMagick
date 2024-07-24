@@ -20,8 +20,6 @@ import com.verdantartifice.primalmagick.client.fx.particles.SpellSparkleParticle
 import com.verdantartifice.primalmagick.client.fx.particles.SpellcraftingRuneParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
 import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecorator;
-import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
-import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.client.tips.TipLoader;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
@@ -38,10 +36,8 @@ import net.minecraftforge.client.IItemDecorator;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -113,12 +109,6 @@ public class ClientRegistrationEvents {
         event.registerReloadListener(LexiconLoader.getOrCreateInstance());
         event.registerReloadListener(StyleGuideLoader.getOrCreateInstance());
         event.registerReloadListener(TipLoader.getOrCreateInstance());
-    }
-    
-    @SubscribeEvent
-    public static void onRegisterGuiOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "wand_hud", new WandHudOverlay());
-        event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), "warding_hud", new WardingHudOverlay());
     }
     
     @SubscribeEvent
