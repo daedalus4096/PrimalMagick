@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.spells.mods;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
@@ -41,7 +42,7 @@ public class ForkSpellMod extends AbstractSpellMod<ForkSpellMod> {
     
     public static final String TYPE = "fork";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_FORK));
-    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.FORKS.get(), SpellPropertiesPM.PRECISION.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.FORKS.get(), SpellPropertiesPM.PRECISION.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -58,7 +59,7 @@ public class ForkSpellMod extends AbstractSpellMod<ForkSpellMod> {
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        return PROPERTIES;
+        return PROPERTIES.get();
     }
 
     @Override

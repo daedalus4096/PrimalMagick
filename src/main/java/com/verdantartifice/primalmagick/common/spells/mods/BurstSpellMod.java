@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -52,7 +53,7 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
     
     public static final String TYPE = "burst";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_BURST));
-    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.RADIUS.get(), SpellPropertiesPM.BURST_POWER.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.RADIUS.get(), SpellPropertiesPM.BURST_POWER.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -69,7 +70,7 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        return PROPERTIES;
+        return PROPERTIES.get();
     }
 
     @Override

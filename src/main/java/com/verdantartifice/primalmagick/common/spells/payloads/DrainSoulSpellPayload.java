@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -47,7 +48,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
     
     public static final String TYPE = "drain_soul";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_DRAIN_SOUL));
-    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -64,7 +65,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        return PROPERTIES;
+        return PROPERTIES.get();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
@@ -49,7 +50,7 @@ public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
     
     public static final String TYPE = "break";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_BREAK));
-    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.POWER.get(), SpellPropertiesPM.SILK_TOUCH.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.POWER.get(), SpellPropertiesPM.SILK_TOUCH.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -66,7 +67,7 @@ public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        return PROPERTIES;
+        return PROPERTIES.get();
     }
 
     @Override

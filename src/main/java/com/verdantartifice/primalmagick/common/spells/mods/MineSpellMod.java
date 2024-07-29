@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.spells.mods;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -37,7 +38,7 @@ public class MineSpellMod extends AbstractSpellMod<MineSpellMod> {
     
     public static final String TYPE = "mine";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_MINE));
-    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -54,7 +55,7 @@ public class MineSpellMod extends AbstractSpellMod<MineSpellMod> {
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        return PROPERTIES;
+        return PROPERTIES.get();
     }
 
     @Override

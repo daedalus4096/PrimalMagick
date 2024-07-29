@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
@@ -49,7 +50,7 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
     
     public static final String TYPE = "healing";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_HEALING));
-    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.POWER.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.POWER.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -66,7 +67,7 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        return PROPERTIES;
+        return PROPERTIES.get();
     }
 
     protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {

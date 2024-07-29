@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,11 +31,11 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public abstract class AbstractDamageSpellPayload<T extends AbstractDamageSpellPayload<T>> extends AbstractSpellPayload<T> {
-    private static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.POWER.get());
+    private static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.POWER.get());
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        return PROPERTIES;
+        return PROPERTIES.get();
     }
 
     protected float getBaseDamage(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {

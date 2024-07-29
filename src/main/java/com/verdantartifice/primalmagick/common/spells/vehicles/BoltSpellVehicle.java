@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.spells.vehicles;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -39,7 +40,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle<BoltSpellVehic
     
     public static final String TYPE = "bolt";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_VEHICLE_BOLT));
-    protected static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.RANGE.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.RANGE.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -56,7 +57,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle<BoltSpellVehic
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        return PROPERTIES;
+        return PROPERTIES.get();
     }
 
     @Override

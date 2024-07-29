@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -39,11 +40,11 @@ import net.minecraft.world.phys.Vec3;
  * @see {@link com.verdantartifice.primalmagick.common.misc.EntitySwapper}
  */
 public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphSpellPayload<T>> extends AbstractSpellPayload<T> {
-    private static final List<SpellProperty> PROPERTIES = Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
+    private static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
-        return PROPERTIES;
+        return PROPERTIES.get();
     }
 
     protected abstract EntityType<?> getNewEntityType();
