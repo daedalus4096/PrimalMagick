@@ -28,7 +28,6 @@ import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeGainComprehensionScreen;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeStudyVocabularyScreen;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeTranscribeWorksScreen;
-import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.OfferingPedestalTER;
@@ -78,7 +77,6 @@ public class ClientModLifecycleEvents {
         registerScreens();
         registerTERs();
         registerItemProperties(event);
-        registerSearchTrees(event);
         registerHudOverlays();
     }
 
@@ -213,12 +211,6 @@ public class ClientModLifecycleEvents {
             ItemProperties.register(ItemsPM.HALLOWSTEEL_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
             ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
             ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
-        });
-    }
-    
-    private static void registerSearchTrees(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            ArcaneSearchRegistry.registerSearchTree();
         });
     }
     

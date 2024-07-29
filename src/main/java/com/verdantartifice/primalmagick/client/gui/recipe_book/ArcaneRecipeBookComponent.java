@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.gui.recipe_book;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
@@ -43,7 +42,6 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.recipebook.GhostRecipe;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
-import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -251,7 +249,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         
         String searchStr = this.searchBox.getValue();
         if (!searchStr.isEmpty()) {
-            ObjectSet<ArcaneRecipeCollection> vanillaObjectSet = new ObjectLinkedOpenHashSet<>(this.mc.getSearchTree(SearchRegistry.RECIPE_COLLECTIONS)
+            ObjectSet<ArcaneRecipeCollection> vanillaObjectSet = new ObjectLinkedOpenHashSet<>(this.mc.getConnection().searchTrees().recipes()
                     .search(searchStr.toLowerCase(Locale.ROOT)).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
             ObjectSet<ArcaneRecipeCollection> arcaneObjectSet = new ObjectLinkedOpenHashSet<>(ArcaneSearchRegistry.getSearchTree().search(searchStr.toLowerCase(Locale.ROOT)));
             filteredCollections.removeIf(arc -> {
