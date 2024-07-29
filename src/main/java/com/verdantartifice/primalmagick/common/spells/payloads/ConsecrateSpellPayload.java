@@ -39,7 +39,7 @@ public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload<Con
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONSECRATE));
 
     public ConsecrateSpellPayload() {
-        super(BlocksPM.CONSECRATION_FIELD.get().defaultBlockState(), 2);
+        super(() -> BlocksPM.CONSECRATION_FIELD.get().defaultBlockState(), 2);
     }
     
     public static AbstractRequirement<?> getRequirement() {

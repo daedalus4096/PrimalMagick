@@ -37,7 +37,7 @@ public class ConjureStoneSpellPayload extends AbstractConjureBlockSpellPayload<C
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_STONE));
     
     public ConjureStoneSpellPayload() {
-        super(Blocks.STONE.defaultBlockState());
+        super(() -> Blocks.STONE.defaultBlockState());
     }
     
     public static AbstractRequirement<?> getRequirement() {
