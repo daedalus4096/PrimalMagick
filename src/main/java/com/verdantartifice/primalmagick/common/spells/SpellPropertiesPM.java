@@ -31,7 +31,7 @@ public class SpellPropertiesPM {
     public static final RegistryObject<SpellProperty> RADIUS = register("radius", id -> new SpellProperty(id, "spells.primalmagick.property.radius", 1, 5));
     public static final RegistryObject<SpellProperty> FORKS = register("forks", id -> new SpellProperty(id, "spells.primalmagick.property.forks", 2, 5));
     public static final RegistryObject<SpellProperty> PRECISION = register("precision", id -> new SpellProperty(id, "spells.primalmagick.property.precision", 0, 5));
-    public static final RegistryObject<SpellProperty> NON_ZERO_DURATION = register("mine_duration", id -> new SpellProperty(id, "spells.primalmagick.property.duration", 1, 5));
+    public static final RegistryObject<SpellProperty> NON_ZERO_DURATION = register("non_zero_duration", id -> new SpellProperty(id, "spells.primalmagick.property.duration", 1, 5));
     public static final RegistryObject<SpellProperty> HASTE = register("haste", id -> new SpellProperty(id, "spells.primalmagick.property.haste", 1, 5));
     public static final RegistryObject<SpellProperty> RANGE = register("range", id -> new SpellProperty(id, "spells.primalmagick.property.range", 1, 5));
     public static final RegistryObject<SpellProperty> SILK_TOUCH = register("silk_touch", id -> new SpellProperty(id, "spells.primalmagick.property.silk_touch", 0, 1));

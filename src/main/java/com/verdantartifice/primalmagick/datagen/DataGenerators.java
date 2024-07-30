@@ -66,8 +66,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new BiomeTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
-        generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), event.getLookupProvider()));
-        generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput(), event.getLookupProvider()));
         CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(generator.getPackOutput(), intermediate, event.getExistingFileHelper(), List.of(
                 new StoryAdvancementsPM())));
@@ -80,6 +78,8 @@ public class DataGenerators {
                 LibraryLootTables.getSubProviderEntry()),
             registryLookupFuture)));
         generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPM(generator.getPackOutput(), event.getLookupProvider()));
+        generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), event.getLookupProvider()));
+        generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput(), event.getLookupProvider()));
         generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput(), registryLookupFuture));
     }
