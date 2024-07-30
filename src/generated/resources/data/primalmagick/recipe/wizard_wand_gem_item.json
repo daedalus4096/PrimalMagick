@@ -1,0 +1,31 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "primalmagick:essences/terrestrial_crystals"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 100,
+      "primalmagick:moon": 100,
+      "primalmagick:sea": 100,
+      "primalmagick:sky": 100,
+      "primalmagick:sun": 100
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_gem_wizard"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:wizard_wand_gem_item"
+  }
+}

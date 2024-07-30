@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.15,
+  "ingredient": {
+    "item": "primalmagick:heartwood"
+  },
+  "result": {
+    "id": "minecraft:charcoal"
+  }
+}

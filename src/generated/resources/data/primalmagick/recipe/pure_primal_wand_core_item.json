@@ -1,0 +1,68 @@
+{
+  "type": "primalmagick:ritual",
+  "ingredients": [
+    {
+      "item": "primalmagick:dark_primal_wand_core_item"
+    },
+    {
+      "item": "primalmagick:hallowood_log"
+    },
+    {
+      "item": "primalmagick:hallowood_log"
+    },
+    {
+      "tag": "forge:nether_stars"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    },
+    {
+      "item": "primalmagick:mana_salts"
+    }
+  ],
+  "instability": 7,
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 100,
+      "primalmagick:earth": 100,
+      "primalmagick:hallowed": 100,
+      "primalmagick:infernal": 100,
+      "primalmagick:moon": 100,
+      "primalmagick:sea": 100,
+      "primalmagick:sky": 100,
+      "primalmagick:sun": 100,
+      "primalmagick:void": 100
+    }
+  },
+  "props": [
+    {
+      "block": "primalmagick:ritual_bell"
+    },
+    {
+      "block": "primalmagick:ritual_lectern"
+    },
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "block": "primalmagick:bloodletter"
+    },
+    {
+      "block": "primalmagick:soul_anvil"
+    },
+    {
+      "block": "primalmagick:celestial_harp"
+    }
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_pure_primal"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:pure_primal_wand_core_item"
+  }
+}

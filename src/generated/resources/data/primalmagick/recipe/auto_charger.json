@@ -1,0 +1,42 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "C": {
+      "item": "primalmagick:wand_charger"
+    },
+    "E": {
+      "tag": "forge:gems/emerald"
+    },
+    "M": {
+      "item": "primalmagick:marble_enchanted"
+    },
+    "P": {
+      "item": "primalmagick:magitech_parts_enchanted"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 20,
+      "primalmagick:moon": 20,
+      "primalmagick:sea": 20,
+      "primalmagick:sky": 20,
+      "primalmagick:sun": 20
+    }
+  },
+  "pattern": [
+    "EME",
+    "PCP",
+    "EME"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:auto_charger"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:auto_charger"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing_trim",
+  "addition": {
+    "tag": "primalmagick:runic_trim_materials"
+  },
+  "base": {
+    "tag": "primalmagick:runic_trimmable_armor"
+  },
+  "template": {
+    "item": "primalmagick:runic_armor_trim_smithing_template"
+  }
+}

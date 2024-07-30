@@ -1,0 +1,27 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "D": {
+      "item": "primalmagick:essence_dust_earth"
+    },
+    "S": {
+      "tag": "forge:sand"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SDS",
+    "SSS"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:stonemelding"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "minecraft:gravel"
+  }
+}

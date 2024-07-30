@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "primalmagick:marble_enchanted"
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:marble_enchanted_brick_wall"
+  }
+}

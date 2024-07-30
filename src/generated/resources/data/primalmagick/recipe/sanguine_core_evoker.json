@@ -1,0 +1,27 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "expertiseGroup": "primalmagick:sanguine_core",
+  "group": "attuned_sanguine_cores",
+  "ingredients": [
+    {
+      "item": "primalmagick:sanguine_core_blank"
+    },
+    {
+      "item": "primalmagick:bloody_flesh"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    }
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sanguine_core_sapients"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:sanguine_core_evoker"
+  }
+}

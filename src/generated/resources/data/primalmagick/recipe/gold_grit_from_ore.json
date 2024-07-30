@@ -1,0 +1,44 @@
+{
+  "type": "forge:conditional",
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "forge:dusts/gold"
+        }
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "forge:ores/gold"
+        }
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "forge:condition": {
+        "type": "forge:true"
+      },
+      "recipe": {
+        "type": "primalmagick:crafting_shapeless_tag",
+        "category": "misc",
+        "group": "earthshatter_hammer_grit",
+        "ingredients": [
+          {
+            "item": "primalmagick:earthshatter_hammer"
+          },
+          {
+            "tag": "forge:ores/gold"
+          }
+        ],
+        "outputAmount": 2,
+        "outputTag": "forge:dusts/gold"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "expertiseGroup": "primalmagick:skyglass_pane",
+  "group": "stained_skyglass_pane",
+  "key": {
+    "D": {
+      "tag": "forge:dyes/yellow"
+    },
+    "G": {
+      "tag": "primalmagick:skyglass_panes"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GDG",
+    "GGG"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:skyglass"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "primalmagick:stained_skyglass_pane_yellow"
+  }
+}

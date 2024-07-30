@@ -1,0 +1,28 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "expertiseGroup": "primalmagick:primalite_tool",
+  "key": {
+    "I": {
+      "tag": "primalmagick:ingots/primalite"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "II",
+    " S",
+    " S"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:primalite"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:primalite_hoe"
+  }
+}

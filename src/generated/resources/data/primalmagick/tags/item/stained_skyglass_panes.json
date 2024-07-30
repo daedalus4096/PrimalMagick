@@ -1,0 +1,20 @@
+{
+  "values": [
+    "primalmagick:stained_skyglass_pane_black",
+    "primalmagick:stained_skyglass_pane_blue",
+    "primalmagick:stained_skyglass_pane_brown",
+    "primalmagick:stained_skyglass_pane_cyan",
+    "primalmagick:stained_skyglass_pane_gray",
+    "primalmagick:stained_skyglass_pane_green",
+    "primalmagick:stained_skyglass_pane_light_blue",
+    "primalmagick:stained_skyglass_pane_light_gray",
+    "primalmagick:stained_skyglass_pane_lime",
+    "primalmagick:stained_skyglass_pane_magenta",
+    "primalmagick:stained_skyglass_pane_orange",
+    "primalmagick:stained_skyglass_pane_pink",
+    "primalmagick:stained_skyglass_pane_purple",
+    "primalmagick:stained_skyglass_pane_red",
+    "primalmagick:stained_skyglass_pane_white",
+    "primalmagick:stained_skyglass_pane_yellow"
+  ]
+}

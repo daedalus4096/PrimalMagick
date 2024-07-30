@@ -1,0 +1,15 @@
+{
+  "type": "primalmagick:dissolution",
+  "ingredient": {
+    "tag": "forge:bones"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1
+    }
+  },
+  "result": {
+    "count": 6,
+    "id": "minecraft:bone_meal"
+  }
+}

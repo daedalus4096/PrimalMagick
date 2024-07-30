@@ -1,0 +1,22 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "primalmagick:rune_unattuned"
+    },
+    {
+      "item": "primalmagick:essence_cluster_hallowed"
+    }
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:rune_grace"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:rune_grace"
+  }
+}

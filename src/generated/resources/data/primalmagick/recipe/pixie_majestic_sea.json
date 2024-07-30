@@ -1,0 +1,55 @@
+{
+  "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:pixie_majestic",
+  "ingredients": [
+    {
+      "item": "primalmagick:mana_salts"
+    },
+    {
+      "item": "primalmagick:essence_cluster_sea"
+    },
+    {
+      "tag": "forge:ingots/gold"
+    },
+    {
+      "item": "primalmagick:rune_summon"
+    },
+    {
+      "item": "primalmagick:rune_creature"
+    },
+    {
+      "item": "primalmagick:rune_power"
+    }
+  ],
+  "instability": 7,
+  "mana": {
+    "sources": {
+      "primalmagick:sea": 200
+    }
+  },
+  "props": [
+    {
+      "block": "primalmagick:incense_brazier"
+    },
+    {
+      "block": "primalmagick:ritual_bell"
+    },
+    {
+      "block": "primalmagick:soul_anvil"
+    },
+    {
+      "block": "primalmagick:celestial_harp"
+    }
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:majestic_pixies"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:pixie_majestic_sea"
+  }
+}

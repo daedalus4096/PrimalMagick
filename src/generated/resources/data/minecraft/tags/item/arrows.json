@@ -1,0 +1,13 @@
+{
+  "values": [
+    "primalmagick:mana_arrow_earth",
+    "primalmagick:mana_arrow_sea",
+    "primalmagick:mana_arrow_sky",
+    "primalmagick:mana_arrow_sun",
+    "primalmagick:mana_arrow_moon",
+    "primalmagick:mana_arrow_blood",
+    "primalmagick:mana_arrow_infernal",
+    "primalmagick:mana_arrow_void",
+    "primalmagick:mana_arrow_hallowed"
+  ]
+}

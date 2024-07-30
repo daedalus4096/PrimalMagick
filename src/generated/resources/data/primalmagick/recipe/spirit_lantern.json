@@ -1,0 +1,50 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "baseExpertiseOverride": 5,
+  "bonusExpertiseOverride": 20,
+  "disciplineOverride": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "expertiseGroup": "primalmagick:sunlamp",
+  "key": {
+    "N": {
+      "tag": "primalmagick:nuggets/hexium"
+    },
+    "T": {
+      "item": "minecraft:soul_torch"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 10
+    }
+  },
+  "pattern": [
+    "NNN",
+    "NTN",
+    "NNN"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:sunlamp"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:hexium"
+        }
+      }
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:spirit_lantern"
+  }
+}

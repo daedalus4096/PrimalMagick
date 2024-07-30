@@ -1,0 +1,45 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "swiftness",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "items": [
+        "primalmagick:concoction"
+      ],
+      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "primalmagick:essence_crystal_sky"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 9
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_elixirs"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:swiftness"
+      },
+      "primalmagick:concoction_doses": 9,
+      "primalmagick:concoction_type": "elixir"
+    },
+    "count": 1,
+    "id": "primalmagick:concoction"
+  }
+}
