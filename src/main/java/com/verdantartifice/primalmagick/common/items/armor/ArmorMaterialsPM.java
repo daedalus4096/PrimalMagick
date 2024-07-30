@@ -19,8 +19,6 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
@@ -30,7 +28,6 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public class ArmorMaterialsPM {
     private static final DeferredRegister<ArmorMaterial> DEFERRED_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, PrimalMagick.MODID);
-    public static final Supplier<IForgeRegistry<ArmorMaterial>> MATERIALS = DEFERRED_MATERIALS.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
         DEFERRED_MATERIALS.register(FMLJavaModLoadingContext.get().getModEventBus());
