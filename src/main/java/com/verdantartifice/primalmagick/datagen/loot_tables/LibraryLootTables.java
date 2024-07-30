@@ -170,11 +170,12 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC, LootTable.lootTable().withPool(epicPool));
 
         // Generate treasure catalog loot table
+        // FIXME Figure out why serialization can't find the mod's "enchantable" item tags
         LootPool.Builder enchPool = LootPool.lootPool();
-        var enchLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
-        enchLookup.listElements().filter(enchRef -> enchRef.key().location().getNamespace().equals(PrimalMagick.MODID)).forEach(enchRef -> {
-            enchPool.add(enchantedBook(enchRef));
-        });
+//        var enchLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+//        enchLookup.listElements().filter(enchRef -> enchRef.key().location().getNamespace().equals(PrimalMagick.MODID)).forEach(enchRef -> {
+//            enchPool.add(enchantedBook(enchRef));
+//        });
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(enchPool));
     }
     
