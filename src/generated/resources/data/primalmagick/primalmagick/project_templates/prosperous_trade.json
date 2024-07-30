@@ -16,7 +16,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:lava_bucket"
       },
       "weight": 1.0
@@ -36,7 +36,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "minecraft:coal"
       },
       "weight": 2.0
@@ -48,7 +48,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "minecraft:mutton"
       },
       "weight": 1.0
@@ -60,7 +60,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "minecraft:beef"
       },
       "weight": 1.0
@@ -72,7 +72,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:compass"
       },
       "weight": 1.0
@@ -92,7 +92,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:glowstone"
       },
       "weight": 1.0
@@ -104,7 +104,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:melon"
       },
       "weight": 1.0
@@ -116,7 +116,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:cake"
       },
       "weight": 1.0
@@ -128,7 +128,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "minecraft:salmon"
       },
       "weight": 1.0
@@ -140,7 +140,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:tropical_fish"
       },
       "weight": 1.0
@@ -152,7 +152,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 3,
+        "count": 3,
         "id": "minecraft:flint"
       },
       "weight": 3.0
@@ -172,7 +172,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:rabbit_hide"
       },
       "weight": 1.0
@@ -184,7 +184,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:ink_sac"
       },
       "weight": 1.0
@@ -196,7 +196,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:writable_book"
       },
       "weight": 1.0
@@ -208,7 +208,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:granite"
       },
       "weight": 1.0
@@ -220,7 +220,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:andesite"
       },
       "weight": 1.0
@@ -232,7 +232,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:diorite"
       },
       "weight": 1.0
@@ -244,11 +244,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:shears",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:shears"
       },
       "weight": 1.0
     },
@@ -280,7 +277,9 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:discover_void",
+        "researchKey": {
+          "rootKey": "primalmagick:discover_void"
+        },
         "weightModifier": -2.0
       }
     ],

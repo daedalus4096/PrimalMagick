@@ -8,7 +8,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:magitech_parts_basic"
       },
       "weight": 3.0
@@ -27,7 +27,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:magitech_parts_enchanted"
       },
       "weight": 3.0
@@ -46,7 +46,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:magitech_parts_forbidden"
       },
       "weight": 3.0
@@ -65,7 +65,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:honey_extractor"
       },
       "weight": 1.0
@@ -84,7 +84,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:arcanometer"
       },
       "weight": 1.0
@@ -103,7 +103,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:concocter"
       },
       "weight": 1.0
@@ -122,7 +122,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:entropy_sink"
       },
       "weight": 1.0
@@ -141,7 +141,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:auto_charger"
       },
       "weight": 1.0
@@ -160,7 +160,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_transmuter"
       },
       "weight": 1.0
@@ -179,7 +179,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:dissolution_chamber"
       },
       "weight": 1.0
@@ -198,7 +198,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:infernal_furnace"
       },
       "weight": 1.0
@@ -264,7 +264,9 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:master_magitech",
+        "researchKey": {
+          "rootKey": "primalmagick:master_magitech"
+        },
         "weightModifier": 2.0
       }
     ],

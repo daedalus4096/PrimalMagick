@@ -1,11 +1,13 @@
 {
   "addenda": [],
   "finales": [],
-  "hasHint": true,
+  "flags": {
+    "hasHint": true,
+    "internal": true
+  },
   "icon": {
     "location": "primalmagick:textures/research/research_bag.png"
   },
-  "internal": true,
   "key": {
     "rootKey": "primalmagick:scan_hallowsteel"
   },

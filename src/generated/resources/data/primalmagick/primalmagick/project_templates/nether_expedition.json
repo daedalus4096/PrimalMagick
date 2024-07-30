@@ -8,11 +8,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:diamond_sword",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:diamond_sword"
       },
       "weight": 1.0
     },
@@ -23,11 +20,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:crossbow",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:crossbow"
       },
       "weight": 1.0
     },
@@ -38,7 +32,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 16,
+        "count": 16,
         "id": "minecraft:arrow"
       },
       "weight": 1.0
@@ -50,11 +44,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:diamond_chestplate",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:diamond_chestplate"
       },
       "weight": 1.0
     },
@@ -65,7 +56,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:map"
       },
       "weight": 1.0
@@ -77,7 +68,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:cartography_table"
       },
       "weight": 1.0
@@ -89,7 +80,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 16,
+        "count": 16,
         "id": "minecraft:torch"
       },
       "weight": 1.0
@@ -101,7 +92,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 4,
+        "count": 4,
         "id": "minecraft:bread"
       },
       "weight": 1.0
@@ -113,11 +104,13 @@
       "matchNBT": true,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:potion",
-        "tag": {
-          "Potion": "minecraft:fire_resistance"
-        }
+        "components": {
+          "minecraft:potion_contents": {
+            "potion": "minecraft:fire_resistance"
+          }
+        },
+        "count": 1,
+        "id": "minecraft:potion"
       },
       "weight": 4.0
     },
@@ -144,11 +137,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:flint_and_steel",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:flint_and_steel"
       },
       "weight": 1.0
     }
@@ -165,7 +155,9 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:discover_void",
+        "researchKey": {
+          "rootKey": "primalmagick:discover_void"
+        },
         "weightModifier": -2.0
       }
     ],

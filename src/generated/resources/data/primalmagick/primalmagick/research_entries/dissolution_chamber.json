@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:magitech"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:dissolution_chamber"
@@ -33,21 +34,21 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 20,
+              "count": 20,
               "id": "primalmagick:iron_grit"
             }
           },
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 20,
+              "count": 20,
               "id": "primalmagick:copper_grit"
             }
           },
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 10,
+              "count": 10,
               "id": "primalmagick:gold_grit"
             }
           },

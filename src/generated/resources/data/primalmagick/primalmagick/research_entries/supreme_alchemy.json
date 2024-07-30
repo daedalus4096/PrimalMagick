@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:alchemy"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "location": "primalmagick:textures/research/discipline_alchemy.png"
   },

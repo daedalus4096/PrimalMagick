@@ -1,7 +1,9 @@
 {
   "addenda": [],
   "finales": [],
-  "internal": true,
+  "flags": {
+    "internal": true
+  },
   "key": {
     "rootKey": "primalmagick:unlock_scans"
   },

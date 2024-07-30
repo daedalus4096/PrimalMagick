@@ -43,7 +43,7 @@
       "recipes": [],
       "siblings": [
         {
-          "enchantment": "primalmagick:reverberation",
+          "enchant": "primalmagick:reverberation",
           "key_type": "primalmagick:rune_enchantment"
         },
         {
@@ -58,6 +58,7 @@
     "rootKey": "primalmagick:ritual"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:primal_shovel"

@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:runeworking"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:rune_protect"

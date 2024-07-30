@@ -11,7 +11,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:magnifying_glass"
       },
       "weight": 1.0

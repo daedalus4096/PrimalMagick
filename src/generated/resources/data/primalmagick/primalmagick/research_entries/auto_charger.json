@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:magitech"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:auto_charger"

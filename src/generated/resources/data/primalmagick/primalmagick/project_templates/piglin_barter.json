@@ -8,7 +8,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:bell"
       },
       "weight": 0.5
@@ -28,7 +28,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:raw_gold_block"
       },
       "weight": 0.5
@@ -40,7 +40,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:clock"
       },
       "weight": 1.0
@@ -52,7 +52,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:gilded_blackstone"
       },
       "weight": 2.0
@@ -64,7 +64,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:glistering_melon_slice"
       },
       "weight": 2.0
@@ -76,7 +76,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:raw_gold"
       },
       "weight": 2.0
@@ -96,7 +96,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:golden_apple"
       },
       "weight": 1.0
@@ -108,11 +108,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:golden_axe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:golden_axe"
       },
       "weight": 1.0
     },
@@ -123,11 +120,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:golden_boots",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:golden_boots"
       },
       "weight": 1.0
     },
@@ -138,7 +132,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:golden_carrot"
       },
       "weight": 2.0
@@ -150,11 +144,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:golden_chestplate",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:golden_chestplate"
       },
       "weight": 1.0
     },
@@ -165,11 +156,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:golden_helmet",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:golden_helmet"
       },
       "weight": 1.0
     },
@@ -180,11 +168,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:golden_hoe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:golden_hoe"
       },
       "weight": 1.0
     },
@@ -195,7 +180,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:golden_horse_armor"
       },
       "weight": 0.5
@@ -207,11 +192,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:golden_leggings",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:golden_leggings"
       },
       "weight": 1.0
     },
@@ -222,11 +204,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:golden_pickaxe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:golden_pickaxe"
       },
       "weight": 1.0
     },
@@ -237,11 +216,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:golden_shovel",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:golden_shovel"
       },
       "weight": 1.0
     },
@@ -252,11 +228,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:golden_sword",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:golden_sword"
       },
       "weight": 1.0
     },
@@ -267,7 +240,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:light_weighted_pressure_plate"
       },
       "weight": 1.0

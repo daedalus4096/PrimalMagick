@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:magitech"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "location": "primalmagick:textures/research/discipline_magitech.png"
   },

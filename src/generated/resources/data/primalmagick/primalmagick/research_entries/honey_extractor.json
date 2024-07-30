@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:magitech"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:honey_extractor"
@@ -27,14 +28,14 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "minecraft:honeycomb"
             }
           },
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "minecraft:honey_bottle"
             }
           },

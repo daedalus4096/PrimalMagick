@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:ritual"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "location": "primalmagick:textures/research/discipline_ritual.png"
   },

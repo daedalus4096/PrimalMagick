@@ -8,7 +8,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:detector_rail"
       },
       "weight": 1.0
@@ -20,7 +20,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:activator_rail"
       },
       "weight": 1.0
@@ -32,7 +32,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:dispenser"
       },
       "weight": 1.0
@@ -44,7 +44,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:dropper"
       },
       "weight": 1.0
@@ -56,7 +56,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:daylight_detector"
       },
       "weight": 1.0
@@ -68,7 +68,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:piston"
       },
       "weight": 1.0
@@ -80,7 +80,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:hopper"
       },
       "weight": 1.0
@@ -92,7 +92,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:redstone_lamp"
       },
       "weight": 1.0
@@ -104,7 +104,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:sticky_piston"
       },
       "weight": 1.0
@@ -116,7 +116,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:comparator"
       },
       "weight": 1.0
@@ -149,19 +149,27 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:basic_magitech",
+        "researchKey": {
+          "rootKey": "primalmagick:basic_magitech"
+        },
         "weightModifier": -1.0
       },
       {
-        "researchKey": "primalmagick:expert_magitech",
+        "researchKey": {
+          "rootKey": "primalmagick:expert_magitech"
+        },
         "weightModifier": -1.0
       },
       {
-        "researchKey": "primalmagick:master_magitech",
+        "researchKey": {
+          "rootKey": "primalmagick:master_magitech"
+        },
         "weightModifier": -1.0
       },
       {
-        "researchKey": "primalmagick:supreme_magitech",
+        "researchKey": {
+          "rootKey": "primalmagick:supreme_magitech"
+        },
         "weightModifier": -1.0
       }
     ],

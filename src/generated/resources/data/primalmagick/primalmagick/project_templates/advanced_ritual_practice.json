@@ -8,7 +8,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:ritual_altar"
       },
       "weight": 10.0
@@ -20,7 +20,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:offering_pedestal"
       },
       "weight": 5.0
@@ -32,7 +32,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "primalmagick:refined_salt"
       },
       "weight": 3.0
@@ -51,7 +51,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:ritual_lectern"
       },
       "weight": 1.0
@@ -70,7 +70,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:enchanted_book"
       },
       "weight": 1.0
@@ -89,7 +89,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:ritual_bell"
       },
       "weight": 1.0
@@ -108,11 +108,8 @@
         }
       },
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_shovel",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_shovel"
       },
       "weight": 1.0
     },
@@ -130,7 +127,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_shard_earth"
       },
       "weight": 1.0
@@ -149,11 +146,8 @@
         }
       },
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_fishing_rod",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_fishing_rod"
       },
       "weight": 1.0
     },
@@ -171,7 +165,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_shard_sea"
       },
       "weight": 1.0
@@ -190,11 +184,8 @@
         }
       },
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_axe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_axe"
       },
       "weight": 1.0
     },
@@ -212,7 +203,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_shard_sky"
       },
       "weight": 1.0
@@ -231,11 +222,8 @@
         }
       },
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_hoe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_hoe"
       },
       "weight": 1.0
     },
@@ -253,7 +241,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_shard_sun"
       },
       "weight": 1.0
@@ -272,11 +260,8 @@
         }
       },
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_pickaxe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_pickaxe"
       },
       "weight": 1.0
     },
@@ -294,7 +279,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_shard_moon"
       },
       "weight": 1.0
@@ -360,19 +345,27 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:basic_ritual",
+        "researchKey": {
+          "rootKey": "primalmagick:basic_ritual"
+        },
         "weightModifier": 1.0
       },
       {
-        "researchKey": "primalmagick:expert_ritual",
+        "researchKey": {
+          "rootKey": "primalmagick:expert_ritual"
+        },
         "weightModifier": 1.0
       },
       {
-        "researchKey": "primalmagick:master_ritual",
+        "researchKey": {
+          "rootKey": "primalmagick:master_ritual"
+        },
         "weightModifier": -1.0
       },
       {
-        "researchKey": "primalmagick:supreme_ritual",
+        "researchKey": {
+          "rootKey": "primalmagick:supreme_ritual"
+        },
         "weightModifier": -1.0
       }
     ],

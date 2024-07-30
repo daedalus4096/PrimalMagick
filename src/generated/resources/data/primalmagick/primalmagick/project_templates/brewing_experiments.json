@@ -8,7 +8,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:brewing_stand"
       },
       "weight": 5.0
@@ -28,7 +28,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:fermented_spider_eye"
       },
       "weight": 1.0
@@ -56,7 +56,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:sugar"
       },
       "weight": 1.0
@@ -68,7 +68,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:rabbit_foot"
       },
       "weight": 0.5
@@ -80,7 +80,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:blaze_powder"
       },
       "weight": 1.0
@@ -92,7 +92,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:glistering_melon_slice"
       },
       "weight": 1.0
@@ -104,7 +104,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:spider_eye"
       },
       "weight": 1.0
@@ -116,7 +116,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:ghast_tear"
       },
       "weight": 1.0
@@ -128,7 +128,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:magma_cream"
       },
       "weight": 1.0
@@ -140,7 +140,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:pufferfish"
       },
       "weight": 1.0
@@ -152,7 +152,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:golden_carrot"
       },
       "weight": 1.0
@@ -164,11 +164,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:turtle_helmet",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:turtle_helmet"
       },
       "weight": 0.5
     },
@@ -179,7 +176,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:phantom_membrane"
       },
       "weight": 0.5

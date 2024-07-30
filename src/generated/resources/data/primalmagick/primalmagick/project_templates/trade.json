@@ -16,7 +16,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "minecraft:coal"
       },
       "weight": 3.0
@@ -36,7 +36,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "minecraft:chicken"
       },
       "weight": 1.0
@@ -48,7 +48,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:porkchop"
       },
       "weight": 1.0
@@ -60,7 +60,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 4,
+        "count": 4,
         "id": "minecraft:paper"
       },
       "weight": 2.0
@@ -80,7 +80,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 4,
+        "count": 4,
         "id": "minecraft:rotten_flesh"
       },
       "weight": 1.0
@@ -132,7 +132,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "minecraft:cod"
       },
       "weight": 1.0
@@ -160,7 +160,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:book"
       },
       "weight": 1.0
@@ -172,7 +172,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "minecraft:clay_ball"
       },
       "weight": 1.0
@@ -184,7 +184,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "minecraft:stone"
       },
       "weight": 1.0
@@ -218,11 +218,15 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:discover_infernal",
+        "researchKey": {
+          "rootKey": "primalmagick:discover_infernal"
+        },
         "weightModifier": -2.0
       },
       {
-        "researchKey": "primalmagick:discover_void",
+        "researchKey": {
+          "rootKey": "primalmagick:discover_void"
+        },
         "weightModifier": -2.0
       }
     ],

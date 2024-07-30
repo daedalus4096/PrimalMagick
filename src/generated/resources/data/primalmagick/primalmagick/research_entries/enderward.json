@@ -41,6 +41,7 @@
     "rootKey": "primalmagick:runeworking"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:enderward"

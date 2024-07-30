@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:runeworking"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "location": "primalmagick:textures/research/discipline_runeworking.png"
   },

@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:magitech"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:zephyr_engine"
@@ -38,7 +39,7 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "minecraft:piston"
             }
           }

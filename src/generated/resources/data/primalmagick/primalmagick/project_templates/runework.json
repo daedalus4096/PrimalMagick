@@ -8,7 +8,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:runecarving_table"
       },
       "weight": 5.0
@@ -20,7 +20,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:stone_slab"
       },
       "weight": 3.0
@@ -40,11 +40,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:diamond_sword",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:diamond_sword"
       },
       "weight": 1.0
     },
@@ -62,7 +59,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:rune_earth"
       },
       "weight": 1.0
@@ -81,7 +78,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:rune_sea"
       },
       "weight": 1.0
@@ -100,7 +97,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:rune_sky"
       },
       "weight": 1.0
@@ -119,7 +116,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:rune_sun"
       },
       "weight": 1.0
@@ -138,7 +135,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:rune_moon"
       },
       "weight": 1.0
@@ -157,7 +154,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:rune_project"
       },
       "weight": 1.0
@@ -176,7 +173,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:rune_protect"
       },
       "weight": 1.0
@@ -195,7 +192,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:rune_item"
       },
       "weight": 1.0
@@ -214,7 +211,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:rune_self"
       },
       "weight": 1.0
@@ -294,15 +291,21 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:expert_runeworking",
+        "researchKey": {
+          "rootKey": "primalmagick:expert_runeworking"
+        },
         "weightModifier": -1.0
       },
       {
-        "researchKey": "primalmagick:master_runeworking",
+        "researchKey": {
+          "rootKey": "primalmagick:master_runeworking"
+        },
         "weightModifier": -1.0
       },
       {
-        "researchKey": "primalmagick:supreme_runeworking",
+        "researchKey": {
+          "rootKey": "primalmagick:supreme_runeworking"
+        },
         "weightModifier": -2.0
       }
     ],

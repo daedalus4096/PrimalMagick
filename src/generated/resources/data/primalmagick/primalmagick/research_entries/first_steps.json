@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:basics"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:grimoire"
@@ -22,7 +23,7 @@
         "rootKey": {
           "key_type": "primalmagick:stack_crafted",
           "stack": {
-            "Count": 1,
+            "count": 1,
             "id": "primalmagick:arcane_workbench"
           }
         }

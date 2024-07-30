@@ -8,7 +8,9 @@
       "rootKey": "primalmagick:ritual"
     }
   ],
-  "hidden": true,
+  "flags": {
+    "hidden": true
+  },
   "icon": {
     "location": "primalmagick:textures/research/discipline_ritual.png"
   },

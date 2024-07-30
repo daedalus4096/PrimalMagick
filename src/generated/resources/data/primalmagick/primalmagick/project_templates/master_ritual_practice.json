@@ -8,7 +8,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:ritual_altar"
       },
       "weight": 10.0
@@ -20,7 +20,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:offering_pedestal"
       },
       "weight": 5.0
@@ -32,7 +32,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 4,
+        "count": 4,
         "id": "primalmagick:refined_salt"
       },
       "weight": 3.0
@@ -51,7 +51,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:bloodletter"
       },
       "weight": 1.0
@@ -70,7 +70,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:water_bucket"
       },
       "weight": 1.0
@@ -89,7 +89,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:soul_anvil"
       },
       "weight": 1.0
@@ -108,7 +108,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:spellcloth"
       },
       "weight": 1.0
@@ -127,11 +127,8 @@
         }
       },
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:hexium_trident",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:hexium_trident"
       },
       "weight": 1.0
     },
@@ -149,7 +146,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_shard_blood"
       },
       "weight": 1.0
@@ -168,11 +165,8 @@
         }
       },
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:hexium_bow",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:hexium_bow"
       },
       "weight": 1.0
     },
@@ -190,7 +184,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_shard_infernal"
       },
       "weight": 1.0
@@ -209,11 +203,8 @@
         }
       },
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:hexium_sword",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:hexium_sword"
       },
       "weight": 1.0
     },
@@ -231,7 +222,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_shard_void"
       },
       "weight": 1.0

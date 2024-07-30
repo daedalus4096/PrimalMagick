@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:basics"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "location": "primalmagick:textures/research/knowledge_theory.png"
   },
@@ -45,7 +46,7 @@
             "rootKey": {
               "key_type": "primalmagick:stack_crafted",
               "stack": {
-                "Count": 1,
+                "count": 1,
                 "id": "primalmagick:research_table"
               }
             }
@@ -55,11 +56,8 @@
             "rootKey": {
               "key_type": "primalmagick:stack_crafted",
               "stack": {
-                "Count": 1,
-                "id": "primalmagick:enchanted_ink_and_quill",
-                "tag": {
-                  "Damage": 0
-                }
+                "count": 1,
+                "id": "primalmagick:enchanted_ink_and_quill"
               }
             }
           }

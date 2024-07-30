@@ -3,9 +3,11 @@
   "disciplineKey": {
     "rootKey": "primalmagick:sorcery"
   },
-  "finaleExempt": true,
   "finales": [],
-  "hidden": true,
+  "flags": {
+    "finaleExempt": true,
+    "hidden": true
+  },
   "icon": {
     "location": "primalmagick:textures/sources/moon.png"
   },

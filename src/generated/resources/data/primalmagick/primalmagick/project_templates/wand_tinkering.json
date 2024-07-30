@@ -15,7 +15,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:wand_assembly_table"
       },
       "weight": 3.0
@@ -27,7 +27,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:heartwood"
       },
       "weight": 1.0
@@ -55,7 +55,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:bamboo"
       },
       "weight": 1.0
@@ -128,7 +128,9 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:master_manaweaving",
+        "researchKey": {
+          "rootKey": "primalmagick:master_manaweaving"
+        },
         "weightModifier": -2.0
       }
     ],

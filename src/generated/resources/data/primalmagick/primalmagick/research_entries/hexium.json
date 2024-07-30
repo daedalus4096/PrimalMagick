@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:alchemy"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:hexium_ingot"
@@ -42,21 +43,21 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_shard_blood"
             }
           },
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_shard_infernal"
             }
           },
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_shard_void"
             }
           },
@@ -65,7 +66,7 @@
             "rootKey": {
               "key_type": "primalmagick:stack_crafted",
               "stack": {
-                "Count": 1,
+                "count": 1,
                 "id": "primalmagick:primalite_ingot"
               }
             }

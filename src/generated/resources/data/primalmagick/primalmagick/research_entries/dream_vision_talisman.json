@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:ritual"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:dream_vision_talisman"

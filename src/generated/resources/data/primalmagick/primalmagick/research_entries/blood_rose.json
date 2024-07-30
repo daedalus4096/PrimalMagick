@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:ritual"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:blood_rose"
@@ -39,7 +40,7 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "minecraft:rose_bush"
             }
           },
