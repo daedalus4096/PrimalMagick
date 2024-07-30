@@ -42,6 +42,13 @@
     }
   },
   "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "primalmagick:disintegration": 2
+        }
+      }
+    },
     "count": 1,
     "id": "primalmagick:primal_axe"
   }

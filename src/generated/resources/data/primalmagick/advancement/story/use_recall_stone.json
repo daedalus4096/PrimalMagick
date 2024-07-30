@@ -1,0 +1,26 @@
+{
+  "parent": "primalmagick:story/craft_runecarving_table",
+  "criteria": {
+    "recall": {
+      "trigger": "primalmagick:recall_stone"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.use_recall_stone.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:recall_stone"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.use_recall_stone.title"
+    }
+  },
+  "requirements": [
+    [
+      "recall"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

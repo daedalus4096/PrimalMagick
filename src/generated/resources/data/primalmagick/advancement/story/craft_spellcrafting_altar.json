@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/craft_arcane_workbench",
+  "criteria": {
+    "has_altar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:spellcrafting_altar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_spellcrafting_altar.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:spellcrafting_altar"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_spellcrafting_altar.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_altar"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

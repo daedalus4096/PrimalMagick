@@ -5,9 +5,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 4,
       "y": 1
@@ -15,9 +15,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 4
+        "points": 4,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 5,
       "y": 1
@@ -25,9 +25,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 1
+        "points": 1,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 6,
       "y": 1
@@ -35,9 +35,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 5
+        "points": 5,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 3,
       "y": 2
@@ -45,9 +45,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 4
+        "points": 4,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 4,
       "y": 2
@@ -55,9 +55,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 5
+        "points": 5,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 6,
       "y": 2
@@ -65,8 +65,8 @@
     {
       "cost": 1,
       "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:sea"
       },
       "x": 2,
@@ -75,9 +75,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 3,
       "y": 3
@@ -85,9 +85,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 4
+        "points": 4,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 4,
       "y": 3
@@ -95,9 +95,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 2
+        "points": 2,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 1,
       "y": 4
@@ -105,9 +105,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 3
+        "points": 3,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 2,
       "y": 4
@@ -115,8 +115,8 @@
     {
       "cost": 1,
       "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:sea"
       },
       "x": 3,
@@ -125,9 +125,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 4,
       "y": 4
@@ -135,9 +135,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 5
+        "points": 5,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 5,
       "y": 4
@@ -145,9 +145,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 1,
       "y": 5
@@ -155,9 +155,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 2
+        "points": 2,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 2,
       "y": 5
@@ -165,9 +165,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 3
+        "points": 3,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 3,
       "y": 5
@@ -175,8 +175,8 @@
     {
       "cost": 1,
       "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:sea"
       },
       "x": 4,
@@ -185,9 +185,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 5,
       "y": 5
@@ -195,9 +195,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 4
+        "points": 4,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 6,
       "y": 5
@@ -205,9 +205,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 0,
       "y": 6
@@ -215,9 +215,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 1
+        "points": 1,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 1,
       "y": 6
@@ -225,9 +225,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 2,
       "y": 6
@@ -235,9 +235,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 2
+        "points": 2,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 3,
       "y": 6
@@ -245,9 +245,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 3
+        "points": 3,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 4,
       "y": 6
@@ -255,8 +255,8 @@
     {
       "cost": 1,
       "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:sea"
       },
       "x": 5,
@@ -265,9 +265,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 6,
       "y": 6
@@ -275,9 +275,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 5
+        "points": 5,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 7,
       "y": 6
@@ -285,9 +285,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 1
+        "points": 1,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 0,
       "y": 7
@@ -295,9 +295,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 1,
       "y": 7
@@ -305,9 +305,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 1
+        "points": 1,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 2,
       "y": 7
@@ -315,9 +315,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 3,
       "y": 7
@@ -325,9 +325,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 2
+        "points": 2,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 4,
       "y": 7
@@ -335,9 +335,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:sea",
-        "points": 3
+        "points": 3,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 5,
       "y": 7
@@ -345,8 +345,8 @@
     {
       "cost": 1,
       "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:sea"
       },
       "x": 6,
@@ -355,9 +355,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 7,
       "y": 7

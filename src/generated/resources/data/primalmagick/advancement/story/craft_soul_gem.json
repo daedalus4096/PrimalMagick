@@ -1,0 +1,44 @@
+{
+  "parent": "primalmagick:story/discover_forbidden",
+  "criteria": {
+    "has_gem": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:soul_gem"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_sliver": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:soul_gem_sliver"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_soul_gem.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:soul_gem"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_soul_gem.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_gem",
+      "has_sliver"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

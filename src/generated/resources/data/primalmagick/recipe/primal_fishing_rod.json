@@ -42,6 +42,13 @@
     }
   },
   "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "primalmagick:bounty": 2
+        }
+      }
+    },
     "count": 1,
     "id": "primalmagick:primal_fishing_rod"
   }

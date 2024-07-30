@@ -7,7 +7,7 @@
       "entity": "this",
       "predicate": {
         "type_specific": {
-          "type": "fishing_hook",
+          "type": "minecraft:fishing_hook",
           "in_open_water": true
         }
       }
@@ -15,14 +15,16 @@
     {
       "condition": "minecraft:match_tool",
       "predicate": {
-        "enchantments": [
-          {
-            "enchantment": "primalmagick:bounty",
-            "levels": {
-              "min": 1
+        "predicates": {
+          "minecraft:enchantments": [
+            {
+              "enchantments": "primalmagick:bounty",
+              "levels": {
+                "min": 1
+              }
             }
-          }
-        ]
+          ]
+        }
       }
     }
   ]

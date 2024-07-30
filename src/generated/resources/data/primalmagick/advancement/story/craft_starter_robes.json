@@ -1,0 +1,72 @@
+{
+  "parent": "primalmagick:story/craft_arcane_workbench",
+  "criteria": {
+    "wool_chest": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:imbued_wool_chest"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "wool_feet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:imbued_wool_feet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "wool_head": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:imbued_wool_head"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "wool_legs": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:imbued_wool_legs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_starter_robes.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:imbued_wool_head"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_starter_robes.title"
+    }
+  },
+  "requirements": [
+    [
+      "wool_head"
+    ],
+    [
+      "wool_chest"
+    ],
+    [
+      "wool_legs"
+    ],
+    [
+      "wool_feet"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

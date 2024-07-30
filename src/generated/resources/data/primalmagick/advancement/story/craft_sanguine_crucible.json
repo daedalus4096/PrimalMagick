@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/craft_soul_gem",
+  "criteria": {
+    "has_crucible": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:sanguine_crucible"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_sanguine_crucible.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:sanguine_crucible"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_sanguine_crucible.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_crucible"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

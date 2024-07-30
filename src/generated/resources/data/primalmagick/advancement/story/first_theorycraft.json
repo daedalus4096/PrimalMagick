@@ -1,0 +1,30 @@
+{
+  "parent": "primalmagick:story/craft_grimoire",
+  "criteria": {
+    "completed_project": {
+      "conditions": {
+        "stat": "primalmagick:research_projects_completed",
+        "threshold": 1
+      },
+      "trigger": "primalmagick:stat_value"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.first_theorycraft.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:enchanted_ink_and_quill"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.first_theorycraft.title"
+    }
+  },
+  "requirements": [
+    [
+      "completed_project"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

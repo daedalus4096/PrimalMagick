@@ -1,0 +1,121 @@
+{
+  "parent": "primalmagick:story/craft_basic_pixie",
+  "criteria": {
+    "blood_pixie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:pixie_grand_blood"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "earth_pixie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:pixie_grand_earth"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hallowed_pixie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:pixie_grand_hallowed"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "infernal_pixie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:pixie_grand_infernal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "moon_pixie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:pixie_grand_moon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sea_pixie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:pixie_grand_sea"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sky_pixie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:pixie_grand_sky"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sun_pixie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:pixie_grand_sun"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "void_pixie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:pixie_grand_void"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_grand_pixie.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:pixie_grand_infernal"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_grand_pixie.title"
+    }
+  },
+  "requirements": [
+    [
+      "earth_pixie",
+      "sea_pixie",
+      "sky_pixie",
+      "sun_pixie",
+      "moon_pixie",
+      "blood_pixie",
+      "infernal_pixie",
+      "void_pixie",
+      "hallowed_pixie"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

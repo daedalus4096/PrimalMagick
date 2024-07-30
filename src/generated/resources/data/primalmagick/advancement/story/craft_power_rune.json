@@ -1,0 +1,55 @@
+{
+  "parent": "primalmagick:story/craft_runecarving_table",
+  "criteria": {
+    "has_grace": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:rune_grace"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_insight": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:rune_insight"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_power": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:rune_power"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_power_rune.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:rune_power"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_power_rune.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_insight",
+      "has_power",
+      "has_grace"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -5,9 +5,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 3
+        "points": 3,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 2,
       "y": 0
@@ -15,9 +15,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 5
+        "points": 5,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 3,
       "y": 0
@@ -25,9 +25,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 4,
       "y": 0
@@ -35,9 +35,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 4
+        "points": 4,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 5,
       "y": 0
@@ -45,9 +45,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 2
+        "points": 2,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 1,
       "y": 1
@@ -55,9 +55,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 2,
       "y": 1
@@ -65,8 +65,8 @@
     {
       "cost": 1,
       "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:moon"
       },
       "x": 3,
@@ -75,9 +75,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 3
+        "points": 3,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 4,
       "y": 1
@@ -85,8 +85,8 @@
     {
       "cost": 1,
       "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:moon"
       },
       "x": 5,
@@ -95,9 +95,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 6,
       "y": 1
@@ -105,9 +105,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 5
+        "points": 5,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 7,
       "y": 1
@@ -115,9 +115,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 0,
       "y": 2
@@ -125,138 +125,138 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 1
-      },
-      "x": 1,
-      "y": 2
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:moon",
-        "points": 2
-      },
-      "x": 2,
-      "y": 2
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:moon",
-        "points": 4
-      },
-      "x": 3,
-      "y": 2
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:moon",
-        "points": 1
-      },
-      "x": 0,
-      "y": 3
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
-      },
-      "x": 1,
-      "y": 3
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:moon",
-        "points": 1
-      },
-      "x": 2,
-      "y": 3
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
-      },
-      "x": 0,
-      "y": 4
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:moon",
-        "points": 1
-      },
-      "x": 1,
-      "y": 4
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
-      },
-      "x": 2,
-      "y": 4
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:moon",
-        "points": 2
-      },
-      "x": 0,
-      "y": 5
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
-      },
-      "x": 1,
-      "y": 5
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:moon",
-        "points": 2
-      },
-      "x": 2,
-      "y": 5
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:moon",
-        "points": 4
-      },
-      "x": 3,
-      "y": 5
-    },
-    {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:comprehension"
+      },
+      "x": 1,
+      "y": 2
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "language": "primalmagick:moon",
+        "points": 2,
+        "reward_type": "primalmagick:comprehension"
+      },
+      "x": 2,
+      "y": 2
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "language": "primalmagick:moon",
+        "points": 4,
+        "reward_type": "primalmagick:comprehension"
+      },
+      "x": 3,
+      "y": 2
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "language": "primalmagick:moon",
+        "points": 1,
+        "reward_type": "primalmagick:comprehension"
+      },
+      "x": 0,
+      "y": 3
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
+      },
+      "x": 1,
+      "y": 3
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "language": "primalmagick:moon",
+        "points": 1,
+        "reward_type": "primalmagick:comprehension"
+      },
+      "x": 2,
+      "y": 3
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
+      },
+      "x": 0,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "language": "primalmagick:moon",
+        "points": 1,
+        "reward_type": "primalmagick:comprehension"
+      },
+      "x": 1,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
+      },
+      "x": 2,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "language": "primalmagick:moon",
+        "points": 2,
+        "reward_type": "primalmagick:comprehension"
+      },
+      "x": 0,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "knowledgeType": "observation",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
+      },
+      "x": 1,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "language": "primalmagick:moon",
+        "points": 2,
+        "reward_type": "primalmagick:comprehension"
+      },
+      "x": 2,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "language": "primalmagick:moon",
+        "points": 4,
+        "reward_type": "primalmagick:comprehension"
+      },
+      "x": 3,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:moon"
       },
       "x": 1,
@@ -265,9 +265,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 2,
       "y": 6
@@ -275,8 +275,8 @@
     {
       "cost": 1,
       "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:moon"
       },
       "x": 3,
@@ -285,9 +285,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 3
+        "points": 3,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 4,
       "y": 6
@@ -295,8 +295,8 @@
     {
       "cost": 1,
       "reward": {
-        "type": "attunement",
         "points": 1,
+        "reward_type": "primalmagick:attunement",
         "source": "primalmagick:moon"
       },
       "x": 5,
@@ -305,9 +305,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 6,
       "y": 6
@@ -315,9 +315,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 5
+        "points": 5,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 7,
       "y": 6
@@ -325,9 +325,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 3
+        "points": 3,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 2,
       "y": 7
@@ -335,9 +335,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 5
+        "points": 5,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 3,
       "y": 7
@@ -345,9 +345,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+        "knowledgeType": "theory",
+        "levels": 1,
+        "reward_type": "primalmagick:knowledge"
       },
       "x": 4,
       "y": 7
@@ -355,9 +355,9 @@
     {
       "cost": 1,
       "reward": {
-        "type": "comprehension",
         "language": "primalmagick:moon",
-        "points": 4
+        "points": 4,
+        "reward_type": "primalmagick:comprehension"
       },
       "x": 5,
       "y": 7

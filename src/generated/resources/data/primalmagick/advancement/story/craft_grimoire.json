@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/craft_mundane_wand",
+  "criteria": {
+    "has_grimoire": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:grimoire"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_grimoire.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:bookshelf"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_grimoire.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_grimoire"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

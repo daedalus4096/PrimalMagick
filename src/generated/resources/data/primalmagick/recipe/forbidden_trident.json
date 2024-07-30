@@ -42,6 +42,13 @@
     }
   },
   "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "primalmagick:rending": 2
+        }
+      }
+    },
     "count": 1,
     "id": "primalmagick:forbidden_trident"
   }

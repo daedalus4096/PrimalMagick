@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/kill_inner_demon",
+  "criteria": {
+    "discovered_forbidden": {
+      "conditions": {
+        "researchKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "trigger": "primalmagick:research_completed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.discover_hallowed.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:hallowed_orb"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.discover_hallowed.title"
+    }
+  },
+  "requirements": [
+    [
+      "discovered_forbidden"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

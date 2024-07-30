@@ -42,6 +42,13 @@
     }
   },
   "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "primalmagick:soulpiercing": 2
+        }
+      }
+    },
     "count": 1,
     "id": "primalmagick:forbidden_bow"
   }
