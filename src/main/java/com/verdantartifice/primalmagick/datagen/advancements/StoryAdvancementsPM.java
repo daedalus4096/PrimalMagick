@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import org.apache.logging.log4j.LogManager;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.advancements.critereon.AttunementThresholdTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.EntityHurtPlayerTriggerExt;
@@ -259,6 +261,8 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .addCriterion("sun_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(registries.lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructuresPM.SUN_SHRINE))))
                 .addCriterion("moon_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(registries.lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructuresPM.MOON_SHRINE))))
                 .save(saver, PrimalMagick.resource("story/discover_all_shrines"));
+        // FIXME Re-add for 1.21 release
+/*
         AdvancementHolder discoverLibrary = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_library").icon(ItemsPM.STATIC_BOOK.get()).build())
                 .parent(craftGrimoire)
                 .requirements(AdvancementRequirements.Strategy.OR)
@@ -272,6 +276,11 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
         AdvancementHolder gainSomeComprehension = makeComprehensionAdvancement("gain_some_comprehension", ItemsPM.SCRIBE_TABLE.get(), AdvancementType.TASK, discoverLibrary, false, 1, saver);
         AdvancementHolder fullyComprehendLanguage = makeComprehensionAdvancement("fully_comprehend_language", ItemsPM.STATIC_BOOK_UNCOMMON.get(), AdvancementType.GOAL, gainSomeComprehension, false, 60, saver);
         makeComprehensionAdvancement("fully_comprehend_all_languages", ItemsPM.STATIC_BOOK_RARE.get(), AdvancementType.CHALLENGE, fullyComprehendLanguage, true, 60, saver);
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("find_lore_tablet").icon(ItemsPM.STATIC_TABLET.get()).build())
+                .parent(discoverLibrary)
+                .addCriterion("has_tablet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.STATIC_TABLET.get()))
+                .save(saver, PrimalMagick.resource("story/find_lore_tablet"));
+*/
         AdvancementHolder craftSpellcraftingAltar = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_spellcrafting_altar").icon(ItemsPM.SPELLCRAFTING_ALTAR.get()).build())
                 .parent(craftArcaneWorkbench)
                 .addCriterion("has_altar", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SPELLCRAFTING_ALTAR.get()))
@@ -305,17 +314,18 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(craftArcaneWorkbench)
                 .addCriterion("has_table", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNECARVING_TABLE.get()))
                 .save(saver, PrimalMagick.resource("story/craft_runecarving_table"));
-        AdvancementHolder runescribeEnchantment = makeRunescribingAdvancement(registries, "runescribe_enchantment", ItemsPM.RUNESCRIBING_ALTAR_BASIC.get(), AdvancementType.TASK, craftRunecarvingTable, false, saver);
-        makeRunescribingAdvancement(registries, "runescribe_all_enchantments", Items.ENCHANTING_TABLE, AdvancementType.CHALLENGE, runescribeEnchantment, true, saver);
+        // FIXME Fix generation of runescribing advancements
+//        AdvancementHolder runescribeEnchantment = makeRunescribingAdvancement(registries, "runescribe_enchantment", ItemsPM.RUNESCRIBING_ALTAR_BASIC.get(), AdvancementType.TASK, craftRunecarvingTable, false, saver);
+//        makeRunescribingAdvancement(registries, "runescribe_all_enchantments", Items.ENCHANTING_TABLE, AdvancementType.CHALLENGE, runescribeEnchantment, true, saver);
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_power_rune").icon(ItemsPM.RUNE_POWER.get()).build())
-                .parent(runescribeEnchantment)
+                .parent(craftRunecarvingTable)
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .addCriterion("has_insight", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNE_INSIGHT.get()))
                 .addCriterion("has_power", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNE_POWER.get()))
                 .addCriterion("has_grace", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.RUNE_GRACE.get()))
                 .save(saver, PrimalMagick.resource("story/craft_power_rune"));
         AdvancementHolder useRecallStone = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("use_recall_stone").icon(ItemsPM.RECALL_STONE.get()).build())
-                .parent(runescribeEnchantment)
+                .parent(craftRunecarvingTable)
                 .addCriterion("recall", RecallStoneTrigger.TriggerInstance.anywhere())
                 .save(saver, PrimalMagick.resource("story/use_recall_stone"));
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("use_recall_stone_nether").icon(Items.RESPAWN_ANCHOR).build())
@@ -449,12 +459,8 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(craftGrimoire)
                 .addCriterion("has_artifact", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()))
                 .save(saver, PrimalMagick.resource("story/find_humming_artifact"));
-        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("find_lore_tablet").icon(ItemsPM.STATIC_TABLET.get()).build())
-                .parent(discoverLibrary)
-                .addCriterion("has_tablet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.STATIC_TABLET.get()))
-                .save(saver, PrimalMagick.resource("story/find_lore_tablet"));
         AdvancementHolder reuseRuneOnce = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("reuse_rune_once").icon(ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get()).build())
-                .parent(runescribeEnchantment)
+                .parent(craftRunecarvingTable)
                 .addCriterion("reuse_once", RuneUseCountTrigger.TriggerInstance.atLeast(2))
                 .save(saver, PrimalMagick.resource("story/reuse_rune_once"));
         AdvancementHolder reuseRuneTwice = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("reuse_rune_twice").icon(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).type(AdvancementType.GOAL).build())
@@ -468,6 +474,7 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .save(saver, PrimalMagick.resource("story/reuse_rune_thrice"));
     }
     
+    @SuppressWarnings("unused")
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
         // TODO Don't hardcode languages, use the registry lookup and ancient tag (problem: custom datapack tags don't appear to be bound)
         Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
@@ -487,10 +494,15 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
         return builder.save(saver, PrimalMagick.resource("story/" + id));
     }
     
+    @SuppressWarnings("unused")
     private static AdvancementHolder makeRunescribingAdvancement(HolderLookup.Provider registries, String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, Consumer<AdvancementHolder> saver) {
         Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
+        LogManager.getLogger().debug("Rune enchantment definitions found in advancement datagen: {}", registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().count());
+        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().map(defHolder -> defHolder.key().location()).forEach(LogManager.getLogger()::debug);
+        LogManager.getLogger().debug("Enchantment definitions found in advancement dataget: {}", registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().count());
+        registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().map(enchHolder -> enchHolder.key().location()).forEach(LogManager.getLogger()::debug);
         registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().sorted(Comparator.comparing(defHolder -> defHolder.key().location().toString())).forEach(defHolder -> {
             builder.addCriterion(defHolder.key().location().toString(), RunescribingTrigger.TriggerInstance.enchantment(defHolder.value().result()));
         });

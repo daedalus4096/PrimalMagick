@@ -78,7 +78,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         generator.addProvider(isServer, new StructureTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new BookLanguageTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new ResearchEntryTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
-        return registryDataGenerator.getRegistryProvider();
+        return registryDataGenerator.getFullRegistries();
     }
     
     private static HolderLookup.Provider append(HolderLookup.Provider original, RegistrySetBuilder builder) {
