@@ -59,13 +59,6 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
         generator.addProvider(event.includeClient(), new TipDefinitionProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput(), event.getLookupProvider()));
-        generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
-                BlockLootTables.getSubProviderEntry(), 
-                EntityLootTables.getSubProviderEntry(), 
-                TreefolkBarteringLootTables.getSubProviderEntry(), 
-                TheorycraftingRewardLootTables.getSubProviderEntry(), 
-                LibraryLootTables.getSubProviderEntry()),
-            event.getLookupProvider())));
         BlockTagsProviderPM blockTagsProvider = new BlockTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new ItemTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
@@ -80,6 +73,13 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(generator.getPackOutput(), intermediate, event.getExistingFileHelper(), List.of(
                 new StoryAdvancementsPM())));
         CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
+        generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
+                BlockLootTables.getSubProviderEntry(), 
+                EntityLootTables.getSubProviderEntry(), 
+                TreefolkBarteringLootTables.getSubProviderEntry(), 
+                TheorycraftingRewardLootTables.getSubProviderEntry(), 
+                LibraryLootTables.getSubProviderEntry()),
+            registryLookupFuture)));
         generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput(), registryLookupFuture));
     }
