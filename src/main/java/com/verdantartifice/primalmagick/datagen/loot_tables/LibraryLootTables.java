@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.datagen.loot_tables;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -16,7 +15,6 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
