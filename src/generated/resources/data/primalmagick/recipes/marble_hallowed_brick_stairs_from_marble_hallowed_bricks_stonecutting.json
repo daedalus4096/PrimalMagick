@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "primalmagick:marble_hallowed_bricks"
-  },
-  "result": "primalmagick:marble_hallowed_brick_stairs"
-}

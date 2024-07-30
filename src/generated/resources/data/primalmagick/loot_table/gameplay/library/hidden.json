@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/trade",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/forbidden",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/hallowed",
+          "weight": 20
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 10.0,
+        "min": 5.0
+      }
+    }
+  ],
+  "random_sequence": "primalmagick:gameplay/library/hidden"
+}

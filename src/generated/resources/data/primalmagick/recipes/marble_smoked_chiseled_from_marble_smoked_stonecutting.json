@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "primalmagick:marble_smoked"
-  },
-  "result": "primalmagick:marble_smoked_chiseled"
-}

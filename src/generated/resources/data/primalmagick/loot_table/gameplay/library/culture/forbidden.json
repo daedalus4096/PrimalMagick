@@ -1,0 +1,55 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:forbidden"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/common",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:forbidden"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/uncommon",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:forbidden"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/rare",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/catalog/treasure"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "primalmagick:gameplay/library/culture/forbidden"
+}
