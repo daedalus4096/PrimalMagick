@@ -112,7 +112,7 @@ public class ModularWandItem extends AbstractWandItem {
     
     @Nullable
     public WandCore getWandCoreAppearance(@Nonnull ItemStack stack) {
-        return stack.get(DataComponentsPM.WAND_CORE_APPEARANCE.get());
+        return stack.getOrDefault(DataComponentsPM.WAND_CORE_APPEARANCE.get(), this.getWandCore(stack));
     }
     
     public void setWandCoreAppearance(@Nonnull ItemStack stack, @Nullable WandCore core) {
@@ -135,7 +135,7 @@ public class ModularWandItem extends AbstractWandItem {
     
     @Nullable 
     public WandCap getWandCapAppearance(@Nonnull ItemStack stack) {
-        return stack.get(DataComponentsPM.WAND_CAP_APPEARANCE.get());
+        return stack.getOrDefault(DataComponentsPM.WAND_CAP_APPEARANCE.get(), this.getWandCap(stack));
     }
     
     public void setWandCapAppearance(@Nonnull ItemStack stack, @Nullable WandCap cap) {
@@ -158,7 +158,7 @@ public class ModularWandItem extends AbstractWandItem {
     
     @Nullable
     public WandGem getWandGemAppearance(@Nonnull ItemStack stack) {
-        return stack.get(DataComponentsPM.WAND_GEM_APPEARANCE.get());
+        return stack.getOrDefault(DataComponentsPM.WAND_GEM_APPEARANCE.get(), this.getWandGem(stack));
     }
     
     public void setWandGemAppearance(@Nonnull ItemStack stack, @Nullable WandGem gem) {
