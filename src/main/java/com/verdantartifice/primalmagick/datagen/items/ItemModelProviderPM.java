@@ -19,6 +19,10 @@ import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Holder;
@@ -286,6 +290,12 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         // TODO Generate mundane wand
         // TODO Generate modular wand
         // TODO Generate modular staff
+        
+        // Generate wand component items
+        WandCoreItem.getAllCores().forEach(this::basicItem);
+        StaffCoreItem.getAllCores().forEach(this::basicItem);
+        WandCapItem.getAllCaps().forEach(this::basicItem);
+        WandGemItem.getAllGems().forEach(this::basicItem);
         
         // Generate spawn items
         this.spawnEggItem(ItemsPM.TREEFOLK_SPAWN_EGG.get());

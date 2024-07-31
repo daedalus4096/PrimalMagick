@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.datagen.advancements.StoryAdvancementsPM
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
 import com.verdantartifice.primalmagick.datagen.atlas.SpriteSourceProviderPM;
 import com.verdantartifice.primalmagick.datagen.blocks.BlockStateProviderPM;
-import com.verdantartifice.primalmagick.datagen.blocks.WandComponentBlockStateProvider;
 import com.verdantartifice.primalmagick.datagen.books.StyleGuideProvider;
 import com.verdantartifice.primalmagick.datagen.items.ItemModelProviderPM;
 import com.verdantartifice.primalmagick.datagen.lang.LanguageProviderEnUs;
@@ -55,7 +54,6 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), intermediate, event.getExistingFileHelper());
         generator.addProvider(event.includeClient(), new SpriteSourceProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new BlockStateProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
-        generator.addProvider(event.includeClient(), new WandComponentBlockStateProvider(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new ItemModelProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
