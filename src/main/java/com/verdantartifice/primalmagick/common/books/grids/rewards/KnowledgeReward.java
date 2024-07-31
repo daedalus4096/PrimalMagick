@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -75,5 +76,34 @@ public class KnowledgeReward extends AbstractReward<KnowledgeReward> {
     @Override
     public Optional<Component> getAmountText() {
         return this.levelsText;
+    }
+    
+    public static class Builder {
+        protected final KnowledgeType type;
+        protected int levels = 0;
+        
+        protected Builder(KnowledgeType type) {
+            this.type = Preconditions.checkNotNull(type);
+        }
+        
+        public static Builder reward(KnowledgeType type) {
+            return new Builder(type);
+        }
+        
+        public Builder levels(int levels) {
+            this.levels = levels;
+            return this;
+        }
+        
+        private void validate() {
+            if (this.levels < 0) {
+                throw new IllegalStateException("Levels value must be non-negative");
+            }
+        }
+        
+        public KnowledgeReward build() {
+            this.validate();
+            return new KnowledgeReward(this.type, this.levels);
+        }
     }
 }

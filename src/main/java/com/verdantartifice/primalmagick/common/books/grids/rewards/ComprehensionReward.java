@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
 import java.util.Optional;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -54,6 +55,10 @@ public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
     protected GridRewardType<ComprehensionReward> getType() {
         return GridRewardTypesPM.COMPREHENSION.get();
     }
+    
+    public int getPoints() {
+        return this.points;
+    }
 
     protected void setPoints(int points) {
         this.points = points;
@@ -82,5 +87,34 @@ public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
     @Override
     public Optional<Component> getAmountText() {
         return this.pointsText;
+    }
+    
+    public static class Builder {
+        protected final ResourceKey<BookLanguage> language;
+        protected int points = 0;
+        
+        protected Builder(ResourceKey<BookLanguage> language) {
+            this.language = Preconditions.checkNotNull(language);
+        }
+        
+        public static Builder reward(ResourceKey<BookLanguage> language) {
+            return new Builder(language);
+        }
+        
+        public Builder points(int points) {
+            this.points = points;
+            return this;
+        }
+        
+        private void validate() {
+            if (this.points < 0) {
+                throw new IllegalStateException("Points value must be non-negative");
+            }
+        }
+        
+        public ComprehensionReward build() {
+            this.validate();
+            return new ComprehensionReward(this.language, this.points);
+        }
     }
 }

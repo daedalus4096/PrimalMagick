@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.books.grids;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
@@ -48,5 +49,38 @@ public class GridNodeDefinition {
     @Nonnull
     public IReward getReward() {
         return this.reward == null ? EmptyReward.INSTANCE : this.reward;
+    }
+    
+    public static class Builder {
+        protected int cost = 1;
+        protected AbstractReward<?> reward = null;
+        
+        public static Builder node() {
+            return new Builder();
+        }
+        
+        public Builder cost(int cost) {
+            this.cost = cost;
+            return this;
+        }
+        
+        public Builder reward(AbstractReward<?> reward) {
+            this.reward = Preconditions.checkNotNull(reward);
+            return this;
+        }
+        
+        private void validate() {
+            if (this.reward == null) {
+                throw new IllegalStateException("No reward defined");
+            }
+            if (this.cost < 0) {
+                throw new IllegalStateException("Cost must be non-negative");
+            }
+        }
+        
+        public GridNodeDefinition build() {
+            this.validate();
+            return new GridNodeDefinition(this.cost, this.reward);
+        }
     }
 }

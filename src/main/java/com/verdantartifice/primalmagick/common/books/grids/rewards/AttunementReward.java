@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
 import java.util.Optional;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -75,5 +76,34 @@ public class AttunementReward extends AbstractReward<AttunementReward> {
     @Override
     public Optional<Component> getAmountText() {
         return this.pointsText;
+    }
+    
+    public static class Builder {
+        protected final Source source;
+        protected int points = 0;
+        
+        protected Builder(Source source) {
+            this.source = Preconditions.checkNotNull(source);
+        }
+        
+        public static Builder reward(Source source) {
+            return new Builder(source);
+        }
+        
+        public Builder points(int points) {
+            this.points = points;
+            return this;
+        }
+        
+        private void validate() {
+            if (this.points < 0) {
+                throw new IllegalStateException("Points value must be non-negative");
+            }
+        }
+        
+        public AttunementReward build() {
+            this.validate();
+            return new AttunementReward(this.source, this.points);
+        }
     }
 }
