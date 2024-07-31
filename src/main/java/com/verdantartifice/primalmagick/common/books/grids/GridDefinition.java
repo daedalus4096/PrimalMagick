@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.joml.Vector2i;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -23,7 +25,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ExtraCodecs;
 
 /**
  * Class encapsulating a data-defined definition for a linguistics grid.  These definitions determine
@@ -41,7 +42,15 @@ public class GridDefinition {
                 ResourceLocation.CODEC.fieldOf("key").forGetter(GridDefinition::getKey),
                 ResourceKey.codec(RegistryKeysPM.BOOK_LANGUAGES).fieldOf("language").forGetter(GridDefinition::getLanguage),
                 CodecUtils.VECTOR2I.fieldOf("startPos").forGetter(GridDefinition::getStartPos),
-                ExtraCodecs.strictUnboundedMap(CodecUtils.VECTOR2I, GridNodeDefinition.codec()).fieldOf("nodes").forGetter(GridDefinition::getNodes)
+                PlacedNode.codec().listOf().<Map<Vector2i, GridNodeDefinition>>xmap(nodeList -> {
+                    ImmutableMap.Builder<Vector2i, GridNodeDefinition> builder = ImmutableMap.builder();
+                    nodeList.forEach(pn -> builder.put(pn.pos(), pn.definition()));
+                    return builder.build();
+                }, nodeMap -> {
+                    ImmutableList.Builder<PlacedNode> builder = ImmutableList.builder();
+                    nodeMap.entrySet().forEach(entry -> builder.add(new PlacedNode(entry.getKey(), entry.getValue())));
+                    return builder.build();
+                }).fieldOf("nodes").forGetter(GridDefinition::getNodes)
             ).apply(instance, GridDefinition::new));
     }
     
@@ -50,7 +59,15 @@ public class GridDefinition {
                 ResourceLocation.STREAM_CODEC, GridDefinition::getKey,
                 ResourceKey.streamCodec(RegistryKeysPM.BOOK_LANGUAGES), GridDefinition::getLanguage,
                 StreamCodecUtils.VECTOR2I, GridDefinition::getStartPos,
-                ByteBufCodecs.map(HashMap::new, StreamCodecUtils.VECTOR2I, GridNodeDefinition.streamCodec()), GridDefinition::getNodes,
+                PlacedNode.streamCodec().apply(ByteBufCodecs.list()).<Map<Vector2i, GridNodeDefinition>>map(nodeList -> {
+                    ImmutableMap.Builder<Vector2i, GridNodeDefinition> builder = ImmutableMap.builder();
+                    nodeList.forEach(pn -> builder.put(pn.pos(), pn.definition()));
+                    return builder.build();
+                }, nodeMap -> {
+                    ImmutableList.Builder<PlacedNode> builder = ImmutableList.builder();
+                    nodeMap.entrySet().forEach(entry -> builder.add(new PlacedNode(entry.getKey(), entry.getValue())));
+                    return builder.build();
+                }), GridDefinition::getNodes,
                 GridDefinition::new);
     }
     
@@ -96,6 +113,22 @@ public class GridDefinition {
     
     public Optional<GridNodeDefinition> getNode(Vector2i pos) {
         return this.isValidPos(pos) ? Optional.ofNullable(this.nodes.get(pos)) : Optional.empty();
+    }
+    
+    protected static record PlacedNode(Vector2i pos, GridNodeDefinition definition) {
+        public static Codec<PlacedNode> codec() {
+            return RecordCodecBuilder.create(instance -> instance.group(
+                    CodecUtils.VECTOR2I.fieldOf("pos").forGetter(PlacedNode::pos),
+                    GridNodeDefinition.codec().fieldOf("definition").forGetter(PlacedNode::definition)
+                ).apply(instance, PlacedNode::new));
+        }
+        
+        public static StreamCodec<RegistryFriendlyByteBuf, PlacedNode> streamCodec() {
+            return StreamCodec.composite(
+                    StreamCodecUtils.VECTOR2I, PlacedNode::pos,
+                    GridNodeDefinition.streamCodec(), PlacedNode::definition,
+                    PlacedNode::new);
+        }
     }
     
     public static class Builder {
