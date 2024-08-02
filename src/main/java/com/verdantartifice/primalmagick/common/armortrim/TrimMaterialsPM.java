@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
@@ -44,7 +44,7 @@ public class TrimMaterialsPM {
         return key;
     }
     
-    private static void register(BootstapContext<TrimMaterial> context, ResourceKey<TrimMaterial> materialKey, Item item, Style textStyle, float itemModelIndex) {
+    private static void register(BootstrapContext<TrimMaterial> context, ResourceKey<TrimMaterial> materialKey, Item item, Style textStyle, float itemModelIndex) {
         context.register(materialKey, TrimMaterial.create(materialKey.location().getPath(), item, itemModelIndex, Component.translatable(Util.makeDescriptionId("trim_material", materialKey.location())).withStyle(textStyle), Map.of()));
     }
     
@@ -60,7 +60,7 @@ public class TrimMaterialsPM {
         }
     }
     
-    public static void bootstrap(BootstapContext<TrimMaterial> context) {
+    public static void bootstrap(BootstrapContext<TrimMaterial> context) {
         register(context, RUNE_EARTH, ItemsPM.RUNE_EARTH.get(), getStyle(Sources.EARTH), 0.7F);          // Use emerald model index
         register(context, RUNE_SEA, ItemsPM.RUNE_SEA.get(), getStyle(Sources.SEA), 0.9F);                // Use lapis model index
         register(context, RUNE_SKY, ItemsPM.RUNE_SKY.get(), getStyle(Sources.SKY), 0.8F);                // Use diamond model index

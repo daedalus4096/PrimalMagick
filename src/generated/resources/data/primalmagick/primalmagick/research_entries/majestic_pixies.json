@@ -97,6 +97,7 @@
     "rootKey": "primalmagick:ritual"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:pixie_majestic_earth"
@@ -129,7 +130,7 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:rune_power"
             }
           },

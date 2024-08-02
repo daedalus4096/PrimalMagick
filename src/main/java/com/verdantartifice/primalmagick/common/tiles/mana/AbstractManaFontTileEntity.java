@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
-import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -40,14 +41,14 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.mana = compound.getShort("mana");
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putShort("mana", (short)this.mana);
     }
 
@@ -107,13 +108,13 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
         }
     }
     
-    public void doSiphon(IManaStorage container, Level level, Player player, Vec3 targetPos, int maxTransferCentimana) {
-        if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock) {
+    public void doSiphon(ManaStorage manaCap, Level level, Player player, Vec3 targetPos, int maxTransferCentimana) {
+        if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock && manaCap != null) {
             Source source = fontBlock.getSource();
             if (source != null) {
                 // Transfer mana from the font to the container
                 int tap = Math.min(this.mana, maxTransferCentimana / 100);
-                int realManaTransfered = container.receiveMana(source, tap * 100, false) / 100;
+                int realManaTransfered = manaCap.receiveMana(source, tap * 100, false) / 100;
                 if (realManaTransfered > 0) {
                     this.mana -= realManaTransfered;
                     StatsManager.incrementValue(player, StatsPM.MANA_SIPHONED, realManaTransfered);

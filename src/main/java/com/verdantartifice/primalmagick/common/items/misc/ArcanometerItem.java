@@ -70,7 +70,7 @@ public class ArcanometerItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (worldIn.isClientSide) {
-            HitResult result = RayTraceUtils.getMouseOver(worldIn);
+            HitResult result = RayTraceUtils.getMouseOver(worldIn, playerIn);
             if (result != null && result.getType() != HitResult.Type.MISS) {
                 // If something is being moused over, play the sound effect for the player and send a scan packet to the server
                 worldIn.playSound(playerIn, playerIn.blockPosition(), SoundsPM.SCAN.get(), SoundSource.MASTER, 1.0F, 1.0F);

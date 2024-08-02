@@ -5,10 +5,10 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to update research entry flag data on the server (e.g. when a user clicks an "updated" entry
@@ -17,6 +17,8 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SyncResearchFlagsPacket implements IMessageToServer {
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncResearchFlagsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncResearchFlagsPacket::encode, SyncResearchFlagsPacket::decode);
+
     protected final ResearchEntryKey key;
     protected final boolean isNew;
     protected final boolean isUpdated;
@@ -37,18 +39,14 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         this.isPopup = isPopup;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(SyncResearchFlagsPacket message, FriendlyByteBuf buf) {
+    public static void encode(SyncResearchFlagsPacket message, RegistryFriendlyByteBuf buf) {
         message.key.toNetwork(buf);
         buf.writeBoolean(message.isNew);
         buf.writeBoolean(message.isUpdated);
         buf.writeBoolean(message.isPopup);
     }
     
-    public static SyncResearchFlagsPacket decode(FriendlyByteBuf buf) {
+    public static SyncResearchFlagsPacket decode(RegistryFriendlyByteBuf buf) {
         return new SyncResearchFlagsPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
     }
     

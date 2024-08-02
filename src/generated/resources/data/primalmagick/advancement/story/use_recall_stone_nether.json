@@ -1,0 +1,29 @@
+{
+  "parent": "primalmagick:story/use_recall_stone",
+  "criteria": {
+    "recall_nether": {
+      "conditions": {
+        "dimension": "minecraft:the_nether"
+      },
+      "trigger": "primalmagick:recall_stone"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.use_recall_stone_nether.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:respawn_anchor"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.use_recall_stone_nether.title"
+    }
+  },
+  "requirements": [
+    [
+      "recall_nether"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

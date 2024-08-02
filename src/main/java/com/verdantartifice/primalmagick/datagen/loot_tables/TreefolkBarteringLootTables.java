@@ -6,14 +6,18 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -24,18 +28,19 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
  * @author Daedalus4096
  */
 public class TreefolkBarteringLootTables extends AbstractGameplayLootTableSubProvider {
-    public TreefolkBarteringLootTables() {
-        super(LootTablesPM::treefolkBartering);
+    public TreefolkBarteringLootTables(HolderLookup.Provider registries) {
+        super(registries, LootTablesPM::treefolkBartering);
     }
     
     @Override
-    protected void addTables(BiConsumer<ResourceLocation, Builder> writer) {
+    protected void addTables(BiConsumer<ResourceKey<LootTable>, Builder> writer) {
+        HolderGetter<Enchantment> enchLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         this.registerLootTable(writer, LootTablesPM.TREEFOLK_BARTERING, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_FOOD).setWeight(30))
-                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_SAPLINGS).setWeight(25))
-                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_SEEDS).setWeight(25))
-                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_JUNK).setWeight(15))
-                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_TREASURE).setWeight(5))));
+                .add(NestedLootTable.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_FOOD).setWeight(30))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_SAPLINGS).setWeight(25))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_SEEDS).setWeight(25))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_JUNK).setWeight(15))
+                .add(NestedLootTable.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_TREASURE).setWeight(5))));
         this.registerLootTable(writer, LootTablesPM.TREEFOLK_BARTERING_FOOD, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(LootItem.lootTableItem(Items.CARROT).setWeight(10))
                 .add(LootItem.lootTableItem(Items.POTATO).setWeight(10))
@@ -69,8 +74,8 @@ public class TreefolkBarteringLootTables extends AbstractGameplayLootTableSubPro
                 .add(LootItem.lootTableItem(ItemsPM.TREEFOLK_SEED.get()).setWeight(20))
                 .add(LootItem.lootTableItem(Items.GOLDEN_APPLE).setWeight(5))
                 .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(1))
-                .add(LootItem.lootTableItem(Items.BOOK).setWeight(5).apply(new EnchantRandomlyFunction.Builder().withEnchantment(EnchantmentsPM.VERDANT.get())))
-                .add(LootItem.lootTableItem(Items.BOOK).setWeight(5).apply((new EnchantRandomlyFunction.Builder()).withEnchantment(EnchantmentsPM.BOUNTY.get())))));
+                .add(LootItem.lootTableItem(Items.BOOK).setWeight(5).apply(new EnchantRandomlyFunction.Builder().withEnchantment(enchLookup.getOrThrow(EnchantmentsPM.VERDANT))))
+                .add(LootItem.lootTableItem(Items.BOOK).setWeight(5).apply((new EnchantRandomlyFunction.Builder()).withEnchantment(enchLookup.getOrThrow(EnchantmentsPM.BOUNTY))))));
     }
     
     public static LootTableProvider.SubProviderEntry getSubProviderEntry() {

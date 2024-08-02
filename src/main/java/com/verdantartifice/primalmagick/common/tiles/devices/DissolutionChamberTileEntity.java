@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
@@ -19,14 +20,15 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -35,6 +37,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -55,7 +58,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     protected int processTime;
     protected int processTimeTotal;
     protected ManaStorage manaStorage;
-    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chamberData = new ContainerData() {
@@ -100,19 +103,19 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
     }
 
     @Override
@@ -144,13 +147,13 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.EARTH) - entity.manaStorage.getManaStored(Sources.EARTH);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Sources.EARTH, centimanaToTransfer)) {
+                if (wand.consumeMana(wandStack, null, Sources.EARTH, centimanaToTransfer, level.registryAccess())) {
                     entity.manaStorage.receiveMana(Sources.EARTH, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
 
-            SimpleContainer testInv = new SimpleContainer(entity.getItem(INPUT_INV_INDEX, 0));
+            SingleRecipeInput testInv = new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0));
             RecipeHolder<IDissolutionRecipe> recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION.get(), testInv, level).orElse(null);
             if (entity.canDissolve(testInv, level.registryAccess(), recipe)) {
                 entity.processTime++;
@@ -171,7 +174,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         }
     }
     
-    protected boolean canDissolve(Container inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
+    protected boolean canDissolve(SingleRecipeInput inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
         if (!inputInv.isEmpty() && recipe != null) {
             ItemStack output = recipe.value().getResultItem(registryAccess);
             if (output.isEmpty()) {
@@ -196,17 +199,17 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         }
     }
     
-    protected void doDissolve(Container inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
+    protected void doDissolve(SingleRecipeInput inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
         if (recipe != null && this.canDissolve(inputInv, registryAccess, recipe)) {
             ItemStack recipeOutput = recipe.value().assemble(inputInv, registryAccess);
             ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
             if (currentOutput.isEmpty()) {
                 this.setItem(OUTPUT_INV_INDEX, 0, recipeOutput);
-            } else if (ItemStack.isSameItemSameTags(recipeOutput, currentOutput)) {
+            } else if (ItemStack.isSameItemSameComponents(recipeOutput, currentOutput)) {
                 currentOutput.grow(recipeOutput.getCount());
             }
             
-            for (int index = 0; index < inputInv.getContainerSize(); index++) {
+            for (int index = 0; index < inputInv.size(); index++) {
                 ItemStack stack = inputInv.getItem(index);
                 if (!stack.isEmpty()) {
                     stack.shrink(1);
@@ -220,7 +223,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
+        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.setChanged();
@@ -337,14 +340,19 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the output item stack
-        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(0));
-        
-        // Slot 1 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(1));
-        
-        // Slot 2 was the wand item stack
-        this.setItem(WAND_INV_INDEX, 0, legacyItems.get(2));
+    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+        super.applyImplicitComponents(pComponentInput);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+    }
+
+    @Override
+    protected void collectImplicitComponents(Builder pComponents) {
+        super.collectImplicitComponents(pComponents);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag pTag) {
+        pTag.remove("ManaStorage");
     }
 }

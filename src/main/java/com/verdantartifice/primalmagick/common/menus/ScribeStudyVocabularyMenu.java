@@ -84,9 +84,9 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         ItemStack bookStack = this.studySlot.getItem();
         if (bookStack.is(ItemTagsPM.STATIC_BOOKS)) {
             this.getContainerLevelAccess().execute((level, blockPos) -> {
-                Optional<Holder.Reference<BookLanguage>> langHolderOpt = StaticBookItem.getBookLanguage(bookStack, level.registryAccess());
+                Optional<Holder<BookLanguage>> langHolderOpt = StaticBookItem.getBookLanguage(bookStack);
                 langHolderOpt.ifPresentOrElse(lang -> {
-                    int studyCount = StaticBookItem.getBookDefinition(bookStack, level.registryAccess()).map(h -> LinguisticsManager.getTimesStudied(this.player, h, lang)).orElse(0);
+                    int studyCount = StaticBookItem.getBookDefinition(bookStack).map(h -> LinguisticsManager.getTimesStudied(this.player, h, lang)).orElse(0);
                     for (int index = 0; index < 3; index++) {
                         // Set the cost of each slot, including the cost of any previous unstudied slots.  Studied slots are given a cost
                         // of -1 as a marker.  In isolation, each slot's cost is equal to its index plus one (i.e. 1, 2, and 3 respectively).
@@ -94,7 +94,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                         // first slot had been studied, the costs would instead be -1, 2, and 5 respectively.
                         this.costs[index] = (index >= studyCount) ? index + 1 + (index > 0 ? Math.max(this.costs[index - 1], 0) : 0) : -1;
                     }
-                    this.languageClue.set(lang.key().location().hashCode());
+                    this.languageClue.set(lang.getRegisteredName().hashCode());
                     this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
                 }, () -> {
                     this.setDefaultBookData();
@@ -109,7 +109,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         for (int index = 0; index < 3; index++) {
             this.costs[index] = 0;
         }
-        this.languageClue.set(BookLanguagesPM.DEFAULT.location().hashCode());
+        this.languageClue.set(BookLanguagesPM.DEFAULT.location().toString().hashCode());
         this.vocabularyCount.set(0);
     }
     
@@ -129,8 +129,8 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             // Perform vocabulary study for the given slot
             this.getContainerLevelAccess().execute((level, blockPos) -> {
                 ItemStack bookStack = this.studySlot.getItem();
-                Holder.Reference<BookDefinition> bookDef = StaticBookItem.getBookDefinition(bookStack, level.registryAccess()).orElse(null);
-                Holder.Reference<BookLanguage> bookLanguage = StaticBookItem.getBookLanguage(bookStack, level.registryAccess()).orElse(null);
+                Holder<BookDefinition> bookDef = StaticBookItem.getBookDefinition(bookStack).orElse(null);
+                Holder<BookLanguage> bookLanguage = StaticBookItem.getBookLanguage(bookStack).orElse(null);
                 
                 int studyDelta = 0;
                 for (int costIndex = 0; costIndex <= slotId && costIndex < this.costs.length; costIndex++) {
@@ -166,7 +166,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     
     public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
-        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().location().hashCode() == hashCode).findFirst()
+        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().location().toString().hashCode() == hashCode).findFirst()
                 .orElse(BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, this.level.registryAccess()));
     }
 

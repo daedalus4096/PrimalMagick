@@ -6,9 +6,14 @@
       "condition": "minecraft:block_state_property"
     },
     {
-      "chance": 0.004,
-      "condition": "minecraft:random_chance_with_looting",
-      "looting_multiplier": 0.003
+      "condition": "minecraft:random_chance_with_enchanted_bonus",
+      "enchanted_chance": {
+        "type": "minecraft:linear",
+        "base": 0.007,
+        "per_level_above_first": 0.003
+      },
+      "enchantment": "minecraft:looting",
+      "unenchanted_chance": 0.004
     }
   ]
 }

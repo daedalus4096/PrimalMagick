@@ -33,9 +33,9 @@ public class ManaArrowItem extends ArrowItem {
     }
 
     @Override
-    public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter) {
+    public AbstractArrow createArrow(Level level, ItemStack ammo, LivingEntity shooter, ItemStack weapon) {
         Item pickupItem = SOURCE_MAPPING.containsKey(this.source) ? SOURCE_MAPPING.get(this.source) : Items.ARROW;
-        return new ManaArrowEntity(level, shooter, this.source, new ItemStack(pickupItem));
+        return new ManaArrowEntity(level, shooter, this.source, new ItemStack(pickupItem), weapon);
     }
     
     public int getColor(int tintIndex) {

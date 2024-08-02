@@ -6,9 +6,10 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialPM;
+import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialsPM;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.items.books.LootGeneratorItem;
@@ -85,16 +86,17 @@ import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
@@ -421,8 +423,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> MANA_NEXUS = registerSupplier("mana_nexus", () -> new BlockItem(BlocksPM.MANA_NEXUS.get(), new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<BlockItem> MANA_SINGULARITY = registerSupplier("mana_singularity", () -> new BlockItem(BlocksPM.MANA_SINGULARITY.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<BlockItem> MANA_SINGULARITY_CREATIVE = registerSupplier("mana_singularity_creative", () -> new BlockItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get(), new Item.Properties().rarity(Rarity.EPIC)));
-    // FIXME Re-add for 1.21 release
-    public static final RegistryObject<BurnableBlockItem> SCRIBE_TABLE = registerWithoutTab("scribe_table", () -> new BurnableBlockItem(BlocksPM.SCRIBE_TABLE.get(), 300, new Item.Properties()));
+    public static final RegistryObject<BurnableBlockItem> SCRIBE_TABLE = registerSupplier("scribe_table", () -> new BurnableBlockItem(BlocksPM.SCRIBE_TABLE.get(), 300, new Item.Properties()));
 
     // Register miscellaneous block items
     public static final RegistryObject<ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));
@@ -437,17 +438,17 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> ENDERWARD = registerSupplier("enderward", () -> new BlockItem(BlocksPM.ENDERWARD.get(), new Item.Properties().stacksTo(16)));
     
     // Register salted food items
-    public static final RegistryObject<Item> SALTED_BAKED_POTATO = registerSupplier("salted_baked_potato", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.72F).build())));
-    public static final RegistryObject<Item> SALTED_COOKED_BEEF = registerSupplier("salted_cooked_beef", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.96F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_CHICKEN = registerSupplier("salted_cooked_chicken", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.72F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_COD = registerSupplier("salted_cooked_cod", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.72F).build())));
-    public static final RegistryObject<Item> SALTED_COOKED_MUTTON = registerSupplier("salted_cooked_mutton", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.96F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_PORKCHOP = registerSupplier("salted_cooked_porkchop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationMod(0.96F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_RABBIT = registerSupplier("salted_cooked_rabbit", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.72F).meat().build())));
-    public static final RegistryObject<Item> SALTED_COOKED_SALMON = registerSupplier("salted_cooked_salmon", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.96F).build())));
-    public static final RegistryObject<BowlFoodItem> SALTED_BEETROOT_SOUP = registerSupplier("salted_beetroot_soup", () -> new BowlFoodItem(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationMod(0.72F).build())));
-    public static final RegistryObject<BowlFoodItem> SALTED_MUSHROOM_STEW = registerSupplier("salted_mushroom_stew", () -> new BowlFoodItem(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationMod(0.72F).build())));
-    public static final RegistryObject<BowlFoodItem> SALTED_RABBIT_STEW = registerSupplier("salted_rabbit_stew", () -> new BowlFoodItem(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(12).saturationMod(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_BAKED_POTATO = registerSupplier("salted_baked_potato", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_BEEF = registerSupplier("salted_cooked_beef", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationModifier(0.96F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_CHICKEN = registerSupplier("salted_cooked_chicken", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_COD = registerSupplier("salted_cooked_cod", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_MUTTON = registerSupplier("salted_cooked_mutton", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.96F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_PORKCHOP = registerSupplier("salted_cooked_porkchop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationModifier(0.96F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_RABBIT = registerSupplier("salted_cooked_rabbit", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.72F).build())));
+    public static final RegistryObject<Item> SALTED_COOKED_SALMON = registerSupplier("salted_cooked_salmon", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.96F).build())));
+    public static final RegistryObject<Item> SALTED_BEETROOT_SOUP = registerSupplier("salted_beetroot_soup", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).usingConvertsTo(Items.BOWL).build())));
+    public static final RegistryObject<Item> SALTED_MUSHROOM_STEW = registerSupplier("salted_mushroom_stew", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).usingConvertsTo(Items.BOWL).build())));
+    public static final RegistryObject<Item> SALTED_RABBIT_STEW = registerSupplier("salted_rabbit_stew", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(12).saturationModifier(0.72F).usingConvertsTo(Items.BOWL).build())));
     
     // Register mineral items
     public static final RegistryObject<Item> IRON_GRIT = registerSupplier("iron_grit", () -> new Item(new Item.Properties()));
@@ -466,41 +467,41 @@ public class ItemsPM {
     public static final RegistryObject<EnergizedGemItem> ENERGIZED_QUARTZ = registerSupplier("energized_quartz", () -> new EnergizedGemItem(new Item.Properties()));
     
     // Register tool items
-    public static final RegistryObject<SwordItem> PRIMALITE_SWORD = registerSupplier("primalite_sword", () -> new SwordItem(ItemTierPM.PRIMALITE, 3, -2.4F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<SwordItem> PRIMALITE_SWORD = registerSupplier("primalite_sword", () -> new SwordItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(SwordItem.createAttributes(ItemTierPM.PRIMALITE, 3, -2.4F))));
     public static final RegistryObject<PrimaliteTridentItem> PRIMALITE_TRIDENT = registerSupplier("primalite_trident", () -> new PrimaliteTridentItem(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<TieredBowItem> PRIMALITE_BOW = registerSupplier("primalite_bow", () -> new TieredBowItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<ShovelItem> PRIMALITE_SHOVEL = registerSupplier("primalite_shovel", () -> new ShovelItem(ItemTierPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PickaxeItem> PRIMALITE_PICKAXE = registerSupplier("primalite_pickaxe", () -> new PickaxeItem(ItemTierPM.PRIMALITE, 1, -2.8F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<AxeItem> PRIMALITE_AXE = registerSupplier("primalite_axe", () -> new AxeItem(ItemTierPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<HoeItem> PRIMALITE_HOE = registerSupplier("primalite_hoe", () -> new HoeItem(ItemTierPM.PRIMALITE, -2, 0.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ShovelItem> PRIMALITE_SHOVEL = registerSupplier("primalite_shovel", () -> new ShovelItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(ShovelItem.createAttributes(ItemTierPM.PRIMALITE, 1.5F, -3.0F))));
+    public static final RegistryObject<PickaxeItem> PRIMALITE_PICKAXE = registerSupplier("primalite_pickaxe", () -> new PickaxeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(PickaxeItem.createAttributes(ItemTierPM.PRIMALITE, 1.0F, -2.8F))));
+    public static final RegistryObject<AxeItem> PRIMALITE_AXE = registerSupplier("primalite_axe", () -> new AxeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(AxeItem.createAttributes(ItemTierPM.PRIMALITE, 5.5F, -3.0F))));
+    public static final RegistryObject<HoeItem> PRIMALITE_HOE = registerSupplier("primalite_hoe", () -> new HoeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(HoeItem.createAttributes(ItemTierPM.PRIMALITE, -2.0F, 0.0F))));
     public static final RegistryObject<TieredFishingRodItem> PRIMALITE_FISHING_ROD = registerSupplier("primalite_fishing_rod", () -> new TieredFishingRodItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PrimaliteShieldItem> PRIMALITE_SHIELD = registerSupplier("primalite_shield", () -> new PrimaliteShieldItem(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<SwordItem> HEXIUM_SWORD = registerSupplier("hexium_sword", () -> new SwordItem(ItemTierPM.HEXIUM, 3, -2.4F, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<SwordItem> HEXIUM_SWORD = registerSupplier("hexium_sword", () -> new SwordItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(SwordItem.createAttributes(ItemTierPM.HEXIUM, 3, -2.4F))));
     public static final RegistryObject<HexiumTridentItem> HEXIUM_TRIDENT = registerSupplier("hexium_trident", () -> new HexiumTridentItem(new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<TieredBowItem> HEXIUM_BOW = registerSupplier("hexium_bow", () -> new TieredBowItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<ShovelItem> HEXIUM_SHOVEL = registerSupplier("hexium_shovel", () -> new ShovelItem(ItemTierPM.HEXIUM, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<PickaxeItem> HEXIUM_PICKAXE = registerSupplier("hexium_pickaxe", () -> new PickaxeItem(ItemTierPM.HEXIUM, 1, -2.8F, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<AxeItem> HEXIUM_AXE = registerSupplier("hexium_axe", () -> new AxeItem(ItemTierPM.HEXIUM, 4.0F, -3.0F, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<HoeItem> HEXIUM_HOE = registerSupplier("hexium_hoe", () -> new HoeItem(ItemTierPM.HEXIUM, -4, 0.0F, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<ShovelItem> HEXIUM_SHOVEL = registerSupplier("hexium_shovel", () -> new ShovelItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(ShovelItem.createAttributes(ItemTierPM.HEXIUM, 1.5F, -3.0F))));
+    public static final RegistryObject<PickaxeItem> HEXIUM_PICKAXE = registerSupplier("hexium_pickaxe", () -> new PickaxeItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(PickaxeItem.createAttributes(ItemTierPM.HEXIUM, 1.0F, -2.8F))));
+    public static final RegistryObject<AxeItem> HEXIUM_AXE = registerSupplier("hexium_axe", () -> new AxeItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(AxeItem.createAttributes(ItemTierPM.HEXIUM, 4.0F, -3.0F))));
+    public static final RegistryObject<HoeItem> HEXIUM_HOE = registerSupplier("hexium_hoe", () -> new HoeItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(HoeItem.createAttributes(ItemTierPM.HEXIUM, -4.0F, 0.0F))));
     public static final RegistryObject<TieredFishingRodItem> HEXIUM_FISHING_ROD = registerSupplier("hexium_fishing_rod", () -> new TieredFishingRodItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<HexiumShieldItem> HEXIUM_SHIELD = registerSupplier("hexium_shield", () -> new HexiumShieldItem(new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<SwordItem> HALLOWSTEEL_SWORD = registerSupplier("hallowsteel_sword", () -> new SwordItem(ItemTierPM.HALLOWSTEEL, 3, -2.4F, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<SwordItem> HALLOWSTEEL_SWORD = registerSupplier("hallowsteel_sword", () -> new SwordItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(ItemTierPM.HALLOWSTEEL, 3, -2.4F))));
     public static final RegistryObject<HallowsteelTridentItem> HALLOWSTEEL_TRIDENT = registerSupplier("hallowsteel_trident", () -> new HallowsteelTridentItem(new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<TieredBowItem> HALLOWSTEEL_BOW = registerSupplier("hallowsteel_bow", () -> new TieredBowItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<ShovelItem> HALLOWSTEEL_SHOVEL = registerSupplier("hallowsteel_shovel", () -> new ShovelItem(ItemTierPM.HALLOWSTEEL, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<PickaxeItem> HALLOWSTEEL_PICKAXE = registerSupplier("hallowsteel_pickaxe", () -> new PickaxeItem(ItemTierPM.HALLOWSTEEL, 1, -2.8F, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<AxeItem> HALLOWSTEEL_AXE = registerSupplier("hallowsteel_axe", () -> new AxeItem(ItemTierPM.HALLOWSTEEL, 3.5F, -3.0F, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<HoeItem> HALLOWSTEEL_HOE = registerSupplier("hallowsteel_hoe", () -> new HoeItem(ItemTierPM.HALLOWSTEEL, -5, 0.0F, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<ShovelItem> HALLOWSTEEL_SHOVEL = registerSupplier("hallowsteel_shovel", () -> new ShovelItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(ShovelItem.createAttributes(ItemTierPM.HALLOWSTEEL, 1.5F, -3.0F))));
+    public static final RegistryObject<PickaxeItem> HALLOWSTEEL_PICKAXE = registerSupplier("hallowsteel_pickaxe", () -> new PickaxeItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(PickaxeItem.createAttributes(ItemTierPM.HALLOWSTEEL, 1.0F, -2.8F))));
+    public static final RegistryObject<AxeItem> HALLOWSTEEL_AXE = registerSupplier("hallowsteel_axe", () -> new AxeItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(AxeItem.createAttributes(ItemTierPM.HALLOWSTEEL, 3.5F, -3.0F))));
+    public static final RegistryObject<HoeItem> HALLOWSTEEL_HOE = registerSupplier("hallowsteel_hoe", () -> new HoeItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(HoeItem.createAttributes(ItemTierPM.HALLOWSTEEL, -5.0F, 0.0F))));
     public static final RegistryObject<TieredFishingRodItem> HALLOWSTEEL_FISHING_ROD = registerSupplier("hallowsteel_fishing_rod", () -> new TieredFishingRodItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<HallowsteelShieldItem> HALLOWSTEEL_SHIELD = registerSupplier("hallowsteel_shield", () -> new HallowsteelShieldItem(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<PrimalShovelItem> PRIMAL_SHOVEL = registerDefaultInstance("primal_shovel", () -> new PrimalShovelItem(ItemTierPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PrimalShovelItem> PRIMAL_SHOVEL = registerDefaultInstance("primal_shovel", () -> new PrimalShovelItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(ShovelItem.createAttributes(ItemTierPM.PRIMALITE, 1.5F, -3.0F))));
     public static final RegistryObject<PrimalFishingRodItem> PRIMAL_FISHING_ROD = registerDefaultInstance("primal_fishing_rod", () -> new PrimalFishingRodItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PrimalAxeItem> PRIMAL_AXE = registerDefaultInstance("primal_axe", () -> new PrimalAxeItem(ItemTierPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PrimalHoeItem> PRIMAL_HOE = registerDefaultInstance("primal_hoe", () -> new PrimalHoeItem(ItemTierPM.PRIMALITE, -2, 0.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PrimalPickaxeItem> PRIMAL_PICKAXE = registerDefaultInstance("primal_pickaxe", () -> new PrimalPickaxeItem(ItemTierPM.PRIMALITE, 1, -2.8F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PrimalAxeItem> PRIMAL_AXE = registerDefaultInstance("primal_axe", () -> new PrimalAxeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(AxeItem.createAttributes(ItemTierPM.PRIMALITE, 5.5F, -3.0F))));
+    public static final RegistryObject<PrimalHoeItem> PRIMAL_HOE = registerDefaultInstance("primal_hoe", () -> new PrimalHoeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(HoeItem.createAttributes(ItemTierPM.PRIMALITE, -2.0F, 0.0F))));
+    public static final RegistryObject<PrimalPickaxeItem> PRIMAL_PICKAXE = registerDefaultInstance("primal_pickaxe", () -> new PrimalPickaxeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(PickaxeItem.createAttributes(ItemTierPM.PRIMALITE, 1.0F, -2.8F))));
     public static final RegistryObject<ForbiddenTridentItem> FORBIDDEN_TRIDENT = registerDefaultInstance("forbidden_trident", () -> new ForbiddenTridentItem(new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<ForbiddenBowItem> FORBIDDEN_BOW = registerDefaultInstance("forbidden_bow", () -> new ForbiddenBowItem(new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<ForbiddenSwordItem> FORBIDDEN_SWORD = registerDefaultInstance("forbidden_sword", () -> new ForbiddenSwordItem(ItemTierPM.HEXIUM, 3, -2.4F, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<ForbiddenSwordItem> FORBIDDEN_SWORD = registerDefaultInstance("forbidden_sword", () -> new ForbiddenSwordItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(SwordItem.createAttributes(ItemTierPM.HEXIUM, 3, -2.4F))));
     public static final RegistryObject<SacredShieldItem> SACRED_SHIELD = registerDefaultInstance("sacred_shield", () -> new SacredShieldItem(new Item.Properties().rarity(Rarity.EPIC)));
     
     // Register mana arrow items
@@ -515,34 +516,34 @@ public class ItemsPM {
     public static final RegistryObject<ManaArrowItem> MANA_ARROW_HALLOWED = registerSupplier("mana_arrow_hallowed", () -> new ManaArrowItem(Sources.HALLOWED, new Item.Properties()));
     
     // Register armor items
-    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = registerSupplier("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, ArmorItem.Type.HELMET, 1, new Item.Properties().rarity(Rarity.COMMON)));
-    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_CHEST = registerSupplier("imbued_wool_chest", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, ArmorItem.Type.CHESTPLATE, 2, new Item.Properties().rarity(Rarity.COMMON)));
-    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_LEGS = registerSupplier("imbued_wool_legs", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, ArmorItem.Type.LEGGINGS, 1, new Item.Properties().rarity(Rarity.COMMON)));
-    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_FEET = registerSupplier("imbued_wool_feet", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, ArmorItem.Type.BOOTS, 1, new Item.Properties().rarity(Rarity.COMMON)));
-    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_HEAD = registerSupplier("spellcloth_head", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, ArmorItem.Type.HELMET, 2, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_CHEST = registerSupplier("spellcloth_chest", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, ArmorItem.Type.CHESTPLATE, 3, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_LEGS = registerSupplier("spellcloth_legs", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, ArmorItem.Type.LEGGINGS, 3, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_FEET = registerSupplier("spellcloth_feet", () -> new RobeArmorItem(ArmorMaterialPM.SPELLCLOTH, ArmorItem.Type.BOOTS, 2, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<RobeArmorItem> HEXWEAVE_HEAD = registerSupplier("hexweave_head", () -> new RobeArmorItem(ArmorMaterialPM.HEXWEAVE, ArmorItem.Type.HELMET, 3, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<RobeArmorItem> HEXWEAVE_CHEST = registerSupplier("hexweave_chest", () -> new RobeArmorItem(ArmorMaterialPM.HEXWEAVE, ArmorItem.Type.CHESTPLATE, 5, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<RobeArmorItem> HEXWEAVE_LEGS = registerSupplier("hexweave_legs", () -> new RobeArmorItem(ArmorMaterialPM.HEXWEAVE, ArmorItem.Type.LEGGINGS, 4, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<RobeArmorItem> HEXWEAVE_FEET = registerSupplier("hexweave_feet", () -> new RobeArmorItem(ArmorMaterialPM.HEXWEAVE, ArmorItem.Type.BOOTS, 3, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_HEAD = registerSupplier("saintswool_head", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, ArmorItem.Type.HELMET, 4, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_CHEST = registerSupplier("saintswool_chest", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, ArmorItem.Type.CHESTPLATE, 6, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_LEGS = registerSupplier("saintswool_legs", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, ArmorItem.Type.LEGGINGS, 6, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_FEET = registerSupplier("saintswool_feet", () -> new RobeArmorItem(ArmorMaterialPM.SAINTSWOOL, ArmorItem.Type.BOOTS, 4, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<ArmorItem> PRIMALITE_HEAD = registerSupplier("primalite_head", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<ArmorItem> PRIMALITE_CHEST = registerSupplier("primalite_chest", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<ArmorItem> PRIMALITE_LEGS = registerSupplier("primalite_legs", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<ArmorItem> PRIMALITE_FEET = registerSupplier("primalite_feet", () -> new ArmorItem(ArmorMaterialPM.PRIMALITE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<ArmorItem> HEXIUM_HEAD = registerSupplier("hexium_head", () -> new ArmorItem(ArmorMaterialPM.HEXIUM, ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<ArmorItem> HEXIUM_CHEST = registerSupplier("hexium_chest", () -> new ArmorItem(ArmorMaterialPM.HEXIUM, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<ArmorItem> HEXIUM_LEGS = registerSupplier("hexium_legs", () -> new ArmorItem(ArmorMaterialPM.HEXIUM, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<ArmorItem> HEXIUM_FEET = registerSupplier("hexium_feet", () -> new ArmorItem(ArmorMaterialPM.HEXIUM, ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<ArmorItem> HALLOWSTEEL_HEAD = registerSupplier("hallowsteel_head", () -> new ArmorItem(ArmorMaterialPM.HALLOWSTEEL, ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<ArmorItem> HALLOWSTEEL_CHEST = registerSupplier("hallowsteel_chest", () -> new ArmorItem(ArmorMaterialPM.HALLOWSTEEL, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<ArmorItem> HALLOWSTEEL_LEGS = registerSupplier("hallowsteel_legs", () -> new ArmorItem(ArmorMaterialPM.HALLOWSTEEL, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<ArmorItem> HALLOWSTEEL_FEET = registerSupplier("hallowsteel_feet", () -> new ArmorItem(ArmorMaterialPM.HALLOWSTEEL, ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = registerSupplier("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialsPM.IMBUED_WOOL.getHolder().get(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.COMMON).durability(ArmorItem.Type.HELMET.getDurability(8)).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
+    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_CHEST = registerSupplier("imbued_wool_chest", () -> new RobeArmorItem(ArmorMaterialsPM.IMBUED_WOOL.getHolder().get(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.COMMON).durability(ArmorItem.Type.CHESTPLATE.getDurability(8)).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
+    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_LEGS = registerSupplier("imbued_wool_legs", () -> new RobeArmorItem(ArmorMaterialsPM.IMBUED_WOOL.getHolder().get(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.COMMON).durability(ArmorItem.Type.LEGGINGS.getDurability(8)).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
+    public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_FEET = registerSupplier("imbued_wool_feet", () -> new RobeArmorItem(ArmorMaterialsPM.IMBUED_WOOL.getHolder().get(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.COMMON).durability(ArmorItem.Type.BOOTS.getDurability(8)).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
+    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_HEAD = registerSupplier("spellcloth_head", () -> new RobeArmorItem(ArmorMaterialsPM.SPELLCLOTH.getHolder().get(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.HELMET.getDurability(20)).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
+    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_CHEST = registerSupplier("spellcloth_chest", () -> new RobeArmorItem(ArmorMaterialsPM.SPELLCLOTH.getHolder().get(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.CHESTPLATE.getDurability(20)).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
+    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_LEGS = registerSupplier("spellcloth_legs", () -> new RobeArmorItem(ArmorMaterialsPM.SPELLCLOTH.getHolder().get(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.LEGGINGS.getDurability(20)).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
+    public static final RegistryObject<RobeArmorItem> SPELLCLOTH_FEET = registerSupplier("spellcloth_feet", () -> new RobeArmorItem(ArmorMaterialsPM.SPELLCLOTH.getHolder().get(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.BOOTS.getDurability(20)).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
+    public static final RegistryObject<RobeArmorItem> HEXWEAVE_HEAD = registerSupplier("hexweave_head", () -> new RobeArmorItem(ArmorMaterialsPM.HEXWEAVE.getHolder().get(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.HELMET.getDurability(35)).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
+    public static final RegistryObject<RobeArmorItem> HEXWEAVE_CHEST = registerSupplier("hexweave_chest", () -> new RobeArmorItem(ArmorMaterialsPM.HEXWEAVE.getHolder().get(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.CHESTPLATE.getDurability(35)).component(DataComponentsPM.MANA_DISCOUNT.get(), 5)));
+    public static final RegistryObject<RobeArmorItem> HEXWEAVE_LEGS = registerSupplier("hexweave_legs", () -> new RobeArmorItem(ArmorMaterialsPM.HEXWEAVE.getHolder().get(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.LEGGINGS.getDurability(35)).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
+    public static final RegistryObject<RobeArmorItem> HEXWEAVE_FEET = registerSupplier("hexweave_feet", () -> new RobeArmorItem(ArmorMaterialsPM.HEXWEAVE.getHolder().get(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.BOOTS.getDurability(35)).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
+    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_HEAD = registerSupplier("saintswool_head", () -> new RobeArmorItem(ArmorMaterialsPM.SAINTSWOOL.getHolder().get(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.HELMET.getDurability(50)).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
+    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_CHEST = registerSupplier("saintswool_chest", () -> new RobeArmorItem(ArmorMaterialsPM.SAINTSWOOL.getHolder().get(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.CHESTPLATE.getDurability(50)).component(DataComponentsPM.MANA_DISCOUNT.get(), 6)));
+    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_LEGS = registerSupplier("saintswool_legs", () -> new RobeArmorItem(ArmorMaterialsPM.SAINTSWOOL.getHolder().get(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.LEGGINGS.getDurability(50)).component(DataComponentsPM.MANA_DISCOUNT.get(), 6)));
+    public static final RegistryObject<RobeArmorItem> SAINTSWOOL_FEET = registerSupplier("saintswool_feet", () -> new RobeArmorItem(ArmorMaterialsPM.SAINTSWOOL.getHolder().get(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.BOOTS.getDurability(50)).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
+    public static final RegistryObject<ArmorItem> PRIMALITE_HEAD = registerSupplier("primalite_head", () -> new ArmorItem(ArmorMaterialsPM.PRIMALITE.getHolder().get(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.HELMET.getDurability(30))));
+    public static final RegistryObject<ArmorItem> PRIMALITE_CHEST = registerSupplier("primalite_chest", () -> new ArmorItem(ArmorMaterialsPM.PRIMALITE.getHolder().get(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.CHESTPLATE.getDurability(30))));
+    public static final RegistryObject<ArmorItem> PRIMALITE_LEGS = registerSupplier("primalite_legs", () -> new ArmorItem(ArmorMaterialsPM.PRIMALITE.getHolder().get(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.LEGGINGS.getDurability(30))));
+    public static final RegistryObject<ArmorItem> PRIMALITE_FEET = registerSupplier("primalite_feet", () -> new ArmorItem(ArmorMaterialsPM.PRIMALITE.getHolder().get(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.BOOTS.getDurability(30))));
+    public static final RegistryObject<ArmorItem> HEXIUM_HEAD = registerSupplier("hexium_head", () -> new ArmorItem(ArmorMaterialsPM.HEXIUM.getHolder().get(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.HELMET.getDurability(45))));
+    public static final RegistryObject<ArmorItem> HEXIUM_CHEST = registerSupplier("hexium_chest", () -> new ArmorItem(ArmorMaterialsPM.HEXIUM.getHolder().get(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.CHESTPLATE.getDurability(45))));
+    public static final RegistryObject<ArmorItem> HEXIUM_LEGS = registerSupplier("hexium_legs", () -> new ArmorItem(ArmorMaterialsPM.HEXIUM.getHolder().get(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.LEGGINGS.getDurability(45))));
+    public static final RegistryObject<ArmorItem> HEXIUM_FEET = registerSupplier("hexium_feet", () -> new ArmorItem(ArmorMaterialsPM.HEXIUM.getHolder().get(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.BOOTS.getDurability(45))));
+    public static final RegistryObject<ArmorItem> HALLOWSTEEL_HEAD = registerSupplier("hallowsteel_head", () -> new ArmorItem(ArmorMaterialsPM.HALLOWSTEEL.getHolder().get(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.HELMET.getDurability(60))));
+    public static final RegistryObject<ArmorItem> HALLOWSTEEL_CHEST = registerSupplier("hallowsteel_chest", () -> new ArmorItem(ArmorMaterialsPM.HALLOWSTEEL.getHolder().get(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.CHESTPLATE.getDurability(60))));
+    public static final RegistryObject<ArmorItem> HALLOWSTEEL_LEGS = registerSupplier("hallowsteel_legs", () -> new ArmorItem(ArmorMaterialsPM.HALLOWSTEEL.getHolder().get(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.LEGGINGS.getDurability(60))));
+    public static final RegistryObject<ArmorItem> HALLOWSTEEL_FEET = registerSupplier("hallowsteel_feet", () -> new ArmorItem(ArmorMaterialsPM.HALLOWSTEEL.getHolder().get(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.BOOTS.getDurability(60))));
     
     // Register miscellaneous items
     public static final RegistryObject<ArcanometerItem> ARCANOMETER = registerSupplier("arcanometer", ArcanometerItem::new);
@@ -560,7 +561,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> TALLOW = registerSupplier("tallow", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> BEESWAX = registerSupplier("beeswax", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> MANA_SALTS = registerSupplier("mana_salts", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<ManafruitItem> MANAFRUIT = registerSupplier("manafruit", () -> new ManafruitItem(0, new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(0.8F).build())));
+    public static final RegistryObject<ManafruitItem> MANAFRUIT = registerSupplier("manafruit", () -> new ManafruitItem(0, new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationModifier(0.8F).build())));
     public static final RegistryObject<Item> INCENSE_STICK = registerSupplier("incense_stick", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SOUL_GEM = registerSupplier("soul_gem", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SOUL_GEM_SLIVER = registerSupplier("soul_gem_sliver", () -> new Item(new Item.Properties()));
@@ -794,7 +795,7 @@ public class ItemsPM {
     public static final RegistryObject<SpellScrollItem> SPELL_SCROLL_FILLED = registerWithoutTab("spell_scroll_filled", SpellScrollItem::new);
     public static final RegistryObject<MundaneWandItem> MUNDANE_WAND = registerSupplier("mundane_wand", MundaneWandItem::new);
     public static final RegistryObject<ModularWandItem> MODULAR_WAND = registerCustom("modular_wand", ModularWandItem::registerCreativeTabItems, () -> new ModularWandItem(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<ModularStaffItem> MODULAR_STAFF = registerCustom("modular_staff", ModularWandItem::registerCreativeTabItems, () -> new ModularStaffItem(5, -2.4F, new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<ModularStaffItem> MODULAR_STAFF = registerCustom("modular_staff", ModularWandItem::registerCreativeTabItems, () -> new ModularStaffItem(new Item.Properties().stacksTo(1).attributes(ModularStaffItem.createAttributes(5, -2.4)).component(DataComponents.TOOL, ModularStaffItem.createToolProperties())));
     public static final RegistryObject<WandCoreItem> HEARTWOOD_WAND_CORE_ITEM = registerSupplier("heartwood_wand_core_item", () -> new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties()));
     public static final RegistryObject<WandCoreItem> OBSIDIAN_WAND_CORE_ITEM = registerSupplier("obsidian_wand_core_item", () -> new WandCoreItem(WandCore.OBSIDIAN, new Item.Properties()));
     public static final RegistryObject<WandCoreItem> CORAL_WAND_CORE_ITEM = registerSupplier("coral_wand_core_item", () -> new WandCoreItem(WandCore.CORAL, new Item.Properties()));
@@ -897,9 +898,8 @@ public class ItemsPM {
     public static final RegistryObject<StaticBookItem> STATIC_BOOK_UNCOMMON = registerWithoutTab("static_book_uncommon", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));  // Deliberately not setting rarity here
     public static final RegistryObject<StaticBookItem> STATIC_BOOK_RARE = registerWithoutTab("static_book_rare", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));  // Deliberately not setting rarity here
     public static final RegistryObject<StaticBookItem> STATIC_TABLET = registerWithoutTab("static_tablet", () -> new StaticBookItem(BookType.TABLET, new Item.Properties().stacksTo(16)));
-    // FIXME Re-add for 1.21 release
-    public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerWithoutTab("lore_tablet_fragment", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<LootGeneratorItem> LORE_TABLET_DIRTY = registerWithoutTab("lore_tablet_dirty", () -> new LootGeneratorItem(LootTablesPM.LIBRARY_ARCHAEOLOGY, new Item.Properties()));
+    public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerSupplier("lore_tablet_fragment", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<LootGeneratorItem> LORE_TABLET_DIRTY = registerSupplier("lore_tablet_dirty", () -> new LootGeneratorItem(LootTablesPM.LIBRARY_ARCHAEOLOGY, new Item.Properties()));
     
     // Register debug items
     public static final RegistryObject<TickStickItem> TICK_STICK = registerWithoutTab("tick_stick", () -> new TickStickItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));

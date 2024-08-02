@@ -13,12 +13,14 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagP
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -62,14 +64,14 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
         List<Component> textList = new ArrayList<>();
         MutableComponent nameComponent = stack.getHoverName().copy();
         if (nameComponent.getStyle().equals(Style.EMPTY)) {
-            nameComponent = nameComponent.withStyle(stack.getItem().getRarity(stack).getStyleModifier());
+            nameComponent = nameComponent.withStyle(stack.getOrDefault(DataComponents.RARITY, Rarity.COMMON).color());
         }
-        if (stack.hasCustomHoverName()) {
+        if (stack.has(DataComponents.CUSTOM_NAME)) {
             nameComponent = nameComponent.withStyle(nameComponent.getStyle().applyFormat(ChatFormatting.ITALIC));
         }
         textList.add(nameComponent);
-        if (ItemStack.shouldShowInTooltip(stack.getHideFlags(), ItemStack.TooltipPart.ADDITIONAL)) {
-            stack.getItem().appendHoverText(stack, mc.level, textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
+        if (!stack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP)) {
+            stack.getItem().appendHoverText(stack, Item.TooltipContext.of(mc.level), textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
         }
         return textList;
     }

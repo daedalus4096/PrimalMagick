@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidget<ExperienceProjectMaterial> {
-    private static final ResourceLocation EXPERIENCE_ORB_TEXTURES = new ResourceLocation("textures/entity/experience_orb.png");
+    private static final ResourceLocation EXPERIENCE_ORB_TEXTURES = ResourceLocation.withDefaultNamespace("textures/entity/experience_orb.png");
 
     public ExperienceProjectMaterialWidget(ExperienceProjectMaterial material, int x, int y, Set<Block> surroundings) {
         super(material, x, y, surroundings);

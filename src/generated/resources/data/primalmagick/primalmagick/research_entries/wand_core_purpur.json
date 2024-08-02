@@ -25,6 +25,7 @@
     "rootKey": "primalmagick:manaweaving"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:purpur_wand_core_item"
@@ -54,7 +55,7 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "minecraft:purpur_block"
             }
           },

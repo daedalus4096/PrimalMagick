@@ -40,7 +40,7 @@ public class RitualLecternTER implements BlockEntityRenderer<RitualLecternTileEn
             matrixStackIn.translate(0.0D, -0.125D, 0.0D);
             this.bookModel.setupAnim(0.0F, 0.1F, 0.9F, 1.2F);
             VertexConsumer ivertexbuilder = EnchantTableRenderer.BOOK_LOCATION.buffer(bufferIn, RenderType::entitySolid);
-            this.bookModel.render(matrixStackIn, ivertexbuilder, combinedLightIn, combinedOverlayIn, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.bookModel.render(matrixStackIn, ivertexbuilder, combinedLightIn, combinedOverlayIn, -1);
             matrixStackIn.popPose();
         }
     }

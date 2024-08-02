@@ -20,10 +20,14 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.tags.ResearchEntryTagsPM;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -40,54 +44,42 @@ import net.minecraft.world.level.ItemLike;
  * @author Daedalus4096
  */
 public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<ResearchTier> tierOpt, Optional<IconDefinition> iconOpt, List<ResearchEntryKey> parents, 
-        boolean hidden, boolean hasHint, boolean internal, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
+        ResearchEntry.Flags flags, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
     public static Codec<ResearchEntry> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
-                ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
+                ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
                 ResearchTier.CODEC.optionalFieldOf("tier").forGetter(ResearchEntry::tierOpt),
                 IconDefinition.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
-                ResearchEntryKey.CODEC.listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
-                Codec.BOOL.optionalFieldOf("hidden", false).forGetter(ResearchEntry::hidden),
-                Codec.BOOL.optionalFieldOf("hasHint", false).forGetter(ResearchEntry::hasHint),
-                Codec.BOOL.optionalFieldOf("internal", false).forGetter(ResearchEntry::internal),
-                Codec.BOOL.optionalFieldOf("finaleExempt", false).forGetter(ResearchEntry::finaleExempt),
-                ResearchDisciplineKey.CODEC.listOf().fieldOf("finales").forGetter(ResearchEntry::finales),
+                ResearchEntryKey.CODEC.codec().listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
+                ResearchEntry.Flags.CODEC.fieldOf("flags").forGetter(ResearchEntry::flags),
+                ResearchDisciplineKey.CODEC.codec().listOf().fieldOf("finales").forGetter(ResearchEntry::finales),
                 ResearchStage.codec().listOf().fieldOf("stages").forGetter(ResearchEntry::stages),
                 ResearchAddendum.codec().listOf().fieldOf("addenda").forGetter(ResearchEntry::addenda)
             ).apply(instance, ResearchEntry::new));
     }
     
-    @Nonnull
-    public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {
-        ResearchEntryKey key = ResearchEntryKey.fromNetwork(buf);
-        Optional<ResearchDisciplineKey> disciplineKeyOpt = buf.readOptional(ResearchDisciplineKey::fromNetwork);
-        Optional<ResearchTier> tierOpt = buf.readOptional(b -> b.readEnum(ResearchTier.class));
-        Optional<IconDefinition> iconOpt = buf.readOptional(IconDefinition::fromNetwork);
-        List<ResearchEntryKey> parents = buf.readList(ResearchEntryKey::fromNetwork);
-        boolean hidden = buf.readBoolean();
-        boolean hasHint = buf.readBoolean();
-        boolean internal = buf.readBoolean();
-        boolean finaleExempt = buf.readBoolean();
-        List<ResearchDisciplineKey> finales = buf.readList(ResearchDisciplineKey::fromNetwork);
-        List<ResearchStage> stages = buf.readList(ResearchStage::fromNetwork);
-        List<ResearchAddendum> addenda = buf.readList(ResearchAddendum::fromNetwork);
-        return new ResearchEntry(key, disciplineKeyOpt, tierOpt, iconOpt, parents, hidden, hasHint, internal, finaleExempt, finales, stages, addenda);
-    }
-    
-    public static void toNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
-        entry.key.toNetwork(buf);
-        buf.writeOptional(entry.disciplineKeyOpt, (b, d) -> d.toNetwork(b));
-        buf.writeOptional(entry.tierOpt, (b, t) -> b.writeEnum(t));
-        buf.writeOptional(entry.iconOpt, IconDefinition::toNetwork);
-        buf.writeCollection(entry.parents, (b, p) -> p.toNetwork(b));
-        buf.writeBoolean(entry.hidden);
-        buf.writeBoolean(entry.hasHint);
-        buf.writeBoolean(entry.internal);
-        buf.writeBoolean(entry.finaleExempt);
-        buf.writeCollection(entry.finales, (b, f) -> f.toNetwork(b));
-        buf.writeCollection(entry.stages, ResearchStage::toNetwork);
-        buf.writeCollection(entry.addenda, ResearchAddendum::toNetwork);
+    public static StreamCodec<RegistryFriendlyByteBuf, ResearchEntry> streamCodec() {
+        return StreamCodecUtils.composite(
+                ResearchEntryKey.STREAM_CODEC,
+                ResearchEntry::key,
+                ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC),
+                ResearchEntry::disciplineKeyOpt,
+                ByteBufCodecs.optional(ResearchTier.STREAM_CODEC),
+                ResearchEntry::tierOpt,
+                ByteBufCodecs.optional(IconDefinition.STREAM_CODEC),
+                ResearchEntry::iconOpt,
+                ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                ResearchEntry::parents,
+                ResearchEntry.Flags.STREAM_CODEC,
+                ResearchEntry::flags,
+                ResearchDisciplineKey.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                ResearchEntry::finales,
+                ResearchStage.streamCodec().apply(ByteBufCodecs.list()),
+                ResearchEntry::stages,
+                ResearchAddendum.streamCodec().apply(ByteBufCodecs.list()),
+                ResearchEntry::addenda,
+                ResearchEntry::new);
     }
     
     public static Builder builder(ResourceKey<ResearchEntry> key) {
@@ -103,7 +95,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
     
     public Optional<String> getHintTranslationKey() {
-        if (this.hasHint) {
+        if (this.flags().hasHint()) {
             return Optional.of(String.join(".", this.getBaseTranslationKey(), "hint"));
         } else {
             return Optional.empty();
@@ -216,6 +208,63 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         return retVal;
     }
     
+    public static record Flags(boolean hidden, boolean hasHint, boolean internal, boolean finaleExempt) {
+        public static final ResearchEntry.Flags EMPTY = new Flags(false, false, false, false);
+        
+        public static final Codec<ResearchEntry.Flags> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.BOOL.optionalFieldOf("hidden", false).forGetter(ResearchEntry.Flags::hidden),
+                Codec.BOOL.optionalFieldOf("hasHint", false).forGetter(ResearchEntry.Flags::hasHint),
+                Codec.BOOL.optionalFieldOf("internal", false).forGetter(ResearchEntry.Flags::internal),
+                Codec.BOOL.optionalFieldOf("finaleExempt", false).forGetter(ResearchEntry.Flags::finaleExempt)
+            ).apply(instance, ResearchEntry.Flags::new));
+        
+        public static final StreamCodec<ByteBuf, ResearchEntry.Flags> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.BOOL,
+                ResearchEntry.Flags::hidden,
+                ByteBufCodecs.BOOL,
+                ResearchEntry.Flags::hasHint,
+                ByteBufCodecs.BOOL,
+                ResearchEntry.Flags::internal,
+                ByteBufCodecs.BOOL,
+                ResearchEntry.Flags::finaleExempt,
+                ResearchEntry.Flags::new);
+        
+        public static ResearchEntry.Flags.Builder builder() {
+            return new ResearchEntry.Flags.Builder();
+        }
+        
+        public static class Builder {
+            protected boolean hidden = false;
+            protected boolean hasHint = false;
+            protected boolean internal = false;
+            protected boolean finaleExempt = false;
+            
+            public Builder hidden() {
+                this.hidden = true;
+                return this;
+            }
+            
+            public Builder hasHint() {
+                this.hasHint = true;
+                return this;
+            }
+            
+            public Builder internal() {
+                this.internal = true;
+                return this;
+            }
+            
+            public Builder finaleExempt() {
+                this.finaleExempt = true;
+                return this;
+            }
+            
+            public ResearchEntry.Flags build() {
+                return new ResearchEntry.Flags(this.hidden, this.hasHint, this.internal, this.finaleExempt);
+            }
+        }
+    }
+    
     public static class Builder {
         protected final String modId;
         protected final ResearchEntryKey key;
@@ -223,10 +272,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         protected Optional<ResearchTier> tierOpt = Optional.empty();
         protected Optional<IconDefinition> iconOpt = Optional.empty();
         protected final List<ResearchEntryKey> parents = new ArrayList<>();
-        protected boolean hidden = false;
-        protected boolean hasHint = false;
-        protected boolean internal = false;
-        protected boolean finaleExempt = false;
+        protected ResearchEntry.Flags.Builder flagsBuilder = ResearchEntry.Flags.builder();
         protected final List<ResearchDisciplineKey> finales = new ArrayList<>();
         protected final List<ResearchStage.Builder> stageBuilders = new ArrayList<>();
         protected final List<ResearchAddendum.Builder> addendumBuilders = new ArrayList<>();
@@ -281,23 +327,8 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
             return this.parent(new ResearchEntryKey(rawKey));
         }
         
-        public Builder hidden() {
-            this.hidden = true;
-            return this;
-        }
-        
-        public Builder hasHint() {
-            this.hasHint = true;
-            return this;
-        }
-        
-        public Builder internal() {
-            this.internal = true;
-            return this;
-        }
-        
-        public Builder finaleExempt() {
-            this.finaleExempt = true;
+        public Builder flags(ResearchEntry.Flags.Builder flagsBuilder) {
+            this.flagsBuilder = flagsBuilder;
             return this;
         }
         
@@ -321,16 +352,16 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         private void validate() {
             if (this.modId.isBlank()) {
                 throw new IllegalStateException("No mod ID specified for entry");
-            } else if (!this.internal && this.disciplineKeyOpt.isEmpty()) {
+            } else if (!this.flagsBuilder.internal && this.disciplineKeyOpt.isEmpty()) {
                 throw new IllegalStateException("No discipline specified for non-internal entry");
-            } else if (!this.internal && this.stageBuilders.isEmpty()) {
+            } else if (!this.flagsBuilder.internal && this.stageBuilders.isEmpty()) {
                 throw new IllegalStateException("Non-internal entries must have at least one stage");
             }
         }
         
         public ResearchEntry build() {
             this.validate();
-            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.tierOpt, this.iconOpt, this.parents, this.hidden, this.hasHint, this.internal, this.finaleExempt, this.finales,
+            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.tierOpt, this.iconOpt, this.parents, this.flagsBuilder.build(), this.finales,
                     this.stageBuilders.stream().map(b -> b.build()).toList(), this.addendumBuilders.stream().map(b -> b.build()).toList());
         }
     }

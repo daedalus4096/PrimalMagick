@@ -27,10 +27,6 @@ public class StructureTagsProviderPM extends TagsProvider<Structure> {
     @Override
     protected void addTags(Provider pProvider) {
         this.tag(StructureTagsPM.SHRINE).add(StructuresPM.EARTH_SHRINE, StructuresPM.SEA_SHRINE, StructuresPM.SKY_SHRINE, StructuresPM.SUN_SHRINE, StructuresPM.MOON_SHRINE);
-        
-        // FIXME Re-add for 1.21 release
-/*
         this.tag(StructureTagsPM.LIBRARY).add(StructuresPM.EARTH_LIBRARY, StructuresPM.SEA_LIBRARY, StructuresPM.SKY_LIBRARY, StructuresPM.SUN_LIBRARY, StructuresPM.MOON_LIBRARY, StructuresPM.FORBIDDEN_LIBRARY);
-*/
     }
 }

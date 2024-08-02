@@ -1,19 +1,19 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import java.util.OptionalInt;
+import java.util.Optional;
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
-import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -31,31 +31,42 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequirement> {
-    public static Codec<ExpertiseRequirement> codec() {
-        return RecordCodecBuilder.create(instance -> instance.group(
+    public static MapCodec<ExpertiseRequirement> codec() {
+        return RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ResearchDisciplineKey.CODEC.fieldOf("discipline").forGetter(ExpertiseRequirement::getDiscipline),
                 ResearchTier.CODEC.fieldOf("tier").forGetter(ExpertiseRequirement::getTier),
-                CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("thresholdOverride")).forGetter(r -> r.thresholdOverrideOpt)
+                Codec.INT.optionalFieldOf("thresholdOverride").forGetter(r -> r.thresholdOverrideOpt)
             ).apply(instance, ExpertiseRequirement::new));
+    }
+    
+    public static StreamCodec<ByteBuf, ExpertiseRequirement> streamCodec() {
+        return StreamCodec.composite(
+                ResearchDisciplineKey.STREAM_CODEC,
+                ExpertiseRequirement::getDiscipline,
+                ResearchTier.STREAM_CODEC,
+                ExpertiseRequirement::getTier,
+                ByteBufCodecs.optional(ByteBufCodecs.VAR_INT),
+                req -> req.thresholdOverrideOpt,
+                ExpertiseRequirement::new);
     }
     
     protected final ResearchDisciplineKey discipline;
     protected final ResearchTier tier;
-    protected final OptionalInt thresholdOverrideOpt;
-    protected OptionalInt thresholdCache = OptionalInt.empty();
+    protected final Optional<Integer> thresholdOverrideOpt;
+    protected Optional<Integer> thresholdCache = Optional.empty();
     
-    protected ExpertiseRequirement(ResearchDisciplineKey discipline, ResearchTier tier, OptionalInt thresholdOverrideOpt) {
+    protected ExpertiseRequirement(ResearchDisciplineKey discipline, ResearchTier tier, Optional<Integer> thresholdOverrideOpt) {
         this.discipline = discipline;
         this.tier = tier;
         this.thresholdOverrideOpt = thresholdOverrideOpt;
     }
     
     public ExpertiseRequirement(ResourceKey<ResearchDiscipline> discipline, ResearchTier tier) {
-        this(new ResearchDisciplineKey(discipline), tier, OptionalInt.empty());
+        this(new ResearchDisciplineKey(discipline), tier, Optional.empty());
     }
     
     public ExpertiseRequirement(ResourceKey<ResearchDiscipline> discipline, ResearchTier tier, int thresholdOverride) {
-        this(new ResearchDisciplineKey(discipline), tier, OptionalInt.of(thresholdOverride));
+        this(new ResearchDisciplineKey(discipline), tier, Optional.of(thresholdOverride));
     }
     
     public ResearchDisciplineKey getDiscipline() {
@@ -72,9 +83,9 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
     
     protected int getThresholdInner(Level level) {
         if (this.thresholdCache.isEmpty()) {
-            this.thresholdCache = OptionalInt.of(ExpertiseManager.getThreshold(level, this.discipline, this.tier).orElse(0));
+            this.thresholdCache = Optional.of(ExpertiseManager.getThreshold(level, this.discipline, this.tier).orElse(0));
         }
-        return this.thresholdCache.getAsInt();
+        return this.thresholdCache.get();
     }
 
     @Override
@@ -110,25 +121,5 @@ public class ExpertiseRequirement extends AbstractRequirement<ExpertiseRequireme
     @Override
     protected RequirementType<ExpertiseRequirement> getType() {
         return RequirementsPM.EXPERTISE.get();
-    }
-
-    @Nonnull
-    static ExpertiseRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        ResearchDisciplineKey disc = ResearchDisciplineKey.fromNetwork(buf);
-        ResearchTier tier = buf.readEnum(ResearchTier.class);
-        OptionalInt thresholdOverrideOpt = buf.readBoolean() ? OptionalInt.of(buf.readVarInt()) : OptionalInt.empty();
-        return new ExpertiseRequirement(disc, tier, thresholdOverrideOpt);
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        this.discipline.toNetwork(buf);
-        buf.writeEnum(this.tier);
-        if (this.thresholdOverrideOpt.isPresent()) {
-            buf.writeBoolean(true);
-            buf.writeVarInt(this.thresholdOverrideOpt.getAsInt());
-        } else {
-            buf.writeBoolean(false);
-        }
     }
 }

@@ -2,14 +2,8 @@
   "type": "primalmagick:blood_notes",
   "conditions": [
     {
-      "condition": "minecraft:entity_properties",
-      "entity": "this",
-      "predicate": {
-        "type": "#primalmagick:drops_blood_notes_high"
-      }
-    },
-    {
       "condition": "minecraft:killed_by_player"
     }
-  ]
+  ],
+  "targetTag": "primalmagick:drops_blood_notes_high"
 }

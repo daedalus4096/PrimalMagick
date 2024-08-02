@@ -208,11 +208,7 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
         return this.createBuilder(() -> new MobEffectLanguageBuilder(effect, this::untrack, this::add));
     }
     
-    public EnchantmentLanguageBuilder enchantment(Supplier<? extends Enchantment> ench) {
-        return this.enchantment(ench.get());
-    }
-    
-    public EnchantmentLanguageBuilder enchantment(Enchantment ench) {
+    public EnchantmentLanguageBuilder enchantment(ResourceKey<Enchantment> ench) {
         return this.createBuilder(() -> new EnchantmentLanguageBuilder(ench, this::untrack, this::add));
     }
     

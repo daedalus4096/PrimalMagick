@@ -4,9 +4,8 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraftforge.common.BasicItemListing;
+import net.minecraft.world.entity.npc.VillagerTrades.EmeraldForItems;
+import net.minecraft.world.entity.npc.VillagerTrades.ItemsForEmeralds;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,17 +22,17 @@ public class VillagerEvents {
     public static void onVillagerTradeSetup(VillagerTradesEvent event) {
         // Allow librarians to trade certain knowledge granting items
         if (VillagerProfession.LIBRARIAN.equals(event.getType())) {
-            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), 3), new ItemStack(Items.EMERALD, 1), 12, 2, 0.05F));
-            event.getTrades().get(2).add(new BasicItemListing(8, new ItemStack(ItemsPM.OBSERVATION_NOTES.get()), 12, 5, 0.05F));
-            event.getTrades().get(3).add(new BasicItemListing(new ItemStack(ItemsPM.MYSTICAL_RELIC.get(), 1), new ItemStack(Items.EMERALD, 5), 12, 20, 0.05F));
-            event.getTrades().get(4).add(new BasicItemListing(16, new ItemStack(ItemsPM.THEORY_NOTES.get()), 12, 15, 0.05F));
+            event.getTrades().get(1).add(new EmeraldForItems(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), 3, 12, 2, 1));
+            event.getTrades().get(2).add(new ItemsForEmeralds(ItemsPM.OBSERVATION_NOTES.get(), 8, 1, 5));
+            event.getTrades().get(3).add(new EmeraldForItems(ItemsPM.MYSTICAL_RELIC.get(), 1, 12, 20, 5));
+            event.getTrades().get(4).add(new ItemsForEmeralds(ItemsPM.THEORY_NOTES.get(), 16, 1, 15));
         }
     }
     
     @SubscribeEvent
     public static void onWandererTradeSetup(WandererTradesEvent event) {
         // Allow wandering traders to sell certain knowledge granting items
-        event.getGenericTrades().add(new BasicItemListing(8, new ItemStack(ItemsPM.OBSERVATION_NOTES.get()), 12, 5, 0.05F));
-        event.getRareTrades().add(new BasicItemListing(16, new ItemStack(ItemsPM.THEORY_NOTES.get()), 12, 15, 0.05F));
+        event.getGenericTrades().add(new ItemsForEmeralds(ItemsPM.OBSERVATION_NOTES.get(), 8, 1, 5));
+        event.getRareTrades().add(new ItemsForEmeralds(ItemsPM.THEORY_NOTES.get(), 16, 1, 15));
     }
 }

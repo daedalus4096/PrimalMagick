@@ -41,16 +41,15 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
-import com.verdantartifice.primalmagick.common.rituals.AbstractRitualStep;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagick.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagick.common.rituals.Mishap;
-import com.verdantartifice.primalmagick.common.rituals.RecipeRitualStep;
-import com.verdantartifice.primalmagick.common.rituals.RitualStepFactory;
-import com.verdantartifice.primalmagick.common.rituals.RitualStepType;
-import com.verdantartifice.primalmagick.common.rituals.UniversalRitualStep;
+import com.verdantartifice.primalmagick.common.rituals.steps.AbstractRitualStep;
+import com.verdantartifice.primalmagick.common.rituals.steps.OfferingRitualStep;
+import com.verdantartifice.primalmagick.common.rituals.steps.PropRitualStep;
+import com.verdantartifice.primalmagick.common.rituals.steps.UniversalRitualStep;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -65,10 +64,11 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -120,8 +120,8 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     protected float stability = 0.0F;
     protected UUID activePlayerId = null;
     protected ResourceLocation activeRecipeId = null;
-    protected AbstractRitualStep currentStep = null;
-    protected Queue<AbstractRitualStep> remainingSteps = new LinkedList<>();
+    protected AbstractRitualStep<?> currentStep = null;
+    protected LinkedList<AbstractRitualStep<?>> remainingSteps = new LinkedList<>();
     protected BlockPos awaitedPropPos = null;
     protected BlockPos channeledOfferingPos = null;
     
@@ -198,8 +198,8 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.active = compound.getBoolean("Active");
         this.currentStepComplete = compound.getBoolean("CurrentStepComplete");
         this.activeCount = compound.getInt("ActiveCount");
@@ -213,20 +213,21 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
         }
         
         this.activeRecipeId = compound.contains("ActiveRecipeId", Tag.TAG_STRING) ? 
-                new ResourceLocation(compound.getString("ActiveRecipeId")) : 
+                ResourceLocation.parse(compound.getString("ActiveRecipeId")) : 
                 null;
         
         this.currentStep = null;
-        if (compound.contains("CurrentStep", Tag.TAG_COMPOUND)) {
-            this.currentStep = RitualStepFactory.deserializeNBT(compound.getCompound("CurrentStep"));
+        if (compound.contains("CurrentStep")) {
+            AbstractRitualStep.dispatchCodec().parse(NbtOps.INSTANCE, compound.get("CurrentStep"))
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(decodedStep -> this.currentStep = decodedStep);
         }
                 
         this.remainingSteps.clear();
-        if (compound.contains("RemainingSteps", Tag.TAG_LIST)) {
-            ListTag stepList = compound.getList("RemainingSteps", Tag.TAG_COMPOUND);
-            for (int index = 0; index < stepList.size(); index++) {
-                this.remainingSteps.offer(RitualStepFactory.deserializeNBT(stepList.getCompound(index)));
-            }
+        if (compound.contains("RemainingSteps")) {
+            AbstractRitualStep.dispatchCodec().listOf().parse(NbtOps.INSTANCE, compound.get("RemainingSteps"))
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(decodedSteps -> this.remainingSteps.addAll(decodedSteps));
         }
         
         this.awaitedPropPos = compound.contains("AwaitedPropPos", Tag.TAG_LONG) ?
@@ -239,8 +240,8 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putBoolean("Active", this.active);
         compound.putBoolean("CurrentStepComplete", this.currentStepComplete);
         compound.putInt("ActiveCount", this.activeCount);
@@ -253,14 +254,14 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
             compound.putString("ActiveRecipeId", this.activeRecipeId.toString());
         }
         if (this.currentStep != null) {
-            compound.put("CurrentStep", this.currentStep.serializeNBT());
+            AbstractRitualStep.dispatchCodec().encodeStart(NbtOps.INSTANCE, this.currentStep)
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(encodedStep -> compound.put("CurrentStep", encodedStep));
         }
         if (this.remainingSteps != null && !this.remainingSteps.isEmpty()) {
-            ListTag stepList = new ListTag();
-            for (AbstractRitualStep step : this.remainingSteps) {
-                stepList.add(step.serializeNBT());
-            }
-            compound.put("RemainingSteps", stepList);
+            AbstractRitualStep.dispatchCodec().listOf().encodeStart(NbtOps.INSTANCE, this.remainingSteps)
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(encodedSteps -> compound.put("RemainingSteps", encodedSteps));
         }
         if (this.awaitedPropPos != null) {
             compound.putLong("AwaitedPropPos", this.awaitedPropPos.asLong());
@@ -413,7 +414,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
         for (ItemStack offering : offerings) {
             inv.setItem(offeringIndex++, offering);
         }
-        Optional<RecipeHolder<IRitualRecipe>> recipeOpt = this.level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), inv, this.level);
+        Optional<RecipeHolder<IRitualRecipe>> recipeOpt = this.level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), inv.asCraftInput(), this.level);
         if (recipeOpt.isPresent()) {
             // Determine if the player has the research and mana to start this recipe
             RecipeHolder<IRitualRecipe> recipe = recipeOpt.get();
@@ -431,16 +432,16 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     protected boolean generateRitualSteps(@Nonnull RecipeHolder<IRitualRecipe> recipe) {
-        LinkedList<AbstractRitualStep> offeringSteps = new LinkedList<>();
-        LinkedList<AbstractRitualStep> propSteps = new LinkedList<>();
-        LinkedList<AbstractRitualStep> newSteps = new LinkedList<>();
+        LinkedList<AbstractRitualStep<?>> offeringSteps = new LinkedList<>();
+        LinkedList<AbstractRitualStep<?>> propSteps = new LinkedList<>();
+        LinkedList<AbstractRitualStep<?>> newSteps = new LinkedList<>();
 
         // Add steps for the recipe offerings and props
         for (int index = 0; index < recipe.value().getIngredients().size(); index++) {
-            offeringSteps.add(new RecipeRitualStep(RitualStepType.OFFERING, index));
+            offeringSteps.add(new OfferingRitualStep(index));
         }
         for (int index = 0; index < recipe.value().getProps().size(); index++) {
-            propSteps.add(new RecipeRitualStep(RitualStepType.PROP, index));
+            propSteps.add(new PropRitualStep(index));
         }
         
         // Add steps for any universal props that were detected when scanning surroundings
@@ -515,7 +516,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
             return false;
         }
         IWand wand = (IWand)wandStack.getItem();
-        return wand.consumeRealMana(wandStack, player, recipe.getManaCosts());
+        return wand.consumeRealMana(wandStack, player, recipe.getManaCosts(), player.registryAccess());
     }
     
     protected void scanSurroundings() {
@@ -642,161 +643,167 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
         return retVal;
     }
 
-    protected boolean doStep(@Nonnull AbstractRitualStep step) {
-        IRitualRecipe recipe = this.getActiveRecipe().map(holder -> holder.value()).orElse(null);
+    protected boolean doStep(@Nonnull AbstractRitualStep<?> step) {
+        return step.execute(this);
+    }
+    
+    public static boolean doOfferingStep(RitualAltarTileEntity altar, OfferingRitualStep step) {
+        IRitualRecipe recipe = altar.getActiveRecipe().map(holder -> holder.value()).orElse(null);
         if (recipe == null) {
-            LOGGER.warn("No recipe found when trying to do ritual step");
+            LOGGER.warn("No recipe found when trying to do offering ritual step");
             return false;
         }
         
-        if (step.getType() == RitualStepType.OFFERING) {
-            return this.doOfferingStep(recipe, ((RecipeRitualStep)step).getIndex());
-        } else if (step.getType() == RitualStepType.PROP) {
-            return this.doPropStep(recipe, ((RecipeRitualStep)step).getIndex());
-        } else if (step.getType() == RitualStepType.UNIVERSAL_PROP) {
-            UniversalRitualStep uStep = (UniversalRitualStep)step;
-            return this.doUniversalPropStep(uStep.getPos(), uStep.getExpectedId());
-        } else {
-            LOGGER.warn("Invalid ritual step type {}", step.getType());
-            return false;
-        }
-    }
-    
-    protected boolean doOfferingStep(IRitualRecipe recipe, int offeringIndex) {
+        int offeringIndex = step.getIndex();
         Ingredient requiredOffering = recipe.getIngredients().get(offeringIndex);
-        if (this.activeCount >= this.nextCheckCount && this.channeledOfferingPos == null) {
+        if (altar.activeCount >= altar.nextCheckCount && altar.channeledOfferingPos == null) {
             // Search for a match for the required ingredient
-            for (BlockPos pedestalPos : this.pedestalPositions) {
-                BlockEntity tile = this.level.getBlockEntity(pedestalPos);
-                Block block = this.level.getBlockState(pedestalPos).getBlock();
+            for (BlockPos pedestalPos : altar.pedestalPositions) {
+                BlockEntity tile = altar.level.getBlockEntity(pedestalPos);
+                Block block = altar.level.getBlockState(pedestalPos).getBlock();
                 if (tile instanceof OfferingPedestalTileEntity pedestalTile && block instanceof ISaltPowered saltBlock) {
-                    if (requiredOffering.test(pedestalTile.getItem()) && saltBlock.isBlockSaltPowered(this.level, pedestalPos)) {
+                    if (requiredOffering.test(pedestalTile.getItem()) && saltBlock.isBlockSaltPowered(altar.level, pedestalPos)) {
                         // Upon finding an ingredient match, start channeling it
-                        this.channeledOfferingPos = pedestalPos;
-                        this.nextCheckCount = this.activeCount + 60;
+                        altar.channeledOfferingPos = pedestalPos;
+                        altar.nextCheckCount = altar.activeCount + 60;
                         return true;
                     }
                 }
             }
             
             // If no match was found, warn the player the first time then check again in a second
-            if (!this.skipWarningMessage && this.getActivePlayer() != null) {
+            if (!altar.skipWarningMessage && altar.getActivePlayer() != null) {
                 if (requiredOffering.isEmpty()) {
-                    this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_offering.empty"), false);                    
+                    altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_offering.empty"), false);                    
                 } else {
-                    this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_offering", requiredOffering.getItems()[0].getHoverName()), false);
+                    altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_offering", requiredOffering.getItems()[0].getHoverName()), false);
                 }
-                this.skipWarningMessage = true;
+                altar.skipWarningMessage = true;
             }
-            this.nextCheckCount = this.activeCount + 20;
+            altar.nextCheckCount = altar.activeCount + 20;
         }
         
-        if (this.channeledOfferingPos != null) {
-            BlockEntity tile = this.level.getBlockEntity(this.channeledOfferingPos);
-            Block block = this.level.getBlockState(this.channeledOfferingPos).getBlock();
+        if (altar.channeledOfferingPos != null) {
+            BlockEntity tile = altar.level.getBlockEntity(altar.channeledOfferingPos);
+            Block block = altar.level.getBlockState(altar.channeledOfferingPos).getBlock();
             
             // Confirm that the channeled offering is still valid
             if ( tile instanceof OfferingPedestalTileEntity pedestalTile &&
                  block instanceof ISaltPowered saltBlock &&
                  requiredOffering.test(pedestalTile.getItem()) &&
-                 saltBlock.isBlockSaltPowered(this.level, this.channeledOfferingPos) ) {
-                if (this.activeCount >= this.nextCheckCount) {
+                 saltBlock.isBlockSaltPowered(altar.level, altar.channeledOfferingPos) ) {
+                if (altar.activeCount >= altar.nextCheckCount) {
                     // Once the channel is complete, consume it and mark the step as complete
                     pedestalTile.removeItem(1);
-                    this.currentStepComplete = true;
-                    this.channeledOfferingPos = null;
+                    altar.currentStepComplete = true;
+                    altar.channeledOfferingPos = null;
                 } else {
                     // If the channel is still in progress, spawn particles
-                    this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getItem());
+                    altar.spawnOfferingParticles(altar.channeledOfferingPos, pedestalTile.getItem());
                 }
                 return true;
             } else {
                 // If the channel was interrupted, add an instability spike and start looking again
-                this.channeledOfferingPos = null;
-                if (this.getActivePlayer() != null) {
+                altar.channeledOfferingPos = null;
+                if (altar.getActivePlayer() != null) {
                     if (requiredOffering.isEmpty()) {
-                        this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.channel_interrupt.empty"), false);
+                        altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.channel_interrupt.empty"), false);
                     } else {
-                        this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.channel_interrupt", requiredOffering.getItems()[0].getHoverName()), false);
+                        altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.channel_interrupt", requiredOffering.getItems()[0].getHoverName()), false);
                     }
-                    this.skipWarningMessage = true;
+                    altar.skipWarningMessage = true;
                 }
-                this.addStability(Mth.clamp(50 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
+                altar.addStability(Mth.clamp(50 * Math.min(0.0F, altar.calculateStabilityDelta()), -25.0F, -1.0F));
             }
         }
         return false;
     }
     
-    protected boolean doPropStep(IRitualRecipe recipe, int propIndex) {
+    public static boolean doPropStep(RitualAltarTileEntity altar, PropRitualStep step) {
+        IRitualRecipe recipe = altar.getActiveRecipe().map(holder -> holder.value()).orElse(null);
+        if (recipe == null) {
+            LOGGER.warn("No recipe found when trying to do prop ritual step");
+            return false;
+        }
+        
+        int propIndex = step.getIndex();
         BlockIngredient requiredProp = recipe.getProps().get(propIndex);
-        if (this.activeCount >= this.nextCheckCount) {
-            if (this.awaitedPropPos == null) {
+        if (altar.activeCount >= altar.nextCheckCount) {
+            if (altar.awaitedPropPos == null) {
                 // Search for the required prop block
-                for (BlockPos propPos : this.propPositions) {
+                for (BlockPos propPos : altar.propPositions) {
                     // Open the prop block if it's valid
-                    BlockState propState = this.level.getBlockState(propPos);
+                    BlockState propState = altar.level.getBlockState(propPos);
                     Block block = propState.getBlock();
-                    if (requiredProp.test(block) && this.openProp(propPos, (b) -> {
-                        return !b.isPropActivated(propState, this.level, propPos) && b.isBlockSaltPowered(this.level, propPos);
+                    if (requiredProp.test(block) && altar.openProp(propPos, (b) -> {
+                        return !b.isPropActivated(propState, altar.level, propPos) && b.isBlockSaltPowered(altar.level, propPos);
                     })) {
                         return true;
                     }
                 }
                 
                 // If no match was found, warn the player the first time
-                if (!this.skipWarningMessage && this.getActivePlayer() != null) {
+                if (!altar.skipWarningMessage && altar.getActivePlayer() != null) {
                     if (requiredProp.hasNoMatchingBlocks()) {
-                        this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop.empty"), false);
+                        altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop.empty"), false);
                     } else {
-                        this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop", requiredProp.getMatchingBlocks()[0].getName()), false);
+                        altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop", requiredProp.getMatchingBlocks()[0].getName()), false);
                     }
-                    this.skipWarningMessage = true;
+                    altar.skipWarningMessage = true;
                 }
             } else {
-                BlockState propState = this.level.getBlockState(this.awaitedPropPos);
+                BlockState propState = altar.level.getBlockState(altar.awaitedPropPos);
                 Block block = propState.getBlock();
                 if ( !(block instanceof IRitualPropBlock) || 
                      !requiredProp.test(block) ||
-                     !((IRitualPropBlock)block).isBlockSaltPowered(this.level, this.awaitedPropPos) ) {
-                    this.onPropInterrupted(block, propState, ForgeRegistries.BLOCKS.getKey(requiredProp.getMatchingBlocks()[0]));
+                     !((IRitualPropBlock)block).isBlockSaltPowered(altar.level, altar.awaitedPropPos) ) {
+                    altar.onPropInterrupted(block, propState, ForgeRegistries.BLOCKS.getKey(requiredProp.getMatchingBlocks()[0]));
                 }
             }
-            this.nextCheckCount = this.activeCount + 20;
+            altar.nextCheckCount = altar.activeCount + 20;
         }
         return false;
     }
     
-    protected boolean doUniversalPropStep(BlockPos propPos, ResourceLocation expectedId) {
-        if (this.activeCount >= this.nextCheckCount) {
-            if (this.awaitedPropPos == null) {
+    public static boolean doUniversalPropStep(RitualAltarTileEntity altar, UniversalRitualStep step) {
+        IRitualRecipe recipe = altar.getActiveRecipe().map(holder -> holder.value()).orElse(null);
+        if (recipe == null) {
+            LOGGER.warn("No recipe found when trying to do universal ritual step");
+            return false;
+        }
+        
+        BlockPos propPos = step.getPos();
+        ResourceLocation expectedId = step.getExpectedId();
+        if (altar.activeCount >= altar.nextCheckCount) {
+            if (altar.awaitedPropPos == null) {
                 // Open the prop block if it's valid
-                BlockState propState = this.level.getBlockState(propPos);
-                if (this.openProp(propPos, (b) -> {
-                    return b.isUniversal() && !b.isPropActivated(propState, this.level, propPos) && b.isBlockSaltPowered(this.level, propPos);
+                BlockState propState = altar.level.getBlockState(propPos);
+                if (altar.openProp(propPos, (b) -> {
+                    return b.isUniversal() && !b.isPropActivated(propState, altar.level, propPos) && b.isBlockSaltPowered(altar.level, propPos);
                 })) {
                     return true;
                 }
                 
                 // If no match was found, warn the player the first time
-                if (!this.skipWarningMessage && this.getActivePlayer() != null) {
+                if (!altar.skipWarningMessage && altar.getActivePlayer() != null) {
                     Block stepBlock = ForgeRegistries.BLOCKS.getValue(expectedId);
                     if (stepBlock == null) {
-                        this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop.empty"), false);
+                        altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop.empty"), false);
                     } else {
-                        this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop", stepBlock.getName()), false);
+                        altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop", stepBlock.getName()), false);
                     }
-                    this.skipWarningMessage = true;
+                    altar.skipWarningMessage = true;
                 }
             } else {
-                BlockState propState = this.level.getBlockState(this.awaitedPropPos);
+                BlockState propState = altar.level.getBlockState(altar.awaitedPropPos);
                 Block block = propState.getBlock();
                 if ( !(block instanceof IRitualPropBlock) ||
                      !((IRitualPropBlock)block).isUniversal() ||
-                     !((IRitualPropBlock)block).isBlockSaltPowered(this.level, this.awaitedPropPos) ) {
-                    this.onPropInterrupted(block, propState, expectedId);
+                     !((IRitualPropBlock)block).isBlockSaltPowered(altar.level, altar.awaitedPropPos) ) {
+                    altar.onPropInterrupted(block, propState, expectedId);
                 }
             }
-            this.nextCheckCount = this.activeCount + 20;
+            altar.nextCheckCount = altar.activeCount + 20;
         }
         return false;
     }
@@ -976,7 +983,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 int damage = 5 + Mth.floor(Math.sqrt(Math.abs(Math.min(0.0F, this.stability))) / 2.0D);
                 int amp = Math.max(0, damage - 6);
                 target.hurt(target.damageSources().magic(), damage);
-                target.addEffect(new MobEffectInstance(EffectsPM.MANA_IMPEDANCE.get(), 12000, amp));
+                target.addEffect(new MobEffectInstance(EffectsPM.MANA_IMPEDANCE.getHolder().get(), 12000, amp));
                 this.doMishapEffects(target.blockPosition(), index == 0); // Only play sounds once
                 if (!allTargets) {
                     break;
@@ -1065,11 +1072,5 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
         });
 
         return retVal;
-    }
-
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the output item stack
-        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(0));
     }
 }

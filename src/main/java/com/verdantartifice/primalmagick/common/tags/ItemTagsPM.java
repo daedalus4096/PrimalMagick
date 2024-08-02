@@ -75,6 +75,16 @@ public class ItemTagsPM {
     public static final TagKey<Item> STORAGE_BLOCKS_PRIMALITE = tag("storage_blocks/primalite");
     public static final TagKey<Item> STORAGE_BLOCKS_HEXIUM = tag("storage_blocks/hexium");
     public static final TagKey<Item> STORAGE_BLOCKS_HALLOWSTEEL = tag("storage_blocks/hallowsteel");
+    
+    public static final TagKey<Item> MELEE_ENCHANTABLE = tag("enchantable/melee");
+    public static final TagKey<Item> ARCHERY_ENCHANTABLE = tag("enchantable/archery");
+    public static final TagKey<Item> SHIELD_ENCHANTABLE = tag("enchantable/shield");
+    public static final TagKey<Item> STAFF_ENCHANTABLE = tag("enchantable/staff");
+    public static final TagKey<Item> WAND_ENCHANTABLE = tag("enchantable/wand");
+    public static final TagKey<Item> HOE_ENCHANTABLE = tag("enchantable/hoe");
+    public static final TagKey<Item> BOUNTY_ENCHANTABLE = tag("enchantable/bounty");
+    public static final TagKey<Item> RENDING_ENCHANTABLE = tag("enchantable/rending");
+    public static final TagKey<Item> ESSENCE_THIEF_ENCHANTABLE = tag("enchantable/essence_thief");
 
     private static TagKey<Item> tag(String name) {
         return ItemTags.create(PrimalMagick.resource(name));

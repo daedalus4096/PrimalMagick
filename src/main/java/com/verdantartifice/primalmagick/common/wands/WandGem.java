@@ -8,8 +8,12 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 
@@ -21,6 +25,9 @@ import net.minecraft.world.item.Rarity;
  */
 public class WandGem implements IWandComponent {
     protected static final Map<String, WandGem> REGISTRY = new HashMap<>();
+    
+    public static final Codec<WandGem> CODEC = Codec.STRING.xmap(WandGem::getWandGem, WandGem::getTag);
+    public static final StreamCodec<ByteBuf, WandGem> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(WandGem::getWandGem, WandGem::getTag);
     
     public static final WandGem APPRENTICE = new WandGem("apprentice", Rarity.COMMON, 75);
     public static final WandGem ADEPT = new WandGem("adept", Rarity.UNCOMMON, 250);

@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.client.fx.particles;
 
-import java.util.Locale;
-
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 /**
  * Particle data for note emitter meta-particles.
@@ -18,30 +17,17 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class NoteEmitterParticleData implements ParticleOptions {
-    public static final Codec<NoteEmitterParticleData> CODEC = RecordCodecBuilder.create((instance) -> {
-        return instance.group(Codec.DOUBLE.fieldOf("hue").forGetter((data) -> {
-            return data.hue;
-        }), Codec.INT.fieldOf("duration").forGetter((data) -> {
-            return data.duration;
-        })).apply(instance, NoteEmitterParticleData::new);
+    public static final MapCodec<NoteEmitterParticleData> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
+        return instance.group(
+                Codec.DOUBLE.fieldOf("hue").forGetter(data -> data.hue),
+                Codec.INT.fieldOf("duration").forGetter(data -> data.duration)
+            ).apply(instance, NoteEmitterParticleData::new);
     });
     
-    @SuppressWarnings("deprecation")
-    public static final ParticleOptions.Deserializer<NoteEmitterParticleData> DESERIALIZER = new ParticleOptions.Deserializer<NoteEmitterParticleData>() {
-        @Override
-        public NoteEmitterParticleData fromCommand(ParticleType<NoteEmitterParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException {
-            reader.expect(' ');
-            double hue = reader.readDouble();
-            reader.expect(' ');
-            int duration = reader.readInt();
-            return new NoteEmitterParticleData(hue, duration);
-        }
-
-        @Override
-        public NoteEmitterParticleData fromNetwork(ParticleType<NoteEmitterParticleData> particleTypeIn, FriendlyByteBuf buffer) {
-            return new NoteEmitterParticleData(buffer.readDouble(), buffer.readInt());
-        }
-    };
+    public static final StreamCodec<ByteBuf, NoteEmitterParticleData> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.DOUBLE, data -> data.hue,
+            ByteBufCodecs.VAR_INT, data -> data.duration,
+            NoteEmitterParticleData::new);
     
     protected final double hue;
     protected final int duration;
@@ -51,20 +37,17 @@ public class NoteEmitterParticleData implements ParticleOptions {
         this.duration = duration;
     }
     
+    public static MapCodec<NoteEmitterParticleData> codec(ParticleType<NoteEmitterParticleData> pParticleType) {
+        return CODEC;
+    }
+
+    public static StreamCodec<? super RegistryFriendlyByteBuf, NoteEmitterParticleData> streamCodec(ParticleType<NoteEmitterParticleData> pParticleType) {
+        return STREAM_CODEC;
+    }
+
     @Override
     public ParticleType<?> getType() {
         return ParticleTypesPM.NOTE_EMITTER.get();
-    }
-
-    @Override
-    public void writeToNetwork(FriendlyByteBuf buffer) {
-        buffer.writeDouble(this.hue);
-        buffer.writeInt(this.duration);
-    }
-
-    @Override
-    public String writeToString() {
-        return String.format(Locale.ROOT, "%s %d %d", ForgeRegistries.PARTICLE_TYPES.getKey(this.getType()), this.hue, this.duration);
     }
 
     public double getHue() {

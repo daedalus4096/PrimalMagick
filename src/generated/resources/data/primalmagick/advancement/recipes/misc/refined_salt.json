@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_rock_salt": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:rock_salt"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primalmagick:refined_salt"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_rock_salt"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primalmagick:refined_salt"
+    ]
+  }
+}

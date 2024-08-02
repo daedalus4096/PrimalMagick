@@ -1,0 +1,42 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "A": {
+      "tag": "forge:gems/amethyst"
+    },
+    "G": {
+      "item": "primalmagick:archmage_wand_gem_item"
+    },
+    "M": {
+      "item": "primalmagick:marble_hallowed"
+    },
+    "P": {
+      "item": "primalmagick:magitech_parts_heavenly"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 750,
+      "primalmagick:moon": 750,
+      "primalmagick:sea": 750,
+      "primalmagick:sky": 750,
+      "primalmagick:sun": 750
+    }
+  },
+  "pattern": [
+    "APA",
+    "MGM",
+    "APA"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_singularity"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:mana_singularity"
+  }
+}

@@ -2,11 +2,12 @@ package com.verdantartifice.primalmagick.common.theorycrafting.weights;
 
 import java.util.function.Supplier;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -21,10 +22,10 @@ public class WeightFunctionTypesPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<WeightFunctionType<ConstantWeight>> CONSTANT = register("constant", ConstantWeight.CODEC, ConstantWeight::fromNetworkInner);
-    public static final RegistryObject<WeightFunctionType<ProgressiveWeight>> PROGRESSIVE = register("progressive", ProgressiveWeight.CODEC, ProgressiveWeight::fromNetworkInner);
+    public static final RegistryObject<WeightFunctionType<ConstantWeight>> CONSTANT = register("constant", ConstantWeight.CODEC, ConstantWeight.STREAM_CODEC);
+    public static final RegistryObject<WeightFunctionType<ProgressiveWeight>> PROGRESSIVE = register("progressive", ProgressiveWeight.CODEC, ProgressiveWeight.STREAM_CODEC);
 
-    protected static <T extends AbstractWeightFunction<T>> RegistryObject<WeightFunctionType<T>> register(String id, Codec<T> codec, FriendlyByteBuf.Reader<T> networkReader) {
-        return DEFERRED_TYPES.register(id, () -> new WeightFunctionType<T>(PrimalMagick.resource(id), codec, networkReader));
+    protected static <T extends AbstractWeightFunction<T>> RegistryObject<WeightFunctionType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+        return DEFERRED_TYPES.register(id, () -> new WeightFunctionType<T>(PrimalMagick.resource(id), codec, streamCodec));
     }
 }

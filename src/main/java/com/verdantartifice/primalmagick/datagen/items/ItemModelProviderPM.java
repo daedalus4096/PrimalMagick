@@ -19,6 +19,10 @@ import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Holder;
@@ -30,7 +34,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.FishingRodItem;
@@ -288,6 +291,12 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         // TODO Generate modular wand
         // TODO Generate modular staff
         
+        // Generate wand component items
+        WandCoreItem.getAllCores().forEach(this::basicItem);
+        StaffCoreItem.getAllCores().forEach(this::basicItem);
+        WandCapItem.getAllCaps().forEach(this::basicItem);
+        WandGemItem.getAllGems().forEach(this::basicItem);
+        
         // Generate spawn items
         this.spawnEggItem(ItemsPM.TREEFOLK_SPAWN_EGG.get());
         this.spawnEggItem(ItemsPM.PRIMALITE_GOLEM_SPAWN_EGG.get());
@@ -345,7 +354,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         ResourceLocation key = this.key(item);
         return this.builder(key)
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", new ResourceLocation(key.getNamespace(), "item/" + key.getPath()));
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "item/" + key.getPath()));
     }
 
     private ItemModelBuilderPM itemWithParent(Item item, Item parent) {
@@ -357,15 +366,15 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
     
     private ItemModelBuilderPM handheldItem(Item item) {
-        return this.builder(item).parent(this.existingModel(new ResourceLocation("item/handheld"))).texture("layer0", this.defaultModelLoc(item));
+        return this.builder(item).parent(this.existingModel(ResourceLocation.withDefaultNamespace("item/handheld"))).texture("layer0", this.defaultModelLoc(item));
     }
     
     private ItemModelBuilderPM tridentItem(TridentItem item) {
         ItemModelBuilderPM throwingModel = this.tridentThrowingModel(item);
         ItemModelBuilderPM inHandModel = this.tridentInHandModel(item, throwingModel);
         return this.basicItem(item)
-                .override().predicate(new ResourceLocation("throwing"), 0).model(inHandModel).end()
-                .override().predicate(new ResourceLocation("throwing"), 1).model(throwingModel).end();
+                .override().predicate(ResourceLocation.withDefaultNamespace("throwing"), 0).model(inHandModel).end()
+                .override().predicate(ResourceLocation.withDefaultNamespace("throwing"), 1).model(throwingModel).end();
     }
     
     private ItemModelBuilderPM tridentInHandModel(TridentItem item, ModelFile throwingModel) {
@@ -373,7 +382,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
                 .texture("particle", this.defaultModelLoc(item))
-                .override().predicate(new ResourceLocation("throwing"), 1).model(throwingModel).end()
+                .override().predicate(ResourceLocation.withDefaultNamespace("throwing"), 1).model(throwingModel).end()
                 .transforms()
                         .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 60, 0).translation(11, 17, -2).scale(1).end()
                         .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 60, 0).translation(3, 17, 12).scale(1).end()
@@ -402,8 +411,8 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
     
     private ItemModelBuilderPM bowItem(BowItem item) {
-        ResourceLocation pulling = new ResourceLocation("pulling");
-        ResourceLocation pull = new ResourceLocation("pull");
+        ResourceLocation pulling = ResourceLocation.withDefaultNamespace("pulling");
+        ResourceLocation pull = ResourceLocation.withDefaultNamespace("pull");
         return this.builder(item)
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", this.defaultModelLoc(item))
@@ -427,7 +436,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         return this.builder(item)
                 .parent(new ModelFile.UncheckedModelFile("item/handheld_rod"))
                 .texture("layer0", this.defaultModelLoc(item))
-                .override().predicate(new ResourceLocation("cast"), 1).model(this.fishingRodCastModel(item)).end();
+                .override().predicate(ResourceLocation.withDefaultNamespace("cast"), 1).model(this.fishingRodCastModel(item)).end();
     }
     
     private ItemModelBuilderPM fishingRodCastModel(FishingRodItem item) {
@@ -440,7 +449,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
                 .texture("particle", particleTexture)
-                .override().predicate(new ResourceLocation("blocking"), 1).model(this.shieldBlockingModel(item, particleTexture)).end()
+                .override().predicate(ResourceLocation.withDefaultNamespace("blocking"), 1).model(this.shieldBlockingModel(item, particleTexture)).end()
                 .transforms()
                         .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 90, 0).translation(10, 6, -4).scale(1).end()
                         .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 90, 0).translation(10, 6, 12).scale(1).end()
@@ -479,7 +488,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
     
     private ItemModelBuilderPM armorItemWithTrims(ArmorItem item, ResourceLocation trimOverlayLoc, List<Holder<TrimMaterial>> trims) {
-        ResourceLocation trimType = new ResourceLocation("trim_type");
+        ResourceLocation trimType = ResourceLocation.withDefaultNamespace("trim_type");
         ItemModelBuilderPM builder = this.basicItem(item);
         
         // It's very important that the overrides be written in ascending order of value, otherwise you may get the wrong texture for any given property value
@@ -510,10 +519,10 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
             };
         } else {
             return switch (item.getEquipmentSlot()) {
-                case HEAD -> new ResourceLocation("trims/items/helmet_trim");
-                case CHEST -> new ResourceLocation("trims/items/chestplate_trim");
-                case LEGS -> new ResourceLocation("trims/items/leggings_trim");
-                case FEET -> new ResourceLocation("trims/items/boots_trim");
+                case HEAD -> ResourceLocation.withDefaultNamespace("trims/items/helmet_trim");
+                case CHEST -> ResourceLocation.withDefaultNamespace("trims/items/chestplate_trim");
+                case LEGS -> ResourceLocation.withDefaultNamespace("trims/items/leggings_trim");
+                case FEET -> ResourceLocation.withDefaultNamespace("trims/items/boots_trim");
                 default -> throw new IllegalArgumentException("Invalid armor type for trim overlay detection");
             };
         }
@@ -523,9 +532,9 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         return lookupProvider.lookupOrThrow(Registries.TRIM_MATERIAL).getOrThrow(key);
     }
     
-    private String getArmorTrimColorPaletteSuffix(Holder<TrimMaterial> trimMaterial, ArmorMaterial armorMaterial) {
-        Map<ArmorMaterials, String> map = trimMaterial.value().overrideArmorMaterials();
-        return armorMaterial instanceof ArmorMaterials && map.containsKey(armorMaterial) ? map.get(armorMaterial) : trimMaterial.value().assetName();
+    private String getArmorTrimColorPaletteSuffix(Holder<TrimMaterial> trimMaterial, Holder<ArmorMaterial> armorMaterial) {
+        Map<Holder<ArmorMaterial>, String> map = trimMaterial.value().overrideArmorMaterials();
+        return map.containsKey(armorMaterial) ? map.get(armorMaterial) : trimMaterial.value().assetName();
     }
     
     private ItemModelBuilderPM itemWithOverlay(Item item) {
@@ -537,7 +546,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
     
     private ItemModelBuilderPM spawnEggItem(SpawnEggItem item) {
-        return this.itemWithParent(item, new ResourceLocation("item/template_spawn_egg"));
+        return this.itemWithParent(item, ResourceLocation.withDefaultNamespace("item/template_spawn_egg"));
     }
     
     private void pixieItem(PixieItem item) {
@@ -549,7 +558,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         ResourceLocation key = this.key(item);
         ItemModelBuilderPM builder = this.builder(key)
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", new ResourceLocation(key.getNamespace(), "item/" + key.getPath() + "_" + defaultColor.getName()));
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "item/" + key.getPath() + "_" + defaultColor.getName()));
         
         // It's very important that the overrides be written in ascending order of value, otherwise you may get the wrong texture for any given property value
         List<DyeColor> sortedColors = Stream.of(DyeColor.values()).sorted((c1, c2) -> Integer.compare(c1.getId(), c2.getId())).toList();

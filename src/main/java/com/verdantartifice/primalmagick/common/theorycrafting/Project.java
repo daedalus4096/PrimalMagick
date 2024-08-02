@@ -16,6 +16,9 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
 
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -41,6 +44,23 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
                 Codec.DOUBLE.fieldOf("baseRewardMultiplier").forGetter(Project::baseRewardMultiplier),
                 ResourceLocation.CODEC.optionalFieldOf("aidBlock").forGetter(Project::aidBlock)
             ).apply(instance, Project::new));
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, Project> streamCodec() {
+        return StreamCodec.composite(
+                ResourceKey.streamCodec(RegistryKeysPM.PROJECT_TEMPLATES),
+                Project::templateKey,
+                MaterialInstance.streamCodec().apply(ByteBufCodecs.list()),
+                Project::activeMaterials,
+                AbstractReward.dispatchStreamCodec().apply(ByteBufCodecs.list()),
+                Project::otherRewards,
+                ByteBufCodecs.DOUBLE,
+                Project::baseSuccessChance,
+                ByteBufCodecs.DOUBLE,
+                Project::baseRewardMultiplier,
+                ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC),
+                Project::aidBlock,
+                Project::new);
     }
     
     @Nonnull

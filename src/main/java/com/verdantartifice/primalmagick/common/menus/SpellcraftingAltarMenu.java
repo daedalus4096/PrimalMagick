@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,13 +19,20 @@ import com.verdantartifice.primalmagick.common.menus.slots.SpellcraftingResultSl
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.SpellComponent;
-import com.verdantartifice.primalmagick.common.spells.SpellFactory;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
-import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
-import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
-import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.mods.AbstractSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
+import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.EmptySpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadType;
+import com.verdantartifice.primalmagick.common.spells.vehicles.AbstractSpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.EmptySpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -68,7 +76,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     protected int spellPrimaryModTypeIndex = 0;
     protected int spellSecondaryModTypeIndex = 0;
     protected SpellPackage spellPackageCache = null;
-    protected Map<SpellComponent, Map<String, Integer>> spellPropertyCache = new HashMap<>();
+    protected Map<SpellComponent, Map<SpellProperty, Integer>> spellPropertyCache = new HashMap<>();
 
     public SpellcraftingAltarMenu(int windowId, Inventory inv, BlockPos tilePos) {
         this(windowId, inv, tilePos, null);
@@ -126,13 +134,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     
     protected SpellPackage makeFinalSpellPackage() {
         // Assemble the final spell package from the input types and properties
-        SpellPackage spell = new SpellPackage();
-        spell.setName(this.getSpellName());
-        spell.setVehicle(this.getSpellVehicleComponent());
-        spell.setPayload(this.getSpellPayloadComponent());
-        spell.setPrimaryMod(this.getSpellPrimaryModComponent());
-        spell.setSecondaryMod(this.getSpellSecondaryModComponent());
-        return spell;
+        return new SpellPackage(this.getSpellName(), this.getSpellVehicleComponent(), this.getSpellPayloadComponent(), this.getSpellPrimaryModComponent(), this.getSpellSecondaryModComponent());
     }
     
     public String getSpellName() {
@@ -142,12 +144,12 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     @Nonnull
     public Component getDefaultSpellName() {
         // Don't use getSpellPackage here, or it will cause infinite recursion
-        Component vehiclePiece = this.getSpellVehicleComponent().getDefaultNamePiece();
-        Component payloadPiece = this.getSpellPayloadComponent().getDefaultNamePiece();
-        Component primaryModPiece = this.getSpellPrimaryModComponent().getDefaultNamePiece();
-        Component secondaryModPiece = this.getSpellSecondaryModComponent().getDefaultNamePiece();
-        boolean primaryActive = this.getSpellPrimaryModComponent().isActive();
-        boolean secondaryActive = this.getSpellSecondaryModComponent().isActive();
+        Component vehiclePiece = this.getSpellVehicleComponent().getComponent().getDefaultNamePiece();
+        Component payloadPiece = this.getSpellPayloadComponent().getComponent().getDefaultNamePiece();
+        Optional<Component> primaryModPiece = this.getSpellPrimaryModComponent().map(mod -> mod.getComponent().getDefaultNamePiece());
+        Optional<Component> secondaryModPiece = this.getSpellSecondaryModComponent().map(mod -> mod.getComponent().getDefaultNamePiece());
+        boolean primaryActive = primaryModPiece.isPresent();
+        boolean secondaryActive = secondaryModPiece.isPresent();
         if (vehiclePiece == null || payloadPiece == null || vehiclePiece.getString().isEmpty() || payloadPiece.getString().isEmpty()) {
             // If the constructed spell is invalid, don't show a default name
             return Component.literal("");
@@ -156,13 +158,13 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
             return Component.translatable("spells.primalmagick.default_name_format.mods.0", vehiclePiece, payloadPiece);
         } else if (primaryActive && secondaryActive) {
             // Two mods selected
-            return Component.translatable("spells.primalmagick.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
+            return Component.translatable("spells.primalmagick.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece.get(), secondaryModPiece.get());
         } else if (primaryActive) {
             // Only a primary mod selected
-            return Component.translatable("spells.primalmagick.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
+            return Component.translatable("spells.primalmagick.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece.get());
         } else {
             // Only a secondary mod selected
-            return Component.translatable("spells.primalmagick.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
+            return Component.translatable("spells.primalmagick.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece.get());
         }
     }
     
@@ -175,17 +177,22 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         });
     }
     
-    protected ISpellVehicle getSpellVehicleComponent() {
+    @Nonnull
+    protected ConfiguredSpellVehicle<?> getSpellVehicleComponent() {
         // Construct a new spell vehicle from the saved type index and populate it with any cached properties
-        ISpellVehicle retVal = SpellFactory.getVehicleFromType(SpellManager.getVehicleTypes(this.player).get(this.getSpellVehicleTypeIndex()));
-        if (retVal != null) {
-            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.VEHICLE).entrySet()) {
-                if (retVal.getProperty(entry.getKey()) != null) {
-                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
-                }
-            }
+        int index = this.getSpellVehicleTypeIndex();
+        List<SpellVehicleType<?>> types = SpellManager.getVehicleTypes(this.player);
+        if (index < 0 || index >= types.size()) {
+            return new ConfiguredSpellVehicle<>(EmptySpellVehicle.INSTANCE);
         }
-        return retVal;
+        AbstractSpellVehicle<?> baseVehicle = types.get(index).instanceSupplier().get();
+        Map<SpellProperty, Integer> properties = new HashMap<>();
+        this.spellPropertyCache.get(SpellComponent.VEHICLE).forEach((prop, val) -> {
+            if (baseVehicle.getProperties().contains(prop)) {
+                properties.put(prop, val);
+            }
+        });
+        return new ConfiguredSpellVehicle<>(baseVehicle, properties);
     }
     
     public int getSpellVehicleTypeIndex() {
@@ -202,17 +209,21 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         });
     }
     
-    protected ISpellPayload getSpellPayloadComponent() {
+    protected ConfiguredSpellPayload<?> getSpellPayloadComponent() {
         // Construct a new spell payload from the saved type index and populate it with any cached properties
-        ISpellPayload retVal = SpellFactory.getPayloadFromType(SpellManager.getPayloadTypes(this.player).get(this.getSpellPayloadTypeIndex()));
-        if (retVal != null) {
-            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.PAYLOAD).entrySet()) {
-                if (retVal.getProperty(entry.getKey()) != null) {
-                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
-                }
-            }
+        int index = this.getSpellPayloadTypeIndex();
+        List<SpellPayloadType<?>> types = SpellManager.getPayloadTypes(this.player);
+        if (index < 0 || index >= types.size()) {
+            return new ConfiguredSpellPayload<>(EmptySpellPayload.INSTANCE);
         }
-        return retVal;
+        AbstractSpellPayload<?> basePayload = types.get(index).instanceSupplier().get();
+        Map<SpellProperty, Integer> properties = new HashMap<>();
+        this.spellPropertyCache.get(SpellComponent.PAYLOAD).forEach((prop, val) -> {
+            if (basePayload.getProperties().contains(prop)) {
+                properties.put(prop, val);
+            }
+        });
+        return new ConfiguredSpellPayload<>(basePayload, properties);
     }
     
     public int getSpellPayloadTypeIndex() {
@@ -229,17 +240,24 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         });
     }
     
-    protected ISpellMod getSpellPrimaryModComponent() {
+    private Optional<ConfiguredSpellMod<?>> getSpellModComponentInner(SpellComponent componentType, int index) {
         // Construct a new spell mod from the saved type index and populate it with any cached properties
-        ISpellMod retVal = SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellPrimaryModTypeIndex()));
-        if (retVal != null) {
-            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.PRIMARY_MOD).entrySet()) {
-                if (retVal.getProperty(entry.getKey()) != null) {
-                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
-                }
-            }
+        List<SpellModType<?>> types = SpellManager.getModTypes(this.player);
+        if (index < 0 || index >= types.size()) {
+            return Optional.empty();
         }
-        return retVal;
+        AbstractSpellMod<?> baseMod = types.get(index).instanceSupplier().get();
+        Map<SpellProperty, Integer> properties = new HashMap<>();
+        this.spellPropertyCache.get(componentType).forEach((prop, val) -> {
+            if (baseMod.getProperties().contains(prop)) {
+                properties.put(prop, val);
+            }
+        });
+        return Optional.of(new ConfiguredSpellMod<>(baseMod, properties));
+    }
+    
+    protected Optional<ConfiguredSpellMod<?>> getSpellPrimaryModComponent() {
+        return this.getSpellModComponentInner(SpellComponent.PRIMARY_MOD, this.getSpellPrimaryModTypeIndex());
     }
     
     public int getSpellPrimaryModTypeIndex() {
@@ -256,17 +274,8 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         });
     }
     
-    protected ISpellMod getSpellSecondaryModComponent() {
-        // Construct a new spell mod from the saved type index and populate it with any cached properties
-        ISpellMod retVal = SpellFactory.getModFromType(SpellManager.getModTypes(this.player).get(this.getSpellSecondaryModTypeIndex()));
-        if (retVal != null) {
-            for (Map.Entry<String, Integer> entry : this.spellPropertyCache.get(SpellComponent.SECONDARY_MOD).entrySet()) {
-                if (retVal.getProperty(entry.getKey()) != null) {
-                    retVal.getProperty(entry.getKey()).setValue(entry.getValue().intValue());
-                }
-            }
-        }
-        return retVal;
+    protected Optional<ConfiguredSpellMod<?>> getSpellSecondaryModComponent() {
+        return this.getSpellModComponentInner(SpellComponent.SECONDARY_MOD, this.getSpellSecondaryModTypeIndex());
     }
     
     public int getSpellSecondaryModTypeIndex() {
@@ -283,25 +292,10 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         });
     }
     
-    public void setSpellPropertyValue(SpellComponent component, String name, int value) {
-        SpellPackage spell = this.getSpellPackage();
-        SpellProperty property = null;
-        
-        // Determine which property is to be changed
-        if (component == SpellComponent.VEHICLE && spell.getVehicle() != null) {
-            property = spell.getVehicle().getProperty(name);
-        } else if (component == SpellComponent.PAYLOAD && spell.getPayload() != null) {
-            property = spell.getPayload().getProperty(name);
-        } else if (component == SpellComponent.PRIMARY_MOD && spell.getPrimaryMod() != null) {
-            property = spell.getPrimaryMod().getProperty(name);
-        } else if (component == SpellComponent.SECONDARY_MOD && spell.getSecondaryMod() != null) {
-            property = spell.getSecondaryMod().getProperty(name);
-        }
-        
+    public void setSpellPropertyValue(SpellComponent component, SpellProperty property, int value) {
         // Set and cache the changed value, then trigger a regeneration of the output item
-        if (property != null) {
-            property.setValue(value);
-            this.spellPropertyCache.get(component).put(name, value);
+        if (component != null && property != null) {
+            this.spellPropertyCache.get(component).put(property, value);
             this.containerLevelAccess.execute((world, blockPos) -> {
                 this.slotChangedCraftingGrid(world);
             });
@@ -399,8 +393,8 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
             Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
             if (opt.isPresent() && opt.get().value() instanceof SpellcraftingRecipe recipe) {
                 // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
-                if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
-                    stack = recipe.assemble(this.scrollInv, world.registryAccess());
+                if (recipe.matches(this.scrollInv.asCraftInput(), world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
+                    stack = recipe.assemble(this.scrollInv.asCraftInput(), world.registryAccess());
                     if (stack != null && stack.getItem() instanceof SpellScrollItem) {
                         ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getSpellPackage());
                     }
@@ -419,7 +413,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
             return false;
         }
         IWand wand = (IWand)stack.getItem();
-        return wand.containsRealMana(stack, player, this.getManaCosts());
+        return wand.containsRealMana(stack, player, this.getManaCosts(), player.registryAccess());
     }
     
     public ItemStack getWand() {

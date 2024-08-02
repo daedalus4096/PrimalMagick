@@ -11,7 +11,6 @@ import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 
 /**
  * Advancement criterion that is triggered when the player uses a rune more than once in a runescribe.
@@ -29,7 +28,7 @@ public class RuneUseCountTrigger extends SimpleCriterionTrigger<RuneUseCountTrig
     
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<Rune> runeOpt, int threshold) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<RuneUseCountTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(RuneUseCountTrigger.TriggerInstance::player), 
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(RuneUseCountTrigger.TriggerInstance::player), 
                 Rune.CODEC.optionalFieldOf("rune").forGetter(RuneUseCountTrigger.TriggerInstance::runeOpt),
                 Codec.INT.fieldOf("threshold").forGetter(RuneUseCountTrigger.TriggerInstance::threshold)
             ).apply(instance, RuneUseCountTrigger.TriggerInstance::new));

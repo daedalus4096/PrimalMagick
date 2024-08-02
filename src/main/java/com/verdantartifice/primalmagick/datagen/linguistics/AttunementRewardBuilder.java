@@ -2,11 +2,18 @@ package com.verdantartifice.primalmagick.datagen.linguistics;
 
 import javax.annotation.Nonnull;
 
-import com.google.gson.JsonObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AttunementReward;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 public class AttunementRewardBuilder {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     protected final Source source;
     protected int points;
     
@@ -48,10 +55,8 @@ public class AttunementRewardBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
-            json.addProperty("type", AttunementReward.TYPE);
-            json.addProperty("source", this.source.getId().toString());
-            json.addProperty("points", this.points);
+        public JsonElement serialize() {
+            return AbstractReward.dispatchCodec().encodeStart(JsonOps.INSTANCE, new AttunementReward(this.source, this.points)).resultOrPartial(LOGGER::error).orElseThrow();
         }
     }
 }

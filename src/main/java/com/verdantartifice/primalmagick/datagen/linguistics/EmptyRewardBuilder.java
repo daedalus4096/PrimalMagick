@@ -1,9 +1,16 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import com.google.gson.JsonObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.EmptyReward;
 
 public class EmptyRewardBuilder {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     protected EmptyRewardBuilder() {}
     
     public static EmptyRewardBuilder reward() {
@@ -18,8 +25,8 @@ public class EmptyRewardBuilder {
         public Result() {}
 
         @Override
-        public void serialize(JsonObject json) {
-            json.addProperty("type", EmptyReward.TYPE);
+        public JsonElement serialize() {
+            return AbstractReward.dispatchCodec().encodeStart(JsonOps.INSTANCE, EmptyReward.INSTANCE).resultOrPartial(LOGGER::error).orElseThrow();
         }
     }
 }

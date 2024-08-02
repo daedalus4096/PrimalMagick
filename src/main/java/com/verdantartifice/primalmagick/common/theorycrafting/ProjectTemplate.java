@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,10 +26,13 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.AbstractWeightFunction;
-import com.verdantartifice.primalmagick.common.util.CodecUtils;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,7 +47,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, List<AbstractReward<?>> otherRewards, Optional<AbstractRequirement<?>> requirement,
-        OptionalInt requiredMaterialCountOverride, OptionalDouble baseSuccessChanceOverride, double rewardMultiplier, List<ResourceLocation> aidBlocks,
+        Optional<Integer> requiredMaterialCountOverride, Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, List<ResourceLocation> aidBlocks,
         Optional<AbstractWeightFunction<?>> weightFunction) {
     public static final int MAX_MATERIALS = 4;
     
@@ -55,12 +56,33 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
                 AbstractProjectMaterial.dispatchCodec().listOf().fieldOf("materialOptions").forGetter(ProjectTemplate::materialOptions),
                 AbstractReward.dispatchCodec().listOf().fieldOf("otherRewards").forGetter(ProjectTemplate::otherRewards),
                 AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ProjectTemplate::requirement),
-                CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("requiredMaterialCountOverride")).forGetter(ProjectTemplate::requiredMaterialCountOverride),
-                CodecUtils.asOptionalDouble(Codec.DOUBLE.optionalFieldOf("baseSuccessChanceOverride")).forGetter(ProjectTemplate::baseSuccessChanceOverride),
+                Codec.INT.optionalFieldOf("requiredMaterialCountOverride").forGetter(ProjectTemplate::requiredMaterialCountOverride),
+                Codec.DOUBLE.optionalFieldOf("baseSuccessChanceOverride").forGetter(ProjectTemplate::baseSuccessChanceOverride),
                 Codec.DOUBLE.fieldOf("rewardMultiplier").forGetter(ProjectTemplate::rewardMultiplier),
                 ResourceLocation.CODEC.listOf().fieldOf("aidBlocks").forGetter(ProjectTemplate::aidBlocks),
                 AbstractWeightFunction.dispatchCodec().optionalFieldOf("weightFunction").forGetter(ProjectTemplate::weightFunction)
             ).apply(instance, ProjectTemplate::new));
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, ProjectTemplate> streamCodec() {
+        return StreamCodecUtils.composite(
+                AbstractProjectMaterial.dispatchStreamCodec().apply(ByteBufCodecs.list()),
+                ProjectTemplate::materialOptions,
+                AbstractReward.dispatchStreamCodec().apply(ByteBufCodecs.list()),
+                ProjectTemplate::otherRewards,
+                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()),
+                ProjectTemplate::requirement,
+                ByteBufCodecs.optional(ByteBufCodecs.VAR_INT),
+                ProjectTemplate::requiredMaterialCountOverride,
+                ByteBufCodecs.optional(ByteBufCodecs.DOUBLE),
+                ProjectTemplate::baseSuccessChanceOverride,
+                ByteBufCodecs.DOUBLE,
+                ProjectTemplate::rewardMultiplier,
+                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                ProjectTemplate::aidBlocks,
+                ByteBufCodecs.optional(AbstractWeightFunction.dispatchStreamCodec()),
+                ProjectTemplate::weightFunction,
+                ProjectTemplate::new);
     }
     
     public double getWeight(Player player) {
@@ -156,8 +178,8 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         protected final List<AbstractProjectMaterial<?>> materialOptions = new ArrayList<>();
         protected final List<AbstractReward<?>> otherRewards = new ArrayList<>();
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
-        protected OptionalInt requiredMaterialCountOverride = OptionalInt.empty();
-        protected OptionalDouble baseSuccessChanceOverride = OptionalDouble.empty();
+        protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
+        protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
         protected double rewardMultiplier = 0.25D;
         protected final List<ResourceLocation> aidBlocks = new ArrayList<>();
         protected Optional<AbstractWeightFunction<?>> weightFunction = Optional.empty();
@@ -189,12 +211,12 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         }
         
         public Builder materialCountOverride(int value) {
-            this.requiredMaterialCountOverride = OptionalInt.of(value);
+            this.requiredMaterialCountOverride = Optional.of(value);
             return this;
         }
         
         public Builder baseSuccessChanceOverride(double value) {
-            this.baseSuccessChanceOverride = OptionalDouble.of(value);
+            this.baseSuccessChanceOverride = Optional.of(value);
             return this;
         }
         
@@ -227,11 +249,11 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
             int maxMaterialCount = this.requiredMaterialCountOverride.orElse(MAX_MATERIALS);
             if (this.materialOptions.size() < maxMaterialCount) {
                 throw new IllegalStateException("Project template must have at least " + maxMaterialCount + " material option(s)");
-            } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.getAsInt() > MAX_MATERIALS) {
+            } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.get() > MAX_MATERIALS) {
                 throw new IllegalStateException("Project template material override must not be greater than " + MAX_MATERIALS);
-            } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.getAsInt() <= 0) {
+            } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.get() <= 0) {
                 throw new IllegalStateException("Project template material override must be positive");
-            } else if (this.baseSuccessChanceOverride.isPresent() && (this.baseSuccessChanceOverride.getAsDouble() < 0D || this.baseSuccessChanceOverride.getAsDouble() > 1D)) {
+            } else if (this.baseSuccessChanceOverride.isPresent() && (this.baseSuccessChanceOverride.get() < 0D || this.baseSuccessChanceOverride.get() > 1D)) {
                 throw new IllegalStateException("Project template base success chance override must be between 0 and 1, inclusive");
             } else if (this.rewardMultiplier <= 0D) {
                 throw new IllegalStateException("Project template reward multiplier must be positive");

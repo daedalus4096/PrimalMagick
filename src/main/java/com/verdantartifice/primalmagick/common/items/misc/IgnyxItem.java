@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.common.entities.projectiles.IgnyxEntity;
 
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -9,8 +11,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
@@ -19,7 +23,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class IgnyxItem extends Item {
+public class IgnyxItem extends Item implements ProjectileItem {
     public IgnyxItem(Item.Properties properties) {
         super(properties);
     }
@@ -45,5 +49,12 @@ public class IgnyxItem extends Item {
             stack.shrink(1);
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+    }
+
+    @Override
+    public Projectile asProjectile(Level pLevel, Position pPos, ItemStack pStack, Direction pDirection) {
+        IgnyxEntity projectile = new IgnyxEntity(pLevel, pPos.x(), pPos.y(), pPos.z());
+        projectile.setItem(pStack);
+        return projectile;
     }
 }

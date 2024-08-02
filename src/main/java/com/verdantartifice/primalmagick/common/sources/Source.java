@@ -12,8 +12,10 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
@@ -31,6 +33,7 @@ public class Source implements StringRepresentable {
     protected static final ResourceLocation UNKNOWN_ATLAS_LOC = PrimalMagick.resource("research/research_unknown");
     
     public static final Codec<Source> CODEC = ResourceLocation.CODEC.xmap(Sources::get, Source::getId);
+    public static final StreamCodec<ByteBuf, Source> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(Sources::get, Source::getId);
 
     protected final ResourceLocation id;            // Unique identifier for the source
     protected final int color;                      // Color to use for graphical effects
@@ -60,12 +63,12 @@ public class Source implements StringRepresentable {
     
     public Source(ResourceLocation id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, ResourceKey<ResearchEntry> discoverKey, int sortOrder) {
         this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.of(new ResearchEntryKey(discoverKey)), sortOrder,
-                new ResourceLocation(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), new ResourceLocation(id.getNamespace(), "sources/" + id.getPath()));
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "sources/" + id.getPath()));
     }
     
     public Source(ResourceLocation id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, int sortOrder) {
         this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.empty(), sortOrder,
-                new ResourceLocation(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), new ResourceLocation(id.getNamespace(), "sources/" + id.getPath()));
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "sources/" + id.getPath()));
     }
     
     @Nonnull

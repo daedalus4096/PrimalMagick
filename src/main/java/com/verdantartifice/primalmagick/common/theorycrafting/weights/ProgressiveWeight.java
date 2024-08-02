@@ -3,18 +3,18 @@ package com.verdantartifice.primalmagick.common.theorycrafting.weights;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.lang3.mutable.MutableDouble;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 
@@ -24,10 +24,17 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class ProgressiveWeight extends AbstractWeightFunction<ProgressiveWeight> {
-    public static final Codec<ProgressiveWeight> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<ProgressiveWeight> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.DOUBLE.fieldOf("startingWeight").forGetter(w -> w.startingWeight),
-            Modifier.CODEC.listOf().fieldOf("modifiers").forGetter(w -> w.modifiers)
+            Modifier.CODEC.codec().listOf().fieldOf("modifiers").forGetter(w -> w.modifiers)
         ).apply(instance, ProgressiveWeight::new));
+    
+    public static final StreamCodec<ByteBuf, ProgressiveWeight> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.DOUBLE,
+            w -> w.startingWeight,
+            Modifier.STREAM_CODEC.apply(ByteBufCodecs.list()),
+            w -> w.modifiers,
+            ProgressiveWeight::new);
 
     private final double startingWeight;
     private final List<Modifier> modifiers;
@@ -49,36 +56,21 @@ public class ProgressiveWeight extends AbstractWeightFunction<ProgressiveWeight>
         return Math.max(0D, retVal.doubleValue());
     }
     
-    @Nonnull
-    static ProgressiveWeight fromNetworkInner(FriendlyByteBuf buf) {
-        double start = buf.readDouble();
-        List<Modifier> modifiers = buf.readList(Modifier::fromNetwork);
-        return new ProgressiveWeight(start, modifiers);
-    }
-
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeDouble(this.startingWeight);
-        buf.writeCollection(this.modifiers, (b, m) -> m.toNetwork(b));
-    }
-
     protected static record Modifier(ResearchEntryKey researchKey, double weightModifier) {
-        public static final Codec<Modifier> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("researchKey").xmap(ResearchEntryKey::new, ResearchEntryKey::getRootKey).forGetter(Modifier::researchKey), 
+        public static final MapCodec<Modifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                ResearchEntryKey.CODEC.fieldOf("researchKey").forGetter(Modifier::researchKey), 
                 Codec.DOUBLE.fieldOf("weightModifier").forGetter(Modifier::weightModifier)
             ).apply(instance, Modifier::new));
         
+        public static final StreamCodec<ByteBuf, Modifier> STREAM_CODEC = StreamCodec.composite(
+                ResearchEntryKey.STREAM_CODEC,
+                Modifier::researchKey,
+                ByteBufCodecs.DOUBLE,
+                Modifier::weightModifier,
+                Modifier::new);
+        
         public Modifier(ResourceKey<ResearchEntry> rawKey, double weightModifier) {
             this(new ResearchEntryKey(rawKey), weightModifier);
-        }
-        
-        public static Modifier fromNetwork(FriendlyByteBuf buf) {
-            return new Modifier(buf.readResourceKey(RegistryKeysPM.RESEARCH_ENTRIES), buf.readDouble());
-        }
-        
-        public void toNetwork(FriendlyByteBuf buf) {
-            buf.writeResourceKey(this.researchKey.getRootKey());
-            buf.writeDouble(this.weightModifier);
         }
     }
     

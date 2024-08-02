@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.joml.Vector2i;
-import org.joml.Vector2ic;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashBasedTable;
@@ -18,6 +17,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguisticsPacket;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -48,7 +48,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     private final Table<ResourceLocation, ResourceLocation, Integer> studyCounts = HashBasedTable.create();
     
     // Map of grid definition IDs to sets of unlocked node coordinates
-    private final Map<ResourceLocation, Set<Vector2ic>> unlocks = new ConcurrentHashMap<>();
+    private final Map<ResourceLocation, Set<Vector2i>> unlocks = new ConcurrentHashMap<>();
     
     // Map of grid definition IDs to last modified times
     private final Map<ResourceLocation, Long> gridModificationTimes = new ConcurrentHashMap<>();
@@ -59,7 +59,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         
         // Serialize recorded comprehension values
@@ -119,12 +119,12 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         
         // Serialize unlocked node coordinates
         ListTag unlockGridList = new ListTag();
-        for (Map.Entry<ResourceLocation, Set<Vector2ic>> gridEntry : this.unlocks.entrySet()) {
+        for (Map.Entry<ResourceLocation, Set<Vector2i>> gridEntry : this.unlocks.entrySet()) {
             if (gridEntry != null) {
                 CompoundTag gridTag = new CompoundTag();
                 gridTag.putString("GridDef", gridEntry.getKey().toString());
                 ListTag unlockCoordsList = new ListTag();
-                for (Vector2ic coords : gridEntry.getValue()) {
+                for (Vector2i coords : gridEntry.getValue()) {
                     if (coords != null) {
                         CompoundTag coordsTag = new CompoundTag();
                         coordsTag.putInt("X", coords.x());
@@ -157,7 +157,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
@@ -168,24 +168,24 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         ListTag comprehensionList = nbt.getList("Comprehension", Tag.TAG_COMPOUND);
         for (int index = 0; index < comprehensionList.size(); index++) {
             CompoundTag tag = comprehensionList.getCompound(index);
-            this.setComprehension(new ResourceLocation(tag.getString("Language")), tag.getInt("Value"));
+            this.setComprehension(ResourceLocation.parse(tag.getString("Language")), tag.getInt("Value"));
         }
         
         // Deserialize vocabulary values
         ListTag vocabularyList = nbt.getList("Vocabulary", Tag.TAG_COMPOUND);
         for (int index = 0; index < vocabularyList.size(); index++) {
             CompoundTag tag = vocabularyList.getCompound(index);
-            this.setVocabulary(new ResourceLocation(tag.getString("Language")), tag.getInt("Value"));
+            this.setVocabulary(ResourceLocation.parse(tag.getString("Language")), tag.getInt("Value"));
         }
         
         // Deserialize books read values
         ListTag booksReadList = nbt.getList("BooksRead", Tag.TAG_COMPOUND);
         for (int langIndex = 0; langIndex < booksReadList.size(); langIndex++) {
             CompoundTag langTag = booksReadList.getCompound(langIndex);
-            ResourceLocation langId = new ResourceLocation(langTag.getString("Language"));
+            ResourceLocation langId = ResourceLocation.parse(langTag.getString("Language"));
             ListTag booksList = langTag.getList("Books", Tag.TAG_STRING);
             for (int bookIndex = 0; bookIndex < booksList.size(); bookIndex++) {
-                ResourceLocation bookId = new ResourceLocation(booksList.getString(bookIndex));
+                ResourceLocation bookId = ResourceLocation.parse(booksList.getString(bookIndex));
                 this.markRead(bookId, langId);
             }
         }
@@ -194,14 +194,14 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         ListTag studyCountList = nbt.getList("StudyCounts", Tag.TAG_COMPOUND);
         for (int index = 0; index < studyCountList.size(); index++) {
             CompoundTag tag = studyCountList.getCompound(index);
-            this.setTimesStudied(new ResourceLocation(tag.getString("Book")), new ResourceLocation(tag.getString("Language")), tag.getInt("Value"));
+            this.setTimesStudied(ResourceLocation.parse(tag.getString("Book")), ResourceLocation.parse(tag.getString("Language")), tag.getInt("Value"));
         }
         
         // Deserialize unlocked node coordinates
         ListTag unlockGridList = nbt.getList("Unlocks", Tag.TAG_COMPOUND);
         for (int gridIndex = 0; gridIndex < unlockGridList.size(); gridIndex++) {
             CompoundTag gridTag = unlockGridList.getCompound(gridIndex);
-            ResourceLocation gridId = new ResourceLocation(gridTag.getString("GridDef"));
+            ResourceLocation gridId = ResourceLocation.parse(gridTag.getString("GridDef"));
             ListTag coordsList = gridTag.getList("Coords", Tag.TAG_COMPOUND);
             for (int coordsIndex = 0; coordsIndex < coordsList.size(); coordsIndex++) {
                 CompoundTag coordsTag = coordsList.getCompound(coordsIndex);
@@ -213,7 +213,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         ListTag modifiedList = nbt.getList("GridModifiedTimes", Tag.TAG_COMPOUND);
         for (int index = 0; index < modifiedList.size(); index++) {
             CompoundTag tag = modifiedList.getCompound(index);
-            this.setLastModified(new ResourceLocation(tag.getString("GridDef")), tag.getLong("LastModified"));
+            this.setLastModified(ResourceLocation.parse(tag.getString("GridDef")), tag.getLong("LastModified"));
         }
         
         ScribeTableMode mode = ScribeTableMode.fromName(nbt.getString("ScribeTableMode"));
@@ -283,7 +283,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     }
 
     @Override
-    public Set<Vector2ic> getUnlockedNodes(ResourceLocation gridDefinitionId) {
+    public Set<Vector2i> getUnlockedNodes(ResourceLocation gridDefinitionId) {
         return Collections.unmodifiableSet(this.unlocks.getOrDefault(gridDefinitionId, Collections.emptySet()));
     }
 
@@ -294,7 +294,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     }
 
     @Override
-    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2ic nodePos) {
+    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2i nodePos) {
         this.setLastModified(gridDefinitionId, System.currentTimeMillis());
         return this.unlocks.computeIfAbsent(gridDefinitionId, k -> new HashSet<>()).add(nodePos);
     }
@@ -336,14 +336,16 @@ public class PlayerLinguistics implements IPlayerLinguistics {
             }
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public CompoundTag serializeNBT() {
-            return instance.serializeNBT();
+        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+            return instance.serializeNBT(registries);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public void deserializeNBT(CompoundTag nbt) {
-            instance.deserializeNBT(nbt);
+        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+            instance.deserializeNBT(registries, nbt);
         }
     }
 }

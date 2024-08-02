@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -50,7 +51,7 @@ public class RunescribingResultSlot extends Slot {
         Level level = this.player.level();
         if (!level.isClientSide) {
             List<Rune> runes = RuneManager.getRunes(stack);
-            Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(level.registryAccess(), runes, stack, this.player, false);
+            Map<Holder<Enchantment>, Integer> enchants = RuneManager.getRuneEnchantments(level.registryAccess(), runes, stack, this.player, false);
 
             if (this.player instanceof ServerPlayer serverPlayer) {
                 // Increment the player's runescribing craft stat

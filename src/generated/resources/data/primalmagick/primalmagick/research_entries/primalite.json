@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:alchemy"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:primalite_ingot"
@@ -27,35 +28,35 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_dust_earth"
             }
           },
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_dust_sea"
             }
           },
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_dust_sky"
             }
           },
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_dust_sun"
             }
           },
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_dust_moon"
             }
           },

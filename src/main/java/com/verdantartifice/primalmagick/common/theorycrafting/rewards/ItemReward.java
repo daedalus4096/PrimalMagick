@@ -3,13 +3,15 @@ package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,9 +25,14 @@ import net.minecraft.world.level.ItemLike;
  * @author Daedalus4096
  */
 public class ItemReward extends AbstractReward<ItemReward> {
-    public static final Codec<ItemReward> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<ItemReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ItemStack.CODEC.fieldOf("stack").forGetter(r -> r.stack)
         ).apply(instance, ItemReward::new));
+    
+    public static final StreamCodec<RegistryFriendlyByteBuf, ItemReward> STREAM_CODEC = StreamCodec.composite(
+            ItemStack.STREAM_CODEC,
+            reward -> reward.stack,
+            ItemReward::new);
     
     private final ItemStack stack;
     
@@ -61,20 +68,10 @@ public class ItemReward extends AbstractReward<ItemReward> {
 
     @Override
     public Component getDescription() {
-        MutableComponent itemName = Component.empty().append(this.stack.getHoverName()).withStyle(this.stack.getRarity().getStyleModifier());
-        if (this.stack.hasCustomHoverName()) {
+        MutableComponent itemName = Component.empty().append(this.stack.getHoverName()).withStyle(this.stack.getRarity().color());
+        if (this.stack.has(DataComponents.CUSTOM_NAME)) {
             itemName.withStyle(ChatFormatting.ITALIC);
         }
         return Component.translatable("label.primalmagick.research_table.reward", this.stack.getCount(), itemName);
-    }
-
-    @Nonnull
-    static ItemReward fromNetworkInner(FriendlyByteBuf buf) {
-        return new ItemReward(buf.readItem());
-    }
-
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeItemStack(this.stack, false);
     }
 }

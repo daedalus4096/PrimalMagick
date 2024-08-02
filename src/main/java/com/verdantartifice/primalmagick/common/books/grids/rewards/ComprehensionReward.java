@@ -2,18 +2,22 @@ package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
 import java.util.Optional;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,33 +29,37 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class ComprehensionReward extends AbstractReward {
-    public static final String TYPE = "comprehension";
-    public static final IRewardSerializer<ComprehensionReward> SERIALIZER = new Serializer();
+public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
     private static final ResourceLocation ICON_LOC = PrimalMagick.resource("textures/gui/sprites/scribe_table/gain_comprehension.png");
+    
+    public static final MapCodec<ComprehensionReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            ResourceKey.codec(RegistryKeysPM.BOOK_LANGUAGES).fieldOf("language").forGetter(r -> r.language),
+            Codec.INT.fieldOf("points").forGetter(r -> r.points)
+        ).apply(instance, ComprehensionReward::new));
+    public static final StreamCodec<ByteBuf, ComprehensionReward> STREAM_CODEC = StreamCodec.composite(
+            ResourceKey.streamCodec(RegistryKeysPM.BOOK_LANGUAGES), r -> r.language,
+            ByteBufCodecs.VAR_INT, r -> r.points,
+            ComprehensionReward::new);
     
     private ResourceKey<BookLanguage> language;
     private int points;
     private Optional<Component> pointsText = Optional.empty();
     
-    public static void init() {
-        AbstractReward.register(TYPE, ComprehensionReward::fromNBT, SERIALIZER);
-    }
-    
-    private ComprehensionReward() {}
-    
-    protected ComprehensionReward(ResourceKey<BookLanguage> language, int points) {
+    public ComprehensionReward(ResourceKey<BookLanguage> language, int points) {
         Verify.verifyNotNull(language, "Invalid language for comprehension reward");
         this.language = language;
         this.setPoints(points);
     }
     
-    public static ComprehensionReward fromNBT(CompoundTag tag) {
-        ComprehensionReward retVal = new ComprehensionReward();
-        retVal.deserializeNBT(tag);
-        return retVal;
+    @Override
+    protected GridRewardType<ComprehensionReward> getType() {
+        return GridRewardTypesPM.COMPREHENSION.get();
     }
     
+    public int getPoints() {
+        return this.points;
+    }
+
     protected void setPoints(int points) {
         this.points = points;
         this.pointsText = Optional.of(Component.literal(Integer.toString(this.points)));
@@ -80,52 +88,33 @@ public class ComprehensionReward extends AbstractReward {
     public Optional<Component> getAmountText() {
         return this.pointsText;
     }
-
-    @Override
-    public String getRewardType() {
-        return TYPE;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public IRewardSerializer<ComprehensionReward> getSerializer() {
-        return SERIALIZER;
-    }
-
-    @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = super.serializeNBT();
-        tag.putString("Language", this.language.location().toString());
-        tag.putInt("Points", this.points);
-        return tag;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        super.deserializeNBT(nbt);
-        ResourceLocation langLoc = new ResourceLocation(nbt.getString("Language"));
-        Verify.verifyNotNull(langLoc, "Invalid language for comprehension reward");
-        this.language = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, langLoc);
-        this.setPoints(nbt.getInt("Points"));
-    }
-
-    public static class Serializer implements IRewardSerializer<ComprehensionReward> {
-        @Override
-        public ComprehensionReward read(ResourceLocation templateId, JsonObject json) {
-            ResourceKey<BookLanguage> language = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, new ResourceLocation(json.getAsJsonPrimitive("language").getAsString()));
-            int points = json.getAsJsonPrimitive("points").getAsInt();
-            return new ComprehensionReward(language, points);
+    
+    public static class Builder {
+        protected final ResourceKey<BookLanguage> language;
+        protected int points = 0;
+        
+        protected Builder(ResourceKey<BookLanguage> language) {
+            this.language = Preconditions.checkNotNull(language);
         }
-
-        @Override
-        public ComprehensionReward fromNetwork(FriendlyByteBuf buf) {
-            return new ComprehensionReward(buf.readResourceKey(RegistryKeysPM.BOOK_LANGUAGES), buf.readVarInt());
+        
+        public static Builder reward(ResourceKey<BookLanguage> language) {
+            return new Builder(language);
         }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ComprehensionReward reward) {
-            buf.writeResourceKey(reward.language);
-            buf.writeVarInt(reward.points);
+        
+        public Builder points(int points) {
+            this.points = points;
+            return this;
+        }
+        
+        private void validate() {
+            if (this.points < 0) {
+                throw new IllegalStateException("Points value must be non-negative");
+            }
+        }
+        
+        public ComprehensionReward build() {
+            this.validate();
+            return new ComprehensionReward(this.language, this.points);
         }
     }
 }

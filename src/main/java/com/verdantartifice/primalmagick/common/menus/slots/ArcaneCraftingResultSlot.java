@@ -99,7 +99,7 @@ public class ArcaneCraftingResultSlot extends Slot {
                 if (!manaCosts.isEmpty()) {
                     ItemStack wandStack = this.wandInventory.getItem(0);
                     if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
-                        wand.consumeRealMana(wandStack, this.player, manaCosts);
+                        wand.consumeRealMana(wandStack, this.player, manaCosts, thePlayer.registryAccess());
                     }
                 }
             }
@@ -110,13 +110,13 @@ public class ArcaneCraftingResultSlot extends Slot {
         // Get the remaining items from the recipe, checking arcane recipes first, then vanilla recipes
         Level level = thePlayer.level();
         NonNullList<ItemStack> remainingList;
-        Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory, level);
+        Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory.asCraftInput(), level);
         if (arcaneOptional.isPresent()) {
-            remainingList = arcaneOptional.get().value().getRemainingItems(this.craftingInventory);
+            remainingList = arcaneOptional.get().value().getRemainingItems(this.craftingInventory.asCraftInput());
         } else {
-            Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory, level);
+            Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory.asCraftInput(), level);
             if (vanillaOptional.isPresent()) {
-                remainingList = vanillaOptional.get().value().getRemainingItems(this.craftingInventory);
+                remainingList = vanillaOptional.get().value().getRemainingItems(this.craftingInventory.asCraftInput());
             } else {
                 remainingList = NonNullList.withSize(this.craftingInventory.getContainerSize(), ItemStack.EMPTY);
                 for (int index = 0; index < remainingList.size(); index++) {
@@ -138,7 +138,7 @@ public class ArcaneCraftingResultSlot extends Slot {
             if (!remainingStack.isEmpty()) {
                 if (materialStack.isEmpty()) {
                     this.craftingInventory.setItem(index, remainingStack);
-                } else if (ItemStack.isSameItemSameTags(materialStack, remainingStack)) {
+                } else if (ItemStack.isSameItemSameComponents(materialStack, remainingStack)) {
                     remainingStack.grow(materialStack.getCount());
                     this.craftingInventory.setItem(index, remainingStack);
                 } else if (!this.player.getInventory().add(remainingStack)) {

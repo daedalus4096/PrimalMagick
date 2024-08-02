@@ -7,13 +7,15 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -46,14 +48,14 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.chargeTime = compound.getInt("ChargeTime");
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("ChargeTime", this.chargeTime);
     }
 
@@ -72,12 +74,13 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
                     if (chargeStack.getItem() instanceof IWand) {
                         // NOTE: Normally this method is called with a count that's descending, but the method doesn't actually care
                         tile.onWandUseTick(chargeStack, level, null, chargerCenter, entity.chargeTime);
-                    } else {
-                        chargeStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(manaCap -> {
-                            if (entity.chargeTime % 5 == 0) {
+                    } else if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+                        if (entity.chargeTime % 5 == 0) {
+                            chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
                                 tile.doSiphon(manaCap, level, null, chargerCenter, 100);    // TODO Get the stack's max charge rate somehow
-                            }
-                        });
+                                return manaCap;
+                            });
+                        }
                     }
                 }
             }
@@ -116,7 +119,7 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, slotStack);
         if (invIndex == INPUT_INV_INDEX && !flag) {
             this.chargeTime = 0;
             this.setChanged();
@@ -146,16 +149,10 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
         retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
-                return stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+                return stack.getItem() instanceof IWand || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
             }
         });
 
         return retVal;
-    }
-
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
     }
 }

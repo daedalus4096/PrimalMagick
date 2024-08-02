@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarT
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -32,6 +33,7 @@ import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
@@ -179,11 +181,11 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<Run
                 }
 
                 // Determine what enchantments can be applied with the slotted rune combination
-                Map<Enchantment, Integer> inputEnch = RuneManager.getRuneEnchantments(this.world.registryAccess(), runes, baseStack, this.player, true);
+                Map<Holder<Enchantment>, Integer> inputEnch = RuneManager.getRuneEnchantments(this.world.registryAccess(), runes, baseStack, this.player, true);
                 if (!inputEnch.isEmpty()) {
-                    Map<Enchantment, Integer> finalEnch = RuneManager.mergeEnchantments(EnchantmentHelper.getEnchantments(baseStack), inputEnch);
+                    ItemEnchantments finalEnch = RuneManager.mergeEnchantments(baseStack.getEnchantments(), inputEnch);
                     stack = baseStack.copy();
-                    EnchantmentHelper.setEnchantments(finalEnch, stack);
+                    EnchantmentHelper.setEnchantments(stack, finalEnch);
                     RuneManager.setRunes(stack, runes);
                 }
             }

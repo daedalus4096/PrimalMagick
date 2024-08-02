@@ -8,51 +8,46 @@
       "matchNBT": true,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:white_banner",
-        "tag": {
-          "BlockEntityTag": {
-            "Patterns": [
-              {
-                "Color": 9,
-                "Pattern": "mr"
-              },
-              {
-                "Color": 8,
-                "Pattern": "bs"
-              },
-              {
-                "Color": 7,
-                "Pattern": "cs"
-              },
-              {
-                "Color": 8,
-                "Pattern": "bo"
-              },
-              {
-                "Color": 15,
-                "Pattern": "ms"
-              },
-              {
-                "Color": 8,
-                "Pattern": "hh"
-              },
-              {
-                "Color": 8,
-                "Pattern": "mc"
-              },
-              {
-                "Color": 15,
-                "Pattern": "bo"
-              }
-            ],
-            "id": "minecraft:banner"
-          },
-          "HideFlags": 32,
-          "display": {
-            "Name": "{\"translate\":\"block.minecraft.ominous_banner\",\"color\":\"gold\"}"
-          }
-        }
+        "components": {
+          "minecraft:banner_patterns": [
+            {
+              "color": "cyan",
+              "pattern": "minecraft:rhombus"
+            },
+            {
+              "color": "light_gray",
+              "pattern": "minecraft:stripe_bottom"
+            },
+            {
+              "color": "gray",
+              "pattern": "minecraft:stripe_center"
+            },
+            {
+              "color": "light_gray",
+              "pattern": "minecraft:border"
+            },
+            {
+              "color": "black",
+              "pattern": "minecraft:stripe_middle"
+            },
+            {
+              "color": "light_gray",
+              "pattern": "minecraft:half_horizontal"
+            },
+            {
+              "color": "light_gray",
+              "pattern": "minecraft:circle"
+            },
+            {
+              "color": "black",
+              "pattern": "minecraft:border"
+            }
+          ],
+          "minecraft:hide_additional_tooltip": {},
+          "minecraft:item_name": "{\"color\":\"gold\",\"translate\":\"block.minecraft.ominous_banner\"}"
+        },
+        "count": 1,
+        "id": "minecraft:white_banner"
       },
       "weight": 1.0
     },
@@ -63,7 +58,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:bloody_flesh"
       },
       "weight": 1.0
@@ -75,11 +70,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:crossbow",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:crossbow"
       },
       "weight": 3.0
     },
@@ -90,11 +82,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:iron_sword",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:iron_sword"
       },
       "weight": 3.0
     },
@@ -105,11 +94,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "minecraft:iron_axe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "minecraft:iron_axe"
       },
       "weight": 3.0
     },
@@ -120,7 +106,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 4,
+        "count": 4,
         "id": "minecraft:arrow"
       },
       "weight": 3.0
@@ -132,7 +118,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 3,
+        "count": 3,
         "id": "minecraft:glass_bottle"
       },
       "weight": 3.0
@@ -144,7 +130,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 16,
+        "count": 16,
         "id": "minecraft:dark_oak_log"
       },
       "weight": 3.0
@@ -156,7 +142,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:carved_pumpkin"
       },
       "weight": 1.0

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,18 +21,18 @@ import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.enchantments.VerdantEnchantment;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
@@ -63,9 +62,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -77,8 +78,10 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.NameTagItem;
@@ -92,9 +95,7 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -116,8 +117,8 @@ public class PlayerEvents {
     
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
-    private static final UUID STEP_MODIFIER_EARTH_UUID = UUID.fromString("17b138bf-1d32-43a9-a690-59e0e4e0d0b6");
-    private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_UUID, "Earth attunement step height bonus", 0.4D, AttributeModifier.Operation.ADDITION);
+    private static final ResourceLocation STEP_MODIFIER_EARTH_ID = PrimalMagick.resource("step_modifier");
+    private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_ID, 0.4D, AttributeModifier.Operation.ADD_VALUE);
     private static final ResearchStageKey SOURCE_EARTH_START = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 1);
     private static final ResearchStageKey SOURCE_EARTH_END = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 2);
     private static final ResearchStageKey SOURCE_SEA_START = new ResearchStageKey(ResearchEntries.SOURCE_SEA, 1);
@@ -195,8 +196,8 @@ public class PlayerEvents {
             player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 610, 0, true, false, true));
         }
         
-        AttributeInstance stepHeightAttribute = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
-        stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH.getId());
+        AttributeInstance stepHeightAttribute = player.getAttribute(Attributes.STEP_HEIGHT);
+        stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH.id());
         if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Sources.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height
             stepHeightAttribute.addTransientModifier(STEP_MODIFIER_EARTH);
@@ -207,9 +208,9 @@ public class PlayerEvents {
         IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
         if (cooldowns != null) {
             long remaining = cooldowns.getRemainingCooldown(CooldownType.DEATH_SAVE);
-            if (remaining > 0 && !player.hasEffect(EffectsPM.WEAKENED_SOUL.get())) {
+            if (remaining > 0 && !player.hasEffect(EffectsPM.WEAKENED_SOUL.getHolder().get())) {
                 // If the player's death save is on cooldown but they've cleared their marker debuff, reapply it
-                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.get(), Mth.ceil(remaining / 50.0F), 0, true, false, true));
+                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder().get(), Mth.ceil(remaining / 50.0F), 0, true, false, true));
             }
         }
     }
@@ -393,9 +394,11 @@ public class PlayerEvents {
     }
     
     protected static void handleRegrowth(Player player) {
-        for (ItemStack stack : player.getAllSlots()) {
-            if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack)) {
-                stack.hurtAndBreak(-1, player, p -> {});
+        if (player.level() instanceof ServerLevel serverLevel) {
+            for (ItemStack stack : player.getAllSlots()) {
+                if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack, player.level().registryAccess())) {
+                    stack.hurtAndBreak(-1, serverLevel, player instanceof ServerPlayer serverPlayer ? serverPlayer : null, item -> {});
+                }
             }
         }
     }
@@ -406,17 +409,15 @@ public class PlayerEvents {
                 for (EquipmentSlot slot : wardCap.getApplicableSlots()) {
                     ItemStack slotStack = player.getItemBySlot(slot);
                     if (!slotStack.isEmpty()) {
-                        LazyOptional<IManaStorage> manaCapOpt = slotStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE);
-                        if (manaCapOpt.isPresent()) {
-                            IManaStorage manaCap = manaCapOpt.orElseThrow(IllegalArgumentException::new);
-                            if (manaCap.getManaStored(Sources.EARTH) >= WardingModuleItem.REGEN_COST) {
-                                // Consume mana from warded armor stacks to regenerate a single point of ward
-                                manaCap.extractMana(Sources.EARTH, WardingModuleItem.REGEN_COST, false);
-                                wardCap.incrementCurrentWard();
-                                wardCap.sync(player);
-                                player.connection.send(new ClientboundSetEquipmentPacket(player.getId(), List.of(Pair.of(slot, slotStack.copy()))));
-                                break;
-                            }
+                        ManaStorage manaCap = slotStack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
+                        if (manaCap != null && manaCap.getManaStored(Sources.EARTH) >= WardingModuleItem.REGEN_COST) {
+                            // Consume mana from warded armor stacks to regenerate a single point of ward
+                            manaCap.extractMana(Sources.EARTH, WardingModuleItem.REGEN_COST, false);
+                            slotStack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), manaCap);
+                            wardCap.incrementCurrentWard();
+                            wardCap.sync(player);
+                            player.connection.send(new ClientboundSetEquipmentPacket(player.getId(), List.of(Pair.of(slot, slotStack.copy()))));
+                            break;
                         }
                     }
                 }
@@ -436,63 +437,66 @@ public class PlayerEvents {
         }
     }
     
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void playerCloneEvent(PlayerEvent.Clone event) {
         // Preserve player capability data between deaths or returns from the End
         event.getOriginal().reviveCaps();   // FIXME Workaround for a Forge issue
         
+        RegistryAccess registryAccess = event.getEntity().registryAccess();
+        
         try {
-            CompoundTag nbtKnowledge = PrimalMagickCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getKnowledge(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtKnowledge);
+            CompoundTag nbtKnowledge = PrimalMagickCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getKnowledge(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtKnowledge);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtCooldowns = PrimalMagickCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getCooldowns(event.getEntity()).deserializeNBT(nbtCooldowns);
+            CompoundTag nbtCooldowns = PrimalMagickCapabilities.getCooldowns(event.getOriginal()).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getCooldowns(event.getEntity()).deserializeNBT(registryAccess, nbtCooldowns);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtStats = PrimalMagickCapabilities.getStats(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getStats(event.getEntity()).deserializeNBT(nbtStats);
+            CompoundTag nbtStats = PrimalMagickCapabilities.getStats(event.getOriginal()).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getStats(event.getEntity()).deserializeNBT(registryAccess, nbtStats);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtAttunements = PrimalMagickCapabilities.getAttunements(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getAttunements(event.getEntity()).deserializeNBT(nbtAttunements);
+            CompoundTag nbtAttunements = PrimalMagickCapabilities.getAttunements(event.getOriginal()).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getAttunements(event.getEntity()).deserializeNBT(registryAccess, nbtAttunements);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtCompanions = PrimalMagickCapabilities.getCompanions(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getCompanions(event.getEntity()).deserializeNBT(nbtCompanions);
+            CompoundTag nbtCompanions = PrimalMagickCapabilities.getCompanions(event.getOriginal()).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getCompanions(event.getEntity()).deserializeNBT(registryAccess, nbtCompanions);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getArcaneRecipeBook(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getEntity().level().getRecipeManager());
+            CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getArcaneRecipeBook(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtRecipeBook, event.getEntity().level().getRecipeManager());
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} arcane recipe book", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtWard = PrimalMagickCapabilities.getWard(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getWard(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtWard);
+            CompoundTag nbtWard = PrimalMagickCapabilities.getWard(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getWard(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtWard);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} ward", event.getOriginal().getName().getString());
         }
         
         try {
-            CompoundTag nbtLinguistics = PrimalMagickCapabilities.getLinguistics(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getLinguistics(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtLinguistics);
+            CompoundTag nbtLinguistics = PrimalMagickCapabilities.getLinguistics(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getLinguistics(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtLinguistics);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} linguistics", event.getOriginal().getName().getString());
         }
@@ -567,8 +571,7 @@ public class PlayerEvents {
         ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM);
         
         // Construct the dream journal item
-        ItemStack journal = StaticBookItem.make(ItemsPM.STATIC_BOOK, Optional.of(BooksPM.DREAM_JOURNAL), Optional.of(BookLanguagesPM.DEFAULT), Optional.of(player.getName().getString()), 
-                OptionalInt.empty(), OptionalInt.empty());
+        ItemStack journal = StaticBookItem.builder(ItemsPM.STATIC_BOOK, player.registryAccess()).book(BooksPM.DREAM_JOURNAL).language(BookLanguagesPM.DEFAULT).author(player.getName().getString()).build();
         
         // Give the dream journal to the player and announce it
         if (!player.addItem(journal)) {
@@ -624,7 +627,7 @@ public class PlayerEvents {
     public static void onUseHoe(BlockEvent.BlockToolModificationEvent event) {
         UseOnContext context = event.getContext();
         ItemStack stack = context.getItemInHand();
-        int enchantLevel = stack.getEnchantmentLevel(EnchantmentsPM.VERDANT.get());
+        int enchantLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.VERDANT, context.getPlayer().registryAccess());
         if (!event.isSimulated() && event.getToolAction().equals(ToolActions.HOE_TILL) && enchantLevel > 0) {
             Player player = event.getPlayer();
             Level level = context.getLevel();
@@ -638,9 +641,10 @@ public class PlayerEvents {
                         }
                         
                         // Damage the stack and cancel the rest of the hoe functionality.
-                        int damage = (VerdantEnchantment.BASE_DAMAGE_PER_USE >> (enchantLevel - 1));
+                        final int baseDamage = 8;
+                        int damage = (baseDamage >> (enchantLevel - 1));
                         if (damage > 0) {
-                            stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
+                            stack.hurtAndBreak(damage, player, LivingEntity.getSlotForHand(context.getHand()));
                         }
                         
                         // Explicitly set the final block state in the event so that the hoe's useOn method does not return PASS and
@@ -665,7 +669,6 @@ public class PlayerEvents {
         if ( !level.isClientSide && 
              target.getType() == EntityType.WITCH && 
              stack.getItem() instanceof NameTagItem && 
-             stack.hasCustomHoverName() && 
              stack.getHoverName().getString().equals(FriendlyWitchEntity.HONORED_NAME)) {
             CompoundTag originalData = target.saveWithoutId(new CompoundTag());
             EntitySwapper.enqueue(level, new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));

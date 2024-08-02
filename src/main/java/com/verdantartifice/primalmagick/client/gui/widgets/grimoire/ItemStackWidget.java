@@ -13,6 +13,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -33,7 +34,8 @@ public class ItemStackWidget extends AbstractWidget {
         this.isComplete = isComplete;
 
         Minecraft mc = Minecraft.getInstance();
-        this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
+        this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.stack.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, 
+                mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
 }
     
     @Override

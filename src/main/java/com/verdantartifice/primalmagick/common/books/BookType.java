@@ -11,7 +11,7 @@ import net.minecraft.util.StringRepresentable;
  * @author Daedalus4096
  */
 public enum BookType implements StringRepresentable {
-    BOOK("book", new ResourceLocation("textures/gui/book.png")),
+    BOOK("book", ResourceLocation.withDefaultNamespace("textures/gui/book.png")),
     TABLET("tablet", PrimalMagick.resource("textures/gui/tablet.png"));
     
     private final String tag;

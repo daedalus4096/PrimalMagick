@@ -13,7 +13,6 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 
 /**
  * Advancement criterion that is triggered when the player reaches at least the given stat value.
@@ -32,7 +31,7 @@ public class StatValueTrigger extends SimpleCriterionTrigger<StatValueTrigger.Tr
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, Stat stat, int threshold) implements SimpleCriterionTrigger.SimpleInstance {
         public static Codec<StatValueTrigger.TriggerInstance> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(StatValueTrigger.TriggerInstance::player), 
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(StatValueTrigger.TriggerInstance::player), 
                     ResourceLocation.CODEC.fieldOf("stat").xmap(loc -> StatsManager.getStat(loc), stat -> stat.key()).forGetter(StatValueTrigger.TriggerInstance::stat),
                     Codec.INT.fieldOf("threshold").forGetter(StatValueTrigger.TriggerInstance::threshold)
                 ).apply(instance, StatValueTrigger.TriggerInstance::new));

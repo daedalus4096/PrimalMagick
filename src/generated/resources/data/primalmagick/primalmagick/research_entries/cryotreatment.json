@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:alchemy"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "minecraft:ice"
@@ -27,7 +28,7 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_dust_sea"
             }
           },

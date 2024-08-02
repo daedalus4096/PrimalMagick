@@ -2,11 +2,9 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -15,18 +13,27 @@ import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 
 public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
-    public static final Codec<ResearchStageKey> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<ResearchStageKey> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("rootKey").forGetter(ResearchStageKey::getRootKey), 
             ExtraCodecs.NON_NEGATIVE_INT.fieldOf("stage").forGetter(ResearchStageKey::getStage)
         ).apply(instance, ResearchStageKey::new));
+    public static final StreamCodec<ByteBuf, ResearchStageKey> STREAM_CODEC = StreamCodec.composite(
+            ResourceKey.streamCodec(RegistryKeysPM.RESEARCH_ENTRIES),
+            ResearchStageKey::getRootKey,
+            ByteBufCodecs.VAR_INT,
+            ResearchStageKey::getStage,
+            ResearchStageKey::new);
+    
     private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
 
     protected final ResourceKey<ResearchEntry> rootKey;
@@ -98,16 +105,5 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
             });
             return retVal.booleanValue();
         }
-    }
-
-    @Nonnull
-    static ResearchStageKey fromNetworkInner(FriendlyByteBuf buf) {
-        return new ResearchStageKey(buf.readResourceKey(RegistryKeysPM.RESEARCH_ENTRIES), buf.readVarInt());
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceKey(RegistryKeysPM.RESEARCH_ENTRIES);
-        buf.writeVarInt(this.stage);
     }
 }

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.data.ContainerSynchronizerLarge;
@@ -70,7 +70,7 @@ public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryT
         
         // Slot 1: charge slot
         this.chargeSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 206, 34, 
-                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent()).tooltip(CHARGE_SLOT_TOOLTIP)));
+                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(CHARGE_SLOT_TOOLTIP)));
 
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {

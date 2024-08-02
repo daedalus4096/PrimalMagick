@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Entity definition for an inner demon's sin crash projectile.
@@ -25,8 +26,8 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
         super(entityType, world);
     }
     
-    public SinCrashEntity(Level world, LivingEntity shooter, double accelX, double accelY, double accelZ) {
-        super(EntityTypesPM.SIN_CRASH.get(), shooter, accelX, accelY, accelZ, world);
+    public SinCrashEntity(Level world, LivingEntity shooter, Vec3 motion) {
+        super(EntityTypesPM.SIN_CRASH.get(), shooter, motion, world);
     }
 
     @Override

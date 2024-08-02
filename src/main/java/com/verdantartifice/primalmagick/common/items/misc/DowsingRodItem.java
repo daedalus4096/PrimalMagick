@@ -105,9 +105,7 @@ public class DowsingRodItem extends Item {
     
     protected void damageRod(Player player, ItemStack stack) {
         if (!player.getAbilities().instabuild) {
-            stack.hurtAndBreak(1, player, p -> {
-                p.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-            });
+            stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
         }
     }
 }

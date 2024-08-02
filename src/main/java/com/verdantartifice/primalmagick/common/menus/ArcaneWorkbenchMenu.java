@@ -29,8 +29,8 @@ import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -40,7 +40,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcaneRecipeBookMenu<CraftingContainer> {
+public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcaneRecipeBookMenu<CraftingInput, IArcaneRecipe> {
     protected final CraftingContainer craftingInv = new TransientCraftingContainer(this, 3, 3);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
@@ -166,10 +166,11 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
     
     protected void slotChangedCraftingGrid(Level world) {
+        CraftingInput craftInput = this.craftingInv.asCraftInput();
         if (world.isClientSide) {
             // Get the active recipe, if any, for client display of mana costs
             this.activeArcaneRecipe = null;
-            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInv, world);
+            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);
             if (arcaneOptional.isPresent()) {
                 RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
                 if (recipe.value().getRequirement().isEmpty() || recipe.value().getRequirement().get().isMetBy(player)) {
@@ -180,20 +181,20 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
         if (!world.isClientSide && this.player instanceof ServerPlayer) {
             ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInv, world);
+            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);
             if (arcaneOptional.isPresent()) {
                 // If the inputs match a defined arcane recipe, show the output if the player can use it
                 RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
                 if (this.canUseArcaneRecipe(world, spe, recipe)) {
-                    stack = recipe.value().assemble(this.craftingInv, world.registryAccess());
+                    stack = recipe.value().assemble(craftInput, world.registryAccess());
                 }
             } else {
-                Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInv, world);
+                Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftInput, world);
                 if (vanillaOptional.isPresent()) {
                     // If the inputs match a defined vanilla recipe, show the output if the player can use it
                     RecipeHolder<CraftingRecipe> recipe = vanillaOptional.get();
                     if (this.resultInv.setRecipeUsed(world, spe, recipe)) {
-                        stack = recipe.value().assemble(this.craftingInv, world.registryAccess());
+                        stack = recipe.value().assemble(craftInput, world.registryAccess());
                     }
                 }
             }
@@ -218,7 +219,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
             return false;
         }
         IWand wand = (IWand)stack.getItem();
-        return wand.containsRealMana(stack, player, recipe.getManaCosts());
+        return wand.containsRealMana(stack, player, recipe.getManaCosts(), player.registryAccess());
     }
 
     @Override
@@ -233,8 +234,8 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<? extends Recipe<? super CraftingContainer>> recipe) {
-        return recipe.value().matches(this.craftingInv, this.player.level());
+    public boolean recipeMatches(RecipeHolder<IArcaneRecipe> recipe) {
+        return recipe.value().matches(this.craftingInv.asCraftInput(), this.player.level());
     }
 
     @Override

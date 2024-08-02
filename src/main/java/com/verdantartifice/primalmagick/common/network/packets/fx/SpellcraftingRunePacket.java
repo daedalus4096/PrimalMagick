@@ -4,9 +4,9 @@ import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a spellcrafting rune particle effect on the client.
@@ -14,17 +14,17 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SpellcraftingRunePacket implements IMessageToClient {
-    protected SpellcraftingAltarTileEntity.Segment segment;
-    protected double x;
-    protected double y;
-    protected double z;
-    protected double dx;
-    protected double dy;
-    protected double dz;
-    protected int color;
+    public static final StreamCodec<RegistryFriendlyByteBuf, SpellcraftingRunePacket> STREAM_CODEC = StreamCodec.ofMember(SpellcraftingRunePacket::encode, SpellcraftingRunePacket::decode);
 
-    public SpellcraftingRunePacket() {}
-    
+    protected final SpellcraftingAltarTileEntity.Segment segment;
+    protected final double x;
+    protected final double y;
+    protected final double z;
+    protected final double dx;
+    protected final double dy;
+    protected final double dz;
+    protected final int color;
+
     public SpellcraftingRunePacket(SpellcraftingAltarTileEntity.Segment segment, double x, double y, double z, double dx, double dy, double dz, int color) {
         this.segment = segment;
         this.x = x;
@@ -36,11 +36,7 @@ public class SpellcraftingRunePacket implements IMessageToClient {
         this.color = color;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(SpellcraftingRunePacket message, FriendlyByteBuf buf) {
+    public static void encode(SpellcraftingRunePacket message, RegistryFriendlyByteBuf buf) {
         buf.writeEnum(message.segment);
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
@@ -51,17 +47,9 @@ public class SpellcraftingRunePacket implements IMessageToClient {
         buf.writeVarInt(message.color);
     }
     
-    public static SpellcraftingRunePacket decode(FriendlyByteBuf buf) {
-        SpellcraftingRunePacket message = new SpellcraftingRunePacket();
-        message.segment = buf.readEnum(SpellcraftingAltarTileEntity.Segment.class);
-        message.x = buf.readDouble();
-        message.y = buf.readDouble();
-        message.z = buf.readDouble();
-        message.dx = buf.readDouble();
-        message.dy = buf.readDouble();
-        message.dz = buf.readDouble();
-        message.color = buf.readVarInt();
-        return message;
+    public static SpellcraftingRunePacket decode(RegistryFriendlyByteBuf buf) {
+        return new SpellcraftingRunePacket(buf.readEnum(SpellcraftingAltarTileEntity.Segment.class), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt());
     }
     
     public static void onMessage(SpellcraftingRunePacket message, CustomPayloadEvent.Context ctx) {

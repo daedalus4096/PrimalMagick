@@ -82,7 +82,6 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
         };
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public List<ItemStack> getDrops(BlockState pState, Builder pParams) {
         if (pParams.getOptionalParameter(LootContextParams.THIS_ENTITY) == null) {
@@ -99,7 +98,6 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
         return pLevel.getBlockState(blockPos).isFaceSturdy(pLevel, blockPos, direction);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
         if (pState.getValue(WATERLOGGED)) {
@@ -128,7 +126,6 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
         return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState pState) {
         return pState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(pState);

@@ -6,6 +6,9 @@ import java.util.function.Supplier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.Utf8String;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -25,5 +28,21 @@ public class RegistryCodecs {
                 });
             });
         });
+    }
+    
+    public static <T> StreamCodec<RegistryFriendlyByteBuf, T> streamCodec(Supplier<IForgeRegistry<T>> registrySupplier) {
+        return new StreamCodec<RegistryFriendlyByteBuf, T>() {
+            @Override
+            public T decode(RegistryFriendlyByteBuf pBuffer) {
+                ResourceLocation id = ResourceLocation.parse(Utf8String.read(pBuffer, 32767));
+                return registrySupplier.get().getValue(id);
+            }
+
+            @Override
+            public void encode(RegistryFriendlyByteBuf pBuffer, T pValue) {
+                ResourceLocation id = registrySupplier.get().getKey(pValue);
+                Utf8String.write(pBuffer, id.toString(), 32767);
+            }
+        };
     }
 }

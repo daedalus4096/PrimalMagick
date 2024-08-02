@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:basics"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "location": "primalmagick:textures/sources/sea.png"
   },
@@ -31,7 +32,7 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "minecraft:ice"
             }
           },

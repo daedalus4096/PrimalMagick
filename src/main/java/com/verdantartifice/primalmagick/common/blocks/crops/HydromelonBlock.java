@@ -8,8 +8,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -36,8 +38,8 @@ public class HydromelonBlock extends Block {
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pPlayer != null && pPlayer.getItemInHand(pHand).canPerformAction(ToolActions.AXE_STRIP)) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (pPlayer != null && stack.canPerformAction(ToolActions.AXE_STRIP)) {
             // If the player right-clicks on the hydromelon with an axe, replace this block with water (or vapor if in the Nether)
             boolean shouldVaporize = pLevel.dimensionType().ultraWarm();
             RandomSource rng = pPlayer.getRandom();
@@ -54,13 +56,11 @@ public class HydromelonBlock extends Block {
                 } else {
                     pLevel.setBlock(pPos, Blocks.WATER.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
                 }
-                pPlayer.getItemInHand(pHand).hurtAndBreak(1, pPlayer, (p) -> {
-                    p.broadcastBreakEvent(pHand);
-                });
+                stack.hurtAndBreak(1, pPlayer, LivingEntity.getSlotForHand(pHand));
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         } else {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
     }
 }

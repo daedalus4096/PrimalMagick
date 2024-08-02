@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -14,6 +15,8 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
+@AutoRegisterCapability
 public interface IPlayerWard extends INBTSerializable<CompoundTag> {
     /**
      * Gets the list of equipment slots which count toward player maximum ward.

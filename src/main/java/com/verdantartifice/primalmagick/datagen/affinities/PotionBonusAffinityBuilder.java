@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -18,11 +19,11 @@ public class PotionBonusAffinityBuilder {
     protected final ResourceLocation targetId;
     protected SourceList.Builder bonusValues = SourceList.builder();
     
-    protected PotionBonusAffinityBuilder(@Nonnull Potion target) {
-        this.targetId = ForgeRegistries.POTIONS.getKey(target);
+    protected PotionBonusAffinityBuilder(@Nonnull Holder<Potion> target) {
+        this.targetId = ForgeRegistries.POTIONS.getKey(target.value());
     }
     
-    public static PotionBonusAffinityBuilder potionBonusAffinity(@Nonnull Potion target) {
+    public static PotionBonusAffinityBuilder potionBonusAffinity(@Nonnull Holder<Potion> target) {
         return new PotionBonusAffinityBuilder(target);
     }
     
@@ -50,7 +51,7 @@ public class PotionBonusAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {
-        this.build(consumer, new ResourceLocation(name));
+        this.build(consumer, ResourceLocation.parse(name));
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {

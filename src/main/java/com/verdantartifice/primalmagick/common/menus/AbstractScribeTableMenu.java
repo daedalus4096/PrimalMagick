@@ -54,7 +54,7 @@ public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventory
     protected abstract void createModeSlots();
 
     protected boolean isAncientBookStack(ItemStack stack) {
-        return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack, this.level.registryAccess()).map(h -> h.is(BookLanguageTagsPM.ANCIENT)).orElse(false);
+        return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).map(h -> h.is(BookLanguageTagsPM.ANCIENT)).orElse(false);
     }
     
     protected Vector2i getInventorySlotsOffset() {

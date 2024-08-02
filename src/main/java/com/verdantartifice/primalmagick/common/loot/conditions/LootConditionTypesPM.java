@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.loot.conditions;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.core.Registry;
@@ -20,7 +20,7 @@ public class LootConditionTypesPM {
         // No-op method to ensure that the class is loaded
     }
     
-    protected static LootItemConditionType register(String name, Codec<? extends LootItemCondition> codec) {
+    protected static LootItemConditionType register(String name, MapCodec<? extends LootItemCondition> codec) {
         return Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, PrimalMagick.resource(name), new LootItemConditionType(codec));
     }
 }

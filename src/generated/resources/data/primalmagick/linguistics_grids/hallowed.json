@@ -3,366 +3,512 @@
   "language": "primalmagick:hallowed",
   "nodes": [
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 5
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 0
+      "pos": [
+        2,
+        1
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 5
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 0
+      "pos": [
+        6,
+        5
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 1
+      "pos": [
+        0,
+        0
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 2,
-      "y": 1
+      "pos": [
+        2,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 1
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 3,
-      "y": 1
+      "pos": [
+        0,
+        1
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        },
+        "vocabularyCost": 1
       },
-      "x": 4,
-      "y": 1
+      "pos": [
+        0,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:hallowed"
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 1
+      "pos": [
+        4,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 1
+      "pos": [
+        0,
+        3
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:hallowed"
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 2
+      "pos": [
+        2,
+        5
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 2
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 1,
-      "y": 2
+      "pos": [
+        0,
+        4
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 1
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 2,
-      "y": 2
+      "pos": [
+        2,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 1
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 2
+      "pos": [
+        0,
+        5
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 2
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 6,
-      "y": 2
+      "pos": [
+        0,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:hallowed"
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 2
+      "pos": [
+        0,
+        7
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 3
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 3
+      "pos": [
+        7,
+        0
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 1
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 1,
-      "y": 3
+      "pos": [
+        7,
+        1
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        },
+        "vocabularyCost": 1
       },
-      "x": 6,
-      "y": 3
+      "pos": [
+        7,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 3
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 3
+      "pos": [
+        5,
+        1
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 4
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 4
+      "pos": [
+        7,
+        3
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 2
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 1,
-      "y": 4
+      "pos": [
+        5,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 2
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 6,
-      "y": 4
+      "pos": [
+        7,
+        4
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 4
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 4
+      "pos": [
+        3,
+        1
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:hallowed"
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 5
+      "pos": [
+        7,
+        5
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 1,
-      "y": 5
+      "pos": [
+        7,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 3
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 2,
-      "y": 5
+      "pos": [
+        5,
+        5
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 3
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 5
+      "pos": [
+        7,
+        7
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 6,
-      "y": 5
+      "pos": [
+        1,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:hallowed"
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 5
+      "pos": [
+        5,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 6
+      "pos": [
+        1,
+        3
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 2,
-      "y": 6
+      "pos": [
+        1,
+        4
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 4
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 3,
-      "y": 6
+      "pos": [
+        3,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 4
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 4,
-      "y": 6
+      "pos": [
+        1,
+        5
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 6
+      "pos": [
+        6,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 6
+      "pos": [
+        4,
+        1
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 5
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 7
+      "pos": [
+        6,
+        3
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:hallowed",
-        "points": 5
+      "definition": {
+        "reward": {
+          "language": "primalmagick:hallowed",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 7
+      "pos": [
+        6,
+        4
+      ]
     }
   ],
-  "start_x": 3,
-  "start_y": 1
+  "startPos": [
+    3,
+    1
+  ]
 }

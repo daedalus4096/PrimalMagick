@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:alchemy"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:calcinator_forbidden"

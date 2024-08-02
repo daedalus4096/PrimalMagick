@@ -41,14 +41,14 @@ public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
         super(StructurePieceTypesPM.LIBRARY.get(), nbt, templateManager, (dummy) -> {
             return makePlaceSettings();
         });
-        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, new ResourceLocation(nbt.getString("Culture")));
+        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, ResourceLocation.parse(nbt.getString("Culture")));
     }
     
     public AbstractLibraryPiece(StructurePieceSerializationContext context, CompoundTag nbt) {
         super(StructurePieceTypesPM.LIBRARY.get(), nbt, context.structureTemplateManager(), (dummy) -> {
             return makePlaceSettings();
         });
-        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, new ResourceLocation(nbt.getString("Culture")));
+        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, ResourceLocation.parse(nbt.getString("Culture")));
     }
     
     protected static StructurePlaceSettings makePlaceSettings() {
@@ -72,32 +72,32 @@ public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
         if ("shelf_low".equals(pName)) {
             // Populate bookshelf above
             if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(culture.get().shelfLootTable(), pRandom.nextLong());
+                container.setLootTable(culture.value().shelfLootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
         } else if ("shelf_high".equals(pName)) {
             // Populate bookshelf below
             if (pLevel.getBlockEntity(pPos.below()) instanceof IRandomizableContents container) {
-                container.setLootTable(culture.get().shelfLootTable(), pRandom.nextLong());
+                container.setLootTable(culture.value().shelfLootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, this.getBrickBlockState(), Block.UPDATE_ALL);
         } else if ("welcome".equals(pName)) {
             // Populate lectern above
             if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(culture.get().welcomeLootTable(), pRandom.nextLong());
+                container.setLootTable(culture.value().welcomeLootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
         } else if ("hidden".equals(pName)) {
             if (pRandom.nextDouble() < 0.25D && pLevel.getBlockEntity(pPos.below()) instanceof RandomizableContainerBlockEntity container) {
                 // Populate chest below
-                container.setLootTable(culture.get().hiddenLootTable(), pRandom.nextLong());
+                container.setLootTable(culture.value().hiddenLootTable(), pRandom.nextLong());
             } else {
                 pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
                 pLevel.setBlock(pPos.below(), this.getFillerBlockState(), Block.UPDATE_ALL);
             }
         } else if ("accent".equals(pName)) {
             // Populate accent blocks
-            pLevel.setBlock(pPos, culture.get().accentBlockState(), Block.UPDATE_ALL);
+            pLevel.setBlock(pPos, culture.value().accentBlockState(), Block.UPDATE_ALL);
         }
     }
 }

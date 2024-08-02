@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
+import java.util.function.Supplier;
+
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 
@@ -28,17 +30,16 @@ import net.minecraftforge.event.ForgeEventFactory;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayload {
-    protected final BlockState targetState;
+public abstract class AbstractConjureBlockSpellPayload<T extends AbstractConjureBlockSpellPayload<T>> extends AbstractSpellPayload<T> {
+    protected final Supplier<BlockState> targetStateSupplier;
     protected final int count;
     
-    public AbstractConjureBlockSpellPayload(BlockState targetState) {
+    protected AbstractConjureBlockSpellPayload(Supplier<BlockState> targetState) {
         this(targetState, 1);
     }
     
-    public AbstractConjureBlockSpellPayload(BlockState targetState, int count) {
-        super();
-        this.targetState = targetState;
+    protected AbstractConjureBlockSpellPayload(Supplier<BlockState> targetState, int count) {
+        this.targetStateSupplier = targetState;
         this.count = count;
     }
 
@@ -88,7 +89,7 @@ public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayl
             }
             
             // Otherwise set the target state, with facing and waterlogging if applicable, into the world
-            BlockState newState = this.targetState;
+            BlockState newState = this.targetStateSupplier.get();
             if (state.hasProperty(BlockStateProperties.FACING)) {
                 newState = newState.setValue(BlockStateProperties.FACING, state.getValue(BlockStateProperties.FACING));
             } else if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {

@@ -1,23 +1,30 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
@@ -38,40 +45,42 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class BurstSpellMod extends AbstractSpellMod {
+public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
+    public static final BurstSpellMod INSTANCE = new BurstSpellMod();
+    
+    public static final MapCodec<BurstSpellMod> CODEC = MapCodec.unit(BurstSpellMod.INSTANCE);
+    public static final StreamCodec<ByteBuf, BurstSpellMod> STREAM_CODEC = StreamCodec.unit(BurstSpellMod.INSTANCE);
+    
     public static final String TYPE = "burst";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_BURST));
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.RADIUS.get(), SpellPropertiesPM.BURST_POWER.get());
 
-    public BurstSpellMod() {
-        super();
-    }
-    
-    public BurstSpellMod(int radius, int power) {
-        super();
-        this.getProperty("radius").setValue(radius);
-        this.getProperty("power").setValue(power);
-    }
-    
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
     }
     
-    @Override
-    protected Map<String, SpellProperty> initProperties() {
-        Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("radius", new SpellProperty("radius", "spells.primalmagick.property.radius", 1, 5));
-        propMap.put("power", new SpellProperty("power", "spells.primalmagick.property.power", 0, 5));
-        return propMap;
+    public static BurstSpellMod getInstance() {
+        return INSTANCE;
     }
     
     @Override
-    public int getBaseManaCostModifier() {
-        return this.getPropertyValue("power");
+    public SpellModType<BurstSpellMod> getType() {
+        return SpellModsPM.BURST.get();
     }
-    
+
     @Override
-    public int getManaCostMultiplier() {
-        int radius = this.getPropertyValue("radius");
+    protected List<SpellProperty> getPropertiesInner() {
+        return PROPERTIES.get();
+    }
+
+    @Override
+    public int getBaseManaCostModifier(SpellPropertyConfiguration properties) {
+        return properties.get(SpellPropertiesPM.BURST_POWER.get());
+    }
+
+    @Override
+    public int getManaCostMultiplier(SpellPropertyConfiguration properties) {
+        int radius = properties.get(SpellPropertiesPM.RADIUS.get());
         return 1 + (radius * radius);
     }
 
@@ -86,8 +95,8 @@ public class BurstSpellMod extends AbstractSpellMod {
         Set<BlockPos> affectedBlocks = new HashSet<>();
         Vec3 hitVec = origin.getLocation();
         BlockPos hitPos = BlockPos.containing(hitVec);
-        int radius = this.getRadiusBlocks();
-        int power = this.getBlastPower(spell, spellSource);
+        int radius = this.getRadiusBlocks(spell, spellSource);
+        int power = this.getBlastPower(spell, spellSource, world.registryAccess());
         double sqRadius = (double)(radius * radius);
         int searchRadius = radius + 1;
         Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.BlockInteraction.KEEP);
@@ -139,16 +148,16 @@ public class BurstSpellMod extends AbstractSpellMod {
         return retVal;
     }
     
-    protected int getRadiusBlocks() {
-        return this.getPropertyValue("radius");
+    protected int getRadiusBlocks(SpellPackage spell, ItemStack spellSource) {
+        return spell.getMod(SpellModsPM.BURST.get()).orElseThrow().getPropertyValue(SpellPropertiesPM.RADIUS.get());
     }
     
-    protected int getBlastPower(SpellPackage spell, ItemStack spellSource) {
-        return 5 + (3 * this.getModdedPropertyValue("power", spell, spellSource));
+    protected int getBlastPower(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return 5 + (3 * this.getModdedPropertyValue(SpellPropertiesPM.BURST_POWER.get(), spell, spellSource, registries));
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getRadiusBlocks(), this.getBlastPower(spell, spellSource));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getRadiusBlocks(spell, spellSource), this.getBlastPower(spell, spellSource, registries));
     }
 }

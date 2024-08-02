@@ -1,5 +1,5 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.crafting.CraftingInput;
 
-public interface IShapelessArcaneRecipePM extends IShapelessRecipePM<CraftingContainer>, IArcaneRecipe {}
+public interface IShapelessArcaneRecipePM extends IShapelessRecipePM<CraftingInput>, IArcaneRecipe {}

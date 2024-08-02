@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -28,7 +28,7 @@ public class CulturesPM {
         return ResourceKey.create(RegistryKeysPM.CULTURES, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<Culture> context) {
+    public static void bootstrap(BootstrapContext<Culture> context) {
         context.register(CulturesPM.EARTH, new Culture(PrimalMagick.resource("earth"), LootTablesPM.LIBRARY_EARTH, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, Blocks.EMERALD_BLOCK.defaultBlockState()));
         context.register(CulturesPM.SEA, new Culture(PrimalMagick.resource("sea"), LootTablesPM.LIBRARY_SEA, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, Blocks.LAPIS_BLOCK.defaultBlockState()));
         context.register(CulturesPM.SKY, new Culture(PrimalMagick.resource("sky"), LootTablesPM.LIBRARY_SKY, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, Blocks.DIAMOND_BLOCK.defaultBlockState()));

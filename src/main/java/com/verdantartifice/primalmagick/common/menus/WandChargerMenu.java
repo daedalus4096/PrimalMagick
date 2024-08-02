@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -61,7 +61,7 @@ public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerT
         
         // Slot 1: wand input/output
         this.wandSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 108, 35, 
-                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent()).tooltip(WAND_SLOT_TOOLTIP)));
+                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(WAND_SLOT_TOOLTIP)));
         
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {

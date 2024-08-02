@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagick.common.network.packets.scribe_table;
 import com.verdantartifice.primalmagick.common.menus.ScribeTranscribeWorksMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to trigger a server-side transcription of the slotted static book on a scribe table.
@@ -15,21 +15,19 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class TranscribeActionPacket implements IMessageToServer {
-    protected int windowId;
+    public static final StreamCodec<RegistryFriendlyByteBuf, TranscribeActionPacket> STREAM_CODEC = StreamCodec.ofMember(TranscribeActionPacket::encode, TranscribeActionPacket::decode);
+
+    protected final int windowId;
 
     public TranscribeActionPacket(int windowId) {
         this.windowId = windowId;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(TranscribeActionPacket message, FriendlyByteBuf buf) {
+    public static void encode(TranscribeActionPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeVarInt(message.windowId);
     }
     
-    public static TranscribeActionPacket decode(FriendlyByteBuf buf) {
+    public static TranscribeActionPacket decode(RegistryFriendlyByteBuf buf) {
         return new TranscribeActionPacket(buf.readVarInt());
     }
     

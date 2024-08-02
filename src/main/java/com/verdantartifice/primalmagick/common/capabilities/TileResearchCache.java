@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -28,7 +29,7 @@ public class TileResearchCache implements ITileResearchCache {
     private final Set<AbstractResearchKey<?>> research = ConcurrentHashMap.newKeySet();
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         
         // Serialize cached completed research
@@ -42,7 +43,7 @@ public class TileResearchCache implements ITileResearchCache {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
         if (nbt == null) {
             return;
         }

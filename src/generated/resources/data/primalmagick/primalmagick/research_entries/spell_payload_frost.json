@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:sorcery"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "location": "primalmagick:textures/sources/sea.png"
   },

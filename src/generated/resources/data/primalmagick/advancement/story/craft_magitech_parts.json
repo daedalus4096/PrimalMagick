@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/craft_arcane_workbench",
+  "criteria": {
+    "has_parts": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:magitech_parts_basic"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_magitech_parts.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:magitech_parts_basic"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_magitech_parts.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_parts"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -6,12 +6,12 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to sync cooldown capability data from the server to the client.
@@ -19,36 +19,34 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SyncCooldownsPacket implements IMessageToClient {
-    protected CompoundTag data;
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncCooldownsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncCooldownsPacket::encode, SyncCooldownsPacket::decode);
 
-    public SyncCooldownsPacket() {
-        this.data = null;
-    }
-    
+    protected final CompoundTag data;
+
+    @SuppressWarnings("deprecation")
     public SyncCooldownsPacket(Player player) {
         IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
-        this.data = (cooldowns != null) ? cooldowns.serializeNBT() : null;
+        this.data = (cooldowns != null) ? cooldowns.serializeNBT(player.registryAccess()) : null;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
+    protected SyncCooldownsPacket(CompoundTag data) {
+        this.data = data;
     }
     
-    public static void encode(SyncCooldownsPacket message, FriendlyByteBuf buf) {
+    public static void encode(SyncCooldownsPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeNbt(message.data);
     }
     
-    public static SyncCooldownsPacket decode(FriendlyByteBuf buf) {
-        SyncCooldownsPacket message = new SyncCooldownsPacket();
-        message.data = buf.readNbt();
-        return message;
+    public static SyncCooldownsPacket decode(RegistryFriendlyByteBuf buf) {
+        return new SyncCooldownsPacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncCooldownsPacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
         if (cooldowns != null) {
-            cooldowns.deserializeNBT(message.data);
+            cooldowns.deserializeNBT(player.registryAccess(), message.data);
         }
     }
 }

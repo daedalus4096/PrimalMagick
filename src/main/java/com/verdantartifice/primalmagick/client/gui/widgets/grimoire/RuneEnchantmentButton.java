@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResear
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -15,16 +16,16 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class RuneEnchantmentButton extends AbstractTopicButton {
-    protected Enchantment enchant;
+    protected Holder<Enchantment> enchant;
     
     @SuppressWarnings("resource")
-    public RuneEnchantmentButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, Enchantment enchant) {
+    public RuneEnchantmentButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, Holder<Enchantment> enchant) {
         super(widthIn, heightIn, 123, 12, text, screen, 
                 GenericIndexIcon.of(ResearchDisciplines.getDiscipline(Minecraft.getInstance().level.registryAccess(), ResearchDisciplines.RUNEWORKING).iconLocation(), false), new Handler());
         this.enchant = enchant;
     }
     
-    public Enchantment getEnchantment() {
+    public Holder<Enchantment> getEnchantment() {
         return this.enchant;
     }
     

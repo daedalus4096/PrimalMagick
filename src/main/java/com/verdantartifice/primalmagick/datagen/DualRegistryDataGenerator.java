@@ -29,7 +29,7 @@ public class DualRegistryDataGenerator extends DatapackBuiltinEntriesProvider {
     }
     
     public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
-        return generator.addProvider(isServer, new DualRegistryDataGenerator(output, provider)).getRegistryProvider();
+        return generator.addProvider(isServer, new DualRegistryDataGenerator(output, provider)).getFullRegistries();
     }
 
     @Override

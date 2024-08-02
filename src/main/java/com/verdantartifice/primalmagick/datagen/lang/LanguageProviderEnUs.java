@@ -64,11 +64,9 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.registries.RegistryObject;
 
 /**
  * Language data provider for US English.
@@ -772,9 +770,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SANGUINE_CORE_INNER_DEMON).name("Sanguine Core: Inner Demon").build();
         this.item(ItemsPM.SKYGLASS_FLASK).name("Skyglass Flask").build();
         this.item(ItemsPM.CONCOCTION)
-            .concoctionName(ConcoctionType.WATER, Potions.EMPTY, "Uncraftable Concoction")
             .concoctionName(ConcoctionType.WATER, Potions.WATER, "Water Flask")
-            .concoctionName(ConcoctionType.TINCTURE, Potions.EMPTY, "Uncraftable Tincture")
             .concoctionName(ConcoctionType.TINCTURE, Potions.NIGHT_VISION, "Tincture of Night Vision")
             .concoctionName(ConcoctionType.TINCTURE, Potions.INVISIBILITY, "Tincture of Invisibility")
             .concoctionName(ConcoctionType.TINCTURE, Potions.LEAPING, "Tincture of Leaping")
@@ -792,7 +788,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .concoctionName(ConcoctionType.TINCTURE, Potions.LUCK, "Tincture of Luck")
             .concoctionName(ConcoctionType.TINCTURE, Potions.TURTLE_MASTER, "Tincture of the Turtle Master")
             .concoctionName(ConcoctionType.TINCTURE, Potions.SLOW_FALLING, "Tincture of Slow Falling")
-            .concoctionName(ConcoctionType.PHILTER, Potions.EMPTY, "Uncraftable Philter")
             .concoctionName(ConcoctionType.PHILTER, Potions.NIGHT_VISION, "Philter of Night Vision")
             .concoctionName(ConcoctionType.PHILTER, Potions.INVISIBILITY, "Philter of Invisibility")
             .concoctionName(ConcoctionType.PHILTER, Potions.LEAPING, "Philter of Leaping")
@@ -810,7 +805,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .concoctionName(ConcoctionType.PHILTER, Potions.LUCK, "Philter of Luck")
             .concoctionName(ConcoctionType.PHILTER, Potions.TURTLE_MASTER, "Philter of the Turtle Master")
             .concoctionName(ConcoctionType.PHILTER, Potions.SLOW_FALLING, "Philter of Slow Falling")
-            .concoctionName(ConcoctionType.ELIXIR, Potions.EMPTY, "Uncraftable Elixir")
             .concoctionName(ConcoctionType.ELIXIR, Potions.NIGHT_VISION, "Elixir of Night Vision")
             .concoctionName(ConcoctionType.ELIXIR, Potions.INVISIBILITY, "Elixir of Invisibility")
             .concoctionName(ConcoctionType.ELIXIR, Potions.LEAPING, "Elixir of Leaping")
@@ -831,7 +825,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         this.item(ItemsPM.BOMB_CASING).name("Bomb Casing").build();
         this.item(ItemsPM.ALCHEMICAL_BOMB)
-            .concoctionName(ConcoctionType.BOMB, Potions.EMPTY, "Uncraftable Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.WATER, "Water Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.NIGHT_VISION, "Night Vision Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.INVISIBILITY, "Invisibility Bomb")
@@ -1130,9 +1123,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.mobEffect(EffectsPM.MANA_IMPEDANCE).name("Mana Impedance").build();
         this.mobEffect(EffectsPM.ENDERLOCK).name("Enderlock").build();
         this.mobEffect(EffectsPM.SOULPIERCED).name("Soulpierced").build();
-        @SuppressWarnings("removal")
-        RegistryObject<MobEffect> stolenEssence = EffectsPM.STOLEN_ESSENCE;
-        this.mobEffect(stolenEssence).name("Stolen Essence").build();
         
         // Generate mod enchantment localizations
         this.enchantment(EnchantmentsPM.LIFESTEAL).name("Lifesteal")
@@ -1242,7 +1232,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
 
         // Generate vanilla enchantment localization extensions
-        this.enchantment(Enchantments.ALL_DAMAGE_PROTECTION)
+        this.enchantment(Enchantments.PROTECTION)
             .fullRuneText("The Protection enchantment can be imbued through the use of Protect, Self, and Earth runes.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage.  It is incompatible with other Protection enchantments.")
             .partialRuneText("The Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage.  It is incompatible with other Protection enchantments.")
             .build();
@@ -1250,7 +1240,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Fire Protection enchantment can be imbued through the use of Protect, Self, and Infernal runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming fire damage as well as the amount of time that the wearer is engulfed in flames.  It is incompatible with other Protection enchantments.")
             .partialRuneText("The Fire Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming fire damage as well as the amount of time that the wearer is engulfed in flames.  It is incompatible with other Protection enchantments.")
             .build();
-        this.enchantment(Enchantments.FALL_PROTECTION)
+        this.enchantment(Enchantments.FEATHER_FALLING)
             .fullRuneText("The Feather Falling enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any pair of boots.  When applied, it greatly reduces all damage sustained from falling.")
             .partialRuneText("The Feather Falling enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any pair of boots.  When applied, it greatly reduces all damage sustained from falling.")
             .build();
@@ -1294,7 +1284,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Fire Aspect enchantment can be imbued through the use of Project, Item, and Infernal runes.  It can be applied to any sword.  When applied, creatures struck by the wielder will be set on fire.")
             .partialRuneText("The Fire Aspect enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, creatures struck by the wielder will be set on fire.")
             .build();
-        this.enchantment(Enchantments.MOB_LOOTING)
+        this.enchantment(Enchantments.LOOTING)
             .fullRuneText("The Looting enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any sword.  When applied, it increases the amount of loot dropped by creatures slain by the wielder.")
             .partialRuneText("The Looting enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, it increases the amount of loot dropped by creatures slain by the wielder.")
             .build();
@@ -1302,7 +1292,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Sweeping Edge enchantment can be imbued through the use of Project, Area, and Sky runes.  It can be applied to any sword.  When applied, it increases the damage done by the wielder with sweep attacks.")
             .partialRuneText("The Sweeping Edge enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, it increases the damage done by the wielder with sweep attacks.")
             .build();
-        this.enchantment(Enchantments.BLOCK_EFFICIENCY)
+        this.enchantment(Enchantments.EFFICIENCY)
             .fullRuneText("The Efficiency enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any axe, pickaxe, shears, or shovel.  When applied, it increases the speed with which the wielder may use the tool.")
             .partialRuneText("The Efficiency enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, shears, or shovel.  When applied, it increases the speed with which the wielder may use the tool.")
             .build();
@@ -1314,31 +1304,31 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Unbreaking enchantment can be imbued through the use of Protect, Item, and Earth runes.  It can be applied to any item that may be damaged or broken.  When applied, it increases the durability of the item, making it harder to damage.")
             .partialRuneText("The Unbreaking enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any item that may be damaged or broken.  When applied, it increases the durability of the item, making it harder to damage.")
             .build();
-        this.enchantment(Enchantments.BLOCK_FORTUNE)
+        this.enchantment(Enchantments.FORTUNE)
             .fullRuneText("The Fortune enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any axe, pickaxe, or shovel.  When applied, it increases the drops yielded by certain blocks.  It is incompatible with the Silk Touch enchantment.")
             .partialRuneText("The Fortune enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, or shovel.  When applied, it increases the drops yielded by certain blocks.  It is incompatible with the Silk Touch enchantment.")
             .build();
-        this.enchantment(Enchantments.POWER_ARROWS)
+        this.enchantment(Enchantments.POWER)
             .fullRuneText("The Power enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any bow.  When applied, it increases the damage done by arrows fired by the wielder.")
             .partialRuneText("The Power enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it increases the damage done by arrows fired by the wielder.")
             .build();
-        this.enchantment(Enchantments.PUNCH_ARROWS)
+        this.enchantment(Enchantments.PUNCH)
             .fullRuneText("The Punch enchantment can be imbued through the use of Project, Creature, and Earth runes.  It can be applied to any bow.  When applied, it increases the distance which a creature struck by the wielder's arrows is knocked back.")
             .partialRuneText("The Punch enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it increases the distance which a creature struck by the wielder's arrows is knocked back.")
             .build();
-        this.enchantment(Enchantments.FLAMING_ARROWS)
+        this.enchantment(Enchantments.FLAME)
             .fullRuneText("The Flame enchantment can be imbued through the use of Project, Item, and Infernal runes.  It can be applied to any bow.  When applied, it causes arrows fired by the wielder to set their targets on fire.")
             .partialRuneText("The Flame enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it causes arrows fired by the wielder to set their targets on fire.")
             .build();
-        this.enchantment(Enchantments.INFINITY_ARROWS)
+        this.enchantment(Enchantments.INFINITY)
             .fullRuneText("The Infinity enchantment can be imbued through the use of Summon, Item, and Sky runes.  It can be applied to any bow.  When applied, it prevents regular arrows from being consumed when the wielder fires.  It is incompatible with the Mending enchantment.")
             .partialRuneText("The Infinity enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it prevents regular arrows from being consumed when the wielder fires.  It is incompatible with the Mending enchantment.")
             .build();
-        this.enchantment(Enchantments.FISHING_LUCK)
+        this.enchantment(Enchantments.LUCK_OF_THE_SEA)
             .fullRuneText("The Luck of the Sea enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any fishing rod.  When applied, it increases the quality of the items that the wielder fishes up.")
             .partialRuneText("The Luck of the Sea enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any fishing rod.  When applied, it increases the quality of the items that the wielder fishes up.")
             .build();
-        this.enchantment(Enchantments.FISHING_SPEED)
+        this.enchantment(Enchantments.LURE)
             .fullRuneText("The Lure enchantment can be imbued through the use of Summon, Creature, and Sea runes.  It can be applied to any fishing rod.  When applied, it decreases the time until the wielder gets a bite when fishing.")
             .partialRuneText("The Lure enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any fishing rod.  When applied, it decreases the time until the wielder gets a bite when fishing.")
             .build();
@@ -2118,13 +2108,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Fascinating.  From what I can tell, the study and use of magick brings a person more into alignment with that source of magick, body and mind.  This results in the development of incredible new abilities on the part of the attuned mage.<BR>Learning a new spell or recipe in my Grimoire will sometimes permanently increase my attunement to the relevant source; I'll be sure to note in the grimoire when this happens.  In addition, channeling mana, whether by crafting a recipe or casting a spell, will temporarily increase my attunement to that source.  The effect can be significant, but it will slowly decay over time.<BR>I've cast a simple spell on my Grimoire to track my current attunement levels.  Should I ever wish to check them, or to remind myself what attunement to a particular source will gain me, I need only check the Attunements section under Other Topics in the main index.")
                 .end()
             .build();
-        // FIXME Re-add for 1.21 release
-//        this.researchEntry(ResearchEntries.LINGUISTICS, lookupProvider).name("Linguistics")
-//            .stages()
-//                .add("The ancient shrines are fascinating, but I'd love to learn more about the ancients who built them.  Who were they?  What were they like?  What other wisdom did they have to share?<BR>Of course, a civilization that existed so long ago probably didn't use the same language that I do now.  If I'm lucky enough to find any lost texts of theirs, I should expect them to be in their native tongue, maybe even more than one of them.<BR>I wonder if I could learn those languages with enough study?  Think of the knowledge I could unlock!  I should make some effort in that direction, I think.")
-//                .add("I was right!  They did leave writings behind, and they're just as incomprehensible as I suspected.  But never fear, I have faith I can learn more.  To that end, I've fashioned myself a Scribe's Table, a place from which I can study these ancient languages.<BR>The Scribe's Table has three modes in which it can be used.  First, I can use it to study the vocabulary of a language.  To do so, I just need an ancient book and the knowledge imparted by my experiences.  Studying a book will cost me a bit of that experience, but will earn me some new vocabulary.  Any given book can only be studied up to three times in each language I discover it, and each study session will require more experience than the last.<BR>The second mode of the Scribe's Table will let me gain comprehension of a language, allowing me to read it plainly.  Parts of it, anyway.  To do so, I need a book of that language and any vocabulary that I've already learned for it.  The table magically represents the structure of the language as a grid; by unlocking the nodes of that grid using earned vocabulary, I will gain rewards such as comprehension, research observations, or more.<BR>Finally, the third mode of the Scribe's Table lets me transcribe a work.  Basically, it lets me make a copy of any ancient book I've found, incorporating all of my comprehension into it so that other people can benefit from it.  To do so, I need an ancient book that I wish to transcribe and a Book and Quill in which to write.  I don't need to do this if I'm going to be the only one reading (it's always best in the original, after all), but if I want to share with my less well-read friends, this might help.<BR>Finally, I've added a Linguistics section to my Grimoire to help keep track of what languages I've encountered and how my studies are progressing for each of them.  I can find it on the main index page.")
-//                .end()
-//            .build();
+        this.researchEntry(ResearchEntries.LINGUISTICS, lookupProvider).name("Linguistics")
+            .stages()
+                .add("The ancient shrines are fascinating, but I'd love to learn more about the ancients who built them.  Who were they?  What were they like?  What other wisdom did they have to share?<BR>Of course, a civilization that existed so long ago probably didn't use the same language that I do now.  If I'm lucky enough to find any lost texts of theirs, I should expect them to be in their native tongue, maybe even more than one of them.<BR>I wonder if I could learn those languages with enough study?  Think of the knowledge I could unlock!  I should make some effort in that direction, I think.")
+                .add("I was right!  They did leave writings behind, and they're just as incomprehensible as I suspected.  But never fear, I have faith I can learn more.  To that end, I've fashioned myself a Scribe's Table, a place from which I can study these ancient languages.<BR>The Scribe's Table has three modes in which it can be used.  First, I can use it to study the vocabulary of a language.  To do so, I just need an ancient book and the knowledge imparted by my experiences.  Studying a book will cost me a bit of that experience, but will earn me some new vocabulary.  Any given book can only be studied up to three times in each language I discover it, and each study session will require more experience than the last.<BR>The second mode of the Scribe's Table will let me gain comprehension of a language, allowing me to read it plainly.  Parts of it, anyway.  To do so, I need a book of that language and any vocabulary that I've already learned for it.  The table magically represents the structure of the language as a grid; by unlocking the nodes of that grid using earned vocabulary, I will gain rewards such as comprehension, research observations, or more.<BR>Finally, the third mode of the Scribe's Table lets me transcribe a work.  Basically, it lets me make a copy of any ancient book I've found, incorporating all of my comprehension into it so that other people can benefit from it.  To do so, I need an ancient book that I wish to transcribe and a Book and Quill in which to write.  I don't need to do this if I'm going to be the only one reading (it's always best in the original, after all), but if I want to share with my less well-read friends, this might help.<BR>Finally, I've added a Linguistics section to my Grimoire to help keep track of what languages I've encountered and how my studies are progressing for each of them.  I can find it on the main index page.")
+                .end()
+            .build();
         this.researchEntry(ResearchEntries.UNLOCK_MANAWEAVING, lookupProvider).name("Introduction to Manaweaving")
             .stages()
                 .add("Integrating mana into my crafting process should be the next goal in my magickal studies.  This will hopefully allow me to create better materials and tools for magickal crafting and for channeling mana.")

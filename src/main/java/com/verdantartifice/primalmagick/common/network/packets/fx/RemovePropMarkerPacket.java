@@ -7,12 +7,12 @@ import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to remove a prop marker particle effect on the client.
@@ -20,26 +20,20 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class RemovePropMarkerPacket implements IMessageToClient {
-    protected BlockPos pos;
-    
-    public RemovePropMarkerPacket() {}
+    public static final StreamCodec<RegistryFriendlyByteBuf, RemovePropMarkerPacket> STREAM_CODEC = StreamCodec.ofMember(RemovePropMarkerPacket::encode, RemovePropMarkerPacket::decode);
+
+    protected final BlockPos pos;
     
     public RemovePropMarkerPacket(@Nonnull BlockPos pos) {
         this.pos = pos;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(RemovePropMarkerPacket message, FriendlyByteBuf buf) {
+    public static void encode(RemovePropMarkerPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeBlockPos(message.pos);
     }
     
-    public static RemovePropMarkerPacket decode(FriendlyByteBuf buf) {
-        RemovePropMarkerPacket message = new RemovePropMarkerPacket();
-        message.pos = buf.readBlockPos();
-        return message;
+    public static RemovePropMarkerPacket decode(RegistryFriendlyByteBuf buf) {
+        return new RemovePropMarkerPacket(buf.readBlockPos());
     }
     
     @SuppressWarnings("deprecation")

@@ -1,16 +1,13 @@
 package com.verdantartifice.primalmagick.common.network.packets.spellcrafting;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.spells.SpellComponent;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to update the value of a spell component's type on the server in the spellcrafting altar GUI.
@@ -18,46 +15,27 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SetSpellComponentTypeIndexPacket implements IMessageToServer {
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final StreamCodec<RegistryFriendlyByteBuf, SetSpellComponentTypeIndexPacket> STREAM_CODEC = StreamCodec.ofMember(
+            SetSpellComponentTypeIndexPacket::encode, SetSpellComponentTypeIndexPacket::decode);
 
-    protected int windowId;
-    protected SpellComponent attr;
-    protected int index;
+    protected final int windowId;
+    protected final SpellComponent attr;
+    protected final int index;
 
-    public SetSpellComponentTypeIndexPacket() {
-        this.windowId = -1;
-        this.attr = null;
-        this.index = -1;
-    }
-    
     public SetSpellComponentTypeIndexPacket(int windowId, SpellComponent attr, int index) {
         this.windowId = windowId;
         this.attr = attr;
         this.index = index;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
+    public static void encode(SetSpellComponentTypeIndexPacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeVarInt(message.windowId);
+        buf.writeEnum(message.attr);
+        buf.writeVarInt(message.index);
     }
     
-    public static void encode(SetSpellComponentTypeIndexPacket message, FriendlyByteBuf buf) {
-        buf.writeInt(message.windowId);
-        buf.writeUtf(message.attr.name());
-        buf.writeInt(message.index);
-    }
-    
-    public static SetSpellComponentTypeIndexPacket decode(FriendlyByteBuf buf) {
-        SetSpellComponentTypeIndexPacket message = new SetSpellComponentTypeIndexPacket();
-        message.windowId = buf.readInt();
-        String attrStr = buf.readUtf();
-        try {
-            message.attr = SpellComponent.valueOf(attrStr);
-        } catch (Exception e) {
-            LOGGER.warn("Received SetSpellAttributeTypeIndexPacket with unexpected attr value {}", attrStr);
-            message.attr = null;
-        }
-        message.index = buf.readInt();
-        return message;
+    public static SetSpellComponentTypeIndexPacket decode(RegistryFriendlyByteBuf buf) {
+        return new SetSpellComponentTypeIndexPacket(buf.readVarInt(), buf.readEnum(SpellComponent.class), buf.readVarInt());
     }
     
     public static void onMessage(SetSpellComponentTypeIndexPacket message, CustomPayloadEvent.Context ctx) {

@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
@@ -23,10 +24,10 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
  * @see {@link net.minecraft.world.level.levelgen.structure.structures.IglooStructure}
  */
 public class ShrineStructure extends Structure {
-    public static final Codec<ShrineStructure> CODEC = RecordCodecBuilder.<ShrineStructure>mapCodec(instance -> 
-            instance.group(ShrineStructure.settingsCodec(instance),
-                    ShrineStructure.Type.CODEC.fieldOf("shrine_type").forGetter(shrine -> shrine.shrineType)
-            ).apply(instance, ShrineStructure::new)).codec();
+    public static final MapCodec<ShrineStructure> CODEC = RecordCodecBuilder.<ShrineStructure>mapCodec(instance -> instance.group(
+            ShrineStructure.settingsCodec(instance),
+            ShrineStructure.Type.CODEC.fieldOf("shrine_type").forGetter(shrine -> shrine.shrineType)
+        ).apply(instance, ShrineStructure::new));
     
     private final ShrineStructure.Type shrineType;
     

@@ -7,12 +7,12 @@ import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a prop marker particle effect on the client.
@@ -20,10 +20,10 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class PropMarkerPacket implements IMessageToClient {
-    protected BlockPos pos;
-    protected int lifetime;
-    
-    public PropMarkerPacket() {}
+    public static final StreamCodec<RegistryFriendlyByteBuf, PropMarkerPacket> STREAM_CODEC = StreamCodec.ofMember(PropMarkerPacket::encode, PropMarkerPacket::decode);
+
+    protected final BlockPos pos;
+    protected final int lifetime;
     
     public PropMarkerPacket(@Nonnull BlockPos pos) {
         this(pos, FxDispatcher.DEFAULT_PROP_MARKER_LIFETIME);
@@ -34,20 +34,13 @@ public class PropMarkerPacket implements IMessageToClient {
         this.lifetime = lifetime;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(PropMarkerPacket message, FriendlyByteBuf buf) {
+    public static void encode(PropMarkerPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeBlockPos(message.pos);
         buf.writeVarInt(message.lifetime);
     }
     
-    public static PropMarkerPacket decode(FriendlyByteBuf buf) {
-        PropMarkerPacket message = new PropMarkerPacket();
-        message.pos = buf.readBlockPos();
-        message.lifetime = buf.readVarInt();
-        return message;
+    public static PropMarkerPacket decode(RegistryFriendlyByteBuf buf) {
+        return new PropMarkerPacket(buf.readBlockPos(), buf.readVarInt());
     }
     
     @SuppressWarnings("deprecation")

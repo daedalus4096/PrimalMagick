@@ -221,7 +221,7 @@ public class ArcaneShapelessRecipeBuilder {
      */
     public void build(RecipeOutput output, String save) {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
-        ResourceLocation saveLoc = new ResourceLocation(save);
+        ResourceLocation saveLoc = ResourceLocation.parse(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Arcane Shapeless Recipe " + save + " should remove its 'save' argument");
         } else {

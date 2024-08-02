@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
 
@@ -51,7 +51,7 @@ public class DamageTypesPM {
         return SORCERY_MAP.get(source);
     }
     
-    public static void bootstrap(BootstapContext<DamageType> context) {
+    public static void bootstrap(BootstrapContext<DamageType> context) {
         context.register(BLEEDING, new DamageType(String.join(".", PrimalMagick.MODID, "bleeding"), 0.1F));
         context.register(BLOOD_ROSE, new DamageType(String.join(".", PrimalMagick.MODID, "blood_rose"), 0.1F));
         context.register(HELLISH_CHAIN, new DamageType(String.join(".", PrimalMagick.MODID, "hellish_chain"), 0F));

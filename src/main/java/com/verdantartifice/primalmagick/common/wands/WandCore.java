@@ -10,10 +10,14 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 
@@ -28,6 +32,9 @@ import net.minecraft.world.item.Rarity;
  */
 public class WandCore implements IWandComponent {
     protected static final Map<String, WandCore> REGISTRY = new HashMap<>();
+    
+    public static final Codec<WandCore> CODEC = Codec.STRING.xmap(WandCore::getWandCore, WandCore::getTag);
+    public static final StreamCodec<ByteBuf, WandCore> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(WandCore::getWandCore, WandCore::getTag);
     
     public static final WandCore HEARTWOOD = new WandCore("heartwood", Rarity.COMMON, 1, null, Collections.emptyList());
     public static final WandCore OBSIDIAN = new WandCore("obsidian", Rarity.COMMON, 1, Sources.EARTH, Arrays.asList(Sources.EARTH));

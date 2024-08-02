@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.stats.Stat;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongArrayTag;
@@ -36,7 +37,7 @@ public class PlayerStats implements IPlayerStats {
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         
         // Serialize recorded stat values
@@ -86,7 +87,7 @@ public class PlayerStats implements IPlayerStats {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
@@ -97,7 +98,7 @@ public class PlayerStats implements IPlayerStats {
         ListTag statList = nbt.getList("Stats", Tag.TAG_COMPOUND);
         for (int index = 0; index < statList.size(); index++) {
             CompoundTag tag = statList.getCompound(index);
-            ResourceLocation loc = new ResourceLocation(tag.getString("Key"));
+            ResourceLocation loc = ResourceLocation.parse(tag.getString("Key"));
             Integer value = Integer.valueOf(tag.getInt("Value"));
             this.stats.put(loc, value);
         }
@@ -112,21 +113,21 @@ public class PlayerStats implements IPlayerStats {
         ListTag recipeList = nbt.getList("CraftedRecipes", Tag.TAG_STRING);
         for (int index = 0; index < recipeList.size(); index++) {
             String idStr = recipeList.getString(index);
-            this.craftedRecipes.add(new ResourceLocation(idStr));
+            this.craftedRecipes.add(ResourceLocation.parse(idStr));
         }
         
         // Deserialize crafted recipe group IDs
         ListTag groupList = nbt.getList("CraftedGroups", Tag.TAG_STRING);
         for (int index = 0; index < groupList.size(); index++) {
             String idStr = groupList.getString(index);
-            this.craftedGroups.add(new ResourceLocation(idStr));
+            this.craftedGroups.add(ResourceLocation.parse(idStr));
         }
         
         // Deserialize crafted rune enchantment IDs
         ListTag enchList = nbt.getList("CraftedRuneEnchantments", Tag.TAG_STRING);
         for (int index = 0; index < enchList.size(); index++) {
             String idStr = enchList.getString(index);
-            this.craftedEnchs.add(new ResourceLocation(idStr));
+            this.craftedEnchs.add(ResourceLocation.parse(idStr));
         }
     }
 
@@ -229,14 +230,16 @@ public class PlayerStats implements IPlayerStats {
             }
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public CompoundTag serializeNBT() {
-            return instance.serializeNBT();
+        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+            return instance.serializeNBT(registries);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public void deserializeNBT(CompoundTag nbt) {
-            instance.deserializeNBT(nbt);
+        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+            instance.deserializeNBT(registries, nbt);
         }
     }
 }

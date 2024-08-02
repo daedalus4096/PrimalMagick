@@ -4,22 +4,12 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.Culture;
-import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
-import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
-import com.verdantartifice.primalmagick.common.capabilities.IWorldEntitySwappers;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
 
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DataPackRegistryEvent;
@@ -31,19 +21,6 @@ import net.minecraftforge.registries.DataPackRegistryEvent;
  */
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ModRegistrationEvents {
-    @SubscribeEvent
-    public static void onRegisterCapability(RegisterCapabilitiesEvent event) {
-        event.register(IPlayerKnowledge.class);
-        event.register(IPlayerCooldowns.class);
-        event.register(IPlayerStats.class);
-        event.register(IPlayerAttunements.class);
-        event.register(IPlayerCompanions.class);
-        event.register(IPlayerArcaneRecipeBook.class);
-        event.register(IWorldEntitySwappers.class);
-        event.register(IManaStorage.class);
-        event.register(ITileResearchCache.class);
-    }
-    
     @SubscribeEvent
     public static void onNewDatapackRegistry(DataPackRegistryEvent.NewRegistry event) {
         event.dataPackRegistry(RegistryKeysPM.RESEARCH_DISCIPLINES, ResearchDiscipline.codec(), ResearchDiscipline.codec());

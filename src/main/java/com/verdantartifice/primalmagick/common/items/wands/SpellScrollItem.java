@@ -5,12 +5,14 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -37,45 +39,31 @@ public class SpellScrollItem extends Item {
     
     @Nullable
     public SpellPackage getSpell(@Nonnull ItemStack stack) {
-        // Get the held spell from the given scroll stack's NBT data
-        SpellPackage spell = null;
-        if (stack.hasTag() && stack.getTag().contains("Spell")) {
-            spell = new SpellPackage(stack.getTag().getCompound("Spell"));
-        }
-        return spell;
+        // Get the held spell from the given scroll stack's data
+        return stack.get(DataComponentsPM.SPELL_PACKAGE.get());
     }
     
     public void setSpell(@Nonnull ItemStack stack, @Nonnull SpellPackage spell) {
-        // Save the given spell into the scroll stack's NBT data
-        stack.addTagElement("Spell", spell.serializeNBT());
+        // Save the given spell into the scroll stack's data
+        stack.set(DataComponentsPM.SPELL_PACKAGE.get(), spell);
+        stack.set(DataComponents.RARITY, spell == null ? Rarity.COMMON : spell.getRarity());
     }
 
     @Override
     public Component getName(ItemStack stack) {
         // A scroll's name is determined by that of the spell it holds (e.g. "Scroll of Lightning Bolt")
         SpellPackage spell = this.getSpell(stack);
-        Component spellName = (spell == null) ? Component.translatable("tooltip.primalmagick.none") : spell.getName();
+        Component spellName = (spell == null) ? Component.translatable("tooltip.primalmagick.none") : spell.getDisplayName();
         return Component.translatable(this.getDescriptionId(stack), spellName).withStyle(ChatFormatting.ITALIC);
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
-        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(this.getSpell(stack), stack, false));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, context, tooltip, flag);
+        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(this.getSpell(stack), stack, false, context.registries()));
         tooltip.add(TOOLTIP);
     }
 
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        // A scroll's rarity is determined by that of its held spell
-        SpellPackage spell = this.getSpell(stack);
-        if (spell == null) {
-            return Rarity.COMMON;
-        } else {
-            return spell.getRarity();
-        }
-    }
-    
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         // Cast the held spell, if any, and consume the scroll

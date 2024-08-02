@@ -39,7 +39,7 @@ public class BloodyFleshItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         tooltip.add(Component.translatable("item.primalmagick.bloody_flesh.tooltip.1").withStyle(Sources.BLOOD.getChatColor(), ChatFormatting.ITALIC));
         tooltip.add(Component.translatable("item.primalmagick.bloody_flesh.tooltip.2").withStyle(Sources.BLOOD.getChatColor(), ChatFormatting.ITALIC));
     }

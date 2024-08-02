@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -13,8 +13,11 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -27,7 +30,7 @@ import net.minecraftforge.common.loot.LootModifier;
  * @author Daedalus4096
  */
 public class EssenceThiefModifier extends LootModifier {
-    public static final Codec<EssenceThiefModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).apply(inst, EssenceThiefModifier::new));
+    public static final MapCodec<EssenceThiefModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst).apply(inst, EssenceThiefModifier::new));
 
     public EssenceThiefModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -58,20 +61,19 @@ public class EssenceThiefModifier extends LootModifier {
     }
     
     private static int getEnchantLevel(LootContext context) {
-        if (context.getParamOrNull(LootContextParams.KILLER_ENTITY) instanceof LivingEntity killer) {
+        if (context.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity killer) {
             // Get the highest enchantment level among held items that could hold the Essence Thief enchantment
-            return EnchantmentsPM.ESSENCE_THIEF.get().getSlotItems(killer).values().stream().mapToInt(EssenceThiefModifier::getEnchantLevel).max().orElse(0);
+            Holder<Enchantment> ench = context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.ESSENCE_THIEF);
+            return ench.value().getSlotItems(killer).values().stream().mapToInt(stack -> {
+                return stack.getEnchantments().getLevel(ench);
+            }).max().orElse(0);
         } else {
             return 0;
         }
     }
     
-    private static int getEnchantLevel(ItemStack stack) {
-        return stack.getEnchantmentLevel(EnchantmentsPM.ESSENCE_THIEF.get());
-    }
-
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

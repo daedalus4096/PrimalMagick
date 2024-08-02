@@ -71,10 +71,10 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class BlockStateProviderPM extends BlockStateProvider {
-    protected static final ResourceLocation SOLID = new ResourceLocation("solid");
-    protected static final ResourceLocation CUTOUT = new ResourceLocation("cutout");
-    protected static final ResourceLocation CUTOUT_MIPPED = new ResourceLocation("cutout_mipped");
-    protected static final ResourceLocation TRANSLUCENT = new ResourceLocation("translucent");
+    protected static final ResourceLocation SOLID = ResourceLocation.withDefaultNamespace("solid");
+    protected static final ResourceLocation CUTOUT = ResourceLocation.withDefaultNamespace("cutout");
+    protected static final ResourceLocation CUTOUT_MIPPED = ResourceLocation.withDefaultNamespace("cutout_mipped");
+    protected static final ResourceLocation TRANSLUCENT = ResourceLocation.withDefaultNamespace("translucent");
 
     public BlockStateProviderPM(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, PrimalMagick.MODID, exFileHelper);
@@ -442,14 +442,14 @@ public class BlockStateProviderPM extends BlockStateProvider {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
             ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
-            ModelFile model = this.models().withExistingParent(this.name(block) + "_" + phaseName, new ResourceLocation("block/leaves"))
+            ModelFile model = this.models().withExistingParent(this.name(block) + "_" + phaseName, ResourceLocation.withDefaultNamespace("block/leaves"))
                     .texture("all", phaseTexture).renderType(TimePhase.FULL.equals(phase) ? CUTOUT : TRANSLUCENT);
             this.getVariantBuilder(block).partialState().with(AbstractPhasingLeavesBlock.PHASE, phase).modelForState().modelFile(model).addModel();
         });
 
         String phaseName = TimePhase.FULL.getSerializedName();
         ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
-        this.simpleBlockItem(block, this.models().withExistingParent(this.name(block) + "_" + phaseName, new ResourceLocation("block/leaves")).texture("all", phaseTexture));
+        this.simpleBlockItem(block, this.models().withExistingParent(this.name(block) + "_" + phaseName, ResourceLocation.withDefaultNamespace("block/leaves")).texture("all", phaseTexture));
     }
     
     private void saplingBlockWithItem(Block block) {
@@ -584,7 +584,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void leavesBlockWithItem(LeavesBlock block) {
-        ModelFile model = this.models().withExistingParent(this.name(block), new ResourceLocation("block/leaves")).texture("all", this.blockTexture(block));
+        ModelFile model = this.models().withExistingParent(this.name(block), ResourceLocation.withDefaultNamespace("block/leaves")).texture("all", this.blockTexture(block));
         this.simpleBlockWithItem(block, model);
     }
     
@@ -813,13 +813,13 @@ public class BlockStateProviderPM extends BlockStateProvider {
         VariantBlockStateBuilder builder = this.getVariantBuilder(block);
         StemBlock.AGE.getPossibleValues().forEach(stage -> {
             builder.partialState().with(StemBlock.AGE, stage).modelForState().modelFile(
-                    this.models().withExistingParent(this.name(block) + "_stage" + stage, new ResourceLocation("block/stem_growth" + stage))
+                    this.models().withExistingParent(this.name(block) + "_stage" + stage, ResourceLocation.withDefaultNamespace("block/stem_growth" + stage))
                         .texture("stem", this.blockTexture(block)).renderType(CUTOUT)).addModel();
         });
     }
     
     private void attachedStemBlock(Block block, ResourceLocation lowerStemTexture) {
-        ModelFile model = this.models().withExistingParent(this.name(block), new ResourceLocation("block/stem_fruit"))
+        ModelFile model = this.models().withExistingParent(this.name(block), ResourceLocation.withDefaultNamespace("block/stem_fruit"))
                 .texture("stem", lowerStemTexture)
                 .texture("upperstem", this.blockTexture(block))
                 .renderType(CUTOUT);
@@ -925,7 +925,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     
     private ModelFile getCarvedBookshelfSlotModel(String baseName, String slotName, boolean occupied, ResourceLocation slotTexture) {
         String name = baseName + "_" + (occupied ? "occupied" : "empty") + "_slot_" + slotName;
-        ResourceLocation parent = new ResourceLocation(ModelProvider.BLOCK_FOLDER + "/template_chiseled_bookshelf_slot_" + slotName);
+        ResourceLocation parent = ResourceLocation.withDefaultNamespace(ModelProvider.BLOCK_FOLDER + "/template_chiseled_bookshelf_slot_" + slotName);
         return this.models().withExistingParent(name, parent).texture("texture", slotTexture);
     }
     

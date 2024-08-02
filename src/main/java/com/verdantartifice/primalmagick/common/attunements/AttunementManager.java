@@ -17,7 +17,9 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -53,8 +55,8 @@ public class AttunementManager {
         }
     }
     
-    public static void registerAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Attribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
-        MODIFIERS.add(new AttunementAttributeModifier(source, threshold, attribute, uuidStr, modValue, modOperation));
+    public static void registerAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Holder<Attribute> attribute, @Nonnull ResourceLocation id, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
+        MODIFIERS.add(new AttunementAttributeModifier(source, threshold, attribute, id, modValue, modOperation));
     }
     
     /**

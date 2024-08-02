@@ -1,11 +1,13 @@
 {
   "addenda": [],
   "finales": [],
-  "hasHint": true,
+  "flags": {
+    "hasHint": true,
+    "internal": true
+  },
   "icon": {
     "location": "primalmagick:textures/research/research_map.png"
   },
-  "internal": true,
   "key": {
     "rootKey": "primalmagick:sotu_discover_infernal"
   },

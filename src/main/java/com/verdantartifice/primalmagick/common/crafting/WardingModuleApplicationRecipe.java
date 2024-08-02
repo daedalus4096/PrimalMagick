@@ -1,13 +1,13 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -23,11 +23,11 @@ public class WardingModuleApplicationRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer pContainer, Level pLevel) {
+    public boolean matches(CraftingInput pContainer, Level pLevel) {
         ItemStack moduleStack = ItemStack.EMPTY;
         ItemStack armorStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < pContainer.getContainerSize(); index++) {
+        for (int index = 0; index < pContainer.size(); index++) {
             ItemStack stack = pContainer.getItem(index);
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof WardingModuleItem) {
@@ -50,11 +50,11 @@ public class WardingModuleApplicationRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(CraftingInput pContainer, HolderLookup.Provider pRegistries) {
         ItemStack moduleStack = ItemStack.EMPTY;
         ItemStack armorStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < pContainer.getContainerSize(); index++) {
+        for (int index = 0; index < pContainer.size(); index++) {
             ItemStack stack = pContainer.getItem(index);
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof WardingModuleItem) {
@@ -68,7 +68,7 @@ public class WardingModuleApplicationRecipe extends CustomRecipe {
         if (armorStack.isEmpty()) {
             return armorStack;
         } else if (moduleStack.getItem() instanceof WardingModuleItem module && module.hasWard()) {
-            armorStack.addTagElement(WardingModuleItem.TAG_NAME, IntTag.valueOf(module.getWardLevel()));
+            armorStack.set(DataComponentsPM.WARD_LEVEL.get(), module.getWardLevel());
             return armorStack;
         } else {
             return ItemStack.EMPTY;

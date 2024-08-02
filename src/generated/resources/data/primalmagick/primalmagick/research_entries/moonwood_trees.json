@@ -4,7 +4,9 @@
     "rootKey": "primalmagick:scans"
   },
   "finales": [],
-  "hidden": true,
+  "flags": {
+    "hidden": true
+  },
   "icon": {
     "isItem": true,
     "location": "primalmagick:moonwood_sapling"

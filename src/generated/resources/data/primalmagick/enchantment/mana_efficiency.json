@@ -1,0 +1,21 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.primalmagick.mana_efficiency"
+  },
+  "max_cost": {
+    "base": 51,
+    "per_level_above_first": 10
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 10
+  },
+  "primary_items": "#primalmagick:enchantable/wand",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#primalmagick:enchantable/wand",
+  "weight": 10
+}

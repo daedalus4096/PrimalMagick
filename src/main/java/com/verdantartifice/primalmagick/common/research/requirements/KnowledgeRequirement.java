@@ -2,18 +2,18 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.google.common.base.Preconditions;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 
@@ -23,10 +23,17 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class KnowledgeRequirement extends AbstractRequirement<KnowledgeRequirement> {
-    public static final Codec<KnowledgeRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<KnowledgeRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             KnowledgeType.CODEC.fieldOf("knowledgeType").forGetter(req -> req.knowledgeType),
             ExtraCodecs.POSITIVE_INT.fieldOf("amount").forGetter(req -> req.amount)
         ).apply(instance, KnowledgeRequirement::new));
+    
+    public static final StreamCodec<ByteBuf, KnowledgeRequirement> STREAM_CODEC = StreamCodec.composite(
+            KnowledgeType.STREAM_CODEC,
+            KnowledgeRequirement::getKnowledgeType,
+            ByteBufCodecs.VAR_INT,
+            KnowledgeRequirement::getAmount,
+            KnowledgeRequirement::new);
     
     protected final KnowledgeType knowledgeType;
     protected final int amount;
@@ -88,16 +95,5 @@ public class KnowledgeRequirement extends AbstractRequirement<KnowledgeRequireme
     @Override
     protected RequirementType<KnowledgeRequirement> getType() {
         return RequirementsPM.KNOWLEDGE.get();
-    }
-
-    @Nonnull
-    static KnowledgeRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        return new KnowledgeRequirement(buf.readEnum(KnowledgeType.class), buf.readVarInt());
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeEnum(this.knowledgeType);
-        buf.writeVarInt(this.amount);
     }
 }

@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock}
  */
 public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucibleTileEntity> {
-    protected static final ResourceLocation WATER_TEXTURE = new ResourceLocation("block/water_still");
+    protected static final ResourceLocation WATER_TEXTURE = ResourceLocation.withDefaultNamespace("block/water_still");
     protected static final Color COLOR = new Color(Sources.BLOOD.getColor()).brighter().brighter();
     protected static final float R = COLOR.getRed() / 255.0F;
     protected static final float G = COLOR.getGreen() / 255.0F;
@@ -52,10 +52,10 @@ public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucible
         TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(WATER_TEXTURE);
         VertexConsumer builder = bufferIn.getBuffer(RenderType.solid());
         Matrix4f matrix = matrixStackIn.last().pose();
-        builder.vertex(matrix, 0.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU0(), sprite.getV1()).uv2(0, 240).normal(1, 0, 0).endVertex();
-        builder.vertex(matrix, 1.0F, 1.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU1(), sprite.getV1()).uv2(0, 240).normal(1, 0, 0).endVertex();
-        builder.vertex(matrix, 1.0F, 0.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU1(), sprite.getV0()).uv2(0, 240).normal(1, 0, 0).endVertex();
-        builder.vertex(matrix, 0.0F, 0.0F, 0.0F).color(R, G, B, 1.0F).uv(sprite.getU0(), sprite.getV0()).uv2(0, 240).normal(1, 0, 0).endVertex();
+        builder.addVertex(matrix, 0.0F, 1.0F, 0.0F).setColor(R, G, B, 1.0F).setUv(sprite.getU0(), sprite.getV1()).setUv2(0, 240).setNormal(1, 0, 0);
+        builder.addVertex(matrix, 1.0F, 1.0F, 0.0F).setColor(R, G, B, 1.0F).setUv(sprite.getU1(), sprite.getV1()).setUv2(0, 240).setNormal(1, 0, 0);
+        builder.addVertex(matrix, 1.0F, 0.0F, 0.0F).setColor(R, G, B, 1.0F).setUv(sprite.getU1(), sprite.getV0()).setUv2(0, 240).setNormal(1, 0, 0);
+        builder.addVertex(matrix, 0.0F, 0.0F, 0.0F).setColor(R, G, B, 1.0F).setUv(sprite.getU0(), sprite.getV0()).setUv2(0, 240).setNormal(1, 0, 0);
         
         matrixStackIn.popPose();
         

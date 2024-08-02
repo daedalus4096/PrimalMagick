@@ -4,10 +4,10 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet that informs the server of updated settings to the player's arcane recipe book.
@@ -15,15 +15,12 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class ChangeArcaneRecipeBookSettingsPacket implements IMessageToServer {
-    protected ArcaneRecipeBookType type;
-    protected boolean open;
-    protected boolean filtering;
-    
-    public ChangeArcaneRecipeBookSettingsPacket() {
-        this.type = null;
-        this.open = false;
-        this.filtering = false;
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, ChangeArcaneRecipeBookSettingsPacket> STREAM_CODEC = StreamCodec.ofMember(
+            ChangeArcaneRecipeBookSettingsPacket::encode, ChangeArcaneRecipeBookSettingsPacket::decode);
+
+    protected final ArcaneRecipeBookType type;
+    protected final boolean open;
+    protected final boolean filtering;
     
     public ChangeArcaneRecipeBookSettingsPacket(ArcaneRecipeBookType type, boolean open, boolean filtering) {
         this.type = type;
@@ -31,22 +28,14 @@ public class ChangeArcaneRecipeBookSettingsPacket implements IMessageToServer {
         this.filtering = filtering;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(ChangeArcaneRecipeBookSettingsPacket message, FriendlyByteBuf buf) {
+    public static void encode(ChangeArcaneRecipeBookSettingsPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeEnum(message.type);
         buf.writeBoolean(message.open);
         buf.writeBoolean(message.filtering);
     }
     
-    public static ChangeArcaneRecipeBookSettingsPacket decode(FriendlyByteBuf buf) {
-        ChangeArcaneRecipeBookSettingsPacket message = new ChangeArcaneRecipeBookSettingsPacket();
-        message.type = buf.readEnum(ArcaneRecipeBookType.class);
-        message.open = buf.readBoolean();
-        message.filtering = buf.readBoolean();
-        return message;
+    public static ChangeArcaneRecipeBookSettingsPacket decode(RegistryFriendlyByteBuf buf) {
+        return new ChangeArcaneRecipeBookSettingsPacket(buf.readEnum(ArcaneRecipeBookType.class), buf.readBoolean(), buf.readBoolean());
     }
     
     public static void onMessage(ChangeArcaneRecipeBookSettingsPacket message, CustomPayloadEvent.Context ctx) {

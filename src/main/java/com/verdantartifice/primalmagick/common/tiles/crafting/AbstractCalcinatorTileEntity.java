@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -175,33 +176,20 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         return retVal;
     }
 
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
-        
-        // Slot 1 was the fuel item stack
-        this.setItem(FUEL_INV_INDEX, 0, legacyItems.get(1));
-        
-        // Slots 2-10 were the output item stacks
-        for (int outputIndex = 0; outputIndex < OUTPUT_CAPACITY; outputIndex++) {
-            this.setItem(OUTPUT_INV_INDEX, outputIndex, legacyItems.get(outputIndex + 2));
-        }
-    }
-
     protected boolean isBurning() {
         return this.burnTime > 0;
     }
     
+    @SuppressWarnings("deprecation")
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         
         this.burnTime = compound.getInt("BurnTime");
         this.burnTimeTotal = compound.getInt("BurnTimeTotal");
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
-        this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
+        this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
@@ -212,14 +200,15 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         }
     }
     
+    @SuppressWarnings("deprecation")
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("BurnTime", this.burnTime);
         compound.putInt("BurnTimeTotal", this.burnTimeTotal);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
-        compound.put("ResearchCache", this.researchCache.serializeNBT());
+        compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
         }
@@ -360,7 +349,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, slotStack);
         if (invIndex == INPUT_INV_INDEX && !flag) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;

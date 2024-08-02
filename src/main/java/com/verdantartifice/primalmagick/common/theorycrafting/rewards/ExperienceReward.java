@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 
-import javax.annotation.Nonnull;
-
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ExtraCodecs;
 
@@ -16,9 +16,14 @@ import net.minecraft.util.ExtraCodecs;
  * @author Daedalus4096
  */
 public class ExperienceReward extends AbstractReward<ExperienceReward> {
-    public static final Codec<ExperienceReward> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<ExperienceReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ExtraCodecs.POSITIVE_INT.fieldOf("points").forGetter(r -> r.points)
         ).apply(instance, ExperienceReward::new));
+    
+    public static final StreamCodec<ByteBuf, ExperienceReward> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.VAR_INT,
+            reward -> reward.points,
+            ExperienceReward::new);
     
     private final int points;
     
@@ -40,15 +45,5 @@ public class ExperienceReward extends AbstractReward<ExperienceReward> {
     public Component getDescription() {
         Component label = Component.translatable("label.primalmagick.experience.points");
         return Component.translatable("label.primalmagick.research_table.reward", this.points, label);
-    }
-
-    @Nonnull
-    static ExperienceReward fromNetworkInner(FriendlyByteBuf buf) {
-        return new ExperienceReward(buf.readVarInt());
-    }
-
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeVarInt(this.points);
     }
 }

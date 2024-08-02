@@ -2,13 +2,13 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -26,11 +26,11 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer pContainer, Level pLevel) {
+    public boolean matches(CraftingInput pContainer, Level pLevel) {
         ItemStack penStack = ItemStack.EMPTY;
         ItemStack bookStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < pContainer.getContainerSize(); index++) {
+        for (int index = 0; index < pContainer.size(); index++) {
             ItemStack stack = pContainer.getItem(index);
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof IWritingImplement) {
@@ -53,11 +53,11 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(CraftingInput pContainer, HolderLookup.Provider pRegistries) {
         ItemStack penStack = ItemStack.EMPTY;
         ItemStack bookStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < pContainer.getContainerSize(); index++) {
+        for (int index = 0; index < pContainer.size(); index++) {
             ItemStack stack = pContainer.getItem(index);
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof IWritingImplement) {
@@ -81,8 +81,8 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer pContainer) {
-        NonNullList<ItemStack> retVal = NonNullList.withSize(pContainer.getContainerSize(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput pContainer) {
+        NonNullList<ItemStack> retVal = NonNullList.withSize(pContainer.size(), ItemStack.EMPTY);
         
         for (int index = 0; index < retVal.size(); index++) {
             ItemStack inputStack = pContainer.getItem(index);
@@ -90,8 +90,13 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
                 retVal.set(index, inputStack.getCraftingRemainingItem());
             } else if (inputStack.getItem() instanceof IWritingImplement pen) {
                 ItemStack leftoverStack = inputStack.copyWithCount(1);
-                if (pen.isDamagedOnUse() && leftoverStack.hurt(1, RANDOM, null)) {
-                    leftoverStack = ItemStack.EMPTY;
+                if (pen.isDamagedOnUse()) {
+                    int newDamage = leftoverStack.getDamageValue() + 1;
+                    if (newDamage >= leftoverStack.getMaxDamage()) {
+                        leftoverStack = ItemStack.EMPTY;
+                    } else {
+                        leftoverStack.setDamageValue(newDamage);
+                    }
                 }
                 retVal.set(index, leftoverStack);
             }

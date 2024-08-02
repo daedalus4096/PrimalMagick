@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -27,17 +28,18 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -51,6 +53,7 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -61,7 +64,6 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Definition of an infernal furnace tile entity.  Performs the smelting for the corresponding block.
@@ -84,7 +86,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     protected int processTimeTotal;
     protected int litGraceTicks;
     protected ManaStorage manaStorage;
-    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
 
@@ -141,28 +143,28 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.superchargeTime = compound.getInt("SuperchargeTime");
         this.superchargeTimeTotal = compound.getInt("SuperchargeTimeTotal");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
         
         CompoundTag recipesUsedTag = compound.getCompound("RecipesUsed");
         for (String key : recipesUsedTag.getAllKeys()) {
-            this.recipesUsed.put(new ResourceLocation(key), recipesUsedTag.getInt(key));
+            this.recipesUsed.put(ResourceLocation.parse(key), recipesUsedTag.getInt(key));
         }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.putInt("SuperchargeTime", this.superchargeTime);
         compound.putInt("SuperchargeTimeTotal", this.superchargeTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
         
         CompoundTag recipesUsedTag = new CompoundTag();
         this.recipesUsed.forEach((key, value) -> {
@@ -195,8 +197,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
     
     private static Optional<RecipeHolder<SmeltingRecipe>> getActiveRecipe(Level level, InfernalFurnaceTileEntity entity) {
-        SimpleContainer testInv = new SimpleContainer(entity.getItem(INPUT_INV_INDEX, 0));
-        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, testInv, level);
+        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), level);
     }
     
     @Override
@@ -217,7 +218,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.INFERNAL) - entity.manaStorage.getManaStored(Sources.INFERNAL);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Sources.INFERNAL, centimanaToTransfer)) {
+                if (wand.consumeMana(wandStack, null, Sources.INFERNAL, centimanaToTransfer, level.registryAccess())) {
                     entity.manaStorage.receiveMana(Sources.INFERNAL, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
@@ -288,7 +289,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     private static boolean canBurn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipeHolder, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
         if (!entity.getItem(INPUT_INV_INDEX, 0).isEmpty() && recipeHolder != null) {
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<Container>)recipeHolder.value()).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
+            ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), registryAccess);
             if (recipeOutput.isEmpty()) {
                 return false;
             } else {
@@ -312,7 +313,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         if (recipeHolder != null && canBurn(registryAccess, recipeHolder, entity, maxFurnaceStackSize)) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<Container>)recipeHolder.value()).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
+            ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), registryAccess);
             ItemStack existingOutput = entity.getItem(OUTPUT_INV_INDEX, 0);
             if (existingOutput.isEmpty()) {
                 entity.setItem(OUTPUT_INV_INDEX, 0, recipeOutput.copy());
@@ -428,7 +429,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
 
     @Override
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(this.getItem(invIndex, slotIndex), stack);
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(this.getItem(invIndex, slotIndex), stack);
         super.setItem(invIndex, slotIndex, stack);
         if (invIndex == INPUT_INV_INDEX && !flag && this.hasLevel()) {
             this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
@@ -525,17 +526,19 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the output item stack
-        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(0));
+    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+        super.applyImplicitComponents(pComponentInput);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+    }
 
-        // Slot 1 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(1));
+    @Override
+    protected void collectImplicitComponents(Builder pComponents) {
+        super.collectImplicitComponents(pComponents);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+    }
 
-        // Slot 2 was the supercharge fuel item stack
-        this.setItem(FUEL_INV_INDEX, 0, legacyItems.get(2));
-
-        // Slot 3 was the wand item stack
-        this.setItem(FUEL_INV_INDEX, 1, legacyItems.get(3));
+    @Override
+    public void removeComponentsFromTag(CompoundTag pTag) {
+        pTag.remove("ManaStorage");
     }
 }

@@ -2,7 +2,11 @@ package com.verdantartifice.primalmagick.common.creative;
 
 import java.util.function.Supplier;
 
+import com.verdantartifice.primalmagick.common.items.IEnchantedByDefault;
+
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
 /**
@@ -19,6 +23,8 @@ public class DefaultInstanceTabRegistration implements ICreativeTabRegistration 
 
     @Override
     public void register(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output) {
-        output.accept(this.itemSupplier.get().asItem().getDefaultInstance());
+        Item item = this.itemSupplier.get().asItem();
+        ItemStack stack = item instanceof IEnchantedByDefault enchItem ? enchItem.getDefaultEnchantedInstance(params.holders()) : item.getDefaultInstance();
+        output.accept(stack);
     }
 }

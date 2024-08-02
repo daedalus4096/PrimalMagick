@@ -15,7 +15,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:wand_assembly_table"
       },
       "weight": 3.0
@@ -34,7 +34,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:wand_glamour_table"
       },
       "weight": 3.0
@@ -46,7 +46,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 2,
+        "count": 2,
         "id": "primalmagick:heartwood"
       },
       "weight": 1.0
@@ -74,7 +74,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:purpur_block"
       },
       "weight": 1.0
@@ -123,7 +123,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_dust_blood"
       },
       "weight": 1.0
@@ -142,7 +142,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_dust_infernal"
       },
       "weight": 1.0
@@ -161,7 +161,7 @@
         }
       },
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "primalmagick:essence_dust_void"
       },
       "weight": 1.0

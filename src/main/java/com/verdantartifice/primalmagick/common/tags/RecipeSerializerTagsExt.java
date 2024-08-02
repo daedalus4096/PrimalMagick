@@ -15,6 +15,6 @@ public class RecipeSerializerTagsExt {
     public static final TagKey<RecipeSerializer<?>> CREATE_AUTOMATION_IGNORE = create("create", "automation_ignore");
     
     private static TagKey<RecipeSerializer<?>> create(String modId, String name) {
-        return TagKey.create(Registries.RECIPE_SERIALIZER, new ResourceLocation(modId, name));
+        return TagKey.create(Registries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(modId, name));
     }
 }

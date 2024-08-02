@@ -16,7 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -137,35 +137,32 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        ItemStack stack = player.getItemInHand(handIn);
-        if (player != null && stack.getItem() instanceof EssenceItem && !this.isPropActivated(state, worldIn, pos)) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (!worldIn.isClientSide && tile instanceof EntropySinkTileEntity) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player != null && stack.getItem() instanceof EssenceItem essenceItem && !this.isPropActivated(state, worldIn, pos)) {
+            if (!worldIn.isClientSide && worldIn.getBlockEntity(pos) instanceof EntropySinkTileEntity sink) {
                 // Start the sink glowing
                 worldIn.setBlock(pos, state.setValue(EntropySinkBlock.LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
-                ((EntropySinkTileEntity)tile).startGlowing();
+                sink.startGlowing();
                 
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(state, worldIn, pos)) {
-                    this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus((EssenceItem)stack.getItem()));
+                    this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus(essenceItem));
                 }
                 
                 // Consume the used essence
-                if (!player.getAbilities().instabuild) {
+                if (!player.hasInfiniteMaterials()) {
                     stack.shrink(1);
                     if (stack.getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);
                     }
                 }
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         } else {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced

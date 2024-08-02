@@ -27,7 +27,7 @@ public class PageImage implements IPageElement {
         }
         try {
             PageImage image = new PageImage();
-            image.location = new ResourceLocation(tokens[0], tokens[1]);
+            image.location = ResourceLocation.fromNamespaceAndPath(tokens[0], tokens[1]);
             image.x = Integer.parseInt(tokens[2]);
             image.y = Integer.parseInt(tokens[3]);
             image.width = Integer.parseInt(tokens[4]);

@@ -11,7 +11,6 @@ import net.minecraft.advancements.critereon.DamagePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.storage.loot.LootContext;
 
@@ -36,8 +35,8 @@ public class EntityHurtPlayerTriggerExt extends SimpleCriterionTrigger<EntityHur
     
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<DamagePredicate> damage) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<EntityHurtPlayerTriggerExt.TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(EntityHurtPlayerTriggerExt.TriggerInstance::player),
-                ExtraCodecs.strictOptionalField(DamagePredicate.CODEC, "damage").forGetter(EntityHurtPlayerTriggerExt.TriggerInstance::damage)
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(EntityHurtPlayerTriggerExt.TriggerInstance::player),
+                DamagePredicate.CODEC.optionalFieldOf("damage").forGetter(EntityHurtPlayerTriggerExt.TriggerInstance::damage)
             ).apply(instance, EntityHurtPlayerTriggerExt.TriggerInstance::new));
 
         public static Criterion<EntityHurtPlayerTriggerExt.TriggerInstance> playerHurtEntity(Optional<EntityPredicate> pPlayer, Optional<DamagePredicate> pDamage) {

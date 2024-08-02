@@ -39,12 +39,11 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
     }
 
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
-        renderer.vertex(stack.last().pose(), x, y, z)
-                .color(r, g, b, 1.0F)
-                .uv(u, v)
-                .uv2(240, 240)
-                .normal(1, 0, 0)
-                .endVertex();
+        renderer.addVertex(stack.last().pose(), x, y, z)
+                .setColor(r, g, b, 1.0F)
+                .setUv(u, v)
+                .setUv2(240, 240)
+                .setNormal(1, 0, 0);
     }
     
     @Override
@@ -65,7 +64,7 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         matrixStack.mulPose(Axis.YP.rotationDegrees(90F));  // Model rotation correction
         matrixStack.mulPose(Axis.YP.rotationDegrees(tileEntityIn.getCurrentRotation(partialTicks)));    // Spin the ring according to tile control
         VertexConsumer ringBuilder = RING_MATERIAL.buffer(buffer, RenderType::entitySolid);
-        this.ringModel.renderToBuffer(matrixStack, ringBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.ringModel.renderToBuffer(matrixStack, ringBuilder, combinedLight, combinedOverlay, -1);
         matrixStack.popPose();
 
         // Color the tile entity core according to the block's source

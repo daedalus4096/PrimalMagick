@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -12,11 +13,12 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -25,7 +27,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * 
  * @author Daedalus4096
  */
-public class RitualRecipe extends AbstractStackCraftingRecipe<Container> implements IShapelessRecipePM<Container>, IRitualRecipe {
+public class RitualRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IShapelessRecipePM<CraftingInput>, IRitualRecipe {
     public static final int MIN_INSTABILITY = 0;
     public static final int MAX_INSTABILITY = 10;
     
@@ -122,9 +124,9 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
 
     public static class Serializer implements RecipeSerializer<RitualRecipe> {
         @Override
-        public Codec<RitualRecipe> codec() {
-            return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
+        public MapCodec<RitualRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(instance -> instance.group(
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(rr -> rr.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
@@ -148,59 +150,66 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
                     ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
-                    ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
+                    ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
                 ).apply(instance, RitualRecipe::new)
             );
         }
         
         @Override
-        public RitualRecipe fromNetwork(FriendlyByteBuf buffer) {
+        public StreamCodec<RegistryFriendlyByteBuf, RitualRecipe> streamCodec() {
+            return StreamCodec.of(RitualRecipe.Serializer::toNetwork, RitualRecipe.Serializer::fromNetwork);
+        }
+
+        private static RitualRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
-            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
+            Optional<AbstractRequirement<?>> requirement = buffer.readBoolean() ? Optional.ofNullable(AbstractRequirement.dispatchStreamCodec().decode(buffer)) : Optional.empty();
             int instability = buffer.readVarInt();
             
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             
             int ingredientCount = buffer.readVarInt();
             NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
-            for (int index = 0; index < ingredients.size(); index++) {
-                ingredients.set(index, Ingredient.fromNetwork(buffer));
-            }
+            ingredients.replaceAll(ing -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
             
             int propCount = buffer.readVarInt();
             NonNullList<BlockIngredient> props = NonNullList.withSize(propCount, BlockIngredient.EMPTY);
-            for (int index = 0; index < props.size(); index++) {
-                props.set(index, BlockIngredient.read(buffer));
-            }
+            props.replaceAll(prop -> BlockIngredient.CONTENTS_STREAM_CODEC.decode(buffer));
             
             Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
-            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey::fromNetwork);
+            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey.STREAM_CODEC);
             
-            ItemStack result = buffer.readItem();
+            ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
             return new RitualRecipe(group, result, ingredients, props, requirement, manaCosts, instability, baseExpOverride, bonusExpOverride, expGroup, discOverride);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, RitualRecipe recipe) {
+        private static void toNetwork(RegistryFriendlyByteBuf buffer, RitualRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
+            recipe.requirement.ifPresentOrElse(req -> {
+                buffer.writeBoolean(true);
+                AbstractRequirement.dispatchStreamCodec().encode(buffer, req);
+            }, () -> {
+                buffer.writeBoolean(false);
+            });
             buffer.writeVarInt(recipe.instability);
             SourceList.toNetwork(buffer, recipe.manaCosts);
+            
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems) {
-                ingredient.toNetwork(buffer);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
             }
+            
             buffer.writeVarInt(recipe.recipeProps.size());
             for (BlockIngredient prop : recipe.recipeProps) {
-                prop.write(buffer);
+                BlockIngredient.CONTENTS_STREAM_CODEC.encode(buffer, prop);
             }
+            
             buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
             buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
-            buffer.writeOptional(recipe.disciplineOverride, (b, d) -> d.toNetwork(b));
-            buffer.writeItem(recipe.output);
+            buffer.writeOptional(recipe.disciplineOverride, ResearchDisciplineKey.STREAM_CODEC);
+            ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
         }
     }
 }

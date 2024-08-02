@@ -8,7 +8,9 @@
       "rootKey": "primalmagick:basics"
     }
   ],
-  "hidden": true,
+  "flags": {
+    "hidden": true
+  },
   "icon": {
     "isItem": true,
     "location": "primalmagick:grimoire"

@@ -1,0 +1,39 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.primalmagick.enderlock"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "primalmagick:apply_constant_mob_effect",
+          "amplifier": 0.0,
+          "duration": {
+            "type": "minecraft:linear",
+            "base": 40.0,
+            "per_level_above_first": 40.0
+          },
+          "toApply": "primalmagick:enderlock"
+        },
+        "enchanted": "attacker"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 10
+  },
+  "primary_items": "#minecraft:enchantable/sword",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#primalmagick:enchantable/melee",
+  "weight": 2
+}

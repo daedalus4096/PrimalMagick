@@ -11,9 +11,11 @@ import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -31,7 +33,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.IntTag;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -78,10 +80,10 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the given wand stack has infinite mana, return that
             return -1;
         } else {
-            // Otherwise get the current centimana for that source from the stack's NBT tag
+            // Otherwise get the current centimana for that source from the stack's data
             int retVal = 0;
-            if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getId().toString())) {
-                retVal = stack.getTag().getInt(source.getId().toString());
+            if (stack != null && source != null) {
+                retVal = stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY).getAmount(source);
             }
             return retVal;
         }
@@ -93,7 +95,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the given wand stack has infinte mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
-            // Otherwise show the current real mana for that source from the stack's NBT tag
+            // Otherwise show the current real mana for that source from the stack's data
             return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
@@ -101,16 +103,15 @@ public abstract class AbstractWandItem extends Item implements IWand {
     @Override
     public SourceList getAllMana(ItemStack stack) {
         SourceList retVal = SourceList.EMPTY;
+        SourceList stored = stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY);
         boolean isInfinite = this.getMaxMana(stack) == -1;
         for (Source source : Sources.getAllSorted()) {
             if (isInfinite) {
                 // If the stack has infinite mana, set that into the returned source list (not merge; it would keep the default zero)
                 retVal = retVal.set(source, -1);
-            } else if (stack.hasTag() && stack.getTag().contains(source.getId().toString())) {
-                // Otherwise, merge the current centimana into the returned source list
-                retVal = retVal.merge(source, stack.getTag().getInt(source.getId().toString()));
             } else {
-                retVal = retVal.merge(source, 0);
+                // Otherwise, merge the current centimana into the returned source list
+                retVal = retVal.merge(source, stored.getAmount(source));
             }
         }
         return retVal;
@@ -122,14 +123,14 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the given wand stack has infinte mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
-            // Otherwise show the max centimana for that source from the stack's NBT tag
+            // Otherwise show the max centimana for that source from the stack's data
             return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
     
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
-        // Save the given amount of centimana for the given source into the stack's NBT tag
-        stack.addTagElement(source.getId().toString(), IntTag.valueOf(amount));
+        // Save the given amount of centimana for the given source into the stack's data
+        stack.update(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY, mana -> mana.set(source, amount));
     }
 
     @Override
@@ -153,15 +154,15 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean consumeMana(ItemStack stack, Player player, Source source, int amount) {
+    public boolean consumeMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
         if (stack == null || source == null) {
             return false;
         }
-        if (this.containsMana(stack, player, source, amount)) {
+        if (this.containsMana(stack, player, source, amount, registries)) {
             // If the wand stack contains enough mana, process the consumption and return success
             if (this.getMaxMana(stack) != -1) {
                 // Only actually consume something if the wand doesn't have infinite mana
-                this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, (int)(this.getTotalCostModifier(stack, player, source) * amount))));
+                this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, (int)(this.getTotalCostModifier(stack, player, source, registries) * amount))));
             }
             
             if (player != null) {
@@ -183,11 +184,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean consumeMana(ItemStack stack, Player player, SourceList sources) {
+    public boolean consumeMana(ItemStack stack, Player player, SourceList sources, HolderLookup.Provider registries) {
         if (stack == null || sources == null) {
             return false;
         }
-        if (this.containsMana(stack, player, sources)) {
+        if (this.containsMana(stack, player, sources, registries)) {
             // If the wand stack contains enough mana, process the consumption and return success
             boolean isInfinite = (this.getMaxMana(stack) == -1);
             SourceList.Builder deltaBuilder = SourceList.builder();
@@ -196,7 +197,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 int realAmount = amount / 100;
                 if (!isInfinite) {
                     // Only actually consume something if the wand doesn't have infinite mana
-                    this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * amount));
+                    this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source, registries) * amount));
                 }
                 
                 if (player != null) {
@@ -221,13 +222,13 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean consumeRealMana(ItemStack stack, Player player, Source source, int amount) {
-        return this.consumeMana(stack, player, source, amount * 100);
+    public boolean consumeRealMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
+        return this.consumeMana(stack, player, source, amount * 100, registries);
     }
     
     @Override
-    public boolean consumeRealMana(ItemStack stack, Player player, SourceList sources) {
-        return this.consumeMana(stack, player, sources.multiply(100));
+    public boolean consumeRealMana(ItemStack stack, Player player, SourceList sources, HolderLookup.Provider registries) {
+        return this.consumeMana(stack, player, sources.multiply(100), registries);
     }
     
     @Override
@@ -250,15 +251,15 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean containsMana(ItemStack stack, Player player, Source source, int amount) {
+    public boolean containsMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
         // A wand stack with infinite mana always contains the requested amount of mana
-        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (int)Math.floor(this.getTotalCostModifier(stack, player, source) * amount);
+        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (int)Math.floor(this.getTotalCostModifier(stack, player, source, registries) * amount);
     }
 
     @Override
-    public boolean containsMana(ItemStack stack, Player player, SourceList sources) {
+    public boolean containsMana(ItemStack stack, Player player, SourceList sources, HolderLookup.Provider registries) {
         for (Source source : sources.getSources()) {
-            if (!this.containsMana(stack, player, source, sources.getAmount(source))) {
+            if (!this.containsMana(stack, player, source, sources.getAmount(source), registries)) {
                 return false;
             }
         }
@@ -266,13 +267,13 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public boolean containsRealMana(ItemStack stack, Player player, Source source, int amount) {
-        return this.containsMana(stack, player, source, amount * 100);
+    public boolean containsRealMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
+        return this.containsMana(stack, player, source, amount * 100, registries);
     }
     
     @Override
-    public boolean containsRealMana(ItemStack stack, Player player, SourceList sources) {
-        return this.containsMana(stack, player, sources.multiply(100));
+    public boolean containsRealMana(ItemStack stack, Player player, SourceList sources, HolderLookup.Provider registries) {
+        return this.containsMana(stack, player, sources.multiply(100), registries);
     }
     
     @Override
@@ -282,12 +283,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
 
     @Override
-    public double getTotalCostModifier(ItemStack stack, @Nullable Player player, Source source) {
+    public double getTotalCostModifier(ItemStack stack, @Nullable Player player, Source source, HolderLookup.Provider registries) {
         // Start with the base modifier, as determined by wand cap
         double modifier = this.getBaseCostModifier(stack);
         
         // Subtract discounts from wand enchantments
-        int efficiencyLevel = stack.getEnchantmentLevel(EnchantmentsPM.MANA_EFFICIENCY.get());
+        int efficiencyLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.MANA_EFFICIENCY, registries);
         if (efficiencyLevel > 0) {
             modifier -= (0.02D * efficiencyLevel);
         }
@@ -310,15 +311,15 @@ public abstract class AbstractWandItem extends Item implements IWand {
             }
             
             // Substract discounts from temporary conditions
-            if (player.hasEffect(EffectsPM.MANAFRUIT.get())) {
+            if (player.hasEffect(EffectsPM.MANAFRUIT.getHolder().get())) {
                 // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
-                modifier -= (0.01D * ((2 * player.getEffect(EffectsPM.MANAFRUIT.get()).getAmplifier()) + 1));
+                modifier -= (0.01D * ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder().get()).getAmplifier()) + 1));
             }
             
             // Add penalties from temporary conditions
-            if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.get())) {
+            if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.getHolder().get())) {
                 // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
-                modifier += (0.05D * (player.getEffect(EffectsPM.MANA_IMPEDANCE.get()).getAmplifier() + 1));
+                modifier += (0.05D * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder().get()).getAmplifier() + 1));
             }
         }
         
@@ -326,8 +327,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
         
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         boolean showDetails = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.hasShiftDown() : false;
@@ -337,7 +338,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
                     Component nameComp = source.getNameText();
-                    int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source));
+                    int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source, context.registries()));
                     Component line = Component.translatable("tooltip.primalmagick.source.mana", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);
                 }
@@ -353,10 +354,10 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 for (int index = 0; index < spells.size(); index++) {
                     SpellPackage spell = spells.get(index);
                     if (index == activeIndex) {
-                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getName()));
-                        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, stack, true));
+                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getDisplayName()));
+                        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, stack, true, context.registries()));
                     } else {
-                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getName()));
+                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getDisplayName()));
                     }
                 }
             }
@@ -382,7 +383,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             SpellPackage activeSpell = this.getActiveSpell(stack);
             Component activeSpellName = (activeSpell == null) ?
                     Component.translatable("tooltip.primalmagick.none") :
-                    activeSpell.getName();
+                    activeSpell.getDisplayName();
             tooltip.add(Component.translatable("tooltip.primalmagick.spells.short_wand_header", activeSpellName));
             
             // Add more info tooltip
@@ -396,35 +397,25 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public int getUseDuration(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return 72000;
     }
     
     @Override
     public BlockPos getPositionInUse(ItemStack wandStack) {
-        // Look up the world coordinates of the wand-interactable tile entity currently in use from NBT, then query the world for it
-        if (wandStack.hasTag() && wandStack.getTag().contains("UsingX") && wandStack.getTag().contains("UsingY") && wandStack.getTag().contains("UsingZ")) {
-            return new BlockPos(wandStack.getTag().getInt("UsingX"), wandStack.getTag().getInt("UsingY"), wandStack.getTag().getInt("UsingZ"));
-        } else {
-            return null;
-        }
+        // Look up the world coordinates of the wand-interactable tile entity currently in use from data components
+        return wandStack.get(DataComponentsPM.WAND_USE_POSITION.get());
     }
     
     @Override
     public void setPositionInUse(ItemStack wandStack, BlockPos pos) {
         // Save the position of the wand-interactable tile entity so it can be looked up later
-        wandStack.addTagElement("UsingX", IntTag.valueOf(pos.getX()));
-        wandStack.addTagElement("UsingY", IntTag.valueOf(pos.getY()));
-        wandStack.addTagElement("UsingZ", IntTag.valueOf(pos.getZ()));
+        wandStack.set(DataComponentsPM.WAND_USE_POSITION.get(), pos.immutable());
     }
     
     @Override
     public void clearPositionInUse(ItemStack wandStack) {
-        if (wandStack.hasTag()) {
-            wandStack.getTag().remove("UsingX");
-            wandStack.getTag().remove("UsingY");
-            wandStack.getTag().remove("UsingZ");
-        }
+        wandStack.remove(DataComponentsPM.WAND_USE_POSITION.get());
     }
     
     protected static boolean isTargetWandInteractable(Level level, Player player, HitResult hit) {
@@ -454,7 +445,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 if (isTargetWandInteractable(worldIn, playerIn, hit)) {
                     // If the current mouseover target in range has special interaction with wands, then suppress the spell cast
                     return InteractionResultHolder.pass(stack);
-                } else if (this.consumeRealMana(stack, playerIn, activeSpell.getManaCost())) {
+                } else if (this.consumeRealMana(stack, playerIn, activeSpell.getManaCost(), worldIn.registryAccess())) {
                     // If the wand contains enough mana, consume it and cast the spell
                     activeSpell.cast(worldIn, playerIn, stack);
                     playerIn.swing(handIn);
@@ -525,7 +516,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                             // Trigger visual effects during channel
                             FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Sources.HALLOWED.getColor());
                         }
-                        if (this.getUseDuration(stack) - count >= WandTransforms.CHANNEL_DURATION) {
+                        if (this.getUseDuration(stack, living) - count >= WandTransforms.CHANNEL_DURATION) {
                             if (!level.isClientSide && player instanceof ServerPlayer) {
                                 // Only execute the transform on the server side
                                 transform.execute(level, player, wandPos);
@@ -546,7 +537,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         BlockPos wandPos = this.getPositionInUse(stack);
         if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !WAND_TRANSFORM_HINT_KEY.isKnownBy(player)) {
             for (IWandTransform transform : WandTransforms.getAll()) {
-                if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack) - timeLeft < WandTransforms.CHANNEL_DURATION) {
+                if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack, entityLiving) - timeLeft < WandTransforms.CHANNEL_DURATION) {
                     ResearchManager.completeResearch(player, WAND_TRANSFORM_HINT_KEY);
                     player.sendSystemMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN));
                     break;

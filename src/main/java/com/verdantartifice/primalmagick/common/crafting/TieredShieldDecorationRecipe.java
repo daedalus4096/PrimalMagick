@@ -2,15 +2,16 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredShieldItem;
 
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
 
 /**
  * Special recipe for decorating a magickal metal shield with a banner.
@@ -23,11 +24,11 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer inv, Level worldIn) {
+    public boolean matches(CraftingInput inv, Level worldIn) {
         ItemStack shieldStack = ItemStack.EMPTY;
         ItemStack bannerStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < inv.getContainerSize(); index++) {
+        for (int index = 0; index < inv.size(); index++) {
             ItemStack stack = inv.getItem(index);
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof BannerItem) {
@@ -36,7 +37,11 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
                     }
                     bannerStack = stack;
                 } else {
-                    if (!(stack.getItem() instanceof AbstractTieredShieldItem) || !((AbstractTieredShieldItem)stack.getItem()).canDecorate() || !shieldStack.isEmpty() || stack.getTagElement("BlockEntityTag") != null) {
+                    if (!(stack.getItem() instanceof AbstractTieredShieldItem shieldItem) || !shieldItem.canDecorate() || !shieldStack.isEmpty()) {
+                        return false;
+                    }
+                    BannerPatternLayers layers = stack.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
+                    if (!layers.layers().isEmpty()) {
                         return false;
                     }
                     shieldStack = stack;
@@ -48,16 +53,16 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
         ItemStack shieldStack = ItemStack.EMPTY;
         ItemStack bannerStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < inv.getContainerSize(); index++) {
+        for (int index = 0; index < inv.size(); index++) {
             ItemStack stack = inv.getItem(index);
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof BannerItem) {
                     bannerStack = stack;
-                } else if (stack.getItem() instanceof AbstractTieredShieldItem && ((AbstractTieredShieldItem)stack.getItem()).canDecorate()) {
+                } else if (stack.getItem() instanceof AbstractTieredShieldItem shieldItem && shieldItem.canDecorate()) {
                     shieldStack = stack.copy();
                 }
             }
@@ -66,10 +71,8 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
         if (shieldStack.isEmpty()) {
             return shieldStack;
         } else {
-            CompoundTag bannerNbt = bannerStack.getTagElement("BlockEntityTag");
-            CompoundTag newNbt = bannerNbt == null ? new CompoundTag() : bannerNbt.copy();
-            newNbt.putInt("Base", ((BannerItem)bannerStack.getItem()).getColor().getId());
-            shieldStack.addTagElement("BlockEntityTag", newNbt);
+            shieldStack.set(DataComponents.BANNER_PATTERNS, bannerStack.get(DataComponents.BANNER_PATTERNS));
+            shieldStack.set(DataComponents.BASE_COLOR, ((BannerItem)bannerStack.getItem()).getColor());
             return shieldStack;
         }
     }

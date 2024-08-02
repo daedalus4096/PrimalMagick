@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
@@ -24,9 +25,11 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.LongTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -57,7 +60,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     protected int chargeTimeTotal;
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
-    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     protected final Set<BlockPos> fontLocations = new HashSet<>();
 
@@ -265,7 +268,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
             if (outputStack.getItem() instanceof IWand wand) {
                 return wand.getMana(outputStack, source) < wand.getMaxMana(outputStack);
             } else {
-                return outputStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+                return outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
             }
         }
         return false;
@@ -279,33 +282,34 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
                 int leftoverRealMana = wand.addRealMana(outputStack, source, realManaToTransfer);
                 int transferedCentimana = 100 * (realManaToTransfer - leftoverRealMana);
                 this.manaStorage.extractMana(source, transferedCentimana, false);
-            } else {
-                outputStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(stackManaStorage -> {
+            } else if (outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+                outputStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, stackManaStorage -> {
                     int centimanaToTransfer = Math.min(this.getBatteryTransferCap(), this.manaStorage.getManaStored(source));
                     int transferedCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
                     this.manaStorage.extractMana(source, transferedCentimana, false);
+                    return stackManaStorage;
                 });
-                outputStack.getOrCreateTag().put("LastUpdated", LongTag.valueOf(System.currentTimeMillis()));   // FIXME Is there a better way of marking this stack as dirty?
+                outputStack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
             }
         }
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
         this.fontSiphonTime = compound.getInt("FontSiphonTime");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
         compound.putInt("FontSiphonTime", this.fontSiphonTime);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
     }
 
     @Override
@@ -374,7 +378,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, slotStack);
         if (invIndex == INPUT_INV_INDEX && !flag) {
             this.chargeTimeTotal = this.getChargeTimeTotal();
             this.chargeTime = 0;
@@ -420,7 +424,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         retVal.set(CHARGE_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(CHARGE_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
-                return (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+                return (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
             }
         });
 
@@ -428,11 +432,19 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
-        
-        // Slot 1 was the charge item stack
-        this.setItem(CHARGE_INV_INDEX, 0, legacyItems.get(1));
+    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+        super.applyImplicitComponents(pComponentInput);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+    }
+
+    @Override
+    protected void collectImplicitComponents(Builder pComponents) {
+        super.collectImplicitComponents(pComponents);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag pTag) {
+        pTag.remove("ManaStorage");
     }
 }

@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -17,6 +18,8 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
+@AutoRegisterCapability
 public interface ITileResearchCache extends INBTSerializable<CompoundTag> {
     /**
      * Remove all research from the cache.

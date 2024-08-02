@@ -13,17 +13,21 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Definition for a mana-tinged arrow.  Has minor secondary effects in addition to regular arrow damage.
@@ -35,28 +39,26 @@ public class ManaArrowEntity extends AbstractArrow {
     private static final ItemStack DEFAULT_ARROW_STACK = new ItemStack(Items.ARROW);
 
     public ManaArrowEntity(EntityType<? extends ManaArrowEntity> type, Level level) {
-        super(type, level, DEFAULT_ARROW_STACK);
+        super(type, level);
     }
     
-    public ManaArrowEntity(Level level, LivingEntity shooter, Source source, ItemStack pickupItem) {
-        super(EntityTypesPM.MANA_ARROW.get(), shooter, level, pickupItem);
+    public ManaArrowEntity(Level level, LivingEntity shooter, Source source, ItemStack pickupItem, ItemStack weapon) {
+        super(EntityTypesPM.MANA_ARROW.get(), shooter, level, pickupItem, weapon);
         this.setSource(source);
     }
     
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(SOURCE_TAG, "");
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(SOURCE_TAG, "");
     }
 
     public void setSource(Source source) {
         this.entityData.set(SOURCE_TAG, source.getId().toString());
-        if (source == Sources.EARTH) {
-            this.setKnockback(this.getKnockback() + 2);
-        } else if (source == Sources.SKY) {
+        if (source == Sources.SKY) {
             this.setNoGravity(true);
         } else if (source == Sources.INFERNAL) {
-            this.setSecondsOnFire(100);
+            this.igniteForSeconds(100);
         } else if (source == Sources.HALLOWED) {
             this.setBaseDamage(this.getBaseDamage() + 1);
         }
@@ -64,7 +66,7 @@ public class ManaArrowEntity extends AbstractArrow {
     
     @Nullable
     public Source getSource() {
-        return Sources.get(new ResourceLocation(this.entityData.get(SOURCE_TAG)));
+        return Sources.get(ResourceLocation.parse(this.entityData.get(SOURCE_TAG)));
     }
     
     @Override
@@ -115,18 +117,18 @@ public class ManaArrowEntity extends AbstractArrow {
             target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 50));
         } else if (source == Sources.SUN) {
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 50));
-            if (target.getMobType() == MobType.UNDEAD) {
-                target.setSecondsOnFire(3);
+            if (target.isInvertedHealAndHarm()) {
+                target.igniteForSeconds(3);
             }
         } else if (source == Sources.MOON) {
             target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 50));
         } else if (source == Sources.BLOOD) {
-            target.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 50));
+            target.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.getHolder().get(), 50));
         } else if (source == Sources.VOID) {
             target.addEffect(new MobEffectInstance(MobEffects.WITHER, 50));
         } else if (source == Sources.HALLOWED) {
-            if (target.getMobType() == MobType.UNDEAD) {
-                target.setSecondsOnFire(3);
+            if (target.isInvertedHealAndHarm()) {
+                target.igniteForSeconds(3);
             }
         }
     }
@@ -135,5 +137,27 @@ public class ManaArrowEntity extends AbstractArrow {
     protected float getWaterInertia() {
         Source source = this.getSource();
         return source == Sources.SEA || source == Sources.BLOOD ? 0.99F : super.getWaterInertia();
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return DEFAULT_ARROW_STACK;
+    }
+
+    @Override
+    protected void doKnockback(LivingEntity pEntity, DamageSource pDamageSource) {
+        float baseForce = this.getSource() == Sources.EARTH ? 2.0F : 0.0F;
+        double force = (double)(
+            this.getWeaponItem() != null && this.level() instanceof ServerLevel serverlevel
+                ? EnchantmentHelper.modifyKnockback(serverlevel, this.getWeaponItem(), pEntity, pDamageSource, baseForce)
+                : baseForce
+        );
+        if (force > 0.0) {
+            double inertia = Math.max(0.0, 1.0 - pEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+            Vec3 pushVec = this.getDeltaMovement().multiply(1.0, 0.0, 1.0).normalize().scale(force * 0.6 * inertia);
+            if (pushVec.lengthSqr() > 0.0) {
+                pEntity.push(pushVec.x, 0.1, pushVec.z);
+            }
+        }
     }
 }

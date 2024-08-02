@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.entities.projectiles;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
@@ -15,6 +16,8 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
@@ -27,7 +30,7 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.CampfireBlock;
@@ -63,8 +66,8 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
     }
 
     @Override
-    protected float getGravity() {
-        return 0.05F;
+    protected double getDefaultGravity() {
+        return 0.05D;
     }
 
     @Override
@@ -103,20 +106,23 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
     
     private void detonate(@Nullable Entity struckEntity) {
         Level level = this.level();
-        if (!level.isClientSide) {
-            ItemStack itemStack = this.getItem();
-            Potion potion = PotionUtils.getPotion(itemStack);
-            List<MobEffectInstance> effects = PotionUtils.getMobEffects(itemStack);
+        ItemStack itemStack = this.getItem();
+        if (!level.isClientSide && itemStack.has(DataComponents.POTION_CONTENTS)) {
+            PotionContents contents = itemStack.get(DataComponents.POTION_CONTENTS);
+            Optional<Holder<Potion>> potionHolderOpt = contents.potion();
+            potionHolderOpt.ifPresent(potionHolder -> {
+                List<MobEffectInstance> effects = potionHolder.value().getEffects();
 
-            // Do explosion audio visual effects
-            PacketHandler.sendToAllAround(new PotionExplosionPacket(this.position(), PotionUtils.getColor(itemStack), potion.hasInstantEffects()), level.dimension(), this.blockPosition(), 32.0D);
+                // Do explosion audio visual effects
+                PacketHandler.sendToAllAround(new PotionExplosionPacket(this.position(), PotionContents.getColor(potionHolder), potionHolder.value().hasInstantEffects()), level.dimension(), this.blockPosition(), 32.0D);
 
-            // Apply potion effects
-            if (potion == Potions.WATER && effects.isEmpty()) {
-                this.applyWater();
-            } else if (!effects.isEmpty()) {
-                this.applyPotionEffects(effects, struckEntity);
-            }
+                // Apply potion effects
+                if (contents.is(Potions.WATER) && effects.isEmpty()) {
+                    this.applyWater();
+                } else if (!effects.isEmpty()) {
+                    this.applyPotionEffects(effects, struckEntity);
+                }
+            });
 
             this.discard();
         }
@@ -148,9 +154,9 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
                 if (distanceSq < 16.0D) {
                     double multiplier = (entity == struckEntity) ? 1.0D : 1.0D - Math.sqrt(distanceSq) / 4.0D;
                     for (MobEffectInstance effectInstance : effects) {
-                        MobEffect effect = effectInstance.getEffect();
-                        if (effect.isInstantenous()) {
-                            effect.applyInstantenousEffect(this, this.getOwner(), entity, effectInstance.getAmplifier(), multiplier);
+                        Holder<MobEffect> effect = effectInstance.getEffect();
+                        if (effect.value().isInstantenous()) {
+                            effect.value().applyInstantenousEffect(this, this.getOwner(), entity, effectInstance.getAmplifier(), multiplier);
                         } else {
                             int scaledDuration = (int)(multiplier * (double)effectInstance.getDuration() + 0.5D);
                             if (scaledDuration > 20) {

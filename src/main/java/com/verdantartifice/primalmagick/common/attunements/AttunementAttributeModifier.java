@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagick.common.attunements;
 
-import java.util.UUID;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -21,19 +21,14 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 public class AttunementAttributeModifier {
     protected final Source source;
     protected final AttunementThreshold threshold;
-    protected final Attribute attribute;
+    protected final Holder<Attribute> attribute;
     protected final AttributeModifier modifier;
     
-    public AttunementAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Attribute attribute, @Nonnull String uuidStr, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
+    public AttunementAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Holder<Attribute> attribute, @Nonnull ResourceLocation id, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
         this.source = source;
         this.threshold = threshold;
         this.attribute = attribute;
-        this.modifier = new AttributeModifier(UUID.fromString(uuidStr), this.getModifierName(), modValue, modOperation);
-    }
-    
-    @Nonnull
-    public String getModifierName() {
-        return this.source.getId().toString() + Integer.toString(this.threshold.getValue());
+        this.modifier = new AttributeModifier(id, modValue, modOperation);
     }
     
     @Nonnull
@@ -46,7 +41,7 @@ public class AttunementAttributeModifier {
     }
     
     @Nonnull
-    public Attribute getAttribute() {
+    public Holder<Attribute> getAttribute() {
         return this.attribute;
     }
     
@@ -59,7 +54,7 @@ public class AttunementAttributeModifier {
         if (entity != null && !entity.level().isClientSide) {
             AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
-                instance.removeModifier(this.getModifier().getId());
+                instance.removeModifier(this.getModifier());
                 instance.addPermanentModifier(this.getModifier());
             }
         }
@@ -69,7 +64,7 @@ public class AttunementAttributeModifier {
         if (entity != null && !entity.level().isClientSide) {
             AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
-                instance.removeModifier(this.getModifier().getId());
+                instance.removeModifier(this.getModifier());
             }
         }
     }

@@ -12,10 +12,11 @@ import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraftforge.api.distmarker.Dist;
@@ -109,7 +110,7 @@ public class ColorEvents {
         }
         
         event.register((stack, color) -> {
-            return color > 0 ? -1 : PotionUtils.getColor(stack);
+            return color == 0 && stack.has(DataComponents.POTION_CONTENTS) ? PotionContents.getColor(stack.get(DataComponents.POTION_CONTENTS).getAllEffects()) : -1;
         }, ItemsPM.CONCOCTION.get(), ItemsPM.ALCHEMICAL_BOMB.get());
         
         for (ManaArrowItem arrow : ManaArrowItem.getManaArrows()) {

@@ -1,20 +1,23 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
 /**
@@ -23,7 +26,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> implements IDissolutionRecipe {
+public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<SingleRecipeInput> implements IDissolutionRecipe {
     protected final Ingredient ingredient;
     protected final SourceList manaCosts;
     
@@ -34,13 +37,13 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> i
     }
 
     @Override
-    public boolean matches(Container inv, Level level) {
+    public boolean matches(SingleRecipeInput inv, Level level) {
         return this.ingredient.test(inv.getItem(0));
     }
 
     @Override
-    public ItemStack assemble(Container inv, RegistryAccess registryAccess) {
-        return this.getResultItem(registryAccess).copy();
+    public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider registries) {
+        return this.getResultItem(registries).copy();
     }
 
     @Override
@@ -64,9 +67,9 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> i
     }
 
     public static class Serializer implements RecipeSerializer<DissolutionTagRecipe> {
-        protected static final Codec<DissolutionTagRecipe> CODEC = RecordCodecBuilder.create(instance -> {
+        protected static final MapCodec<DissolutionTagRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> {
             return instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(dr -> dr.group),
                     TagKey.codec(Registries.ITEM).fieldOf("outputTag").forGetter(dr -> dr.outputTag),
                     Codec.INT.fieldOf("outputAmount").forGetter(dr -> dr.outputAmount),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
@@ -74,28 +77,22 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> i
                 ).apply(instance, DissolutionTagRecipe::new);
         });
         
+        protected static final StreamCodec<RegistryFriendlyByteBuf, DissolutionTagRecipe> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8, r -> r.group,
+                StreamCodecUtils.tagKey(Registries.ITEM), r -> r.outputTag,
+                ByteBufCodecs.VAR_INT, r -> r.outputAmount,
+                Ingredient.CONTENTS_STREAM_CODEC, r -> r.ingredient,
+                SourceList.STREAM_CODEC, r -> r.manaCosts,
+                DissolutionTagRecipe::new);
+        
         @Override
-        public Codec<DissolutionTagRecipe> codec() {
+        public MapCodec<DissolutionTagRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public DissolutionTagRecipe fromNetwork(FriendlyByteBuf buffer) {
-            String group = buffer.readUtf();
-            SourceList manaCosts = SourceList.fromNetwork(buffer);
-            Ingredient ing = Ingredient.fromNetwork(buffer);
-            TagKey<Item> resultTag = TagKey.create(Registries.ITEM, buffer.readResourceLocation());
-            int resultAmount = buffer.readVarInt();
-            return new DissolutionTagRecipe(group, resultTag, resultAmount, ing, manaCosts);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, DissolutionTagRecipe recipe) {
-            buffer.writeUtf(recipe.group);
-            SourceList.toNetwork(buffer, recipe.manaCosts);
-            recipe.ingredient.toNetwork(buffer);
-            buffer.writeResourceLocation(recipe.outputTag.location());
-            buffer.writeVarInt(recipe.outputAmount);
+        public StreamCodec<RegistryFriendlyByteBuf, DissolutionTagRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
     }
 }

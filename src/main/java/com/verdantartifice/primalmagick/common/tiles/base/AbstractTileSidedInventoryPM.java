@@ -15,10 +15,14 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -56,7 +60,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     protected final NonNullList<LazyOptional<IItemHandler>> itemHandlerOpts;
     protected final NonNullList<List<ContainerListener>> listeners;
     
-    protected ResourceLocation lootTable;
+    protected ResourceKey<LootTable> lootTable;
     protected long lootTableSeed;
 
     public AbstractTileSidedInventoryPM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -173,7 +177,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                     CompoundTag slotTag = new CompoundTag();
                     slotTag.putByte("Inv", (byte)invIndex);
                     slotTag.putByte("Slot", (byte)slotIndex);
-                    stack.save(slotTag);
+                    ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, stack).resultOrPartial(LOGGER::error).ifPresent(tag -> slotTag.put("Item", tag));
                     tagList.add(slotTag);
                 }
             }
@@ -212,16 +216,15 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                 byte invIndex = slotTag.getByte("Inv");
                 byte slotIndex = slotTag.getByte("Slot");
                 if (this.isSyncedSlot(invIndex, slotIndex)) {
-                    ItemStack stack = ItemStack.of(slotTag);
-                    this.syncedInventories.get(invIndex).set(slotIndex, stack);
+                    ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, slotTag.getCompound("Item")).resultOrPartial(LOGGER::error).ifPresent(stack -> this.syncedInventories.get(invIndex).set(slotIndex, stack));
                 }
             }
         }
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    public void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(pTag, pRegistries);
         for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
             this.inventories.get(invIndex).clear();
         }
@@ -230,40 +233,20 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                 ListTag listTag = pTag.getList("TileSidedInventoriesPM", Tag.TAG_COMPOUND);
                 for (int invIndex = 0; invIndex < this.getInventoryCount() && invIndex < listTag.size(); invIndex++) {
                     CompoundTag invTag = listTag.getCompound(invIndex);
-                    ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex));
+                    ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex), pRegistries);
                 }
-            } else if (pTag.contains("Items")) {
-                // Compatibility layer for tiles that used to be AbstractTileInventoryPM instances pre-4.0.8
-                // TODO Remove in next major revision
-                int legacySize = 0;
-                for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
-                    legacySize += this.getInventorySize(invIndex);
-                }
-                NonNullList<ItemStack> legacyItems = NonNullList.withSize(legacySize, ItemStack.EMPTY);
-                ContainerHelper.loadAllItems(pTag, legacyItems);
-                this.loadLegacyItems(legacyItems);
             }
         }
     }
     
-    /**
-     * Load a given list of AbstractTileInventoryPM-formatted items into the multi-inventory format used by
-     * this tile type.  Should only ever be called at most once for any given block entity instance,
-     * when it's first loaded into the new format.
-     * 
-     * @param legacyItems the list of all items loaded for this tile in the legacy format
-     */
-    // TODO Remove in next major revision
-    protected abstract void loadLegacyItems(NonNullList<ItemStack> legacyItems);
-
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.saveAdditional(pTag, pRegistries);
         ListTag listTag = new ListTag();
         if (!this.trySaveLootTable(pTag)) {
             for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
                 CompoundTag invTag = new CompoundTag();
-                ContainerHelper.saveAllItems(invTag, this.inventories.get(invIndex));
+                ContainerHelper.saveAllItems(invTag, this.inventories.get(invIndex), pRegistries);
                 listTag.add(invIndex, invTag);
             }
         }
@@ -309,7 +292,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     }
 
     @Override
-    public void setLootTable(ResourceLocation lootTable, long lootTableSeed) {
+    public void setLootTable(ResourceKey<LootTable> lootTable, long lootTableSeed) {
         this.lootTable = lootTable;
         this.lootTableSeed = lootTableSeed;
     }
@@ -317,7 +300,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     @Override
     public void unpackLootTable(Player player) {
         if (this.lootTable != null && this.level.getServer() != null) {
-            LootTable loot = this.level.getServer().getLootData().getLootTable(this.lootTable);
+            LootTable loot = this.level.getServer().reloadableRegistries().getLootTable(this.lootTable);
             if (player instanceof ServerPlayer serverPlayer) {
                 CriteriaTriggers.GENERATE_LOOT.trigger(serverPlayer, this.lootTable);
             }
@@ -348,7 +331,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
 
     protected boolean tryLoadLootTable(CompoundTag pTag) {
         if (pTag.contains("LootTable", Tag.TAG_STRING)) {
-            this.lootTable = new ResourceLocation(pTag.getString("LootTable"));
+            this.lootTable = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(pTag.getString("LootTable")));
             this.lootTableSeed = pTag.getLong("LootTableSeed");
             return true;
         } else {
@@ -360,7 +343,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         if (this.lootTable == null) {
             return false;
         } else {
-            pTag.putString("LootTable", this.lootTable.toString());
+            pTag.putString("LootTable", this.lootTable.location().toString());
             if (this.lootTableSeed != 0L) {
                 pTag.putLong("LootTableSeed", this.lootTableSeed);
             }

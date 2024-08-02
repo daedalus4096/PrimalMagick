@@ -26,6 +26,6 @@ public class PrimalMagick {
     }
     
     public static ResourceLocation resource(String name) {
-        return new ResourceLocation(MODID, name);
+        return ResourceLocation.fromNamespaceAndPath(MODID, name);
     }
 }

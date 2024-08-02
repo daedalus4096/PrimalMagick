@@ -3,9 +3,9 @@ package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
@@ -18,21 +18,21 @@ public abstract class AbstractReward<T extends AbstractReward<T>> {
         return RegistryCodecs.codec(RewardTypesPM.TYPES).dispatch("reward_type", AbstractReward::getType, RewardType::codec);
     }
     
+    public static StreamCodec<RegistryFriendlyByteBuf, AbstractReward<?>> dispatchStreamCodec() {
+        return RegistryCodecs.streamCodec(RewardTypesPM.TYPES).dispatch(AbstractReward::getType, RewardType::streamCodec);
+    }
+    
     public abstract void grant(ServerPlayer player);
     
     public abstract Component getDescription();
     
     protected abstract RewardType<T> getType();
 
-    public static AbstractReward<?> fromNetwork(FriendlyByteBuf buf) {
-        ResourceLocation typeId = buf.readResourceLocation();
-        return RewardTypesPM.TYPES.get().getValue(typeId).networkReader().apply(buf);
+    public static AbstractReward<?> fromNetwork(RegistryFriendlyByteBuf buf) {
+        return AbstractReward.dispatchStreamCodec().decode(buf);
     }
     
-    public void toNetwork(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.getType().id());
-        this.toNetworkInner(buf);
+    public void toNetwork(RegistryFriendlyByteBuf buf) {
+        AbstractReward.dispatchStreamCodec().encode(buf, this);
     }
-    
-    protected abstract void toNetworkInner(FriendlyByteBuf buf);
 }

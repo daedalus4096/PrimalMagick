@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +31,7 @@ public class TrimPatternsPM {
     protected static final Component RUNIC_ARMOR_TRIM_INGREDIENTS = Component.translatable(Util.makeDescriptionId("tooltip", PrimalMagick.resource("smithing_template.runic_armor_trim.ingredients"))).withStyle(DESCRIPTION_FORMAT);
     protected static final Component RUNIC_ARMOR_TRIM_BASE_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("tooltip", PrimalMagick.resource("smithing_template.runic_armor_trim.base_slot_description")));
     protected static final Component RUNIC_ARMOR_TRIM_ADDITIONS_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("tooltip", PrimalMagick.resource("smithing_template.runic_armor_trim.additions_slot_description")));
-    protected static final List<ResourceLocation> RUNIC_TRIMMABLE_ARMOR_ICONS = List.of(new ResourceLocation("item/empty_armor_slot_helmet"), new ResourceLocation("item/empty_armor_slot_chestplate"), new ResourceLocation("item/empty_armor_slot_leggings"), new ResourceLocation("item/empty_armor_slot_boots"));
+    protected static final List<ResourceLocation> RUNIC_TRIMMABLE_ARMOR_ICONS = List.of(ResourceLocation.withDefaultNamespace("item/empty_armor_slot_helmet"), ResourceLocation.withDefaultNamespace("item/empty_armor_slot_chestplate"), ResourceLocation.withDefaultNamespace("item/empty_armor_slot_leggings"), ResourceLocation.withDefaultNamespace("item/empty_armor_slot_boots"));
     protected static final List<ResourceLocation> RUNIC_TRIMMABLE_MATERIAL_ICONS = List.of(PrimalMagick.resource("item/empty_rune_slot"));
 
     public static SmithingTemplateItem createRunicArmorTrimTemplate(ResourceKey<TrimPattern> patternKey) {
@@ -49,11 +49,11 @@ public class TrimPatternsPM {
         return ResourceKey.create(Registries.TRIM_PATTERN, PrimalMagick.resource(name));
     }
     
-    private static void register(BootstapContext<TrimPattern> context, Item templateItem, ResourceKey<TrimPattern> patternKey) {
+    private static void register(BootstrapContext<TrimPattern> context, Item templateItem, ResourceKey<TrimPattern> patternKey) {
         context.register(patternKey, new TrimPattern(patternKey.location(), ForgeRegistries.ITEMS.getHolder(templateItem).orElseThrow(), Component.translatable(Util.makeDescriptionId("trim_pattern", patternKey.location())), false));
     }
     
-    public static void bootstrap(BootstapContext<TrimPattern> context) {
+    public static void bootstrap(BootstrapContext<TrimPattern> context) {
         register(context, ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get(), RUNIC);
     }
 }

@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:sorcery"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:wand_inscription_table"

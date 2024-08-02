@@ -1,15 +1,23 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -22,37 +30,41 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity}
  */
-public class MineSpellMod extends AbstractSpellMod {
+public class MineSpellMod extends AbstractSpellMod<MineSpellMod> {
+    public static final MineSpellMod INSTANCE = new MineSpellMod();
+    
+    public static final MapCodec<MineSpellMod> CODEC = MapCodec.unit(MineSpellMod.INSTANCE);
+    public static final StreamCodec<ByteBuf, MineSpellMod> STREAM_CODEC = StreamCodec.unit(MineSpellMod.INSTANCE);
+    
     public static final String TYPE = "mine";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_MOD_MINE));
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
 
-    public MineSpellMod() {
-        super();
-    }
-    
-    public MineSpellMod(int duration) {
-        super();
-        this.getProperty("duration").setValue(duration);
-    }
-    
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
     }
     
-    @Override
-    protected Map<String, SpellProperty> initProperties() {
-        Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("duration", new SpellProperty("duration", "spells.primalmagick.property.duration", 1, 5));
-        return propMap;
+    public static MineSpellMod getInstance() {
+        return INSTANCE;
     }
     
     @Override
-    public int getBaseManaCostModifier() {
-        return this.getPropertyValue("duration");
+    public SpellModType<MineSpellMod> getType() {
+        return SpellModsPM.MINE.get();
+    }
+
+    @Override
+    protected List<SpellProperty> getPropertiesInner() {
+        return PROPERTIES.get();
+    }
+
+    @Override
+    public int getBaseManaCostModifier(SpellPropertyConfiguration properties) {
+        return properties.get(SpellPropertiesPM.NON_ZERO_DURATION.get());
     }
     
     @Override
-    public int getManaCostMultiplier() {
+    public int getManaCostMultiplier(SpellPropertyConfiguration properties) {
         return 1;
     }
 
@@ -62,11 +74,12 @@ public class MineSpellMod extends AbstractSpellMod {
     }
     
     public int getDurationMinutes(SpellPackage spell, ItemStack spellSource) {
-        return 4 * this.getModdedPropertyValue("duration", spell, spellSource);
+        int duration = spell.getMod(SpellModsPM.MINE.get()).orElseThrow().getPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get());
+        return 4 * duration;
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
         return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getDurationMinutes(spell, spellSource));
     }
 }

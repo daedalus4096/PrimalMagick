@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -112,15 +111,15 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (player != null && player.getItemInHand(handIn).isEmpty() && !this.isPropActivated(state, worldIn, pos)) {
+    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
+        if (player != null && !this.isPropActivated(state, worldIn, pos)) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             final double noteHue = 2.0D / 24.0D;
             worldIn.playSound(player, pos, SoundsPM.HARP.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             worldIn.addParticle(new NoteEmitterParticleData(noteHue, CelestialHarpTileEntity.TICKS_PER_PLAY), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-            if (!worldIn.isClientSide && tile instanceof CelestialHarpTileEntity) {
+            if (!worldIn.isClientSide && tile instanceof CelestialHarpTileEntity harp) {
                 // Start the harp tile entity playing
-                ((CelestialHarpTileEntity)tile).startPlaying();
+                harp.startPlaying();
                 
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(state, worldIn, pos)) {
@@ -133,7 +132,6 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
         }
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced

@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
 
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeType;
  *  
  * @author Daedalus4096
  */
-public interface IRunecarvingRecipe extends Recipe<Container>, IHasRequirement, IHasExpertise {
+public interface IRunecarvingRecipe extends Recipe<RunecarvingRecipeInput>, IHasRequirement, IHasExpertise {
     @Override
     default RecipeType<?> getType() {
         return RecipeTypesPM.RUNECARVING.get();

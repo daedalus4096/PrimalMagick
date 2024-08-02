@@ -11,7 +11,6 @@ import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
-import org.joml.Vector2ic;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.VocabularyWidget;
@@ -54,7 +53,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     protected static final ResourceLocation PARCHMENT_SPRITE = PrimalMagick.resource("scribe_table/parchment");
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected final Map<Vector2ic, NodeButton> nodeButtons = new HashMap<>();
+    protected final Map<Vector2i, NodeButton> nodeButtons = new HashMap<>();
     protected VocabularyWidget vocabularyWidget;
     protected PlayerGrid grid;
     protected long nextCheckTime = 0L;
@@ -86,7 +85,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         // Initialize the node buttons for the grid
         for (int y = GridDefinition.MIN_POS; y <= GridDefinition.MAX_POS; y++) {
             for (int x = GridDefinition.MIN_POS; x <= GridDefinition.MAX_POS; x++) {
-                Vector2ic nodePos = new Vector2i(x, y);
+                Vector2i nodePos = new Vector2i(x, y);
                 NodeButton button = new NodeButton(this, x, y, this.leftPos + 40 + (12 * x), this.topPos + 23 + (12 * y));
                 button.visible = false;
                 this.nodeButtons.put(nodePos, button);
@@ -123,7 +122,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Update the node buttons for each node in the grid definition
             if (this.grid != null) {
                 this.nodeButtons.entrySet().forEach(entry -> {
-                    Vector2ic nodePos = entry.getKey();
+                    Vector2i nodePos = entry.getKey();
                     NodeButton button = entry.getValue();
                     if (this.grid.getDefinition().getNodes().keySet().contains(nodePos)) {
                         // If the button's position is part of the grid definition, update the button to reflect the node

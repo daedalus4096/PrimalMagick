@@ -5,11 +5,11 @@ import java.util.Optional;
 import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
-import com.verdantartifice.primalmagick.client.gui.SpellSelectionRadialScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
@@ -28,10 +28,8 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -70,11 +68,12 @@ public class ClientRenderEvents {
             event.getToolTip().add(Component.translatable("tooltip.primalmagick.warded").append(CommonComponents.SPACE).append(levelComponent).withStyle(ChatFormatting.DARK_AQUA));
         }
         
-        // Show a tooltip entry if the item is warded armor
-        event.getItemStack().getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(manaStorage -> {
+        // Show a tooltip entry if the item has attached mana storage
+        ManaStorage manaStorage = event.getItemStack().get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
+        if (manaStorage != null) {
             Sources.getAllSorted().stream().filter(source -> source.isDiscovered(event.getEntity()) && manaStorage.canStore(source)).forEach(source ->
                 event.getToolTip().add(Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (manaStorage.getManaStored(source) / 100.0D))));
-        });
+        }
     }
     
     @SubscribeEvent
@@ -115,14 +114,6 @@ public class ClientRenderEvents {
                     GuiUtils.renderSourcesBillboard(event.getPoseStack(), event.getMultiBufferSource(), interpolatedEntityX, interpolatedEntityY + entity.getBbHeight(), interpolatedEntityZ, affinities, partialTicks);
                 }
             });
-        }
-    }
-    
-    @SubscribeEvent
-    public static void onRenderGameOverlayPreLayer(RenderGuiOverlayEvent.Pre event) {
-        Minecraft mc = Minecraft.getInstance();
-        if (event.getOverlay() == VanillaGuiOverlay.CROSSHAIR.type() && mc.screen instanceof SpellSelectionRadialScreen) {
-            event.setCanceled(true);
         }
     }
 }

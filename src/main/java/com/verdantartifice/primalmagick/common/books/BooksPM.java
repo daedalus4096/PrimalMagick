@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 
 /**
@@ -28,7 +28,7 @@ public class BooksPM {
         return ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<BookDefinition> context) {
+    public static void bootstrap(BootstrapContext<BookDefinition> context) {
         context.register(BooksPM.TEST_BOOK, new BookDefinition(PrimalMagick.resource("test")));
         context.register(BooksPM.DREAM_JOURNAL, new BookDefinition(PrimalMagick.resource("dream_journal")));
         context.register(BooksPM.WELCOME, new BookDefinition(PrimalMagick.resource("welcome")));

@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineK
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 
 /**
@@ -32,7 +32,7 @@ public class ResearchDisciplines {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_DISCIPLINES, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<ResearchDiscipline> context) {
+    public static void bootstrap(BootstrapContext<ResearchDiscipline> context) {
         context.register(BASICS, ResearchDiscipline.builder(BASICS).icon(PrimalMagick.resource("textures/item/grimoire.png")).indexSortOrder(100).build());
         context.register(MANAWEAVING, ResearchDiscipline.builder(MANAWEAVING).unlock(ResearchEntries.UNLOCK_MANAWEAVING).icon(PrimalMagick.resource("textures/research/discipline_manaweaving.png"))
                 .craftingStat(StatsPM.CRAFTED_MANAWEAVING).expertiseStat(StatsPM.EXPERTISE_MANAWEAVING).indexSortOrder(200).build());

@@ -8,7 +8,9 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.common.books.BookHelper;
+import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.books.Lexicon;
 import com.verdantartifice.primalmagick.common.books.LexiconManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -75,10 +77,12 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
 
     public void updateWithTagData(RegistryAccess registryAccess) {
         LOGGER.info("Updating lexicons with tagged data");
-        registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).keySet().forEach(langId -> {
+        registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().forEach(langHolder -> {
             Lexicon lexicon = new Lexicon();
-            registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).registryKeySet().forEach(bookKey -> lexicon.addWords(ClientBookHelper.getUnencodedWords(bookKey)));
-            LexiconManager.setLexicon(langId, lexicon);
+            registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).holders().map(bookHolder -> new BookView(Either.left(bookHolder), langHolder, 0)).forEach(view -> {
+                lexicon.addWords(ClientBookHelper.getUnencodedWords(view));
+            });
+            LexiconManager.setLexicon(langHolder.key().location(), lexicon);
         });
     }
 }

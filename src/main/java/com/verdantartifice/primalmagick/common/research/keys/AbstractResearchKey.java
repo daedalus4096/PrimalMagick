@@ -11,8 +11,8 @@ import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -23,6 +23,10 @@ import net.minecraft.world.entity.player.Player;
 public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
     public static Codec<AbstractResearchKey<?>> dispatchCodec() {
         return RegistryCodecs.codec(ResearchKeyTypesPM.TYPES).dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, AbstractResearchKey<?>> dispatchStreamCodec() {
+        return RegistryCodecs.streamCodec(ResearchKeyTypesPM.TYPES).dispatch(AbstractResearchKey::getType, ResearchKeyType::streamCodec);
     }
     
     @Override
@@ -57,15 +61,11 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
         }
     }
     
-    public static AbstractResearchKey<?> fromNetwork(FriendlyByteBuf buf) {
-        ResourceLocation typeId = buf.readResourceLocation();
-        return ResearchKeyTypesPM.TYPES.get().getValue(typeId).networkReader().apply(buf);
+    public static AbstractResearchKey<?> fromNetwork(RegistryFriendlyByteBuf buf) {
+        return AbstractResearchKey.dispatchStreamCodec().decode(buf);
     }
     
-    public void toNetwork(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.getType().id());
-        this.toNetworkInner(buf);
+    public void toNetwork(RegistryFriendlyByteBuf buf) {
+        AbstractResearchKey.dispatchStreamCodec().encode(buf, this);
     }
-    
-    protected abstract void toNetworkInner(FriendlyByteBuf buf);
 }

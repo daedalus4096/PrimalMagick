@@ -3,9 +3,9 @@ package com.verdantartifice.primalmagick.common.network.packets.fx;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a spell impact particle effect on the client.
@@ -13,13 +13,13 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SpellImpactPacket implements IMessageToClient {
-    protected double x;
-    protected double y;
-    protected double z;
-    protected int radius;
-    protected int color;
-    
-    public SpellImpactPacket() {}
+    public static final StreamCodec<RegistryFriendlyByteBuf, SpellImpactPacket> STREAM_CODEC = StreamCodec.ofMember(SpellImpactPacket::encode, SpellImpactPacket::decode);
+
+    protected final double x;
+    protected final double y;
+    protected final double z;
+    protected final int radius;
+    protected final int color;
     
     public SpellImpactPacket(double x, double y, double z, int radius, int color) {
         this.x = x;
@@ -29,26 +29,16 @@ public class SpellImpactPacket implements IMessageToClient {
         this.color = color;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(SpellImpactPacket message, FriendlyByteBuf buf) {
+    public static void encode(SpellImpactPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
         buf.writeDouble(message.z);
-        buf.writeInt(message.radius);
-        buf.writeInt(message.color);
+        buf.writeVarInt(message.radius);
+        buf.writeVarInt(message.color);
     }
     
-    public static SpellImpactPacket decode(FriendlyByteBuf buf) {
-        SpellImpactPacket message = new SpellImpactPacket();
-        message.x = buf.readDouble();
-        message.y = buf.readDouble();
-        message.z = buf.readDouble();
-        message.radius = buf.readInt();
-        message.color = buf.readInt();
-        return message;
+    public static SpellImpactPacket decode(RegistryFriendlyByteBuf buf) {
+        return new SpellImpactPacket(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt(), buf.readVarInt());
     }
     
     public static void onMessage(SpellImpactPacket message, CustomPayloadEvent.Context ctx) {

@@ -47,7 +47,7 @@ public class SpellcraftingAltarRingModel extends Model {
     }
     
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         // Made with Blockbench 4.1.4
         // Exported for Minecraft version 1.17 with Mojang mappings
         this.ring.render(poseStack, buffer, packedLight, packedOverlay);

@@ -6,12 +6,12 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to sync statistics capability data from the server to the client.
@@ -19,36 +19,34 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SyncStatsPacket implements IMessageToClient {
-    protected CompoundTag data;
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncStatsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncStatsPacket::encode, SyncStatsPacket::decode);
 
-    public SyncStatsPacket() {
-        this.data = null;
-    }
-    
+    protected final CompoundTag data;
+
+    @SuppressWarnings("deprecation")
     public SyncStatsPacket(Player player) {
         IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-        this.data = (stats != null) ? stats.serializeNBT() : null;
+        this.data = (stats != null) ? stats.serializeNBT(player.registryAccess()) : null;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
+    protected SyncStatsPacket(CompoundTag data) {
+        this.data = data;
     }
     
-    public static void encode(SyncStatsPacket message, FriendlyByteBuf buf) {
+    public static void encode(SyncStatsPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeNbt(message.data);
     }
     
-    public static SyncStatsPacket decode(FriendlyByteBuf buf) {
-        SyncStatsPacket message = new SyncStatsPacket();
-        message.data = buf.readNbt();
-        return message;
+    public static SyncStatsPacket decode(RegistryFriendlyByteBuf buf) {
+        return new SyncStatsPacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncStatsPacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
         if (stats != null) {
-            stats.deserializeNBT(message.data);
+            stats.deserializeNBT(player.registryAccess(), message.data);
         }
     }
 }

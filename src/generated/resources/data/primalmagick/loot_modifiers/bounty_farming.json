@@ -9,14 +9,16 @@
     {
       "condition": "minecraft:match_tool",
       "predicate": {
-        "enchantments": [
-          {
-            "enchantment": "primalmagick:bounty",
-            "levels": {
-              "min": 1
+        "predicates": {
+          "minecraft:enchantments": [
+            {
+              "enchantments": "primalmagick:bounty",
+              "levels": {
+                "min": 1
+              }
             }
-          }
-        ]
+          ]
+        }
       }
     }
   ]

@@ -2,16 +2,17 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
@@ -26,11 +27,19 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCustomStatRequirement> implements IVanillaStatRequirement {
-    public static final Codec<VanillaCustomStatRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<VanillaCustomStatRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("statValue").forGetter(VanillaCustomStatRequirement::getStatValueLoc),
             Codec.INT.fieldOf("threshold").forGetter(VanillaCustomStatRequirement::getThreshold),
             IconDefinition.CODEC.fieldOf("iconDefinition").forGetter(VanillaCustomStatRequirement::getIconDefinition)
         ).apply(instance, VanillaCustomStatRequirement::new));
+    public static final StreamCodec<ByteBuf, VanillaCustomStatRequirement> STREAM_CODEC = StreamCodec.composite(
+            ResourceLocation.STREAM_CODEC,
+            VanillaCustomStatRequirement::getStatValueLoc,
+            ByteBufCodecs.VAR_INT,
+            VanillaCustomStatRequirement::getThreshold,
+            IconDefinition.STREAM_CODEC,
+            VanillaCustomStatRequirement::getIconDefinition,
+            VanillaCustomStatRequirement::new);
     
     protected final ResourceLocation statValueLocation;
     protected final int threshold;
@@ -124,17 +133,5 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     @Override
     protected RequirementType<VanillaCustomStatRequirement> getType() {
         return RequirementsPM.VANILLA_CUSTOM_STAT.get();
-    }
-    
-    @Nonnull
-    static VanillaCustomStatRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        return new VanillaCustomStatRequirement(buf.readResourceLocation(), buf.readVarInt(), IconDefinition.fromNetwork(buf));
-    }
-
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.getStatValueLoc());
-        buf.writeVarInt(this.threshold);
-        IconDefinition.toNetwork(buf, this.iconDefinition);
     }
 }

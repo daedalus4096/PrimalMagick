@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import com.verdantartifice.primalmagick.client.util.TooltipHelper;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -53,8 +54,9 @@ public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item, ItemLangu
         return this;
     }
     
-    public ItemLanguageBuilder concoctionName(ConcoctionType type, Potion potion, String name) {
-        return this.concoctionName(type, ForgeRegistries.POTIONS.getKey(potion).getPath(), name);
+    public ItemLanguageBuilder concoctionName(ConcoctionType type, Holder<Potion> potion, String name) {
+        String effectName = potion.unwrapKey().orElseThrow().location().getPath();
+        return this.concoctionName(type, effectName, name);
     }
     
     public ItemLanguageBuilder concoctionName(ConcoctionType type, String effectName, String name) {

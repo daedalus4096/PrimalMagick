@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -63,16 +64,16 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.souls = compound.getInt("Souls");
         this.fluidAmount = compound.getInt("FluidAmount");
         this.charge = compound.getInt("Charge");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("Souls", this.souls);
         compound.putInt("FluidAmount", this.fluidAmount);
         compound.putInt("Charge", this.charge);
@@ -93,8 +94,17 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
                     entity.souls -= core.getSoulsPerSpawn();
                     
                     if (!level.isClientSide) {
-                        if (!entity.getItem(INPUT_INV_INDEX, 0).isDamageableItem() || entity.getItem(INPUT_INV_INDEX, 0).hurt(1, level.random, null)) {
-                            entity.getItem(INPUT_INV_INDEX, 0).shrink(1);
+                        ItemStack coreStack = entity.getItem(INPUT_INV_INDEX, 0);
+                        if (coreStack.isDamageableItem()) {
+                            int newDamage = coreStack.getDamageValue() + 1;
+                            if (newDamage >= coreStack.getMaxDamage()) {
+                                coreStack.shrink(1);
+                                entity.updateLitState();
+                            } else {
+                                coreStack.setDamageValue(newDamage);
+                            }
+                        } else {
+                            coreStack.shrink(1);
                             entity.updateLitState();
                         }
                         
@@ -130,7 +140,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
         double z = (double)this.worldPosition.getZ() + (SPAWN_RANGE * (this.level.random.nextDouble() - this.level.random.nextDouble())) + 0.5D;
         BlockPos spawnPos = BlockPos.containing(x, y, z);
         
-        if (this.level.noCollision(entityType.getAABB(x, y, z))) {
+        if (this.level.noCollision(entityType.getSpawnAABB(x, y, z))) {
             ServerLevel serverWorld = (ServerLevel)this.level;
             Entity entity = entityType.spawn(serverWorld, (ItemStack)null, (Player)null, spawnPos, MobSpawnType.SPAWNER, true, !Objects.equals(this.worldPosition, spawnPos));
             if (entity == null) {
@@ -139,7 +149,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
             entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), this.level.random.nextFloat() * 360.0F, 0.0F);
             
             if (entity instanceof Mob mobEntity) {
-                ForgeEventFactory.onFinalizeSpawn(mobEntity, serverWorld, this.level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null, null);
+                ForgeEventFactory.onFinalizeSpawn(mobEntity, serverWorld, this.level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null);
             }
             
             PacketHandler.sendToAllAround(new WandPoofPacket(x, y, z, Color.WHITE.getRGB(), true, Direction.UP), this.level.dimension(), entity.blockPosition(), 32.0D);
@@ -153,7 +163,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
+        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
             this.charge = 0;
             this.setChanged();
             this.syncTile(false);
@@ -264,11 +274,5 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
         });
 
         return retVal;
-    }
-
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
     }
 }

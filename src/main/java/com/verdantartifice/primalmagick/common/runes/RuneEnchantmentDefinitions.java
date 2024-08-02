@@ -7,12 +7,11 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 
 import net.minecraft.core.Holder;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Datapack registry for the mod's definitions of rune combination enchantments.
@@ -20,9 +19,9 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class RuneEnchantmentDefinitions {
-    public static final ResourceKey<RuneEnchantmentDefinition> ALL_DAMAGE_PROTECTION = createKey(Enchantments.ALL_DAMAGE_PROTECTION);
+    public static final ResourceKey<RuneEnchantmentDefinition> ALL_DAMAGE_PROTECTION = createKey(Enchantments.PROTECTION);
     public static final ResourceKey<RuneEnchantmentDefinition> FIRE_PROTECTION = createKey(Enchantments.FIRE_PROTECTION);
-    public static final ResourceKey<RuneEnchantmentDefinition> FALL_PROTECTION = createKey(Enchantments.FALL_PROTECTION);
+    public static final ResourceKey<RuneEnchantmentDefinition> FALL_PROTECTION = createKey(Enchantments.FEATHER_FALLING);
     public static final ResourceKey<RuneEnchantmentDefinition> BLAST_PROTECTION = createKey(Enchantments.BLAST_PROTECTION);
     public static final ResourceKey<RuneEnchantmentDefinition> PROJECTILE_PROTECTION = createKey(Enchantments.PROJECTILE_PROTECTION);
     public static final ResourceKey<RuneEnchantmentDefinition> RESPIRATION = createKey(Enchantments.RESPIRATION);
@@ -33,18 +32,18 @@ public class RuneEnchantmentDefinitions {
     public static final ResourceKey<RuneEnchantmentDefinition> SHARPNESS = createKey(Enchantments.SHARPNESS);
     public static final ResourceKey<RuneEnchantmentDefinition> KNOCKBACK = createKey(Enchantments.KNOCKBACK);
     public static final ResourceKey<RuneEnchantmentDefinition> FIRE_ASPECT = createKey(Enchantments.FIRE_ASPECT);
-    public static final ResourceKey<RuneEnchantmentDefinition> MOB_LOOTING = createKey(Enchantments.MOB_LOOTING);
+    public static final ResourceKey<RuneEnchantmentDefinition> MOB_LOOTING = createKey(Enchantments.LOOTING);
     public static final ResourceKey<RuneEnchantmentDefinition> SWEEPING_EDGE = createKey(Enchantments.SWEEPING_EDGE);
-    public static final ResourceKey<RuneEnchantmentDefinition> BLOCK_EFFICIENCY = createKey(Enchantments.BLOCK_EFFICIENCY);
+    public static final ResourceKey<RuneEnchantmentDefinition> BLOCK_EFFICIENCY = createKey(Enchantments.EFFICIENCY);
     public static final ResourceKey<RuneEnchantmentDefinition> SILK_TOUCH = createKey(Enchantments.SILK_TOUCH);
     public static final ResourceKey<RuneEnchantmentDefinition> UNBREAKING = createKey(Enchantments.UNBREAKING);
-    public static final ResourceKey<RuneEnchantmentDefinition> BLOCK_FORTUNE = createKey(Enchantments.BLOCK_FORTUNE);
-    public static final ResourceKey<RuneEnchantmentDefinition> POWER_ARROWS = createKey(Enchantments.POWER_ARROWS);
-    public static final ResourceKey<RuneEnchantmentDefinition> PUNCH_ARROWS = createKey(Enchantments.PUNCH_ARROWS);
-    public static final ResourceKey<RuneEnchantmentDefinition> FLAMING_ARROWS = createKey(Enchantments.FLAMING_ARROWS);
-    public static final ResourceKey<RuneEnchantmentDefinition> INFINITY_ARROWS = createKey(Enchantments.INFINITY_ARROWS);
-    public static final ResourceKey<RuneEnchantmentDefinition> FISHING_LUCK = createKey(Enchantments.FISHING_LUCK);
-    public static final ResourceKey<RuneEnchantmentDefinition> FISHING_SPEED = createKey(Enchantments.FISHING_SPEED);
+    public static final ResourceKey<RuneEnchantmentDefinition> BLOCK_FORTUNE = createKey(Enchantments.FORTUNE);
+    public static final ResourceKey<RuneEnchantmentDefinition> POWER_ARROWS = createKey(Enchantments.POWER);
+    public static final ResourceKey<RuneEnchantmentDefinition> PUNCH_ARROWS = createKey(Enchantments.PUNCH);
+    public static final ResourceKey<RuneEnchantmentDefinition> FLAMING_ARROWS = createKey(Enchantments.FLAME);
+    public static final ResourceKey<RuneEnchantmentDefinition> INFINITY_ARROWS = createKey(Enchantments.INFINITY);
+    public static final ResourceKey<RuneEnchantmentDefinition> FISHING_LUCK = createKey(Enchantments.LUCK_OF_THE_SEA);
+    public static final ResourceKey<RuneEnchantmentDefinition> FISHING_SPEED = createKey(Enchantments.LURE);
     public static final ResourceKey<RuneEnchantmentDefinition> LOYALTY = createKey(Enchantments.LOYALTY);
     public static final ResourceKey<RuneEnchantmentDefinition> IMPALING = createKey(Enchantments.IMPALING);
     public static final ResourceKey<RuneEnchantmentDefinition> RIPTIDE = createKey(Enchantments.RIPTIDE);
@@ -58,38 +57,33 @@ public class RuneEnchantmentDefinitions {
     public static final ResourceKey<RuneEnchantmentDefinition> SOUL_SPEED = createKey(Enchantments.SOUL_SPEED);
     public static final ResourceKey<RuneEnchantmentDefinition> SWIFT_SNEAK = createKey(Enchantments.SWIFT_SNEAK);
 
-    public static final ResourceKey<RuneEnchantmentDefinition> LIFESTEAL = createKey(EnchantmentsPM.LIFESTEAL.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> ENDERLOCK = createKey(EnchantmentsPM.ENDERLOCK.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> JUDGMENT = createKey(EnchantmentsPM.JUDGMENT.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> ENDERPORT = createKey(EnchantmentsPM.ENDERPORT.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> REGROWTH = createKey(EnchantmentsPM.REGROWTH.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> AEGIS = createKey(EnchantmentsPM.AEGIS.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> MANA_EFFICIENCY = createKey(EnchantmentsPM.MANA_EFFICIENCY.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> SPELL_POWER = createKey(EnchantmentsPM.SPELL_POWER.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> TREASURE = createKey(EnchantmentsPM.TREASURE.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> BLUDGEONING = createKey(EnchantmentsPM.BLUDGEONING.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> REVERBERATION = createKey(EnchantmentsPM.REVERBERATION.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> BOUNTY = createKey(EnchantmentsPM.BOUNTY.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> DISINTEGRATION = createKey(EnchantmentsPM.DISINTEGRATION.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> VERDANT = createKey(EnchantmentsPM.VERDANT.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> LUCKY_STRIKE = createKey(EnchantmentsPM.LUCKY_STRIKE.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> RENDING = createKey(EnchantmentsPM.RENDING.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> SOULPIERCING = createKey(EnchantmentsPM.SOULPIERCING.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> ESSENCE_THIEF = createKey(EnchantmentsPM.ESSENCE_THIEF.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> BULWARK = createKey(EnchantmentsPM.BULWARK.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> MAGICK_PROTECTION = createKey(EnchantmentsPM.MAGICK_PROTECTION.get());
-    public static final ResourceKey<RuneEnchantmentDefinition> GUILLOTINE = createKey(EnchantmentsPM.GUILLOTINE.get());
+    public static final ResourceKey<RuneEnchantmentDefinition> LIFESTEAL = createKey(EnchantmentsPM.LIFESTEAL);
+    public static final ResourceKey<RuneEnchantmentDefinition> ENDERLOCK = createKey(EnchantmentsPM.ENDERLOCK);
+    public static final ResourceKey<RuneEnchantmentDefinition> JUDGMENT = createKey(EnchantmentsPM.JUDGMENT);
+    public static final ResourceKey<RuneEnchantmentDefinition> ENDERPORT = createKey(EnchantmentsPM.ENDERPORT);
+    public static final ResourceKey<RuneEnchantmentDefinition> REGROWTH = createKey(EnchantmentsPM.REGROWTH);
+    public static final ResourceKey<RuneEnchantmentDefinition> AEGIS = createKey(EnchantmentsPM.AEGIS);
+    public static final ResourceKey<RuneEnchantmentDefinition> MANA_EFFICIENCY = createKey(EnchantmentsPM.MANA_EFFICIENCY);
+    public static final ResourceKey<RuneEnchantmentDefinition> SPELL_POWER = createKey(EnchantmentsPM.SPELL_POWER);
+    public static final ResourceKey<RuneEnchantmentDefinition> TREASURE = createKey(EnchantmentsPM.TREASURE);
+    public static final ResourceKey<RuneEnchantmentDefinition> BLUDGEONING = createKey(EnchantmentsPM.BLUDGEONING);
+    public static final ResourceKey<RuneEnchantmentDefinition> REVERBERATION = createKey(EnchantmentsPM.REVERBERATION);
+    public static final ResourceKey<RuneEnchantmentDefinition> BOUNTY = createKey(EnchantmentsPM.BOUNTY);
+    public static final ResourceKey<RuneEnchantmentDefinition> DISINTEGRATION = createKey(EnchantmentsPM.DISINTEGRATION);
+    public static final ResourceKey<RuneEnchantmentDefinition> VERDANT = createKey(EnchantmentsPM.VERDANT);
+    public static final ResourceKey<RuneEnchantmentDefinition> LUCKY_STRIKE = createKey(EnchantmentsPM.LUCKY_STRIKE);
+    public static final ResourceKey<RuneEnchantmentDefinition> RENDING = createKey(EnchantmentsPM.RENDING);
+    public static final ResourceKey<RuneEnchantmentDefinition> SOULPIERCING = createKey(EnchantmentsPM.SOULPIERCING);
+    public static final ResourceKey<RuneEnchantmentDefinition> ESSENCE_THIEF = createKey(EnchantmentsPM.ESSENCE_THIEF);
+    public static final ResourceKey<RuneEnchantmentDefinition> BULWARK = createKey(EnchantmentsPM.BULWARK);
+    public static final ResourceKey<RuneEnchantmentDefinition> MAGICK_PROTECTION = createKey(EnchantmentsPM.MAGICK_PROTECTION);
+    public static final ResourceKey<RuneEnchantmentDefinition> GUILLOTINE = createKey(EnchantmentsPM.GUILLOTINE);
 
-    public static ResourceKey<RuneEnchantmentDefinition> createKey(Enchantment ench) {
-        ResourceLocation enchLoc = ForgeRegistries.ENCHANTMENTS.getKey(ench);
-        if (enchLoc == null) {
-            throw new IllegalArgumentException("Unknown enchantment while creating rune definition key");
-        } else {
-            return ResourceKey.create(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, enchLoc);
-        }
+    public static ResourceKey<RuneEnchantmentDefinition> createKey(ResourceKey<Enchantment> ench) {
+        return ResourceKey.create(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, ench.location());
     }
     
-    public static void bootstrap(BootstapContext<RuneEnchantmentDefinition> context) {
+    public static void bootstrap(BootstrapContext<RuneEnchantmentDefinition> context) {
         // Register rune enchantment definitions for vanilla enchantments
         register(context, ALL_DAMAGE_PROTECTION, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROTECT).noun(Rune.SELF).source(Rune.EARTH).build());
         register(context, FIRE_PROTECTION, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROTECT).noun(Rune.SELF).source(Rune.INFERNAL).build());
@@ -171,13 +165,11 @@ public class RuneEnchantmentDefinitions {
         register(context, GUILLOTINE, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.DISPEL).noun(Rune.CREATURE).source(Rune.BLOOD).build());
     }
     
-    private static Holder.Reference<RuneEnchantmentDefinition> register(BootstapContext<RuneEnchantmentDefinition> context, ResourceKey<RuneEnchantmentDefinition> key, 
-            Function<Enchantment, RuneEnchantmentDefinition> supplier) {
-        Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(key.location());
-        if (ench == null) {
-            throw new IllegalArgumentException("Unknown enchantment while registering rune definition: " + key.toString());
-        } else {
-            return context.register(key, supplier.apply(ench));
-        }
+    private static Holder.Reference<RuneEnchantmentDefinition> register(BootstrapContext<RuneEnchantmentDefinition> context, ResourceKey<RuneEnchantmentDefinition> key, 
+            Function<Holder<Enchantment>, RuneEnchantmentDefinition> supplier) {
+        ResourceKey<Enchantment> enchKey = ResourceKey.create(Registries.ENCHANTMENT, key.location());
+        Holder.Reference<Enchantment> enchHolder = context.lookup(Registries.ENCHANTMENT).get(enchKey).orElseThrow(
+                () -> new IllegalArgumentException("Unknown enchantment while registering rune definition: " + key.toString()));
+        return context.register(key, supplier.apply(enchHolder));
     }
 }

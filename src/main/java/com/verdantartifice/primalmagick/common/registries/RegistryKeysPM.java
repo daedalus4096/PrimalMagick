@@ -4,11 +4,18 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.Culture;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyType;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
+import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicType;
+import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepType;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
+import com.verdantartifice.primalmagick.common.spells.SpellProperty;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadType;
+import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialType;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType;
@@ -35,6 +42,13 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<RewardType<?>>> PROJECT_REWARD_TYPES = key("project_reward_types");
     public static final ResourceKey<Registry<WeightFunctionType<?>>> PROJECT_WEIGHT_FUNCTION_TYPES = key("project_weight_function_types");
     public static final ResourceKey<Registry<RuneEnchantmentDefinition>> RUNE_ENCHANTMENT_DEFINITIONS = key("rune_enchantment_definitions");
+    public static final ResourceKey<Registry<SpellProperty>> SPELL_PROPERTIES = key("spell_properties");
+    public static final ResourceKey<Registry<SpellModType<?>>> SPELL_MOD_TYPES = key("spell_mod_types");
+    public static final ResourceKey<Registry<SpellVehicleType<?>>> SPELL_VEHICLE_TYPES = key("spell_vehicle_types");
+    public static final ResourceKey<Registry<SpellPayloadType<?>>> SPELL_PAYLOAD_TYPES = key("spell_payload_types");
+    public static final ResourceKey<Registry<GridRewardType<?>>> GRID_REWARD_TYPES = key("grid_reward_types");
+    public static final ResourceKey<Registry<ResearchTopicType<?>>> RESEARCH_TOPIC_TYPES = key("research_topic_types");
+    public static final ResourceKey<Registry<RitualStepType<?>>> RITUAL_STEP_TYPES = key("ritual_step_types");
     
     private static <T> ResourceKey<Registry<T>> key(String name) {
         return ResourceKey.createRegistryKey(PrimalMagick.resource(name));

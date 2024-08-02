@@ -26,7 +26,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  */
 public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     protected static final float ANIMATION_TIME_TOTAL = 15.0F;
-    protected static final WidgetSprites SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/tab"), new ResourceLocation("recipe_book/tab_selected"));
+    protected static final WidgetSprites SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/tab"), ResourceLocation.withDefaultNamespace("recipe_book/tab_selected"));
 
     protected final ArcaneRecipeBookCategories category;
     protected float animationTime;
@@ -43,7 +43,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
         builder.addAll(vanillaBook.getCollection(this.category.getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
         List<ArcaneRecipeCollection> list = builder.build();
         
-        if (mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?> recipeMenu) {
+        if (mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?, ?> recipeMenu) {
             for (ArcaneRecipeCollection recipeCollection : list) {
                 for (RecipeHolder<?> recipe : recipeCollection.getRecipes(arcaneBook.getData().isFiltering(recipeMenu.getRecipeBookType()))) {
                     if (arcaneBook.getData().willHighlight(recipe) || vanillaBook.willHighlight(recipe)) {

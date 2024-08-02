@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ignyx": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ignyx"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primalmagick:torch_from_ignyx"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ignyx"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primalmagick:torch_from_ignyx"
+    ]
+  }
+}

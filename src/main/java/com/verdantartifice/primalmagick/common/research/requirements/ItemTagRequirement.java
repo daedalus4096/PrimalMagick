@@ -2,16 +2,16 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
@@ -24,10 +24,16 @@ import net.minecraft.world.item.Item;
  * @author Daedalus4096
  */
 public class ItemTagRequirement extends AbstractRequirement<ItemTagRequirement> {
-    public static final Codec<ItemTagRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<ItemTagRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             TagKey.codec(Registries.ITEM).fieldOf("tag").forGetter(req -> req.tag),
             ExtraCodecs.POSITIVE_INT.fieldOf("amount").forGetter(req -> req.amount)
         ).apply(instance, ItemTagRequirement::new));
+    public static final StreamCodec<ByteBuf, ItemTagRequirement> STREAM_CODEC = StreamCodec.composite(
+            StreamCodecUtils.tagKey(Registries.ITEM),
+            ItemTagRequirement::getTag,
+            ByteBufCodecs.VAR_INT,
+            ItemTagRequirement::getAmount,
+            ItemTagRequirement::new);
     
     protected final TagKey<Item> tag;
     protected final int amount;
@@ -79,16 +85,5 @@ public class ItemTagRequirement extends AbstractRequirement<ItemTagRequirement> 
     @Override
     protected RequirementType<ItemTagRequirement> getType() {
         return RequirementsPM.ITEM_TAG.get();
-    }
-
-    @Nonnull
-    static ItemTagRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        return new ItemTagRequirement(ItemTags.create(buf.readResourceLocation()), buf.readVarInt());
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.tag.location());
-        buf.writeVarInt(this.amount);
     }
 }

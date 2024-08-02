@@ -167,7 +167,7 @@ public class CombatEvents {
 
             // If at least one point of damage was done by a player with the lesser blood attunement, cause bleeding
             if (event.getAmount() >= 1.0F && AttunementManager.meetsThreshold(attacker, Sources.BLOOD, AttunementThreshold.LESSER)) {
-                event.getEntity().addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 200));
+                event.getEntity().addEffect(new MobEffectInstance(EffectsPM.BLEEDING.getHolder().get(), 200));
             }
             
             // Players with greater blood attunement can steal health, with a chance based on damage done
@@ -200,7 +200,7 @@ public class CombatEvents {
                 player.removeAllEffects();
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
                 player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
-                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.get(), 6000, 0, true, false, true));
+                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder().get(), 6000, 0, true, false, true));
                 cooldowns.setCooldown(CooldownType.DEATH_SAVE, 6000);
                 level.playSound(null, player.blockPosition(), SoundsPM.ANGELS.get(), 
                         SoundSource.PLAYERS, 1.0F, 1.0F + (0.05F * (float)level.random.nextGaussian()));
@@ -209,7 +209,7 @@ public class CombatEvents {
         }
         
         // If the entity is afflicted with Drain Soul, drop some soul gems
-        if (entity.hasEffect(EffectsPM.DRAIN_SOUL.get()) && !event.isCanceled()) {
+        if (entity.hasEffect(EffectsPM.DRAIN_SOUL.getHolder().get()) && !event.isCanceled()) {
             float gems = entity.getType().getCategory().isFriendly() ? 
                     Mth.sqrt(entity.getMaxHealth()) / 20.0F : 
                     entity.getMaxHealth() / 20.0F;
@@ -223,24 +223,22 @@ public class CombatEvents {
     @SubscribeEvent
     public static void onArrowImpact(ProjectileImpactEvent event) {
         // If the shooter has the Enderport enchantment, teleport to the hit location
+        // TODO Could the Enderport effect be converted to an enchantment effect component?
         Entity shooter = event.getProjectile().getOwner();
-        if (shooter instanceof LivingEntity && EnchantmentHelperPM.hasEnderport((LivingEntity)shooter)) {
-            EntityUtils.teleportEntity((LivingEntity)shooter, event.getProjectile().level(), event.getRayTraceResult().getLocation());
+        if (shooter instanceof LivingEntity livingShooter && EnchantmentHelperPM.hasEnderport(livingShooter)) {
+            EntityUtils.teleportEntity(livingShooter, event.getProjectile().level(), event.getRayTraceResult().getLocation());
         }
 
         // Handle the Soulpiercing enchantment
         HitResult rayTraceResult = event.getRayTraceResult();
         if (rayTraceResult.getType() == HitResult.Type.ENTITY) {
             Entity targetEntity = ((EntityHitResult)rayTraceResult).getEntity();
-            if (targetEntity instanceof LivingEntity) {
-                LivingEntity target = (LivingEntity)targetEntity;
-                if (shooter instanceof LivingEntity) {
-                    LivingEntity livingShooter = (LivingEntity)shooter;
-                    
+            if (targetEntity instanceof LivingEntity target) {
+                if (shooter instanceof LivingEntity livingShooter) {
                     // If the target can have its soul pierced, spawn some soul slivers
-                    int soulpiercingLevel = livingShooter.getMainHandItem().getEnchantmentLevel(EnchantmentsPM.SOULPIERCING.get());
+                    int soulpiercingLevel = EnchantmentHelperPM.getEnchantmentLevel(livingShooter.getMainHandItem(), EnchantmentsPM.SOULPIERCING, livingShooter.registryAccess());
                     if (soulpiercingLevel > 0) {
-                        MobEffectInstance soulpiercedInstance = new MobEffectInstance(EffectsPM.SOULPIERCED.get(), 12000, 0, false, false);
+                        MobEffectInstance soulpiercedInstance = new MobEffectInstance(EffectsPM.SOULPIERCED.getHolder().get(), 12000, 0, false, false);
                         if (target.canBeAffected(soulpiercedInstance) && !target.hasEffect(soulpiercedInstance.getEffect())) {
                             Containers.dropItemStack(target.level(), target.getX(), target.getY(), target.getZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), soulpiercingLevel));
                             target.addEffect(soulpiercedInstance);

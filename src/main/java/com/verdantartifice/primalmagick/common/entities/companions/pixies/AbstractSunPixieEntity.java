@@ -4,9 +4,8 @@ import java.util.EnumSet;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.HealingSpellPayload;
-import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
@@ -31,15 +30,8 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
     }
 
     @Override
-    protected SpellPackage createSpellPackage() {
-        SpellPackage spell = new SpellPackage("Pixie Bolt");
-        BoltSpellVehicle vehicle = new BoltSpellVehicle();
-        vehicle.getProperty("range").setValue(5);
-        spell.setVehicle(vehicle);
-        HealingSpellPayload payload = new HealingSpellPayload();
-        payload.getProperty("power").setValue(this.getSpellPower());
-        spell.setPayload(payload);
-        return spell;
+    protected AbstractSpellPayload<?> getSpellPayload() {
+        return HealingSpellPayload.INSTANCE;
     }
 
     @Override

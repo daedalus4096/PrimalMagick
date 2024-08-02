@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,8 +34,9 @@ public class ManaCostWidget extends AbstractSourceWidget {
     }
     
     protected double getCostModifier() {
+        Minecraft mc = Minecraft.getInstance();
         ItemStack wandStack = this.wandStackSupplier.get();
-        return wandStack.getItem() instanceof IWand wand ? wand.getTotalCostModifier(wandStack, this.player, this.source) : 1D;
+        return wandStack.getItem() instanceof IWand wand ? wand.getTotalCostModifier(wandStack, this.player, this.source, mc.level.registryAccess()) : 1D;
     }
     
     protected double getModifiedAmount() {

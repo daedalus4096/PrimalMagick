@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -39,6 +40,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagick.common.capabilities.IWorldEntitySwappers}
  */
+@SuppressWarnings("deprecation")
 public class EntitySwapper implements INBTSerializable<CompoundTag> {
     protected UUID targetId = null;
     protected EntityType<?> entityType = null;
@@ -56,10 +58,10 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
         this.delay = delay;
     }
     
-    public EntitySwapper(CompoundTag tag) {
+    public EntitySwapper(HolderLookup.Provider registries, CompoundTag tag) {
         // Attempt to deserialize an entity swapper from the given NBT data
         this();
-        this.deserializeNBT(tag);
+        this.deserializeNBT(registries, tag);
     }
     
     public static boolean enqueue(@Nonnull Level world, @Nullable EntitySwapper swapper) {
@@ -123,9 +125,8 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 Collection<MobEffectInstance> activeEffects = livingTarget.getActiveEffects();
                 
                 // If the original, pre-swapped entity had it's NBT data preserved in this swapper, prepare it for loading into the new entity
-                CompoundTag data = null;
+                CompoundTag data = new CompoundTag();
                 if (this.originalData != null) {
-                    data = new CompoundTag();
                     data.put("EntityTag", this.pruneData(this.originalData, this.polymorphDuration.isPresent()));
                 }
                 
@@ -135,7 +136,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 
                 // Remove the target entity and spawn a new one of the target type into the world
                 livingTarget.discard();
-                Entity newEntity = this.entityType.create(serverWorld, data, null, BlockPos.containing(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
+                Entity newEntity = this.entityType.create(serverWorld, e -> e.load(data), BlockPos.containing(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
                 newEntity.setCustomName(customName);
                 newEntity.setCustomNameVisible(customNameVisible);
                 world.addFreshEntity(newEntity);
@@ -154,7 +155,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                     // If this is a temporary swap, create a new entity swapper to swap back
                     int ticks = this.polymorphDuration.get().intValue();
                     if (newEntity instanceof LivingEntity) {
-                        ((LivingEntity)newEntity).addEffect(new MobEffectInstance(EffectsPM.POLYMORPH.get(), ticks));
+                        ((LivingEntity)newEntity).addEffect(new MobEffectInstance(EffectsPM.POLYMORPH.getHolder().get(), ticks));
                     }
                     return new EntitySwapper(newEntity.getUUID(), oldType, this.originalData, Optional.empty(), ticks);
                 } else {
@@ -179,7 +180,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag nbt = new CompoundTag();
         if (this.targetId != null) {
             nbt.putUUID("TargetId", this.targetId);
@@ -198,7 +199,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
         if (nbt.hasUUID("TargetId")) {
             this.targetId = nbt.getUUID("TargetId");
         }

@@ -1,0 +1,26 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "primalmagick:wood_table"
+    },
+    {
+      "item": "primalmagick:magnifying_glass"
+    },
+    {
+      "item": "minecraft:paper"
+    }
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_stage",
+      "rootKey": "primalmagick:first_steps",
+      "stage": 2
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:analysis_table"
+  }
+}

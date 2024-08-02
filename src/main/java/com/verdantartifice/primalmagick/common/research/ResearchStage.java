@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -33,8 +32,11 @@ import com.verdantartifice.primalmagick.common.research.requirements.VanillaItem
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -57,36 +59,33 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, SourceList attunements) {
     public static Codec<ResearchStage> codec() { 
         return RecordCodecBuilder.create(instance -> instance.group(
-            ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchStage::parentKey),
+            ResearchEntryKey.CODEC.codec().fieldOf("parentKey").forGetter(ResearchStage::parentKey),
             Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchStage::textTranslationKey),
             AbstractRequirement.dispatchCodec().optionalFieldOf("completionRequirementOpt").forGetter(ResearchStage::completionRequirementOpt),
             ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
             AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
-            ResearchEntryKey.CODEC.listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
+            ResearchEntryKey.CODEC.codec().listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
             SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchStage::attunements)
         ).apply(instance, ResearchStage::new));
     }
     
-    @Nonnull
-    public static ResearchStage fromNetwork(FriendlyByteBuf buf) {
-        ResearchEntryKey parentKey = ResearchEntryKey.fromNetwork(buf);
-        String textKey = buf.readUtf();
-        Optional<AbstractRequirement<?>> compReqOpt = buf.readOptional(AbstractRequirement::fromNetwork);
-        List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
-        List<AbstractResearchKey<?>> siblings = buf.readList(ResearchEntryKey::fromNetwork);
-        List<ResearchEntryKey> revelations = buf.readList(ResearchEntryKey::fromNetwork);
-        SourceList attunements = SourceList.fromNetwork(buf);
-        return new ResearchStage(parentKey, textKey, compReqOpt, recipes, siblings, revelations, attunements);
-    }
-    
-    public static void toNetwork(FriendlyByteBuf buf, ResearchStage stage) {
-        stage.parentKey.toNetwork(buf);
-        buf.writeUtf(stage.textTranslationKey);
-        buf.writeOptional(stage.completionRequirementOpt, (b, r) -> r.toNetwork(b));
-        buf.writeCollection(stage.recipes, (b, l) -> b.writeResourceLocation(l));
-        buf.writeCollection(stage.siblings, (b, s) -> s.toNetwork(b));
-        buf.writeCollection(stage.revelations, (b, r) -> r.toNetwork(b));
-        SourceList.toNetwork(buf, stage.attunements);
+    public static StreamCodec<RegistryFriendlyByteBuf, ResearchStage> streamCodec() {
+        return StreamCodecUtils.composite(
+                ResearchEntryKey.STREAM_CODEC,
+                ResearchStage::parentKey,
+                ByteBufCodecs.STRING_UTF8,
+                ResearchStage::textTranslationKey,
+                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()),
+                ResearchStage::completionRequirementOpt,
+                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                ResearchStage::recipes,
+                AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()),
+                ResearchStage::siblings,
+                ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                ResearchStage::revelations,
+                SourceList.STREAM_CODEC,
+                ResearchStage::attunements,
+                ResearchStage::new);
     }
     
     public boolean hasPrerequisites() {
@@ -226,7 +225,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
         
         public Builder recipe(String modId, String name) {
-            return this.recipe(new ResourceLocation(modId, name));
+            return this.recipe(ResourceLocation.fromNamespaceAndPath(modId, name));
         }
         
         public Builder recipe(ItemLike itemLike) {

@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -14,6 +15,8 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
+@AutoRegisterCapability
 public interface IPlayerAttunements extends INBTSerializable<CompoundTag> {
     /**
      * Remove all attunement data from the player.

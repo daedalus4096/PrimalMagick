@@ -8,17 +8,13 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-import com.verdantartifice.primalmagick.common.books.grids.rewards.AttunementReward;
-import com.verdantartifice.primalmagick.common.books.grids.rewards.ComprehensionReward;
-import com.verdantartifice.primalmagick.common.books.grids.rewards.EmptyReward;
-import com.verdantartifice.primalmagick.common.books.grids.rewards.KnowledgeReward;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,12 +44,6 @@ public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
     public static GridDefinitionLoader createInstance() {
         if (INSTANCE == null) {
             INSTANCE = new GridDefinitionLoader();
-            
-            // Initialize reward serialization mappings while we're at it, as the classloader requires it to happen somewhere
-            EmptyReward.init();
-            AttunementReward.init();
-            ComprehensionReward.init();
-            KnowledgeReward.init();
         }
         return INSTANCE;
     }
@@ -78,10 +68,11 @@ public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
 
             try {
                 // Instantiate grid definition from serializer, then attempt to register it
-                GridDefinition gridDef = GridDefinition.SERIALIZER.read(location, GsonHelper.convertToJsonObject(entry.getValue(), "top member"));
-                if (gridDef == null || !LinguisticsManager.registerGridDefinition(location, gridDef)) {
-                    LOGGER.error("Failed to register linguistics grid definition {}", location);
-                }
+                GridDefinition.codec().parse(JsonOps.INSTANCE, entry.getValue()).resultOrPartial(LOGGER::error).ifPresent(gridDef -> {
+                    if (gridDef == null || !LinguisticsManager.registerGridDefinition(location, gridDef)) {
+                        LOGGER.error("Failed to register linguistics grid definition {}", location);
+                    }
+                });
             } catch (Exception e) {
                 LOGGER.error("Parsing error loading linguistics grid definition {}", location, e);
             }

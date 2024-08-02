@@ -84,7 +84,7 @@ public class ItemAffinity extends AbstractAffinity {
                 throw new JsonSyntaxException("Illegal affinity target in affinity JSON for " + affinityId.toString());
             }
             
-            ResourceLocation targetId = new ResourceLocation(target);
+            ResourceLocation targetId = ResourceLocation.parse(target);
             if (!ForgeRegistries.ITEMS.containsKey(targetId)) {
                 throw new JsonSyntaxException("Unknown target item " + target + " in affinity JSON for " + affinityId.toString());
             }
@@ -95,7 +95,7 @@ public class ItemAffinity extends AbstractAffinity {
             } else if (json.has("set")) {
                 entry.setValues = JsonUtils.toSourceList(json.get("set").getAsJsonObject());
             } else if (json.has("base")) {
-                entry.baseEntryId = new ResourceLocation(json.getAsJsonPrimitive("base").getAsString());
+                entry.baseEntryId = ResourceLocation.parse(json.getAsJsonPrimitive("base").getAsString());
                 if (!ForgeRegistries.ITEMS.containsKey(entry.baseEntryId)) {
                     throw new JsonSyntaxException("Unknown base item " + target + " in affinity JSON for " + affinityId.toString());
                 }

@@ -50,7 +50,7 @@ public class JsonUtils {
         List<ResourceLocation> retVal = new ArrayList<>();
         for (JsonElement element : jsonArray) {
             try {
-                retVal.add(new ResourceLocation(element.getAsString()));
+                retVal.add(ResourceLocation.parse(element.getAsString()));
             } catch (Exception e) {}
         }
         return retVal;

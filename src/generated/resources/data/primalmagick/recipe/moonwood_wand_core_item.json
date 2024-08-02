@@ -1,0 +1,35 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "#": {
+      "item": "primalmagick:moonwood_log"
+    },
+    "D": {
+      "item": "primalmagick:essence_dust_moon"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 5,
+      "primalmagick:moon": 15,
+      "primalmagick:sea": 5,
+      "primalmagick:sky": 5,
+      "primalmagick:sun": 5
+    }
+  },
+  "pattern": [
+    "D#",
+    "#D"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_moonwood"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:moonwood_wand_core_item"
+  }
+}

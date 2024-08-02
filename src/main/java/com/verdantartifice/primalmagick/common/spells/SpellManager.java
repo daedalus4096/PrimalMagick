@@ -2,9 +2,11 @@ package com.verdantartifice.primalmagick.common.spells;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -19,14 +21,24 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.spells.mods.BurstSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.MineSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
+import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadType;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
+import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
+import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehiclesPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -39,6 +51,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.IForgeRegistry;
 
 /**
  * Primary access point for spell-related methods.  Also stores defined spell component data in static registries.
@@ -79,10 +92,17 @@ public class SpellManager {
         return retVal;
     }
     
+    protected static <T extends ISpellComponentType> List<T> getFilteredTypes(@Nullable Player player, Supplier<IForgeRegistry<T>> registrySupplier) {
+        // Compute a list of spell component types that the given player is able to use
+        return registrySupplier.get().getValues().stream()
+                .filter(type -> type.requirementSupplier().get() == null || type.requirementSupplier().get().isMetBy(player))
+                .sorted(Comparator.comparing(T::sortOrder))
+                .toList();
+    }
+    
     @Nonnull
-    public static List<String> getVehicleTypes(@Nullable Player player) {
-        // Compute a list of spell vehicle types that the given player is able to use
-        return getFilteredTypes(player, VEHICLE_TYPES, VEHICLE_RESEARCH_SUPPLIERS);
+    public static List<SpellVehicleType<?>> getVehicleTypes(@Nullable Player player) {
+        return getFilteredTypes(player, SpellVehiclesPM.TYPES);
     }
     
     @Nullable
@@ -100,9 +120,8 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<String> getPayloadTypes(@Nullable Player player) {
-        // Compute a list of spell payload types that the given player is able to use
-        return getFilteredTypes(player, PAYLOAD_TYPES, PAYLOAD_RESEARCH_SUPPLIERS);
+    public static List<SpellPayloadType<?>> getPayloadTypes(@Nullable Player player) {
+        return getFilteredTypes(player, SpellPayloadsPM.TYPES);
     }
     
     @Nullable
@@ -120,9 +139,8 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<String> getModTypes(@Nullable Player player) {
-        // Compute a list of spell mod types that the given player is able to use
-        return getFilteredTypes(player, MOD_TYPES, MOD_RESEARCH_SUPPLIERS);
+    public static List<SpellModType<?>> getModTypes(@Nullable Player player) {
+        return getFilteredTypes(player, SpellModsPM.TYPES);
     }
     
     @Nullable
@@ -205,7 +223,7 @@ public class SpellManager {
                 if (spell == null) {
                     player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell.none"));
                 } else {
-                    player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getName()));
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getDisplayName()));
                 }
             }
         }
@@ -214,15 +232,15 @@ public class SpellManager {
     public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull HitResult result, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, 
             boolean allowMine, @Nullable Entity projectileEntity) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
-        if (!world.isClientSide && spell.getPayload() != null) {
+        if (!world.isClientSide && spell.payload() != null) {
             Vec3 hitVec = result.getLocation();
-            BurstSpellMod burstMod = spell.getMod(BurstSpellMod.class, "radius");
-            MineSpellMod mineMod = spell.getMod(MineSpellMod.class, "duration");
+            ConfiguredSpellMod<BurstSpellMod> burstMod = spell.getMod(SpellModsPM.BURST.get()).orElse(null);
+            ConfiguredSpellMod<MineSpellMod> mineMod = spell.getMod(SpellModsPM.MINE.get()).orElse(null);
             
             // Trigger spell impact FX on the clients of every player in range
-            int radius = (burstMod == null || (allowMine && mineMod != null)) ? 1 : burstMod.getPropertyValue("radius");
+            int radius = (burstMod == null || (allowMine && mineMod != null)) ? 1 : burstMod.getPropertyValue(SpellPropertiesPM.RADIUS.get());
             PacketHandler.sendToAllAround(
-                    new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
+                    new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.payload().getComponent().getSource().getColor()), 
                     world.dimension(), 
                     BlockPos.containing(hitVec), 
                     64.0D);
@@ -230,17 +248,17 @@ public class SpellManager {
             if (allowMine && mineMod != null) {
                 // If the spell package has the Mine mod and mines are allowed (i.e. this payload wasn't triggered by an existing mine),
                 // spawn a new mine
-                SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, spellSource, mineMod.getDurationMinutes(spell, spellSource));
+                SpellMineEntity mineEntity = new SpellMineEntity(world, hitVec, caster, spell, spellSource, mineMod.getComponent().getDurationMinutes(spell, spellSource));
                 world.addFreshEntity(mineEntity);
             } else if (burstMod != null) {
                 // If the spell package has the burst mod, calculate the set of affected blocks/entities and execute the payload on each
-                Set<HitResult> targetSet = burstMod.getBurstTargets(result, spell, spellSource, world);
+                Set<HitResult> targetSet = burstMod.getComponent().getBurstTargets(result, spell, spellSource, world);
                 for (HitResult target : targetSet) {
-                    spell.getPayload().execute(target, hitVec, spell, world, caster, spellSource, null);
+                    spell.payload().getComponent().execute(target, hitVec, spell, world, caster, spellSource, null);
                 }
             } else {
                 // Otherwise, just execute the payload on the given target
-                spell.getPayload().execute(result, null, spell, world, caster, spellSource, null);
+                spell.payload().getComponent().execute(result, null, spell, world, caster, spellSource, null);
             }
         }
     }
@@ -257,28 +275,29 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, @Nonnull ItemStack spellSource, boolean indent) {
+    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, @Nonnull ItemStack spellSource, boolean indent, HolderLookup.Provider registries) {
         List<Component> retVal = new ArrayList<>();
         Component leader = indent ? Component.literal("    ") : Component.literal("");
         if (spell != null) {
-            ISpellVehicle vehicle = spell.getVehicle();
+            ConfiguredSpellVehicle<?> vehicle = spell.vehicle();
             if (vehicle != null) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getDetailTooltip())));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getComponent().getDetailTooltip(spell, spellSource, registries))));
             }
             
-            ISpellPayload payload = spell.getPayload();
+            ConfiguredSpellPayload<?> payload = spell.payload();
             if (payload != null) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getComponent().getDetailTooltip(spell, spellSource, registries))));
             }
             
-            ISpellMod primary = spell.getPrimaryMod();
-            ISpellMod secondary = spell.getSecondaryMod();
-            if (primary != null && primary.isActive() && secondary != null && secondary.isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.getDetailTooltip(spell, spellSource), secondary.getDetailTooltip(spell, spellSource))));
-            } else if (primary != null && primary.isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", primary.getDetailTooltip(spell, spellSource))));
-            } else if (secondary != null && secondary.isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", secondary.getDetailTooltip(spell, spellSource))));
+            Optional<ConfiguredSpellMod<?>> primary = spell.primaryMod();
+            Optional<ConfiguredSpellMod<?>> secondary = spell.secondaryMod();
+            if (primary.isPresent() && primary.get().getComponent().isActive() && secondary.isPresent() && secondary.get().getComponent().isActive()) {
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.get().getComponent().getDetailTooltip(spell, spellSource, registries),
+                        secondary.get().getComponent().getDetailTooltip(spell, spellSource, registries))));
+            } else if (primary.isPresent() && primary.get().getComponent().isActive()) {
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", primary.get().getComponent().getDetailTooltip(spell, spellSource, registries))));
+            } else if (secondary.isPresent() && secondary.get().getComponent().isActive()) {
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", secondary.get().getComponent().getDetailTooltip(spell, spellSource, registries))));
             }
             
             retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));

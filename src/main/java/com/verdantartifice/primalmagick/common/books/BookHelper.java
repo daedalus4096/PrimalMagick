@@ -1,24 +1,18 @@
 package com.verdantartifice.primalmagick.common.books;
 
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.function.TriFunction;
-
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
-import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.util.FunctionUtils;
 
 import net.minecraft.Util;
-import net.minecraft.core.Holder;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringDecomposer;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
@@ -32,31 +26,31 @@ public class BookHelper {
 
     public static final Style BASE_TEXT_STYLE = Style.EMPTY;
 
-    private static BiFunction<BookView, RegistryAccess, Component> memoizedTitleText = Util.memoize(BookHelper::getTitleTextInner);
-    private static TriFunction<BookView, Component, RegistryAccess, Component> memoizedAuthorText = FunctionUtils.memoize(BookHelper::getAuthorTextInner);
+    private static Function<BookView, Component> memoizedTitleText = Util.memoize(BookHelper::getTitleTextInner);
+    private static BiFunction<BookView, Component, Component> memoizedAuthorText = Util.memoize(BookHelper::getAuthorTextInner);
 
     public static void invalidate() {
         memoizedTitleText = Util.memoize(BookHelper::getTitleTextInner);
-        memoizedAuthorText = FunctionUtils.memoize(BookHelper::getAuthorTextInner);
+        memoizedAuthorText = Util.memoize(BookHelper::getAuthorTextInner);
     }
     
-    public static String getTitleTranslationKey(ResourceKey<?> bookKey) {
-        if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
+    public static String getTitleTranslationKey(BookView view) {
+        return view.bookDef().map(bookHolder -> {
+            ResourceKey<BookDefinition> bookKey = bookHolder.unwrapKey().get();
             return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "title");
-        } else {
+        }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
-        }
+        });
     }
 
-    public static Component getTitleText(BookView view, RegistryAccess registryAccess) {
-        return memoizedTitleText.apply(view, registryAccess);
+    public static Component getTitleText(BookView view) {
+        return memoizedTitleText.apply(view);
     }
     
-    private static Component getTitleTextInner(BookView view, RegistryAccess registryAccess) {
+    private static Component getTitleTextInner(BookView view) {
         MutableComponent retVal = Component.empty();
-        String titleTranslationKey = getTitleTranslationKey(view.bookKey());
-        final Holder.Reference<BookLanguage> lang = view.getLanguageOrDefault(registryAccess, BookLanguagesPM.DEFAULT);
-        final Lexicon langLex = LexiconManager.getLexicon(lang.key().location()).orElseThrow();
+        String titleTranslationKey = getTitleTranslationKey(view);
+        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().location()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
         
         // Add the encoded title text
@@ -64,28 +58,27 @@ public class BookHelper {
             if (SEPARATOR_ONLY.matcher(word).matches()) {
                 // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
-            } else if (lang.get().autoTranslate()) {
+            } else if (view.language().value().autoTranslate()) {
                 // If the language is auto-translating, then add the title text directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
-            } else if (lang.get().isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.get().complexity())) {
+            } else if (view.language().value().isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), view.language().value().complexity())) {
                 // If the word has been translated, then add it directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
             } else {
                 // If the word has not been translated, then add an encoded replacement word
-                retVal.append(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.get().style()));
+                retVal.append(Component.literal(loremLex.getReplacementWord(word)).withStyle(view.language().value().style()));
             }
         });
         return retVal;
     }
     
-    public static Component getAuthorText(BookView view, Component unencodedText, RegistryAccess registryAccess) {
-        return memoizedAuthorText.apply(view, unencodedText, registryAccess);
+    public static Component getAuthorText(BookView view, Component unencodedText) {
+        return memoizedAuthorText.apply(view, unencodedText);
     }
     
-    private static Component getAuthorTextInner(BookView view, Component unencodedText, RegistryAccess registryAccess) {
+    private static Component getAuthorTextInner(BookView view, Component unencodedText) {
         MutableComponent retVal = Component.empty();
-        final Holder.Reference<BookLanguage> lang = view.getLanguageOrDefault(registryAccess, BookLanguagesPM.DEFAULT);
-        final Lexicon langLex = LexiconManager.getLexicon(lang.key().location()).orElseThrow();
+        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().location()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
         
         // Add the encoded title text
@@ -93,21 +86,21 @@ public class BookHelper {
             if (SEPARATOR_ONLY.matcher(word).matches()) {
                 // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
-            } else if (lang.get().autoTranslate()) {
+            } else if (view.language().value().autoTranslate()) {
                 // If the language is auto-translating, then add the author text directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
-            } else if (lang.get().isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.get().complexity())) {
+            } else if (view.language().value().isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), view.language().value().complexity())) {
                 // If the word has been translated, then add it directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
             } else {
                 // If the word has not been translated, then add an encoded replacement word
-                retVal.append(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.get().style()));
+                retVal.append(Component.literal(loremLex.getReplacementWord(word)).withStyle(view.language().value().style()));
             }
         });
         return retVal;
     }
     
-    public static double getBookComprehension(BookView view, RegistryAccess registryAccess) {
-        return (FMLEnvironment.dist == Dist.CLIENT) ? ClientBookHelper.getBookComprehension(view, registryAccess) : 0;
+    public static double getBookComprehension(BookView view) {
+        return FMLEnvironment.dist.isClient() ? ClientBookHelper.getBookComprehension(view) : 0;
     }
 }

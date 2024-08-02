@@ -5,15 +5,16 @@ import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -23,7 +24,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * 
  * @author Daedalus4096
  */
-public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> implements IShapelessRecipePM<Container>, IConcoctingRecipe {
+public class ConcoctingRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IShapelessRecipePM<CraftingInput>, IConcoctingRecipe {
     protected final Optional<AbstractRequirement<?>> requirement;
     protected final SourceList manaCosts;
     protected final NonNullList<Ingredient> recipeItems;
@@ -64,9 +65,9 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
 
     public static class Serializer implements RecipeSerializer<ConcoctingRecipe> {
         @Override
-        public Codec<ConcoctingRecipe> codec() { 
-            return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
+        public MapCodec<ConcoctingRecipe> codec() { 
+            return RecordCodecBuilder.mapCodec(instance -> instance.group(
+                    Codec.STRING.optionalFieldOf("group", "").forGetter(sar -> sar.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
@@ -84,32 +85,40 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
         }
         
         @Override
-        public ConcoctingRecipe fromNetwork(FriendlyByteBuf buffer) {
+        public StreamCodec<RegistryFriendlyByteBuf, ConcoctingRecipe> streamCodec() {
+            return StreamCodec.of(ConcoctingRecipe.Serializer::toNetwork, ConcoctingRecipe.Serializer::fromNetwork);
+        }
+        
+        private static ConcoctingRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             String group = buffer.readUtf();
-            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
+            Optional<AbstractRequirement<?>> requirement = buffer.readBoolean() ? Optional.ofNullable(AbstractRequirement.dispatchStreamCodec().decode(buffer)) : Optional.empty();
             
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             
             int count = buffer.readVarInt();
             NonNullList<Ingredient> ingredients = NonNullList.withSize(count, Ingredient.EMPTY);
-            for (int index = 0; index < ingredients.size(); index++) {
-                ingredients.set(index, Ingredient.fromNetwork(buffer));
-            }
+            ingredients.replaceAll(ing -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
             
-            ItemStack result = buffer.readItem();
+            ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
             return new ConcoctingRecipe(group, result, ingredients, requirement, manaCosts);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, ConcoctingRecipe recipe) {
+        private static void toNetwork(RegistryFriendlyByteBuf buffer, ConcoctingRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
+            recipe.requirement.ifPresentOrElse(req -> {
+                buffer.writeBoolean(true);
+                AbstractRequirement.dispatchStreamCodec().encode(buffer, req);
+            }, () -> {
+                buffer.writeBoolean(false);
+            });
             SourceList.toNetwork(buffer, recipe.manaCosts);
+            
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems) {
-                ingredient.toNetwork(buffer);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
             }
-            buffer.writeItem(recipe.output);
+            
+            ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
         }
     }
 }

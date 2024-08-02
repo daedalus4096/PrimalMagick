@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagick.common.network.packets.scribe_table;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to trigger a server-side vocabulary study of the slotted static book on a scribe table.
@@ -14,6 +14,8 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class StudyVocabularyActionPacket implements IMessageToServer {
+    public static final StreamCodec<RegistryFriendlyByteBuf, StudyVocabularyActionPacket> STREAM_CODEC = StreamCodec.ofMember(StudyVocabularyActionPacket::encode, StudyVocabularyActionPacket::decode);
+
     protected final int windowId;
     protected final int slotId;
     
@@ -22,16 +24,12 @@ public class StudyVocabularyActionPacket implements IMessageToServer {
         this.slotId = slotId;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(StudyVocabularyActionPacket message, FriendlyByteBuf buf) {
+    public static void encode(StudyVocabularyActionPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeVarInt(message.windowId);
         buf.writeVarInt(message.slotId);
     }
     
-    public static StudyVocabularyActionPacket decode(FriendlyByteBuf buf) {
+    public static StudyVocabularyActionPacket decode(RegistryFriendlyByteBuf buf) {
         return new StudyVocabularyActionPacket(buf.readVarInt(), buf.readVarInt());
     }
     

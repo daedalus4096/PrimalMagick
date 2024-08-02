@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -26,7 +24,10 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -56,24 +57,21 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
             ).apply(instance, ResearchAddendum::new));
     }
     
-    @Nonnull
-    public static ResearchAddendum fromNetwork(FriendlyByteBuf buf) {
-        ResearchEntryKey parentKey = ResearchEntryKey.fromNetwork(buf);
-        String textKey = buf.readUtf();
-        Optional<AbstractRequirement<?>> compReqOpt = buf.readOptional(AbstractRequirement::fromNetwork);
-        List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
-        List<AbstractResearchKey<?>> siblings = buf.readList(AbstractResearchKey::fromNetwork);
-        SourceList attunements = SourceList.fromNetwork(buf);
-        return new ResearchAddendum(parentKey, textKey, compReqOpt, recipes, siblings, attunements);
-    }
-    
-    public static void toNetwork(FriendlyByteBuf buf, ResearchAddendum addendum) {
-        addendum.parentKey.toNetwork(buf);
-        buf.writeUtf(addendum.textTranslationKey);
-        buf.writeOptional(addendum.completionRequirementOpt, (b, r) -> r.toNetwork(b));
-        buf.writeCollection(addendum.recipes, (b, l) -> b.writeResourceLocation(l));
-        buf.writeCollection(addendum.siblings, (b, s) -> s.toNetwork(b));
-        SourceList.toNetwork(buf, addendum.attunements);
+    public static StreamCodec<RegistryFriendlyByteBuf, ResearchAddendum> streamCodec() {
+        return StreamCodec.composite(
+                ResearchEntryKey.STREAM_CODEC,
+                ResearchAddendum::parentKey,
+                ByteBufCodecs.STRING_UTF8,
+                ResearchAddendum::textTranslationKey,
+                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()),
+                ResearchAddendum::completionRequirementOpt,
+                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                ResearchAddendum::recipes,
+                AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()),
+                ResearchAddendum::siblings,
+                SourceList.STREAM_CODEC,
+                ResearchAddendum::attunements,
+                ResearchAddendum::new);
     }
     
     public static class Builder {
@@ -102,7 +100,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         }
         
         public Builder recipe(String modId, String name) {
-            return this.recipe(new ResourceLocation(modId, name));
+            return this.recipe(ResourceLocation.fromNamespaceAndPath(modId, name));
         }
         
         public Builder recipe(ItemLike itemLike) {
@@ -114,12 +112,12 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
             return this;
         }
         
-        public Builder sibling(ResourceKey<ResearchEntry> siblingKey) {
+        public Builder siblingResearch(ResourceKey<ResearchEntry> siblingKey) {
             this.siblings.add(new ResearchEntryKey(siblingKey));
             return this;
         }
         
-        public Builder sibling(Enchantment runeEnchantment) {
+        public Builder siblingEnchantment(Holder<Enchantment> runeEnchantment) {
             this.siblings.add(new RuneEnchantmentKey(runeEnchantment));
             return this;
         }

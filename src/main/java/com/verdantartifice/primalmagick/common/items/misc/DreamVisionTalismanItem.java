@@ -2,11 +2,14 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import java.util.List;
 
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +38,7 @@ public class DreamVisionTalismanItem extends Item {
      * @return the amount of experience stored in the given talisman
      */
     public int getStoredExp(ItemStack stack) {
-        return stack.getOrCreateTag().getInt("StoredExp");
+        return stack.getOrDefault(DataComponentsPM.STORED_EXPERIENCE.get(), 0);
     }
     
     /**
@@ -60,7 +63,7 @@ public class DreamVisionTalismanItem extends Item {
     }
     
     protected void setStoredExp(ItemStack stack, int toSet) {
-        stack.getOrCreateTag().putInt("StoredExp", toSet);
+        stack.set(DataComponentsPM.STORED_EXPERIENCE.get(), toSet);
     }
     
     /**
@@ -80,7 +83,7 @@ public class DreamVisionTalismanItem extends Item {
      * @return whether the given talisman is currently active
      */
     public boolean isActive(ItemStack stack) {
-        return !stack.getOrCreateTag().getBoolean("Disabled");
+        return stack.getOrDefault(DataComponentsPM.ENABLED.get(), true);
     }
     
     /**
@@ -90,7 +93,7 @@ public class DreamVisionTalismanItem extends Item {
      * @param active whether the talisman should capture experience
      */
     public void setActive(ItemStack stack, boolean active) {
-        stack.getOrCreateTag().putBoolean("Disabled", !active);
+        stack.set(DataComponentsPM.ENABLED.get(), active);
     }
 
     /**
@@ -119,11 +122,11 @@ public class DreamVisionTalismanItem extends Item {
      */
     public boolean doDrain(ItemStack stack, Player player) {
         Level level = player.level();
-        if (!level.isClientSide && this.isReadyToDrain(stack)) {
+        if (!level.isClientSide && level instanceof ServerLevel serverLevel && this.isReadyToDrain(stack)) {
             if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
                 this.setStoredExp(stack, 0);
-                stack.hurtAndBreak(1, player, p -> {
-                    p.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.break").withStyle(ChatFormatting.RED), false);
+                stack.hurtAndBreak(1, serverLevel, player instanceof ServerPlayer serverPlayer ? serverPlayer : null, item -> {
+                    player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.break").withStyle(ChatFormatting.RED), false);
                 });
                 return true;
             }
@@ -132,8 +135,8 @@ public class DreamVisionTalismanItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, level, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
         tooltip.add(Component.translatable("tooltip.primalmagick.dream_vision_talisman.exp", this.getStoredExp(stack), this.getExpCapacity(stack)));
         if (this.isActive(stack)) {
             tooltip.add(Component.translatable("tooltip.primalmagick.active").withStyle(ChatFormatting.GREEN));

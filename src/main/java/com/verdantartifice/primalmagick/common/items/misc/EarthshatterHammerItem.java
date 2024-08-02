@@ -15,14 +15,14 @@ public class EarthshatterHammerItem extends Item {
     protected static final RandomSource RNG = RandomSource.create();
     
     public EarthshatterHammerItem() {
-        super(new Item.Properties().durability(255).rarity(Rarity.UNCOMMON).setNoRepair());
+        super(new Item.Properties().durability(255).rarity(Rarity.UNCOMMON));
     }
     
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack stack) {
         if (this.hasCraftingRemainingItem(stack)) {
             ItemStack newStack = stack.copy();
-            newStack.hurt(1, RNG, null);
+            newStack.setDamageValue(newStack.getDamageValue() + 1);
             return newStack;
         } else {
             return ItemStack.EMPTY;

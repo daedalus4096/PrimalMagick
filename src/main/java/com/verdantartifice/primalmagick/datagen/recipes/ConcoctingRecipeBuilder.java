@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -27,9 +28,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.ingredients.PartialNBTIngredient;
@@ -149,17 +148,20 @@ public class ConcoctingRecipeBuilder {
     
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        String groupStr = this.useDefaultGroup ? ForgeRegistries.POTIONS.getKey(PotionUtils.getPotion(this.result)).getPath() : this.group;
+        String groupStr = this.useDefaultGroup ? ForgeRegistries.POTIONS.getKey(this.result.get(DataComponents.POTION_CONTENTS).potion().get().value()).getPath() : this.group;
         ConcoctingRecipe recipe = new ConcoctingRecipe(Objects.requireNonNullElse(groupStr, ""), this.result, this.ingredients, this.getFinalRequirement(), Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);
     }
     
     public void build(RecipeOutput output) {
-        Potion potion = PotionUtils.getPotion(this.result);
+        PotionContents contents = this.result.get(DataComponents.POTION_CONTENTS);
+        if (contents == null || contents.potion().isEmpty()) {
+            throw new IllegalStateException("No potion effect defined for result of concocting recipe with output " + this.result.getHoverName().getString());
+        }
         ConcoctionType type = ConcoctionUtils.getConcoctionType(this.result);
-        if (type == null || potion == null || potion == Potions.EMPTY) {
+        if (type == null) {
             throw new IllegalStateException("Output is not a concoction for concocting recipe with output " + this.result.getHoverName().getString());
         }
-        this.build(output, PrimalMagick.resource(ForgeRegistries.POTIONS.getKey(potion).getPath() + "_" + type.getSerializedName()));
+        this.build(output, PrimalMagick.resource(ForgeRegistries.POTIONS.getKey(contents.potion().get().value()).getPath() + "_" + type.getSerializedName()));
     }
 }

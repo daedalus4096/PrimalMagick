@@ -4,6 +4,7 @@
     "rootKey": "primalmagick:alchemy"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:hallowsteel_ingot"
@@ -36,7 +37,7 @@
           {
             "requirement_type": "primalmagick:item_stack",
             "stack": {
-              "Count": 1,
+              "count": 1,
               "id": "primalmagick:essence_crystal_hallowed"
             }
           },
@@ -45,7 +46,7 @@
             "rootKey": {
               "key_type": "primalmagick:stack_crafted",
               "stack": {
-                "Count": 1,
+                "count": 1,
                 "id": "primalmagick:hexium_ingot"
               }
             }

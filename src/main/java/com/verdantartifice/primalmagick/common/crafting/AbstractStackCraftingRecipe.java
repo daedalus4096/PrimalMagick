@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.Container;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeInput;
 
-public abstract class AbstractStackCraftingRecipe<C extends Container> extends AbstractRecipe<C> {
+public abstract class AbstractStackCraftingRecipe<T extends RecipeInput> extends AbstractRecipe<T> {
     protected final ItemStack output;
     
     protected AbstractStackCraftingRecipe(String group, ItemStack output) {
@@ -13,7 +13,7 @@ public abstract class AbstractStackCraftingRecipe<C extends Container> extends A
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider pRegistries) {
         return this.output;
     }
 }

@@ -1,0 +1,66 @@
+{
+  "type": "primalmagick:concocting",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "items": [
+        "primalmagick:alchemical_bomb"
+      ],
+      "nbt": "{ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "primalmagick:essence_shard_sky"
+    },
+    {
+      "item": "primalmagick:essence_shard_void"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    {
+      "tag": "forge:dusts/glowstone"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 3
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_bombs"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      }
+    ]
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:strong_slowness"
+      },
+      "primalmagick:concoction_doses": 6,
+      "primalmagick:concoction_type": "bomb",
+      "primalmagick:fuse_type": "medium"
+    },
+    "count": 1,
+    "id": "primalmagick:alchemical_bomb"
+  }
+}

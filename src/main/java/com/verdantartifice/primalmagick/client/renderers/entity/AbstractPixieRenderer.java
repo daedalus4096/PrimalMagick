@@ -24,8 +24,8 @@ public abstract class AbstractPixieRenderer extends MobRenderer<AbstractPixieEnt
     }
 
     @Override
-    protected void setupRotations(AbstractPixieEntity entityLiving, PoseStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
+    protected void setupRotations(AbstractPixieEntity entityLiving, PoseStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks, float scale) {
         matrixStackIn.translate(0.0D, (double)(Mth.cos(ageInTicks * 0.3F) * 0.1F), 0.0D);
-        super.setupRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw, partialTicks);
+        super.setupRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw, partialTicks, scale);
     }
 }

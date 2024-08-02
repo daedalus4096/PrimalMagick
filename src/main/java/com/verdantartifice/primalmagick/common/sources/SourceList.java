@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -20,6 +21,8 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 
@@ -34,6 +37,7 @@ public class SourceList {
     public static final Codec<SourceList> CODEC = RecordCodecBuilder.create(instance -> {
         return instance.group(Codec.simpleMap(Source.CODEC, Codec.INT, StringRepresentable.keys(Sources.getAllSorted().toArray(Source[]::new))).xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).fieldOf("sources").forGetter(sl -> sl.sources)).apply(instance, SourceList::new);
     });
+    public static final StreamCodec<ByteBuf, SourceList> STREAM_CODEC = ByteBufCodecs.map(Object2IntOpenHashMap::new, Source.STREAM_CODEC, ByteBufCodecs.VAR_INT).map(SourceList::new, l -> l.sources);
     
     public static final SourceList EMPTY = new SourceList();
 
@@ -398,7 +402,7 @@ public class SourceList {
         for (int index = 0; index < tagList.size(); index++) {
             CompoundTag singleTag = tagList.getCompound(index);
             if (singleTag.contains("key")) {
-                retVal.with(Sources.get(new ResourceLocation(singleTag.getString("key"))), singleTag.getInt("amount"));
+                retVal.with(Sources.get(ResourceLocation.parse(singleTag.getString("key"))), singleTag.getInt("amount"));
             }
         }
         return retVal.build();

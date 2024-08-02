@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "D": {
+      "item": "primalmagick:essence_dust_hallowed"
+    },
+    "M": {
+      "item": "primalmagick:marble_raw"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 5
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MDM",
+    "MMM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:supreme_manaweaving"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "primalmagick:marble_hallowed"
+  }
+}

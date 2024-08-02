@@ -16,7 +16,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:jukebox"
       },
       "weight": 1.0
@@ -28,7 +28,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:book"
       },
       "weight": 2.0
@@ -64,7 +64,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:cake"
       },
       "weight": 1.0
@@ -76,7 +76,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:rose_bush"
       },
       "weight": 1.0
@@ -88,7 +88,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:tnt"
       },
       "weight": 0.5
@@ -99,11 +99,15 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:discover_infernal",
+        "researchKey": {
+          "rootKey": "primalmagick:discover_infernal"
+        },
         "weightModifier": -2.0
       },
       {
-        "researchKey": "primalmagick:discover_void",
+        "researchKey": {
+          "rootKey": "primalmagick:discover_void"
+        },
         "weightModifier": -2.0
       }
     ],

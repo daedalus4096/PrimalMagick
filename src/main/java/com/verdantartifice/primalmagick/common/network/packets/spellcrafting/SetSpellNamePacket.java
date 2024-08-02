@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagick.common.network.packets.spellcrafting;
 import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to update a spell package's name on the server in the spellcrafting altar GUI.
@@ -14,33 +14,23 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SetSpellNamePacket implements IMessageToServer {
-    protected int windowId;
-    protected String name;
-    
-    public SetSpellNamePacket() {
-        this.windowId = -1;
-        this.name = "";
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, SetSpellNamePacket> STREAM_CODEC = StreamCodec.ofMember(SetSpellNamePacket::encode, SetSpellNamePacket::decode);
+
+    protected final int windowId;
+    protected final String name;
     
     public SetSpellNamePacket(int windowId, String name) {
         this.windowId = windowId;
         this.name = name;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(SetSpellNamePacket message, FriendlyByteBuf buf) {
-        buf.writeInt(message.windowId);
+    public static void encode(SetSpellNamePacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeVarInt(message.windowId);
         buf.writeUtf(message.name);
     }
     
-    public static SetSpellNamePacket decode(FriendlyByteBuf buf) {
-        SetSpellNamePacket message = new SetSpellNamePacket();
-        message.windowId = buf.readInt();
-        message.name = buf.readUtf();
-        return message;
+    public static SetSpellNamePacket decode(RegistryFriendlyByteBuf buf) {
+        return new SetSpellNamePacket(buf.readVarInt(), buf.readUtf());
     }
     
     public static void onMessage(SetSpellNamePacket message, CustomPayloadEvent.Context ctx) {

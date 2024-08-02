@@ -15,7 +15,6 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchantmentBonusAffinity extends AbstractAffinity {
     public static final Serializer SERIALIZER = new Serializer();
@@ -53,10 +52,8 @@ public class EnchantmentBonusAffinity extends AbstractAffinity {
                 throw new JsonSyntaxException("Illegal affinity target in affinity JSON for " + affinityId.toString());
             }
             
-            ResourceLocation targetId = new ResourceLocation(target);
-            if (!ForgeRegistries.ENCHANTMENTS.containsKey(targetId)) {
-                throw new JsonSyntaxException("Unknown target enchantment type " + target + " in affinity JSON for " + affinityId.toString());
-            }
+            // FIXME Validate that the specified enchantment target exists
+            ResourceLocation targetId = ResourceLocation.parse(target);
             
             EnchantmentBonusAffinity entry = new EnchantmentBonusAffinity(targetId);
             if (json.has("multiplier"))  {

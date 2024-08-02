@@ -10,9 +10,11 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -26,6 +28,16 @@ public class IconDefinition {
             ResourceLocation.CODEC.fieldOf("location").forGetter(IconDefinition::getLocation),
             Codec.STRING.optionalFieldOf("tooltipOverride").forGetter(def -> def.tooltipOverrideOpt)
         ).apply(instance, IconDefinition::new));
+    public static final StreamCodec<ByteBuf, IconDefinition> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.BOOL,
+            IconDefinition::isItem,
+            ByteBufCodecs.BOOL,
+            IconDefinition::isTag,
+            ResourceLocation.STREAM_CODEC,
+            IconDefinition::getLocation,
+            ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8),
+            def -> def.tooltipOverrideOpt,
+            IconDefinition::new);
     
     private final boolean isItem;
     private final boolean isTag;
@@ -87,17 +99,5 @@ public class IconDefinition {
         } else {
             return ImmutableList.of();
         }
-    }
-    
-    @Nullable
-    public static IconDefinition fromNetwork(FriendlyByteBuf buf) {
-        return new IconDefinition(buf.readBoolean(), buf.readBoolean(), buf.readResourceLocation(), buf.readOptional(b -> b.readUtf()));
-    }
-    
-    public static void toNetwork(FriendlyByteBuf buf, @Nullable IconDefinition icon) {
-        buf.writeBoolean(icon.isItem);
-        buf.writeBoolean(icon.isTag);
-        buf.writeResourceLocation(icon.location);
-        buf.writeOptional(icon.tooltipOverrideOpt, (b, s) -> buf.writeUtf(s));
     }
 }

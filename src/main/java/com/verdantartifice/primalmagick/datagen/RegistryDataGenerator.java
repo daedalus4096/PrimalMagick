@@ -10,6 +10,8 @@ import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagick.common.init.InitEnchantments;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -52,6 +54,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
             .add(Registries.TRIM_MATERIAL, TrimMaterialsPM::bootstrap)
             .add(Registries.TRIM_PATTERN, TrimPatternsPM::bootstrap)
             .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap)
+            .add(Registries.ENCHANTMENT, EnchantmentsPM::bootstrap)
             .add(RegistryKeysPM.RESEARCH_DISCIPLINES, ResearchDisciplines::bootstrap)
             .add(RegistryKeysPM.RESEARCH_ENTRIES, ResearchEntries::bootstrap)
             .add(RegistryKeysPM.PROJECT_TEMPLATES, ProjectTemplates::bootstrap)
@@ -65,13 +68,17 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
     }
     
     public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
+        // Custom enchantment effect types are normally registered as part of FMLCommonSetup. However, that event never gets fired
+        // in datagen runs, so it must be done manually as part of the data provider.
+        InitEnchantments.initEffects();
+
         RegistryDataGenerator registryDataGenerator = generator.addProvider(isServer, new RegistryDataGenerator(output, provider));
         // TODO Move to DataGenerators once Forge allows tagging datapack registries
         generator.addProvider(isServer, new DamageTypeTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new StructureTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new BookLanguageTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new ResearchEntryTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
-        return registryDataGenerator.getRegistryProvider();
+        return registryDataGenerator.getFullRegistries();
     }
     
     private static HolderLookup.Provider append(HolderLookup.Provider original, RegistrySetBuilder builder) {

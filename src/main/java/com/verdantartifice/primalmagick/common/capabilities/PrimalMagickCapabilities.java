@@ -27,7 +27,7 @@ public class PrimalMagickCapabilities {
     public static final Capability<IPlayerWard> WARD = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerLinguistics> LINGUISTICS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = CapabilityManager.get(new CapabilityToken<>(){});
-    public static final Capability<IManaStorage> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IManaStorage<?>> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<ITileResearchCache> RESEARCH_CACHE = CapabilityManager.get(new CapabilityToken<>(){});
     
     @Nonnull
@@ -76,7 +76,7 @@ public class PrimalMagickCapabilities {
     }
     
     @Nullable
-    public static IManaStorage getManaStorage(@Nonnull BlockEntity tile) {
+    public static IManaStorage<?> getManaStorage(@Nonnull BlockEntity tile) {
         return tile.getCapability(MANA_STORAGE, null).orElse(null);
     }
     

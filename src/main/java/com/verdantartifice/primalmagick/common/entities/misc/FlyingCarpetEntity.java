@@ -68,9 +68,9 @@ public class FlyingCarpetEntity extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DYE_COLOR, -1);
-        this.entityData.define(DAMAGE, 0.0F);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        pBuilder.define(DYE_COLOR, -1);
+        pBuilder.define(DAMAGE, 0.0F);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class FlyingCarpetEntity extends Entity {
     }
 
     @Override
-    protected Vec3 getRelativePortalPosition(Axis axis, FoundRectangle result) {
+    public Vec3 getRelativePortalPosition(Axis axis, FoundRectangle result) {
         return LivingEntity.resetForwardDirectionOfRelativePortalPosition(super.getRelativePortalPosition(axis, result));
     }
 

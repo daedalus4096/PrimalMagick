@@ -2,22 +2,24 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
-import javax.annotation.Nonnull;
-
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
-    public static final Codec<ResearchEntryKey> CODEC = ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("rootKey").xmap(ResearchEntryKey::new, key -> key.rootKey).codec();
+    public static final MapCodec<ResearchEntryKey> CODEC = ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("rootKey").xmap(ResearchEntryKey::new, key -> key.rootKey);
+    public static final StreamCodec<ByteBuf, ResearchEntryKey> STREAM_CODEC = ResourceKey.streamCodec(RegistryKeysPM.RESEARCH_ENTRIES).map(ResearchEntryKey::new, key -> key.rootKey);
+    
     private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
 
     protected final ResourceKey<ResearchEntry> rootKey;
@@ -67,18 +69,7 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
         return Objects.equals(rootKey, other.rootKey);
     }
     
-    @Nonnull
-    public static ResearchEntryKey fromNetwork(FriendlyByteBuf buf) {
+    public static ResearchEntryKey fromNetwork(RegistryFriendlyByteBuf buf) {
         return (ResearchEntryKey)AbstractResearchKey.fromNetwork(buf);
-    }
-    
-    @Nonnull
-    static ResearchEntryKey fromNetworkInner(FriendlyByteBuf buf) {
-        return new ResearchEntryKey(buf.readResourceKey(RegistryKeysPM.RESEARCH_ENTRIES));
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceKey(this.rootKey);
     }
 }

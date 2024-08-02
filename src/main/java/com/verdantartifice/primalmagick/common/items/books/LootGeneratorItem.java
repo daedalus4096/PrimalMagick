@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -28,9 +28,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
  * @author Daedalus4096
  */
 public class LootGeneratorItem extends Item {
-    protected final ResourceLocation lootTableLoc;
+    protected final ResourceKey<LootTable> lootTableLoc;
     
-    public LootGeneratorItem(ResourceLocation lootTableLoc, Item.Properties properties) {
+    public LootGeneratorItem(ResourceKey<LootTable> lootTableLoc, Item.Properties properties) {
         super(properties);
         this.lootTableLoc = lootTableLoc;
     }
@@ -38,7 +38,7 @@ public class LootGeneratorItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer && pLevel instanceof ServerLevel serverLevel) {
-            LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(this.lootTableLoc);
+            LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(this.lootTableLoc);
             LootParams lootParams = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, pPlayer.getEyePosition()).create(LootContextParamSets.CHEST);   // Origin is irrelevant, but expected
             List<ItemStack> generatedStacks = lootTable.getRandomItems(lootParams);
             ItemStack generatedStack = generatedStacks.stream().findFirst().orElse(ItemStack.EMPTY);
@@ -53,8 +53,8 @@ public class LootGeneratorItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        super.appendHoverText(pStack, pContext, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable(this.getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 }

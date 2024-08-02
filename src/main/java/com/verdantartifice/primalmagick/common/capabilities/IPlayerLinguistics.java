@@ -5,13 +5,14 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joml.Vector2ic;
+import org.joml.Vector2i;
 
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -19,6 +20,8 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
+@AutoRegisterCapability
 public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
     public static final int MAX_STUDY_COUNT = 3;
     
@@ -111,12 +114,12 @@ public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
     
     /**
      * Gets an unmodifiable view of the currently unlocked node coordinates for the given grid.  To unlock
-     * a new node, use {@link #unlockNode(ResourceLocation, Vector2ic)}.
+     * a new node, use {@link #unlockNode(ResourceLocation, Vector2i)}.
      * 
      * @param gridDefinitionId the grid definition to be queried
      * @return an unmodifiable view of the given grid's unlocked nodes
      */
-    public Set<Vector2ic> getUnlockedNodes(ResourceLocation gridDefinitionId);
+    public Set<Vector2i> getUnlockedNodes(ResourceLocation gridDefinitionId);
     
     /**
      * Clears all unlocked nodes for the given grid.
@@ -133,7 +136,7 @@ public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
      * @param nodePos the coordinates to be unlocked
      * @return true if the node was unlocked, false otherwise (i.e. the node was already unlocked)
      */
-    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2ic nodePos);
+    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2i nodePos);
     
     /**
      * Gets the system time at which the player last modified the unlock states of the given grid.

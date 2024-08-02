@@ -6,22 +6,26 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplineKey> {
-    public static final Codec<ResearchDisciplineKey> CODEC = ResourceKey.codec(RegistryKeysPM.RESEARCH_DISCIPLINES).fieldOf("rootKey").xmap(ResearchDisciplineKey::new, key -> key.rootKey).codec();
+    public static final MapCodec<ResearchDisciplineKey> CODEC = ResourceKey.codec(RegistryKeysPM.RESEARCH_DISCIPLINES).fieldOf("rootKey").xmap(ResearchDisciplineKey::new, key -> key.rootKey);
+    public static final StreamCodec<ByteBuf, ResearchDisciplineKey> STREAM_CODEC = ResourceKey.streamCodec(RegistryKeysPM.RESEARCH_DISCIPLINES).map(ResearchDisciplineKey::new, key -> key.rootKey);
+    
     private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
 
     protected final ResourceKey<ResearchDiscipline> rootKey;
@@ -90,17 +94,7 @@ public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplin
     }
     
     @Nonnull
-    public static ResearchDisciplineKey fromNetwork(FriendlyByteBuf buf) {
+    public static ResearchDisciplineKey fromNetwork(RegistryFriendlyByteBuf buf) {
         return (ResearchDisciplineKey)AbstractResearchKey.fromNetwork(buf);
-    }
-    
-    @Nonnull
-    static ResearchDisciplineKey fromNetworkInner(FriendlyByteBuf buf) {
-        return new ResearchDisciplineKey(buf.readResourceKey(RegistryKeysPM.RESEARCH_DISCIPLINES));
-    }
-
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceKey(this.rootKey);
     }
 }

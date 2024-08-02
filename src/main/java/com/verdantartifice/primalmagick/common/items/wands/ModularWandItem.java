@@ -11,7 +11,9 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandISTER;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
@@ -20,11 +22,8 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -84,8 +83,8 @@ public class ModularWandItem extends AbstractWandItem {
     }
 
     @Override
-    public double getTotalCostModifier(ItemStack stack, Player player, Source source) {
-        double mod = super.getTotalCostModifier(stack, player, source);
+    public double getTotalCostModifier(ItemStack stack, Player player, Source source, HolderLookup.Provider registries) {
+        double mod = super.getTotalCostModifier(stack, player, source, registries);
         
         // Subtract discount for wand core alignment, if any
         WandCore core = this.getWandCore(stack);
@@ -98,96 +97,75 @@ public class ModularWandItem extends AbstractWandItem {
     
     @Override
     public boolean isGlamoured(ItemStack stack) {
-        return stack.hasTag() && (stack.getTag().contains("coreAppearance") || stack.getTag().contains("capAppearance") || stack.getTag().contains("gemAppearance"));
+        return stack.has(DataComponentsPM.WAND_CORE_APPEARANCE.get()) || stack.has(DataComponentsPM.WAND_CAP_APPEARANCE.get()) || stack.has(DataComponentsPM.WAND_GEM_APPEARANCE.get());
     }
 
     @Nullable
     public WandCore getWandCore(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("core")) {
-            return WandCore.getWandCore(stack.getTag().getString("core"));
-        } else {
-            return null;
-        }
+        return stack.get(DataComponentsPM.WAND_CORE.get());
     }
     
     public void setWandCore(@Nonnull ItemStack stack, @Nonnull WandCore core) {
-        stack.addTagElement("core", StringTag.valueOf(core.getTag()));
+        stack.set(DataComponentsPM.WAND_CORE.get(), core);
+        stack.set(DataComponents.RARITY, this.calculateRarity(stack));
     }
     
     @Nullable
     public WandCore getWandCoreAppearance(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("coreAppearance")) {
-            return WandCore.getWandCore(stack.getTag().getString("coreAppearance"));
-        } else {
-            return this.getWandCore(stack);
-        }
+        return stack.getOrDefault(DataComponentsPM.WAND_CORE_APPEARANCE.get(), this.getWandCore(stack));
     }
     
     public void setWandCoreAppearance(@Nonnull ItemStack stack, @Nullable WandCore core) {
         if (core == null) {
-            stack.removeTagKey("coreAppearance");
+            stack.remove(DataComponentsPM.WAND_CORE_APPEARANCE.get());
         } else {
-            stack.addTagElement("coreAppearance", StringTag.valueOf(core.getTag()));
+            stack.set(DataComponentsPM.WAND_CORE_APPEARANCE.get(), core);
         }
     }
     
     @Nullable 
     public WandCap getWandCap(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("cap")) {
-            return WandCap.getWandCap(stack.getTag().getString("cap"));
-        } else {
-            return null;
-        }
+        return stack.get(DataComponentsPM.WAND_CAP.get());
     }
     
     public void setWandCap(@Nonnull ItemStack stack, @Nonnull WandCap cap) {
-        stack.addTagElement("cap", StringTag.valueOf(cap.getTag()));
+        stack.set(DataComponentsPM.WAND_CAP.get(), cap);
+        stack.set(DataComponents.RARITY, this.calculateRarity(stack));
     }
     
     @Nullable 
     public WandCap getWandCapAppearance(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("capAppearance")) {
-            return WandCap.getWandCap(stack.getTag().getString("capAppearance"));
-        } else {
-            return this.getWandCap(stack);
-        }
+        return stack.getOrDefault(DataComponentsPM.WAND_CAP_APPEARANCE.get(), this.getWandCap(stack));
     }
     
     public void setWandCapAppearance(@Nonnull ItemStack stack, @Nullable WandCap cap) {
         if (cap == null) {
-            stack.removeTagKey("capAppearance");
+            stack.remove(DataComponentsPM.WAND_CAP_APPEARANCE.get());
         } else {
-            stack.addTagElement("capAppearance", StringTag.valueOf(cap.getTag()));
+            stack.set(DataComponentsPM.WAND_CAP_APPEARANCE.get(), cap);
         }
     }
     
     @Nullable
     public WandGem getWandGem(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("gem")) {
-            return WandGem.getWandGem(stack.getTag().getString("gem"));
-        } else {
-            return null;
-        }
+        return stack.get(DataComponentsPM.WAND_GEM.get());
     }
     
     public void setWandGem(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
-        stack.addTagElement("gem", StringTag.valueOf(gem.getTag()));
+        stack.set(DataComponentsPM.WAND_GEM.get(), gem);
+        stack.set(DataComponents.RARITY, this.calculateRarity(stack));
     }
     
     @Nullable
     public WandGem getWandGemAppearance(@Nonnull ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("gemAppearance")) {
-            return WandGem.getWandGem(stack.getTag().getString("gemAppearance"));
-        } else {
-            return this.getWandGem(stack);
-        }
+        return stack.getOrDefault(DataComponentsPM.WAND_GEM_APPEARANCE.get(), this.getWandGem(stack));
     }
     
     public void setWandGemAppearance(@Nonnull ItemStack stack, @Nullable WandGem gem) {
         if (gem == null) {
-            stack.removeTagKey("gemAppearance");
+            stack.remove(DataComponentsPM.WAND_GEM_APPEARANCE.get());
         } else {
-            stack.addTagElement("gemAppearance", StringTag.valueOf(gem.getTag()));
+            stack.set(DataComponentsPM.WAND_GEM_APPEARANCE.get(), gem);
         }
     }
     
@@ -208,9 +186,8 @@ public class ModularWandItem extends AbstractWandItem {
         return Component.translatable("item.primalmagick.modular_wand", gemName, capName, coreName);
     }
     
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        // A modular wand's rarity is the highest of those of its components
+    protected Rarity calculateRarity(ItemStack stack) {
+        // A modular wand's unenchanted rarity is the highest of those of its components
         Rarity retVal = Rarity.COMMON;
         WandCore core = this.getWandCore(stack);
         if (core != null && core.getRarity().compareTo(retVal) > 0) {
@@ -224,22 +201,7 @@ public class ModularWandItem extends AbstractWandItem {
         if (gem != null && gem.getRarity().compareTo(retVal) > 0) {
             retVal = gem.getRarity();
         }
-        
-        // Increase rarity if enchanted
-        if (stack.isEnchanted()) {
-            switch (retVal) {
-            case COMMON:
-            case UNCOMMON:
-                return Rarity.RARE;
-            case RARE:
-                return Rarity.EPIC;
-            case EPIC:
-            default:
-                return retVal;
-            }
-        } else {
-            return retVal;
-        }
+        return retVal;
     }
     
     @Override
@@ -295,25 +257,14 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public List<SpellPackage> getSpells(ItemStack stack) {
-        // Deserialize the list of inscribed spells from the given wand stack's NBT data
-        List<SpellPackage> retVal = new ArrayList<>();
-        if (stack != null) {
-            ListTag spellTagsList = stack.getTag().getList("Spells", Tag.TAG_COMPOUND);
-            for (int index = 0; index < spellTagsList.size(); index++) {
-                CompoundTag spellTag = spellTagsList.getCompound(index);
-                SpellPackage newSpell = new SpellPackage(spellTag);
-                if (newSpell != null) {
-                    retVal.add(newSpell);
-                }
-            }
-        }
-        return retVal;
+        // Deserialize the list of inscribed spells from the given wand stack's data
+        return ImmutableList.copyOf(stack.getOrDefault(DataComponentsPM.SPELL_PACKAGE_LIST.get(), ImmutableList.of()));
     }
     
     @Override
     public int getSpellCount(ItemStack stack) {
         if (stack != null) {
-            return stack.getTag().getList("Spells", Tag.TAG_COMPOUND).size();
+            return stack.getOrDefault(DataComponentsPM.SPELL_PACKAGE_LIST.get(), ImmutableList.of()).size();
         } else {
             return 0;
         }
@@ -343,7 +294,7 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public int getActiveSpellIndex(ItemStack stack) {
         // Return -1 if no active spell is selected
-        return (stack != null && stack.getTag().contains("ActiveSpell")) ? stack.getTag().getInt("ActiveSpell") : -1;
+        return stack.getOrDefault(DataComponentsPM.ACTIVE_SPELL_INDEX.get(), -1);
     }
     
     @Override
@@ -351,11 +302,10 @@ public class ModularWandItem extends AbstractWandItem {
         // Deserialize the active inscribed spell from the given wand stack's NBT data
         SpellPackage retVal = null;
         if (stack != null) {
-            ListTag spellTagsList = stack.getTag().getList("Spells", Tag.TAG_COMPOUND);
+            List<SpellPackage> spellList = stack.get(DataComponentsPM.SPELL_PACKAGE_LIST.get());
             int index = this.getActiveSpellIndex(stack);
-            if (index >= 0 && index < spellTagsList.size()) {
-                CompoundTag spellTag = spellTagsList.getCompound(index);
-                retVal = new SpellPackage(spellTag);
+            if (spellList != null && index >= 0 && index < spellList.size()) {
+                retVal = spellList.get(index);
             }
         }
         return retVal;
@@ -367,7 +317,7 @@ public class ModularWandItem extends AbstractWandItem {
             return false;
         } else if (index >= -1 && index < this.getSpells(stack).size()) {
             // -1 is a valid value and means "no active spell"
-            stack.addTagElement("ActiveSpell", IntTag.valueOf(index));
+            stack.set(DataComponentsPM.ACTIVE_SPELL_INDEX.get(), index);
             return true;
         }
         return false;
@@ -375,7 +325,7 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public boolean canAddSpell(ItemStack stack, SpellPackage spell) {
-        if (stack == null || spell == null || spell.getPayload() == null) {
+        if (stack == null || spell == null || spell.payload() == null) {
             return false;
         }
         
@@ -387,10 +337,10 @@ public class ModularWandItem extends AbstractWandItem {
         
         // Determine the payload sources of all spells to be included in the given wand
         List<Source> spellSources = this.getSpells(stack).stream()
-                .filter(p -> (p != null && p.getPayload() != null))
-                .map(p -> p.getPayload().getSource())
+                .filter(p -> (p != null && p.payload() != null))
+                .map(p -> p.payload().getComponent().getSource())
                 .collect(Collectors.toCollection(() -> new ArrayList<>()));
-        spellSources.add(spell.getPayload().getSource());
+        spellSources.add(spell.payload().getComponent().getSource());
         
         int coreSlots = this.getCoreSpellSlotCount(core);
         if (spellSources.size() < coreSlots + 1) {
@@ -408,15 +358,9 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public boolean addSpell(ItemStack stack, SpellPackage spell) {
         if (this.canAddSpell(stack, spell)) {
-            // Save the given spell into the wand stack's NBT data
-            if (!stack.getTag().contains("Spells")) {
-                ListTag newList = new ListTag();
-                newList.add(spell.serializeNBT());
-                stack.addTagElement("Spells", newList);
-                return true;
-            } else {
-                return stack.getTag().getList("Spells", Tag.TAG_COMPOUND).add(spell.serializeNBT());
-            }
+            // Save the given spell into the wand stack's data
+            stack.set(DataComponentsPM.SPELL_PACKAGE_LIST.get(), ImmutableList.<SpellPackage>builder().addAll(this.getSpells(stack)).add(spell).build());
+            return true;
         } else {
             return false;
         }
@@ -424,7 +368,8 @@ public class ModularWandItem extends AbstractWandItem {
 
     @Override
     public void clearSpells(ItemStack stack) {
-        stack.getTag().remove("Spells");
+        stack.remove(DataComponentsPM.SPELL_PACKAGE_LIST.get());
+        stack.remove(DataComponentsPM.ACTIVE_SPELL_INDEX.get());
     }
 
     @Override

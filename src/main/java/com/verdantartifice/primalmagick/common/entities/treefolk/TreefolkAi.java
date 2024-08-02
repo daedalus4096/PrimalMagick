@@ -253,7 +253,7 @@ public class TreefolkAi {
 
     private static List<ItemStack> getBarterResponseItems(TreefolkEntity entity) {
         if (entity.level() instanceof ServerLevel serverLevel) {
-            LootTable table = serverLevel.getServer().getLootData().getLootTable(LootTablesPM.TREEFOLK_BARTERING);
+            LootTable table = serverLevel.getServer().reloadableRegistries().getLootTable(LootTablesPM.TREEFOLK_BARTERING);
             return table.getRandomItems(new LootParams.Builder(serverLevel).withParameter(LootContextParams.THIS_ENTITY, entity).create(LootContextParamSets.PIGLIN_BARTER));
         } else {
             return Collections.emptyList();

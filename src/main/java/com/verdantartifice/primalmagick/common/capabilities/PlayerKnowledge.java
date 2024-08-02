@@ -26,11 +26,11 @@ import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
-import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicFactory;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectFactory;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -54,15 +54,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Map<AbstractResearchKey<?>, Integer> stages = new ConcurrentHashMap<>();              // Map of research keys to current stage numbers
     private final Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags = new ConcurrentHashMap<>();     // Map of research keys to attached flag sets
     private final Map<KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();                    // Map of knowledge types to accrued points
-    private final LinkedList<AbstractResearchTopic> topicHistory = new LinkedList<>();                  // Grimoire research topic history
+    private final LinkedList<AbstractResearchTopic<?>> topicHistory = new LinkedList<>();                  // Grimoire research topic history
     
     private Project project = null;     // Currently active research project
-    private AbstractResearchTopic topic = null; // Last active grimoire research topic
+    private AbstractResearchTopic<?> topic = null; // Last active grimoire research topic
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
     @Nonnull
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         
         // Serialize known research, including stage number and attached flags
@@ -110,15 +110,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Serialize last active grimoire topic, if any
         if (this.topic != null) {
-            rootTag.put("topic", this.topic.serializeNBT());
+            AbstractResearchTopic.dispatchCodec().encodeStart(NbtOps.INSTANCE, this.topic)
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(encodedTopic -> rootTag.put("topic", encodedTopic));
         }
         
         // Serialize grimoire topic history
-        ListTag historyList = new ListTag();
-        for (AbstractResearchTopic topic : this.topicHistory) {
-            historyList.add(topic.serializeNBT());
-        }
-        rootTag.put("topicHistory", historyList);
+        AbstractResearchTopic.dispatchCodec().listOf().encodeStart(NbtOps.INSTANCE, this.topicHistory)
+            .resultOrPartial(LOGGER::error)
+            .ifPresent(encodedHistory -> rootTag.put("topicHistory", encodedHistory));
         
         rootTag.putLong("syncTimestamp", System.currentTimeMillis());
         
@@ -126,7 +126,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public synchronized void deserializeNBT(@Nullable CompoundTag nbt) {
+    public synchronized void deserializeNBT(HolderLookup.Provider registries, @Nullable CompoundTag nbt) {
         if (nbt == null || nbt.getLong("syncTimestamp") <= this.syncTimestamp) {
             return;
         }
@@ -183,17 +183,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Deserialize last active grimoire topic
         if (nbt.contains("topic")) {
-            this.topic = ResearchTopicFactory.deserializeNBT(nbt.getCompound("topic"));
+            AbstractResearchTopic.dispatchCodec().parse(NbtOps.INSTANCE, nbt.get("topic"))
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(decodedTopic -> this.topic = decodedTopic);
         }
         
         // Deserialize grimoire topic history
-        ListTag historyList = nbt.getList("topicHistory", Tag.TAG_COMPOUND);
-        for (int index = 0; index < historyList.size(); index++) {
-            AbstractResearchTopic topic = ResearchTopicFactory.deserializeNBT(historyList.getCompound(index));
-            if (topic != null) {
-                this.topicHistory.add(topic);
-            }
-        }
+        AbstractResearchTopic.dispatchCodec().listOf().parse(NbtOps.INSTANCE, nbt.get("topicHistory"))
+            .resultOrPartial(LOGGER::error)
+            .ifPresent(decodedHistory -> this.topicHistory.addAll(decodedHistory));
     }
 
     @Override
@@ -385,22 +383,22 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public AbstractResearchTopic getLastResearchTopic() {
+    public AbstractResearchTopic<?> getLastResearchTopic() {
         return this.topic == null ? MainIndexResearchTopic.INSTANCE : this.topic;
     }
 
     @Override
-    public void setLastResearchTopic(AbstractResearchTopic topic) {
+    public void setLastResearchTopic(AbstractResearchTopic<?> topic) {
         this.topic = topic;
     }
 
     @Override
-    public LinkedList<AbstractResearchTopic> getResearchTopicHistory() {
+    public LinkedList<AbstractResearchTopic<?>> getResearchTopicHistory() {
         return this.topicHistory;
     }
 
     @Override
-    public void setResearchTopicHistory(List<AbstractResearchTopic> history) {
+    public void setResearchTopicHistory(List<AbstractResearchTopic<?>> history) {
         this.topicHistory.clear();
         this.topicHistory.addAll(history);
     }
@@ -436,14 +434,16 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             }
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public CompoundTag serializeNBT() {
-            return instance.serializeNBT();
+        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+            return instance.serializeNBT(registries);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public void deserializeNBT(CompoundTag nbt) {
-            instance.deserializeNBT(nbt);
+        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+            instance.deserializeNBT(registries, nbt);
         }
     }
 }

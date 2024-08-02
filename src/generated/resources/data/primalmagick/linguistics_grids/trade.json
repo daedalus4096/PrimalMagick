@@ -3,366 +3,512 @@
   "language": "primalmagick:trade",
   "nodes": [
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 5
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 1,
-      "y": 0
+      "pos": [
+        4,
+        3
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:sun"
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 2,
-      "y": 0
+      "pos": [
+        6,
+        5
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        },
+        "vocabularyCost": 1
       },
-      "x": 3,
-      "y": 0
+      "pos": [
+        2,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 4,
-      "y": 0
+      "pos": [
+        4,
+        4
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 0
+      "pos": [
+        6,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:moon"
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 6,
-      "y": 0
+      "pos": [
+        4,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 5
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 0
+      "pos": [
+        4,
+        7
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 2
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 3,
-      "y": 1
+      "pos": [
+        2,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 2
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 1
+      "pos": [
+        0,
+        5
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 3
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 1,
-      "y": 2
+      "pos": [
+        2,
+        7
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:sky"
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 2,
-      "y": 2
+      "pos": [
+        0,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 3,
-      "y": 2
+      "pos": [
+        7,
+        0
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 4,
-      "y": 2
+      "pos": [
+        5,
+        0
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 2
+      "pos": [
+        7,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:sea"
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 6,
-      "y": 2
+      "pos": [
+        5,
+        1
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 3
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 7,
-      "y": 2
+      "pos": [
+        3,
+        0
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 3,
-      "y": 3
+      "pos": [
+        5,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 4,
-      "y": 3
+      "pos": [
+        3,
+        1
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 3
+      "pos": [
+        5,
+        3
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "observation",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 4,
-      "y": 4
+      "pos": [
+        1,
+        0
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 4
+      "pos": [
+        3,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 2
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 6,
-      "y": 4
+      "pos": [
+        5,
+        4
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 5
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 5
+      "pos": [
+        3,
+        3
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 2
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 5
+      "pos": [
+        5,
+        5
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 6,
-      "y": 5
+      "pos": [
+        1,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 0,
-      "y": 6
+      "pos": [
+        5,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "attunement",
-        "points": 1,
-        "source": "primalmagick:earth"
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 1,
-      "y": 6
+      "pos": [
+        5,
+        7
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 2,
-      "y": 6
+      "pos": [
+        3,
+        7
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 4
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        },
+        "vocabularyCost": 1
       },
-      "x": 4,
-      "y": 6
+      "pos": [
+        1,
+        6
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 3
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 6
+      "pos": [
+        1,
+        7
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 4
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        },
+        "vocabularyCost": 1
       },
-      "x": 6,
-      "y": 6
+      "pos": [
+        6,
+        0
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 4
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 1,
-      "y": 7
+      "pos": [
+        4,
+        0
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 5
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        },
+        "vocabularyCost": 1
       },
-      "x": 2,
-      "y": 7
+      "pos": [
+        6,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "knowledge",
-        "knowledge_type": "theory",
-        "levels": 1
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        "vocabularyCost": 1
       },
-      "x": 3,
-      "y": 7
+      "pos": [
+        2,
+        0
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 3
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
       },
-      "x": 4,
-      "y": 7
+      "pos": [
+        4,
+        2
+      ]
     },
     {
-      "cost": 1,
-      "reward": {
-        "type": "comprehension",
-        "language": "primalmagick:trade",
-        "points": 4
+      "definition": {
+        "reward": {
+          "language": "primalmagick:trade",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
       },
-      "x": 5,
-      "y": 7
+      "pos": [
+        6,
+        4
+      ]
     }
   ],
-  "start_x": 4,
-  "start_y": 3
+  "startPos": [
+    4,
+    3
+  ]
 }

@@ -4,17 +4,16 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to trigger a server-side withdrawl of essence from an essence cask.
@@ -22,17 +21,12 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class WithdrawCaskEssencePacket implements IMessageToServer {
-    protected EssenceType essenceType;
-    protected Source essenceSource;
-    protected int amount;
-    protected BlockPos caskPos;
-    
-    public WithdrawCaskEssencePacket() {
-        this.essenceType = null;
-        this.essenceSource = null;
-        this.amount = -1;
-        this.caskPos = BlockPos.ZERO;
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, WithdrawCaskEssencePacket> STREAM_CODEC = StreamCodec.ofMember(WithdrawCaskEssencePacket::encode, WithdrawCaskEssencePacket::decode);
+
+    protected final EssenceType essenceType;
+    protected final Source essenceSource;
+    protected final int amount;
+    protected final BlockPos caskPos;
     
     public WithdrawCaskEssencePacket(EssenceType type, Source source, int amount, BlockPos pos) {
         this.essenceType = type;
@@ -41,24 +35,15 @@ public class WithdrawCaskEssencePacket implements IMessageToServer {
         this.caskPos = pos;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_SERVER;
-    }
-    
-    public static void encode(WithdrawCaskEssencePacket message, FriendlyByteBuf buf) {
-        buf.writeUtf(message.essenceType.toString());
-        buf.writeResourceLocation(message.essenceSource.getId());
+    public static void encode(WithdrawCaskEssencePacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeEnum(message.essenceType);
+        Source.STREAM_CODEC.encode(buf, message.essenceSource);
         buf.writeVarInt(message.amount);
-        buf.writeLong(message.caskPos.asLong());
+        buf.writeBlockPos(message.caskPos);
     }
     
-    public static WithdrawCaskEssencePacket decode(FriendlyByteBuf buf) {
-        WithdrawCaskEssencePacket message = new WithdrawCaskEssencePacket();
-        message.essenceType = EssenceType.valueOf(buf.readUtf());
-        message.essenceSource = Sources.get(buf.readResourceLocation());
-        message.amount = buf.readVarInt();
-        message.caskPos = BlockPos.of(buf.readLong());
-        return message;
+    public static WithdrawCaskEssencePacket decode(RegistryFriendlyByteBuf buf) {
+        return new WithdrawCaskEssencePacket(buf.readEnum(EssenceType.class), Source.STREAM_CODEC.decode(buf), buf.readVarInt(), buf.readBlockPos());
     }
     
     public static void onMessage(WithdrawCaskEssencePacket message, CustomPayloadEvent.Context ctx) {

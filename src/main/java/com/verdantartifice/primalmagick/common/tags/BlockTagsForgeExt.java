@@ -16,6 +16,6 @@ public class BlockTagsForgeExt {
     public static final TagKey<Block> MINEABLE_WITH_SHEARS = tag("mineable/shears");
 
     private static TagKey<Block> tag(String name) {
-        return BlockTags.create(new ResourceLocation("forge", name));
+        return BlockTags.create(ResourceLocation.fromNamespaceAndPath("forge", name));
     }
 }

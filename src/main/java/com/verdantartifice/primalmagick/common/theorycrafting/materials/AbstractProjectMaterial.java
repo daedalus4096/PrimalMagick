@@ -18,8 +18,9 @@ import com.verdantartifice.primalmagick.common.research.requirements.AndRequirem
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -34,6 +35,10 @@ public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<
         return RegistryCodecs.codec(ProjectMaterialTypesPM.TYPES).dispatch("material_type", AbstractProjectMaterial::getType, type -> type.codecSupplier().get());
     }
     
+    public static StreamCodec<RegistryFriendlyByteBuf, AbstractProjectMaterial<?>> dispatchStreamCodec() {
+        return RegistryCodecs.streamCodec(ProjectMaterialTypesPM.TYPES).dispatch(AbstractProjectMaterial::getType, type -> type.streamCodecSupplier().get());
+    }
+    
     protected final double weight;
     protected final double bonusReward;
     protected final Optional<AbstractRequirement<?>> requirement;
@@ -46,20 +51,13 @@ public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<
     
     protected abstract ProjectMaterialType<T> getType();
     
-    public static AbstractProjectMaterial<?> fromNetwork(FriendlyByteBuf buf) {
-        ResourceLocation typeId = buf.readResourceLocation();
-        double weight = buf.readDouble();
-        double bonusReward = buf.readDouble();
-        Optional<AbstractRequirement<?>> requirement = buf.readOptional(AbstractRequirement::fromNetwork);
-        return ProjectMaterialTypesPM.TYPES.get().getValue(typeId).networkReader().apply(buf, weight, bonusReward, requirement);
+    public static AbstractProjectMaterial<?> fromNetwork(RegistryFriendlyByteBuf buf) {
+        return AbstractProjectMaterial.dispatchStreamCodec().decode(buf);
     }
     
-    public void toNetwork(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.getType().id());
-        this.toNetworkInner(buf);
+    public void toNetwork(RegistryFriendlyByteBuf buf) {
+        AbstractProjectMaterial.dispatchStreamCodec().encode(buf, this);
     }
-    
-    protected abstract void toNetworkInner(FriendlyByteBuf buf);
     
     /**
      * Determine if this material's requirements are satisfied by the given player.

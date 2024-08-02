@@ -13,7 +13,6 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 
 /**
  * Advancement criterion that is triggered when the player reaches at least the given comprehension value.
@@ -32,7 +31,7 @@ public class LinguisticsComprehensionTrigger extends SimpleCriterionTrigger<Ling
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, ResourceKey<BookLanguage> language, int threshold) implements SimpleCriterionTrigger.SimpleInstance {
         public static Codec<LinguisticsComprehensionTrigger.TriggerInstance> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(LinguisticsComprehensionTrigger.TriggerInstance::player), 
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(LinguisticsComprehensionTrigger.TriggerInstance::player), 
                     ResourceKey.codec(RegistryKeysPM.BOOK_LANGUAGES).fieldOf("language").forGetter(LinguisticsComprehensionTrigger.TriggerInstance::language),
                     Codec.INT.fieldOf("threshold").forGetter(LinguisticsComprehensionTrigger.TriggerInstance::threshold)
                 ).apply(instance, LinguisticsComprehensionTrigger.TriggerInstance::new));

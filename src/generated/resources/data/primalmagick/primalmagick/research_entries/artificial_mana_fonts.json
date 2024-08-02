@@ -85,6 +85,7 @@
     "rootKey": "primalmagick:manaweaving"
   },
   "finales": [],
+  "flags": {},
   "icon": {
     "isItem": true,
     "location": "primalmagick:artificial_font_earth"

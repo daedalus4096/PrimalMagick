@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -61,8 +62,8 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
     }
     
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         
         this.phaseTicks = compound.getInt("PhaseTicks");
         this.nextUpdate = compound.getInt("NextUpdate");
@@ -70,15 +71,15 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         this.nextSegment = Segment.values()[compound.getInt("NextSegmentIndex")];
         this.currentRotation = RotationPhase.values()[compound.getInt("CurrentRotationIndex")];
         
-        Source last = Sources.get(new ResourceLocation(compound.getString("LastSource")));
+        Source last = Sources.get(ResourceLocation.parse(compound.getString("LastSource")));
         this.lastSource = last == null ? Sources.EARTH : last;
-        Source next = Sources.get(new ResourceLocation(compound.getString("NextSource")));
+        Source next = Sources.get(ResourceLocation.parse(compound.getString("NextSource")));
         this.nextSource = next == null ? Sources.EARTH : next;
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("PhaseTicks", this.phaseTicks);
         compound.putInt("NextUpdate", this.nextUpdate);
         compound.putInt("LastSegmentIndex", this.lastSegment.ordinal());

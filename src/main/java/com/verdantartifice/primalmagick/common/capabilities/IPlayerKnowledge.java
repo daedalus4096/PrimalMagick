@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -22,6 +23,8 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
+@SuppressWarnings("deprecation")
+@AutoRegisterCapability
 public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
     /**
      * Remove all research from the player.
@@ -179,28 +182,28 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * 
      * @return the player's last active grimoire research topic
      */
-    public AbstractResearchTopic getLastResearchTopic();
+    public AbstractResearchTopic<?> getLastResearchTopic();
     
     /**
      * Sets the player's last active grimoire research topic.
      * 
      * @param topic the player's last active grimoire research topic
      */
-    public void setLastResearchTopic(AbstractResearchTopic topic);
+    public void setLastResearchTopic(AbstractResearchTopic<?> topic);
     
     /**
      * Gets the player's grimoire research topic history.
      * 
      * @return the player's grimoire research topic history
      */
-    public LinkedList<AbstractResearchTopic> getResearchTopicHistory();
+    public LinkedList<AbstractResearchTopic<?>> getResearchTopicHistory();
     
     /**
      * Sets the player's grimoire research topic history.
      * 
      * @param history the player's grimoire research topic history
      */
-    public void setResearchTopicHistory(List<AbstractResearchTopic> history);
+    public void setResearchTopicHistory(List<AbstractResearchTopic<?>> history);
     
     /**
      * Sync the given player's research and knowledge data to the their client.

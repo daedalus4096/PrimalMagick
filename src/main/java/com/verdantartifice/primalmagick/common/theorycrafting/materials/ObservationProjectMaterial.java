@@ -3,9 +3,8 @@ package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -13,7 +12,9 @@ import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -25,14 +26,29 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ObservationProjectMaterial extends AbstractProjectMaterial<ObservationProjectMaterial> {
-    public static Codec<ObservationProjectMaterial> codec() {
-        return RecordCodecBuilder.create(instance -> instance.group(
+    public static MapCodec<ObservationProjectMaterial> codec() {
+        return RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ExtraCodecs.POSITIVE_INT.fieldOf("count").forGetter(ObservationProjectMaterial::getCount),
                 Codec.BOOL.fieldOf("consumed").forGetter(ObservationProjectMaterial::isConsumed),
                 Codec.DOUBLE.fieldOf("weight").forGetter(ObservationProjectMaterial::getWeight),
                 Codec.DOUBLE.fieldOf("bonusReward").forGetter(ObservationProjectMaterial::getBonusReward),
                 AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ObservationProjectMaterial::getRequirement)
             ).apply(instance, ObservationProjectMaterial::new));
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, ObservationProjectMaterial> streamCodec() {
+        return StreamCodec.composite(
+                ByteBufCodecs.VAR_INT,
+                ObservationProjectMaterial::getCount,
+                ByteBufCodecs.BOOL,
+                ObservationProjectMaterial::isConsumed,
+                ByteBufCodecs.DOUBLE,
+                ObservationProjectMaterial::getWeight,
+                ByteBufCodecs.DOUBLE,
+                ObservationProjectMaterial::getBonusReward,
+                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()),
+                ObservationProjectMaterial::getRequirement,
+                ObservationProjectMaterial::new);
     }
 
     protected final int count;
@@ -95,17 +111,6 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial<Observat
         return true;
     }
 
-    @Nonnull
-    static ObservationProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
-        return new ObservationProjectMaterial(buf.readVarInt(), buf.readBoolean(), weight, bonusReward, requirement);
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeVarInt(this.count);
-        buf.writeBoolean(this.consumed);
-    }
-    
     public static Builder builder(int count) {
         return new Builder(count);
     }

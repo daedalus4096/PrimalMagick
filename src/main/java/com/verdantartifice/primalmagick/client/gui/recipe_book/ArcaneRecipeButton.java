@@ -25,13 +25,13 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  * @author Daedalus4096
  */
 public class ArcaneRecipeButton extends AbstractWidget {
-    protected static final WidgetSprites SLOT_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/slot_craftable"), new ResourceLocation("recipe_book/slot_uncraftable"), new ResourceLocation("recipe_book/slot_many_craftable"), new ResourceLocation("recipe_book/slot_many_uncraftable"));
+    protected static final WidgetSprites SLOT_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/slot_craftable"), ResourceLocation.withDefaultNamespace("recipe_book/slot_uncraftable"), ResourceLocation.withDefaultNamespace("recipe_book/slot_many_craftable"), ResourceLocation.withDefaultNamespace("recipe_book/slot_many_uncraftable"));
     protected static final float ANIMATION_TIME = 15.0F;
     protected static final int BACKGROUND_SIZE = 25;
     public static final int TICKS_TO_SWAP = 30;
     protected static final Component MORE_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.moreRecipes");
     
-    protected IArcaneRecipeBookMenu<?> menu;
+    protected IArcaneRecipeBookMenu<?, ?> menu;
     protected ArcaneRecipeBook book;
     protected ArcaneRecipeCollection collection;
     protected float time;
@@ -45,7 +45,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     public void init(ArcaneRecipeCollection recipeCollection, ArcaneRecipeBookPage page) {
         Minecraft mc = page.getMinecraft();
         this.collection = recipeCollection;
-        this.menu = mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?> recipeBookMenu ? recipeBookMenu : null;
+        this.menu = mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?, ?> recipeBookMenu ? recipeBookMenu : null;
         this.book = page.getArcaneRecipeBook();
         List<RecipeHolder<?>> list = this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType()));
         

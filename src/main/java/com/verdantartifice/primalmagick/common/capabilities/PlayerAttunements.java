@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -39,7 +40,7 @@ public class PlayerAttunements implements IPlayerAttunements {
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         
         // Serialize recorded attunement values
@@ -74,7 +75,7 @@ public class PlayerAttunements implements IPlayerAttunements {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
@@ -85,7 +86,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         ListTag attunementList = nbt.getList("Attunements", Tag.TAG_COMPOUND);
         for (int index = 0; index < attunementList.size(); index++) {
             CompoundTag tag = attunementList.getCompound(index);
-            Source source = Sources.get(new ResourceLocation(tag.getString("Source")));
+            Source source = Sources.get(ResourceLocation.parse(tag.getString("Source")));
             AttunementType type = null;
             try {
                 type = AttunementType.valueOf(tag.getString("Type"));
@@ -97,7 +98,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         // Deserialize suppression values
         ListTag suppressionList = nbt.getList("Suppressions", Tag.TAG_STRING);
         for (int index = 0; index < suppressionList.size(); index++) {
-            Source source = Sources.get(new ResourceLocation(suppressionList.getString(index)));
+            Source source = Sources.get(ResourceLocation.parse(suppressionList.getString(index)));
             this.setSuppressed(source, true);
         }
     }
@@ -174,14 +175,16 @@ public class PlayerAttunements implements IPlayerAttunements {
             }
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public CompoundTag serializeNBT() {
-            return instance.serializeNBT();
+        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+            return instance.serializeNBT(registries);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public void deserializeNBT(CompoundTag nbt) {
-            instance.deserializeNBT(nbt);
+        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+            instance.deserializeNBT(registries, nbt);
         }
     }
 }

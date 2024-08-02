@@ -8,8 +8,12 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 
@@ -22,6 +26,9 @@ import net.minecraft.world.item.Rarity;
  */
 public class WandCap implements IWandComponent {
     protected static final Map<String, WandCap> REGISTRY = new HashMap<>();
+    
+    public static final Codec<WandCap> CODEC = Codec.STRING.xmap(WandCap::getWandCap, WandCap::getTag);
+    public static final StreamCodec<ByteBuf, WandCap> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(WandCap::getWandCap, WandCap::getTag);
     
     public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1D, 1);
     public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 1.0D, 2);

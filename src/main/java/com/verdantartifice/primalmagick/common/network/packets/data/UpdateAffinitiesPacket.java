@@ -11,8 +11,9 @@ import com.verdantartifice.primalmagick.common.affinities.IAffinitySerializer;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to update affinity JSON data on the client from the server.
@@ -20,33 +21,24 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class UpdateAffinitiesPacket implements IMessageToClient {
-    protected List<IAffinity> affinities;
+    public static final StreamCodec<RegistryFriendlyByteBuf, UpdateAffinitiesPacket> STREAM_CODEC = StreamCodec.ofMember(UpdateAffinitiesPacket::encode, UpdateAffinitiesPacket::decode);
+
+    protected final List<IAffinity> affinities;
     
     public UpdateAffinitiesPacket(Collection<IAffinity> affinities) {
         this.affinities = new ArrayList<>(affinities);
     }
     
-    public UpdateAffinitiesPacket(FriendlyByteBuf buf) {
-        this.affinities = buf.readList(UpdateAffinitiesPacket::fromNetwork);
-    }
-    
-    public List<IAffinity> getAffinities() {
-        return this.affinities;
-    }
-    
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-    
-    public static void encode(UpdateAffinitiesPacket message, FriendlyByteBuf buf) {
+    public static void encode(UpdateAffinitiesPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeCollection(message.affinities, UpdateAffinitiesPacket::toNetwork);
     }
     
-    public static UpdateAffinitiesPacket decode(FriendlyByteBuf buf) {
-        return new UpdateAffinitiesPacket(buf);
+    public static UpdateAffinitiesPacket decode(RegistryFriendlyByteBuf buf) {
+        return new UpdateAffinitiesPacket(buf.readList(UpdateAffinitiesPacket::fromNetwork));
     }
     
     public static IAffinity fromNetwork(FriendlyByteBuf buf) {
+        // TODO Replace this with a dispatched stream codec
         String typeStr = buf.readUtf();
         AffinityType type = AffinityType.parse(typeStr);
         IAffinitySerializer<?> serializer = AffinityManager.getSerializer(type);
@@ -63,6 +55,6 @@ public class UpdateAffinitiesPacket implements IMessageToClient {
     }
     
     public static void onMessage(UpdateAffinitiesPacket message, CustomPayloadEvent.Context ctx) {
-        AffinityManager.getOrCreateInstance().replaceAffinities(message.getAffinities());
+        AffinityManager.getOrCreateInstance().replaceAffinities(message.affinities);
     }
 }

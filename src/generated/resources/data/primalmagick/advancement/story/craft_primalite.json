@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/craft_essence_furnace",
+  "criteria": {
+    "has_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:primalite_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_primalite.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:primalite_ingot"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_primalite.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

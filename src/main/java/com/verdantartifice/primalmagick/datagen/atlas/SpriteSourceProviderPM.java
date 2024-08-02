@@ -40,7 +40,7 @@ import net.minecraftforge.common.data.SpriteSourceProvider;
  * @author Daedalus4096
  */
 public class SpriteSourceProviderPM extends SpriteSourceProvider {
-    protected static final ResourceLocation ARMOR_TRIMS_ATLAS = new ResourceLocation("armor_trims");
+    protected static final ResourceLocation ARMOR_TRIMS_ATLAS = ResourceLocation.withDefaultNamespace("armor_trims");
     private static final Logger LOGGER = LogUtils.getLogger();
 
     protected final Set<ResourceLocation> trackedSingles = new HashSet<>();
@@ -102,35 +102,35 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
                         PrimalMagick.resource("trims/items/robe_feet_trim"), 
                         PrimalMagick.resource("trims/items/robe_head_trim"), 
                         PrimalMagick.resource("trims/items/robe_legs_trim")),
-                new ResourceLocation("trims/color_palettes/trim_palette"),
+                ResourceLocation.withDefaultNamespace("trims/color_palettes/trim_palette"),
                 ImmutableMap.<String, ResourceLocation>builder()
-                        .put("quartz", new ResourceLocation("trims/color_palettes/quartz"))
-                        .put("iron", new ResourceLocation("trims/color_palettes/iron"))
-                        .put("gold", new ResourceLocation("trims/color_palettes/gold"))
-                        .put("diamond", new ResourceLocation("trims/color_palettes/diamond"))
-                        .put("netherite", new ResourceLocation("trims/color_palettes/netherite"))
-                        .put("redstone", new ResourceLocation("trims/color_palettes/redstone"))
-                        .put("copper", new ResourceLocation("trims/color_palettes/copper"))
-                        .put("emerald", new ResourceLocation("trims/color_palettes/emerald"))
-                        .put("lapis", new ResourceLocation("trims/color_palettes/lapis"))
-                        .put("amethyst", new ResourceLocation("trims/color_palettes/amethyst"))
+                        .put("quartz", ResourceLocation.withDefaultNamespace("trims/color_palettes/quartz"))
+                        .put("iron", ResourceLocation.withDefaultNamespace("trims/color_palettes/iron"))
+                        .put("gold", ResourceLocation.withDefaultNamespace("trims/color_palettes/gold"))
+                        .put("diamond", ResourceLocation.withDefaultNamespace("trims/color_palettes/diamond"))
+                        .put("netherite", ResourceLocation.withDefaultNamespace("trims/color_palettes/netherite"))
+                        .put("redstone", ResourceLocation.withDefaultNamespace("trims/color_palettes/redstone"))
+                        .put("copper", ResourceLocation.withDefaultNamespace("trims/color_palettes/copper"))
+                        .put("emerald", ResourceLocation.withDefaultNamespace("trims/color_palettes/emerald"))
+                        .put("lapis", ResourceLocation.withDefaultNamespace("trims/color_palettes/lapis"))
+                        .put("amethyst", ResourceLocation.withDefaultNamespace("trims/color_palettes/amethyst"))
                         .build()));
         
         // Add mod armor trim pattern model overlays to the armor trims atlas
         armorTrimsAtlas.addSource(new PalettedPermutations(
                 List.of(PrimalMagick.resource("trims/models/armor/runic"), 
                         PrimalMagick.resource("trims/models/armor/runic_leggings")),
-                new ResourceLocation("trims/color_palettes/trim_palette"),
+                ResourceLocation.withDefaultNamespace("trims/color_palettes/trim_palette"),
                 ImmutableMap.<String, ResourceLocation>builder()
-                        .put("rune_earth", new ResourceLocation("trims/color_palettes/emerald"))
-                        .put("rune_sea", new ResourceLocation("trims/color_palettes/lapis"))
-                        .put("rune_sky", new ResourceLocation("trims/color_palettes/diamond"))
-                        .put("rune_sun", new ResourceLocation("trims/color_palettes/gold"))
-                        .put("rune_moon", new ResourceLocation("trims/color_palettes/iron"))
-                        .put("rune_blood", new ResourceLocation("trims/color_palettes/redstone"))
-                        .put("rune_infernal", new ResourceLocation("trims/color_palettes/copper"))
-                        .put("rune_void", new ResourceLocation("trims/color_palettes/amethyst"))
-                        .put("rune_hallowed", new ResourceLocation("trims/color_palettes/quartz"))
+                        .put("rune_earth", ResourceLocation.withDefaultNamespace("trims/color_palettes/emerald"))
+                        .put("rune_sea", ResourceLocation.withDefaultNamespace("trims/color_palettes/lapis"))
+                        .put("rune_sky", ResourceLocation.withDefaultNamespace("trims/color_palettes/diamond"))
+                        .put("rune_sun", ResourceLocation.withDefaultNamespace("trims/color_palettes/gold"))
+                        .put("rune_moon", ResourceLocation.withDefaultNamespace("trims/color_palettes/iron"))
+                        .put("rune_blood", ResourceLocation.withDefaultNamespace("trims/color_palettes/redstone"))
+                        .put("rune_infernal", ResourceLocation.withDefaultNamespace("trims/color_palettes/copper"))
+                        .put("rune_void", ResourceLocation.withDefaultNamespace("trims/color_palettes/amethyst"))
+                        .put("rune_hallowed", ResourceLocation.withDefaultNamespace("trims/color_palettes/quartz"))
                         .build()));
     }
 

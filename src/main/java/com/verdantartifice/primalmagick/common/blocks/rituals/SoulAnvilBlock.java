@@ -20,7 +20,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -92,7 +92,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     }
     
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 
@@ -102,15 +102,15 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     }
     
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (player != null && player.getItemInHand(handIn).getItem() == ItemsPM.SOUL_GEM.get() && !state.getValue(DIRTY)) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player != null && stack.is(ItemsPM.SOUL_GEM.get()) && !state.getValue(DIRTY)) {
             // If using a soul gem on a clean anvil, break it
             worldIn.playSound(player, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
-                if (!player.getAbilities().instabuild) {
-                    player.getItemInHand(handIn).shrink(1);
-                    if (player.getItemInHand(handIn).getCount() <= 0) {
+                if (!player.hasInfiniteMaterials()) {
+                    stack.shrink(1);
+                    if (stack.getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);
                     }
                 }
@@ -120,20 +120,19 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
                     this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus());
                 }
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         } else if (player != null && player.getItemInHand(handIn).is(ItemTagsPM.MAGICKAL_CLOTH) && state.getValue(DIRTY)) {
             // If using a magickal cloth on a dirty anvil, clean it
-            worldIn.playSound(player, pos, SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
+            worldIn.playSound(player, pos, SoundEvents.ARMOR_EQUIP_LEATHER.value(), SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         } else {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced

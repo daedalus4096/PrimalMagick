@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEnti
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -72,7 +71,7 @@ public class ScribeTableBlock extends BaseEntityBlock {
     }
     
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
         if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the scribe table
             BlockEntity tile = worldIn.getBlockEntity(pos);
@@ -93,7 +92,6 @@ public class ScribeTableBlock extends BaseEntityBlock {
         return new ScribeTableTileEntity(pPos, pState);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         // Drop the tile entity's inventory into the world when the block is replaced

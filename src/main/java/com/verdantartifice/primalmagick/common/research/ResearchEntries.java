@@ -16,13 +16,16 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.Tags;
 
 /**
@@ -348,7 +351,7 @@ public class ResearchEntries {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
     }
     
-    public static void bootstrap(BootstapContext<ResearchEntry> context) {
+    public static void bootstrap(BootstrapContext<ResearchEntry> context) {
         bootstrapBasicsEntries(context);
         bootstrapManaweavingEntries(context); 
         bootstrapAlchemyEntries(context);
@@ -360,7 +363,7 @@ public class ResearchEntries {
         bootstrapInternalEntries(context);
     }
     
-    private static void bootstrapBasicsEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapBasicsEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.BASICS;
         register(context, FIRST_STEPS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.GRIMOIRE.get())
                 .stage().requiredCraft(ItemsPM.ARCANE_WORKBENCH.get()).recipe(ItemsPM.MUNDANE_WAND.get()).end()
@@ -380,13 +383,10 @@ public class ResearchEntries {
                 .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
-        // FIXME Re-add for 1.21 release
-/*
         register(context, LINGUISTICS, key -> ResearchEntry.builder(key).discipline(discipline).icon(Items.WRITABLE_BOOK).parent(FIRST_STEPS)
                 .stage().requiredObservations(1).requiredStat(StatsPM.ANCIENT_BOOKS_READ, 1).end()
                 .stage().recipe(ItemsPM.SCRIBE_TABLE.get()).recipe(ItemsPM.LORE_TABLET_DIRTY.get()).end()
                 .build());
-*/
         register(context, UNLOCK_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(FIRST_STEPS)
                 .stage().requiredObservations(1).end()
                 .stage().end()
@@ -461,19 +461,19 @@ public class ResearchEntries {
                 .stage().requiredItem(Tags.Items.NETHER_STARS).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_HALLOWED, 100).end()
                 .stage().attunement(Sources.HALLOWED, 5).end()
                 .build());
-        register(context, SECRETS_OF_THE_UNIVERSE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_UNKNOWN)
+        register(context, SECRETS_OF_THE_UNIVERSE, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_UNKNOWN)
                 .stage().requiredResearch(SOTU_DISCOVER_BLOOD).requiredResearch(SOTU_DISCOVER_INFERNAL).requiredResearch(SOTU_DISCOVER_VOID)
                         .requiredResearch(SOTU_RESEARCH_ARCANOMETER).requiredResearch(SOTU_RESEARCH_HEXIUM).requiredResearch(SOTU_RESEARCH_POWER_RUNE)
                         .requiredResearch(SOTU_RESEARCH_SANGUINE_CRUCIBLE).requiredResearch(SOTU_RESEARCH_CLEANSING_RITE).requiredResearch(SOTU_SCAN_HALLOWED_ORB).end()
                 .stage().attunement(Sources.HALLOWED, 4).end()
                 .build());
-        register(context, COMPLETE_BASICS, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.GRIMOIRE.get()).finale(discipline)
+        register(context, COMPLETE_BASICS, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.GRIMOIRE.get()).finale(discipline)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
                 .build());
-        register(context, THEORY_OF_EVERYTHING, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.GRIMOIRE.get()).finale(ResearchDisciplines.BASICS)
-                .finale(ResearchDisciplines.ALCHEMY).finale(ResearchDisciplines.MAGITECH).finale(ResearchDisciplines.MANAWEAVING)
+        register(context, THEORY_OF_EVERYTHING, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.GRIMOIRE.get())
+                .finale(ResearchDisciplines.BASICS).finale(ResearchDisciplines.ALCHEMY).finale(ResearchDisciplines.MAGITECH).finale(ResearchDisciplines.MANAWEAVING)
                 .finale(ResearchDisciplines.RITUAL).finale(ResearchDisciplines.RUNEWORKING).finale(ResearchDisciplines.SORCERY)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 2).attunement(Sources.SEA, 2).attunement(Sources.SKY, 2).attunement(Sources.SUN, 2).attunement(Sources.MOON, 2)
@@ -481,7 +481,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapManaweavingEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapManaweavingEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.MANAWEAVING;
         register(context, BASIC_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_MANAWEAVING).parent(UNLOCK_MANAWEAVING)
                 .stage().recipe(ItemsPM.MANA_PRISM.get()).end()
@@ -507,7 +507,7 @@ public class ResearchEntries {
                         .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
                         .recipe(ItemsPM.MARBLE_HALLOWED_STAIRS.get()).recipe(ItemsPM.MARBLE_HALLOWED_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BOOKSHELF.get()).end()
                 .build());
-        register(context, COMPLETE_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_MANAWEAVING).finale(discipline)
+        register(context, COMPLETE_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_MANAWEAVING).finale(discipline)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
@@ -742,7 +742,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapAlchemyEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapAlchemyEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.ALCHEMY;
         register(context, BASIC_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_ALCHEMY).parent(UNLOCK_ALCHEMY)
                 .stage().requiredCraft(ItemsPM.ESSENCE_FURNACE.get()).end()
@@ -760,7 +760,7 @@ public class ResearchEntries {
                 .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().end()
                 .build());
-        register(context, COMPLETE_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_ALCHEMY).finale(discipline)
+        register(context, COMPLETE_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_ALCHEMY).finale(discipline)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
@@ -986,7 +986,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapSorceryEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapSorceryEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.SORCERY;
         register(context, BASIC_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(UNLOCK_SORCERY)
                 .stage().attunement(Sources.EARTH, 1).recipe(ItemsPM.SPELL_SCROLL_BLANK.get()).recipe(ItemsPM.SPELLCRAFTING_ALTAR.get()).end()
@@ -1003,7 +1003,7 @@ public class ResearchEntries {
                 .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 250).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().end()
                 .build());
-        register(context, COMPLETE_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_SORCERY).finale(discipline)
+        register(context, COMPLETE_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_SORCERY).finale(discipline)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
@@ -1085,7 +1085,7 @@ public class ResearchEntries {
                 .stage().requiredResearch(FURRY_FRIEND).requiredTheories(1).end()
                 .stage().attunement(Sources.MOON, 3).end()
                 .build());
-        register(context, SPELL_PAYLOAD_POLYMORPH_SHEEP, key -> ResearchEntry.builder(key).discipline(discipline).hidden().finaleExempt().icon(Sources.MOON.getImage())
+        register(context, SPELL_PAYLOAD_POLYMORPH_SHEEP, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden().finaleExempt()).icon(Sources.MOON.getImage())
                 .stage().end()
                 .build());
         register(context, SPELL_PAYLOAD_CONJURE_ANIMAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.BLOOD.getImage()).parent(MASTER_SORCERY).parent(SPELL_PAYLOAD_BLOOD)
@@ -1131,7 +1131,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapRuneworkingEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapRuneworkingEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.RUNEWORKING;
         register(context, BASIC_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_RUNEWORKING).parent(UNLOCK_RUNEWORKING)
                 .stage().recipe(ItemsPM.RUNECARVING_TABLE.get()).recipe(ItemsPM.RUNE_UNATTUNED.get()).recipe(ItemsPM.RUNESCRIBING_ALTAR_BASIC.get()).end()
@@ -1149,7 +1149,7 @@ public class ResearchEntries {
                 .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).end()
                 .build());
-        register(context, COMPLETE_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_RUNEWORKING).finale(discipline)
+        register(context, COMPLETE_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_RUNEWORKING).finale(discipline)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
@@ -1266,7 +1266,8 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapRitualEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapRitualEntries(BootstrapContext<ResearchEntry> context) {
+        HolderGetter<Enchantment> enchGetter = context.lookup(Registries.ENCHANTMENT);
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.RITUAL;
         register(context, BASIC_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_RITUAL).parent(UNLOCK_RITUAL)
                 .stage().recipe(ItemsPM.RITUAL_ALTAR.get()).recipe(ItemsPM.OFFERING_PEDESTAL.get()).end()
@@ -1283,7 +1284,7 @@ public class ResearchEntries {
                 .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().end()
                 .build());
-        register(context, COMPLETE_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_RITUAL).finale(discipline)
+        register(context, COMPLETE_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_RITUAL).finale(discipline)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
@@ -1441,63 +1442,63 @@ public class ResearchEntries {
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.PRIMAL_SHOVEL.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_PROJECT).requiredResearch(RUNE_AREA).requiredResearch(RUNE_EARTH)
-                        .sibling(EnchantmentsPM.REVERBERATION.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                        .siblingEnchantment(enchGetter.getOrThrow(EnchantmentsPM.REVERBERATION)).siblingResearch(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
         register(context, PRIMAL_FISHING_ROD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.PRIMAL_FISHING_ROD.get())
                 .parent(EXPERT_RITUAL).parent(PRIMALITE).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_SEA).parent(RITUAL_BELL).parent(RITUAL_LECTERN)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.PRIMAL_FISHING_ROD.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_AREA).requiredResearch(RUNE_SEA)
-                        .sibling(EnchantmentsPM.BOUNTY.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                        .siblingEnchantment(enchGetter.getOrThrow(EnchantmentsPM.BOUNTY)).siblingResearch(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
         register(context, PRIMAL_AXE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.PRIMAL_AXE.get())
                 .parent(EXPERT_RITUAL).parent(PRIMALITE).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_SKY).parent(RITUAL_BELL).parent(INCENSE_BRAZIER)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.PRIMAL_AXE.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_PROJECT).requiredResearch(RUNE_AREA).requiredResearch(RUNE_SKY)
-                        .sibling(EnchantmentsPM.DISINTEGRATION.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                        .siblingEnchantment(enchGetter.getOrThrow(EnchantmentsPM.DISINTEGRATION)).siblingResearch(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
         register(context, PRIMAL_HOE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.PRIMAL_HOE.get())
                 .parent(EXPERT_RITUAL).parent(PRIMALITE).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_SUN).parent(RITUAL_CANDLES).parent(INCENSE_BRAZIER)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.PRIMAL_HOE.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_CREATURE).requiredResearch(RUNE_SUN)
-                        .sibling(EnchantmentsPM.VERDANT.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                        .siblingEnchantment(enchGetter.getOrThrow(EnchantmentsPM.VERDANT)).siblingResearch(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
         register(context, PRIMAL_PICKAXE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.PRIMAL_PICKAXE.get())
                 .parent(EXPERT_RITUAL).parent(PRIMALITE).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_MOON).parent(RITUAL_LECTERN).parent(INCENSE_BRAZIER)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.PRIMAL_PICKAXE.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_ITEM).requiredResearch(RUNE_MOON)
-                        .sibling(EnchantmentsPM.LUCKY_STRIKE.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                        .siblingEnchantment(enchGetter.getOrThrow(EnchantmentsPM.LUCKY_STRIKE)).siblingResearch(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
         register(context, FORBIDDEN_TRIDENT, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.FORBIDDEN_TRIDENT.get())
                 .parent(DISCOVER_BLOOD).parent(MASTER_RITUAL).parent(HEXIUM).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_BLOOD).parent(BLOODLETTER)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.FORBIDDEN_TRIDENT.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_PROJECT).requiredResearch(RUNE_CREATURE).requiredResearch(RUNE_BLOOD)
-                        .sibling(EnchantmentsPM.RENDING.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                        .siblingEnchantment(enchGetter.getOrThrow(EnchantmentsPM.RENDING)).siblingResearch(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
         register(context, FORBIDDEN_BOW, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.FORBIDDEN_BOW.get())
                 .parent(DISCOVER_INFERNAL).parent(MASTER_RITUAL).parent(HEXIUM).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_INFERNAL).parent(SOUL_ANVIL)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.FORBIDDEN_BOW.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_ABSORB).requiredResearch(RUNE_CREATURE).requiredResearch(RUNE_INFERNAL)
-                        .sibling(EnchantmentsPM.SOULPIERCING.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                        .siblingEnchantment(enchGetter.getOrThrow(EnchantmentsPM.SOULPIERCING)).siblingResearch(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
         register(context, FORBIDDEN_SWORD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.FORBIDDEN_SWORD.get())
                 .parent(DISCOVER_VOID).parent(MASTER_RITUAL).parent(HEXIUM).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_VOID).parent(BLOODLETTER).parent(SOUL_ANVIL)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.FORBIDDEN_SWORD.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_ITEM).requiredResearch(RUNE_VOID)
-                        .sibling(EnchantmentsPM.ESSENCE_THIEF.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                        .siblingEnchantment(enchGetter.getOrThrow(EnchantmentsPM.ESSENCE_THIEF)).siblingResearch(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
         register(context, SACRED_SHIELD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.SACRED_SHIELD.get())
                 .parent(DISCOVER_HALLOWED).parent(SUPREME_RITUAL).parent(HALLOWSTEEL).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_HALLOWED).parent(CELESTIAL_HARP)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.SACRED_SHIELD.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_PROTECT).requiredResearch(RUNE_SELF).requiredResearch(RUNE_HALLOWED)
-                        .sibling(EnchantmentsPM.BULWARK.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                        .siblingEnchantment(enchGetter.getOrThrow(EnchantmentsPM.BULWARK)).siblingResearch(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
         register(context, DREAM_VISION_TALISMAN, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.DREAM_VISION_TALISMAN.get())
                 .parent(EXPERT_RITUAL).parent(RITUAL_CANDLES).parent(INCENSE_BRAZIER).parent(RITUAL_LECTERN)
@@ -1525,7 +1526,7 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapMagitechEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapMagitechEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.MAGITECH;
         register(context, BASIC_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_MAGITECH).parent(UNLOCK_MAGITECH)
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).end()
@@ -1542,7 +1543,7 @@ public class ResearchEntries {
                 .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).requiredResearch(SCAN_HALLOWSTEEL).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).end()
                 .build());
-        register(context, COMPLETE_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_MAGITECH).finale(discipline)
+        register(context, COMPLETE_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_MAGITECH).finale(discipline)
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
@@ -1737,63 +1738,63 @@ public class ResearchEntries {
                 .build());
     }
     
-    private static void bootstrapScanEntries(BootstapContext<ResearchEntry> context) {
+    private static void bootstrapScanEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.SCANS;
-        register(context, RAW_MARBLE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.MARBLE_RAW.get()).parent(UNLOCK_SCANS)
+        register(context, RAW_MARBLE, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.MARBLE_RAW.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.MARBLE_SLAB.get()).recipe(ItemsPM.MARBLE_STAIRS.get()).recipe(ItemsPM.MARBLE_WALL.get()).recipe(ItemsPM.MARBLE_BRICKS.get())
                         .recipe(ItemsPM.MARBLE_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_BRICK_STAIRS.get()).recipe(ItemsPM.MARBLE_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_PILLAR.get())
                         .recipe(ItemsPM.MARBLE_CHISELED.get()).recipe(ItemsPM.MARBLE_TILES.get()).recipe(ItemsPM.MARBLE_RUNED.get()).recipe(ItemsPM.MARBLE_BOOKSHELF.get()).end()
                 .build());
-        register(context, HALLOWED_ORB, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.HALLOWED_ORB.get()).parent(UNLOCK_SCANS)
+        register(context, HALLOWED_ORB, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.HALLOWED_ORB.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.HALLOWOOD_SAPLING.get()).end()
                 .build());
-        register(context, HALLOWOOD_TREES, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.HALLOWOOD_SAPLING.get()).parent(UNLOCK_SCANS)
+        register(context, HALLOWOOD_TREES, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.HALLOWOOD_SAPLING.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.HALLOWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_HALLOWOOD_WOOD.get()).recipe(ItemsPM.HALLOWOOD_PLANKS.get())
                         .recipe(ItemsPM.HALLOWOOD_SLAB.get()).recipe(ItemsPM.HALLOWOOD_STAIRS.get()).recipe(ItemsPM.HALLOWOOD_PILLAR.get()).end()
                 .build());
-        register(context, SUNWOOD_TREES, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.SUNWOOD_SAPLING.get()).parent(UNLOCK_SCANS)
+        register(context, SUNWOOD_TREES, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.SUNWOOD_SAPLING.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.SUNWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_SUNWOOD_WOOD.get()).recipe(ItemsPM.SUNWOOD_PLANKS.get())
                         .recipe(ItemsPM.SUNWOOD_SLAB.get()).recipe(ItemsPM.SUNWOOD_STAIRS.get()).recipe(ItemsPM.SUNWOOD_PILLAR.get()).end()
                 .build());
-        register(context, MOONWOOD_TREES, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.MOONWOOD_SAPLING.get()).parent(UNLOCK_SCANS)
+        register(context, MOONWOOD_TREES, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.MOONWOOD_SAPLING.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.MOONWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_MOONWOOD_WOOD.get()).recipe(ItemsPM.MOONWOOD_PLANKS.get())
                         .recipe(ItemsPM.MOONWOOD_SLAB.get()).recipe(ItemsPM.MOONWOOD_STAIRS.get()).recipe(ItemsPM.MOONWOOD_PILLAR.get()).end()
                 .build());
-        register(context, ROCK_SALT, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.REFINED_SALT.get()).parent(UNLOCK_SCANS)
+        register(context, ROCK_SALT, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.REFINED_SALT.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.REFINED_SALT.get()).recipe("rock_salt_from_smelting")
                         .recipe(ItemsPM.SALT_BLOCK.get()).recipe("refined_salt_from_salt_block")
                         .recipe(ItemsPM.SALTED_BAKED_POTATO.get()).recipe(ItemsPM.SALTED_BEETROOT_SOUP.get()).recipe(ItemsPM.SALTED_COOKED_BEEF.get())
                         .recipe(ItemsPM.SALTED_COOKED_CHICKEN.get()).recipe(ItemsPM.SALTED_COOKED_COD.get()).recipe(ItemsPM.SALTED_COOKED_MUTTON.get()).recipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
                         .recipe(ItemsPM.SALTED_COOKED_RABBIT.get()).recipe(ItemsPM.SALTED_COOKED_SALMON.get()).recipe(ItemsPM.SALTED_MUSHROOM_STEW.get()).recipe(ItemsPM.SALTED_RABBIT_STEW.get()).end()
                 .build());
-        register(context, ALCHEMICAL_WASTE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.ALCHEMICAL_WASTE.get()).parent(UNLOCK_SCANS)
+        register(context, ALCHEMICAL_WASTE, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.ALCHEMICAL_WASTE.get()).parent(UNLOCK_SCANS)
                 .stage().end()
                 .build());
-        register(context, QUARTZ, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.QUARTZ).parent(UNLOCK_SCANS)
+        register(context, QUARTZ, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(Items.QUARTZ).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.QUARTZ_NUGGET.get()).recipe("quartz_from_nuggets").recipe("quartz_from_smelting").end()
                 .build());
-        register(context, INNER_DEMON, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(UNLOCK_SCANS)
+        register(context, INNER_DEMON, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(UNLOCK_SCANS)
                 .stage().end()
                 .build());
-        register(context, BOOKSHELF, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.BOOKSHELF).parent(UNLOCK_SCANS)
+        register(context, BOOKSHELF, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(Items.BOOKSHELF).parent(UNLOCK_SCANS)
                 .stage().end()
                 .build());
-        register(context, BEEHIVE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.BEEHIVE).parent(UNLOCK_SCANS)
+        register(context, BEEHIVE, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(Items.BEEHIVE).parent(UNLOCK_SCANS)
                 .stage().end()
                 .build());
-        register(context, BEACON, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.BEACON).parent(UNLOCK_SCANS)
+        register(context, BEACON, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(Items.BEACON).parent(UNLOCK_SCANS)
                 .stage().end()
                 .build());
-        register(context, DRAGON_EGG, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.DRAGON_EGG).parent(UNLOCK_SCANS)
+        register(context, DRAGON_EGG, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(Items.DRAGON_EGG).parent(UNLOCK_SCANS)
                 .stage().end()
                 .build());
-        register(context, DRAGON_HEAD, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.DRAGON_HEAD).parent(UNLOCK_SCANS)
+        register(context, DRAGON_HEAD, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(Items.DRAGON_HEAD).parent(UNLOCK_SCANS)
                 .stage().end()
                 .build());
-        register(context, MYSTICAL_RELIC, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.MYSTICAL_RELIC.get()).parent(UNLOCK_SCANS)
+        register(context, MYSTICAL_RELIC, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.MYSTICAL_RELIC.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.MYSTICAL_RELIC.get()).end()
                 .build());
-        register(context, HUMMING_ARTIFACT, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).parent(UNLOCK_SCANS)
+        register(context, HUMMING_ARTIFACT, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.HUMMING_ARTIFACT_EARTH.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SEA.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SKY.get())
                         .recipe(ItemsPM.HUMMING_ARTIFACT_SUN.get()).recipe(ItemsPM.HUMMING_ARTIFACT_MOON.get()).end()
                 .addendum().requiredResearch(DISCOVER_BLOOD).recipe(ItemsPM.HUMMING_ARTIFACT_BLOOD.get()).end()
@@ -1801,58 +1802,58 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_VOID).recipe(ItemsPM.HUMMING_ARTIFACT_VOID.get()).end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).recipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get()).end()
                 .build());
-        register(context, TREEFOLK, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.HEARTWOOD.get()).parent(UNLOCK_SCANS)
+        register(context, TREEFOLK, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.HEARTWOOD.get()).parent(UNLOCK_SCANS)
                 .stage().end()
                 .build());
     }
     
-    private static void bootstrapInternalEntries(BootstapContext<ResearchEntry> context) {
-        register(context, UNLOCK_SCANS, key -> ResearchEntry.builder(key).internal().build());
-        register(context, UNLOCK_RUNE_ENCHANTMENTS, key -> ResearchEntry.builder(key).internal().build());
-        register(context, DISCOVER_BLOOD, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE)
+    private static void bootstrapInternalEntries(BootstrapContext<ResearchEntry> context) {
+        register(context, UNLOCK_SCANS, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).build());
+        register(context, UNLOCK_RUNE_ENCHANTMENTS, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).build());
+        register(context, DISCOVER_BLOOD, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_TUBE)
                 .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_BLOOD).end()
                 .build());
-        register(context, DISCOVER_INFERNAL, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE)
+        register(context, DISCOVER_INFERNAL, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_TUBE)
                 .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_INFERNAL).end()
                 .build());
-        register(context, DISCOVER_VOID, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE)
+        register(context, DISCOVER_VOID, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_TUBE)
                 .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_VOID).end()
                 .build());
-        register(context, DISCOVER_FORBIDDEN, key -> ResearchEntry.builder(key).internal().icon(ICON_UNKNOWN).build());
-        register(context, DISCOVER_HALLOWED, key -> ResearchEntry.builder(key).internal().icon(ICON_UNKNOWN).build());
-        register(context, ENV_EARTH, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, ENV_SEA, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, ENV_SKY, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, ENV_SUN, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, ENV_MOON, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, SOTU_DISCOVER_BLOOD, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
-        register(context, SOTU_DISCOVER_INFERNAL, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
-        register(context, SOTU_DISCOVER_VOID, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
-        register(context, SOTU_RESEARCH_ARCANOMETER, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
-        register(context, SOTU_RESEARCH_HEXIUM, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
-        register(context, SOTU_RESEARCH_POWER_RUNE, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
-        register(context, SOTU_RESEARCH_SANGUINE_CRUCIBLE, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
-        register(context, SOTU_RESEARCH_CLEANSING_RITE, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
-        register(context, SOTU_SCAN_HALLOWED_ORB, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
-        register(context, SCAN_PRIMALITE, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
-        register(context, SCAN_HEXIUM, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
-        register(context, SCAN_HALLOWSTEEL, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
-        register(context, DROWN_A_LITTLE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
-        register(context, NEAR_DEATH_EXPERIENCE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
-        register(context, FURRY_FRIEND, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
-        register(context, BREED_ANIMAL, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
-        register(context, FEEL_THE_BURN, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
-        register(context, SCAN_NETHER_STAR, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
-        register(context, SCAN_FLYING_CREATURE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, SCAN_GOLEM, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, WAND_TRANSFORM_HINT, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, FOUND_SHRINE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, GOT_DREAM, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, SIPHON_PROMPT, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
-        register(context, UNKNOWN_RUNE, key -> ResearchEntry.builder(key).internal().icon(ICON_UNKNOWN).build());
+        register(context, DISCOVER_FORBIDDEN, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_UNKNOWN).build());
+        register(context, DISCOVER_HALLOWED, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_UNKNOWN).build());
+        register(context, ENV_EARTH, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, ENV_SEA, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, ENV_SKY, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, ENV_SUN, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, ENV_MOON, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, SOTU_DISCOVER_BLOOD, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_MAP).build());
+        register(context, SOTU_DISCOVER_INFERNAL, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_MAP).build());
+        register(context, SOTU_DISCOVER_VOID, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_MAP).build());
+        register(context, SOTU_RESEARCH_ARCANOMETER, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_TUBE).build());
+        register(context, SOTU_RESEARCH_HEXIUM, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_TUBE).build());
+        register(context, SOTU_RESEARCH_POWER_RUNE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_TUBE).build());
+        register(context, SOTU_RESEARCH_SANGUINE_CRUCIBLE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_TUBE).build());
+        register(context, SOTU_RESEARCH_CLEANSING_RITE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_TUBE).build());
+        register(context, SOTU_SCAN_HALLOWED_ORB, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_BAG).build());
+        register(context, SCAN_PRIMALITE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_BAG).build());
+        register(context, SCAN_HEXIUM, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_BAG).build());
+        register(context, SCAN_HALLOWSTEEL, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_BAG).build());
+        register(context, DROWN_A_LITTLE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_MAP).build());
+        register(context, NEAR_DEATH_EXPERIENCE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_MAP).build());
+        register(context, FURRY_FRIEND, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_MAP).build());
+        register(context, BREED_ANIMAL, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_MAP).build());
+        register(context, FEEL_THE_BURN, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_MAP).build());
+        register(context, SCAN_NETHER_STAR, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal().hasHint()).icon(ICON_BAG).build());
+        register(context, SCAN_FLYING_CREATURE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, SCAN_GOLEM, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, WAND_TRANSFORM_HINT, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, FOUND_SHRINE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, GOT_DREAM, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, SIPHON_PROMPT, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
+        register(context, UNKNOWN_RUNE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_UNKNOWN).build());
     }
     
-    private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
+    private static Holder.Reference<ResearchEntry> register(BootstrapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
         return context.register(key, supplier.apply(key));
     }
     

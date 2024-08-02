@@ -23,10 +23,11 @@ import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagick.client.gui.WandGlamourTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandInscriptionTableScreen;
+import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
+import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeGainComprehensionScreen;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeStudyVocabularyScreen;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeTranscribeWorksScreen;
-import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.OfferingPedestalTER;
@@ -45,6 +46,8 @@ import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -74,7 +77,7 @@ public class ClientModLifecycleEvents {
         registerScreens();
         registerTERs();
         registerItemProperties(event);
-        registerSearchTrees(event);
+        registerHudOverlays();
     }
 
     private static void registerScreens() {
@@ -130,16 +133,16 @@ public class ClientModLifecycleEvents {
 
                 @Override
                 public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int seed) {
-                    if (entity == null || !(entity instanceof Player)) {
-                        return 0.0F;
-                    } else {
+                    if (entity instanceof Player player) {
                         // If the currently moused-over block/item has not yet been scanned, raise the antennae
-                        if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(world), world, (Player)entity)) {
+                        if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(world, player), world, (Player)entity)) {
                             this.incrementScanState();
                         } else {
                             this.decrementScanState();
                         }
                         return scanState;
+                    } else {
+                        return 0F;
                     }
                 }
                 
@@ -176,44 +179,54 @@ public class ClientModLifecycleEvents {
                     return (inMain || inOff) && entity instanceof Player && ((Player)entity).fishing != null ? 1.0F : 0.0F;
                 }
             };
-            ItemProperties.register(ItemsPM.PRIMALITE_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
-            ItemProperties.register(ItemsPM.PRIMAL_FISHING_ROD.get(), new ResourceLocation("cast"), castProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
+            ItemProperties.register(ItemsPM.PRIMAL_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
             
             ItemPropertyFunction handActiveProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
             };
-            ItemProperties.register(ItemsPM.PRIMALITE_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
-            ItemProperties.register(ItemsPM.FORBIDDEN_TRIDENT.get(), new ResourceLocation("throwing"), handActiveProperty);
-            ItemProperties.register(ItemsPM.PRIMALITE_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
-            ItemProperties.register(ItemsPM.SACRED_SHIELD.get(), new ResourceLocation("blocking"), handActiveProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
+            ItemProperties.register(ItemsPM.FORBIDDEN_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
+            ItemProperties.register(ItemsPM.SACRED_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
             
             ItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 if (entity == null) {
                     return 0.0F;
                 } else {
-                    return entity.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F;
+                    return entity.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 20.0F;
                 }
             };
-            ItemProperties.register(ItemsPM.PRIMALITE_BOW.get(), new ResourceLocation("pull"), pullProperty);
-            ItemProperties.register(ItemsPM.PRIMALITE_BOW.get(), new ResourceLocation("pulling"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_BOW.get(), new ResourceLocation("pull"), pullProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_BOW.get(), new ResourceLocation("pulling"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_BOW.get(), new ResourceLocation("pull"), pullProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_BOW.get(), new ResourceLocation("pulling"), handActiveProperty);
-            ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), new ResourceLocation("pull"), pullProperty);
-            ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), new ResourceLocation("pulling"), handActiveProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
+            ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
+            ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
         });
     }
     
-    private static void registerSearchTrees(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            ArcaneSearchRegistry.registerSearchTree();
-        });
+    private static void registerHudOverlays() {
+        Minecraft mc = Minecraft.getInstance();
+        
+        // Register the wand HUD overlay
+        // FIXME Register above hotbar layer instead of at the top
+        LayeredDraw wandLayer = new LayeredDraw();
+        wandLayer.add(WandHudOverlay::render);
+        mc.gui.layers.add(wandLayer, WandHudOverlay::shouldRender);
+        
+        // Register the ward health bar overlay
+        // FIXME Register above player health layer instead of at the top
+        LayeredDraw wardLayer = new LayeredDraw();
+        wardLayer.add(WardingHudOverlay::render);
+        mc.gui.layers.add(wardLayer, WardingHudOverlay::shouldRender);
     }
 }

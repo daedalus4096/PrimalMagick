@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
@@ -10,7 +11,6 @@ import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberT
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -18,18 +18,16 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Server data container for the dissolution chamber GUI.
  * 
  * @author Daedalus4096
  */
-public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<DissolutionChamberTileEntity> implements IArcaneRecipeBookMenu<Container> {
+public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<DissolutionChamberTileEntity> implements IArcaneRecipeBookMenu<SingleRecipeInput, IDissolutionRecipe> {
     protected final ContainerData chamberData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
@@ -146,12 +144,8 @@ public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<Disso
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<? extends Recipe<? super Container>> recipe) {
-        if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
-            return recipe.value().matches(new RecipeWrapper(modifiable), this.level);
-        } else {
-            return false;
-        }
+    public boolean recipeMatches(RecipeHolder<IDissolutionRecipe> recipe) {
+        return recipe.value().matches(new SingleRecipeInput(this.getTileInventory(Direction.UP).getStackInSlot(0)), this.level);
     }
 
     @Override

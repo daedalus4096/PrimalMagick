@@ -1,0 +1,108 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:earth"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/epic"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:sea"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/epic"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:sky"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/epic"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:sun"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/epic"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:moon"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/epic"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:trade"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/epic"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:forbidden"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/epic"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_language": "primalmagick:hallowed"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "value": "primalmagick:gameplay/library/catalog/epic"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "primalmagick:gameplay/library/archaeology"
+}

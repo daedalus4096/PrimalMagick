@@ -8,7 +8,9 @@
       "rootKey": "primalmagick:sorcery"
     }
   ],
-  "hidden": true,
+  "flags": {
+    "hidden": true
+  },
   "icon": {
     "location": "primalmagick:textures/research/discipline_sorcery.png"
   },

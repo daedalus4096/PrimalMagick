@@ -2,15 +2,15 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
@@ -21,10 +21,16 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class StatRequirement extends AbstractRequirement<StatRequirement> {
-    public static final Codec<StatRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<StatRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("stat").xmap(loc -> StatsManager.getStat(loc), stat -> stat.key()).forGetter(req -> req.stat),
             ExtraCodecs.POSITIVE_INT.fieldOf("requiredValue").forGetter(req -> req.requiredValue)
         ).apply(instance, StatRequirement::new));
+    public static final StreamCodec<ByteBuf, StatRequirement> STREAM_CODEC = StreamCodec.composite(
+            ResourceLocation.STREAM_CODEC.map(loc -> StatsManager.getStat(loc), stat -> stat.key()),
+            StatRequirement::getStat,
+            ByteBufCodecs.VAR_INT,
+            StatRequirement::getRequiredValue,
+            StatRequirement::new);
     
     protected final Stat stat;
     protected final int requiredValue;
@@ -78,16 +84,5 @@ public class StatRequirement extends AbstractRequirement<StatRequirement> {
     @Override
     protected RequirementType<StatRequirement> getType() {
         return RequirementsPM.STAT.get();
-    }
-
-    @Nonnull
-    static StatRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        return new StatRequirement(StatsManager.getStat(buf.readResourceLocation()), buf.readVarInt());
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.stat.key());
-        buf.writeVarInt(this.requiredValue);
     }
 }

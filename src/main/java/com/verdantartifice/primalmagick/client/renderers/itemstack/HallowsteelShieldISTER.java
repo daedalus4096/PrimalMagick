@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
+
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
@@ -10,8 +12,8 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class HallowsteelShieldISTER extends AbstractTieredShieldISTER {
-    public static final ResourceLocation TEXTURE_SHIELD_BASE = new ResourceLocation("primalmagick:entity/shield/hallowsteel_shield_base");
-    public static final ResourceLocation TEXTURE_SHIELD_NO_PATTERN = new ResourceLocation("primalmagick:entity/shield/hallowsteel_shield_base_nopattern");
+    public static final ResourceLocation TEXTURE_SHIELD_BASE = PrimalMagick.resource("entity/shield/hallowsteel_shield_base");
+    public static final ResourceLocation TEXTURE_SHIELD_NO_PATTERN = PrimalMagick.resource("entity/shield/hallowsteel_shield_base_nopattern");
     @SuppressWarnings("deprecation")
     protected static final Material LOCATION_SHIELD_BASE = new Material(TextureAtlas.LOCATION_BLOCKS, TEXTURE_SHIELD_BASE);
     @SuppressWarnings("deprecation")

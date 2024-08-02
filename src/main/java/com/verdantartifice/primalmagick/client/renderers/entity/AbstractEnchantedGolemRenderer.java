@@ -20,8 +20,8 @@ public abstract class AbstractEnchantedGolemRenderer<T extends AbstractEnchanted
     }
 
     @Override
-    protected void setupRotations(T entityLiving, PoseStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
-        super.setupRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw, partialTicks);
+    protected void setupRotations(T entityLiving, PoseStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks, float scale) {
+        super.setupRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw, partialTicks, scale);
         if (!((double)entityLiving.walkAnimation.speed() < 0.01D)) {
             float f = 13.0F;
             float f1 = entityLiving.walkAnimation.position(partialTicks) + 6.0F;

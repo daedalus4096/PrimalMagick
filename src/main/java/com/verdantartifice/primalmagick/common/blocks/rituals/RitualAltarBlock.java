@@ -50,7 +50,6 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
         }
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving) {
@@ -90,24 +89,23 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
         return createTickerHelper(type, TileEntityTypesPM.RITUAL_ALTAR.get(), RitualAltarTileEntity::tick);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!worldIn.isClientSide) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RitualAltarTileEntity altarTile) {
-                if (!altarTile.getItem().isEmpty() && player.getItemInHand(handIn).isEmpty()) {
+                if (!altarTile.getItem().isEmpty()) {
                     // When activating a full altar with an empty hand, pick up the item
                     ItemStack stack = altarTile.getItem().copy();
                     altarTile.setItem(ItemStack.EMPTY);
-                    player.setItemInHand(handIn, stack);
+                    player.setItemInHand(InteractionHand.MAIN_HAND, stack);
                     player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                     return InteractionResult.SUCCESS;
                 }
             }
         }
-        return super.use(state, worldIn, pos, player, handIn, hit);
+        return super.useWithoutItem(state, worldIn, pos, player, hit);
     }
 
     @Override

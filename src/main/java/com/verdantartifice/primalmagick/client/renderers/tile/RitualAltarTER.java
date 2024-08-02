@@ -30,12 +30,11 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
     }
     
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float a, float u, float v) {
-        renderer.vertex(stack.last().pose(), x, y, z)
-                .color(r, g, b, a)
-                .uv(u, v)
-                .uv2(240, 240)
-                .normal(1, 0, 0)
-                .endVertex();
+        renderer.addVertex(stack.last().pose(), x, y, z)
+                .setColor(r, g, b, a)
+                .setUv(u, v)
+                .setUv2(240, 240)
+                .setNormal(1, 0, 0);
     }
     
     protected void renderCube(VertexConsumer builder, PoseStack matrixStack, float ds, float r, float g, float b, float a, TextureAtlasSprite sprite) {

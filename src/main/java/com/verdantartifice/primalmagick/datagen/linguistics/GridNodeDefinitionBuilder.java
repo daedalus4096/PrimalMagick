@@ -80,7 +80,7 @@ public class GridNodeDefinitionBuilder {
             json.addProperty("x", this.xPos);
             json.addProperty("y", this.yPos);
             json.addProperty("cost", this.cost);
-            json.add("reward", this.reward.getRewardJson());
+            json.add("reward", this.reward.serialize());
         }
     }
 }

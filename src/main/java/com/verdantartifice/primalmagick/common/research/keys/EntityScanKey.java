@@ -2,26 +2,30 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
-    public static final Codec<EntityScanKey> CODEC = ResourceLocation.CODEC.fieldOf("entityType").xmap(loc -> {
+    public static final MapCodec<EntityScanKey> CODEC = ResourceLocation.CODEC.fieldOf("entityType").xmap(loc -> {
         return new EntityScanKey(ForgeRegistries.ENTITY_TYPES.getValue(loc));
     }, key -> {
         return EntityType.getKey(key.entityType);
-    }).codec();
+    });
+    public static final StreamCodec<ByteBuf, EntityScanKey> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(loc -> {
+        return new EntityScanKey(ForgeRegistries.ENTITY_TYPES.getValue(loc));
+    }, key -> {
+        return EntityType.getKey(key.entityType);
+    });
     
     private static final String PREFIX = "*";
     private static final ResourceLocation ICON_MAP = PrimalMagick.resource("textures/research/research_map.png");
@@ -67,15 +71,5 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
             return false;
         EntityScanKey other = (EntityScanKey) obj;
         return EntityType.getKey(other.entityType).equals(EntityType.getKey(this.entityType));
-    }
-    
-    @Nonnull
-    static EntityScanKey fromNetworkInner(FriendlyByteBuf buf) {
-        return new EntityScanKey(ForgeRegistries.ENTITY_TYPES.getValue(buf.readResourceLocation()));
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(EntityType.getKey(this.entityType));
     }
 }

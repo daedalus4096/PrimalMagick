@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.OptionalInt;
+import java.util.Optional;
 import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
@@ -238,11 +238,11 @@ public class PrimalMagickCommand {
                 .then(Commands.argument("targets", EntityArgument.players())
                     .then(Commands.literal("give")
                         // /pm books <targets> give <bookId>
-                        .then(Commands.argument("bookId", ResourceKeyArgumentPM.key(RegistryKeysPM.BOOKS)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceKeyArgumentPM.getBook(context, "bookId"), defaultLanguage(context.getSource()), OptionalInt.empty()))
+                        .then(Commands.argument("bookId", ResourceKeyArgumentPM.key(RegistryKeysPM.BOOKS)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceKeyArgumentPM.getBook(context, "bookId"), defaultLanguage(context.getSource()), Optional.empty()))
                             // /pm books <targets> give <bookId> [<languageId>]
-                            .then(Commands.argument("languageId", ResourceKeyArgumentPM.key(RegistryKeysPM.BOOK_LANGUAGES)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceKeyArgumentPM.getBook(context, "bookId"), ResourceKeyArgumentPM.getLanguage(context, "languageId"), OptionalInt.empty()))
+                            .then(Commands.argument("languageId", ResourceKeyArgumentPM.key(RegistryKeysPM.BOOK_LANGUAGES)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceKeyArgumentPM.getBook(context, "bookId"), ResourceKeyArgumentPM.getLanguage(context, "languageId"), Optional.empty()))
                                 // /pm books <targets> give <bookId> [<languageId>] [<comprehension>]
-                                .then(Commands.argument("comprehension", IntegerArgumentType.integer(0)).executes((context) -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceKeyArgumentPM.getBook(context, "bookId"), ResourceKeyArgumentPM.getLanguage(context, "languageId"), OptionalInt.of(IntegerArgumentType.getInteger(context, "comprehension")))))
+                                .then(Commands.argument("comprehension", IntegerArgumentType.integer(0)).executes((context) -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceKeyArgumentPM.getBook(context, "bookId"), ResourceKeyArgumentPM.getLanguage(context, "languageId"), Optional.of(IntegerArgumentType.getInteger(context, "comprehension")))))
                             )
                         )
                     )
@@ -900,10 +900,10 @@ public class PrimalMagickCommand {
         return BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, source.getServer().registryAccess());
     }
 
-    private static int giveBook(CommandSourceStack source, Collection<ServerPlayer> targets, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage, OptionalInt comprehension) {
+    private static int giveBook(CommandSourceStack source, Collection<ServerPlayer> targets, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage, Optional<Integer> comprehension) {
         ItemStack bookStack = new ItemStack(ItemsPM.STATIC_BOOK.get());
-        StaticBookItem.setBookDefinition(bookStack, bookDef.key());
-        StaticBookItem.setBookLanguage(bookStack, bookLanguage.key());
+        StaticBookItem.setBookDefinition(bookStack, bookDef);
+        StaticBookItem.setBookLanguage(bookStack, bookLanguage);
         StaticBookItem.setGeneration(bookStack, 0);
         StaticBookItem.setTranslatedComprehension(bookStack, comprehension);
         

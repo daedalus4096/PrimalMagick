@@ -17,10 +17,10 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +44,7 @@ public class ResearchCompletedTrigger extends SimpleCriterionTrigger<ResearchCom
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, AbstractResearchKey<?> researchKey) implements SimpleCriterionTrigger.SimpleInstance {
         public static Codec<ResearchCompletedTrigger.TriggerInstance> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(ResearchCompletedTrigger.TriggerInstance::player), 
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(ResearchCompletedTrigger.TriggerInstance::player), 
                     AbstractResearchKey.dispatchCodec().fieldOf("researchKey").forGetter(ResearchCompletedTrigger.TriggerInstance::researchKey)
                 ).apply(instance, ResearchCompletedTrigger.TriggerInstance::new));
         }
@@ -65,7 +65,7 @@ public class ResearchCompletedTrigger extends SimpleCriterionTrigger<ResearchCom
             return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new ResearchEntryKey(rawKey)));
         }
         
-        public static Criterion<ResearchCompletedTrigger.TriggerInstance> runescribed(Enchantment ench) {
+        public static Criterion<ResearchCompletedTrigger.TriggerInstance> runescribed(Holder<Enchantment> ench) {
             return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new RuneEnchantmentKey(ench)));
         }
         

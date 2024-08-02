@@ -95,7 +95,7 @@ public class VoxelShapeUtils {
                     }
                 } else if (obj.has("parent")) {
                     // Attempt to load and parse the parent model file
-                    return fromModel(new ResourceLocation(obj.getAsJsonPrimitive("parent").getAsString()), history);
+                    return fromModel(ResourceLocation.parse(obj.getAsJsonPrimitive("parent").getAsString()), history);
                 } else {
                     LOGGER.warn("No elements or parent found in VoxelShape model file: {}", location.toString());
                     return Shapes.empty();

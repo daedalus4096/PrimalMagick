@@ -2,16 +2,15 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -20,8 +19,12 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class ResearchRequirement extends AbstractRequirement<ResearchRequirement> {
-    public static Codec<ResearchRequirement> codec() {
-        return AbstractResearchKey.dispatchCodec().fieldOf("rootKey").xmap(ResearchRequirement::new, req -> req.rootKey).codec();
+    public static MapCodec<ResearchRequirement> codec() {
+        return AbstractResearchKey.dispatchCodec().fieldOf("rootKey").xmap(ResearchRequirement::new, req -> req.rootKey);
+    }
+    
+    public static StreamCodec<RegistryFriendlyByteBuf, ResearchRequirement> streamCodec() {
+        return AbstractResearchKey.dispatchStreamCodec().map(ResearchRequirement::new, req -> req.rootKey);
     }
     
     protected final AbstractResearchKey<?> rootKey;
@@ -80,15 +83,5 @@ public class ResearchRequirement extends AbstractRequirement<ResearchRequirement
     @Override
     protected RequirementType<ResearchRequirement> getType() {
         return RequirementsPM.RESEARCH.get();
-    }
-
-    @Nonnull
-    static ResearchRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        return new ResearchRequirement(AbstractResearchKey.fromNetwork(buf));
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        this.rootKey.toNetwork(buf);
     }
 }

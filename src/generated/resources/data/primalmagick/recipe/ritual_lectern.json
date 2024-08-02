@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "B": {
+      "tag": "forge:bookshelves"
+    },
+    "S": {
+      "item": "primalmagick:moonwood_slab"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:moon": 10
+    }
+  },
+  "pattern": [
+    "SSS",
+    " B ",
+    " S "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ritual_lectern"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:ritual_lectern"
+  }
+}

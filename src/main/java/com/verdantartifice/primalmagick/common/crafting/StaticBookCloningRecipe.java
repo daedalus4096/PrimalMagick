@@ -3,12 +3,12 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -24,11 +24,11 @@ public class StaticBookCloningRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer pContainer, Level pLevel) {
+    public boolean matches(CraftingInput pContainer, Level pLevel) {
         int count = 0;
         ItemStack bookStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < pContainer.getContainerSize(); index++) {
+        for (int index = 0; index < pContainer.size(); index++) {
             ItemStack slotStack = pContainer.getItem(index);
             if (!slotStack.isEmpty()) {
                 if (slotStack.is(ItemTagsPM.STATIC_BOOKS)) {
@@ -48,11 +48,11 @@ public class StaticBookCloningRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(CraftingInput pContainer, HolderLookup.Provider pRegistries) {
         int count = 0;
         ItemStack originalStack = ItemStack.EMPTY;
         
-        for (int index = 0; index < pContainer.getContainerSize(); index++) {
+        for (int index = 0; index < pContainer.size(); index++) {
             ItemStack slotStack = pContainer.getItem(index);
             if (!slotStack.isEmpty()) {
                 if (slotStack.is(ItemTagsPM.STATIC_BOOKS)) {
@@ -78,8 +78,8 @@ public class StaticBookCloningRecipe extends CustomRecipe {
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer pContainer) {
-        NonNullList<ItemStack> retVal = NonNullList.withSize(pContainer.getContainerSize(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput pContainer) {
+        NonNullList<ItemStack> retVal = NonNullList.withSize(pContainer.size(), ItemStack.EMPTY);
         
         for (int index = 0; index < retVal.size(); index++) {
             ItemStack inputStack = pContainer.getItem(index);

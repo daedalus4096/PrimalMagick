@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.SinCrashEnti
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.BloodDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ProjectileSpellVehicle;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
@@ -18,6 +19,7 @@ import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
@@ -43,6 +45,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 
 /**
@@ -97,14 +100,11 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     
     @Nonnull
     protected SpellPackage getSpellPackage() {
-        SpellPackage spell = new SpellPackage("Blood Ball");
-        ProjectileSpellVehicle vehicle = new ProjectileSpellVehicle();
-        spell.setVehicle(vehicle);
-        BloodDamageSpellPayload payload = new BloodDamageSpellPayload();
         Difficulty difficulty = this.level().getDifficulty();
-        payload.getProperty("power").setValue(difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 5 : 3));
-        spell.setPayload(payload);
-        return spell;
+        return SpellPackage.builder().name("Blood Ball")
+                .vehicle().type(ProjectileSpellVehicle.INSTANCE).end()
+                .payload().type(BloodDamageSpellPayload.INSTANCE).with(SpellPropertiesPM.POWER.get(), difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 5 : 3)).end()
+                .build();
     }
 
     @Override
@@ -147,7 +147,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     @Override
     public boolean doHurtTarget(Entity entityIn) {
         boolean retVal = super.doHurtTarget(entityIn);
-        entityIn.setSecondsOnFire(5);
+        entityIn.igniteForSeconds(5);
         return retVal;
     }
 
@@ -176,8 +176,8 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     }
 
     @Override
-    protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn) {
-        super.dropCustomDeathLoot(source, looting, recentlyHitIn);
+    protected void dropCustomDeathLoot(ServerLevel serverLevel, DamageSource source, boolean recentlyHitIn) {
+        super.dropCustomDeathLoot(serverLevel, source, recentlyHitIn);
         ItemEntity itemEntity = this.spawnAtLocation(ItemsPM.HALLOWED_ORB.get());
         if (itemEntity != null) {
             itemEntity.setExtendedLifetime();
@@ -204,7 +204,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     }
 
     @Override
-    public boolean canChangeDimensions() {
+    public boolean canUsePortal(boolean pAllowPassengers) {
         return false;
     }
     
@@ -225,7 +225,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
                 double dx = level.random.nextGaussian() * SIN_CRASH_RANGE * (level.random.nextBoolean() ? 1.0D : -1.0D);
                 double dy = -1.0D * (double)this.getEyeHeight();
                 double dz = level.random.nextGaussian() * SIN_CRASH_RANGE * (level.random.nextBoolean() ? 1.0D : -1.0D);
-                SinCrashEntity crash = new SinCrashEntity(level, this, dx, dy, dz);
+                SinCrashEntity crash = new SinCrashEntity(level, this, new Vec3(dx, dy, dz));
                 crash.moveTo(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);
                 level.addFreshEntity(crash);
             }

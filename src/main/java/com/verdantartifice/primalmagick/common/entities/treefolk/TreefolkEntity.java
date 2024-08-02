@@ -87,9 +87,9 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_IS_DANCING, false);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(DATA_IS_DANCING, false);
     }
     
     public boolean isAngry() {
@@ -140,7 +140,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     public void aiStep() {
         super.aiStep();
         if (this.hasCustomName() && DREADED_NAME.equals(this.getCustomName().getString())) {
-            this.setSecondsOnFire(8);
+            this.igniteForSeconds(8);
         }
     }
 
@@ -183,11 +183,9 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
         if (stack.is(Items.FLINT_AND_STEEL)) {
             level.playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
             if (!level.isClientSide) {
-                this.setSecondsOnFire(10);
+                this.igniteForSeconds(10);
                 this.setLastHurtByMob(player);
-                stack.hurtAndBreak(1, player, p -> {
-                    p.broadcastBreakEvent(hand);
-                });
+                stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         } else if (!level.isClientSide) {

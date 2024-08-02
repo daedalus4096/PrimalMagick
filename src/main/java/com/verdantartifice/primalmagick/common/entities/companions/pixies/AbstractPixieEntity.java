@@ -13,6 +13,9 @@ import com.verdantartifice.primalmagick.common.entities.companions.CompanionMana
 import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
+import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -72,7 +75,16 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     protected abstract PixieItem getSpawnItem();
     
     @Nonnull
-    protected abstract SpellPackage createSpellPackage();
+    protected SpellPackage createSpellPackage() {
+        // Not all pixie spells need the duration property, but those that don't will ignore it
+        return SpellPackage.builder().name("Pixie Bolt")
+                .vehicle().type(BoltSpellVehicle.INSTANCE).with(SpellPropertiesPM.RANGE.get(), 5).end()
+                .payload().type(this.getSpellPayload()).with(SpellPropertiesPM.POWER.get(), this.getSpellPower()).with(SpellPropertiesPM.DURATION.get(), this.getSpellPower()).end()
+                .build();
+    }
+    
+    @Nonnull
+    protected abstract AbstractSpellPayload<?> getSpellPayload();
     
     @Nonnull
     protected SpellPackage getSpellPackage() {
@@ -107,9 +119,9 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(ANGER_TIME, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(ANGER_TIME, 0);
     }
 
     @Override
@@ -262,7 +274,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    public boolean canBeLeashed(Player player) {
+    public boolean canBeLeashed() {
         return false;
     }
 

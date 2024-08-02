@@ -31,7 +31,7 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
+        "count": 1,
         "id": "minecraft:book"
       },
       "weight": 1.0
@@ -43,11 +43,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_sword",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_sword"
       },
       "weight": 1.0
     },
@@ -58,11 +55,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_pickaxe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_pickaxe"
       },
       "weight": 1.0
     },
@@ -73,11 +67,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_shovel",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_shovel"
       },
       "weight": 1.0
     },
@@ -88,11 +79,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_axe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_axe"
       },
       "weight": 1.0
     },
@@ -103,11 +91,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_hoe",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_hoe"
       },
       "weight": 1.0
     },
@@ -118,11 +103,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_head",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_head"
       },
       "weight": 1.0
     },
@@ -133,11 +115,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_chest",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_chest"
       },
       "weight": 1.0
     },
@@ -148,11 +127,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_legs",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_legs"
       },
       "weight": 1.0
     },
@@ -163,11 +139,8 @@
       "matchNBT": false,
       "material_type": "primalmagick:item",
       "stack": {
-        "Count": 1,
-        "id": "primalmagick:primalite_feet",
-        "tag": {
-          "Damage": 0
-        }
+        "count": 1,
+        "id": "primalmagick:primalite_feet"
       },
       "weight": 1.0
     },
@@ -203,11 +176,15 @@
   "weightFunction": {
     "modifiers": [
       {
-        "researchKey": "primalmagick:master_manaweaving",
+        "researchKey": {
+          "rootKey": "primalmagick:master_manaweaving"
+        },
         "weightModifier": -1.0
       },
       {
-        "researchKey": "primalmagick:supreme_manaweaving",
+        "researchKey": {
+          "rootKey": "primalmagick:supreme_manaweaving"
+        },
         "weightModifier": -1.0
       }
     ],

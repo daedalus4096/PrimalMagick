@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -53,14 +54,14 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.altarPos = compound.contains("AltarPos", Tag.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         if (this.altarPos != null) {
             compound.putLong("AltarPos", this.altarPos.asLong());
         }
@@ -110,12 +111,6 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
         });
 
         return retVal;
-    }
-
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
     }
 
     @Override

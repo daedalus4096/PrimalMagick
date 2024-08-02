@@ -1,0 +1,35 @@
+{
+  "parent": "primalmagick:story/craft_grimoire",
+  "criteria": {
+    "made_furnace": {
+      "conditions": {
+        "researchKey": {
+          "key_type": "primalmagick:stack_crafted",
+          "stack": {
+            "count": 1,
+            "id": "primalmagick:essence_furnace"
+          }
+        }
+      },
+      "trigger": "primalmagick:research_completed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_essence_furnace.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:essence_furnace"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_essence_furnace.title"
+    }
+  },
+  "requirements": [
+    [
+      "made_furnace"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

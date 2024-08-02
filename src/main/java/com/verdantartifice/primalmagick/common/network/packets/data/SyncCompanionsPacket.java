@@ -6,12 +6,12 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to sync companion capability data from the server to the client.
@@ -19,36 +19,34 @@ import net.minecraftforge.network.NetworkDirection;
  * @author Daedalus4096
  */
 public class SyncCompanionsPacket implements IMessageToClient {
-    protected CompoundTag data;
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncCompanionsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncCompanionsPacket::encode, SyncCompanionsPacket::decode);
 
-    public SyncCompanionsPacket() {
-        this.data = null;
-    }
-    
+    protected final CompoundTag data;
+
+    @SuppressWarnings("deprecation")
     public SyncCompanionsPacket(Player player) {
         IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
-        this.data = (companions != null) ? companions.serializeNBT() : null;
+        this.data = (companions != null) ? companions.serializeNBT(player.registryAccess()) : null;
     }
     
-    public static NetworkDirection direction() {
-        return NetworkDirection.PLAY_TO_CLIENT;
+    protected SyncCompanionsPacket(CompoundTag data) {
+        this.data = data;
     }
     
-    public static void encode(SyncCompanionsPacket message, FriendlyByteBuf buf) {
+    public static void encode(SyncCompanionsPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeNbt(message.data);
     }
     
-    public static SyncCompanionsPacket decode(FriendlyByteBuf buf) {
-        SyncCompanionsPacket message = new SyncCompanionsPacket();
-        message.data = buf.readNbt();
-        return message;
+    public static SyncCompanionsPacket decode(RegistryFriendlyByteBuf buf) {
+        return new SyncCompanionsPacket(buf.readNbt());
     }
     
+    @SuppressWarnings("deprecation")
     public static void onMessage(SyncCompanionsPacket message, CustomPayloadEvent.Context ctx) {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
         if (companions != null) {
-            companions.deserializeNBT(message.data);
+            companions.deserializeNBT(player.registryAccess(), message.data);
         }
     }
 }

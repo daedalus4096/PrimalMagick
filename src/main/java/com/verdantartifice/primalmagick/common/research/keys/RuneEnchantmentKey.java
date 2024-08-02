@@ -2,39 +2,38 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> {
-    public static final Codec<RuneEnchantmentKey> CODEC = ResourceLocation.CODEC.fieldOf("enchantment").xmap(loc -> {
-        return new RuneEnchantmentKey(ForgeRegistries.ENCHANTMENTS.getValue(loc));
-    }, key -> {
-        return ForgeRegistries.ENCHANTMENTS.getKey(key.enchant);
-    }).codec();
+    public static final MapCodec<RuneEnchantmentKey> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Enchantment.CODEC.fieldOf("enchant").forGetter(k -> k.enchant)
+        ).apply(instance, RuneEnchantmentKey::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RuneEnchantmentKey> STREAM_CODEC = StreamCodec.composite(Enchantment.STREAM_CODEC, k -> k.enchant, RuneEnchantmentKey::new);
     
     private static final String PREFIX = "&";
     private static final ResourceLocation ICON_TUBE = PrimalMagick.resource("textures/research/research_tube.png");
 
-    protected final Enchantment enchant;
+    protected final Holder<Enchantment> enchant;
     
-    public RuneEnchantmentKey(Enchantment enchant) {
+    public RuneEnchantmentKey(Holder<Enchantment> enchant) {
         this.enchant = Preconditions.checkNotNull(enchant);
     }
 
     @Override
     public String toString() {
-        return PREFIX + ForgeRegistries.ENCHANTMENTS.getKey(this.enchant).toString();
+        return PREFIX + this.enchant.unwrapKey().get().location().toString();
     }
 
     @Override
@@ -54,7 +53,7 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
 
     @Override
     public int hashCode() {
-        return Objects.hash(ForgeRegistries.ENCHANTMENTS.getKey(this.enchant));
+        return Objects.hash(this.enchant);
     }
 
     @Override
@@ -66,17 +65,6 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
         if (getClass() != obj.getClass())
             return false;
         RuneEnchantmentKey other = (RuneEnchantmentKey) obj;
-        return ForgeRegistries.ENCHANTMENTS.getKey(this.enchant).equals(ForgeRegistries.ENCHANTMENTS.getKey(other.enchant));
-    }
-
-    @Nonnull
-    static RuneEnchantmentKey fromNetworkInner(FriendlyByteBuf buf) {
-        ResourceLocation loc = buf.readResourceLocation();
-        return new RuneEnchantmentKey(ForgeRegistries.ENCHANTMENTS.getValue(loc));
-    }
-    
-    @Override
-    protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(ForgeRegistries.ENCHANTMENTS.getKey(this.enchant));
+        return this.enchant.equals(other.enchant);
     }
 }

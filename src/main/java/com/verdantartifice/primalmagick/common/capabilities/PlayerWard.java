@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,7 +32,7 @@ public class PlayerWard implements IPlayerWard {
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         rootTag.putFloat("Current", this.current);
         rootTag.putFloat("Max", this.max);
@@ -41,7 +42,7 @@ public class PlayerWard implements IPlayerWard {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
@@ -121,14 +122,16 @@ public class PlayerWard implements IPlayerWard {
             }
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public CompoundTag serializeNBT() {
-            return instance.serializeNBT();
+        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+            return instance.serializeNBT(registries);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
-        public void deserializeNBT(CompoundTag nbt) {
-            instance.deserializeNBT(nbt);
+        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+            instance.deserializeNBT(registries, nbt);
         }
     }
 }

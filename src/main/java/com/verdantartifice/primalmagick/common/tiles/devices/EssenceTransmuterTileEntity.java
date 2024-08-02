@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterMenu;
@@ -35,8 +36,11 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -75,7 +79,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     protected ITileResearchCache researchCache;
     protected Source nextOutputSource;
     
-    protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
     protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
@@ -124,14 +128,15 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         this.researchCache = new TileResearchCache();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
-        this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
-        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(new ResourceLocation(compound.getString("NextSource"))) : null;
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
+        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(ResourceLocation.parse(compound.getString("NextSource"))) : null;
         
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
@@ -142,13 +147,14 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        compound.put("ManaStorage", this.manaStorage.serializeNBT());
-        compound.put("ResearchCache", this.researchCache.serializeNBT());
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+        compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.nextOutputSource != null) {
             compound.putString("NextSource", this.nextOutputSource.getId().toString());
         }
@@ -193,7 +199,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.MOON) - entity.manaStorage.getManaStored(Sources.MOON);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Sources.MOON, centimanaToTransfer)) {
+                if (wand.consumeMana(wandStack, null, Sources.MOON, centimanaToTransfer, level.registryAccess())) {
                     entity.manaStorage.receiveMana(Sources.MOON, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
@@ -276,7 +282,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
+        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.nextOutputSource = null;
@@ -441,16 +447,19 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
-        
-        // Slots 1-9 were the output item stacks
-        for (int inputIndex = 0; inputIndex < OUTPUT_CAPACITY; inputIndex++) {
-            this.setItem(OUTPUT_INV_INDEX, inputIndex, legacyItems.get(inputIndex + 1));
-        }
-        
-        // Slot 10 was the wand item stack
-        this.setItem(WAND_INV_INDEX, 0, legacyItems.get(OUTPUT_CAPACITY + 1));
+    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+        super.applyImplicitComponents(pComponentInput);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+    }
+
+    @Override
+    protected void collectImplicitComponents(Builder pComponents) {
+        super.collectImplicitComponents(pComponents);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag pTag) {
+        pTag.remove("ManaStorage");
     }
 }

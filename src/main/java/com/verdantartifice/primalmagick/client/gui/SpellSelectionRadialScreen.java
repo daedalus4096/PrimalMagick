@@ -33,6 +33,7 @@ public class SpellSelectionRadialScreen extends Screen {
     private final List<RadialMenuItem> cachedMenuItems = new ArrayList<>();
     private final ImageRadialMenuItem noSpellMenuItem;
 
+    // FIXME Disable crosshair GUI overlay layer while radial screen is active
     public SpellSelectionRadialScreen() {
         super(Component.empty());
         Minecraft mc = Minecraft.getInstance();
@@ -73,7 +74,7 @@ public class SpellSelectionRadialScreen extends Screen {
                 close();
             }
         };
-        this.noSpellMenuItem = new ImageRadialMenuItem(this.menu, -1, new ResourceLocation("textures/item/barrier.png"), Component.translatable("tooltip.primalmagick.spells.no_spell_selection")) {
+        this.noSpellMenuItem = new ImageRadialMenuItem(this.menu, -1, ResourceLocation.withDefaultNamespace("textures/item/barrier.png"), Component.translatable("tooltip.primalmagick.spells.no_spell_selection")) {
             @Override
             public boolean onClick() {
                 return SpellSelectionRadialScreen.this.trySwitch(getSlot());

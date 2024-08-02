@@ -15,7 +15,6 @@ import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -47,8 +46,8 @@ public class ScanLocationTrigger extends SimpleCriterionTrigger<ScanLocationTrig
     public static record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ContextAwarePredicate> location) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<ScanLocationTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
-                    ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(ScanLocationTrigger.TriggerInstance::player), 
-                    ExtraCodecs.strictOptionalField(ContextAwarePredicate.CODEC, "location").forGetter(ScanLocationTrigger.TriggerInstance::location)
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(ScanLocationTrigger.TriggerInstance::player), 
+                    ContextAwarePredicate.CODEC.optionalFieldOf("location").forGetter(ScanLocationTrigger.TriggerInstance::location)
                 ).apply(instance, ScanLocationTrigger.TriggerInstance::new);
         });
 

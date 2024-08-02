@@ -15,7 +15,7 @@ public class TieredBowItem extends BowItem {
     protected final Tier tier;
     
     public TieredBowItem(Tier tier, Item.Properties properties) {
-        super(properties.defaultDurability(tier.getUses()));
+        super(properties.durability(tier.getUses()));
         this.tier = tier;
     }
 

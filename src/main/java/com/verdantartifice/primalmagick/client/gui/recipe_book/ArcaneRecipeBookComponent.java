@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.gui.recipe_book;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +18,7 @@ import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.StackedNbtContents;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.StackedComponentContents;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
@@ -43,7 +42,6 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.recipebook.GhostRecipe;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
-import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -60,15 +58,15 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  */
 public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, NarratableEntry, RecipeShownListener, PlaceRecipe<Ingredient> {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected static final ResourceLocation RECIPE_BOOK_LOCATION = new ResourceLocation("textures/gui/recipe_book.png");
+    protected static final ResourceLocation RECIPE_BOOK_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/recipe_book.png");
     protected static final Component SEARCH_HINT = (Component.translatable("gui.recipebook.search_hint")).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
     public static final int IMAGE_WIDTH = 147;
     public static final int IMAGE_HEIGHT = 166;
     private static final int OFFSET_X_POSITION = 86;
     private static final Component ONLY_CRAFTABLES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.craftable");
     private static final Component ALL_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.all");
-    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/filter_enabled"), new ResourceLocation("recipe_book/filter_disabled"), new ResourceLocation("recipe_book/filter_enabled_highlighted"), new ResourceLocation("recipe_book/filter_disabled_highlighted"));
-    private static final WidgetSprites FURNACE_FILTER_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/furnace_filter_enabled"), new ResourceLocation("recipe_book/furnace_filter_disabled"), new ResourceLocation("recipe_book/furnace_filter_enabled_highlighted"), new ResourceLocation("recipe_book/furnace_filter_disabled_highlighted"));
+    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/filter_enabled"), ResourceLocation.withDefaultNamespace("recipe_book/filter_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/filter_enabled_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/filter_disabled_highlighted"));
+    private static final WidgetSprites FURNACE_FILTER_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled_highlighted"));
 
     protected int xOffset;
     protected int width;
@@ -79,7 +77,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected ArcaneRecipeBookTabButton selectedTab;
     protected StateSwitchingButton filterButton;
     protected final Object filterButtonLock = new Object();
-    protected IArcaneRecipeBookMenu<?> menu;
+    protected IArcaneRecipeBookMenu<?, ?> menu;
     protected Minecraft mc;
     @Nullable
     protected EditBox searchBox;
@@ -87,7 +85,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected ClientRecipeBook vanillaBook;
     protected ClientArcaneRecipeBook arcaneBook;
     protected final ArcaneRecipeBookPage recipeBookPage = new ArcaneRecipeBookPage();
-    protected final StackedNbtContents stackedContents = new StackedNbtContents();
+    protected final StackedComponentContents stackedContents = new StackedComponentContents();
     protected int timesInventoryChanged;
     protected boolean ignoreTextInput;
     protected boolean visible;
@@ -95,7 +93,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected boolean useFurnaceStyle;
     protected boolean isLoading = true;
 
-    public void init(int width, int height, Minecraft mc, boolean tooNarrow, boolean useFurnaceStyle, IArcaneRecipeBookMenu<?> menu) {
+    public void init(int width, int height, Minecraft mc, boolean tooNarrow, boolean useFurnaceStyle, IArcaneRecipeBookMenu<?, ?> menu) {
         this.mc = mc;
         this.width = width;
         this.height = height;
@@ -251,7 +249,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         
         String searchStr = this.searchBox.getValue();
         if (!searchStr.isEmpty()) {
-            ObjectSet<ArcaneRecipeCollection> vanillaObjectSet = new ObjectLinkedOpenHashSet<>(this.mc.getSearchTree(SearchRegistry.RECIPE_COLLECTIONS)
+            ObjectSet<ArcaneRecipeCollection> vanillaObjectSet = new ObjectLinkedOpenHashSet<>(this.mc.getConnection().searchTrees().recipes()
                     .search(searchStr.toLowerCase(Locale.ROOT)).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
             ObjectSet<ArcaneRecipeCollection> arcaneObjectSet = new ObjectLinkedOpenHashSet<>(ArcaneSearchRegistry.getSearchTree().search(searchStr.toLowerCase(Locale.ROOT)));
             filteredCollections.removeIf(arc -> {
@@ -539,8 +537,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     }
 
     @Override
-    public void addItemToSlot(Iterator<Ingredient> iterator, int slotIndex, int count, int p_135418_, int p_135419_) {
-        Ingredient ingredient = iterator.next();
+    public void addItemToSlot(Ingredient ingredient, int slotIndex, int count, int p_135418_, int p_135419_) {
         if (!ingredient.isEmpty()) {
             Slot slot = this.menu.getSlots().get(slotIndex);
             this.ghostRecipe.addIngredient(ingredient, slot.x, slot.y);

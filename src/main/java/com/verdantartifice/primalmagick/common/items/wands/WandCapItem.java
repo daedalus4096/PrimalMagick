@@ -8,8 +8,6 @@ import java.util.List;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 
 /**
  * Item definition for a wand cap.  May be used to construct modular wands.
@@ -22,18 +20,13 @@ public class WandCapItem extends Item {
     protected final WandCap cap;
 
     public WandCapItem(WandCap cap, Properties properties) {
-        super(properties);
+        super(properties.rarity(cap.getRarity()));
         this.cap = cap;
         CAPS.add(this);
     }
 
     public WandCap getWandCap() {
         return this.cap;
-    }
-    
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        return this.cap.getRarity();
     }
     
     public static Collection<WandCapItem> getAllCaps() {

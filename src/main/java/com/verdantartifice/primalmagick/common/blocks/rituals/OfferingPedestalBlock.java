@@ -16,6 +16,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -67,38 +68,43 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
         return new OfferingPedestalTileEntity(pos, state);
     }
     
-    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (handIn == InteractionHand.MAIN_HAND) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
-                if (pedestalTile.getItem().isEmpty() && !player.getItemInHand(handIn).isEmpty()) {
+            if (worldIn.getBlockEntity(pos) instanceof OfferingPedestalTileEntity pedestalTile) {
+                if (pedestalTile.getItem().isEmpty() && !stack.isEmpty()) {
                     // When activating an empty pedestal with an item in hand, place it on the pedestal
-                    ItemStack stack = player.getItemInHand(handIn).copy();
-                    stack.setCount(1);
-                    pedestalTile.setItem(stack);
+                    ItemStack placementStack = stack.copyWithCount(1);
+                    pedestalTile.setItem(placementStack);
                     player.getItemInHand(handIn).shrink(1);
                     if (player.getItemInHand(handIn).getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);
                     }
                     player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
-                    return InteractionResult.SUCCESS;
-                } else if (!pedestalTile.getItem().isEmpty() && player.getItemInHand(handIn).isEmpty()) {
-                    // When activating a full pedestal with an empty hand, pick up the item
-                    ItemStack stack = pedestalTile.getItem().copy();
-                    pedestalTile.setItem(ItemStack.EMPTY);
-                    player.setItemInHand(handIn, stack);
-                    player.getInventory().setChanged();
-                    worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 }
             }
         }
-        return super.use(state, worldIn, pos, player, handIn, hit);
+        return super.useItemOn(stack, state, worldIn, pos, player, handIn, hit);
     }
     
+    @Override
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+        if (pLevel.getBlockEntity(pPos) instanceof OfferingPedestalTileEntity pedestalTile) {
+            if (!pedestalTile.getItem().isEmpty()) {
+                // When activating a full pedestal with an empty hand, pick up the item
+                ItemStack stack = pedestalTile.getItem().copy();
+                pedestalTile.setItem(ItemStack.EMPTY);
+                pPlayer.setItemInHand(InteractionHand.MAIN_HAND, stack);
+                pPlayer.getInventory().setChanged();
+                pLevel.playSound(null, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return super.useWithoutItem(pState, pLevel, pPos, pPlayer, pHitResult);
+    }
+
     @Override
     public boolean hasSymmetryPenalty(Level world, BlockPos pos, BlockPos otherPos) {
         BlockEntity tile = world.getBlockEntity(pos);
@@ -132,7 +138,6 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
         return 0.01F;
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Drop the tile entity's inventory into the world when the block is replaced

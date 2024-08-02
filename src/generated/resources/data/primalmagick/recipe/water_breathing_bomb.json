@@ -1,0 +1,48 @@
+{
+  "type": "primalmagick:concocting",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "items": [
+        "primalmagick:alchemical_bomb"
+      ],
+      "nbt": "{ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "primalmagick:essence_shard_sea"
+    },
+    {
+      "item": "primalmagick:essence_shard_sky"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:pufferfish"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 3
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_bombs"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:water_breathing"
+      },
+      "primalmagick:concoction_doses": 6,
+      "primalmagick:concoction_type": "bomb",
+      "primalmagick:fuse_type": "medium"
+    },
+    "count": 1,
+    "id": "primalmagick:alchemical_bomb"
+  }
+}

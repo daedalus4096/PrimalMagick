@@ -14,23 +14,23 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.google.common.collect.ImmutableList;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 /**
  * Primary access point for rune-related methods.
@@ -38,14 +38,12 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
  * @author Daedalus4096
  */
 public class RuneManager {
-    private static final String RUNE_TAG_NAME = PrimalMagick.MODID + ":runes";
-    
     /**
      * Gets the set of enchantments that can be replicated with runes.
      * 
      * @return the set of enchantments that can be replicated with runes
      */
-    public static Set<Enchantment> getRuneEnchantments(RegistryAccess registryAccess) {
+    public static Set<Holder<Enchantment>> getRuneEnchantments(RegistryAccess registryAccess) {
         return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().map(RuneEnchantmentDefinition::result).collect(Collectors.toUnmodifiableSet());
     }
     
@@ -54,10 +52,8 @@ public class RuneManager {
      * 
      * @return the list of enchantments that can be replicated with runes, sorted by display name
      */
-    public static List<Enchantment> getRuneEnchantmentsSorted(RegistryAccess registryAccess) {
-        return getRuneEnchantments(registryAccess).stream().sorted((e1, e2) -> {
-            return e1.getFullname(1).getString().compareTo(e2.getFullname(1).getString());
-        }).collect(Collectors.toList());
+    public static List<Holder<Enchantment>> getRuneEnchantmentsSorted(RegistryAccess registryAccess) {
+        return getRuneEnchantments(registryAccess).stream().sorted(Comparator.comparing(e -> Enchantment.getFullname(e, 1).getString())).collect(Collectors.toList());
     }
     
     /**
@@ -71,7 +67,7 @@ public class RuneManager {
      * @return the map of rune enchantments and the levels at which they should be applied
      */
     @Nonnull
-    public static Map<Enchantment, Integer> getRuneEnchantments(RegistryAccess registryAccess, @Nullable List<Rune> runes, @Nullable ItemStack stack, @Nullable Player player, boolean filterIncompatible) {
+    public static Map<Holder<Enchantment>, Integer> getRuneEnchantments(RegistryAccess registryAccess, @Nullable List<Rune> runes, @Nullable ItemStack stack, @Nullable Player player, boolean filterIncompatible) {
         if (runes == null || runes.isEmpty() || stack == null || stack.isEmpty() || player == null || !checkLimits(runes)) {
             return Collections.emptyMap();
         }
@@ -88,20 +84,20 @@ public class RuneManager {
             for (NounRune noun : nounRunes) {
                 for (SourceRune source : sourceRunes) {
                     // Intersect the sets of enchantments for each verb, noun, and source combination
-                    Set<Enchantment> possibleEnchantments = new HashSet<>();
+                    Set<Holder<Enchantment>> possibleEnchantments = new HashSet<>();
                     possibleEnchantments.addAll(getVerbEnchantments(registryAccess, verb));
                     possibleEnchantments.retainAll(getNounEnchantments(registryAccess, noun));
                     possibleEnchantments.retainAll(getSourceEnchantments(registryAccess, source));
                     
-                    for (Enchantment possible : possibleEnchantments) {
+                    for (Holder<Enchantment> possible : possibleEnchantments) {
                         // If the rune enchantment can be applied to the given item stack, is compatible with 
                         // those already found, it meets the minimum power level, and the player has any needed
                         // research, add the enchantment to the result set
                         Optional<AbstractRequirement<?>> reqOpt = getEnchantmentRequirement(registryAccess, possible);
-                        if ( possible.canEnchant(stack) && 
+                        if ( possible.value().canEnchant(stack) && 
                              (reqOpt.isEmpty() || reqOpt.get().isMetBy(player)) &&
-                             powerLevel >= possible.getMinLevel() ) {
-                            intermediate.add(new EnchantmentInstance(possible, Math.min(powerLevel, possible.getMaxLevel())));
+                             powerLevel >= possible.value().getMinLevel() ) {
+                            intermediate.add(new EnchantmentInstance(possible, Math.min(powerLevel, possible.value().getMaxLevel())));
                         }
                     }
                 }
@@ -109,10 +105,10 @@ public class RuneManager {
         }
         
         // Sort enchantments first by their minimum XP cost (descending) and then by hash code (ascending) to ensure consistent results
-        intermediate.sort(Comparator.<EnchantmentInstance>comparingInt(i -> i.enchantment.getMinCost(i.level)).reversed().thenComparingInt(i -> i.hashCode()));
+        intermediate.sort(Comparator.<EnchantmentInstance>comparingInt(i -> i.enchantment.value().getMinCost(i.level)).reversed().thenComparingInt(i -> i.hashCode()));
         
         // Add intermediate enchantments to the result map, filtering out incompatible enchantments if appropriate
-        Map<Enchantment, Integer> retVal = new HashMap<>();
+        Map<Holder<Enchantment>, Integer> retVal = new HashMap<>();
         intermediate.forEach(instance -> {
             if (!filterIncompatible || EnchantmentHelper.isEnchantmentCompatible(retVal.keySet(), instance.enchantment)) {
                 retVal.put(instance.enchantment, instance.level);
@@ -122,19 +118,19 @@ public class RuneManager {
         return retVal;
     }
     
-    private static Set<Enchantment> getVerbEnchantments(RegistryAccess registryAccess, VerbRune verb) {
+    private static Set<Holder<Enchantment>> getVerbEnchantments(RegistryAccess registryAccess, VerbRune verb) {
         return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().filter(def -> def.verb().equals(verb)).map(def -> def.result()).collect(Collectors.toUnmodifiableSet());
     }
     
-    private static Set<Enchantment> getNounEnchantments(RegistryAccess registryAccess, NounRune noun) {
+    private static Set<Holder<Enchantment>> getNounEnchantments(RegistryAccess registryAccess, NounRune noun) {
         return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().filter(def -> def.noun().equals(noun)).map(def -> def.result()).collect(Collectors.toUnmodifiableSet());
     }
     
-    private static Set<Enchantment> getSourceEnchantments(RegistryAccess registryAccess, SourceRune source) {
+    private static Set<Holder<Enchantment>> getSourceEnchantments(RegistryAccess registryAccess, SourceRune source) {
         return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().filter(def -> def.source().equals(source)).map(def -> def.result()).collect(Collectors.toUnmodifiableSet());
     }
     
-    private static Optional<AbstractRequirement<?>> getEnchantmentRequirement(RegistryAccess registryAccess, Enchantment enchant) {
+    private static Optional<AbstractRequirement<?>> getEnchantmentRequirement(RegistryAccess registryAccess, Holder<Enchantment> enchant) {
         return getRuneDefinition(registryAccess, enchant).flatMap(def -> def.requirementOpt());
     }
     
@@ -165,22 +161,22 @@ public class RuneManager {
      * @param addition the second enchantment map
      * @return the merged enchantment map
      */
-    public static Map<Enchantment, Integer> mergeEnchantments(@Nonnull Map<Enchantment, Integer> original, @Nonnull Map<Enchantment, Integer> addition) {
+    public static ItemEnchantments mergeEnchantments(@Nonnull ItemEnchantments original, @Nonnull Map<Holder<Enchantment>, Integer> addition) {
         // Start with the original map as a base
-        Map<Enchantment, Integer> retVal = new HashMap<>(original);
+        ItemEnchantments.Mutable retVal = new ItemEnchantments.Mutable(original);
         
-        for (Map.Entry<Enchantment, Integer> entry : addition.entrySet()) {
-            if (retVal.containsKey(entry.getKey())) {
+        for (Map.Entry<Holder<Enchantment>, Integer> entry : addition.entrySet()) {
+            if (retVal.keySet().contains(entry.getKey())) {
                 // If the original already contains the enchantment to be added, set its value to the higher of the two levels
-                retVal.put(entry.getKey(), Math.max(original.getOrDefault(entry.getKey(), 0), entry.getValue()));
+                retVal.upgrade(entry.getKey(), Math.max(original.getLevel(entry.getKey()), entry.getValue()));
             } else if (EnchantmentHelper.isEnchantmentCompatible(original.keySet(), entry.getKey())) {
                 // Only add the addition enchantment if it's compatible with all those in the current output set
-                retVal.put(entry.getKey(), entry.getValue());
+                retVal.upgrade(entry.getKey(), entry.getValue());
                 
             }
         }
         
-        return retVal;
+        return retVal.toImmutable();
     }
     
     /**
@@ -190,11 +186,7 @@ public class RuneManager {
      * @return true if the item stack has one or more runes applied, false otherwise
      */
     public static boolean hasRunes(@Nullable ItemStack stack) {
-        if (stack == null || stack.isEmpty() || !stack.hasTag()) {
-            return false;
-        } else {
-            return !stack.getTag().getList(RUNE_TAG_NAME, Tag.TAG_STRING).isEmpty();
-        }
+        return !getRunes(stack).isEmpty();
     }
     
     /**
@@ -205,21 +197,7 @@ public class RuneManager {
      */
     @Nonnull
     public static List<Rune> getRunes(@Nullable ItemStack stack) {
-        if (stack == null || stack.isEmpty() || !stack.hasTag()) {
-            return Collections.emptyList();
-        }
-        
-        List<Rune> retVal = new ArrayList<>();
-        ListTag tagList = stack.getTag().getList(RUNE_TAG_NAME, Tag.TAG_STRING);
-        for (int index = 0; index < tagList.size(); index++) {
-            String tagStr = tagList.getString(index);
-            Rune rune = Rune.getRune(new ResourceLocation(tagStr));
-            if (rune != null) {
-                retVal.add(rune);
-            }
-        }
-        
-        return retVal;
+        return stack == null ? ImmutableList.of() : stack.getOrDefault(DataComponentsPM.INSCRIBED_RUNES.get(), ImmutableList.of());
     }
     
     /**
@@ -230,13 +208,7 @@ public class RuneManager {
      */
     public static void setRunes(@Nullable ItemStack stack, @Nullable List<Rune> runes) {
         if (stack != null && !stack.isEmpty() && runes != null && !runes.isEmpty()) {
-            ListTag tagList = new ListTag();
-            for (Rune rune : runes) {
-                if (rune != null) {
-                    tagList.add(StringTag.valueOf(rune.getId().toString()));
-                }
-            }
-            stack.addTagElement(RUNE_TAG_NAME, tagList);
+            stack.set(DataComponentsPM.INSCRIBED_RUNES.get(), runes);
         }
     }
     
@@ -247,7 +219,7 @@ public class RuneManager {
      */
     public static void clearRunes(@Nullable ItemStack stack) {
         if (stack != null) {
-            stack.removeTagKey(RUNE_TAG_NAME);
+            stack.remove(DataComponentsPM.INSCRIBED_RUNES.get());
         }
     }
     
@@ -257,7 +229,7 @@ public class RuneManager {
      * @param enchant the enchantment to query
      * @return true if the enchantment has a rune combination defined for it, false otherwise
      */
-    public static boolean hasRuneDefinition(RegistryAccess registryAccess, Enchantment enchant) {
+    public static boolean hasRuneDefinition(RegistryAccess registryAccess, Holder<Enchantment> enchant) {
         return getRuneEnchantments(registryAccess).contains(enchant);
     }
     
@@ -267,11 +239,11 @@ public class RuneManager {
      * @param enchant the enchantment to query
      * @return the rune combination definition for the given enchant, or null if one was not registered
      */
-    public static Optional<RuneEnchantmentDefinition> getRuneDefinition(RegistryAccess registryAccess, Enchantment enchant) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().filter(def -> def.result().equals(enchant)).findFirst();
+    public static Optional<RuneEnchantmentDefinition> getRuneDefinition(RegistryAccess registryAccess, Holder<Enchantment> enchant) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().filter(def -> def.result().value().equals(enchant.value())).findFirst();
     }
     
-    public static boolean isRuneKnown(Player player, Enchantment enchant, RuneType runeType) {
+    public static boolean isRuneKnown(Player player, Holder<Enchantment> enchant, RuneType runeType) {
         return ResearchManager.isResearchComplete(player, new RuneEnchantmentKey(enchant)) || 
                 ResearchManager.isResearchComplete(player, new RuneEnchantmentPartialKey(enchant, runeType));
     }

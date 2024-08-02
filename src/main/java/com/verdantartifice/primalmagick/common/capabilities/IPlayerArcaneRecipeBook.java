@@ -4,10 +4,13 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
+@AutoRegisterCapability
 public interface IPlayerArcaneRecipeBook {
     /**
      * Get the active arcane recipe book.
@@ -23,7 +26,7 @@ public interface IPlayerArcaneRecipeBook {
      */
     public void sync(@Nullable ServerPlayer player);
 
-    public CompoundTag serializeNBT();
+    public CompoundTag serializeNBT(HolderLookup.Provider registries);
 
-    public void deserializeNBT(CompoundTag nbt, RecipeManager recipeManager);
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt, RecipeManager recipeManager);
 }
