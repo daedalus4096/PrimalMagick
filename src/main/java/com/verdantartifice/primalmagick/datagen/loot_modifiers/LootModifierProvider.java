@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.EssenceThiefModifi
 import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.GuillotineModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
+import com.verdantartifice.primalmagick.common.loot.modifiers.ReplaceItemModifier;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
@@ -34,6 +35,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -250,54 +252,51 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
                 }, EntityTypeTagsPM.GUILLOTINE_PLAYER_HEAD, Items.PLAYER_HEAD, 0.1F));
 
-        // FIXME Re-add for 1.21 release
-/*
         this.add("lore_fragment_desert_well_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY.location()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_desert_pyramid_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID_ARCHAEOLOGY).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID_ARCHAEOLOGY.location()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_trail_ruins_archaeology_common", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON.location()).build(),
                         LootItemRandomChanceCondition.randomChance(0.02F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_trail_ruins_archaeology_rare", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE.location()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_ocean_ruin_warm_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY.location()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_ocean_ruin_cold_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY.location()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_underwater_ruin_small_chest", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_SMALL).build()
+                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_SMALL.location()).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(1, 3)));
         this.add("lore_fragment_underwater_ruin_big_chest", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG).build()
+                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG.location()).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
         this.add("lore_fragment_desert_pyramid_chest", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID).build()
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID.location()).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
         this.add("lore_fragment_jungle_temple_chest", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE).build()
+                        LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE.location()).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
-*/
     }
 }

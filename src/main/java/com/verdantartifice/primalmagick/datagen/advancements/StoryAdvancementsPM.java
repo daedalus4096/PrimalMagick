@@ -261,8 +261,6 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .addCriterion("sun_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(registries.lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructuresPM.SUN_SHRINE))))
                 .addCriterion("moon_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(registries.lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructuresPM.MOON_SHRINE))))
                 .save(saver, PrimalMagick.resource("story/discover_all_shrines"));
-        // FIXME Re-add for 1.21 release
-/*
         AdvancementHolder discoverLibrary = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_library").icon(ItemsPM.STATIC_BOOK.get()).build())
                 .parent(craftGrimoire)
                 .requirements(AdvancementRequirements.Strategy.OR)
@@ -280,7 +278,6 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .parent(discoverLibrary)
                 .addCriterion("has_tablet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.STATIC_TABLET.get()))
                 .save(saver, PrimalMagick.resource("story/find_lore_tablet"));
-*/
         AdvancementHolder craftSpellcraftingAltar = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_spellcrafting_altar").icon(ItemsPM.SPELLCRAFTING_ALTAR.get()).build())
                 .parent(craftArcaneWorkbench)
                 .addCriterion("has_altar", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SPELLCRAFTING_ALTAR.get()))
@@ -474,7 +471,6 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
                 .save(saver, PrimalMagick.resource("story/reuse_rune_thrice"));
     }
     
-    @SuppressWarnings("unused")
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {
         // TODO Don't hardcode languages, use the registry lookup and ancient tag (problem: custom datapack tags don't appear to be bound)
         Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())

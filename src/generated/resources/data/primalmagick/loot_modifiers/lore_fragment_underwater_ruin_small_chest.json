@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/underwater_ruin_small"
+    }
+  ],
+  "item": "primalmagick:lore_tablet_fragment",
+  "rolls": {
+    "max_inclusive": 3,
+    "min_inclusive": 1
+  }
+}

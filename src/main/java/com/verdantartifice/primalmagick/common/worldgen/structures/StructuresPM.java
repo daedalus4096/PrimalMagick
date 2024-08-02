@@ -4,8 +4,10 @@ import java.util.Map;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.Culture;
+import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.library.LibraryStructure;
+import com.verdantartifice.primalmagick.common.worldgen.structures.library.NetherLibraryStructure;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -15,6 +17,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
@@ -54,7 +58,6 @@ public class StructuresPM {
         context.register(structureKey, new ShrineStructure(structure(biomes), shrineType));
     }
     
-    @SuppressWarnings("unused")
     private static void registerLibrary(BootstrapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, ResourceKey<Culture> cultureKey) {
         context.register(structureKey, new LibraryStructure(structure(biomes), cultureKey));
     }
@@ -68,8 +71,6 @@ public class StructuresPM {
         registerShrine(context, StructuresPM.SUN_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SUN_SHRINE), ShrineStructure.Type.SUN);
         registerShrine(context, StructuresPM.MOON_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_MOON_SHRINE), ShrineStructure.Type.MOON);
         
-        // FIXME Re-add for 1.21 release
-/*
         registerLibrary(context, StructuresPM.EARTH_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_EARTH_LIBRARY), CulturesPM.EARTH);
         registerLibrary(context, StructuresPM.SEA_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SEA_LIBRARY), CulturesPM.SEA);
         registerLibrary(context, StructuresPM.SKY_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SKY_LIBRARY), CulturesPM.SKY);
@@ -80,6 +81,5 @@ public class StructuresPM {
                 new Structure.StructureSettings(biomeGetter.getOrThrow(BiomeTagsPM.HAS_FORBIDDEN_LIBRARY), Map.of(), GenerationStep.Decoration.UNDERGROUND_DECORATION, TerrainAdjustment.BEARD_THIN), 
                 CulturesPM.FORBIDDEN, 
                 UniformHeight.of(VerticalAnchor.absolute(32), VerticalAnchor.belowTop(10))));
-*/
     }
 }

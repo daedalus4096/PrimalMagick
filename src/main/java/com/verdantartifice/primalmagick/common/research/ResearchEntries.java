@@ -383,13 +383,10 @@ public class ResearchEntries {
                 .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
-        // FIXME Re-add for 1.21 release
-/*
         register(context, LINGUISTICS, key -> ResearchEntry.builder(key).discipline(discipline).icon(Items.WRITABLE_BOOK).parent(FIRST_STEPS)
                 .stage().requiredObservations(1).requiredStat(StatsPM.ANCIENT_BOOKS_READ, 1).end()
                 .stage().recipe(ItemsPM.SCRIBE_TABLE.get()).recipe(ItemsPM.LORE_TABLET_DIRTY.get()).end()
                 .build());
-*/
         register(context, UNLOCK_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(FIRST_STEPS)
                 .stage().requiredObservations(1).end()
                 .stage().end()

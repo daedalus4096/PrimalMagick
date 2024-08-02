@@ -35,9 +35,6 @@ public class StructureSetsPM {
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.SUN_SHRINE)), 
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.MOON_SHRINE))),
                 new RandomSpreadStructurePlacement(20, 10, RandomSpreadType.LINEAR, 11893192)));
-
-        // FIXME Re-add for 1.21 release
-/*
         context.register(StructureSetsPM.LIBRARIES, new StructureSet(
                 List.of(StructureSet.entry(structureGetter.getOrThrow(StructuresPM.EARTH_LIBRARY)), 
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.SEA_LIBRARY)), 
@@ -46,6 +43,5 @@ public class StructureSetsPM {
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.MOON_LIBRARY)),
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.FORBIDDEN_LIBRARY))),
                 new RandomSpreadStructurePlacement(30, 15, RandomSpreadType.LINEAR, 11893193)));
-*/
     }
 }
