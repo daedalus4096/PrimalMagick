@@ -2,13 +2,6 @@
   "type": "primalmagick:bloody_flesh",
   "conditions": [
     {
-      "condition": "minecraft:entity_properties",
-      "entity": "this",
-      "predicate": {
-        "type": "#primalmagick:drops_bloody_flesh"
-      }
-    },
-    {
       "condition": "minecraft:killed_by_player"
     },
     {
@@ -21,5 +14,6 @@
       "enchantment": "minecraft:looting",
       "unenchanted_chance": 0.5
     }
-  ]
+  ],
+  "targetTag": "primalmagick:drops_bloody_flesh"
 }

@@ -67,10 +67,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
         HolderLookup.RegistryLookup<Enchantment> enchLookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         this.add("bloody_flesh", new BloodyFleshModifier(
                 new LootItemCondition[] {
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOODY_FLESH)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.5F, 0.1F).build()
-                }));
+                }, EntityTypeTagsPM.DROPS_BLOODY_FLESH));
         this.add("bounty_farming", new BountyFarmingModifier(
                 new LootItemCondition[] {
                         MatchBlockTag.builder(BlockTagsPM.BOUNTY_CROPS).build(),
@@ -97,26 +97,26 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                 , 0.5F));
         this.add("blood_notes_high", new BloodNotesModifier(
                 new LootItemCondition[] {
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }));
+                }, EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH));
         this.add("blood_notes_low", new BloodNotesModifier(
                 new LootItemCondition[] {
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOOD_NOTES_LOW)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.25F, 0.25F).build()
-                }));
+                }, EntityTypeTagsPM.DROPS_BLOOD_NOTES_LOW));
         this.add("relic_fragments_high", new RelicFragmentsModifier(
                 new LootItemCondition[] {
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_HIGH)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, 3, 5, 1));
+                }, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_HIGH, 3, 5, 1));
         this.add("relic_fragments_low", new RelicFragmentsModifier(
                 new LootItemCondition[] {
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.1F, 0.05F).build()
-                }, 1, 1, 0));
+                }, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW, 1, 1, 0));
         this.add("four_leaf_clover_short_grass", new FourLeafCloverModifier(
                 new LootItemCondition[] {
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.SHORT_GRASS).build(),
@@ -210,45 +210,45 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
         this.add("guillotine_zombie_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_ZOMBIE_HEAD)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, Items.ZOMBIE_HEAD, 0.1F));
+                }, EntityTypeTagsPM.GUILLOTINE_ZOMBIE_HEAD, Items.ZOMBIE_HEAD, 0.1F));
         this.add("guillotine_skeleton_skull", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_SKELETON_SKULL)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, Items.SKELETON_SKULL, 0.1F));
+                }, EntityTypeTagsPM.GUILLOTINE_SKELETON_SKULL, Items.SKELETON_SKULL, 0.1F));
         this.add("guillotine_creeper_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_CREEPER_HEAD)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, Items.CREEPER_HEAD, 0.1F));
+                }, EntityTypeTagsPM.GUILLOTINE_CREEPER_HEAD, Items.CREEPER_HEAD, 0.1F));
         this.add("guillotine_dragon_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_DRAGON_HEAD)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, Items.DRAGON_HEAD, 0.1F));
+                }, EntityTypeTagsPM.GUILLOTINE_DRAGON_HEAD, Items.DRAGON_HEAD, 0.1F));
         this.add("guillotine_wither_skeleton_skull", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_WITHER_SKELETON_SKULL)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, Items.WITHER_SKELETON_SKULL, 0.1F));
+                }, EntityTypeTagsPM.GUILLOTINE_WITHER_SKELETON_SKULL, Items.WITHER_SKELETON_SKULL, 0.1F));
         this.add("guillotine_piglin_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_PIGLIN_HEAD)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, Items.PIGLIN_HEAD, 0.1F));
+                }, EntityTypeTagsPM.GUILLOTINE_PIGLIN_HEAD, Items.PIGLIN_HEAD, 0.1F));
         this.add("guillotine_player_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_PLAYER_HEAD)).build(),
+                        // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, Items.PLAYER_HEAD, 0.1F));
+                }, EntityTypeTagsPM.GUILLOTINE_PLAYER_HEAD, Items.PLAYER_HEAD, 0.1F));
 
         // FIXME Re-add for 1.21 release
 /*

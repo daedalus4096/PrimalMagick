@@ -2,13 +2,6 @@
   "type": "primalmagick:relic_fragments",
   "conditions": [
     {
-      "condition": "minecraft:entity_properties",
-      "entity": "this",
-      "predicate": {
-        "type": "#primalmagick:drops_relic_fragments_low"
-      }
-    },
-    {
       "condition": "minecraft:killed_by_player"
     },
     {
@@ -24,5 +17,6 @@
   ],
   "lootingBonus": 0,
   "maxCount": 1,
-  "minCount": 1
+  "minCount": 1,
+  "targetTag": "primalmagick:drops_relic_fragments_low"
 }

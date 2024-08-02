@@ -3,15 +3,9 @@
   "chance": 0.1,
   "conditions": [
     {
-      "condition": "minecraft:entity_properties",
-      "entity": "this",
-      "predicate": {
-        "type": "#primalmagick:guillotine/skeleton_skull"
-      }
-    },
-    {
       "condition": "minecraft:killed_by_player"
     }
   ],
-  "item": "minecraft:skeleton_skull"
+  "item": "minecraft:skeleton_skull",
+  "targetTag": "primalmagick:guillotine/skeleton_skull"
 }

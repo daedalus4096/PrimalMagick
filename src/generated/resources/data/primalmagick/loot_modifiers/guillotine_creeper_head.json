@@ -3,15 +3,9 @@
   "chance": 0.1,
   "conditions": [
     {
-      "condition": "minecraft:entity_properties",
-      "entity": "this",
-      "predicate": {
-        "type": "#primalmagick:guillotine/creeper_head"
-      }
-    },
-    {
       "condition": "minecraft:killed_by_player"
     }
   ],
-  "item": "minecraft:creeper_head"
+  "item": "minecraft:creeper_head",
+  "targetTag": "primalmagick:guillotine/creeper_head"
 }
