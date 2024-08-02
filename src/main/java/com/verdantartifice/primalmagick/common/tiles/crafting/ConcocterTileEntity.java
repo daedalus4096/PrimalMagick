@@ -453,20 +453,6 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slots 0-8 were the input item stacks
-        for (int inputIndex = 0; inputIndex < MAX_INPUT_ITEMS; inputIndex++) {
-            this.setItem(INPUT_INV_INDEX, inputIndex, legacyItems.get(inputIndex));
-        }
-        
-        // Slot 9 was the wand item stack
-        this.setItem(WAND_INV_INDEX, 0, legacyItems.get(MAX_INPUT_ITEMS));
-        
-        // Slot 10 was the output item stack
-        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(MAX_INPUT_ITEMS + 1));
-    }
-
-    @Override
     protected void applyImplicitComponents(DataComponentInput pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
         pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);

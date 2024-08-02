@@ -114,12 +114,6 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
-    }
-
-    @Override
     public void onLoad() {
         this.unpackLootTable(null);
         super.onLoad();

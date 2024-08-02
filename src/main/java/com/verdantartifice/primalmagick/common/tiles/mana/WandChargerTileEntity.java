@@ -235,13 +235,4 @@ public class WandChargerTileEntity extends AbstractTileSidedInventoryPM implemen
 
         return retVal;
     }
-
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
-        
-        // Slot 1 was the charge item stack
-        this.setItem(CHARGE_INV_INDEX, 0, legacyItems.get(1));
-    }
 }

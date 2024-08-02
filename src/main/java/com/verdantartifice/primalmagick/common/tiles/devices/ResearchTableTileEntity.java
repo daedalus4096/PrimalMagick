@@ -87,13 +87,4 @@ public class ResearchTableTileEntity extends AbstractTileSidedInventoryPM implem
 
         return retVal;
     }
-
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the writing implement item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
-        
-        // Slot 1 was the paper item stack
-        this.setItem(INPUT_INV_INDEX, 1, legacyItems.get(1));
-    }
 }

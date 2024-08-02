@@ -87,11 +87,6 @@ public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Nothing to do; block didn't exist in legacy versions
-    }
-
-    @Override
     public void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.loadAdditional(pTag, pRegistries);
         this.lastInteractedSlot = pTag.getInt("LastInteractedSlot");

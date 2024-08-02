@@ -526,21 +526,6 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the output item stack
-        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(0));
-
-        // Slot 1 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(1));
-
-        // Slot 2 was the supercharge fuel item stack
-        this.setItem(FUEL_INV_INDEX, 0, legacyItems.get(2));
-
-        // Slot 3 was the wand item stack
-        this.setItem(FUEL_INV_INDEX, 1, legacyItems.get(3));
-    }
-
-    @Override
     protected void applyImplicitComponents(DataComponentInput pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
         pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);

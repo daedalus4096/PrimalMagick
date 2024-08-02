@@ -447,20 +447,6 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
-        
-        // Slots 1-9 were the output item stacks
-        for (int inputIndex = 0; inputIndex < OUTPUT_CAPACITY; inputIndex++) {
-            this.setItem(OUTPUT_INV_INDEX, inputIndex, legacyItems.get(inputIndex + 1));
-        }
-        
-        // Slot 10 was the wand item stack
-        this.setItem(WAND_INV_INDEX, 0, legacyItems.get(OUTPUT_CAPACITY + 1));
-    }
-
-    @Override
     protected void applyImplicitComponents(DataComponentInput pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
         pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);

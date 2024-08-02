@@ -235,32 +235,10 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                     CompoundTag invTag = listTag.getCompound(invIndex);
                     ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex), pRegistries);
                 }
-            } else if (pTag.contains("Items")) {
-                // Compatibility layer for tiles that used to be AbstractTileInventoryPM instances pre-4.0.8
-                // FIXME Remove in next major revision
-                int legacySize = 0;
-                for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
-                    legacySize += this.getInventorySize(invIndex);
-                }
-                NonNullList<ItemStack> legacyItems = NonNullList.withSize(legacySize, ItemStack.EMPTY);
-                ContainerHelper.loadAllItems(pTag, legacyItems, pRegistries);
-                this.loadLegacyItems(legacyItems);
             }
         }
     }
     
-    /**
-     * Load a given list of AbstractTileInventoryPM-formatted items into the multi-inventory format used by
-     * this tile type.  Should only ever be called at most once for any given block entity instance,
-     * when it's first loaded into the new format.
-     * 
-     * @param legacyItems the list of all items loaded for this tile in the legacy format
-     * @deprecated
-     */
-    // FIXME Remove in next major revision
-    @Deprecated(since = "4.0.2", forRemoval = true)
-    protected abstract void loadLegacyItems(NonNullList<ItemStack> legacyItems);
-
     @Override
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.saveAdditional(pTag, pRegistries);

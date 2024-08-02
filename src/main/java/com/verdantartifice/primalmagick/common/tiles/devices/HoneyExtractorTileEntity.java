@@ -337,20 +337,6 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     }
 
     @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slots 0-1 were the input item stacks
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
-        this.setItem(INPUT_INV_INDEX, 1, legacyItems.get(1));
-        
-        // Slots 2-3 were the output item stacks
-        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(2));
-        this.setItem(OUTPUT_INV_INDEX, 1, legacyItems.get(3));
-        
-        // Slot 4 was the wand item stack
-        this.setItem(WAND_INV_INDEX, 0, legacyItems.get(4));
-    }
-
-    @Override
     protected void applyImplicitComponents(DataComponentInput pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
         pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);

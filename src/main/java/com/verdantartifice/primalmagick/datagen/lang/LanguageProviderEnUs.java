@@ -1125,9 +1125,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.mobEffect(EffectsPM.MANA_IMPEDANCE).name("Mana Impedance").build();
         this.mobEffect(EffectsPM.ENDERLOCK).name("Enderlock").build();
         this.mobEffect(EffectsPM.SOULPIERCED).name("Soulpierced").build();
-        @SuppressWarnings("removal")
-        RegistryObject<MobEffect> stolenEssence = EffectsPM.STOLEN_ESSENCE;
-        this.mobEffect(stolenEssence).name("Stolen Essence").build();
         
         // Generate mod enchantment localizations
         this.enchantment(EnchantmentsPM.LIFESTEAL).name("Lifesteal")

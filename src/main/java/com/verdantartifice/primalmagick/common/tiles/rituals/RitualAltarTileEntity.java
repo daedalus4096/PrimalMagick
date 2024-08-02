@@ -1073,10 +1073,4 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
 
         return retVal;
     }
-
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Slot 0 was the output item stack
-        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(0));
-    }
 }

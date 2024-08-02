@@ -120,11 +120,6 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
         return retVal;
     }
 
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // Nothing to do; this tile didn't exist in legacy versions
-    }
-    
     public void doTranscribe(Player player) {
         Level level = this.getLevel();
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
