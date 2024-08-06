@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
@@ -66,6 +69,8 @@ import net.minecraftforge.items.ItemStackHandler;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.EssenceTransmuterBlock}
  */
 public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IOwnedTileEntity {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int OUTPUT_INV_INDEX = 1;
     protected static final int WAND_INV_INDEX = 2;
@@ -134,7 +139,9 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+            LOGGER.error("Failed to decode mana storage: {}", msg);
+        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
         this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(ResourceLocation.parse(compound.getString("NextSource"))) : null;
         
@@ -153,7 +160,9 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+            LOGGER.error("Failed to encode mana storage: {}", msg);
+        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
         compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.nextOutputSource != null) {
             compound.putString("NextSource", this.nextOutputSource.getId().toString());

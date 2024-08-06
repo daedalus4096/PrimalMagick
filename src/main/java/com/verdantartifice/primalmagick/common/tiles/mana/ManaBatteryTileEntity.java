@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.OptionalInt;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
@@ -52,6 +55,8 @@ import net.minecraftforge.items.ItemStackHandler;
  * @author Daedalus4096
  */
 public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected static final int FONT_RANGE = 5;
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int CHARGE_INV_INDEX = 1;
@@ -300,7 +305,9 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
         this.fontSiphonTime = compound.getInt("FontSiphonTime");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+            LOGGER.error("Failed to decode mana storage: {}", msg);
+        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
     
     @Override
@@ -309,7 +316,9 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
         compound.putInt("FontSiphonTime", this.fontSiphonTime);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+            LOGGER.error("Failed to encode mana storage: {}", msg);
+        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
     }
 
     @Override

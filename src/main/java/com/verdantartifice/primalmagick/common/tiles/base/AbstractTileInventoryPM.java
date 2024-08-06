@@ -7,6 +7,9 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 
 import net.minecraft.core.BlockPos;
@@ -37,6 +40,8 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * @author Daedalus4096
  */
 public abstract class AbstractTileInventoryPM extends AbstractTilePM {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected NonNullList<ItemStack> items;         // The tile's inventory
     protected NonNullList<ItemStack> syncedItems;   // Client-side inventory data received from the server
     protected List<ContainerListener> listeners;    // Listeners to be informed when the inventory contents change
@@ -151,9 +156,12 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
                 ItemStack stack = this.items.get(index);
                 if (this.isSyncedSlot(index) && !stack.isEmpty()) {
                     // Only include populated, sync-tagged slots to lessen packet size
+                    final byte slotIndex = (byte)index;
                     CompoundTag slotTag = new CompoundTag();
-                    slotTag.putByte("Slot", (byte)index);
-                    ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, stack).resultOrPartial(LOGGER::error).ifPresent(tag -> slotTag.put("Item", tag));
+                    slotTag.putByte("Slot", slotIndex);
+                    ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, stack).resultOrPartial(msg -> {
+                        LOGGER.error("Failed to encode slot {}: {}", slotIndex, msg);
+                    }).ifPresent(tag -> slotTag.put("Item", tag));
                     tagList.add(slotTag);
                 }
             }
@@ -188,7 +196,9 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
                 CompoundTag slotTag = tagList.getCompound(index);
                 byte slotIndex = slotTag.getByte("Slot");
                 if (this.isSyncedSlot(slotIndex)) {
-                    ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, slotTag.getCompound("Item")).resultOrPartial(LOGGER::error).ifPresent(stack -> this.syncedItems.set(slotIndex, stack));
+                    ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, slotTag.getCompound("Item")).resultOrPartial(msg -> {
+                        LOGGER.error("Failed to decode slot {}: {}", slotIndex, msg);
+                    }).ifPresent(stack -> this.syncedItems.set(slotIndex, stack));
                 }
             }
         }

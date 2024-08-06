@@ -4,6 +4,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -29,6 +32,8 @@ import net.minecraftforge.items.ItemStackHandler;
  * @author Daedalus4096
  */
 public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int BOOK_CAPACITY = CarvedBookshelfBlock.MAX_BOOKS;
 

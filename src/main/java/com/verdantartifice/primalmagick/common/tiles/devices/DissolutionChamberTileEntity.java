@@ -2,6 +2,9 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import java.util.OptionalInt;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
@@ -51,6 +54,8 @@ import net.minecraftforge.items.ItemStackHandler;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.DissolutionChamberBlock}
  */
 public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, StackedContentsCompatible {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected static final int OUTPUT_INV_INDEX = 0;
     protected static final int INPUT_INV_INDEX = 1;
     protected static final int WAND_INV_INDEX = 2;
@@ -107,7 +112,9 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+            LOGGER.error("Failed to decode mana storage: {}", msg);
+        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
 
     @Override
@@ -115,7 +122,9 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+            LOGGER.error("Failed to encode mana storage: {}", msg);
+        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
     }
 
     @Override

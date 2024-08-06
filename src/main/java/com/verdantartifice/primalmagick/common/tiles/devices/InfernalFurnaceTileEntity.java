@@ -9,6 +9,9 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
@@ -72,6 +75,8 @@ import net.minecraftforge.items.ItemStackHandler;
  * @author Daedalus4096
  */
 public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, RecipeCraftingHolder, StackedContentsCompatible {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
     protected static final int MANA_PER_HALF_SECOND = 1;
     protected static final int DEFAULT_COOK_TIME = 100;
@@ -149,7 +154,9 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.superchargeTime = compound.getInt("SuperchargeTime");
         this.superchargeTimeTotal = compound.getInt("SuperchargeTimeTotal");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+            LOGGER.error("Failed to decode mana storage: {}", msg);
+        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
         
         CompoundTag recipesUsedTag = compound.getCompound("RecipesUsed");
         for (String key : recipesUsedTag.getAllKeys()) {
@@ -164,7 +171,9 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.putInt("SuperchargeTime", this.superchargeTime);
         compound.putInt("SuperchargeTimeTotal", this.superchargeTimeTotal);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+            LOGGER.error("Failed to encode mana storage: {}", msg);
+        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
         
         CompoundTag recipesUsedTag = new CompoundTag();
         this.recipesUsed.forEach((key, value) -> {

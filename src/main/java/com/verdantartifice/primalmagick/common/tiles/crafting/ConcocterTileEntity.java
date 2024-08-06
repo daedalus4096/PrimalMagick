@@ -11,6 +11,9 @@ import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
@@ -66,6 +69,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int WAND_INV_INDEX = 1;
     protected static final int OUTPUT_INV_INDEX = 2;
@@ -133,7 +138,9 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(LOGGER::error).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+            LOGGER.error("Failed to decode mana storage: {}", msg);
+        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
         this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         
         this.ownerUUID = null;
@@ -148,7 +155,9 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         super.saveAdditional(compound, registries);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(LOGGER::error).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+            LOGGER.error("Failed to encode mana storage: {}", msg);
+        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
         compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.ownerUUID != null) {
             compound.putUUID("OwnerUUID", this.ownerUUID);

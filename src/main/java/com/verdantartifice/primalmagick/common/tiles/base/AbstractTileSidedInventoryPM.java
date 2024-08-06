@@ -11,6 +11,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -54,6 +56,8 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * @author Daedalus4096
  */
 public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implements IRandomizableContents {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     protected final NonNullList<NonNullList<ItemStack>> inventories;
     protected final NonNullList<NonNullList<ItemStack>> syncedInventories;
     protected final NonNullList<ItemStackHandler> itemHandlers;
@@ -175,9 +179,13 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                 if (this.isSyncedSlot(invIndex, slotIndex) && !stack.isEmpty()) {
                     // Only include populated, sync-tagged slots to lessen packet size
                     CompoundTag slotTag = new CompoundTag();
-                    slotTag.putByte("Inv", (byte)invIndex);
-                    slotTag.putByte("Slot", (byte)slotIndex);
-                    ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, stack).resultOrPartial(LOGGER::error).ifPresent(tag -> slotTag.put("Item", tag));
+                    final byte invIndexByte = (byte)invIndex;
+                    slotTag.putByte("Inv", invIndexByte);
+                    final byte slotIndexByte = (byte)slotIndex;
+                    slotTag.putByte("Slot", slotIndexByte);
+                    ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, stack).resultOrPartial(msg -> {
+                        LOGGER.error("Failed to encode inv {} slot {}: {}", invIndexByte, slotIndexByte, msg);
+                    }).ifPresent(tag -> slotTag.put("Item", tag));
                     tagList.add(slotTag);
                 }
             }
@@ -216,7 +224,9 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                 byte invIndex = slotTag.getByte("Inv");
                 byte slotIndex = slotTag.getByte("Slot");
                 if (this.isSyncedSlot(invIndex, slotIndex)) {
-                    ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, slotTag.getCompound("Item")).resultOrPartial(LOGGER::error).ifPresent(stack -> this.syncedInventories.get(invIndex).set(slotIndex, stack));
+                    ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, slotTag.getCompound("Item")).resultOrPartial(msg -> {
+                        LOGGER.error("Failed to decode inv {} slot {}: {}", invIndex, slotIndex, msg);
+                    }).ifPresent(stack -> this.syncedInventories.get(invIndex).set(slotIndex, stack));
                 }
             }
         }
