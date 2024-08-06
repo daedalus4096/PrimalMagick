@@ -27,7 +27,6 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
-import com.verdantartifice.primalmagick.common.theorycrafting.ProjectFactory;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -36,6 +35,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
@@ -65,11 +65,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         
+        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
+        
         // Serialize known research, including stage number and attached flags
         ListTag researchList = new ListTag();
         for (AbstractResearchKey<?> key : this.research) {
             CompoundTag tag = new CompoundTag();
-            AbstractResearchKey.dispatchCodec().encodeStart(NbtOps.INSTANCE, key).resultOrPartial(LOGGER::error).ifPresent(encodedTag -> tag.put("key", encodedTag));
+            AbstractResearchKey.dispatchCodec().encodeStart(registryOps, key)
+                .resultOrPartial(msg -> LOGGER.error("Failed to encode research entry in player knowledge capability: {}", msg))
+                .ifPresent(encodedTag -> tag.put("key", encodedTag));
             if (this.stages.containsKey(key)) {
                 tag.putInt("stage", this.stages.get(key));
             }
@@ -103,21 +107,21 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Serialize active research project, if any
         if (this.project != null) {
-            Project.codec().encodeStart(NbtOps.INSTANCE, this.project)
-                .resultOrPartial(LOGGER::error)
+            Project.codec().encodeStart(registryOps, this.project)
+                .resultOrPartial(msg -> LOGGER.error("Failed to encode active research project in player knowledge capability: {}", msg))
                 .ifPresent(encodedProject -> rootTag.put("project", encodedProject));
         }
         
         // Serialize last active grimoire topic, if any
         if (this.topic != null) {
-            AbstractResearchTopic.dispatchCodec().encodeStart(NbtOps.INSTANCE, this.topic)
-                .resultOrPartial(LOGGER::error)
+            AbstractResearchTopic.dispatchCodec().encodeStart(registryOps, this.topic)
+                .resultOrPartial(msg -> LOGGER.error("Failed to encode current grimoire topic in player knowledge capability: {}", msg))
                 .ifPresent(encodedTopic -> rootTag.put("topic", encodedTopic));
         }
         
         // Serialize grimoire topic history
-        AbstractResearchTopic.dispatchCodec().listOf().encodeStart(NbtOps.INSTANCE, this.topicHistory)
-            .resultOrPartial(LOGGER::error)
+        AbstractResearchTopic.dispatchCodec().listOf().encodeStart(registryOps, this.topicHistory)
+            .resultOrPartial(msg -> LOGGER.error("Failed to encode grimoire topic history entry in player knowledge capability: {}", msg))
             .ifPresent(encodedHistory -> rootTag.put("topicHistory", encodedHistory));
         
         rootTag.putLong("syncTimestamp", System.currentTimeMillis());
@@ -136,11 +140,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.clearKnowledge();
         this.project = null;
         
+        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
+        
         // Deserialize known research, including stage number and attached flags
         ListTag researchList = nbt.getList("research", Tag.TAG_COMPOUND);
         for (int index = 0; index < researchList.size(); index++) {
             CompoundTag tag = researchList.getCompound(index);
-            AbstractResearchKey.dispatchCodec().parse(NbtOps.INSTANCE, tag.get("key")).resultOrPartial(LOGGER::error).ifPresent(parsedKey -> {
+            AbstractResearchKey.dispatchCodec().parse(registryOps, tag.get("key")).resultOrPartial(msg -> {
+                LOGGER.error("Failed to decode research entry in player knowledge capability: {}", msg);
+            }).ifPresent(parsedKey -> {
                 if (!this.isResearchKnown(parsedKey)) {
                     this.research.add(parsedKey);
                     int stage = tag.getInt("stage");
@@ -178,19 +186,21 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Deserialize active research project
         if (nbt.contains("project")) {
-            this.project = ProjectFactory.getProjectFromNBT(nbt.getCompound("project"));
+            Project.codec().parse(registryOps, nbt.getCompound("project"))
+                .resultOrPartial(msg -> LOGGER.error("Failed to decode active research project in player knowledge capability: {}", msg))
+                .ifPresent(project -> this.project = project);
         }
         
         // Deserialize last active grimoire topic
         if (nbt.contains("topic")) {
-            AbstractResearchTopic.dispatchCodec().parse(NbtOps.INSTANCE, nbt.get("topic"))
-                .resultOrPartial(LOGGER::error)
+            AbstractResearchTopic.dispatchCodec().parse(registryOps, nbt.get("topic"))
+                .resultOrPartial(msg -> LOGGER.error("Failed to decode current grimoire topic in player knowledge capability: {}", msg))
                 .ifPresent(decodedTopic -> this.topic = decodedTopic);
         }
         
         // Deserialize grimoire topic history
-        AbstractResearchTopic.dispatchCodec().listOf().parse(NbtOps.INSTANCE, nbt.get("topicHistory"))
-            .resultOrPartial(LOGGER::error)
+        AbstractResearchTopic.dispatchCodec().listOf().parse(registryOps, nbt.get("topicHistory"))
+            .resultOrPartial(msg -> LOGGER.error("Failed to decode grimoire topic history entry in player knowledge capability: {}", msg))
             .ifPresent(decodedHistory -> this.topicHistory.addAll(decodedHistory));
     }
 

@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -90,13 +91,17 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
     }
 
     @Nullable
-    public Tag serializeNBT() {
-        return codec().encodeStart(NbtOps.INSTANCE, this).resultOrPartial(LOGGER::error).orElse(null);
+    public Tag serializeNBT(HolderLookup.Provider registries) {
+        return codec().encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this)
+                .resultOrPartial(msg -> LOGGER.error("Failed to encode spell package: {}", msg))
+                .orElse(null);
     }
     
     @Nullable
-    public static SpellPackage deserializeNBT(Tag nbt) {
-        return codec().parse(NbtOps.INSTANCE, nbt).resultOrPartial(LOGGER::error).orElse(null);
+    public static SpellPackage deserializeNBT(Tag nbt, HolderLookup.Provider registries) {
+        return codec().parse(registries.createSerializationContext(NbtOps.INSTANCE), nbt)
+                .resultOrPartial(msg -> LOGGER.error("Failed to decode spell package: {}", msg))
+                .orElse(null);
     }
 
     public int getCooldownTicks() {

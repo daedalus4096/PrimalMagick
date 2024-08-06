@@ -119,7 +119,7 @@ public class SpellMineEntity extends Entity {
         
         this.spell = null;
         if (compound.contains("Spell", Tag.TAG_COMPOUND)) {
-            this.spell = SpellPackage.deserializeNBT(compound.getCompound("Spell"));
+            this.spell = SpellPackage.deserializeNBT(compound.getCompound("Spell"), this.registryAccess());
         }
         if (this.spell != null && !this.spell.isValid()) {
             this.spell = null;
@@ -130,7 +130,9 @@ public class SpellMineEntity extends Entity {
         
         this.spellSource = null;
         if (compound.contains("SpellSource", Tag.TAG_COMPOUND)) {
-            this.spellSource = ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, compound.getCompound("SpellSource")).resultOrPartial(LOGGER::error).orElse(ItemStack.EMPTY);
+            this.spellSource = ItemStack.OPTIONAL_CODEC.parse(this.registryAccess().createSerializationContext(NbtOps.INSTANCE), compound.getCompound("SpellSource"))
+                    .resultOrPartial(msg -> LOGGER.error("Failed to decode spell source: {}", msg))
+                    .orElse(ItemStack.EMPTY);
         }
         
         this.currentLife = compound.getInt("CurrentLife");
@@ -143,10 +145,12 @@ public class SpellMineEntity extends Entity {
             compound.putUUID("Caster", this.casterId);
         }
         if (this.spell != null) {
-            compound.put("Spell", this.spell.serializeNBT());
+            compound.put("Spell", this.spell.serializeNBT(this.registryAccess()));
         }
         if (this.spellSource != null) {
-            ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, this.spellSource).resultOrPartial(LOGGER::error).ifPresent(tag -> compound.put("SpellSource", tag));
+            ItemStack.OPTIONAL_CODEC.encodeStart(this.registryAccess().createSerializationContext(NbtOps.INSTANCE), this.spellSource)
+                    .resultOrPartial(msg -> LOGGER.error("Failed to encode spell source: {}", msg))
+                    .ifPresent(tag -> compound.put("SpellSource", tag));
         }
         compound.putInt("CurrentLife", this.currentLife);
         compound.putInt("Lifespan", this.getLifespan());

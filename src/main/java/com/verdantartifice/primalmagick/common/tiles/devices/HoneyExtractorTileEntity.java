@@ -108,7 +108,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
         super.loadAdditional(compound, registries);
         this.spinTime = compound.getInt("SpinTime");
         this.spinTimeTotal = compound.getInt("SpinTimeTotal");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
@@ -118,7 +118,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
         super.saveAdditional(compound, registries);
         compound.putInt("SpinTime", this.spinTime);
         compound.putInt("SpinTimeTotal", this.spinTimeTotal);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
     }

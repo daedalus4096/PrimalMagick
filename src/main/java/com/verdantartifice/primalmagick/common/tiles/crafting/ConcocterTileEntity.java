@@ -138,7 +138,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         
         this.cookTime = compound.getInt("CookTime");
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyInto(this.manaStorage));
         this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
@@ -155,7 +155,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         super.saveAdditional(compound, registries);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
         compound.put("ResearchCache", this.researchCache.serializeNBT(registries));

@@ -305,7 +305,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
         this.fontSiphonTime = compound.getInt("FontSiphonTime");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
@@ -316,7 +316,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
         compound.putInt("FontSiphonTime", this.fontSiphonTime);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
     }

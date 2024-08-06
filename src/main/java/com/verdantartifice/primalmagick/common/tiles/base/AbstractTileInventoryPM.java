@@ -159,7 +159,7 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
                     final byte slotIndex = (byte)index;
                     CompoundTag slotTag = new CompoundTag();
                     slotTag.putByte("Slot", slotIndex);
-                    ItemStack.OPTIONAL_CODEC.encodeStart(NbtOps.INSTANCE, stack).resultOrPartial(msg -> {
+                    ItemStack.OPTIONAL_CODEC.encodeStart(this.getLevel().registryAccess().createSerializationContext(NbtOps.INSTANCE), stack).resultOrPartial(msg -> {
                         LOGGER.error("Failed to encode slot {}: {}", slotIndex, msg);
                     }).ifPresent(tag -> slotTag.put("Item", tag));
                     tagList.add(slotTag);
@@ -196,7 +196,7 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
                 CompoundTag slotTag = tagList.getCompound(index);
                 byte slotIndex = slotTag.getByte("Slot");
                 if (this.isSyncedSlot(slotIndex)) {
-                    ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, slotTag.getCompound("Item")).resultOrPartial(msg -> {
+                    ItemStack.OPTIONAL_CODEC.parse(this.getLevel().registryAccess().createSerializationContext(NbtOps.INSTANCE), slotTag.getCompound("Item")).resultOrPartial(msg -> {
                         LOGGER.error("Failed to decode slot {}: {}", slotIndex, msg);
                     }).ifPresent(stack -> this.syncedItems.set(slotIndex, stack));
                 }

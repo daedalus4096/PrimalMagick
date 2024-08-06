@@ -72,6 +72,7 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -216,17 +217,19 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 ResourceLocation.parse(compound.getString("ActiveRecipeId")) : 
                 null;
         
+        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
+        
         this.currentStep = null;
         if (compound.contains("CurrentStep")) {
-            AbstractRitualStep.dispatchCodec().parse(NbtOps.INSTANCE, compound.get("CurrentStep"))
-                .resultOrPartial(LOGGER::error)
+            AbstractRitualStep.dispatchCodec().parse(registryOps, compound.get("CurrentStep"))
+                .resultOrPartial(msg -> LOGGER.error("Failed to decode current ritual step: {}", msg))
                 .ifPresent(decodedStep -> this.currentStep = decodedStep);
         }
                 
         this.remainingSteps.clear();
         if (compound.contains("RemainingSteps")) {
-            AbstractRitualStep.dispatchCodec().listOf().parse(NbtOps.INSTANCE, compound.get("RemainingSteps"))
-                .resultOrPartial(LOGGER::error)
+            AbstractRitualStep.dispatchCodec().listOf().parse(registryOps, compound.get("RemainingSteps"))
+                .resultOrPartial(msg -> LOGGER.error("Failed to decode remaining ritual steps: {}", msg))
                 .ifPresent(decodedSteps -> this.remainingSteps.addAll(decodedSteps));
         }
         
@@ -242,6 +245,9 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
+
+        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
+
         compound.putBoolean("Active", this.active);
         compound.putBoolean("CurrentStepComplete", this.currentStepComplete);
         compound.putInt("ActiveCount", this.activeCount);
@@ -254,13 +260,13 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
             compound.putString("ActiveRecipeId", this.activeRecipeId.toString());
         }
         if (this.currentStep != null) {
-            AbstractRitualStep.dispatchCodec().encodeStart(NbtOps.INSTANCE, this.currentStep)
-                .resultOrPartial(LOGGER::error)
+            AbstractRitualStep.dispatchCodec().encodeStart(registryOps, this.currentStep)
+                .resultOrPartial(msg -> LOGGER.error("Failed to encode current ritual step: {}", msg))
                 .ifPresent(encodedStep -> compound.put("CurrentStep", encodedStep));
         }
         if (this.remainingSteps != null && !this.remainingSteps.isEmpty()) {
-            AbstractRitualStep.dispatchCodec().listOf().encodeStart(NbtOps.INSTANCE, this.remainingSteps)
-                .resultOrPartial(LOGGER::error)
+            AbstractRitualStep.dispatchCodec().listOf().encodeStart(registryOps, this.remainingSteps)
+                .resultOrPartial(msg -> LOGGER.error("Failed to encode remaining ritual steps: {}", msg))
                 .ifPresent(encodedSteps -> compound.put("RemainingSteps", encodedSteps));
         }
         if (this.awaitedPropPos != null) {

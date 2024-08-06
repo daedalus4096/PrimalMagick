@@ -112,7 +112,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         super.loadAdditional(compound, registries);
         this.processTime = compound.getInt("ProcessTime");
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyInto(this.manaStorage));
     }
@@ -122,7 +122,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         super.saveAdditional(compound, registries);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
     }

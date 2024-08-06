@@ -154,7 +154,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.superchargeTime = compound.getInt("SuperchargeTime");
         this.superchargeTimeTotal = compound.getInt("SuperchargeTimeTotal");
-        ManaStorage.CODEC.parse(NbtOps.INSTANCE, compound.get("ManaStorage")).resultOrPartial(msg -> {
+        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyInto(this.manaStorage));
         
@@ -171,7 +171,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.putInt("SuperchargeTime", this.superchargeTime);
         compound.putInt("SuperchargeTimeTotal", this.superchargeTimeTotal);
-        ManaStorage.CODEC.encodeStart(NbtOps.INSTANCE, this.manaStorage).resultOrPartial(msg -> {
+        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
         

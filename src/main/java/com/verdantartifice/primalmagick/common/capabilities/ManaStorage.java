@@ -207,15 +207,15 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
 
         @Override
         public Tag serializeNBT(HolderLookup.Provider registries) {
-            return this.instance.codec().encodeStart(NbtOps.INSTANCE, this.instance)
-                .resultOrPartial(LOGGER::error)
+            return this.instance.codec().encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.instance)
+                .resultOrPartial(msg -> LOGGER.error("Failed to serialize mana storage capability: {}", msg))
                 .orElseThrow();
         }
 
         @Override
         public void deserializeNBT(HolderLookup.Provider registries, Tag nbt) {
-            this.instance.codec().parse(NbtOps.INSTANCE, nbt)
-                .resultOrPartial(LOGGER::error)
+            this.instance.codec().parse(registries.createSerializationContext(NbtOps.INSTANCE), nbt)
+                .resultOrPartial(msg -> LOGGER.error("Failed to deserialize mana storage capability: {}", msg))
                 .ifPresent(decodedManaStorage -> {
                     this.instance = decodedManaStorage;
                     this.holder = LazyOptional.of(() -> this.instance);
