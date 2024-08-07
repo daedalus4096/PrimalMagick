@@ -20,6 +20,11 @@ import net.minecraft.server.network.ConfigurationTask;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.network.config.ConfigurationTaskContext;
 
+/**
+ * Configuration task that syncs datapack contents from the server to the client.
+ * 
+ * @author Daedalus4096
+ */
 public class SyncDatapackDataTask implements ConfigurationTask {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final Type TYPE = new Type(PrimalMagick.MODID + ":sync_datapack_data");
@@ -31,6 +36,12 @@ public class SyncDatapackDataTask implements ConfigurationTask {
     public void start(ConfigurationTaskContext ctx) {
         this.taskCtx = ctx;
         Connection conn = ctx.getConnection();
+        
+        // If we're in memory, no syncing necessary
+        if (this.taskCtx.getConnection().isMemoryConnection()) {
+            this.taskCtx.finish(type());
+            return;
+        }
         
         // First update affinity data, then move on to the next step
         this.expectedToken = AcknowledgementPacket.expect(this::updateLinguisticsGrids);
