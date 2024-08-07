@@ -35,7 +35,7 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellMod<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(SpellModsPM.TYPES).dispatch(AbstractSpellMod::getType, SpellModType::streamCodec);
+        return RegistryCodecs.registryFriendlyStreamCodec(SpellModsPM.TYPES).dispatch(AbstractSpellMod::getType, SpellModType::streamCodec);
     }
     
     public abstract SpellModType<T> getType();

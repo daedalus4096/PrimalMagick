@@ -6,7 +6,7 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -27,7 +27,7 @@ public class GridRewardTypesPM {
     public static final RegistryObject<GridRewardType<EmptyReward>> EMPTY = register("empty", EmptyReward.CODEC, EmptyReward.STREAM_CODEC);
     public static final RegistryObject<GridRewardType<KnowledgeReward>> KNOWLEDGE = register("knowledge", KnowledgeReward.CODEC, KnowledgeReward.STREAM_CODEC);
     
-    protected static <T extends AbstractReward<T>> RegistryObject<GridRewardType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+    protected static <T extends AbstractReward<T>> RegistryObject<GridRewardType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super FriendlyByteBuf, T> streamCodec) {
         return DEFERRED_TYPES.register(id, () -> new GridRewardType<T>(PrimalMagick.resource(id), codec, streamCodec));
     }
 }

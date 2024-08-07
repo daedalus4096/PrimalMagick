@@ -25,7 +25,7 @@ public abstract class AbstractSpellVehicle<T extends AbstractSpellVehicle<T>> im
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellVehicle<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(SpellVehiclesPM.TYPES).dispatch(AbstractSpellVehicle::getType, SpellVehicleType::streamCodec);
+        return RegistryCodecs.registryFriendlyStreamCodec(SpellVehiclesPM.TYPES).dispatch(AbstractSpellVehicle::getType, SpellVehicleType::streamCodec);
     }
     
     public abstract SpellVehicleType<T> getType();

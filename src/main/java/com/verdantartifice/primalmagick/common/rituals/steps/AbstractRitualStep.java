@@ -18,7 +18,7 @@ public abstract class AbstractRitualStep<T extends AbstractRitualStep<T>> {
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractRitualStep<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(RitualStepTypesPM.TYPES).dispatch(AbstractRitualStep::getType, RitualStepType::streamCodec);
+        return RegistryCodecs.registryFriendlyStreamCodec(RitualStepTypesPM.TYPES).dispatch(AbstractRitualStep::getType, RitualStepType::streamCodec);
     }
     
     public abstract boolean isValid();

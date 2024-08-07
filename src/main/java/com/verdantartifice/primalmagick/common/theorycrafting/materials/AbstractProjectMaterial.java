@@ -36,7 +36,7 @@ public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractProjectMaterial<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(ProjectMaterialTypesPM.TYPES).dispatch(AbstractProjectMaterial::getType, type -> type.streamCodecSupplier().get());
+        return RegistryCodecs.registryFriendlyStreamCodec(ProjectMaterialTypesPM.TYPES).dispatch(AbstractProjectMaterial::getType, type -> type.streamCodecSupplier().get());
     }
     
     protected final double weight;

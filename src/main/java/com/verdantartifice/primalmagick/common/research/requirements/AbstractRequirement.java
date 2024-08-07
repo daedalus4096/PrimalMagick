@@ -28,7 +28,7 @@ public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractRequirement<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(RequirementsPM.TYPES).dispatch(AbstractRequirement::getType, type -> type.streamCodecSupplier().get());
+        return RegistryCodecs.registryFriendlyStreamCodec(RequirementsPM.TYPES).dispatch(AbstractRequirement::getType, type -> type.streamCodecSupplier().get());
     }
     
     public abstract boolean isMetBy(@Nullable Player player);

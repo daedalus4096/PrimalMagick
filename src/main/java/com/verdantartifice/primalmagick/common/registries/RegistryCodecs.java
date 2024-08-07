@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.Utf8String;
 import net.minecraft.network.codec.StreamCodec;
@@ -30,7 +31,7 @@ public class RegistryCodecs {
         });
     }
     
-    public static <T> StreamCodec<RegistryFriendlyByteBuf, T> streamCodec(Supplier<IForgeRegistry<T>> registrySupplier) {
+    public static <T> StreamCodec<RegistryFriendlyByteBuf, T> registryFriendlyStreamCodec(Supplier<IForgeRegistry<T>> registrySupplier) {
         return new StreamCodec<RegistryFriendlyByteBuf, T>() {
             @Override
             public T decode(RegistryFriendlyByteBuf pBuffer) {
@@ -40,6 +41,22 @@ public class RegistryCodecs {
 
             @Override
             public void encode(RegistryFriendlyByteBuf pBuffer, T pValue) {
+                ResourceLocation id = registrySupplier.get().getKey(pValue);
+                Utf8String.write(pBuffer, id.toString(), 32767);
+            }
+        };
+    }
+    
+    public static <T> StreamCodec<FriendlyByteBuf, T> friendlyStreamCodec(Supplier<IForgeRegistry<T>> registrySupplier) {
+        return new StreamCodec<FriendlyByteBuf, T>() {
+            @Override
+            public T decode(FriendlyByteBuf pBuffer) {
+                ResourceLocation id = ResourceLocation.parse(Utf8String.read(pBuffer, 32767));
+                return registrySupplier.get().getValue(id);
+            }
+
+            @Override
+            public void encode(FriendlyByteBuf pBuffer, T pValue) {
                 ResourceLocation id = registrySupplier.get().getKey(pValue);
                 Utf8String.write(pBuffer, id.toString(), 32767);
             }

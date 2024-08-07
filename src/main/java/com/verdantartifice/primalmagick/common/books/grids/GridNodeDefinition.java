@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractRewar
 import com.verdantartifice.primalmagick.common.books.grids.rewards.EmptyReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
 
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -27,7 +27,7 @@ public class GridNodeDefinition {
             ).apply(instance, GridNodeDefinition::new));
     }
 
-    public static StreamCodec<RegistryFriendlyByteBuf, GridNodeDefinition> streamCodec() {
+    public static StreamCodec<FriendlyByteBuf, GridNodeDefinition> streamCodec() {
         return StreamCodec.composite(
                 ByteBufCodecs.VAR_INT, d -> d.vocabularyCost,
                 AbstractReward.dispatchStreamCodec(), d -> d.reward,

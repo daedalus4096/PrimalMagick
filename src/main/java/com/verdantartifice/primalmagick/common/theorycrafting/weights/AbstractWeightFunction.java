@@ -18,7 +18,7 @@ public abstract class AbstractWeightFunction<T extends AbstractWeightFunction<T>
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractWeightFunction<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(WeightFunctionTypesPM.TYPES).dispatch(AbstractWeightFunction::getType, WeightFunctionType::streamCodec);
+        return RegistryCodecs.registryFriendlyStreamCodec(WeightFunctionTypesPM.TYPES).dispatch(AbstractWeightFunction::getType, WeightFunctionType::streamCodec);
     }
     
     public abstract double getWeight(Player player);

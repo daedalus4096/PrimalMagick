@@ -38,7 +38,7 @@ public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> im
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellPayload<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(SpellPayloadsPM.TYPES).dispatch(AbstractSpellPayload::getType, SpellPayloadType::streamCodec);
+        return RegistryCodecs.registryFriendlyStreamCodec(SpellPayloadsPM.TYPES).dispatch(AbstractSpellPayload::getType, SpellPayloadType::streamCodec);
     }
     
     protected static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("#######.##");

@@ -26,7 +26,7 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractResearchKey<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(ResearchKeyTypesPM.TYPES).dispatch(AbstractResearchKey::getType, ResearchKeyType::streamCodec);
+        return RegistryCodecs.registryFriendlyStreamCodec(ResearchKeyTypesPM.TYPES).dispatch(AbstractResearchKey::getType, ResearchKeyType::streamCodec);
     }
     
     @Override

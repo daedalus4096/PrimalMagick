@@ -19,7 +19,7 @@ public abstract class AbstractReward<T extends AbstractReward<T>> {
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractReward<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(RewardTypesPM.TYPES).dispatch(AbstractReward::getType, RewardType::streamCodec);
+        return RegistryCodecs.registryFriendlyStreamCodec(RewardTypesPM.TYPES).dispatch(AbstractReward::getType, RewardType::streamCodec);
     }
     
     public abstract void grant(ServerPlayer player);

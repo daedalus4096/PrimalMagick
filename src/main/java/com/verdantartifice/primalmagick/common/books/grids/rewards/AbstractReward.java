@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -21,8 +22,8 @@ public abstract class AbstractReward<T extends AbstractReward<T>> implements IRe
         return RegistryCodecs.codec(GridRewardTypesPM.TYPES).dispatch("reward_type", AbstractReward::getType, GridRewardType::codec);
     }
     
-    public static StreamCodec<RegistryFriendlyByteBuf, AbstractReward<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(GridRewardTypesPM.TYPES).dispatch(AbstractReward::getType, GridRewardType::streamCodec);
+    public static StreamCodec<FriendlyByteBuf, AbstractReward<?>> dispatchStreamCodec() {
+        return RegistryCodecs.friendlyStreamCodec(GridRewardTypesPM.TYPES).dispatch(AbstractReward::getType, GridRewardType::streamCodec);
     }
     
     protected abstract GridRewardType<T> getType();

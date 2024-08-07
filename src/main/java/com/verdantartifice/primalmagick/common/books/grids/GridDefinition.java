@@ -20,7 +20,7 @@ import com.verdantartifice.primalmagick.common.util.CodecUtils;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
@@ -54,7 +54,7 @@ public class GridDefinition {
             ).apply(instance, GridDefinition::new));
     }
     
-    public static StreamCodec<RegistryFriendlyByteBuf, GridDefinition> streamCodec() {
+    public static StreamCodec<FriendlyByteBuf, GridDefinition> streamCodec() {
         return StreamCodec.composite(
                 ResourceLocation.STREAM_CODEC, GridDefinition::getKey,
                 ResourceKey.streamCodec(RegistryKeysPM.BOOK_LANGUAGES), GridDefinition::getLanguage,
@@ -123,7 +123,7 @@ public class GridDefinition {
                 ).apply(instance, PlacedNode::new));
         }
         
-        public static StreamCodec<RegistryFriendlyByteBuf, PlacedNode> streamCodec() {
+        public static StreamCodec<FriendlyByteBuf, PlacedNode> streamCodec() {
             return StreamCodec.composite(
                     StreamCodecUtils.VECTOR2I, PlacedNode::pos,
                     GridNodeDefinition.streamCodec(), PlacedNode::definition,

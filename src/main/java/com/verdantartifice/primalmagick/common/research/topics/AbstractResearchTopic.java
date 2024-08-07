@@ -17,7 +17,7 @@ public abstract class AbstractResearchTopic<T extends AbstractResearchTopic<T>> 
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractResearchTopic<?>> dispatchStreamCodec() {
-        return RegistryCodecs.streamCodec(ResearchTopicTypesPM.TYPES).dispatch(AbstractResearchTopic::getType, ResearchTopicType::streamCodec);
+        return RegistryCodecs.registryFriendlyStreamCodec(ResearchTopicTypesPM.TYPES).dispatch(AbstractResearchTopic::getType, ResearchTopicType::streamCodec);
     }
     
     protected final int page;
