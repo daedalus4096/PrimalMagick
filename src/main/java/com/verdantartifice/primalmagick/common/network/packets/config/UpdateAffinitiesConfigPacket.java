@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
@@ -21,29 +20,29 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * 
  * @author Daedalus4096
  */
-public class UpdateAffinitiesPacket implements IMessageToClient {
-    public static final StreamCodec<RegistryFriendlyByteBuf, UpdateAffinitiesPacket> STREAM_CODEC = StreamCodec.ofMember(UpdateAffinitiesPacket::encode, UpdateAffinitiesPacket::decode);
+public class UpdateAffinitiesConfigPacket implements IMessageToClient {
+    public static final StreamCodec<FriendlyByteBuf, UpdateAffinitiesConfigPacket> STREAM_CODEC = StreamCodec.ofMember(UpdateAffinitiesConfigPacket::encode, UpdateAffinitiesConfigPacket::decode);
     private static final int NO_REPLY = -1;
 
     protected final int token;
     protected final List<IAffinity> affinities;
     
-    public UpdateAffinitiesPacket(Collection<IAffinity> affinities) {
+    public UpdateAffinitiesConfigPacket(Collection<IAffinity> affinities) {
         this(NO_REPLY, affinities);
     }
     
-    public UpdateAffinitiesPacket(int token, Collection<IAffinity> affinities) {
+    public UpdateAffinitiesConfigPacket(int token, Collection<IAffinity> affinities) {
         this.token = token;
         this.affinities = new ArrayList<>(affinities);
     }
     
-    public static void encode(UpdateAffinitiesPacket message, RegistryFriendlyByteBuf buf) {
+    public static void encode(UpdateAffinitiesConfigPacket message, FriendlyByteBuf buf) {
         buf.writeVarInt(message.token);
-        buf.writeCollection(message.affinities, UpdateAffinitiesPacket::toNetwork);
+        buf.writeCollection(message.affinities, UpdateAffinitiesConfigPacket::toNetwork);
     }
     
-    public static UpdateAffinitiesPacket decode(RegistryFriendlyByteBuf buf) {
-        return new UpdateAffinitiesPacket(buf.readVarInt(), buf.readList(UpdateAffinitiesPacket::fromNetwork));
+    public static UpdateAffinitiesConfigPacket decode(FriendlyByteBuf buf) {
+        return new UpdateAffinitiesConfigPacket(buf.readVarInt(), buf.readList(UpdateAffinitiesConfigPacket::fromNetwork));
     }
     
     public static IAffinity fromNetwork(FriendlyByteBuf buf) {
@@ -63,7 +62,7 @@ public class UpdateAffinitiesPacket implements IMessageToClient {
         ((IAffinitySerializer<T>)affinity.getSerializer()).toNetwork(buf, affinity);
     }
     
-    public static void onMessage(UpdateAffinitiesPacket message, CustomPayloadEvent.Context ctx) {
+    public static void onMessage(UpdateAffinitiesConfigPacket message, CustomPayloadEvent.Context ctx) {
         AffinityManager.getOrCreateInstance().replaceAffinities(message.affinities);
         if (message.token != NO_REPLY) {
             PacketHandler.reply(new AcknowledgementPacket(message.token), ctx);

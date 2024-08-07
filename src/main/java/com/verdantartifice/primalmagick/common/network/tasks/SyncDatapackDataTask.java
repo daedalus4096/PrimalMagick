@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.config.AcknowledgementPacket;
-import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesPacket;
+import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsPacket;
 
 import net.minecraft.network.Connection;
@@ -35,7 +35,7 @@ public class SyncDatapackDataTask implements ConfigurationTask {
         // First update affinity data, then move on to the next step
         this.expectedToken = AcknowledgementPacket.expect(this::updateLinguisticsGrids);
         LOGGER.debug("Pushing affinity data to client");
-        PacketHandler.sendOverConnection(new UpdateAffinitiesPacket(this.expectedToken, AffinityManager.getInstance().getAllAffinities()), conn);
+        PacketHandler.sendOverConnection(new UpdateAffinitiesConfigPacket(this.expectedToken, AffinityManager.getInstance().getAllAffinities()), conn);
     }
     
     private void updateLinguisticsGrids(AcknowledgementPacket msg, CustomPayloadEvent.Context ctx) {

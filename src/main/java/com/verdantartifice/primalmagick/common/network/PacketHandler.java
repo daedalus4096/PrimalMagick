@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network;
 
-import java.util.function.BiConsumer;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,7 +7,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.network.packets.config.AcknowledgementPacket;
-import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesPacket;
+import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.ContainerSetVarintDataPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
@@ -25,6 +23,7 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPac
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -93,7 +92,7 @@ public class PacketHandler {
             .simpleChannel()
                 .configuration()
                     .clientbound()
-//                        .add(UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.STREAM_CODEC, UpdateAffinitiesPacket::onMessage)
+                        .add(UpdateAffinitiesConfigPacket.class, UpdateAffinitiesConfigPacket.STREAM_CODEC, UpdateAffinitiesConfigPacket::onMessage)
 //                        .add(UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.STREAM_CODEC, UpdateLinguisticsGridsPacket::onMessage)
                     .serverbound()
                         .add(AcknowledgementPacket.class, AcknowledgementPacket.STREAM_CODEC, AcknowledgementPacket::onMessage)
@@ -183,15 +182,5 @@ public class PacketHandler {
     public static void reply(Object replyMessage, CustomPayloadEvent.Context ctx) {
         // Send a reply message in response to a previous message
         CHANNEL.reply(replyMessage, ctx);
-    }
-
-    private interface Handler<MSG> {
-        void handle(MSG msg, CustomPayloadEvent.Context ctx);
-    }
-
-    private static <MSG> BiConsumer<MSG, CustomPayloadEvent.Context> ctx(Handler<MSG> handler) {
-        return (msg, ctx) -> {
-            handler.handle(msg, ctx);
-        };
     }
 }
