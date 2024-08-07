@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.network.packets.config.AcknowledgementPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesConfigPacket;
-import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsPacket;
+import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.ContainerSetVarintDataPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPack
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -93,7 +94,7 @@ public class PacketHandler {
                 .configuration()
                     .clientbound()
                         .add(UpdateAffinitiesConfigPacket.class, UpdateAffinitiesConfigPacket.STREAM_CODEC, UpdateAffinitiesConfigPacket::onMessage)
-//                        .add(UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.STREAM_CODEC, UpdateLinguisticsGridsPacket::onMessage)
+                        .add(UpdateLinguisticsGridsConfigPacket.class, UpdateLinguisticsGridsConfigPacket.STREAM_CODEC, UpdateLinguisticsGridsConfigPacket::onMessage)
                     .serverbound()
                         .add(AcknowledgementPacket.class, AcknowledgementPacket.STREAM_CODEC, AcknowledgementPacket::onMessage)
                 .play()

@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.books.grids.GridDefinitionLoader;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.network.CustomPayloadEvent;
@@ -18,23 +18,23 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * 
  * @author Daedalus4096
  */
-public class UpdateLinguisticsGridsPacket implements IMessageToClient {
-    public static final StreamCodec<RegistryFriendlyByteBuf, UpdateLinguisticsGridsPacket> STREAM_CODEC = StreamCodec.ofMember(UpdateLinguisticsGridsPacket::encode, UpdateLinguisticsGridsPacket::decode);
+public class UpdateLinguisticsGridsConfigPacket implements IMessageToClient {
+    public static final StreamCodec<FriendlyByteBuf, UpdateLinguisticsGridsConfigPacket> STREAM_CODEC = StreamCodec.ofMember(UpdateLinguisticsGridsConfigPacket::encode, UpdateLinguisticsGridsConfigPacket::decode);
     private static final int NO_REPLY = -1;
 
     protected final int token;
     protected final Map<ResourceLocation, GridDefinition> gridDefs;
     
-    public UpdateLinguisticsGridsPacket(Map<ResourceLocation, GridDefinition> gridDefs) {
+    public UpdateLinguisticsGridsConfigPacket(Map<ResourceLocation, GridDefinition> gridDefs) {
         this(NO_REPLY, gridDefs);
     }
     
-    public UpdateLinguisticsGridsPacket(int token, Map<ResourceLocation, GridDefinition> gridDefs) {
+    public UpdateLinguisticsGridsConfigPacket(int token, Map<ResourceLocation, GridDefinition> gridDefs) {
         this.token = token;
         this.gridDefs = new HashMap<>(gridDefs);
     }
     
-    protected UpdateLinguisticsGridsPacket(RegistryFriendlyByteBuf buf) {
+    protected UpdateLinguisticsGridsConfigPacket(FriendlyByteBuf buf) {
         this.token = buf.readVarInt();
         this.gridDefs = new HashMap<>();
         int mapSize = buf.readVarInt();
@@ -45,7 +45,7 @@ public class UpdateLinguisticsGridsPacket implements IMessageToClient {
         }
     }
     
-    public static void encode(UpdateLinguisticsGridsPacket message, RegistryFriendlyByteBuf buf) {
+    public static void encode(UpdateLinguisticsGridsConfigPacket message, FriendlyByteBuf buf) {
         buf.writeVarInt(message.token);
         buf.writeVarInt(message.gridDefs.size());
         for (Map.Entry<ResourceLocation, GridDefinition> entry : message.gridDefs.entrySet()) {
@@ -54,11 +54,11 @@ public class UpdateLinguisticsGridsPacket implements IMessageToClient {
         }
     }
     
-    public static UpdateLinguisticsGridsPacket decode(RegistryFriendlyByteBuf buf) {
-        return new UpdateLinguisticsGridsPacket(buf);
+    public static UpdateLinguisticsGridsConfigPacket decode(FriendlyByteBuf buf) {
+        return new UpdateLinguisticsGridsConfigPacket(buf);
     }
     
-    public static void onMessage(UpdateLinguisticsGridsPacket message, CustomPayloadEvent.Context ctx) {
+    public static void onMessage(UpdateLinguisticsGridsConfigPacket message, CustomPayloadEvent.Context ctx) {
         GridDefinitionLoader.createInstance().replaceGridDefinitions(message.gridDefs);
         if (message.token != NO_REPLY) {
             PacketHandler.reply(new AcknowledgementPacket(message.token), ctx);

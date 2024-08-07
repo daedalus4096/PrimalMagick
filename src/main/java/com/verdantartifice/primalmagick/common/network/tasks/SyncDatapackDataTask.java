@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.config.AcknowledgementPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesConfigPacket;
-import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsPacket;
+import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsConfigPacket;
 
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -48,7 +48,7 @@ public class SyncDatapackDataTask implements ConfigurationTask {
         // Next update linguistics grid data, then finish
         this.expectedToken = AcknowledgementPacket.expect(this::finish);
         LOGGER.debug("Pushing linguistics grid data to client");
-        PacketHandler.reply(new UpdateLinguisticsGridsPacket(this.expectedToken, LinguisticsManager.getAllGridDefinitions()), ctx);
+        PacketHandler.reply(new UpdateLinguisticsGridsConfigPacket(this.expectedToken, LinguisticsManager.getAllGridDefinitions()), ctx);
     }
 
     private void finish(AcknowledgementPacket msg, CustomPayloadEvent.Context ctx) {

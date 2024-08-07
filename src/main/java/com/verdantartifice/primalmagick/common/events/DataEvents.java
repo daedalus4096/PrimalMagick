@@ -4,8 +4,8 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
-import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.OnDatapackSyncEvent;
