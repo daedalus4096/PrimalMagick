@@ -1,11 +1,16 @@
 package com.verdantartifice.primalmagick.common.network;
 
+import java.util.function.BiConsumer;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
+import com.verdantartifice.primalmagick.common.network.packets.config.AcknowledgementPacket;
+import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesPacket;
+import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.ContainerSetVarintDataPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
@@ -20,8 +25,6 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPac
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -61,9 +64,12 @@ import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.Se
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.StartProjectPacket;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.Connection;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.network.Channel.VersionTest;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.PacketDistributor;
@@ -76,14 +82,21 @@ import net.minecraftforge.network.SimpleChannel;
  */
 public class PacketHandler {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final ResourceLocation CHANNEL_NAME = PrimalMagick.resource("main_channel");
     private static final int PROTOCOL_VERSION = 1;
     
-    private static final SimpleChannel INSTANCE = ChannelBuilder
-            .named(PrimalMagick.resource("main_channel"))
+    private static final SimpleChannel CHANNEL = ChannelBuilder
+            .named(CHANNEL_NAME)
             .clientAcceptedVersions(VersionTest.exact(PROTOCOL_VERSION))
             .serverAcceptedVersions(VersionTest.exact(PROTOCOL_VERSION))
             .networkProtocolVersion(PROTOCOL_VERSION)
             .simpleChannel()
+                .configuration()
+                    .clientbound()
+//                        .add(UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.STREAM_CODEC, UpdateAffinitiesPacket::onMessage)
+//                        .add(UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.STREAM_CODEC, UpdateLinguisticsGridsPacket::onMessage)
+                    .serverbound()
+                        .add(AcknowledgementPacket.class, AcknowledgementPacket.STREAM_CODEC, AcknowledgementPacket::onMessage)
                 .play()
                     .clientbound()
                         .addMain(SyncKnowledgePacket.class, SyncKnowledgePacket.STREAM_CODEC, SyncKnowledgePacket::onMessage)
@@ -144,21 +157,41 @@ public class PacketHandler {
     
     public static void registerMessages() {
         // The class just needs to be externally referenced by a loaded class in order to be class-loaded itself and have its SimpleChannel initialized statically
-        LOGGER.debug("Registering network {} v{}", INSTANCE.getName(), INSTANCE.getProtocolVersion());
+        LOGGER.debug("Registering network {} v{}", CHANNEL.getName(), CHANNEL.getProtocolVersion());
     }
     
     public static void sendToServer(IMessageToServer message) {
         // Send a packet from a client to the server
-        INSTANCE.send(message, PacketDistributor.SERVER.noArg());
+        CHANNEL.send(message, PacketDistributor.SERVER.noArg());
     }
     
     public static void sendToPlayer(IMessageToClient message, ServerPlayer player) {
         // Send a message from the server to a specific player's client
-        INSTANCE.send(message, PacketDistributor.PLAYER.with(player));
+        CHANNEL.send(message, PacketDistributor.PLAYER.with(player));
     }
     
     public static void sendToAllAround(IMessageToClient message, ResourceKey<Level> dimension, BlockPos center, double radius) {
         // Send a message to the clients of all players within a given distance of the given world position
-        INSTANCE.send(message, PacketDistributor.NEAR.with(new PacketDistributor.TargetPoint(center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, radius, dimension)));
+        CHANNEL.send(message, PacketDistributor.NEAR.with(new PacketDistributor.TargetPoint(center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, radius, dimension)));
+    }
+    
+    public static void sendOverConnection(Object message, Connection conn) {
+        // Send a message over the given connection
+        CHANNEL.send(message, conn);
+    }
+    
+    public static void reply(Object replyMessage, CustomPayloadEvent.Context ctx) {
+        // Send a reply message in response to a previous message
+        CHANNEL.reply(replyMessage, ctx);
+    }
+
+    private interface Handler<MSG> {
+        void handle(MSG msg, CustomPayloadEvent.Context ctx);
+    }
+
+    private static <MSG> BiConsumer<MSG, CustomPayloadEvent.Context> ctx(Handler<MSG> handler) {
+        return (msg, ctx) -> {
+            handler.handle(msg, ctx);
+        };
     }
 }

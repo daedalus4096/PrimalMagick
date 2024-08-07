@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.network.packets.data;
+package com.verdantartifice.primalmagick.common.network.packets.config;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.affinities.IAffinity;
 import com.verdantartifice.primalmagick.common.affinities.IAffinitySerializer;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,19 +23,27 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  */
 public class UpdateAffinitiesPacket implements IMessageToClient {
     public static final StreamCodec<RegistryFriendlyByteBuf, UpdateAffinitiesPacket> STREAM_CODEC = StreamCodec.ofMember(UpdateAffinitiesPacket::encode, UpdateAffinitiesPacket::decode);
+    private static final int NO_REPLY = -1;
 
+    protected final int token;
     protected final List<IAffinity> affinities;
     
     public UpdateAffinitiesPacket(Collection<IAffinity> affinities) {
+        this(NO_REPLY, affinities);
+    }
+    
+    public UpdateAffinitiesPacket(int token, Collection<IAffinity> affinities) {
+        this.token = token;
         this.affinities = new ArrayList<>(affinities);
     }
     
     public static void encode(UpdateAffinitiesPacket message, RegistryFriendlyByteBuf buf) {
+        buf.writeVarInt(message.token);
         buf.writeCollection(message.affinities, UpdateAffinitiesPacket::toNetwork);
     }
     
     public static UpdateAffinitiesPacket decode(RegistryFriendlyByteBuf buf) {
-        return new UpdateAffinitiesPacket(buf.readList(UpdateAffinitiesPacket::fromNetwork));
+        return new UpdateAffinitiesPacket(buf.readVarInt(), buf.readList(UpdateAffinitiesPacket::fromNetwork));
     }
     
     public static IAffinity fromNetwork(FriendlyByteBuf buf) {
@@ -56,5 +65,8 @@ public class UpdateAffinitiesPacket implements IMessageToClient {
     
     public static void onMessage(UpdateAffinitiesPacket message, CustomPayloadEvent.Context ctx) {
         AffinityManager.getOrCreateInstance().replaceAffinities(message.affinities);
+        if (message.token != NO_REPLY) {
+            PacketHandler.reply(new AcknowledgementPacket(message.token), ctx);
+        }
     }
 }
