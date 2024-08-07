@@ -20,7 +20,7 @@ public class ClientEntityEvents {
     @SubscribeEvent
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         Minecraft mc = Minecraft.getInstance();
-        if (event.getEntity() instanceof Player player && player.getId() == mc.player.getId()) {
+        if (mc.player != null && event.getEntity() instanceof Player player && player.getId() == mc.player.getId()) {
             // Update client lexicons with tag-delineated book data
             LexiconLoader.getInstance().updateWithTagData(event.getLevel().registryAccess());
         }
