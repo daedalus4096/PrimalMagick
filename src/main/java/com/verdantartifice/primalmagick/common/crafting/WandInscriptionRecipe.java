@@ -23,6 +23,10 @@ public class WandInscriptionRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingInput inv, Level worldIn) {
+        if (inv.size() < 2) {
+            return false;
+        }
+        
         ItemStack wandStack = inv.getItem(0);
         ItemStack scrollStack = inv.getItem(1);
         
@@ -42,6 +46,10 @@ public class WandInscriptionRecipe extends CustomRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+        if (inv.size() < 2) {
+            return ItemStack.EMPTY;
+        }
+        
         ItemStack wandStack = inv.getItem(0);
         ItemStack scrollStack = inv.getItem(1);
         

@@ -27,6 +27,10 @@ public class WandAssemblyRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingInput inv, Level worldIn) {
+        if (inv.size() < 4) {
+            return false;
+        }
+        
         ItemStack coreStack = inv.getItem(0);
         ItemStack gemStack = inv.getItem(1);
         ItemStack capStack1 = inv.getItem(2);
@@ -41,6 +45,10 @@ public class WandAssemblyRecipe extends CustomRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+        if (inv.size() < 4) {
+            return ItemStack.EMPTY;
+        }
+        
         ItemStack coreStack = inv.getItem(0);
         ItemStack gemStack = inv.getItem(1);
         ItemStack capStack = inv.getItem(2);

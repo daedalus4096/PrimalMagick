@@ -27,6 +27,10 @@ public class WandGlamourRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingInput inv, Level worldIn) {
+        if (inv.size() < 4) {
+            return false;
+        }
+        
         ItemStack wandStack = inv.getItem(0);
         ItemStack coreStack = inv.getItem(1);
         ItemStack capStack = inv.getItem(2);
@@ -42,6 +46,10 @@ public class WandGlamourRecipe extends CustomRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+        if (inv.size() < 4) {
+            return ItemStack.EMPTY;
+        }
+        
         ItemStack wandStack = inv.getItem(0);
         ItemStack coreStack = inv.getItem(1);
         ItemStack capStack = inv.getItem(2);
