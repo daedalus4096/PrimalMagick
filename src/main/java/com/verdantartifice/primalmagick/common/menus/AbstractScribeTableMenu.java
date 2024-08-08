@@ -6,15 +6,18 @@ import org.joml.Vector2i;
 
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.data.ContainerSynchronizerLarge;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerSynchronizer;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -70,5 +73,17 @@ public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventory
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
         this.tile.removeListener(this);
+    }
+    
+    @Override
+    public void setSynchronizer(ContainerSynchronizer pSynchronizer) {
+        // The data slot values anticipated by this menu are too large to be transfered by the vanilla synchronizer,
+        // which transmits data slot values as shorts.  Assuming that this menu is on the server side, ignore the
+        // given synchronizer and substitute in one which can handle larger values.
+        if (this.player instanceof ServerPlayer serverPlayer) {
+            super.setSynchronizer(new ContainerSynchronizerLarge(serverPlayer));
+        } else {
+            super.setSynchronizer(pSynchronizer);
+        }
     }
 }
