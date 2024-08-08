@@ -857,6 +857,8 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get()).set(auraUnit.multiply(3).add(Sources.HALLOWED, 3)).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.SHEEP_TOME.get()).set(auraUnit.multiply(5).add(Sources.MOON, 15).add(Sources.HALLOWED, 20)).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.STATIC_BOOK.get()).base(Items.WRITTEN_BOOK).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.STATIC_BOOK_UNCOMMON.get()).base(Items.WRITTEN_BOOK).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.STATIC_BOOK_RARE.get()).base(Items.WRITTEN_BOOK).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.STATIC_TABLET.get()).set(Sources.EARTH, 20).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.LORE_TABLET_FRAGMENT.get()).set(Sources.EARTH, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.LORE_TABLET_DIRTY.get()).base(ItemsPM.STATIC_TABLET.get()).build(consumer);
