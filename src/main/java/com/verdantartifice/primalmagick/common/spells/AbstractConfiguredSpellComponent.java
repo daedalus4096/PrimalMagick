@@ -33,7 +33,7 @@ public abstract class AbstractConfiguredSpellComponent<T extends ISpellComponent
     }
     
     public int getPropertyValue(SpellProperty property) {
-        return this.configuredProperties.getOrDefault(property, 0);
+        return this.configuredProperties.getOrDefault(property, property.min());
     }
     
     public void setPropertyValue(SpellProperty property, int value) {
