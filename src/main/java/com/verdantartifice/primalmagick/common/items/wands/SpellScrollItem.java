@@ -75,7 +75,9 @@ public class SpellScrollItem extends Item {
             if (spell != null && !SpellManager.isOnCooldown(playerIn)) {
                 SpellManager.setCooldown(playerIn, spell.getCooldownTicks());
                 spell.cast(worldIn, playerIn, stack);
-                stack.shrink(1);
+                if (!playerIn.hasInfiniteMaterials()) {
+                    stack.shrink(1);
+                }
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
             } else {
                 return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
