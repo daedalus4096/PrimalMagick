@@ -99,12 +99,8 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
     }
     
     public void copyInto(ManaStorage other) {
-        other.capacity = this.capacity;
-        other.maxReceive = this.maxReceive;
-        other.maxExtract = this.maxExtract;
+        // Only copy current mana levels to avoid blowing away unchanging values such as capacity
         other.setMana(this.mana);
-        other.allowedSources.clear();
-        other.allowedSources.addAll(this.allowedSources);
     }
 
     public void setMana(SourceList mana) {
