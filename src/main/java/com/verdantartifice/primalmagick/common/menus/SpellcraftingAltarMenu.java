@@ -296,6 +296,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         // Set and cache the changed value, then trigger a regeneration of the output item
         if (component != null && property != null) {
             this.spellPropertyCache.get(component).put(property, value);
+            this.spellPackageCache = null;
             this.containerLevelAccess.execute((world, blockPos) -> {
                 this.slotChangedCraftingGrid(world);
             });
