@@ -247,6 +247,9 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
             return Optional.empty();
         }
         AbstractSpellMod<?> baseMod = types.get(index).instanceSupplier().get();
+        if (!baseMod.isActive()) {
+            return Optional.empty();
+        }
         Map<SpellProperty, Integer> properties = new HashMap<>();
         this.spellPropertyCache.get(componentType).forEach((prop, val) -> {
             if (baseMod.getProperties().contains(prop)) {
