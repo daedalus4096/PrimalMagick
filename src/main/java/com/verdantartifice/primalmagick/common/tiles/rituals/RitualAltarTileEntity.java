@@ -177,7 +177,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 return Optional.of(new RecipeHolder<>(recipeOpt.get().id(), ritualRecipe));
             }
         }
-        return null;
+        return Optional.empty();
     }
     
     @Override
