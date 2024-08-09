@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.core.HolderLookup;
@@ -69,6 +71,10 @@ public class WardingModuleApplicationRecipe extends CustomRecipe {
             return armorStack;
         } else if (moduleStack.getItem() instanceof WardingModuleItem module && module.hasWard()) {
             armorStack.set(DataComponentsPM.WARD_LEVEL.get(), module.getWardLevel());
+            if (!armorStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+                // TODO Properly handle case where item already has a mana storage component; shouldn't be any items that do that yet
+                armorStack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), new ManaStorage(WardingModuleItem.MANA_CAPACITY, WardingModuleItem.CHARGE_RATE, WardingModuleItem.REGEN_COST, Sources.EARTH));
+            }
             return armorStack;
         } else {
             return ItemStack.EMPTY;
