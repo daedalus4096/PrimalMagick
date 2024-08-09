@@ -93,10 +93,12 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.getBlockEntity(pPos) instanceof OfferingPedestalTileEntity pedestalTile) {
             if (!pedestalTile.getItem().isEmpty()) {
-                // When activating a full pedestal with an empty hand, pick up the item
+                // When activating a full pedestal, pick up the item
                 ItemStack stack = pedestalTile.getItem().copy();
                 pedestalTile.setItem(ItemStack.EMPTY);
-                pPlayer.setItemInHand(InteractionHand.MAIN_HAND, stack);
+                if (!stack.isEmpty() && !pPlayer.getInventory().add(stack)) {
+                    pPlayer.drop(stack, false);
+                }
                 pPlayer.getInventory().setChanged();
                 pLevel.playSound(null, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                 return InteractionResult.SUCCESS;

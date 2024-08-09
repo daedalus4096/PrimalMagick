@@ -105,7 +105,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
             pLevel.playSound(pPlayer, pPos, SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 0.8F + (pLevel.random.nextFloat() * 0.4F));
             if (!pLevel.isClientSide) {
                 pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
-                if (!pPlayer.getAbilities().instabuild) {
+                if (!pPlayer.hasInfiniteMaterials()) {
                     pPlayer.getItemInHand(pHand).shrink(1);
                     if (pPlayer.getItemInHand(pHand).getCount() <= 0) {
                         pPlayer.setItemInHand(pHand, ItemStack.EMPTY);

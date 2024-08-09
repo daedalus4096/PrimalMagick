@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -95,10 +94,12 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RitualAltarTileEntity altarTile) {
                 if (!altarTile.getItem().isEmpty()) {
-                    // When activating a full altar with an empty hand, pick up the item
+                    // When activating a full altar, pick up the item
                     ItemStack stack = altarTile.getItem().copy();
                     altarTile.setItem(ItemStack.EMPTY);
-                    player.setItemInHand(InteractionHand.MAIN_HAND, stack);
+                    if (!stack.isEmpty() && !player.getInventory().add(stack)) {
+                        player.drop(stack, false);
+                    }
                     player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                     return InteractionResult.SUCCESS;
