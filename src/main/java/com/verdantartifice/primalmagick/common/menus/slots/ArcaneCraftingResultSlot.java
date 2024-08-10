@@ -17,6 +17,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -104,7 +105,12 @@ public class ArcaneCraftingResultSlot extends Slot {
                 }
             }
         }
-        
+
+        CraftingInput.Positioned positionedCraftingInput = this.craftingInventory.asPositionedCraftInput();
+        CraftingInput craftingInput = positionedCraftingInput.input();
+        int leftBound = positionedCraftingInput.left();
+        int topBound = positionedCraftingInput.top();
+
         ForgeHooks.setCraftingPlayer(thePlayer);
         
         // Get the remaining items from the recipe, checking arcane recipes first, then vanilla recipes
@@ -112,11 +118,11 @@ public class ArcaneCraftingResultSlot extends Slot {
         NonNullList<ItemStack> remainingList;
         Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory.asCraftInput(), level);
         if (arcaneOptional.isPresent()) {
-            remainingList = arcaneOptional.get().value().getRemainingItems(this.craftingInventory.asCraftInput());
+            remainingList = arcaneOptional.get().value().getRemainingItems(craftingInput);
         } else {
             Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory.asCraftInput(), level);
             if (vanillaOptional.isPresent()) {
-                remainingList = vanillaOptional.get().value().getRemainingItems(this.craftingInventory.asCraftInput());
+                remainingList = vanillaOptional.get().value().getRemainingItems(craftingInput);
             } else {
                 remainingList = NonNullList.withSize(this.craftingInventory.getContainerSize(), ItemStack.EMPTY);
                 for (int index = 0; index < remainingList.size(); index++) {
@@ -127,22 +133,26 @@ public class ArcaneCraftingResultSlot extends Slot {
         
         ForgeHooks.setCraftingPlayer(null);
         
-        for (int index = 0; index < remainingList.size(); index++) {
-            ItemStack materialStack = this.craftingInventory.getItem(index);
-            ItemStack remainingStack = remainingList.get(index);
-            if (!materialStack.isEmpty()) {
-                this.craftingInventory.removeItem(index, 1);
-                materialStack = this.craftingInventory.getItem(index);
-            }
-            
-            if (!remainingStack.isEmpty()) {
-                if (materialStack.isEmpty()) {
-                    this.craftingInventory.setItem(index, remainingStack);
-                } else if (ItemStack.isSameItemSameComponents(materialStack, remainingStack)) {
-                    remainingStack.grow(materialStack.getCount());
-                    this.craftingInventory.setItem(index, remainingStack);
-                } else if (!this.player.getInventory().add(remainingStack)) {
-                    this.player.drop(remainingStack, false);
+        for (int y = 0; y < craftingInput.height(); y++) {
+            for (int x = 0; x < craftingInput.width(); x++) {
+                int originalIndex = leftBound + x + ((topBound + y) * this.craftingInventory.getWidth());
+                int remainderIndex = x + (y * craftingInput.width());
+                ItemStack materialStack = this.craftingInventory.getItem(originalIndex);
+                ItemStack remainingStack = remainingList.get(remainderIndex);
+                if (!materialStack.isEmpty()) {
+                    this.craftingInventory.removeItem(originalIndex, 1);
+                    materialStack = this.craftingInventory.getItem(originalIndex);
+                }
+                
+                if (!remainingStack.isEmpty()) {
+                    if (materialStack.isEmpty()) {
+                        this.craftingInventory.setItem(originalIndex, remainingStack);
+                    } else if (ItemStack.isSameItemSameComponents(materialStack, remainingStack)) {
+                        remainingStack.grow(materialStack.getCount());
+                        this.craftingInventory.setItem(originalIndex, remainingStack);
+                    } else if (!this.player.getInventory().add(remainingStack)) {
+                        this.player.drop(remainingStack, false);
+                    }
                 }
             }
         }
