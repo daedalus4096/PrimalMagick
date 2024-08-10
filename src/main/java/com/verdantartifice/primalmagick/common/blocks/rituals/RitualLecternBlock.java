@@ -28,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -160,7 +161,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                     } else {
                         // When activating a full lectern while not sneaking, read the book
                         if (player instanceof ServerPlayer serverPlayer) {
-                            bookStack.getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
+                            EnchantmentHelper.getEnchantmentsForCrafting(bookStack).entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
                                 PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer);
                             });
                         }
@@ -192,7 +193,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                     } else {
                         // When activating a full lectern while not sneaking, read the book
                         if (pPlayer instanceof ServerPlayer serverPlayer) {
-                            bookStack.getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
+                            EnchantmentHelper.getEnchantmentsForCrafting(bookStack).entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
                                 PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), pPlayer.registryAccess()), serverPlayer);
                             });
                         }

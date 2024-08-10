@@ -31,6 +31,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LecternBlock;
@@ -199,7 +200,7 @@ public class BlockEvents {
             } else if (lecternEntity.getBook().is(Items.ENCHANTED_BOOK)) {
                 // Open the enchanted book screen
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-                    lecternEntity.getBook().getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
+                    EnchantmentHelper.getEnchantmentsForCrafting(lecternEntity.getBook()).entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
                         PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer);
                     });
                 }

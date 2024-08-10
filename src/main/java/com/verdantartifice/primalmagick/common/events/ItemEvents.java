@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -47,7 +48,7 @@ public class ItemEvents {
     private static InteractionResult handleEnchantedBookRightClick(ItemStack stack, Player player, Level level) {
         // Get the entry for the most powerful enchantment on the book, if any
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            stack.getEnchantments().entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
+            EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
                 PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer);
             });
         }
