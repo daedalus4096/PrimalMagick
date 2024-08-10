@@ -40,7 +40,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcaneRecipeBookMenu<CraftingInput, IArcaneRecipe> {
+public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcaneRecipeBookMenu<CraftingInput, CraftingRecipe> {
     protected final CraftingContainer craftingInv = new TransientCraftingContainer(this, 3, 3);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
@@ -234,7 +234,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<IArcaneRecipe> recipe) {
+    public boolean recipeMatches(RecipeHolder<CraftingRecipe> recipe) {
         return recipe.value().matches(this.craftingInv.asCraftInput(), this.player.level());
     }
 
