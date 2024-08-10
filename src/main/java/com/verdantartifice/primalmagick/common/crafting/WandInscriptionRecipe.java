@@ -21,14 +21,14 @@ public class WandInscriptionRecipe extends CustomRecipe {
         super(category);
     }
 
+    private static ItemStack getItem(CraftingInput inv, int index) {
+        return (index >= 0 && index < inv.size()) ? inv.getItem(index) : ItemStack.EMPTY;
+    }
+
     @Override
     public boolean matches(CraftingInput inv, Level worldIn) {
-        if (inv.size() < 2) {
-            return false;
-        }
-        
-        ItemStack wandStack = inv.getItem(0);
-        ItemStack scrollStack = inv.getItem(1);
+        ItemStack wandStack = getItem(inv, 0);
+        ItemStack scrollStack = getItem(inv, 1);
         
         // Make sure a wand is present
         if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
@@ -46,12 +46,8 @@ public class WandInscriptionRecipe extends CustomRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
-        if (inv.size() < 2) {
-            return ItemStack.EMPTY;
-        }
-        
-        ItemStack wandStack = inv.getItem(0);
-        ItemStack scrollStack = inv.getItem(1);
+        ItemStack wandStack = getItem(inv, 0);
+        ItemStack scrollStack = getItem(inv, 1);
         
         if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
             if (!scrollStack.isEmpty() && scrollStack.getItem() instanceof SpellScrollItem scroll) {

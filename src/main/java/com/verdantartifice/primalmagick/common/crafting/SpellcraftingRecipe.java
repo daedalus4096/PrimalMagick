@@ -22,7 +22,7 @@ public class SpellcraftingRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingInput inv, Level worldIn) {
-        return inv.getItem(0).getItem().equals(ItemsPM.SPELL_SCROLL_BLANK.get());
+        return inv.isEmpty() ? false : inv.getItem(0).getItem().equals(ItemsPM.SPELL_SCROLL_BLANK.get());
     }
 
     @Override

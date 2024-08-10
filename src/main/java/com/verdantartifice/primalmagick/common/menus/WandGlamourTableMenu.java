@@ -27,6 +27,7 @@ import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
@@ -200,8 +201,9 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
             Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
             if (opt.isPresent() && opt.get().value() instanceof WandGlamourRecipe recipe) {
                 // If the inputs are valid, show the output
-                if (recipe.matches(this.componentInv.asCraftInput(), world)) {
-                    stack = recipe.assemble(this.componentInv.asCraftInput(), world.registryAccess());
+                CraftingInput craftInput = this.componentInv.asCraftInput();
+                if (recipe.matches(craftInput, world)) {
+                    stack = recipe.assemble(craftInput, world.registryAccess());
                 }
             }
             
@@ -213,7 +215,7 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
 
     protected class GlamourComponentInventory extends TransientCraftingContainer {
         public GlamourComponentInventory() {
-            super(WandGlamourTableMenu.this, 2, 2);
+            super(WandGlamourTableMenu.this, 4, 1);
         }
         
         @Override

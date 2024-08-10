@@ -25,16 +25,16 @@ public class WandAssemblyRecipe extends CustomRecipe {
         super(category);
     }
 
+    private static ItemStack getItem(CraftingInput inv, int index) {
+        return (index >= 0 && index < inv.size()) ? inv.getItem(index) : ItemStack.EMPTY;
+    }
+
     @Override
     public boolean matches(CraftingInput inv, Level worldIn) {
-        if (inv.size() < 4) {
-            return false;
-        }
-        
-        ItemStack coreStack = inv.getItem(0);
-        ItemStack gemStack = inv.getItem(1);
-        ItemStack capStack1 = inv.getItem(2);
-        ItemStack capStack2 = inv.getItem(3);
+        ItemStack coreStack = getItem(inv, 0);
+        ItemStack gemStack = getItem(inv, 1);
+        ItemStack capStack1 = getItem(inv, 2);
+        ItemStack capStack2 = getItem(inv, 3);
         
         // Make sure the crafting inventory has a core, a gem, and two identical caps
         return !coreStack.isEmpty() && ((coreStack.getItem() instanceof WandCoreItem) || (coreStack.getItem() instanceof StaffCoreItem)) &&
@@ -45,13 +45,9 @@ public class WandAssemblyRecipe extends CustomRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
-        if (inv.size() < 4) {
-            return ItemStack.EMPTY;
-        }
-        
-        ItemStack coreStack = inv.getItem(0);
-        ItemStack gemStack = inv.getItem(1);
-        ItemStack capStack = inv.getItem(2);
+        ItemStack coreStack = getItem(inv, 0);
+        ItemStack gemStack = getItem(inv, 1);
+        ItemStack capStack = getItem(inv, 2);
         
         ItemStack outputStack = (coreStack.getItem() instanceof StaffCoreItem) ? 
                 new ItemStack(ItemsPM.MODULAR_STAFF.get()) : 
@@ -72,7 +68,7 @@ public class WandAssemblyRecipe extends CustomRecipe {
 
     @Override
     public boolean canCraftInDimensions(int width, int height) {
-        return width >= 2 && height >= 2;
+        return (width * height) >= 4;
     }
 
     @Override

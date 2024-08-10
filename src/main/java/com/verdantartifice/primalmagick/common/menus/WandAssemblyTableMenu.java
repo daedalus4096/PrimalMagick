@@ -212,7 +212,7 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
 
     protected class WandComponentInventory extends TransientCraftingContainer {
         public WandComponentInventory() {
-            super(WandAssemblyTableMenu.this, 2, 2);
+            super(WandAssemblyTableMenu.this, 4, 1);
         }
         
         @Override

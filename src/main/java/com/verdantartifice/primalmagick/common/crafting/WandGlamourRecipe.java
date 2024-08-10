@@ -25,16 +25,16 @@ public class WandGlamourRecipe extends CustomRecipe {
         super(category);
     }
 
+    private static ItemStack getItem(CraftingInput inv, int index) {
+        return (index >= 0 && index < inv.size()) ? inv.getItem(index) : ItemStack.EMPTY;
+    }
+
     @Override
     public boolean matches(CraftingInput inv, Level worldIn) {
-        if (inv.size() < 4) {
-            return false;
-        }
-        
-        ItemStack wandStack = inv.getItem(0);
-        ItemStack coreStack = inv.getItem(1);
-        ItemStack capStack = inv.getItem(2);
-        ItemStack gemStack = inv.getItem(3);
+        ItemStack wandStack = getItem(inv, 0);
+        ItemStack coreStack = getItem(inv, 1);
+        ItemStack capStack = getItem(inv, 2);
+        ItemStack gemStack = getItem(inv, 3);
         boolean isStaff = (wandStack.getItem() instanceof IStaff);
         
         // Make sure the crafting inventory has a modular wand/staff, as well as an optional core, cap, and/or gem
@@ -43,17 +43,13 @@ public class WandGlamourRecipe extends CustomRecipe {
                (capStack.isEmpty() || (capStack.getItem() instanceof WandCapItem)) &&
                (gemStack.isEmpty() || (gemStack.getItem() instanceof WandGemItem));
     }
-
+    
     @Override
     public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
-        if (inv.size() < 4) {
-            return ItemStack.EMPTY;
-        }
-        
-        ItemStack wandStack = inv.getItem(0);
-        ItemStack coreStack = inv.getItem(1);
-        ItemStack capStack = inv.getItem(2);
-        ItemStack gemStack = inv.getItem(3);
+        ItemStack wandStack = getItem(inv, 0);
+        ItemStack coreStack = getItem(inv, 1);
+        ItemStack capStack = getItem(inv, 2);
+        ItemStack gemStack = getItem(inv, 3);
         
         ItemStack retVal = wandStack.copy();
         ModularWandItem wandItem = (ModularWandItem)retVal.getItem();
@@ -83,7 +79,7 @@ public class WandGlamourRecipe extends CustomRecipe {
 
     @Override
     public boolean canCraftInDimensions(int width, int height) {
-        return width >= 2 && height >= 2;
+        return (width * height) >= 4;
     }
 
     @Override
