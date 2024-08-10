@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.OpenGrimoire
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
@@ -191,7 +192,7 @@ public class BlockEvents {
                     PacketHandler.sendToPlayer(new OpenGrimoireScreenPacket(), serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
-            } else if (lecternEntity.getBook().is(ItemsPM.STATIC_BOOK.get())) {
+            } else if (lecternEntity.getBook().is(ItemTagsPM.STATIC_BOOKS)) {
                 // Open the static book screen
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(lecternEntity.getBook(), BookType.BOOK, player.registryAccess()), serverPlayer);
