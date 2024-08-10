@@ -825,7 +825,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         this.item(ItemsPM.BOMB_CASING).name("Bomb Casing").build();
         this.item(ItemsPM.ALCHEMICAL_BOMB)
-            .concoctionName(ConcoctionType.BOMB, Potions.WATER, "Water Bomb")
+            .concoctionName(ConcoctionType.WATER, Potions.WATER, "Water Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.NIGHT_VISION, "Night Vision Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.INVISIBILITY, "Invisibility Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.LEAPING, "Leaping Bomb")
