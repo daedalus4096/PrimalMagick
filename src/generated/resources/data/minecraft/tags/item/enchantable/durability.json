@@ -3,6 +3,7 @@
     "#forge:tools/bows",
     "#forge:tools/crossbows",
     "#forge:tools/fishing_rods",
-    "#forge:tools/tridents"
+    "#forge:tools/tridents",
+    "#forge:tools/shields"
   ]
 }

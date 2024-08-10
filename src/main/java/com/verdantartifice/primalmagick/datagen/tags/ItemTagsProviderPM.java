@@ -58,9 +58,14 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTags.WOODEN_SLABS).add(ItemsPM.MOONWOOD_SLAB.get(), ItemsPM.SUNWOOD_SLAB.get(), ItemsPM.HALLOWOOD_SLAB.get());
         this.tag(ItemTags.WOODEN_STAIRS).add(ItemsPM.MOONWOOD_STAIRS.get(), ItemsPM.SUNWOOD_STAIRS.get(), ItemsPM.HALLOWOOD_STAIRS.get());
 
+        this.tag(ItemTags.HEAD_ARMOR).addTag(ItemTagsPM.ROBES_HELMETS).add(ItemsPM.PRIMALITE_HEAD.get(), ItemsPM.HEXIUM_HEAD.get(), ItemsPM.HALLOWSTEEL_HEAD.get());
+        this.tag(ItemTags.CHEST_ARMOR).addTag(ItemTagsPM.ROBES_CHESTPLATES).add(ItemsPM.PRIMALITE_CHEST.get(), ItemsPM.HEXIUM_CHEST.get(), ItemsPM.HALLOWSTEEL_CHEST.get());
+        this.tag(ItemTags.LEG_ARMOR).addTag(ItemTagsPM.ROBES_LEGGINGS).add(ItemsPM.PRIMALITE_LEGS.get(), ItemsPM.HEXIUM_LEGS.get(), ItemsPM.HALLOWSTEEL_LEGS.get());
+        this.tag(ItemTags.FOOT_ARMOR).addTag(ItemTagsPM.ROBES_BOOTS).add(ItemsPM.PRIMALITE_FEET.get(), ItemsPM.HEXIUM_FEET.get(), ItemsPM.HALLOWSTEEL_FEET.get());
+
         this.tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOWS);
         this.tag(ItemTags.CROSSBOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_CROSSBOWS);
-        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOWS).addTag(Tags.Items.TOOLS_CROSSBOWS).addTag(Tags.Items.TOOLS_FISHING_RODS).addTag(Tags.Items.TOOLS_TRIDENTS);
+        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOWS).addTag(Tags.Items.TOOLS_CROSSBOWS).addTag(Tags.Items.TOOLS_FISHING_RODS).addTag(Tags.Items.TOOLS_TRIDENTS).addTag(Tags.Items.TOOLS_SHIELDS);
         this.tag(ItemTags.FISHING_ENCHANTABLE).addTag(Tags.Items.TOOLS_FISHING_RODS);
         this.tag(ItemTags.TRIDENT_ENCHANTABLE).addTag(Tags.Items.TOOLS_TRIDENTS);
 
