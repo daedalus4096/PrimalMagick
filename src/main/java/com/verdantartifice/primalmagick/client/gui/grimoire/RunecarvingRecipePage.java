@@ -56,7 +56,7 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         
         // Render recipe expertise widget if applicable
         if (this.recipe.value().hasExpertiseReward(this.registryAccess)) {
-            screen.addWidgetToScreen(new RecipeExpertiseWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 46));
+            screen.addWidgetToScreen(new RecipeExpertiseWidget(this.recipe, x - 6 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30));
         }
     }
 
