@@ -117,7 +117,7 @@ public class StaticBookItem extends Item {
     }
 
     public static boolean hasAuthor(ItemStack stack) {
-        return !StringUtil.isNullOrEmpty(stack.get(DataComponentsPM.AUTHOR_OVERRIDE.get())) || !stack.has(DataComponentsPM.BOOK_DEFINITION.get());
+        return !StringUtil.isNullOrEmpty(stack.get(DataComponentsPM.AUTHOR_OVERRIDE.get())) || stack.has(DataComponentsPM.BOOK_DEFINITION.get());
     }
     
     public static Component getAuthor(ItemStack stack) {
