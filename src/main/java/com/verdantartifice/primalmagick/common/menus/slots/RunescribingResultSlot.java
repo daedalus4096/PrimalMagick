@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
-import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
@@ -59,7 +58,6 @@ public class RunescribingResultSlot extends Slot {
                 
                 // Award appropriate expertise and advancements for each enchant
                 enchants.keySet().forEach(enchant -> {
-                    ExpertiseManager.awardExpertise(serverPlayer, enchant);
                     CriteriaTriggersPM.RUNESCRIBING.trigger(serverPlayer, enchant);
                 });
                 

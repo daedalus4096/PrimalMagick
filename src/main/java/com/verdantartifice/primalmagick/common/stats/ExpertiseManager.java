@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -37,6 +39,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class ExpertiseManager {
+    private static final Logger LOGGER = LogManager.getLogger();
+    
     public static Optional<Stat> getStat(RegistryAccess registryAccess, ResearchDisciplineKey disciplineKey) {
         ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(registryAccess, disciplineKey);
         return discipline == null ? Optional.empty() : discipline.expertiseStat();
@@ -50,9 +54,6 @@ public class ExpertiseManager {
         } else if (rawKey.equals(ResearchDisciplines.SORCERY)) {
             // The Sorcery discipline calculates expertise thresholds arbitrarily, out of necessity
             return Optional.of(getThresholdBySpellsCast(tier));
-        } else if (rawKey.equals(ResearchDisciplines.RUNEWORKING)) {
-            // The Runeworking discipline calculates thresholds based both on traditional crafting and enchantment runescribing
-            return Optional.of(getThresholdByDisciplineRecipes(level.registryAccess(), level.getRecipeManager(), disciplineKey, tier) + getThresholdByEnchantmentsRunescribed(level.registryAccess(), tier));
         } else {
             // All other disciplines calculate thresholds based solely on traditional and/or ritual crafting
             return Optional.of(getThresholdByDisciplineRecipes(level.registryAccess(), level.getRecipeManager(), disciplineKey, tier));
@@ -74,8 +75,8 @@ public class ExpertiseManager {
             RuneManager.getRuneDefinition(registryAccess, ench).ifPresent(runeEnchDef -> {
                 // Only consider rune enchantment definitions with a research tier lower than the given one
                 getRuneEnchantmentTier(registryAccess, runeEnchDef).filter(enchTier -> enchTier.compareTo(tier) < 0).ifPresent(enchTier -> {
-                    retVal.add(enchTier.getDefaultExpertise());
-                    retVal.add(enchTier.getDefaultBonusExpertise());
+                    int reward = enchTier.getDefaultExpertise() + enchTier.getDefaultBonusExpertise();
+                    retVal.add(reward);
                 });
             });
         });
@@ -88,7 +89,9 @@ public class ExpertiseManager {
             default -> 0F;
         };
 
-        return (int)(multiplier * (float)retVal.intValue());
+        int total = (int)(multiplier * (float)retVal.intValue());
+        LOGGER.debug("Final expertise enchantment value for runeworking tier {}: {} ({} * {})", tier.getSerializedName(), total, retVal.intValue(), multiplier);
+        return total;
     }
     
     protected static int getThresholdByDisciplineRecipes(RegistryAccess registryAccess, RecipeManager recipeManager, ResearchDisciplineKey discKey, ResearchTier tier) {
@@ -103,19 +106,20 @@ public class ExpertiseManager {
                         expRecipe.getExpertiseGroup().ifPresentOrElse(groupId -> {
                             // If the recipe is part of an expertise group, only take its values into account if that group has not already been processed
                             if (!foundGroups.contains(groupId)) {
-                                retVal.add(expRecipe.getExpertiseReward(registryAccess));
-                                retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
+                                int reward = expRecipe.getExpertiseReward(registryAccess) + expRecipe.getBonusExpertiseReward(registryAccess);
+                                retVal.add(reward);
                                 foundGroups.add(groupId);
                             }
                         }, () -> {
                             // If the recipe is not part of an expertise group, then always contribute its values to the threshold
-                            retVal.add(expRecipe.getExpertiseReward(registryAccess));
-                            retVal.add(expRecipe.getBonusExpertiseReward(registryAccess));
+                            int reward = expRecipe.getExpertiseReward(registryAccess) + expRecipe.getBonusExpertiseReward(registryAccess);
+                            retVal.add(reward);
                         });
                     });
                 });
             }
         }
+        LOGGER.debug("Final expertise threshold value for {} tier {}: {}", discKey.getRootKey().location(), tier.getSerializedName(), retVal.intValue());
         return retVal.intValue();
     }
     
