@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -174,6 +175,24 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
         // Do nothing by default
     }
     
+    @Override
+    public int hashCode() {
+        return Objects.hash(allowedSources, capacity, mana, maxExtract, maxReceive);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ManaStorage other = (ManaStorage) obj;
+        return Objects.equals(allowedSources, other.allowedSources) && capacity == other.capacity
+                && Objects.equals(mana, other.mana) && maxExtract == other.maxExtract && maxReceive == other.maxReceive;
+    }
+
     /**
      * Capability provider for the mana storage capability.  Used to attach capability data to the owner.
      * 

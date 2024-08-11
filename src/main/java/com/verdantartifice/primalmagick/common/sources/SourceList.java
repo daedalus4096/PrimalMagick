@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.sources;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -437,6 +438,23 @@ public class SourceList {
     public String toString() {
         List<String> pieces = Sources.getAllSorted().stream().filter(this.sources::containsKey).map(source -> String.join("=", source.getId().toString(), Integer.toString(this.sources.getInt(source)))).toList();
         return "SourceList[" + String.join(",", pieces) + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sources);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        SourceList other = (SourceList) obj;
+        return Objects.equals(sources, other.sources);
     }
 
     public static class Builder {
