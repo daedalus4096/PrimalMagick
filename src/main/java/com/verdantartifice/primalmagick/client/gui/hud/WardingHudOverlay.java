@@ -42,7 +42,7 @@ public class WardingHudOverlay {
         if (wardMax > 0F) {
             int left = pGuiGraphics.guiWidth() / 2 - 91;
             // FIXME Find a better way to determine where the ward overlay should be rendered vertically on the screen
-            int top = pGuiGraphics.guiHeight() - 39 - rowHeight;
+            int top = pGuiGraphics.guiHeight() - 28 - rowHeight;
 
             int regen = -1;
             if (wardCapOpt.<Boolean>lazyMap(wardCap -> wardCap.isRegenerating()).orElse(false)) {

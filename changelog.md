@@ -8,6 +8,7 @@ v5.0.0-beta
 * The Aegis enchantment now also reduces fire burn time and explosion knockback suffered
 * Decreased the rarity of the Spell Power enchantment at the Enchanting Table
 * Some rune enchantments (Lifesteal, Enderlock, and Guillotine) are now available at the Enchanting Table
+* The ward shield bar now renders on top of the health bar, instead of above the armor bar
 
 v4.2.0-beta
 -----------
