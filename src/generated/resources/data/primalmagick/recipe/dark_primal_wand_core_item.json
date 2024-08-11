@@ -1,5 +1,6 @@
 {
   "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:dark_primal_core",
   "ingredients": [
     {
       "item": "primalmagick:primal_wand_core_item"

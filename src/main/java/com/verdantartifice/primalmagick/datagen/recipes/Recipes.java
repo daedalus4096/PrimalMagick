@@ -2610,6 +2610,7 @@ public class Recipes extends RecipeProvider {
             .key('H', ItemsPM.HEARTWOOD.get())
             .requiredResearch(ResearchEntries.WAND_CORE_HEARTWOOD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("heartwood_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get())
             .patternLine("D#")
@@ -2618,6 +2619,7 @@ public class Recipes extends RecipeProvider {
             .key('#', Tags.Items.OBSIDIAN)
             .requiredResearch(ResearchEntries.WAND_CORE_OBSIDIAN)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 15).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("obsidian_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CORAL_WAND_CORE_ITEM.get())
             .patternLine("D#")
@@ -2626,6 +2628,7 @@ public class Recipes extends RecipeProvider {
             .key('#', ItemTagsPM.CORAL_BLOCKS)
             .requiredResearch(ResearchEntries.WAND_CORE_CORAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 15).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("coral_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BAMBOO_WAND_CORE_ITEM.get())
             .patternLine("D#")
@@ -2634,6 +2637,7 @@ public class Recipes extends RecipeProvider {
             .key('#', Items.BAMBOO)
             .requiredResearch(ResearchEntries.WAND_CORE_BAMBOO)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 15).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("bamboo_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SUNWOOD_WAND_CORE_ITEM.get())
             .patternLine("D#")
@@ -2642,6 +2646,7 @@ public class Recipes extends RecipeProvider {
             .key('#', ItemsPM.SUNWOOD_LOG.get())
             .requiredResearch(ResearchEntries.WAND_CORE_SUNWOOD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 15).add(Sources.MOON, 5))
+            .expertiseGroup("sunwood_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MOONWOOD_WAND_CORE_ITEM.get())
             .patternLine("D#")
@@ -2650,6 +2655,7 @@ public class Recipes extends RecipeProvider {
             .key('#', ItemsPM.MOONWOOD_LOG.get())
             .requiredResearch(ResearchEntries.WAND_CORE_MOONWOOD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 15))
+            .expertiseGroup("moonwood_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BONE_WAND_CORE_ITEM.get())
             .patternLine("D#")
@@ -2658,6 +2664,7 @@ public class Recipes extends RecipeProvider {
             .key('#', Items.BONE)
             .requiredResearch(ResearchEntries.WAND_CORE_BONE)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5).add(Sources.BLOOD, 15))
+            .expertiseGroup("bone_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get())
             .patternLine("D#")
@@ -2666,6 +2673,7 @@ public class Recipes extends RecipeProvider {
             .key('#', Tags.Items.RODS_BLAZE)
             .requiredResearch(ResearchEntries.WAND_CORE_BLAZE_ROD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5).add(Sources.INFERNAL, 15))
+            .expertiseGroup("blaze_rod_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PURPUR_WAND_CORE_ITEM.get())
             .patternLine("D#")
@@ -2674,6 +2682,7 @@ public class Recipes extends RecipeProvider {
             .key('#', Items.PURPUR_BLOCK)
             .requiredResearch(ResearchEntries.WAND_CORE_PURPUR)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5).add(Sources.VOID, 15))
+            .expertiseGroup("purpur_core")
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_WAND_CORE_ITEM.get())
             .addIngredient(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get())
@@ -2689,6 +2698,7 @@ public class Recipes extends RecipeProvider {
             .instability(3)
             .requiredResearch(ResearchEntries.WAND_CORE_PRIMAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 15).add(Sources.SEA, 15).add(Sources.SKY, 15).add(Sources.SUN, 15).add(Sources.MOON, 15))
+            .expertiseGroup("primal_core")
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get())
             .addIngredient(ItemsPM.PRIMAL_WAND_CORE_ITEM.get())
@@ -2705,6 +2715,7 @@ public class Recipes extends RecipeProvider {
             .instability(5)
             .requiredResearch(ResearchEntries.WAND_CORE_DARK_PRIMAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 50).add(Sources.SEA, 50).add(Sources.SKY, 50).add(Sources.SUN, 50).add(Sources.MOON, 50).add(Sources.BLOOD, 50).add(Sources.INFERNAL, 50).add(Sources.VOID, 50))
+            .expertiseGroup("dark_primal_core")
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PURE_PRIMAL_WAND_CORE_ITEM.get())
             .addIngredient(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get())
@@ -2720,6 +2731,7 @@ public class Recipes extends RecipeProvider {
             .instability(7)
             .requiredResearch(ResearchEntries.WAND_CORE_PURE_PRIMAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 100).add(Sources.SEA, 100).add(Sources.SKY, 100).add(Sources.SUN, 100).add(Sources.MOON, 100).add(Sources.BLOOD, 100).add(Sources.INFERNAL, 100).add(Sources.VOID, 100).add(Sources.HALLOWED, 100))
+            .expertiseGroup("pure_primal_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IRON_WAND_CAP_ITEM.get())
             .patternLine("NNN")
@@ -2788,6 +2800,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_HEARTWOOD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("heartwood_core")
             .expertiseTier(ResearchTier.BASIC)
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get())
@@ -2799,6 +2812,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_OBSIDIAN)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 15).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("obsidian_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CORAL_STAFF_CORE_ITEM.get())
             .patternLine(" D#")
@@ -2809,6 +2823,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_CORAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 15).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("coral_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BAMBOO_STAFF_CORE_ITEM.get())
             .patternLine(" D#")
@@ -2819,6 +2834,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_BAMBOO)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 15).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .expertiseGroup("bamboo_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SUNWOOD_STAFF_CORE_ITEM.get())
             .patternLine(" D#")
@@ -2829,6 +2845,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_SUNWOOD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 15).add(Sources.MOON, 5))
+            .expertiseGroup("sunwood_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MOONWOOD_STAFF_CORE_ITEM.get())
             .patternLine(" D#")
@@ -2839,6 +2856,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_MOONWOOD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 15))
+            .expertiseGroup("moonwood_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BONE_STAFF_CORE_ITEM.get())
             .patternLine(" D#")
@@ -2849,6 +2867,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_BONE)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5).add(Sources.BLOOD, 15))
+            .expertiseGroup("bone_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BLAZE_ROD_STAFF_CORE_ITEM.get())
             .patternLine(" D#")
@@ -2859,6 +2878,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_BLAZE_ROD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5).add(Sources.INFERNAL, 15))
+            .expertiseGroup("blaze_rod_core")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PURPUR_STAFF_CORE_ITEM.get())
             .patternLine(" D#")
@@ -2869,6 +2889,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.STAVES)
             .requiredResearch(ResearchEntries.WAND_CORE_PURPUR)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5).add(Sources.VOID, 15))
+            .expertiseGroup("purpur_core")
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_STAFF_CORE_ITEM.get())
             .addIngredient(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get())
@@ -2886,6 +2907,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.WAND_CORE_PRIMAL)
             .discipline(ResearchDisciplines.RITUAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 15).add(Sources.SEA, 15).add(Sources.SKY, 15).add(Sources.SUN, 15).add(Sources.MOON, 15))
+            .expertiseGroup("primal_core")
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.DARK_PRIMAL_STAFF_CORE_ITEM.get())
             .addIngredient(ItemsPM.PRIMAL_STAFF_CORE_ITEM.get())
@@ -2904,6 +2926,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.WAND_CORE_DARK_PRIMAL)
             .discipline(ResearchDisciplines.RITUAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 50).add(Sources.SEA, 50).add(Sources.SKY, 50).add(Sources.SUN, 50).add(Sources.MOON, 50).add(Sources.BLOOD, 50).add(Sources.INFERNAL, 50).add(Sources.VOID, 50))
+            .expertiseGroup("dark_primal_core")
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PURE_PRIMAL_STAFF_CORE_ITEM.get())
             .addIngredient(ItemsPM.DARK_PRIMAL_STAFF_CORE_ITEM.get())
@@ -2921,6 +2944,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.WAND_CORE_PURE_PRIMAL)
             .discipline(ResearchDisciplines.RITUAL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 100).add(Sources.SEA, 100).add(Sources.SKY, 100).add(Sources.SUN, 100).add(Sources.MOON, 100).add(Sources.BLOOD, 100).add(Sources.INFERNAL, 100).add(Sources.VOID, 100).add(Sources.HALLOWED, 100))
+            .expertiseGroup("pure_primal_core")
             .build(consumer);
     }
     

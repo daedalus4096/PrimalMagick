@@ -2016,6 +2016,18 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.expertiseGroup("mana_font_heavenly").name("Heavenly mana fonts").build();
         this.expertiseGroup("mana_arrow").name("Mana-tinged arrows").build();
         this.expertiseGroup("attunement_shackles").name("Attunement shackles").build();
+        this.expertiseGroup("heartwood_core").name("Heartwood caster core").build();
+        this.expertiseGroup("obsidian_core").name("Obsidian caster core").build();
+        this.expertiseGroup("coral_core").name("Coral caster core").build();
+        this.expertiseGroup("bamboo_core").name("Bamboo caster core").build();
+        this.expertiseGroup("sunwood_core").name("Sunwood caster core").build();
+        this.expertiseGroup("moonwood_core").name("Moonwood caster core").build();
+        this.expertiseGroup("bone_core").name("Bone caster core").build();
+        this.expertiseGroup("blaze_rod_core").name("Blaze rod caster core").build();
+        this.expertiseGroup("purpur_core").name("Purpur caster core").build();
+        this.expertiseGroup("primal_core").name("Primal caster core").build();
+        this.expertiseGroup("dark_primal_core").name("Dark primal caster core").build();
+        this.expertiseGroup("pure_primal_core").name("Pure primal caster core").build();
         
         // Generate research project localizations
         this.researchProject("trade").name("Trade").text("Perhaps some nearby villagers have magickal knowledge to trade.  You assemble some goods they'll find valuable.").build();

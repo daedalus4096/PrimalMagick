@@ -3,6 +3,7 @@
   "disciplineOverride": {
     "rootKey": "primalmagick:ritual"
   },
+  "expertiseGroup": "primalmagick:primal_core",
   "ingredients": [
     {
       "item": "primalmagick:obsidian_staff_core_item"
