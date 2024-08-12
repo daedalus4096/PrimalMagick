@@ -64,7 +64,7 @@ public class ExpertiseManager {
         return switch (tier) {
             case EXPERT -> 50;      // Assume 10 spells at 5 mana each
             case MASTER -> 500;     // Assume 50 spells at 10 mana each
-            case SUPREME -> 5000;   // Assume 250 spells at 20 mana each
+            case SUPREME -> 2500;   // Assume 125 spells at 20 mana each
             default -> 0;
         };
     }
