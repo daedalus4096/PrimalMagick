@@ -13,9 +13,6 @@
   "parents": [],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:discover_blood"
       },

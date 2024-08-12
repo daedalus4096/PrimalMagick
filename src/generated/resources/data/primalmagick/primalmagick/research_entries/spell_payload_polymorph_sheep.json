@@ -17,9 +17,6 @@
   "parents": [],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_polymorph_sheep"
       },

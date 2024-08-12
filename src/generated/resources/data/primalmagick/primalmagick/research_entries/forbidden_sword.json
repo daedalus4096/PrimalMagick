@@ -1,9 +1,6 @@
 {
   "addenda": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:and",
         "subRequirements": [
@@ -94,9 +91,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 2,
         "knowledgeType": "theory",
@@ -111,9 +105,6 @@
       "textTranslationKey": "research.primalmagick.forbidden_sword.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:forbidden_sword"
       },

@@ -46,9 +46,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 2,
         "knowledgeType": "theory",
@@ -63,9 +60,6 @@
       "textTranslationKey": "research.primalmagick.cleansing_rite.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:cleansing_rite"
       },

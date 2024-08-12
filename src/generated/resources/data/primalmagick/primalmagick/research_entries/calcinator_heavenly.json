@@ -31,9 +31,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 3,
         "knowledgeType": "theory",
@@ -48,9 +45,6 @@
       "textTranslationKey": "research.primalmagick.calcinator_heavenly.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:calcinator_heavenly"
       },

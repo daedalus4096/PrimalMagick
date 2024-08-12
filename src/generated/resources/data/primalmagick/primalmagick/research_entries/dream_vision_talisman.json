@@ -28,9 +28,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:and",
         "subRequirements": [
@@ -55,9 +52,6 @@
       "textTranslationKey": "research.primalmagick.dream_vision_talisman.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:dream_vision_talisman"
       },

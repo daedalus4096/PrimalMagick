@@ -15,9 +15,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:and",
         "subRequirements": [
@@ -42,9 +39,6 @@
       "textTranslationKey": "research.primalmagick.advanced_wandmaking.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:advanced_wandmaking"
       },

@@ -28,9 +28,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 3,
         "knowledgeType": "theory",
@@ -45,9 +42,6 @@
       "textTranslationKey": "research.primalmagick.rune_grace.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:rune_grace"
       },

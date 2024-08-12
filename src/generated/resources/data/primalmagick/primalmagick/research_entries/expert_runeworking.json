@@ -24,9 +24,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "discipline": {
           "rootKey": "primalmagick:runeworking"
@@ -43,9 +40,6 @@
       "textTranslationKey": "research.primalmagick.expert_runeworking.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:expert_runeworking"
       },

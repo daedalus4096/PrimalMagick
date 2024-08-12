@@ -18,9 +18,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 2,
         "knowledgeType": "theory",
@@ -35,9 +32,6 @@
       "textTranslationKey": "research.primalmagick.spell_mod_quicken.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_mod_quicken"
       },

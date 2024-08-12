@@ -37,9 +37,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 2,
         "knowledgeType": "theory",
@@ -54,9 +51,6 @@
       "textTranslationKey": "research.primalmagick.calcinator_forbidden.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:calcinator_forbidden"
       },

@@ -15,9 +15,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:terrestrial_magick"
       },

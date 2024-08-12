@@ -15,9 +15,6 @@
   "parents": [],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -39,9 +36,6 @@
       "textTranslationKey": "research.primalmagick.first_steps.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requiredValue": 10,
         "requirement_type": "primalmagick:stat",
@@ -58,9 +52,6 @@
       "textTranslationKey": "research.primalmagick.first_steps.text.stage.2"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requiredValue": 1,
         "requirement_type": "primalmagick:stat",
@@ -80,9 +71,6 @@
       "textTranslationKey": "research.primalmagick.first_steps.text.stage.3"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:first_steps"
       },
