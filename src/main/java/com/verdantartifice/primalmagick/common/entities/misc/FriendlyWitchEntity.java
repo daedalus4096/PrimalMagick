@@ -203,15 +203,15 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         Level level = this.level();
         if (this.isAlive() && !this.isTrading() && !this.isBaby()) {
-            if (this.getOffers().isEmpty()) {
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            } else {
-                if (!level.isClientSide) {
+            if (!level.isClientSide) {
+                if (this.getOffers().isEmpty()) {
+                    return InteractionResult.CONSUME;
+                } else {
                     this.setTradingPlayer(player);
                     this.openTradingScreen(player, this.getDisplayName(), 1);
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
             }
+            return InteractionResult.sidedSuccess(level.isClientSide);
         } else {
             return super.mobInteract(player, hand);
         }
