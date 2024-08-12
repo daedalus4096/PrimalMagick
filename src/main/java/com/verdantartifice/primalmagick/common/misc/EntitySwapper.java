@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -131,7 +132,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 }
                 
                 // Send an FX packet to all nearby player clients
-                PacketHandler.sendToAllAround(new WandPoofPacket(targetPos.x, targetPos.y, targetPos.z, Color.WHITE.getRGB(), true, null), 
+                PacketHandler.sendToAllAround(new WandPoofPacket(targetPos.x, targetPos.y, targetPos.z, Color.WHITE.getRGB(), true, Direction.UP), 
                         world.dimension(), BlockPos.containing(targetPos), 32.0D);
                 
                 // Remove the target entity and spawn a new one of the target type into the world

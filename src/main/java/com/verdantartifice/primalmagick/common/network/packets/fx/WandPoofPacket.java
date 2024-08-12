@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.network.packets.fx;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
@@ -27,7 +26,7 @@ public class WandPoofPacket implements IMessageToClient {
     protected final boolean sound;
     protected final Direction face;
     
-    public WandPoofPacket(double x, double y, double z, int color, boolean sound, @Nullable Direction facing) {
+    public WandPoofPacket(double x, double y, double z, int color, boolean sound, @Nonnull Direction facing) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -36,7 +35,7 @@ public class WandPoofPacket implements IMessageToClient {
         this.face = facing;
     }
     
-    public WandPoofPacket(@Nonnull BlockPos pos, int color, boolean sound, @Nullable Direction facing) {
+    public WandPoofPacket(@Nonnull BlockPos pos, int color, boolean sound, @Nonnull Direction facing) {
         this(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, color, sound, facing);
     }
     
