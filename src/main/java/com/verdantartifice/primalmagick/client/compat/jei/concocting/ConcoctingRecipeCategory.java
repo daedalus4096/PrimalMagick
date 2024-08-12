@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -23,7 +24,6 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -75,7 +75,7 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<ICon
     }
 
     @Override
-    public List<Component> getTooltipStrings(RecipeHolder<IConcoctingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public void getTooltip(ITooltipBuilder builder, RecipeHolder<IConcoctingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
         IConcoctingRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
@@ -83,13 +83,13 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<ICon
         if ( manaCosts != null && !manaCosts.isEmpty() && 
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
-            return JeiHelper.getManaCostTooltipStrings(manaCosts);
+            builder.addAll(JeiHelper.getManaCostTooltipStrings(manaCosts));
         } else if ( requirementOpt.isPresent() &&
                     mouseX >= RESEARCH_X_OFFSET && mouseX < RESEARCH_X_OFFSET + this.researchIcon.getWidth() &&
                     mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
-            return JeiHelper.getRequirementTooltipStrings(mc.level.registryAccess(), requirementOpt.get());
+            builder.addAll(JeiHelper.getRequirementTooltipStrings(mc.level.registryAccess(), requirementOpt.get()));
         } else {
-            return super.getTooltipStrings(recipeHolder, recipeSlotsView, mouseX, mouseY);
+            super.getTooltip(builder,   recipeHolder, recipeSlotsView, mouseX, mouseY);
         }
     }
 
