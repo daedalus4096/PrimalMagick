@@ -146,8 +146,8 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         // Don't use getSpellPackage here, or it will cause infinite recursion
         Component vehiclePiece = this.getSpellVehicleComponent().getComponent().getDefaultNamePiece();
         Component payloadPiece = this.getSpellPayloadComponent().getComponent().getDefaultNamePiece();
-        Optional<Component> primaryModPiece = this.getSpellPrimaryModComponent().map(mod -> mod.getComponent().getDefaultNamePiece());
-        Optional<Component> secondaryModPiece = this.getSpellSecondaryModComponent().map(mod -> mod.getComponent().getDefaultNamePiece());
+        Optional<Component> primaryModPiece = this.getSpellPrimaryModComponent().filter(mod -> mod.getComponent().isActive()).map(mod -> mod.getComponent().getDefaultNamePiece());
+        Optional<Component> secondaryModPiece = this.getSpellSecondaryModComponent().filter(mod -> mod.getComponent().isActive()).map(mod -> mod.getComponent().getDefaultNamePiece());
         boolean primaryActive = primaryModPiece.isPresent();
         boolean secondaryActive = secondaryModPiece.isPresent();
         if (vehiclePiece == null || payloadPiece == null || vehiclePiece.getString().isEmpty() || payloadPiece.getString().isEmpty()) {
@@ -247,9 +247,6 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
             return Optional.empty();
         }
         AbstractSpellMod<?> baseMod = types.get(index).instanceSupplier().get();
-        if (!baseMod.isActive()) {
-            return Optional.empty();
-        }
         Map<SpellProperty, Integer> properties = new HashMap<>();
         this.spellPropertyCache.get(componentType).forEach((prop, val) -> {
             if (baseMod.getProperties().contains(prop)) {
