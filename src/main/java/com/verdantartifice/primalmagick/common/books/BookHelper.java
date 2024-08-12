@@ -11,7 +11,7 @@ import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
@@ -36,8 +36,8 @@ public class BookHelper {
     
     public static String getTitleTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceKey<BookDefinition> bookKey = bookHolder.unwrapKey().get();
-            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "title");
+            ResourceLocation bookLoc = bookHolder.value().bookId();
+            return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "title");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
         });
