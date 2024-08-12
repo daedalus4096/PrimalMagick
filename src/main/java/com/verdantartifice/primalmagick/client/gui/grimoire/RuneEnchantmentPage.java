@@ -102,7 +102,6 @@ public class RuneEnchantmentPage extends AbstractPage {
         if (this.isFirstPage() && side == 0) {
             RuneManager.getRuneDefinition(mc.level.registryAccess(), this.enchant).ifPresent(def -> {
                 int widgetXPos = x + 6 + (side * 140) + (indent / 2) - (overlayWidth / 2);
-                screen.addWidgetToScreen(new EnchantmentExpertiseWidget(this.enchant, widgetXPos - 30, y - 2));
                 
                 if (RuneManager.isRuneKnown(mc.player, this.enchant, RuneType.VERB)) {
                     screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.verb()), widgetXPos, y, false));
