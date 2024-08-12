@@ -17,23 +17,36 @@ import net.minecraft.resources.ResourceKey;
  * @author Daedalus4096
  */
 public class BooksPM {
-    // Register static books
+    // Register general static books
     public static final ResourceKey<BookDefinition> TEST_BOOK = create("test");
     public static final ResourceKey<BookDefinition> DREAM_JOURNAL = create("dream_journal");
     public static final ResourceKey<BookDefinition> WELCOME = create("welcome");
     public static final ResourceKey<BookDefinition> WARNING = create("warning");
     public static final ResourceKey<BookDefinition> SOURCE_PRIMER = create("source_primer");
     
+    // TODO Register setting tome books
+    // TODO Register earth-themed vignette books
+    // TODO Register sea-themed vignette books
+    // TODO Register sky-themed vignette books
+    // TODO Register sun-themed vignette books
+    // TODO Register moon-themed vignette books
+    // TODO Register forbidden-themed vignette books
+    // TODO Register hallowed-themed vignette books
+    
     public static ResourceKey<BookDefinition> create(String name) {
         return ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource(name));
     }
     
     public static void bootstrap(BootstrapContext<BookDefinition> context) {
-        context.register(BooksPM.TEST_BOOK, new BookDefinition(PrimalMagick.resource("test")));
-        context.register(BooksPM.DREAM_JOURNAL, new BookDefinition(PrimalMagick.resource("dream_journal")));
-        context.register(BooksPM.WELCOME, new BookDefinition(PrimalMagick.resource("welcome")));
-        context.register(BooksPM.WARNING, new BookDefinition(PrimalMagick.resource("warning")));
-        context.register(BooksPM.SOURCE_PRIMER, new BookDefinition(PrimalMagick.resource("source_primer")));
+        register(context, BooksPM.TEST_BOOK);
+        register(context, BooksPM.DREAM_JOURNAL);
+        register(context, BooksPM.WELCOME);
+        register(context, BooksPM.WARNING);
+        register(context, BooksPM.SOURCE_PRIMER);
+    }
+    
+    private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
+        return context.register(key, new BookDefinition(key.location()));
     }
     
     /**

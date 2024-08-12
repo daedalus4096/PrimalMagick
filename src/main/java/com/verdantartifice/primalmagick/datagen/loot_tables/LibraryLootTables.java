@@ -152,19 +152,27 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
 
         // Register catalog component loot tables
-        LootPool.Builder commonPool = LootPool.lootPool().add(book(this.registries, BooksPM.SOURCE_PRIMER, Rarity.COMMON, 1));
+        LootPool.Builder commonPool = LootPool.lootPool()
+                .add(book(this.registries, BooksPM.SOURCE_PRIMER, Rarity.COMMON, 1))
+                ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(commonPool));
         
         // Generate uncommon catalog loot table
-        LootPool.Builder uncommonPool = LootPool.lootPool().add(book(this.registries, BooksPM.DREAM_JOURNAL, Rarity.UNCOMMON, 1));
+        LootPool.Builder uncommonPool = LootPool.lootPool()
+                .add(book(this.registries, BooksPM.DREAM_JOURNAL, Rarity.UNCOMMON, 1))
+                ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_UNCOMMON, LootTable.lootTable().withPool(uncommonPool));
         
         // Generate rare catalog loot table
-        LootPool.Builder rarePool = LootPool.lootPool().add(book(this.registries, BooksPM.TEST_BOOK, Rarity.RARE, 1));
+        LootPool.Builder rarePool = LootPool.lootPool()
+                .add(book(this.registries, BooksPM.TEST_BOOK, Rarity.RARE, 1))
+                ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(rarePool));
         
         // Generate epic catalog loot table for archaeology tablets
-        LootPool.Builder epicPool = LootPool.lootPool().add(book(this.registries, BooksPM.TEST_BOOK, Rarity.EPIC, 1));
+        LootPool.Builder epicPool = LootPool.lootPool()
+                .add(book(this.registries, BooksPM.TEST_BOOK, Rarity.EPIC, 1))
+                ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC, LootTable.lootTable().withPool(epicPool));
 
         // Generate treasure catalog loot table
