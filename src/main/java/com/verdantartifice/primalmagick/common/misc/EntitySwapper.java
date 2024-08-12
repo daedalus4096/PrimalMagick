@@ -28,6 +28,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -101,13 +102,13 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
     
     @Nullable
     public EntitySwapper execute(@Nonnull Level world) {
-        if (!world.isClientSide && world instanceof ServerLevel) {
-            ServerLevel serverWorld = (ServerLevel)world;
+        if (!world.isClientSide && world instanceof ServerLevel serverWorld) {
             Entity target = serverWorld.getEntity(this.targetId);
             
             // Only proceed if this is a valid swapper and the target is allowed to be swapped
             if (this.isValid() && target != null && this.isValidTarget(target)) {
                 LivingEntity livingTarget = (LivingEntity)target;
+                CompoundTag currentData = livingTarget.saveWithoutId(new CompoundTag());
                 
                 // Dismount the target from any mounts and dismount any other entities riding the target
                 if (livingTarget.isPassenger()) {
@@ -126,10 +127,9 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 Collection<MobEffectInstance> activeEffects = livingTarget.getActiveEffects();
                 
                 // If the original, pre-swapped entity had it's NBT data preserved in this swapper, prepare it for loading into the new entity
-                CompoundTag data = new CompoundTag();
-                if (this.originalData != null) {
-                    data.put("EntityTag", this.pruneData(this.originalData, this.polymorphDuration.isPresent()));
-                }
+                CompoundTag data = this.originalData == null ?
+                        currentData :
+                        currentData.merge(this.pruneData(this.originalData, this.polymorphDuration.isPresent()));
                 
                 // Send an FX packet to all nearby player clients
                 PacketHandler.sendToAllAround(new WandPoofPacket(targetPos.x, targetPos.y, targetPos.z, Color.WHITE.getRGB(), true, Direction.UP), 
@@ -137,15 +137,20 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 
                 // Remove the target entity and spawn a new one of the target type into the world
                 livingTarget.discard();
-                Entity newEntity = this.entityType.create(serverWorld, e -> e.load(data), BlockPos.containing(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
-                newEntity.setCustomName(customName);
-                newEntity.setCustomNameVisible(customNameVisible);
-                world.addFreshEntity(newEntity);
-                newEntity.absMoveTo(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
+                Entity newEntity = this.entityType.spawn(serverWorld, e -> {
+                    if (!data.isEmpty()) {
+                        e.load(data);
+                    }
+                }, BlockPos.containing(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
+                if (newEntity != null) {
+                    newEntity.setCustomName(customName);
+                    newEntity.setCustomNameVisible(customNameVisible);
+                    newEntity.absMoveTo(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
+                    serverWorld.gameEvent(null, GameEvent.ENTITY_PLACE, targetPos);
+                }
                 
                 // Carry over the previous entity's percentage health and active potion effects
-                if (newEntity instanceof LivingEntity) {
-                    LivingEntity newLivingEntity = (LivingEntity)newEntity;
+                if (newEntity instanceof LivingEntity newLivingEntity) {
                     newLivingEntity.setHealth((float)(healthPercentage * newLivingEntity.getMaxHealth()));
                     for (MobEffectInstance activeEffect : activeEffects) {
                         newLivingEntity.addEffect(activeEffect);
@@ -155,8 +160,8 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 if (this.polymorphDuration.isPresent()) {
                     // If this is a temporary swap, create a new entity swapper to swap back
                     int ticks = this.polymorphDuration.get().intValue();
-                    if (newEntity instanceof LivingEntity) {
-                        ((LivingEntity)newEntity).addEffect(new MobEffectInstance(EffectsPM.POLYMORPH.getHolder().get(), ticks));
+                    if (newEntity instanceof LivingEntity newLivingEntity) {
+                        newLivingEntity.addEffect(new MobEffectInstance(EffectsPM.POLYMORPH.getHolder().get(), ticks));
                     }
                     return new EntitySwapper(newEntity.getUUID(), oldType, this.originalData, Optional.empty(), ticks);
                 } else {
