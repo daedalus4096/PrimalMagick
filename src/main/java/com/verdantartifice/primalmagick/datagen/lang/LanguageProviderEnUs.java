@@ -1764,6 +1764,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .foreword("This book is printed very simply, as if intended for young children.")
             .text("The Earth abides.\nThe Sea flows.\nThe Sky drifts.\nThe Sun shines.\nThe Moon changes.\nThe Blood pumps.\nThe Infernal rages.\nThe Void hungers.\nThe Hallowed sings.")
             .build();
+        this.book(BooksPM.FIVE_CULTURES_PRELUDE).name("The Five Cultures: Prelude").author("Davien the Scholar")
+            .text("This volume represents a lifetime’s study of the Five Cultures. I pass it on to you, explorer, to add to your understanding of the world and what came before. While I’ve been as thorough as I can, I know there is much left to learn — more than I could glean if I had another ten lifetimes of travel and research. I hope you will take what you find within these pages and build upon this knowledge as your journey unfolds.\n\nBest of luck,\nDavien the Scholar")
+            .build();
         
         // Generate spell vehicle localizations
         this.add("spells.primalmagick.vehicle.header", "Spell Type");

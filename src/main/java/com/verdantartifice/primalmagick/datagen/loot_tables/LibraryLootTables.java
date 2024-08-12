@@ -154,6 +154,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         // Register catalog component loot tables
         LootPool.Builder commonPool = LootPool.lootPool()
                 .add(book(this.registries, BooksPM.SOURCE_PRIMER, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_PRELUDE, Rarity.COMMON, 1))
                 ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(commonPool));
         

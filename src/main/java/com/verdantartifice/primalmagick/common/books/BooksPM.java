@@ -25,6 +25,8 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> SOURCE_PRIMER = create("source_primer");
     
     // TODO Register setting tome books
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_PRELUDE = create("five_cultures/prelude");
+    
     // TODO Register earth-themed vignette books
     // TODO Register sea-themed vignette books
     // TODO Register sky-themed vignette books
@@ -43,6 +45,8 @@ public class BooksPM {
         register(context, BooksPM.WELCOME);
         register(context, BooksPM.WARNING);
         register(context, BooksPM.SOURCE_PRIMER);
+        
+        register(context, BooksPM.FIVE_CULTURES_PRELUDE);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
