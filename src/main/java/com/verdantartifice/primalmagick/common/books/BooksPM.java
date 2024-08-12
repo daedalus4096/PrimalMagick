@@ -27,6 +27,11 @@ public class BooksPM {
     
     // TODO Register setting tome books
     public static final ResourceKey<BookDefinition> FIVE_CULTURES_PRELUDE = create("five_cultures/prelude");
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_INTRODUCTION = create("five_cultures/introduction");
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_EARTH_PART_1 = create("five_cultures/earth_part_1");
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_EARTH_PART_2 = create("five_cultures/earth_part_2");
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_EARTH_INNOVATIONS = create("five_cultures/earth_innovations");
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_EARTH_RELATIONS = create("five_cultures/earth_relations");
     
     // TODO Register earth-themed vignette books
     // TODO Register sea-themed vignette books
@@ -48,6 +53,11 @@ public class BooksPM {
         register(context, BooksPM.SOURCE_PRIMER);
         
         register(context, BooksPM.FIVE_CULTURES_PRELUDE);
+        register(context, BooksPM.FIVE_CULTURES_INTRODUCTION);
+        register(context, BooksPM.FIVE_CULTURES_EARTH_PART_1);
+        register(context, BooksPM.FIVE_CULTURES_EARTH_PART_2);
+        register(context, BooksPM.FIVE_CULTURES_EARTH_INNOVATIONS);
+        register(context, BooksPM.FIVE_CULTURES_EARTH_RELATIONS);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
