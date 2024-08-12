@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.compat.jei.dissolution;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
@@ -12,6 +10,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -19,7 +18,6 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -58,14 +56,14 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
     }
 
     @Override
-    public List<Component> getTooltipStrings(RecipeHolder<IDissolutionRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public void getTooltip(ITooltipBuilder builder, RecipeHolder<IDissolutionRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         SourceList manaCosts = recipe.value().getManaCosts();
         if ( manaCosts != null && !manaCosts.isEmpty() && 
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
-            return JeiHelper.getManaCostTooltipStrings(manaCosts);
+            builder.addAll(JeiHelper.getManaCostTooltipStrings(manaCosts));
         } else {
-            return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
+            super.getTooltip(builder, recipe, recipeSlotsView, mouseX, mouseY);
         }
     }
 

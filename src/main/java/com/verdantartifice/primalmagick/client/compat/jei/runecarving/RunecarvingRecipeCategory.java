@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.compat.jei.runecarving;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -13,6 +12,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -21,7 +21,6 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -66,15 +65,15 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
     }
 
     @Override
-    public List<Component> getTooltipStrings(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public void getTooltip(ITooltipBuilder builder, RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
         Optional<AbstractRequirement<?>> requirementOpt = recipe.value().getRequirement();
         if ( requirementOpt.isPresent() &&
              mouseX >= RESEARCH_X_OFFSET && mouseX < RESEARCH_X_OFFSET + this.researchIcon.getWidth() &&
              mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
-            return JeiHelper.getRequirementTooltipStrings(mc.level.registryAccess(), requirementOpt.get());
+            builder.addAll(JeiHelper.getRequirementTooltipStrings(mc.level.registryAccess(), requirementOpt.get()));
         } else {
-            return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
+            super.getTooltip(builder, recipe, recipeSlotsView, mouseX, mouseY);
         }
     }
 

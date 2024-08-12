@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.EnchantmentExpertiseWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ResearchWidget;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
