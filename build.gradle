@@ -146,7 +146,12 @@ dependencies {
     // FIXME 2024/08/11 - JEI does not have a build for MC 1.21.1 yet, and may never as it's a minor bugfix version.
     compileOnly "mezz.jei:jei-1.21-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-1.21-forge-api:${jei_version}"
-    runtimeOnly "mezz.jei:jei-1.21-forge:${jei_version}"
+
+    // FIXME 2024/08/12 - When the following line is active, as of MC1.21.1, attempting to run the client or data generator
+    // will result in a ResolutionException, saying that the jei.api and jei modules each export a package, one of many, to
+    // either forge or primalmagick.  This error only occurs when starting the run from Eclipse, and *not* when doing so
+    // from the command-line interface.  Uncomment this line when this bug no longer occurs.  Check in MC1.22.
+    //runtimeOnly "mezz.jei:jei-1.21-forge:${jei_version}"
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
