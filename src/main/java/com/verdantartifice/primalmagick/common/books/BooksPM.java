@@ -98,6 +98,16 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> SHELTER_FROM_THE_STORMS = create("shelter_from_the_storm");
     public static final ResourceKey<BookDefinition> JOURNEYS_ANEW = create("journeys/anew");
     
+    // Register unique tablet vignettes
+    public static final ResourceKey<BookDefinition> BESIEGED = create("besieged");
+    public static final ResourceKey<BookDefinition> CAPTAINS_LOG = create("captains_log");
+    public static final ResourceKey<BookDefinition> RUNNING = create("running");
+    public static final ResourceKey<BookDefinition> IN_GLORIOUS_MEMORY = create("in_glorious_memory");
+    public static final ResourceKey<BookDefinition> EVACUATION = create("evacuation");
+    public static final ResourceKey<BookDefinition> END_OF_ALL_THINGS = create("end_of_all_things");
+    public static final ResourceKey<BookDefinition> VICTORY = create("victory");
+    public static final ResourceKey<BookDefinition> OUR_FAILURE = create("our_failure");
+
     public static ResourceKey<BookDefinition> create(String name) {
         return ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource(name));
     }
@@ -173,6 +183,15 @@ public class BooksPM {
         register(context, BooksPM.MAGICKAL_TOME_TRANSGRESSIONS);
         register(context, BooksPM.SHELTER_FROM_THE_STORMS);
         register(context, BooksPM.JOURNEYS_ANEW);
+        
+        register(context, BooksPM.BESIEGED);
+        register(context, BooksPM.CAPTAINS_LOG);
+        register(context, BooksPM.RUNNING);
+        register(context, BooksPM.IN_GLORIOUS_MEMORY);
+        register(context, BooksPM.EVACUATION);
+        register(context, BooksPM.END_OF_ALL_THINGS);
+        register(context, BooksPM.VICTORY);
+        register(context, BooksPM.OUR_FAILURE);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {

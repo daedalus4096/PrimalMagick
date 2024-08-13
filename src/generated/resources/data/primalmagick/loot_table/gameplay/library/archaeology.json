@@ -14,7 +14,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "value": "primalmagick:gameplay/library/catalog/epic"
+          "value": "primalmagick:gameplay/library/catalog/epic/earth"
         },
         {
           "type": "minecraft:loot_table",
@@ -26,7 +26,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "value": "primalmagick:gameplay/library/catalog/epic"
+          "value": "primalmagick:gameplay/library/catalog/epic/sea"
         },
         {
           "type": "minecraft:loot_table",
@@ -38,7 +38,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "value": "primalmagick:gameplay/library/catalog/epic"
+          "value": "primalmagick:gameplay/library/catalog/epic/sky"
         },
         {
           "type": "minecraft:loot_table",
@@ -50,7 +50,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "value": "primalmagick:gameplay/library/catalog/epic"
+          "value": "primalmagick:gameplay/library/catalog/epic/sun"
         },
         {
           "type": "minecraft:loot_table",
@@ -62,7 +62,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "value": "primalmagick:gameplay/library/catalog/epic"
+          "value": "primalmagick:gameplay/library/catalog/epic/moon"
         },
         {
           "type": "minecraft:loot_table",
@@ -74,7 +74,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "value": "primalmagick:gameplay/library/catalog/epic"
+          "value": "primalmagick:gameplay/library/catalog/epic/trade"
         },
         {
           "type": "minecraft:loot_table",
@@ -86,7 +86,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "value": "primalmagick:gameplay/library/catalog/epic"
+          "value": "primalmagick:gameplay/library/catalog/epic/forbidden"
         },
         {
           "type": "minecraft:loot_table",
@@ -98,7 +98,7 @@
               "function": "minecraft:set_components"
             }
           ],
-          "value": "primalmagick:gameplay/library/catalog/epic"
+          "value": "primalmagick:gameplay/library/catalog/epic/hallowed"
         }
       ],
       "rolls": 1.0

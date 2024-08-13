@@ -9,7 +9,7 @@
           "functions": [
             {
               "components": {
-                "primalmagick:book_definition": "primalmagick:test"
+                "primalmagick:book_definition": "primalmagick:evacuation"
               },
               "function": "minecraft:set_components"
             }
@@ -20,5 +20,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "primalmagick:gameplay/library/catalog/epic"
+  "random_sequence": "primalmagick:gameplay/library/catalog/epic/moon"
 }

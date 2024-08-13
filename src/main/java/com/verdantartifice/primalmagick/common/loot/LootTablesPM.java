@@ -55,7 +55,14 @@ public class LootTablesPM {
     public static final ResourceKey<LootTable> LIBRARY_CATALOG_COMMON = registerLibrary("gameplay/library/catalog/common");
     public static final ResourceKey<LootTable> LIBRARY_CATALOG_UNCOMMON = registerLibrary("gameplay/library/catalog/uncommon");
     public static final ResourceKey<LootTable> LIBRARY_CATALOG_RARE = registerLibrary("gameplay/library/catalog/rare");
-    public static final ResourceKey<LootTable> LIBRARY_CATALOG_EPIC = registerLibrary("gameplay/library/catalog/epic");
+    public static final ResourceKey<LootTable> LIBRARY_CATALOG_EPIC_EARTH = registerLibrary("gameplay/library/catalog/epic/earth");
+    public static final ResourceKey<LootTable> LIBRARY_CATALOG_EPIC_SEA = registerLibrary("gameplay/library/catalog/epic/sea");
+    public static final ResourceKey<LootTable> LIBRARY_CATALOG_EPIC_SKY = registerLibrary("gameplay/library/catalog/epic/sky");
+    public static final ResourceKey<LootTable> LIBRARY_CATALOG_EPIC_SUN = registerLibrary("gameplay/library/catalog/epic/sun");
+    public static final ResourceKey<LootTable> LIBRARY_CATALOG_EPIC_MOON = registerLibrary("gameplay/library/catalog/epic/moon");
+    public static final ResourceKey<LootTable> LIBRARY_CATALOG_EPIC_TRADE = registerLibrary("gameplay/library/catalog/epic/trade");
+    public static final ResourceKey<LootTable> LIBRARY_CATALOG_EPIC_FORBIDDEN = registerLibrary("gameplay/library/catalog/epic/forbidden");
+    public static final ResourceKey<LootTable> LIBRARY_CATALOG_EPIC_HALLOWED = registerLibrary("gameplay/library/catalog/epic/hallowed");
     public static final ResourceKey<LootTable> LIBRARY_CATALOG_TREASURE = registerLibrary("gameplay/library/catalog/treasure");
 
     private static ResourceKey<LootTable> registerTreefolk(String id) {
