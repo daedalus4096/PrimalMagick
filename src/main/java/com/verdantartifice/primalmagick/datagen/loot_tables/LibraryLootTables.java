@@ -176,6 +176,10 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(book(this.registries, BooksPM.FIVE_CULTURES_MOON_PART_2, Rarity.COMMON, 1))
                 .add(book(this.registries, BooksPM.FIVE_CULTURES_MOON_INNOVATIONS, Rarity.COMMON, 1))
                 .add(book(this.registries, BooksPM.FIVE_CULTURES_MOON_RELATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_THREE_STONES, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.TRAVEL_DIARY_SEVEN_PILLARS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.HELP, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_ARCH, Rarity.COMMON, 1))
                 ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(commonPool));
         

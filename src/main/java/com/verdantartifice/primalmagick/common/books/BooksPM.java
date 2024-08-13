@@ -25,7 +25,7 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> WARNING = create("warning");
     public static final ResourceKey<BookDefinition> SOURCE_PRIMER = create("source_primer");
     
-    // TODO Register setting tome books
+    // Register setting tome books
     public static final ResourceKey<BookDefinition> FIVE_CULTURES_PRELUDE = create("five_cultures/prelude");
     public static final ResourceKey<BookDefinition> FIVE_CULTURES_INTRODUCTION = create("five_cultures/introduction");
     public static final ResourceKey<BookDefinition> FIVE_CULTURES_EARTH_PART_1 = create("five_cultures/earth_part_1");
@@ -53,7 +53,12 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> FIVE_CULTURES_HEAVENLY_MAGICK = create("five_cultures/heavenly_magick");
     public static final ResourceKey<BookDefinition> FIVE_CULTURES_HEAVENLY_INNOVATIONS = create("five_cultures/heavenly_innovations");
 
-    // TODO Register earth-themed vignette books
+    // Register earth-themed vignette books
+    public static final ResourceKey<BookDefinition> MAGICKAL_TOME_THREE_STONES = create("magickal_tome/three_stones");
+    public static final ResourceKey<BookDefinition> TRAVEL_DIARY_SEVEN_PILLARS = create("travel_diary/seven_pillars");
+    public static final ResourceKey<BookDefinition> HELP = create("help");
+    public static final ResourceKey<BookDefinition> JOURNEYS_ARCH = create("journeys/arch");
+    
     // TODO Register sea-themed vignette books
     // TODO Register sky-themed vignette books
     // TODO Register sun-themed vignette books
@@ -98,6 +103,11 @@ public class BooksPM {
         register(context, BooksPM.FIVE_CULTURES_FORBIDDEN_INNOVATIONS);
         register(context, BooksPM.FIVE_CULTURES_HEAVENLY_MAGICK);
         register(context, BooksPM.FIVE_CULTURES_HEAVENLY_INNOVATIONS);
+        
+        register(context, BooksPM.MAGICKAL_TOME_THREE_STONES);
+        register(context, BooksPM.TRAVEL_DIARY_SEVEN_PILLARS);
+        register(context, BooksPM.HELP);
+        register(context, BooksPM.JOURNEYS_ARCH);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
