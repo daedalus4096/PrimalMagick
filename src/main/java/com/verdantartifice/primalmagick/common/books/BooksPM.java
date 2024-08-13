@@ -67,7 +67,12 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> TRAVEL_DIARY_YERRAN = create("travel_diary/yerran");
     public static final ResourceKey<BookDefinition> JOURNEYS_CURRENT = create("journeys/current");
 
-    // TODO Register sky-themed vignette books
+    // Register sky-themed vignette books
+    public static final ResourceKey<BookDefinition> TRAVEL_DIARY_FLYING = create("travel_diary/flying");
+    public static final ResourceKey<BookDefinition> MAGICKAL_TOME_LIGHTNING_IN_MY_GRASP = create("magickal_tome/lightning_in_my_grasp");
+    public static final ResourceKey<BookDefinition> OUR_DIPLOMATIC_MISSION = create("our_diplomatic_mission");
+    public static final ResourceKey<BookDefinition> JOURNEYS_MOTION = create("journeys/motion");
+
     // TODO Register sun-themed vignette books
     // TODO Register moon-themed vignette books
     // TODO Register forbidden-themed vignette books
@@ -122,6 +127,11 @@ public class BooksPM {
         register(context, BooksPM.RECIPES_SEAWEED);
         register(context, BooksPM.TRAVEL_DIARY_YERRAN);
         register(context, BooksPM.JOURNEYS_CURRENT);
+        
+        register(context, BooksPM.TRAVEL_DIARY_FLYING);
+        register(context, BooksPM.MAGICKAL_TOME_LIGHTNING_IN_MY_GRASP);
+        register(context, BooksPM.OUR_DIPLOMATIC_MISSION);
+        register(context, BooksPM.JOURNEYS_MOTION);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
