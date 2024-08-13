@@ -18,9 +18,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:forbidden_magick"
       },

@@ -21,9 +21,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:and",
         "subRequirements": [
@@ -61,9 +58,6 @@
       "textTranslationKey": "research.primalmagick.supreme_sorcery.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:supreme_sorcery"
       },

@@ -21,9 +21,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:mystical_relic"
       },

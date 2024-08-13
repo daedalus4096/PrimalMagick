@@ -19,9 +19,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 1,
         "knowledgeType": "theory",
@@ -36,9 +33,6 @@
       "textTranslationKey": "research.primalmagick.rune_absorb.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:rune_absorb"
       },

@@ -954,14 +954,14 @@ public class PrimalMagickCommand {
         LinguisticsManager.setComprehension(target, bookLanguage, value);
         int newValue = LinguisticsManager.getComprehension(target, bookLanguage);
         if (value > complexity) {
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success.capped", target.getName(), langKey, complexity, newValue), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success.capped", target.getName(), langKey.toString(), complexity, newValue), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target.capped", source.getTextName(), langKey, complexity, newValue));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target.capped", source.getTextName(), langKey.toString(), complexity, newValue));
             }
         } else {
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success", target.getName(), langKey, newValue), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success", target.getName(), langKey.toString(), newValue), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target", source.getTextName(), langKey, newValue));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target", source.getTextName(), langKey.toString(), newValue));
             }
         }
 
@@ -977,9 +977,9 @@ public class PrimalMagickCommand {
         ResourceLocation langKey = bookLanguage.key().location();
         LinguisticsManager.setVocabulary(target, bookLanguage, value);
         int newValue = LinguisticsManager.getVocabulary(target, bookLanguage);
-        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.set.success", target.getName(), langKey, newValue), true);
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.set.success", target.getName(), langKey.toString(), newValue), true);
         if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.vocabulary.set.target", source.getTextName(), langKey, newValue));
+            target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.vocabulary.set.target", source.getTextName(), langKey.toString(), newValue));
         }
         return 0;
     }
@@ -995,14 +995,14 @@ public class PrimalMagickCommand {
         LinguisticsManager.setTimesStudied(target, bookDef, bookLanguage, value);
         int newValue = LinguisticsManager.getTimesStudied(target, bookDef, bookLanguage);
         if (value > IPlayerLinguistics.MAX_STUDY_COUNT) {
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.set.success.capped", target.getName(), bookId, langKey, newValue, value), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.set.success.capped", target.getName(), bookId.toString(), langKey.toString(), newValue, value), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.study_count.set.target.capped", source.getTextName(), bookId, langKey, newValue, value));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.study_count.set.target.capped", source.getTextName(), bookId.toString(), langKey.toString(), newValue, value));
             }
         } else {
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.set.success", target.getName(), bookId, langKey, newValue), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.set.success", target.getName(), bookId.toString(), langKey.toString(), newValue), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.study_count.set.target", source.getTextName(), bookId, langKey, newValue));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.study_count.set.target", source.getTextName(), bookId.toString(), langKey.toString(), newValue));
             }
         }
         return 0;

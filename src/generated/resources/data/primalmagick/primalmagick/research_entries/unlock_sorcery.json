@@ -18,9 +18,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 1,
         "knowledgeType": "observation",
@@ -35,9 +32,6 @@
       "textTranslationKey": "research.primalmagick.unlock_sorcery.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:unlock_sorcery"
       },

@@ -18,9 +18,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -40,9 +37,6 @@
       "textTranslationKey": "research.primalmagick.basic_alchemy.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:basic_alchemy"
       },

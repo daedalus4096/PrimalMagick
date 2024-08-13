@@ -21,9 +21,6 @@
   "parents": [],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 1,
         "knowledgeType": "observation",

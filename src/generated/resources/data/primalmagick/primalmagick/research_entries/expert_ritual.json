@@ -21,9 +21,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "discipline": {
           "rootKey": "primalmagick:ritual"
@@ -40,9 +37,6 @@
       "textTranslationKey": "research.primalmagick.expert_ritual.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:expert_ritual"
       },

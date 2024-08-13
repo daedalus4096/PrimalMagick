@@ -21,9 +21,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "discipline": {
           "rootKey": "primalmagick:manaweaving"
@@ -40,9 +37,6 @@
       "textTranslationKey": "research.primalmagick.expert_manaweaving.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:expert_manaweaving"
       },

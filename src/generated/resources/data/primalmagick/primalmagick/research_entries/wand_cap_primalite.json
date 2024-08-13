@@ -22,9 +22,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:and",
         "subRequirements": [
@@ -49,9 +46,6 @@
       "textTranslationKey": "research.primalmagick.wand_cap_primalite.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:wand_cap_primalite"
       },

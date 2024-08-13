@@ -111,9 +111,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 2,
         "knowledgeType": "theory",

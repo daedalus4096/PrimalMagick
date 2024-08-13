@@ -1,9 +1,6 @@
 {
   "addenda": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:and",
         "subRequirements": [
@@ -91,9 +88,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 3,
         "knowledgeType": "theory",
@@ -108,9 +102,6 @@
       "textTranslationKey": "research.primalmagick.sacred_shield.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:sacred_shield"
       },

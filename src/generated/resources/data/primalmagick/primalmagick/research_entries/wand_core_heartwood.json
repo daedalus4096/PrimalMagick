@@ -1,9 +1,6 @@
 {
   "addenda": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -40,9 +37,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:and",
         "subRequirements": [
@@ -69,9 +63,6 @@
       "textTranslationKey": "research.primalmagick.wand_core_heartwood.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:wand_core_heartwood"
       },

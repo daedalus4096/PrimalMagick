@@ -18,9 +18,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 1,
         "knowledgeType": "observation",
@@ -35,9 +32,6 @@
       "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:and",
         "subRequirements": [
@@ -76,9 +70,6 @@
       "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.2"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requiredValue": 1,
         "requirement_type": "primalmagick:stat",
@@ -97,9 +88,6 @@
       "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.3"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:theorycrafting"
       },

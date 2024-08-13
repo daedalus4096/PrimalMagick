@@ -21,9 +21,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 1,
         "knowledgeType": "observation",
@@ -38,9 +35,6 @@
       "textTranslationKey": "research.primalmagick.unlock_magitech.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:unlock_magitech"
       },

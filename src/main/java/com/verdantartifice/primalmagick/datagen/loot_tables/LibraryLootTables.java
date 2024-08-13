@@ -100,14 +100,14 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
                 .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(20))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_ARCHAEOLOGY, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
-                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.EARTH, 1))
-                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SEA, 1))
-                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SKY, 1))
-                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SUN, 1))
-                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.MOON, 1))
-                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.TRADE, 1))
-                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.FORBIDDEN, 1))
-                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.HALLOWED, 1))));
+                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC_EARTH, BookLanguagesPM.EARTH, 1))
+                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC_SEA, BookLanguagesPM.SEA, 1))
+                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC_SKY, BookLanguagesPM.SKY, 1))
+                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC_SUN, BookLanguagesPM.SUN, 1))
+                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC_MOON, BookLanguagesPM.MOON, 1))
+                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC_TRADE, BookLanguagesPM.TRADE, 1))
+                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC_FORBIDDEN, BookLanguagesPM.FORBIDDEN, 1))
+                .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_EPIC_HALLOWED, BookLanguagesPM.HALLOWED, 1))));
         
         // Register culture component loot tables
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_EARTH, LootTable.lootTable().withPool(LootPool.lootPool()
@@ -151,21 +151,88 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(catalog(this.registries, LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.HALLOWED, 10))
                 .add(NestedLootTable.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
 
-        // Register catalog component loot tables
-        LootPool.Builder commonPool = LootPool.lootPool().add(book(this.registries, BooksPM.SOURCE_PRIMER, Rarity.COMMON, 1));
+        // Register common catalog loot table
+        LootPool.Builder commonPool = LootPool.lootPool()
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_PRELUDE, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_INTRODUCTION, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_EARTH_PART_1, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_EARTH_INNOVATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_EARTH_RELATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SEA_PART_1, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SEA_PART_2, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SEA_RELATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SKY_PART_1, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SKY_PART_2, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SKY_RELATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SUN_PART_2, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SUN_INNOVATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SUN_RELATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_MOON_PART_1, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_MOON_PART_2, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_MOON_INNOVATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.TRAVEL_DIARY_SEVEN_PILLARS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.HELP, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_ARCH, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.TOURNAMENT_FLYER, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.AVAST, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.RECIPES_SEAWEED, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.TRAVEL_DIARY_YERRAN, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_CURRENT, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.TRAVEL_DIARY_FLYING, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.OUR_DIPLOMATIC_MISSION, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_MOTION, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.CALL_TO_ARMS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.TRAVEL_DIARY_ELDE, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.RECIPES_SUN_TEA, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_WINDOWS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.TRAVEL_DIARY_CUSP, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.RECIPES_MUSHROOMS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_SHAPES, Rarity.COMMON, 1))
+                ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(commonPool));
         
         // Generate uncommon catalog loot table
-        LootPool.Builder uncommonPool = LootPool.lootPool().add(book(this.registries, BooksPM.DREAM_JOURNAL, Rarity.UNCOMMON, 1));
+        LootPool.Builder uncommonPool = LootPool.lootPool()
+                .add(book(this.registries, BooksPM.SOURCE_PRIMER, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_EARTH_PART_2, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SEA_INNOVATIONS, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SKY_INNOVATIONS, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SUN_PART_1, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_MOON_RELATIONS, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_FORBIDDEN_MAGICK, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_FORBIDDEN_INNOVATIONS, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.TRAVEL_DIARY_BEYOND, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_THREE_STONES, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_ON_THE_BEACH, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_LIGHTNING_IN_MY_GRASP, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_NEAR_DEATH_EXPERIENCE, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_IN_DREAMS, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_SOMETHING_MOMENTOUS, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.DELAY, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_EDITORS_NOTE, Rarity.UNCOMMON, 1))
+                ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_UNCOMMON, LootTable.lootTable().withPool(uncommonPool));
         
         // Generate rare catalog loot table
-        LootPool.Builder rarePool = LootPool.lootPool().add(book(this.registries, BooksPM.TEST_BOOK, Rarity.RARE, 1));
+        LootPool.Builder rarePool = LootPool.lootPool()
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_HEAVENLY_MAGICK, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_HEAVENLY_INNOVATIONS, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.A_CURIOUS_EXCHANGE, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_TRANSGRESSIONS, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.SHELTER_FROM_THE_STORMS, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_ANEW, Rarity.RARE, 1))
+                ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(rarePool));
         
-        // Generate epic catalog loot table for archaeology tablets
-        LootPool.Builder epicPool = LootPool.lootPool().add(book(this.registries, BooksPM.TEST_BOOK, Rarity.EPIC, 1));
-        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC, LootTable.lootTable().withPool(epicPool));
+        // Generate epic catalog loot tables for unique archaeology tablets
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC_EARTH, LootTable.lootTable().withPool(LootPool.lootPool().add(book(this.registries, BooksPM.BESIEGED, Rarity.EPIC, 1))));
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC_SEA, LootTable.lootTable().withPool(LootPool.lootPool().add(book(this.registries, BooksPM.CAPTAINS_LOG, Rarity.EPIC, 1))));
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC_SKY, LootTable.lootTable().withPool(LootPool.lootPool().add(book(this.registries, BooksPM.RUNNING, Rarity.EPIC, 1))));
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC_SUN, LootTable.lootTable().withPool(LootPool.lootPool().add(book(this.registries, BooksPM.IN_GLORIOUS_MEMORY, Rarity.EPIC, 1))));
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC_MOON, LootTable.lootTable().withPool(LootPool.lootPool().add(book(this.registries, BooksPM.EVACUATION, Rarity.EPIC, 1))));
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC_TRADE, LootTable.lootTable().withPool(LootPool.lootPool().add(book(this.registries, BooksPM.END_OF_ALL_THINGS, Rarity.EPIC, 1))));
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC_FORBIDDEN, LootTable.lootTable().withPool(LootPool.lootPool().add(book(this.registries, BooksPM.VICTORY, Rarity.EPIC, 1))));
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC_HALLOWED, LootTable.lootTable().withPool(LootPool.lootPool().add(book(this.registries, BooksPM.OUR_FAILURE, Rarity.EPIC, 1))));
 
         // Generate treasure catalog loot table
         // FIXME Figure out why serialization can't find the mod's "enchantable" item tags

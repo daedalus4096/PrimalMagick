@@ -15,9 +15,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 1,
         "knowledgeType": "observation",
@@ -32,9 +29,6 @@
       "textTranslationKey": "research.primalmagick.attunements.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:attunements"
       },

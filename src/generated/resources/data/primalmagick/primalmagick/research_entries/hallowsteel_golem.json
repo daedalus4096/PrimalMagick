@@ -25,9 +25,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 3,
         "knowledgeType": "theory",
@@ -42,9 +39,6 @@
       "textTranslationKey": "research.primalmagick.hallowsteel_golem.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:hallowsteel_golem"
       },

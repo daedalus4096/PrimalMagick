@@ -28,9 +28,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 1,
         "knowledgeType": "theory",
@@ -45,9 +42,6 @@
       "textTranslationKey": "research.primalmagick.essence_cask_enchanted.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:essence_cask_enchanted"
       },

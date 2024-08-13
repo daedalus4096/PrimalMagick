@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookHelper;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookType;
@@ -32,6 +31,7 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringDecomposer;
@@ -74,8 +74,8 @@ public class ClientBookHelper {
     
     private static String getForewordTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceKey<BookDefinition> bookKey = bookHolder.unwrapKey().get();
-            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "foreword");
+            ResourceLocation bookLoc = bookHolder.value().bookId();
+            return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "foreword");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
         });
@@ -83,8 +83,8 @@ public class ClientBookHelper {
 
     private static String getAfterwordTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceKey<BookDefinition> bookKey = bookHolder.unwrapKey().get();
-            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "afterword");
+            ResourceLocation bookLoc = bookHolder.value().bookId();
+            return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "afterword");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
         });
@@ -92,8 +92,8 @@ public class ClientBookHelper {
 
     private static String getAuthorTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceKey<BookDefinition> bookKey = bookHolder.unwrapKey().get();
-            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "author");
+            ResourceLocation bookLoc = bookHolder.value().bookId();
+            return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "author");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
         });
@@ -101,8 +101,8 @@ public class ClientBookHelper {
 
     private static String getTextTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceKey<BookDefinition> bookKey = bookHolder.unwrapKey().get();
-            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "text");
+            ResourceLocation bookLoc = bookHolder.value().bookId();
+            return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "text");
         }, enchHolder -> {
             ResourceKey<Enchantment> enchKey = enchHolder.unwrapKey().get();
             String key = String.join(".", "enchantment", enchKey.location().getNamespace(), enchKey.location().getPath(), "desc");

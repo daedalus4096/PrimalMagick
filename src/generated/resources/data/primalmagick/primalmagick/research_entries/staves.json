@@ -24,9 +24,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 1,
         "knowledgeType": "theory",
@@ -41,9 +38,6 @@
       "textTranslationKey": "research.primalmagick.staves.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:staves"
       },

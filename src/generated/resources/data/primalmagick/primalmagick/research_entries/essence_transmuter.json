@@ -22,9 +22,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 1,
         "knowledgeType": "theory",
@@ -39,9 +36,6 @@
       "textTranslationKey": "research.primalmagick.essence_transmuter.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:essence_transmuter"
       },

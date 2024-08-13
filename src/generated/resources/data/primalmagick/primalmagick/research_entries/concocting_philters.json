@@ -1,9 +1,6 @@
 {
   "addenda": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -25,9 +22,6 @@
       "textTranslationKey": "research.primalmagick.concocting_philters.text.addenda.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -71,9 +65,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {}
-      },
       "completionRequirementOpt": {
         "amount": 2,
         "knowledgeType": "theory",
@@ -88,9 +79,6 @@
       "textTranslationKey": "research.primalmagick.concocting_philters.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {}
-      },
       "parentKey": {
         "rootKey": "primalmagick:concocting_philters"
       },
