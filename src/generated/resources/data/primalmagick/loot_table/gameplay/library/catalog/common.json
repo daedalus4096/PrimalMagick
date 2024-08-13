@@ -327,6 +327,18 @@
             }
           ],
           "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:tournament_flyer"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book"
         }
       ],
       "rolls": 1.0

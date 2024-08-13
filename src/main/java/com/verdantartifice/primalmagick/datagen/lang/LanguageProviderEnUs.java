@@ -1857,7 +1857,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.book(BooksPM.JOURNEYS_ARCH).name("Journeys: Arch").author("the poet Tyndarin")
             .text("I came to the great stone arch\\nand stood at its base, feeling small and uncertain.\\nTaller than any buildings shaped by my people’s hands,\\nit rose into the sky.\\nMy neck hurt from looking.\\nI wondered what creature might reach down and\\npluck us up by the arch’s handle.\\n\\nHow long had it taken for wind and water to wear the stone away?\\nThe river that bullied its way through it dried up long ago.\\nYet the stone still stands, changed but triumphant.\\n\\nI think of the things that have weathered me,\\nof old hurts that chipped away pieces of my soul,\\nbut I’m still here,\\nstill standing, too.")
             .build();
-        
+        this.book(BooksPM.TOURNAMENT_FLYER).name("Stone Skimmer Tournament").author("Unknown")
+            .text("Test Your Skill! Win Prizes!\\n\\nIt’s time for the annual Stone Skimmer Tournament! Stone-shapers from far and wide are invited to enter their creations in this year’s tournament. Shape your sleekest, coolest skimmer and test its speed against your competitors. Divisions include youth, amateur, apprentice, and expert. Prizes will be awarded in the following categories:\\n\\n-Fastest\\n-Carrying capacity\\n-Best maneuverability\\n-Best design\\n\\nWe’ll also have artists making designs from their skimmer wakes, with hourly balloon rides to view them from above (with special thanks to our Sky Culture friends!) Plenty of fun and games and food for the whole family. Mark your calendars!")
+            .build();
         
         // Generate spell vehicle localizations
         this.add("spells.primalmagick.vehicle.header", "Spell Type");
