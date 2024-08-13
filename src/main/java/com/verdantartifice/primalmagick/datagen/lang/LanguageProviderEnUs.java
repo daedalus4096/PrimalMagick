@@ -971,6 +971,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("written_language").sub("translated").sub("partial").output("Partially translated").end().build();
         this.tooltip("written_language").sub("times_studied").output("Times studied: %1$d").end().build();
         this.tooltip("written_language").sub("obfuscated_word").output("Your eyes seem to slide off this word, no matter how hard you try to focus.").end().build();
+        this.tooltip("written_language").sub("illegible_text").output("illegible").end().build();
+        this.tooltip("written_language").sub("illegible_hover").output("This text is illegible.").end().build();
         this.tooltip("codex").sub("full").output("Use to gain complete understanding of the %1$s language").end().build();
         this.tooltip("codex").sub("partial").output("Use to increase your understanding of the %1$s language").end().build();
         this.tooltip("scribe_table").sub("mode").sub("study_vocabulary").output("Study Vocabulary").end().build();
@@ -1951,7 +1953,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         this.book(BooksPM.SHELTER_FROM_THE_STORMS).name("Shelter from the Storms").author("Unknown")
             .foreword("A page torn from a flyer")
-            .text("If you're reading this, come find us. We've carved out a safe place to wait out the cataclysm, but the portal will only hold for so long. Take only what you need and find us at [illegible]. Tell your neighbors. Follow the beacons. We'll keep them lit and wait as long as we can. All is not lost, but you have to hurry.")
+            .text("If you're reading this, come find us. We've carved out a safe place to wait out the cataclysm, but the portal will only hold for so long. Take only what you need and find us at illegible. Tell your neighbors. Follow the beacons. We'll keep them lit and wait as long as we can. All is not lost, but you have to hurry.")
             .build();
         this.book(BooksPM.JOURNEYS_ANEW).name("Journeys: Anew").author("the poet Tyndarin")
             .text("I've been so long entrenched in darkness\nthat the light ought to sear my eyes.\nAnd yet it is gentle and clean and kind,\nenveloping me in warmth and love.\n\nBrighter than the sun,\nPurer than even the moon,\nIts source — its Source? — is everywhere.\nIt's within me. Within you.\n\nOh, my love, my loves, I hold my arms wide and wait for you.\nStep into my embrace. Let me hold you.\nI'm here now, whole and happy.\nCome sing with me, of love and hope and harmony.\n\nLet's begin anew.")

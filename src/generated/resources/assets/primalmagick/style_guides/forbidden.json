@@ -54,6 +54,19 @@
         "strikethrough": true
       },
       "translationKey": "source.primalmagick.hallowed"
+    },
+    {
+      "hoverTranslationKey": "tooltip.primalmagick.written_language.illegible_hover",
+      "style": {
+        "hoverEvent": {
+          "action": "show_text",
+          "contents": {
+            "translate": "tooltip.primalmagick.written_language.illegible_hover"
+          }
+        },
+        "obfuscated": true
+      },
+      "translationKey": "tooltip.primalmagick.written_language.illegible_text"
     }
   ]
 }

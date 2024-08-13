@@ -51,7 +51,11 @@ public class StyleGuideProvider implements DataProvider {
     }
     
     protected void registerStyleGuides(BiConsumer<ResourceLocation, StyleGuide> consumer) {
-        StyleGuide.builder(BookLanguagesPM.DEFAULT).save(consumer);     // No styling for default language
+        String illegibleKey = "tooltip.primalmagick.written_language.illegible_text";
+        
+        StyleGuide.builder(BookLanguagesPM.DEFAULT)
+                .entry(illegibleKey).setStyle(Style.EMPTY.withObfuscated(true)).hoverText("tooltip.primalmagick.written_language.illegible_hover").end()
+                .save(consumer);
         StyleGuide.builder(BookLanguagesPM.GALACTIC).save(consumer);    // No styling for galactic language
         StyleGuide.builder(BookLanguagesPM.ILLAGER).save(consumer);     // No styling for illager language
         StyleGuide.builder(BookLanguagesPM.BABELTONGUE).save(consumer); // No styling for babeltongue language
@@ -69,6 +73,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Sources.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.HALLOWED.getColor()).withObfuscated(true))
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
+                .entry(illegibleKey).setStyle(Style.EMPTY.withObfuscated(true)).hoverText("tooltip.primalmagick.written_language.illegible_hover").end()
                 .save(consumer);
         StyleGuide.builder(BookLanguagesPM.SEA)
                 .entry(Sources.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.EARTH.getColor())).end()
@@ -84,6 +89,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Sources.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.HALLOWED.getColor()).withObfuscated(true))
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
+                .entry(illegibleKey).setStyle(Style.EMPTY.withObfuscated(true)).hoverText("tooltip.primalmagick.written_language.illegible_hover").end()
                 .save(consumer);
         StyleGuide.builder(BookLanguagesPM.SKY)
                 .entry(Sources.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.EARTH.getColor())).end()
@@ -99,6 +105,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Sources.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.HALLOWED.getColor()).withObfuscated(true))
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
+                .entry(illegibleKey).setStyle(Style.EMPTY.withObfuscated(true)).hoverText("tooltip.primalmagick.written_language.illegible_hover").end()
                 .save(consumer);
         StyleGuide.builder(BookLanguagesPM.SUN)
                 .entry(Sources.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.EARTH.getColor())).end()
@@ -114,6 +121,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Sources.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.HALLOWED.getColor()).withObfuscated(true))
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
+                .entry(illegibleKey).setStyle(Style.EMPTY.withObfuscated(true)).hoverText("tooltip.primalmagick.written_language.illegible_hover").end()
                 .save(consumer);
         StyleGuide.builder(BookLanguagesPM.MOON)
                 .entry(Sources.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.EARTH.getColor())).end()
@@ -129,6 +137,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Sources.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.HALLOWED.getColor()).withObfuscated(true))
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
+                .entry(illegibleKey).setStyle(Style.EMPTY.withObfuscated(true)).hoverText("tooltip.primalmagick.written_language.illegible_hover").end()
                 .save(consumer);
         StyleGuide.builder(BookLanguagesPM.TRADE)
                 .entry(Sources.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.EARTH.getColor())).end()
@@ -144,6 +153,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Sources.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.HALLOWED.getColor()).withObfuscated(true))
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
+                .entry(illegibleKey).setStyle(Style.EMPTY.withObfuscated(true)).hoverText("tooltip.primalmagick.written_language.illegible_hover").end()
                 .save(consumer);
         StyleGuide.builder(BookLanguagesPM.FORBIDDEN)
                 .entry(Sources.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.EARTH.getColor())).end()
@@ -155,6 +165,7 @@ public class StyleGuideProvider implements DataProvider {
                 .entry(Sources.INFERNAL.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.INFERNAL.getColor())).end()
                 .entry(Sources.VOID.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.VOID.getColor())).end()
                 .entry(Sources.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.HALLOWED.getColor()).withStrikethrough(true)).end()
+                .entry(illegibleKey).setStyle(Style.EMPTY.withObfuscated(true)).hoverText("tooltip.primalmagick.written_language.illegible_hover").end()
                 .save(consumer);
         StyleGuide.builder(BookLanguagesPM.HALLOWED)
                 .entry(Sources.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.EARTH.getColor())).end()
@@ -166,6 +177,7 @@ public class StyleGuideProvider implements DataProvider {
                 .entry(Sources.INFERNAL.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.INFERNAL.getColor())).end()
                 .entry(Sources.VOID.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.VOID.getColor())).end()
                 .entry(Sources.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Sources.HALLOWED.getColor())).end()
+                .entry(illegibleKey).setStyle(Style.EMPTY.withObfuscated(true)).hoverText("tooltip.primalmagick.written_language.illegible_hover").end()
                 .save(consumer);
     }
     
