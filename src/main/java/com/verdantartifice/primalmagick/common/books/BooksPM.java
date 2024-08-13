@@ -40,6 +40,10 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> FIVE_CULTURES_SKY_PART_2 = create("five_cultures/sky_part_2");
     public static final ResourceKey<BookDefinition> FIVE_CULTURES_SKY_INNOVATIONS = create("five_cultures/sky_innovations");
     public static final ResourceKey<BookDefinition> FIVE_CULTURES_SKY_RELATIONS = create("five_cultures/sky_relations");
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_SUN_PART_1 = create("five_cultures/sun_part_1");
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_SUN_PART_2 = create("five_cultures/sun_part_2");
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_SUN_INNOVATIONS = create("five_cultures/sun_innovations");
+    public static final ResourceKey<BookDefinition> FIVE_CULTURES_SUN_RELATIONS = create("five_cultures/sun_relations");
     
     // TODO Register earth-themed vignette books
     // TODO Register sea-themed vignette books
@@ -74,6 +78,10 @@ public class BooksPM {
         register(context, BooksPM.FIVE_CULTURES_SKY_PART_2);
         register(context, BooksPM.FIVE_CULTURES_SKY_INNOVATIONS);
         register(context, BooksPM.FIVE_CULTURES_SKY_RELATIONS);
+        register(context, BooksPM.FIVE_CULTURES_SUN_PART_1);
+        register(context, BooksPM.FIVE_CULTURES_SUN_PART_2);
+        register(context, BooksPM.FIVE_CULTURES_SUN_INNOVATIONS);
+        register(context, BooksPM.FIVE_CULTURES_SUN_RELATIONS);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {

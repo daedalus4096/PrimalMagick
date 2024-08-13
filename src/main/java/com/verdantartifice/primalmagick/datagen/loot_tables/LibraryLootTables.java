@@ -168,6 +168,10 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(book(this.registries, BooksPM.FIVE_CULTURES_SKY_PART_2, Rarity.COMMON, 1))
                 .add(book(this.registries, BooksPM.FIVE_CULTURES_SKY_INNOVATIONS, Rarity.COMMON, 1))
                 .add(book(this.registries, BooksPM.FIVE_CULTURES_SKY_RELATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SUN_PART_1, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SUN_PART_2, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SUN_INNOVATIONS, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_SUN_RELATIONS, Rarity.COMMON, 1))
                 ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(commonPool));
         
