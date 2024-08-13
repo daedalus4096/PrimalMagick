@@ -27,6 +27,54 @@
             }
           ],
           "name": "primalmagick:static_book_uncommon"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:travel_diary/beyond"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book_uncommon"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:magickal_tome/something_momentous"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book_uncommon"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:delay"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book_uncommon"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:journeys/editors_note"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book_uncommon"
         }
       ],
       "rolls": 1.0

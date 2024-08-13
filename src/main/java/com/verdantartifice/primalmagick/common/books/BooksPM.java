@@ -87,7 +87,12 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> RECIPES_MUSHROOMS = create("recipes/mushrooms");
     public static final ResourceKey<BookDefinition> JOURNEYS_SHAPES = create("journeys/shapes");
 
-    // TODO Register forbidden-themed vignette books
+    // Register forbidden-themed vignette books
+    public static final ResourceKey<BookDefinition> TRAVEL_DIARY_BEYOND = create("travel_diary/beyond");
+    public static final ResourceKey<BookDefinition> MAGICKAL_TOME_SOMETHING_MOMENTOUS = create("magickal_tome/something_momentous");
+    public static final ResourceKey<BookDefinition> DELAY = create("delay");
+    public static final ResourceKey<BookDefinition> JOURNEYS_EDITORS_NOTE = create("journeys/editors_note");
+
     // TODO Register hallowed-themed vignette books
     
     public static ResourceKey<BookDefinition> create(String name) {
@@ -156,6 +161,11 @@ public class BooksPM {
         register(context, BooksPM.A_CURIOUS_EXCHANGE);
         register(context, BooksPM.RECIPES_MUSHROOMS);
         register(context, BooksPM.JOURNEYS_SHAPES);
+        
+        register(context, BooksPM.TRAVEL_DIARY_BEYOND);
+        register(context, BooksPM.MAGICKAL_TOME_SOMETHING_MOMENTOUS);
+        register(context, BooksPM.DELAY);
+        register(context, BooksPM.JOURNEYS_EDITORS_NOTE);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
