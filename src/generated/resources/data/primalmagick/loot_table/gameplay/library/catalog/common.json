@@ -447,6 +447,66 @@
             }
           ],
           "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:call_to_arms"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:travel_diary/elde"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:magickal_tome/near_death_experience"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:recipes/sun_tea"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:journeys/windows"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book"
         }
       ],
       "rolls": 1.0

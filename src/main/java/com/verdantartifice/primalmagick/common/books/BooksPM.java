@@ -73,7 +73,13 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> OUR_DIPLOMATIC_MISSION = create("our_diplomatic_mission");
     public static final ResourceKey<BookDefinition> JOURNEYS_MOTION = create("journeys/motion");
 
-    // TODO Register sun-themed vignette books
+    // Register sun-themed vignette books
+    public static final ResourceKey<BookDefinition> CALL_TO_ARMS = create("call_to_arms");
+    public static final ResourceKey<BookDefinition> TRAVEL_DIARY_ELDE = create("travel_diary/elde");
+    public static final ResourceKey<BookDefinition> MAGICKAL_TOME_NEAR_DEATH_EXPERIENCE = create("magickal_tome/near_death_experience");
+    public static final ResourceKey<BookDefinition> RECIPES_SUN_TEA = create("recipes/sun_tea");
+    public static final ResourceKey<BookDefinition> JOURNEYS_WINDOWS = create("journeys/windows");
+
     // TODO Register moon-themed vignette books
     // TODO Register forbidden-themed vignette books
     // TODO Register hallowed-themed vignette books
@@ -132,6 +138,12 @@ public class BooksPM {
         register(context, BooksPM.MAGICKAL_TOME_LIGHTNING_IN_MY_GRASP);
         register(context, BooksPM.OUR_DIPLOMATIC_MISSION);
         register(context, BooksPM.JOURNEYS_MOTION);
+        
+        register(context, BooksPM.CALL_TO_ARMS);
+        register(context, BooksPM.TRAVEL_DIARY_ELDE);
+        register(context, BooksPM.MAGICKAL_TOME_NEAR_DEATH_EXPERIENCE);
+        register(context, BooksPM.RECIPES_SUN_TEA);
+        register(context, BooksPM.JOURNEYS_WINDOWS);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
