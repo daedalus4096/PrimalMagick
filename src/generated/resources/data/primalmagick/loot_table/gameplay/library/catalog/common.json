@@ -9,18 +9,6 @@
           "functions": [
             {
               "components": {
-                "primalmagick:book_definition": "primalmagick:source_primer"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
                 "primalmagick:book_definition": "primalmagick:five_cultures/prelude"
               },
               "function": "minecraft:set_components"
@@ -46,18 +34,6 @@
             {
               "components": {
                 "primalmagick:book_definition": "primalmagick:five_cultures/earth_part_1"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
-                "primalmagick:book_definition": "primalmagick:five_cultures/earth_part_2"
               },
               "function": "minecraft:set_components"
             }
@@ -117,18 +93,6 @@
           "functions": [
             {
               "components": {
-                "primalmagick:book_definition": "primalmagick:five_cultures/sea_innovations"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
                 "primalmagick:book_definition": "primalmagick:five_cultures/sea_relations"
               },
               "function": "minecraft:set_components"
@@ -165,31 +129,7 @@
           "functions": [
             {
               "components": {
-                "primalmagick:book_definition": "primalmagick:five_cultures/sky_innovations"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
                 "primalmagick:book_definition": "primalmagick:five_cultures/sky_relations"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
-                "primalmagick:book_definition": "primalmagick:five_cultures/sun_part_1"
               },
               "function": "minecraft:set_components"
             }
@@ -273,30 +213,6 @@
           "functions": [
             {
               "components": {
-                "primalmagick:book_definition": "primalmagick:five_cultures/moon_relations"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
-                "primalmagick:book_definition": "primalmagick:magickal_tome/three_stones"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
                 "primalmagick:book_definition": "primalmagick:travel_diary/seven_pillars"
               },
               "function": "minecraft:set_components"
@@ -357,18 +273,6 @@
           "functions": [
             {
               "components": {
-                "primalmagick:book_definition": "primalmagick:magickal_tome/on_the_beach"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
                 "primalmagick:book_definition": "primalmagick:recipes/seaweed"
               },
               "function": "minecraft:set_components"
@@ -406,18 +310,6 @@
             {
               "components": {
                 "primalmagick:book_definition": "primalmagick:travel_diary/flying"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
-                "primalmagick:book_definition": "primalmagick:magickal_tome/lightning_in_my_grasp"
               },
               "function": "minecraft:set_components"
             }
@@ -477,18 +369,6 @@
           "functions": [
             {
               "components": {
-                "primalmagick:book_definition": "primalmagick:magickal_tome/near_death_experience"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
                 "primalmagick:book_definition": "primalmagick:recipes/sun_tea"
               },
               "function": "minecraft:set_components"
@@ -514,30 +394,6 @@
             {
               "components": {
                 "primalmagick:book_definition": "primalmagick:travel_diary/cusp"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
-                "primalmagick:book_definition": "primalmagick:magickal_tome/in_dreams"
-              },
-              "function": "minecraft:set_components"
-            }
-          ],
-          "name": "primalmagick:static_book"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
-                "primalmagick:book_definition": "primalmagick:a_curious_exchange"
               },
               "function": "minecraft:set_components"
             }

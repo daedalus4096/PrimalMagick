@@ -33,6 +33,18 @@
           "functions": [
             {
               "components": {
+                "primalmagick:book_definition": "primalmagick:a_curious_exchange"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book_rare"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
                 "primalmagick:book_definition": "primalmagick:magickal_tome/transgressions"
               },
               "function": "minecraft:set_components"
