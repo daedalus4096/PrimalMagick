@@ -181,13 +181,15 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         
         // Generate uncommon catalog loot table
         LootPool.Builder uncommonPool = LootPool.lootPool()
-                .add(book(this.registries, BooksPM.DREAM_JOURNAL, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_FORBIDDEN_MAGICK, Rarity.UNCOMMON, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_FORBIDDEN_INNOVATIONS, Rarity.UNCOMMON, 1))
                 ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_UNCOMMON, LootTable.lootTable().withPool(uncommonPool));
         
         // Generate rare catalog loot table
         LootPool.Builder rarePool = LootPool.lootPool()
-                .add(book(this.registries, BooksPM.TEST_BOOK, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_HEAVENLY_MAGICK, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.FIVE_CULTURES_HEAVENLY_INNOVATIONS, Rarity.RARE, 1))
                 ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(rarePool));
         

@@ -9,7 +9,19 @@
           "functions": [
             {
               "components": {
-                "primalmagick:book_definition": "primalmagick:dream_journal"
+                "primalmagick:book_definition": "primalmagick:five_cultures/forbidden_magick"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book_uncommon"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:five_cultures/forbidden_innovations"
               },
               "function": "minecraft:set_components"
             }

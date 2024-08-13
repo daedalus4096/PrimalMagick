@@ -9,7 +9,19 @@
           "functions": [
             {
               "components": {
-                "primalmagick:book_definition": "primalmagick:test"
+                "primalmagick:book_definition": "primalmagick:five_cultures/heavenly_magick"
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "primalmagick:static_book_rare"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "primalmagick:book_definition": "primalmagick:five_cultures/heavenly_innovations"
               },
               "function": "minecraft:set_components"
             }
