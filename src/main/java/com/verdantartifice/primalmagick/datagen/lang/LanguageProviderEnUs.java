@@ -1945,7 +1945,17 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.book(BooksPM.JOURNEYS_EDITORS_NOTE).name("Journeys: Editor's Note").author("the poet Tyndarin")
             .text("Editor’s note: Tyndarin stopped publishing poems for several years. Fragments of unfinished poems have been found, but for the most part she guarded her work during this period jealously and refused to share it with any but her closest companions. Letters from her friends have been reproduced in the appendix to this volume, and speak to the dark themes she was wrestling with, including those of death, hunger, emptiness, and rage.\\n\\nFor those who wish to know more about her life during this period, we recommend The Poet and the Pilgrim, by her friend and frequent companion Bayol the Traveler.")
             .build();
-        
+        this.book(BooksPM.MAGICKAL_TOME_TRANSGRESSIONS).name("Transgressions").author("Varemil the Magician")
+            .foreword("A page torn from a magickal tome")
+            .text("Ah, this book is nearly full, and fittingly so. I have the tools of my last and greatest ritual laid out before me, and soon I will begin. So much has happened to bring me to this point, mistakes and triumphs, actions that make me proud and those that fill me with shame. I’ve done much in pursuit of my craft — most of it good, but not all. We lose ourselves a little, I think, in search of knowledge. Of power.\\n\\nThere’s more. Always more. Always something else to discover, but nothing I write here can prepare those who follow after me. We must each deal with our own transgressions: The wrongs I’ve done will not resemble yours, and therefore I cannot tell you how to defeat what demon awaits you at the end. But be brave, stand fast in what you’ve learned, and you will triumph.\\n\\nPerhaps we’ll meet one day, and tell one another our tales. I wish you luck.")
+            .build();
+        this.book(BooksPM.SHELTER_FROM_THE_STORMS).name("Shelter from the Storms").author("Unknown")
+            .foreword("A page torn from a flyer")
+            .text("If you’re reading this, come find us. We’ve carved out a safe place to wait out the cataclysm, but the portal will only hold for so long. Take only what you need and find us at [illegible]. Tell your neighbors. Follow the beacons. We’ll keep them lit and wait as long as we can. All is not lost, but you have to hurry.")
+            .build();
+        this.book(BooksPM.JOURNEYS_ANEW).name("Journeys: Anew").author("the poet Tyndarin")
+            .text("I’ve been so long entrenched in darkness\\nthat the light ought to sear my eyes.\\nAnd yet it is gentle and clean and kind,\\nenveloping me in warmth and love.\\n\\nBrighter than the sun,\\nPurer than even the moon,\\nIts source — its Source? — is everywhere.\\nIt’s within me. Within you.\\n\\nOh, my love, my loves, I hold my arms wide and wait for you.\\nStep into my embrace. Let me hold you.\\nI’m here now, whole and happy.\\nCome sing with me, of love and hope and harmony.\\n\\nLet’s begin anew.")
+            .build();
         
         // Generate spell vehicle localizations
         this.add("spells.primalmagick.vehicle.header", "Spell Type");

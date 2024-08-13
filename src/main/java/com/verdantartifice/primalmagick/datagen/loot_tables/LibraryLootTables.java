@@ -218,6 +218,9 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         LootPool.Builder rarePool = LootPool.lootPool()
                 .add(book(this.registries, BooksPM.FIVE_CULTURES_HEAVENLY_MAGICK, Rarity.RARE, 1))
                 .add(book(this.registries, BooksPM.FIVE_CULTURES_HEAVENLY_INNOVATIONS, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_TRANSGRESSIONS, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.SHELTER_FROM_THE_STORMS, Rarity.RARE, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_ANEW, Rarity.RARE, 1))
                 ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(rarePool));
         

@@ -93,7 +93,10 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> DELAY = create("delay");
     public static final ResourceKey<BookDefinition> JOURNEYS_EDITORS_NOTE = create("journeys/editors_note");
 
-    // TODO Register hallowed-themed vignette books
+    // Register hallowed-themed vignette books
+    public static final ResourceKey<BookDefinition> MAGICKAL_TOME_TRANSGRESSIONS = create("magickal_tome/transgressions");
+    public static final ResourceKey<BookDefinition> SHELTER_FROM_THE_STORMS = create("shelter_from_the_storm");
+    public static final ResourceKey<BookDefinition> JOURNEYS_ANEW = create("journeys/anew");
     
     public static ResourceKey<BookDefinition> create(String name) {
         return ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource(name));
@@ -166,6 +169,10 @@ public class BooksPM {
         register(context, BooksPM.MAGICKAL_TOME_SOMETHING_MOMENTOUS);
         register(context, BooksPM.DELAY);
         register(context, BooksPM.JOURNEYS_EDITORS_NOTE);
+        
+        register(context, BooksPM.MAGICKAL_TOME_TRANSGRESSIONS);
+        register(context, BooksPM.SHELTER_FROM_THE_STORMS);
+        register(context, BooksPM.JOURNEYS_ANEW);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
