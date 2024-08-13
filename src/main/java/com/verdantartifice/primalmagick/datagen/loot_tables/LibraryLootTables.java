@@ -181,6 +181,11 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(book(this.registries, BooksPM.HELP, Rarity.COMMON, 1))
                 .add(book(this.registries, BooksPM.JOURNEYS_ARCH, Rarity.COMMON, 1))
                 .add(book(this.registries, BooksPM.TOURNAMENT_FLYER, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.AVAST, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.MAGICKAL_TOME_ON_THE_BEACH, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.RECIPES_SEAWEED, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.TRAVEL_DIARY_YERRAN, Rarity.COMMON, 1))
+                .add(book(this.registries, BooksPM.JOURNEYS_CURRENT, Rarity.COMMON, 1))
                 ;
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(commonPool));
         

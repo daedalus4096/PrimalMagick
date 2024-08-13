@@ -60,7 +60,13 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> JOURNEYS_ARCH = create("journeys/arch");
     public static final ResourceKey<BookDefinition> TOURNAMENT_FLYER = create("tournament_flyer");
     
-    // TODO Register sea-themed vignette books
+    // Register sea-themed vignette books
+    public static final ResourceKey<BookDefinition> AVAST = create("avast");
+    public static final ResourceKey<BookDefinition> MAGICKAL_TOME_ON_THE_BEACH = create("magickal_tome/on_the_beach");
+    public static final ResourceKey<BookDefinition> RECIPES_SEAWEED = create("recipes/seaweed");
+    public static final ResourceKey<BookDefinition> TRAVEL_DIARY_YERRAN = create("travel_diary/yerran");
+    public static final ResourceKey<BookDefinition> JOURNEYS_CURRENT = create("journeys/current");
+
     // TODO Register sky-themed vignette books
     // TODO Register sun-themed vignette books
     // TODO Register moon-themed vignette books
@@ -110,6 +116,12 @@ public class BooksPM {
         register(context, BooksPM.HELP);
         register(context, BooksPM.JOURNEYS_ARCH);
         register(context, BooksPM.TOURNAMENT_FLYER);
+        
+        register(context, BooksPM.AVAST);
+        register(context, BooksPM.MAGICKAL_TOME_ON_THE_BEACH);
+        register(context, BooksPM.RECIPES_SEAWEED);
+        register(context, BooksPM.TRAVEL_DIARY_YERRAN);
+        register(context, BooksPM.JOURNEYS_CURRENT);
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
