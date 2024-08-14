@@ -1,6 +1,6 @@
 v5.0.0-beta
 -----------
-* Updated to Minecraft 1.21
+* Updated to Minecraft 1.21.1
 * Added ancient libraries, for those seeking knowledge of the past
 * Added story advancements, because they're a great teaching tool
 * Replaced item craft count requirements for tier research with a new system: expertise
@@ -9,6 +9,7 @@ v5.0.0-beta
 * Decreased the rarity of the Spell Power enchantment at the Enchanting Table
 * Some rune enchantments (Lifesteal, Enderlock, and Guillotine) are now available at the Enchanting Table
 * The ward shield bar now renders on top of the health bar, instead of above the armor bar
+* Essence Furnaces can now be transformed from any block in the forge:furnaces block tag, instead of just the vanilla Furnace
 
 v4.2.0-beta
 -----------
