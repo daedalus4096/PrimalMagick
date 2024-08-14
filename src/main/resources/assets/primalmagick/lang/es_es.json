@@ -2682,7 +2682,7 @@
   "stat.primalmagick.expertise_ritual": "Ritual Magick expertise",
   "stat.primalmagick.expertise_ritual.hint": "Ritual Magick expertise is gained by crafting most ritual magick recipes at an Arcane Workbench or at a Ritual Altar, with a bonus given for the first craft of a given recipe",
   "stat.primalmagick.expertise_runeworking": "Runeworking expertise",
-  "stat.primalmagick.expertise_runeworking.hint": "Runeworking expertise is gained by crafting most runeworking recipes at an Arcane Workbench or at a Runecarving Table, with a bonus given for the first craft of a given recipe",
+  "stat.primalmagick.expertise_runeworking.hint": "Runeworking expertise is gained by crafting most runeworking recipes or by runescribing items, with a bonus given for the first craft of a recipe or runescribe of an enchantment",
   "stat.primalmagick.expertise_sorcery": "Sorcery expertise",
   "stat.primalmagick.expertise_sorcery.hint": "Sorcery expertise is gained by casting spells from a scroll or wand, with more expensive spells yielding more expertise",
   "stat.primalmagick.grimoire_read": "Times Grimoire consulted",
