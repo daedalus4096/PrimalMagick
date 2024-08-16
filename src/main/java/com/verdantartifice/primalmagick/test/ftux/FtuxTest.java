@@ -25,7 +25,9 @@ import net.minecraft.gametest.framework.GameTestGenerator;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -68,10 +70,7 @@ public class FtuxTest {
     @GameTest(template = "primalmagick:test/floor5x5x5", timeoutTicks = 150)
     public static void sleepingAfterShrineGrantsDream(GameTestHelper helper) {
         // Create a player who's found a shrine and is primed for the dream, but hasn't had it yet
-        @SuppressWarnings("removal")
-        ServerPlayer player = helper.makeMockServerPlayerInLevel();
-        BlockPos playerPos = new BlockPos(0, 2, 0);
-        player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(playerPos)));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE), "Failed to grant prerequisite research");
         helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Created player already marked as having had the dream");
         helper.assertTrue(player.getInventory().isEmpty(), "Fresh player inventory is not empty");
@@ -93,7 +92,6 @@ public class FtuxTest {
                         StaticBookItem.getBookLanguageId(stack).filter(id -> BookLanguagesPM.DEFAULT.equals(id)).isPresent() &&
                         StaticBookItem.getAuthor(stack).equals(player.getName());
             }), "Dream Journal components are not a match to expected");
-            helper.getLevel().getServer().getPlayerList().remove(player);
         });
     }
 }
