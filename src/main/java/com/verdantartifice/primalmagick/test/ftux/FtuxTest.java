@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.test.ftux;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -29,7 +27,6 @@ public class FtuxTest {
     
     @GameTestGenerator
     public static Collection<TestFunction> fontDiscoveryTests() {
-        List<TestFunction> retVal = new ArrayList<>();
         Map<String, Block> testParams = ImmutableMap.<String, Block>builder()
                 .put("earth", BlocksPM.ANCIENT_FONT_EARTH.get())
                 .put("sea", BlocksPM.ANCIENT_FONT_SEA.get())
@@ -37,24 +34,21 @@ public class FtuxTest {
                 .put("sun", BlocksPM.ANCIENT_FONT_SUN.get())
                 .put("moon", BlocksPM.ANCIENT_FONT_MOON.get())
                 .build();
-        testParams.forEach((name, block) -> {
-            retVal.add(TestUtils.createTestFunction("fontDiscoveryTests", name, helper -> {
-                @SuppressWarnings("removal")
-                Player player = helper.makeMockServerPlayerInLevel();
-                player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO)));
-                helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research already present on new player");
+        return TestUtils.createParameterizedTestFunctions("fontDiscoveryTests", testParams, (helper, block) -> {
+            @SuppressWarnings("removal")
+            Player player = helper.makeMockServerPlayerInLevel();
+            player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO)));
+            helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research already present on new player");
 
-                BlockPos fontPos = new BlockPos(1, 0, 1);
-                helper.setBlock(fontPos, block);
-                helper.assertBlockState(fontPos, state -> {
-                    return state.is(block);
-                }, () -> "Test font not found!");
-                
-                helper.succeedWhen(() -> {
-                    helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research not complete");
-                });
-            }));
+            BlockPos fontPos = new BlockPos(1, 0, 1);
+            helper.setBlock(fontPos, block);
+            helper.assertBlockState(fontPos, state -> {
+                return state.is(block);
+            }, () -> "Test font not found!");
+            
+            helper.succeedWhen(() -> {
+                helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research not complete");
+            });
         });
-        return retVal;
     }
 }
