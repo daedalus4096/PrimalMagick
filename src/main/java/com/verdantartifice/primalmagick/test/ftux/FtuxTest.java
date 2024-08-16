@@ -9,14 +9,18 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.test.TestUtils;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestGenerator;
+import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -35,20 +39,50 @@ public class FtuxTest {
                 .put("moon", BlocksPM.ANCIENT_FONT_MOON.get())
                 .build();
         return TestUtils.createParameterizedTestFunctions("fontDiscoveryTests", testParams, (helper, block) -> {
+            // Create a player in the level and confirm that they start out not having found a shrine
             @SuppressWarnings("removal")
-            Player player = helper.makeMockServerPlayerInLevel();
+            ServerPlayer player = helper.makeMockServerPlayerInLevel();
             player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO)));
             helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research already present on new player");
 
-            BlockPos fontPos = new BlockPos(1, 0, 1);
+            // Place an ancient font near the player
+            BlockPos fontPos = new BlockPos(1, 1, 1);
             helper.setBlock(fontPos, block);
             helper.assertBlockState(fontPos, state -> {
                 return state.is(block);
             }, () -> "Test font not found!");
             
+            // Succeed once the player has been marked as having found a shrine
             helper.succeedWhen(() -> {
                 helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research not complete");
+                helper.getLevel().getServer().getPlayerList().remove(player);
             });
+        });
+    }
+    
+    @GameTest(template = "primalmagick:test/floor5x5x5", timeoutTicks = 150)
+    public static void sleepingAfterShrineGrantsDream(GameTestHelper helper) {
+        // Create a player who's found a shrine and is primed for the dream, but hasn't had it yet
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        BlockPos playerPos = new BlockPos(0, 2, 0);
+        player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(playerPos)));
+        helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE), "Failed to grant prerequisite research");
+        helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Created player already marked as having had the dream");
+        helper.assertTrue(player.getInventory().isEmpty(), "Fresh player inventory is not empty");
+        
+        // Place a bed and sleep in it
+        BlockPos bedPos = new BlockPos(2, 2, 2);
+        TestUtils.placeBed(helper, bedPos);
+        helper.setNight();
+        player.startSleepInBed(helper.absolutePos(bedPos));
+        player.stopSleeping();
+        
+        // Succeed once the player has been marked as having had the dream
+        helper.succeedWhen(() -> {
+            helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Got Dream research not complete");
+            helper.assertTrue(InventoryUtils.isPlayerCarrying(player, ItemsPM.STATIC_BOOK.get()), "No Dream Journal found in player inventory");
+            helper.getLevel().getServer().getPlayerList().remove(player);
         });
     }
 }

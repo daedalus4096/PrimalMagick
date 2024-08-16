@@ -9,9 +9,14 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.StructureUtils;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraftforge.gametest.GameTestHolder;
 
 public class TestUtils {
@@ -138,5 +143,12 @@ public class TestUtils {
             }));
         });
         return retVal;
+    }
+    
+    public static void placeBed(GameTestHelper helper, BlockPos bedPos) {
+        helper.setBlock(bedPos, Blocks.BLUE_BED);
+        BlockState footState = helper.getBlockState(bedPos);
+        BlockPos headPos = bedPos.relative(footState.getValue(BedBlock.FACING));
+        helper.setBlock(headPos, footState.setValue(BedBlock.PART, BedPart.HEAD));
     }
 }
