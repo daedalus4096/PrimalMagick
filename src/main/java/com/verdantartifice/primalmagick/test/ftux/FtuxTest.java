@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -26,10 +27,14 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.crafting.SimpleCraftingContainer;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(PrimalMagick.MODID)
@@ -92,6 +97,28 @@ public class FtuxTest {
                         StaticBookItem.getBookLanguageId(stack).filter(id -> BookLanguagesPM.DEFAULT.equals(id)).isPresent() &&
                         StaticBookItem.getAuthor(stack).equals(player.getName());
             }), "Dream Journal components are not a match to expected");
+        });
+    }
+    
+    @GameTestGenerator
+    public static Collection<TestFunction> mundaneWandCraftingTests() {
+        Map<String, Item> testParams = ImmutableMap.<String, Item>builder()
+                .put("earth", ItemsPM.ESSENCE_DUST_EARTH.get())
+                .put("sea", ItemsPM.ESSENCE_DUST_SEA.get())
+                .put("sky", ItemsPM.ESSENCE_DUST_SKY.get())
+                .put("sun", ItemsPM.ESSENCE_DUST_SUN.get())
+                .put("moon", ItemsPM.ESSENCE_DUST_MOON.get())
+                .build();
+        return TestUtils.createParameterizedTestFunctions("mundaneWandCraftingTests", testParams, (helper, dust) -> {
+            var container = SimpleCraftingContainer.builder()
+                    .pattern("SD ")
+                    .define('S', Items.STICK)
+                    .define('D', dust)
+                    .build();
+            var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, container, helper.getLevel());
+            helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
+            helper.assertTrue(recipe.get().value().getResultItem(helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
+            helper.succeed();
         });
     }
 }
