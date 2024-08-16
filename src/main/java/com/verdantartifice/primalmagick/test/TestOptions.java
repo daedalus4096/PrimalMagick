@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.test;
 
 public record TestOptions(int timeoutTicks, String batch, boolean skyAccess, int rotationSteps, boolean required, boolean manualOnly, String template, long setupTicks, int attempts, int requiredSuccesses) {
-    public static final TestOptions DEFAULT = new TestOptions(100, "defaultBatch", false, 0, true, false, "", 0L, 1, 1);
+    public static final TestOptions DEFAULT = new TestOptions(100, TestUtils.DEFAULT_BATCH, false, 0, true, false, TestUtils.DEFAULT_TEMPLATE, 0L, 1, 1);
     
     public static Builder builder() {
         return new Builder();

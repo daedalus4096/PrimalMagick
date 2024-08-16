@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.test.TestUtils;
 
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -18,7 +19,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 public class ResearchTest {
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    @GameTest(template = "primalmagick:test/empty3x3x3")
+    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void researchGrantWorks(GameTestHelper helper) {
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         

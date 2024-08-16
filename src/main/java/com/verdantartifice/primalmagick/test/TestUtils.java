@@ -1,30 +1,81 @@
 package com.verdantartifice.primalmagick.test;
 
-import java.util.Locale;
 import java.util.function.Consumer;
 
-import org.apache.logging.log4j.LogManager;
+import javax.annotation.Nullable;
 
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.StructureUtils;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraftforge.gametest.GameTestHolder;
 
 public class TestUtils {
-    public static String getCurrentMethodName() {
-        return StackWalker.getInstance().walk(s -> s.skip(1).findFirst()).map(f -> f.getMethodName()).orElse(null);
+    public static final String DEFAULT_BATCH = "defaultBatch";
+    public static final String DEFAULT_TEMPLATE = "primalmagick:test/empty3x3x3";
+    
+    @Nullable
+    private static String findPrefix() {
+        String callerClassName = StackWalker.getInstance().walk(s -> s.skip(2).findFirst()).map(f -> f.getClassName()).orElse(null);
+        if (callerClassName != null) {
+            try {
+                Class<?> callerClass = Class.forName(callerClassName);
+                GameTestHolder holder = callerClass.getAnnotation(GameTestHolder.class);
+                if (holder != null && !holder.value().isEmpty()) {
+                    return holder.value();
+                }
+            } catch (ClassNotFoundException e) {
+                return null;
+            }
+        }
+        return null;
     }
     
-    public static String getCallerMethodName() {
-        return StackWalker.getInstance().walk(s -> s.skip(2).findFirst()).map(f -> f.getMethodName()).orElse(null);
+    private static String makeName(@Nullable String prefix, String group, String suffix) {
+        return (prefix == null) ? String.join(".", group, suffix) : String.join(".", prefix, group, suffix);
     }
     
-    public static TestFunction createNestedTestFunction(String nameSuffix, TestOptions options, Consumer<GameTestHelper> consumer) {
-//        String callerName = getCallerMethodName();
-        String callerName = "generated";
-        String finalName = (callerName == null ? nameSuffix : String.join(".", callerName, nameSuffix)).toLowerCase(Locale.ENGLISH);
-        LogManager.getLogger().debug("Creating nested test function with name: {}", finalName);
+    private static String makeBatch(@Nullable String prefix, String batchName) {
+        if (DEFAULT_BATCH.equals(batchName)) {
+            return (prefix == null) ? batchName : prefix;
+        } else {
+            return (prefix == null) ? batchName : String.join(".", prefix, batchName);
+        }
+    }
+    
+    /**
+     * Transforms the given consumer into a TestFunction that can be run via the Minecraft game test framework with
+     * default options. <strong>This method is expected to be run from a class registered via the GameTestHolder 
+     * annotation, rather than through the RegisterGameTestsEvent event. It will behave unpredictably otherwise.</strong>
+     * 
+     * @param generatedGroupName the method name of the calling test generator; used to compose the generated test name
+     * @param nameSuffix the unique suffix to be appended to the name of the generated test
+     * @param consumer the consumer to be transformed into a test function
+     * @return the final TestFunction to be run in the Minecraft game test framework
+     */
+    public static TestFunction createTestFunction(String generatedGroupName, String nameSuffix, Consumer<GameTestHelper> consumer) {
+        return createTestFunctionInner(findPrefix(), generatedGroupName, nameSuffix, TestOptions.DEFAULT, consumer);
+    }
+    
+    /**
+     * Transforms the given consumer into a TestFunction that can be run via the Minecraft game test framework.
+     * <strong>This method is expected to be run from a class registered via the GameTestHolder annotation, rather
+     * than through the RegisterGameTestsEvent event. It will behave unpredictably otherwise.</strong>
+     * 
+     * @param generatedGroupName the method name of the calling test generator; used to compose the generated test name
+     * @param nameSuffix the unique suffix to be appended to the name of the generated test
+     * @param options any options to be applied to the generated test; see the GameTest annotation for details
+     * @param consumer the consumer to be transformed into a test function
+     * @return the final TestFunction to be run in the Minecraft game test framework
+     */
+    public static TestFunction createTestFunction(String generatedGroupName, String nameSuffix, TestOptions options, Consumer<GameTestHelper> consumer) {
+        return createTestFunctionInner(findPrefix(), generatedGroupName, nameSuffix, options, consumer);
+    }
+    
+    private static TestFunction createTestFunctionInner(String prefix, String generatedGroupName, String nameSuffix, TestOptions options, Consumer<GameTestHelper> consumer) {
+        String finalName = makeName(prefix, generatedGroupName, nameSuffix);
+        String batch = makeBatch(prefix, options.batch());
         return new TestFunction(
-            options.batch(),
+            batch,
             finalName,
             options.template(),
             StructureUtils.getRotationForRotationSteps(options.rotationSteps()),
