@@ -9,18 +9,24 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.test.TestUtils;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestGenerator;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -78,10 +84,16 @@ public class FtuxTest {
         player.startSleepInBed(helper.absolutePos(bedPos));
         player.stopSleeping();
         
-        // Succeed once the player has been marked as having had the dream
+        // Succeed once the player has been marked as having had the dream and received the dream journal
         helper.succeedWhen(() -> {
             helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Got Dream research not complete");
-            helper.assertTrue(InventoryUtils.isPlayerCarrying(player, ItemsPM.STATIC_BOOK.get()), "No Dream Journal found in player inventory");
+            NonNullList<ItemStack> stacks = InventoryUtils.find(player, ItemTagsPM.STATIC_BOOKS);
+            helper.assertTrue(stacks.size() == 1, "No potential Dream Journals found");
+            helper.assertTrue(stacks.stream().anyMatch(stack -> {
+                return StaticBookItem.getBookId(stack).filter(id -> BooksPM.DREAM_JOURNAL.equals(id)).isPresent() &&
+                        StaticBookItem.getBookLanguageId(stack).filter(id -> BookLanguagesPM.DEFAULT.equals(id)).isPresent() &&
+                        StaticBookItem.getAuthor(stack).equals(player.getName());
+            }), "Dream Journal components are not a match to expected");
             helper.getLevel().getServer().getPlayerList().remove(player);
         });
     }
