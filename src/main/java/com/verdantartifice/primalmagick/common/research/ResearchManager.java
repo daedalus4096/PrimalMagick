@@ -315,6 +315,10 @@ public class ResearchManager {
         return true;
     }
     
+    public static boolean progressResearch(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+        return progressResearch(player, new ResearchEntryKey(rawKey));
+    }
+    
     public static boolean progressResearch(@Nullable Player player, @Nullable ResearchEntryKey key) {
         // Progress the given research to its next stage and sync to the player's client
         return progressResearch(player, key, true);

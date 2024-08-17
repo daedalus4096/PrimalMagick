@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.test.TestUtils;
 
 import net.minecraft.gametest.framework.GameTest;
@@ -26,7 +25,7 @@ public class ResearchTest {
         helper.assertFalse(ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research already started on new player");
         helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS), "Test research already complete on new player");
         
-        helper.assertTrue(ResearchManager.progressResearch(player, new ResearchEntryKey(ResearchEntries.FIRST_STEPS)), "Failed to progress test research");
+        helper.assertTrue(ResearchManager.progressResearch(player, ResearchEntries.FIRST_STEPS), "Failed to progress test research");
         
         helper.assertTrue(ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research not started after progressing");
         helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS), "Test research completed after only progressing");
