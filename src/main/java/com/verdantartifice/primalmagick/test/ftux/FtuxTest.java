@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.test.ftux;
 import java.util.Collection;
 import java.util.Map;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,19 +21,25 @@ import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.test.TestUtils;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestGenerator;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.crafting.SimpleCraftingContainer;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -119,6 +126,40 @@ public class FtuxTest {
             helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
             helper.assertTrue(recipe.get().value().getResultItem(helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
             helper.succeed();
+        });
+    }
+    
+    // FIXME 8-16-2024: This test currently crashes the game test server due to an NPE in Forge's PacketDistributor when 
+    // sending the "poof" packet to nearby clients. Re-enable once fixed.
+    //@GameTest(template = TestUtils.DEFAULT_TEMPLATE)
+    public static void transformGrimoire(GameTestHelper helper) {
+        // Create a player who has started but not completed First Steps
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
+        
+        // Put a mundane wand in that player's main hand
+        ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
+        Item wandItem = wandStack.getItem();
+        player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
+        
+        // Place a crafting table
+        BlockPos pos = new BlockPos(1, 1, 1);
+        helper.setBlock(pos, Blocks.BOOKSHELF);
+        helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
+        helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+        
+        // Start transforming the table
+        BlockPos posAbs = helper.absolutePos(pos);
+        BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
+        UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
+        helper.assertTrue(wandItem.onItemUseFirst(wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        
+        // Continue channeling the wand until the transformation succeeds or the test times out and fails
+        MutableInt remainingTicks = new MutableInt(wandItem.getUseDuration(wandStack, player));
+        helper.succeedWhen(() -> {
+            wandItem.onUseTick(helper.getLevel(), player, wandStack, remainingTicks.decrementAndGet());
+            helper.assertBlockNotPresent(Blocks.BOOKSHELF, pos);
+            helper.assertItemEntityPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
         });
     }
 }
