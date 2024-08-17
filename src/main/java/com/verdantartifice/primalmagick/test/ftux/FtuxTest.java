@@ -129,11 +129,42 @@ public class FtuxTest {
         });
     }
     
+    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
+    public static void transformAbortGivesHint(GameTestHelper helper) {
+        // Create a player who has gotten the dream
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
+        helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Newly created player already has sought research");
+        
+        // Put a mundane wand in that player's main hand
+        ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
+        Item wandItem = wandStack.getItem();
+        player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
+        
+        // Place a crafting table
+        BlockPos pos = new BlockPos(1, 1, 1);
+        helper.setBlock(pos, Blocks.BOOKSHELF);
+        helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
+        helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+        
+        // Start transforming the table
+        BlockPos posAbs = helper.absolutePos(pos);
+        BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
+        UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
+        helper.assertTrue(wandItem.onItemUseFirst(wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        
+        // Immediately stop transforming and check for hint flag research
+        int remainingTicks = wandItem.getUseDuration(wandStack, player);
+        wandItem.releaseUsing(wandStack, helper.getLevel(), player, remainingTicks);
+        helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Sought research not found");
+        helper.succeed();
+    }
+    
     // FIXME 8-16-2024: This test currently crashes the game test server due to an NPE in Forge's PacketDistributor when 
     // sending the "poof" packet to nearby clients. Re-enable once fixed.
     //@GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void transformGrimoire(GameTestHelper helper) {
-        // Create a player who has started but not completed First Steps
+        // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
         
