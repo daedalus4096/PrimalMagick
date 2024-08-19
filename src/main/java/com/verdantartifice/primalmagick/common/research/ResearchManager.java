@@ -203,6 +203,10 @@ public class ResearchManager {
         return retVal;
     }
     
+    public static void forceGrantWithAllParents(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+        forceGrantWithAllParents(player, new ResearchEntryKey(rawKey));
+    }
+    
     public static void forceGrantWithAllParents(@Nullable Player player, @Nullable ResearchEntryKey key) {
         if (player != null && key != null) {
             RegistryAccess registryAccess = player.level().registryAccess();
