@@ -266,6 +266,10 @@ public class ResearchManager {
         }
     }
     
+    public static void forceRevokeWithAllChildren(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+        forceRevokeWithAllChildren(player, new ResearchEntryKey(rawKey));
+    }
+    
     public static void forceRevokeWithAllChildren(@Nullable Player player, @Nullable ResearchEntryKey key) {
         if (player != null && key != null) {
             RegistryAccess registryAccess = player.level().registryAccess();

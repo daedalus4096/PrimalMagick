@@ -8,10 +8,13 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ExpertiseRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ItemStackRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ItemTagRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.KnowledgeRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.OrRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.QuorumRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.VanillaCustomStatRequirement;
@@ -116,6 +119,76 @@ public class ResearchRequirementsTest {
         var req = new VanillaCustomStatRequirement(Stats.JUMP, 1, null);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
         player.jumpFromGround();
+        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        helper.succeed();
+    }
+
+    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
+    public static void and_requirement(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        var req = new AndRequirement(
+                new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS)),
+                new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5),
+                new ItemStackRequirement(new ItemStack(Items.IRON_INGOT))
+            );
+        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        
+        // Grant the first sub-requirement and re-test
+        ResearchManager.forceGrantWithAllParents(player, ResearchEntries.FIRST_STEPS);
+        helper.assertFalse(req.isMetBy(player), "Partial expectation 1 failed");
+        
+        // Grant the second sub-requirement and re-test
+        player.getInventory().add(new ItemStack(Items.IRON_INGOT));
+        helper.assertFalse(req.isMetBy(player), "Partial expectation 2 failed");
+        
+        // Grant the third sub-requirement and re-test
+        ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, 5 * KnowledgeType.OBSERVATION.getProgression());
+        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        helper.succeed();
+    }
+
+    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
+    public static void or_requirement(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        var req = new OrRequirement(
+                new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS)),
+                new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5),
+                new ItemStackRequirement(new ItemStack(Items.IRON_INGOT))
+            );
+        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        
+        // Grant the first sub-requirement and re-test
+        ResearchManager.forceGrantWithAllParents(player, ResearchEntries.FIRST_STEPS);
+        helper.assertTrue(req.isMetBy(player), "Partial expectation 1 failed");
+        
+        // Reset, grant the second sub-requirement, and re-test
+        ResearchManager.forceRevokeWithAllChildren(player, ResearchEntries.FIRST_STEPS);
+        player.getInventory().add(new ItemStack(Items.IRON_INGOT));
+        helper.assertTrue(req.isMetBy(player), "Partial expectation 2 failed");
+        
+        // Reset, grant the third sub-requirement, and re-test
+        player.getInventory().clearContent();
+        ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, 5 * KnowledgeType.OBSERVATION.getProgression());
+        helper.assertTrue(req.isMetBy(player), "Partial expectation 3 failed");
+        helper.succeed();
+    }
+
+    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
+    public static void quorum_requirement(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        var req = new QuorumRequirement(2,
+                new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS)),
+                new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5),
+                new ItemStackRequirement(new ItemStack(Items.IRON_INGOT))
+            );
+        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        
+        // Grant the first sub-requirement and re-test
+        ResearchManager.forceGrantWithAllParents(player, ResearchEntries.FIRST_STEPS);
+        helper.assertFalse(req.isMetBy(player), "Partial expectation 1 failed");
+        
+        // Grant the second sub-requirement and re-test
+        player.getInventory().add(new ItemStack(Items.IRON_INGOT));
         helper.assertTrue(req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
