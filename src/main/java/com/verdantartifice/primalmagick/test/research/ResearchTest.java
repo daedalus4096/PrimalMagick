@@ -14,12 +14,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder(PrimalMagick.MODID)
+@GameTestHolder(PrimalMagick.MODID + ".research")
 public class ResearchTest {
     protected static final Logger LOGGER = LogManager.getLogger();
     
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void researchGrantWorks(GameTestHelper helper) {
+    public static void research_grant_works(GameTestHelper helper) {
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         
         helper.assertFalse(ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research already started on new player");

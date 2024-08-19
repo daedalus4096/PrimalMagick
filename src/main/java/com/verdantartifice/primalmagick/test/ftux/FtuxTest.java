@@ -44,12 +44,12 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.crafting.SimpleCraftingContainer;
 import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder(PrimalMagick.MODID)
+@GameTestHolder(PrimalMagick.MODID + ".ftux")
 public class FtuxTest {
     protected static final Logger LOGGER = LogManager.getLogger();
     
     @GameTestGenerator
-    public static Collection<TestFunction> fontDiscoveryTests() {
+    public static Collection<TestFunction> font_discovery_tests() {
         Map<String, Block> testParams = ImmutableMap.<String, Block>builder()
                 .put("earth", BlocksPM.ANCIENT_FONT_EARTH.get())
                 .put("sea", BlocksPM.ANCIENT_FONT_SEA.get())
@@ -57,7 +57,7 @@ public class FtuxTest {
                 .put("sun", BlocksPM.ANCIENT_FONT_SUN.get())
                 .put("moon", BlocksPM.ANCIENT_FONT_MOON.get())
                 .build();
-        return TestUtils.createParameterizedTestFunctions("fontDiscoveryTests", testParams, (helper, block) -> {
+        return TestUtils.createParameterizedTestFunctions("font_discovery_tests", testParams, (helper, block) -> {
             // Create a player in the level and confirm that they start out not having found a shrine
             @SuppressWarnings("removal")
             ServerPlayer player = helper.makeMockServerPlayerInLevel();
@@ -80,7 +80,7 @@ public class FtuxTest {
     }
     
     @GameTest(template = "primalmagick:test/floor5x5x5", timeoutTicks = 150)
-    public static void sleepingAfterShrineGrantsDream(GameTestHelper helper) {
+    public static void sleeping_after_shrine_grants_dream(GameTestHelper helper) {
         // Create a player who's found a shrine and is primed for the dream, but hasn't had it yet
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE), "Failed to grant prerequisite research");
@@ -108,7 +108,7 @@ public class FtuxTest {
     }
     
     @GameTestGenerator
-    public static Collection<TestFunction> mundaneWandCraftingTests() {
+    public static Collection<TestFunction> mundane_wand_crafting_tests() {
         Map<String, Item> testParams = ImmutableMap.<String, Item>builder()
                 .put("earth", ItemsPM.ESSENCE_DUST_EARTH.get())
                 .put("sea", ItemsPM.ESSENCE_DUST_SEA.get())
@@ -116,7 +116,7 @@ public class FtuxTest {
                 .put("sun", ItemsPM.ESSENCE_DUST_SUN.get())
                 .put("moon", ItemsPM.ESSENCE_DUST_MOON.get())
                 .build();
-        return TestUtils.createParameterizedTestFunctions("mundaneWandCraftingTests", testParams, (helper, dust) -> {
+        return TestUtils.createParameterizedTestFunctions("mundane_wand_crafting_tests", testParams, (helper, dust) -> {
             var container = SimpleCraftingContainer.builder()
                     .pattern("SD ")
                     .define('S', Items.STICK)
@@ -130,7 +130,7 @@ public class FtuxTest {
     }
     
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void transformAbortGivesHint(GameTestHelper helper) {
+    public static void transform_abort_gives_hint(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
@@ -163,7 +163,7 @@ public class FtuxTest {
     // FIXME 8-16-2024: This test currently crashes the game test server due to an NPE in Forge's PacketDistributor when 
     // sending the "poof" packet to nearby clients. Re-enable once fixed.
     //@GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void transformGrimoire(GameTestHelper helper) {
+    public static void transform_grimoire(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
@@ -187,8 +187,10 @@ public class FtuxTest {
         
         // Continue channeling the wand until the transformation succeeds or the test times out and fails
         MutableInt remainingTicks = new MutableInt(wandItem.getUseDuration(wandStack, player));
-        helper.succeedWhen(() -> {
+        helper.onEachTick(() -> {
             wandItem.onUseTick(helper.getLevel(), player, wandStack, remainingTicks.decrementAndGet());
+        });
+        helper.succeedWhen(() -> {
             helper.assertBlockNotPresent(Blocks.BOOKSHELF, pos);
             helper.assertItemEntityPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
         });
