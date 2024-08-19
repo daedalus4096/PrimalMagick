@@ -45,4 +45,29 @@ public class CraftingRequirementsTest {
         helper.assertTrue(reqOpt.get().isMetBy(player), "Player does not meet requirement after being granted required research");
         helper.succeed();
     }
+    
+    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
+    public static void ritual_recipe(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        
+        // Get the Manafruit recipe from the recipe manager
+        var container = SimpleCraftingContainer.builder()
+                .pattern("AHM")
+                .define('A', Items.APPLE)
+                .define('H', Items.HONEY_BOTTLE)
+                .define('M', ItemsPM.MANA_SALTS.get())
+                .build();
+        var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), container, helper.getLevel());
+        helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
+        
+        // Confirm that it has a requirement which the mock player does not yet meet
+        var reqOpt = recipe.get().value().getRequirement();
+        helper.assertTrue(reqOpt.isPresent(), "Recipe requirement not found when expected");
+        helper.assertFalse(reqOpt.get().isMetBy(player), "Player meets requirement without research");
+        
+        // Grant the required research and confirm that the requirement is then met
+        ResearchManager.forceGrantWithAllParents(player, ResearchEntries.MANAFRUIT);
+        helper.assertTrue(reqOpt.get().isMetBy(player), "Player does not meet requirement after being granted required research");
+        helper.succeed();
+    }
 }
