@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.ItemTagRequ
 import com.verdantartifice.primalmagick.common.research.requirements.KnowledgeRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.VanillaCustomStatRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.VanillaItemUsedStatRequirement;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -21,15 +22,13 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.test.TestUtils;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -107,6 +106,16 @@ public class ResearchRequirementsTest {
         player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(pos)));
         var stack = new ItemStack(Items.SNOWBALL);
         stack.use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        helper.succeed();
+    }
+
+    @GameTest(template = "primalmagick:test/floor5x5x5")
+    public static void vanilla_custom_stat_requirement(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayer(); // Vanilla stats require an explicit client or server player
+        var req = new VanillaCustomStatRequirement(Stats.JUMP, 1, null);
+        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        player.jumpFromGround();
         helper.assertTrue(req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
