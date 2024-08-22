@@ -110,12 +110,14 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
 
             @Override
             protected void checkTakeAchievements(ItemStack stack) {
-                super.checkTakeAchievements(stack);
-                RecipeHolder<?> recipeUsed = RunecarvingTableMenu.this.outputInventory.getRecipeUsed();
-                if (recipeUsed != null) {
-                    ExpertiseManager.awardExpertise(this.player, recipeUsed);
+                if (this.removeCount > 0) {
+                    RecipeHolder<?> recipeUsed = RunecarvingTableMenu.this.outputInventory.getRecipeUsed();
+                    if (recipeUsed != null) {
+                        ExpertiseManager.awardExpertise(this.player, recipeUsed);
+                        StatsManager.incrementValue(this.player, StatsPM.CRAFTED_RUNEWORKING, this.removeCount);
+                    }
                 }
-                StatsManager.incrementValue(this.player, StatsPM.CRAFTED_RUNEWORKING, stack.getCount());
+                super.checkTakeAchievements(stack);
             }
         });
         
