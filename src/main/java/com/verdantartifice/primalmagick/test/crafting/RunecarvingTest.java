@@ -20,7 +20,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 @GameTestHolder(PrimalMagick.MODID + ".runecarving")
 public class RunecarvingTest extends AbstractBaseTest {
     // FIXME 8-21-2024 This test currently fails when setting the runecarving table block because it attempts to send
-    // a packet to multiple players for some reason. Re-enable once Forge bug fixed.
+    // a packet to multiple players from the initial tile sync. Re-enable once Forge bug fixed.
     //@GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void craft_works(GameTestHelper helper) {
         // Create a test player with the research needed for basic runecarving
