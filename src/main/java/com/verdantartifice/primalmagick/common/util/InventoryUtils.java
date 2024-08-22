@@ -13,9 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
@@ -354,14 +352,13 @@ public class InventoryUtils {
      * conveyed by a tag.
      * 
      * @param player the player whose inventory to search
-     * @param tagName the name of the tag containing the items to be searched for
+     * @param tag the tag containing the items to be searched for
      * @return a list of item stacks matching the given tag
      */
     @Nonnull
-    public static NonNullList<ItemStack> find(@Nullable Player player, @Nullable ResourceLocation tagName) {
+    public static NonNullList<ItemStack> find(@Nullable Player player, @Nullable TagKey<Item> tag) {
         NonNullList<ItemStack> retVal = NonNullList.create();
-        if (player != null && tagName != null) {
-            TagKey<Item> tag = ItemTags.create(tagName);
+        if (player != null && tag != null) {
             for (ItemStack searchStack : player.getInventory().items) {
                 // Only the items need match, not the NBT data
                 if (!searchStack.isEmpty() && searchStack.is(tag)) {

@@ -36,7 +36,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -517,7 +516,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                             FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Sources.HALLOWED.getColor());
                         }
                         if (this.getUseDuration(stack, living) - count >= WandTransforms.CHANNEL_DURATION) {
-                            if (!level.isClientSide && player instanceof ServerPlayer) {
+                            if (!level.isClientSide) {
                                 // Only execute the transform on the server side
                                 transform.execute(level, player, wandPos);
                             }
