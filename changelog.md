@@ -1,3 +1,7 @@
+v5.0.1-beta
+-----------
+* Runecarving Table recipes now properly grant expertise
+
 v5.0.0-beta
 -----------
 * Updated to Minecraft 1.21.1

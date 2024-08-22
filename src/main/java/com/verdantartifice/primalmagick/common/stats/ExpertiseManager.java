@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -125,6 +126,10 @@ public class ExpertiseManager {
     
     public static Optional<Integer> getValue(@Nullable Player player, ResearchDisciplineKey disciplineKey) {
         return player == null ? Optional.empty() : getStat(player.level().registryAccess(), disciplineKey).map(stat -> StatsManager.getValue(player, stat));
+    }
+    
+    public static Optional<Integer> getValue(@Nullable Player player, @Nonnull ResourceKey<ResearchDiscipline> rawKey) {
+        return getValue(player, new ResearchDisciplineKey(rawKey));
     }
     
     public static void incrementValue(@Nullable Player player, ResearchDisciplineKey disciplineKey) {

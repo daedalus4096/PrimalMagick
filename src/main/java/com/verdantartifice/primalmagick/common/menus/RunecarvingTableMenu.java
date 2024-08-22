@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipe
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
+import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -110,6 +111,10 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
             @Override
             protected void checkTakeAchievements(ItemStack stack) {
                 super.checkTakeAchievements(stack);
+                RecipeHolder<?> recipeUsed = RunecarvingTableMenu.this.outputInventory.getRecipeUsed();
+                if (recipeUsed != null) {
+                    ExpertiseManager.awardExpertise(this.player, recipeUsed);
+                }
                 StatsManager.incrementValue(this.player, StatsPM.CRAFTED_RUNEWORKING, stack.getCount());
             }
         });
@@ -154,6 +159,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     public boolean clickMenuButton(Player playerIn, int id) {
         if (id >= 0 && id < this.recipes.size()) {
             this.selectedRecipe.set(id);
+            this.outputInventory.setRecipeUsed(this.recipes.get(id));
             this.updateRecipeResultSlot(playerIn.level().registryAccess());
         }
         return true;
