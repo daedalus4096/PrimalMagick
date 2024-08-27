@@ -1,6 +1,7 @@
 v5.0.1-beta
 -----------
 * Runecarving Table recipes now properly grant expertise
+* Fixed a crash that occurs when a thrown magickal metal trident strikes a creature
 
 v5.0.0-beta
 -----------
