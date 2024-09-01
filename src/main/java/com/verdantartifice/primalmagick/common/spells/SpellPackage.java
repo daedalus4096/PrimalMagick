@@ -156,7 +156,7 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
                 ExpertiseManager.awardExpertise(player, this);
                 StatsManager.incrementValue(player, StatsPM.SPELLS_CAST);
             }
-            this.vehicle.getComponent().execute(this, world, caster, spellSource);
+            this.vehicle.getComponent().execute(this, world, caster, spellSource.copy());
         }
     }
     
