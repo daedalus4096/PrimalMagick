@@ -3,11 +3,16 @@
   "group": "long_invisibility",
   "ingredients": [
     {
-      "type": "forge:partial_nbt",
+      "type": "primalmagick:partial_component",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
       "items": [
         "primalmagick:concoction"
-      ],
-      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
+      ]
     },
     {
       "item": "primalmagick:essence_shard_moon"

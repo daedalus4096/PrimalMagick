@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesP
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
@@ -48,6 +49,7 @@ public class InitRegistries {
         EffectsPM.init();
         RecipeTypesPM.init();
         RecipeSerializersPM.init();
+        IngredientsPM.init();
         SoundsPM.init();
         StructurePieceTypesPM.init();
         StructureFeaturesPM.init();

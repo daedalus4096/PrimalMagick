@@ -2,11 +2,16 @@
   "type": "primalmagick:concocting",
   "ingredients": [
     {
-      "type": "forge:partial_nbt",
+      "type": "primalmagick:partial_component",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
       "items": [
         "primalmagick:alchemical_bomb"
-      ],
-      "nbt": "{ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
+      ]
     },
     {
       "item": "primalmagick:essence_shard_sea"
