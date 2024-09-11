@@ -1,5 +1,6 @@
 v5.0.1-beta
 -----------
+* Updated to Forge 52.0.13
 * Runecarving Table recipes now properly grant expertise
 * Fixed a crash that occurs when a thrown magickal metal trident strikes a creature
 * Fixed a bug preventing the Silk Touch property for Break spells working in certain circumstances
