@@ -72,6 +72,10 @@ public class PartialComponentIngredient extends AbstractIngredient {
         return SERIALIZER;
     }
     
+    public static Builder builder() {
+        return new Builder();
+    }
+    
     public static final MapCodec<PartialComponentIngredient> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ForgeRegistries.ITEMS.getCodec().listOf().fieldOf("items").forGetter(i -> i.items),
             DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(i -> i.components)
