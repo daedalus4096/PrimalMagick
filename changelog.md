@@ -4,7 +4,8 @@ v5.0.1-beta
 * Runecarving Table recipes now properly grant expertise
 * Fixed a crash that occurs when a thrown magickal metal trident strikes a creature
 * Fixed a bug preventing the Silk Touch property for Break spells working in certain circumstances
-* Fix concocter recipes to properly recognize water flasks and water bombs as ingredients
+* Fixed concocter recipes to properly recognize water flasks and water bombs as ingredients
+* Fixed an issue where some Earthshatter Hammer and Dissolution Chamber recipes were not being recognized
 
 v5.0.0-beta
 -----------
