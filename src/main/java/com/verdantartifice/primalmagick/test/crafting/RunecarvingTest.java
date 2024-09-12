@@ -10,8 +10,10 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
+import com.verdantartifice.primalmagick.test.TestUtils;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -19,9 +21,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(PrimalMagick.MODID + ".runecarving")
 public class RunecarvingTest extends AbstractBaseTest {
-    // FIXME 8-21-2024 This test currently fails when setting the runecarving table block because it attempts to send
-    // a packet to multiple players from the initial tile sync. Re-enable once Forge bug fixed.
-    //@GameTest(template = TestUtils.DEFAULT_TEMPLATE)
+    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void craft_works(GameTestHelper helper) {
         // Create a test player with the research needed for basic runecarving
         var player = helper.makeMockServerPlayer();

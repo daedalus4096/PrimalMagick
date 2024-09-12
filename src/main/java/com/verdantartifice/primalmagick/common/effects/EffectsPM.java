@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -19,7 +18,7 @@ public class EffectsPM {
     private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, PrimalMagick.MODID);
     
     public static void init() {
-        EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        EFFECTS.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<MobEffect> FLYING = EFFECTS.register("flying", () -> new FlyingEffect(MobEffectCategory.BENEFICIAL, Sources.SKY.getColor()));

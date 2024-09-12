@@ -103,7 +103,6 @@ import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -117,7 +116,7 @@ public class ItemsPM {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PrimalMagick.MODID);
     
     public static void init() {
-        ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ITEMS.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     protected static <I extends Item> RegistryObject<I> registerSupplier(String name, Supplier<? extends I> itemSupplier) {

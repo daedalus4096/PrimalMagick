@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -18,7 +17,7 @@ public class MenuTypesPM {
     private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, PrimalMagick.MODID);
     
     public static void init() {
-        MENU_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        MENU_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<MenuType<ArcaneWorkbenchMenu>> ARCANE_WORKBENCH = MENU_TYPES.register("arcane_workbench", () -> IForgeMenuType.create((windowId, inv, data) -> {

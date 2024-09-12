@@ -160,9 +160,7 @@ public class FtuxTest {
         helper.succeed();
     }
     
-    // FIXME 8-16-2024: This test currently crashes the game test server due to an NPE in Forge's PacketDistributor when 
-    // sending the "poof" packet to nearby clients. Re-enable once fixed.
-    //@GameTest(template = TestUtils.DEFAULT_TEMPLATE)
+    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void transform_grimoire(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);

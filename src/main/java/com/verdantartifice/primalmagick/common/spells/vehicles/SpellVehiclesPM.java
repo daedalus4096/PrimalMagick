@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -20,7 +19,7 @@ public class SpellVehiclesPM {
     public static final Supplier<IForgeRegistry<SpellVehicleType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
-        DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        DEFERRED_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<SpellVehicleType<EmptySpellVehicle>> EMPTY = register(EmptySpellVehicle.TYPE, 100, EmptySpellVehicle::getInstance, EmptySpellVehicle::getRequirement, EmptySpellVehicle.CODEC, EmptySpellVehicle.STREAM_CODEC);

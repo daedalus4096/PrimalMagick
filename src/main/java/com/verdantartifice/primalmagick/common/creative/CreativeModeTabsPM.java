@@ -13,7 +13,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -27,7 +26,7 @@ public class CreativeModeTabsPM {
     private static final List<ICreativeTabRegistration> TAB_REGISTRATIONS = new ArrayList<>();
     
     public static void init() {
-        TABS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        TABS.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static void registerSupplier(Supplier<? extends ItemLike> itemSupplier) {

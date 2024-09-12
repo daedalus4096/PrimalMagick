@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -22,7 +21,7 @@ public class SpellModsPM {
     public static final Supplier<IForgeRegistry<SpellModType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
-        DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        DEFERRED_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<SpellModType<EmptySpellMod>> EMPTY = register(EmptySpellMod.TYPE, 100, EmptySpellMod::getInstance, EmptySpellMod::getRequirement, SpellPropertiesPM.POWER, EmptySpellMod.CODEC, EmptySpellMod.STREAM_CODEC);

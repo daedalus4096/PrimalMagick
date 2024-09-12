@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -18,7 +17,7 @@ public class RecipeSerializersPM {
     private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, PrimalMagick.MODID);
     
     public static void init() {
-        RECIPE_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        RECIPE_SERIALIZERS.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<RecipeSerializer<ShapelessArcaneRecipe>> ARCANE_CRAFTING_SHAPELESS = RECIPE_SERIALIZERS.register("arcane_crafting_shapeless", ShapelessArcaneRecipe.Serializer::new);

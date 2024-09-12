@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.sounds;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -17,7 +16,7 @@ public class SoundsPM {
     private static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PrimalMagick.MODID);
     
     public static void init() {
-        SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        SOUNDS.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<SoundEvent> PAGE = SOUNDS.register("page", () -> SoundEvent.createVariableRangeEvent(PrimalMagick.resource("page")));
