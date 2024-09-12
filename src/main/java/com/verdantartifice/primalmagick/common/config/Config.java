@@ -4,10 +4,10 @@ import java.nio.file.Path;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftSpeed;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -85,8 +85,8 @@ public class Config {
             // Only allow registration once
             throw new IllegalStateException("Primal Magick config spec is already registered!");
         }
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG_SPEC);
+        PrimalMagick.getModLoadingContext().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG_SPEC);
+        PrimalMagick.getModLoadingContext().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG_SPEC);
         loadConfig(Config.COMMON_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagick-common.toml"));
         loadConfig(Config.CLIENT_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagick-client.toml"));
         IS_REGISTERED = true;

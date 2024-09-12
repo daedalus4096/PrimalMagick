@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEnti
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -21,7 +20,7 @@ public class RitualStepTypesPM {
     public static final Supplier<IForgeRegistry<RitualStepType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
-        DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        DEFERRED_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<RitualStepType<OfferingRitualStep>> OFFERING = register("offering", OfferingRitualStep.CODEC, OfferingRitualStep.STREAM_CODEC, RitualAltarTileEntity::doOfferingStep);

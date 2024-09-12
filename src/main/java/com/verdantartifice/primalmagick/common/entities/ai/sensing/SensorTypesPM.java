@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.entities.ai.sensing;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.world.entity.ai.sensing.SensorType;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -17,7 +16,7 @@ public class SensorTypesPM {
     private static final DeferredRegister<SensorType<?>> SENSOR_TYPES = DeferredRegister.create(ForgeRegistries.SENSOR_TYPES, PrimalMagick.MODID);
     
     public static void init() {
-        SENSOR_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        SENSOR_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
 
     public static final RegistryObject<SensorType<TreefolkSpecificSensor>> TREEFOLK_SPECIFIC_SENSOR = SENSOR_TYPES.register("treefolk_specific_sensor", () -> new SensorType<>(TreefolkSpecificSensor::new));

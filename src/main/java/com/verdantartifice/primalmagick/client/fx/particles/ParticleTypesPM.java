@@ -11,7 +11,6 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -25,7 +24,7 @@ public class ParticleTypesPM {
     private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, PrimalMagick.MODID);
 
     public static void init() {
-        PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        PARTICLE_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<SimpleParticleType> WAND_POOF = registerSimple("wand_poof", true);

@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.library.Nethe
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -19,7 +18,7 @@ public class StructureFeaturesPM {
     private static final DeferredRegister<StructureType<?>> STRUCTURES = DeferredRegister.create(Registries.STRUCTURE_TYPE, PrimalMagick.MODID);
     
     public static void init() {
-        STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        STRUCTURES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<StructureType<ShrineStructure>> SHRINE = STRUCTURES.register("shrine", () -> () -> ShrineStructure.CODEC);

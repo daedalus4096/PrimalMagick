@@ -17,7 +17,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -30,7 +29,7 @@ public class ArmorMaterialsPM {
     private static final DeferredRegister<ArmorMaterial> DEFERRED_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, PrimalMagick.MODID);
     
     public static void init() {
-        DEFERRED_MATERIALS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        DEFERRED_MATERIALS.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<ArmorMaterial> IMBUED_WOOL = register("imbued_wool", Util.make(new EnumMap<>(ArmorItem.Type.class), defMap -> {

@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -19,7 +18,7 @@ public class ArgumentTypesPM {
     private static final DeferredRegister<ArgumentTypeInfo<?, ?>> COMMAND_ARGUMENT_TYPES = DeferredRegister.create(ForgeRegistries.COMMAND_ARGUMENT_TYPES, PrimalMagick.MODID);
 
     public static void init() {
-        COMMAND_ARGUMENT_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        COMMAND_ARGUMENT_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<SingletonArgumentInfo<KnowledgeTypeArgument>> KNOWLEDGE_TYPE = COMMAND_ARGUMENT_TYPES.register("knowledge_type", 

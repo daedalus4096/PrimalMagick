@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -17,7 +16,7 @@ public class RecipeTypesPM {
     private static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, PrimalMagick.MODID);
     
     public static void init() {
-        RECIPE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        RECIPE_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<RecipeType<IArcaneRecipe>> ARCANE_CRAFTING = RECIPE_TYPES.register("arcane_crafting", () -> RecipeType.simple(PrimalMagick.resource("arcane_crafting")));

@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -21,7 +20,7 @@ public class SpellPropertiesPM {
     public static final Supplier<IForgeRegistry<SpellProperty>> PROPERTIES = DEFERRED_PROPERTIES.makeRegistry(() -> new RegistryBuilder<SpellProperty>().hasTags());
     
     public static void init() {
-        DEFERRED_PROPERTIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        DEFERRED_PROPERTIES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<SpellProperty> POWER = register("power", id -> new SpellProperty(id, "spells.primalmagick.property.power", 1, 5));

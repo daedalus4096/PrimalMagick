@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -18,7 +17,7 @@ public class LootModifierSerializersPM {
     private static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, PrimalMagick.MODID);
     
     public static void init() {
-        SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        SERIALIZERS.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
     public static final RegistryObject<MapCodec<BloodyFleshModifier>> BLOODY_FLESH = SERIALIZERS.register("bloody_flesh", () -> BloodyFleshModifier.CODEC);

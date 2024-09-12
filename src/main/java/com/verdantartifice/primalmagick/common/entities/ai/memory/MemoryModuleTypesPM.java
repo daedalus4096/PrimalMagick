@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -22,7 +21,7 @@ public class MemoryModuleTypesPM {
     private static final DeferredRegister<MemoryModuleType<?>> MEMORY_MODULE_TYPES = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, PrimalMagick.MODID);
     
     public static void init() {
-        MEMORY_MODULE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        MEMORY_MODULE_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
 
     public static final RegistryObject<MemoryModuleType<List<TreefolkEntity>>> NEARBY_TREEFOLK = MEMORY_MODULE_TYPES.register("nearby_treefolk", () -> new MemoryModuleType<>(Optional.empty()));
