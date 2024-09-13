@@ -2714,8 +2714,6 @@
   "stat.primalmagick.research_projects_completed": "研究条目完成了",
   "stat.primalmagick.ritual_mishaps": "仪式上的灾难",
   "stat.primalmagick.rituals_completed": "进行仪式",
-  "stat.primalmagick.shears_used": "Times shears used",
-  "stat.primalmagick.shears_used.hint": "Right click shearable blocks and entities for credit; breaking blocks with shears in hand does not count",
   "stat.primalmagick.shrine_found_earth": "发现大地神殿",
   "stat.primalmagick.shrine_found_moon": "发现月亮神殿",
   "stat.primalmagick.shrine_found_sea": "发现海洋神殿",
