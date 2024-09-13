@@ -44,6 +44,7 @@
       "recipes": [
         "primalmagick:sanguine_core_bat",
         "primalmagick:sanguine_core_bee",
+        "primalmagick:sanguine_core_breeze",
         "primalmagick:sanguine_core_chicken",
         "primalmagick:sanguine_core_parrot",
         "primalmagick:sanguine_core_vex",

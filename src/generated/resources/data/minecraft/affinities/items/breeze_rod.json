@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:sky": 20
+  },
+  "target": "minecraft:breeze_rod"
+}

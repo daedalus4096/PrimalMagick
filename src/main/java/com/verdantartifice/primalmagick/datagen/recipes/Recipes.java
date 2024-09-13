@@ -4303,6 +4303,14 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.SANGUINE_CORE_FLYING_CREATURES)
             .expertiseGroup("sanguine_core")
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ARMADILLO.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.ARMADILLO_SCUTE)
+            .addIngredient(Items.SPIDER_EYE)
+            .setGroup("attuned_sanguine_cores")
+            .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
+            .expertiseGroup("sanguine_core")
+            .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_AXOLOTL.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.TROPICAL_FISH_BUCKET)
@@ -4333,6 +4341,22 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_DEMONS)
+            .expertiseGroup("sanguine_core")
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BOGGED.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.BONES)
+            .addIngredient(Tags.Items.MUSHROOMS)
+            .setGroup("attuned_sanguine_cores")
+            .requiredResearch(ResearchEntries.SANGUINE_CORE_UNDEAD)
+            .expertiseGroup("sanguine_core")
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BREEZE.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.BREEZE_ROD)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
+            .setGroup("attuned_sanguine_cores")
+            .requiredResearch(ResearchEntries.SANGUINE_CORE_FLYING_CREATURES)
             .expertiseGroup("sanguine_core")
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAMEL.get())

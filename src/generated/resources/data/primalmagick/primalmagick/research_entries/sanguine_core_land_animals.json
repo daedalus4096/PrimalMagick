@@ -42,6 +42,7 @@
         "rootKey": "primalmagick:sanguine_core_land_animals"
       },
       "recipes": [
+        "primalmagick:sanguine_core_armadillo",
         "primalmagick:sanguine_core_cat",
         "primalmagick:sanguine_core_camel",
         "primalmagick:sanguine_core_cave_spider",

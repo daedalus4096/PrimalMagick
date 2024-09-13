@@ -923,12 +923,12 @@ public class ResearchEntries {
                 .build());
         register(context, SANGUINE_CORE_LAND_ANIMALS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
-                .stage().attunement(Sources.EARTH, 2).recipe(ItemsPM.SANGUINE_CORE_CAT.get()).recipe(ItemsPM.SANGUINE_CORE_CAMEL.get()).recipe(ItemsPM.SANGUINE_CORE_CAVE_SPIDER.get())
-                        .recipe(ItemsPM.SANGUINE_CORE_COW.get()) .recipe(ItemsPM.SANGUINE_CORE_DONKEY.get()).recipe(ItemsPM.SANGUINE_CORE_FOX.get()).recipe(ItemsPM.SANGUINE_CORE_GOAT.get())
-                        .recipe(ItemsPM.SANGUINE_CORE_HORSE.get()) .recipe(ItemsPM.SANGUINE_CORE_LLAMA.get()).recipe(ItemsPM.SANGUINE_CORE_OCELOT.get()).recipe(ItemsPM.SANGUINE_CORE_PANDA.get())
-                        .recipe(ItemsPM.SANGUINE_CORE_PIG.get()).recipe(ItemsPM.SANGUINE_CORE_RABBIT.get()).recipe(ItemsPM.SANGUINE_CORE_RAVAGER.get()).recipe(ItemsPM.SANGUINE_CORE_SHEEP.get())
-                        .recipe(ItemsPM.SANGUINE_CORE_SILVERFISH.get()).recipe(ItemsPM.SANGUINE_CORE_SLIME.get()).recipe(ItemsPM.SANGUINE_CORE_SNIFFER.get()).recipe(ItemsPM.SANGUINE_CORE_SPIDER.get())
-                        .recipe(ItemsPM.SANGUINE_CORE_WOLF.get()).end()
+                .stage().attunement(Sources.EARTH, 2).recipe(ItemsPM.SANGUINE_CORE_ARMADILLO.get()).recipe(ItemsPM.SANGUINE_CORE_CAT.get()).recipe(ItemsPM.SANGUINE_CORE_CAMEL.get())
+                        .recipe(ItemsPM.SANGUINE_CORE_CAVE_SPIDER.get()).recipe(ItemsPM.SANGUINE_CORE_COW.get()) .recipe(ItemsPM.SANGUINE_CORE_DONKEY.get()).recipe(ItemsPM.SANGUINE_CORE_FOX.get())
+                        .recipe(ItemsPM.SANGUINE_CORE_GOAT.get()).recipe(ItemsPM.SANGUINE_CORE_HORSE.get()) .recipe(ItemsPM.SANGUINE_CORE_LLAMA.get()).recipe(ItemsPM.SANGUINE_CORE_OCELOT.get())
+                        .recipe(ItemsPM.SANGUINE_CORE_PANDA.get()).recipe(ItemsPM.SANGUINE_CORE_PIG.get()).recipe(ItemsPM.SANGUINE_CORE_RABBIT.get()).recipe(ItemsPM.SANGUINE_CORE_RAVAGER.get())
+                        .recipe(ItemsPM.SANGUINE_CORE_SHEEP.get()).recipe(ItemsPM.SANGUINE_CORE_SILVERFISH.get()).recipe(ItemsPM.SANGUINE_CORE_SLIME.get()).recipe(ItemsPM.SANGUINE_CORE_SNIFFER.get())
+                        .recipe(ItemsPM.SANGUINE_CORE_SPIDER.get()).recipe(ItemsPM.SANGUINE_CORE_WOLF.get()).end()
                 .build());
         register(context, SANGUINE_CORE_SEA_CREATURES, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
@@ -939,8 +939,8 @@ public class ResearchEntries {
                 .build());
         register(context, SANGUINE_CORE_FLYING_CREATURES, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
-                .stage().attunement(Sources.SKY, 2).recipe(ItemsPM.SANGUINE_CORE_BAT.get()).recipe(ItemsPM.SANGUINE_CORE_BEE.get()).recipe(ItemsPM.SANGUINE_CORE_CHICKEN.get())
-                        .recipe(ItemsPM.SANGUINE_CORE_PARROT.get()).recipe(ItemsPM.SANGUINE_CORE_VEX.get()).recipe(ItemsPM.SANGUINE_CORE_ALLAY.get()).end()
+                .stage().attunement(Sources.SKY, 2).recipe(ItemsPM.SANGUINE_CORE_BAT.get()).recipe(ItemsPM.SANGUINE_CORE_BEE.get()).recipe(ItemsPM.SANGUINE_CORE_BREEZE.get())
+                        .recipe(ItemsPM.SANGUINE_CORE_CHICKEN.get()).recipe(ItemsPM.SANGUINE_CORE_PARROT.get()).recipe(ItemsPM.SANGUINE_CORE_VEX.get()).recipe(ItemsPM.SANGUINE_CORE_ALLAY.get()).end()
                 .build());
         register(context, SANGUINE_CORE_PLANTS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
@@ -948,10 +948,10 @@ public class ResearchEntries {
                 .build());
         register(context, SANGUINE_CORE_UNDEAD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()
-                .stage().attunement(Sources.MOON, 2).recipe(ItemsPM.SANGUINE_CORE_DROWNED.get()).recipe(ItemsPM.SANGUINE_CORE_HUSK.get()).recipe(ItemsPM.SANGUINE_CORE_PHANTOM.get())
-                        .recipe(ItemsPM.SANGUINE_CORE_SKELETON.get()).recipe(ItemsPM.SANGUINE_CORE_SKELETON_HORSE.get()).recipe(ItemsPM.SANGUINE_CORE_STRAY.get()).recipe(ItemsPM.SANGUINE_CORE_WITHER_SKELETON.get())
-                        .recipe(ItemsPM.SANGUINE_CORE_ZOGLIN.get()).recipe(ItemsPM.SANGUINE_CORE_ZOMBIE.get()).recipe(ItemsPM.SANGUINE_CORE_ZOMBIE_HORSE.get()).recipe(ItemsPM.SANGUINE_CORE_ZOMBIE_VILLAGER.get())
-                        .recipe(ItemsPM.SANGUINE_CORE_ZOMBIFIED_PIGLIN.get()).end()
+                .stage().attunement(Sources.MOON, 2).recipe(ItemsPM.SANGUINE_CORE_BOGGED.get()).recipe(ItemsPM.SANGUINE_CORE_DROWNED.get()).recipe(ItemsPM.SANGUINE_CORE_HUSK.get())
+                        .recipe(ItemsPM.SANGUINE_CORE_PHANTOM.get()).recipe(ItemsPM.SANGUINE_CORE_SKELETON.get()).recipe(ItemsPM.SANGUINE_CORE_SKELETON_HORSE.get()).recipe(ItemsPM.SANGUINE_CORE_STRAY.get())
+                        .recipe(ItemsPM.SANGUINE_CORE_WITHER_SKELETON.get()).recipe(ItemsPM.SANGUINE_CORE_ZOGLIN.get()).recipe(ItemsPM.SANGUINE_CORE_ZOMBIE.get()).recipe(ItemsPM.SANGUINE_CORE_ZOMBIE_HORSE.get())
+                        .recipe(ItemsPM.SANGUINE_CORE_ZOMBIE_VILLAGER.get()).recipe(ItemsPM.SANGUINE_CORE_ZOMBIFIED_PIGLIN.get()).end()
                 .build());
         register(context, SANGUINE_CORE_SAPIENTS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(SANGUINE_CRUCIBLE)
                 .stage().requiredTheories(1).end()

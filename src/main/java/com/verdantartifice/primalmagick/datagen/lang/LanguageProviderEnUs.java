@@ -699,10 +699,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.DRAINED_MAJESTIC_HALLOWED_PIXIE).name("Drained Majestic Hallowed Pixie").build();
         this.item(ItemsPM.SANGUINE_CORE_BLANK).name("Blank Sanguine Core").build();
         this.item(ItemsPM.SANGUINE_CORE_ALLAY).name("Sanguine Core: Allay").build();
+        this.item(ItemsPM.SANGUINE_CORE_ARMADILLO).name("Sanguine Core: Armadillo").build();
         this.item(ItemsPM.SANGUINE_CORE_AXOLOTL).name("Sanguine Core: Axolotl").build();
         this.item(ItemsPM.SANGUINE_CORE_BAT).name("Sanguine Core: Bat").build();
         this.item(ItemsPM.SANGUINE_CORE_BEE).name("Sanguine Core: Bee").build();
         this.item(ItemsPM.SANGUINE_CORE_BLAZE).name("Sanguine Core: Blaze").build();
+        this.item(ItemsPM.SANGUINE_CORE_BOGGED).name("Sanguine Core: Bogged").build();
+        this.item(ItemsPM.SANGUINE_CORE_BREEZE).name("Sanguine Core: Breeze").build();
         this.item(ItemsPM.SANGUINE_CORE_CAMEL).name("Sanguine Core: Camel").build();
         this.item(ItemsPM.SANGUINE_CORE_CAT).name("Sanguine Core: Cat").build();
         this.item(ItemsPM.SANGUINE_CORE_CAVE_SPIDER).name("Sanguine Core: Cave Spider").build();
