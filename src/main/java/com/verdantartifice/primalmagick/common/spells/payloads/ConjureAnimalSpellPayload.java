@@ -53,10 +53,10 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload<ConjureAnima
     public static final String TYPE = "conjure_animal";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_ANIMAL));
     
-    // TODO Update with new animals from patch
     // TODO Datapack-ify animal conjuration data?
     // TODO Add quantity property to allow summoning more than one animal?
     protected static final WeightedRandomBag<EntityType<?>> LAND_ANIMALS = Util.make(new WeightedRandomBag<>(), bag -> {
+        bag.add(EntityType.ARMADILLO, 2);
         bag.add(EntityType.BAT, 2);
         bag.add(EntityType.CAT, 5);
         bag.add(EntityType.CHICKEN, 10);
