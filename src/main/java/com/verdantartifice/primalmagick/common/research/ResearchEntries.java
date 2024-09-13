@@ -1066,7 +1066,7 @@ public class ResearchEntries {
                 .build());
         register(context, SPELL_PAYLOAD_SHEAR, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SKY.getImage()).parent(EXPERT_SORCERY)
                 .parent(SPELL_PAYLOAD_LIGHTNING).parent(SPELL_PAYLOAD_BREAK)
-                .stage().requiredStat(StatsPM.SHEARS_USED, 50).requiredTheories(1).end()
+                .stage().requiredTheories(1).end()
                 .stage().attunement(Sources.SKY, 3).end()
                 .build());
         register(context, SPELL_PAYLOAD_FLIGHT, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SKY.getImage()).parent(SUPREME_SORCERY).parent(SPELL_PAYLOAD_LIGHTNING)

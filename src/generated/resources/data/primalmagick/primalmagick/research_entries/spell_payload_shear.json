@@ -25,19 +25,9 @@
   "stages": [
     {
       "completionRequirementOpt": {
-        "requirement_type": "primalmagick:and",
-        "subRequirements": [
-          {
-            "requiredValue": 50,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:shears_used"
-          },
-          {
-            "amount": 1,
-            "knowledgeType": "theory",
-            "requirement_type": "primalmagick:knowledge"
-          }
-        ]
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
       },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_shear"

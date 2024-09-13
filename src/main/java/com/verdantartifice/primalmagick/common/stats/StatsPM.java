@@ -63,6 +63,5 @@ public class StatsPM {
     public static final Stat ANCIENT_BOOKS_READ = Stat.builder("ancient_books_read").icon(ICON_BAG).build();
     public static final Stat VOCABULARY_STUDIED = Stat.builder("vocabulary_studied").icon(ICON_BAG).build();
     public static final Stat BLOCKS_BROKEN_BAREHANDED = Stat.builder("blocks_broken_barehanded").icon(ICON_MAP).hasHint().build();
-    public static final Stat SHEARS_USED = Stat.builder("shears_used").icon(ICON_BAG).hasHint().build();
     public static final Stat TREANTS_NAMED = Stat.builder("treants_named").icon(ICON_MAP).build();
 }

@@ -2202,7 +2202,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.ANCIENT_BOOKS_READ).name("Unique ancient books read").build();
         this.stat(StatsPM.VOCABULARY_STUDIED).name("Ancient vocabulary studied").build();
         this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").hint("The blocks must be at least as hard as wood").build();
-        this.stat(StatsPM.SHEARS_USED).name("Times shears used").hint("Right click shearable blocks and entities for credit; breaking blocks with shears in hand does not count").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();
         
         // Generate expertise group description localizations

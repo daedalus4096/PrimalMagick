@@ -6,6 +6,8 @@ v5.0.1-beta
 * Fixed a bug preventing the Silk Touch property for Break spells working in certain circumstances
 * Fixed concocter recipes to properly recognize water flasks and water bombs as ingredients
 * Fixed an issue where some Earthshatter Hammer and Dissolution Chamber recipes were not being recognized
+* Made the Shear spell payload's research entry no longer require shearing things as a prerequisite
+* Removed the shear use statistic from mod tracking
 
 v5.0.0-beta
 -----------
