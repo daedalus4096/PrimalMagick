@@ -2714,8 +2714,6 @@
   "stat.primalmagick.research_projects_completed": "Research projects completed",
   "stat.primalmagick.ritual_mishaps": "Ritual mishaps endured",
   "stat.primalmagick.rituals_completed": "Rituals conducted",
-  "stat.primalmagick.shears_used": "Times shears used",
-  "stat.primalmagick.shears_used.hint": "Right click shearable blocks and entities for credit; breaking blocks with shears in hand does not count",
   "stat.primalmagick.shrine_found_earth": "Earth shrines found",
   "stat.primalmagick.shrine_found_moon": "Moon shrines found",
   "stat.primalmagick.shrine_found_sea": "Sea shrines found",
