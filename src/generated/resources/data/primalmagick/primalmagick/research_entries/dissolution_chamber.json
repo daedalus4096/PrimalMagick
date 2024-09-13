@@ -29,25 +29,19 @@
         "requirement_type": "primalmagick:and",
         "subRequirements": [
           {
-            "requirement_type": "primalmagick:item_stack",
-            "stack": {
-              "count": 20,
-              "id": "primalmagick:iron_grit"
-            }
+            "amount": 20,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "forge:dusts/iron"
           },
           {
-            "requirement_type": "primalmagick:item_stack",
-            "stack": {
-              "count": 20,
-              "id": "primalmagick:copper_grit"
-            }
+            "amount": 20,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "forge:dusts/copper"
           },
           {
-            "requirement_type": "primalmagick:item_stack",
-            "stack": {
-              "count": 10,
-              "id": "primalmagick:gold_grit"
-            }
+            "amount": 10,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "forge:dusts/gold"
           },
           {
             "amount": 2,

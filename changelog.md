@@ -10,6 +10,7 @@ v5.0.1-beta
 * Fixed an issue where some Earthshatter Hammer and Dissolution Chamber recipes were not being recognized
 * Made the Shear spell payload's research entry no longer require shearing things as a prerequisite
 * Removed the shear use statistic from mod tracking
+* Fixed Dissolution Chamber research requirements to use metal dust tags instead of specific items
 
 v5.0.0-beta
 -----------

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,10 +51,23 @@ public class ItemTagWidget extends AbstractWidget {
     
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        Minecraft mc = Minecraft.getInstance();
         this.lastStack = this.currentStack;
         this.currentStack = this.getDisplayStack();
         if (!this.currentStack.isEmpty()) {
             GuiUtils.renderItemStack(guiGraphics, this.currentStack, this.getX(), this.getY(), this.getMessage().getString(), false);
+            
+            // Draw amount string if applicable
+            if (this.amount > 1) {
+                Component amountText = Component.literal(Integer.toString(this.amount));
+                int width = mc.font.width(amountText.getString());
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
+                guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
+                guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+                guiGraphics.pose().popPose();
+            }
+            
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
                 guiGraphics.pose().pushPose();
