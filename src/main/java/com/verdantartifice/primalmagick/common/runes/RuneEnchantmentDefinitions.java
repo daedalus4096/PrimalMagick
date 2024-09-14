@@ -56,6 +56,9 @@ public class RuneEnchantmentDefinitions {
     public static final ResourceKey<RuneEnchantmentDefinition> SMITE = createKey(Enchantments.SMITE);
     public static final ResourceKey<RuneEnchantmentDefinition> SOUL_SPEED = createKey(Enchantments.SOUL_SPEED);
     public static final ResourceKey<RuneEnchantmentDefinition> SWIFT_SNEAK = createKey(Enchantments.SWIFT_SNEAK);
+    public static final ResourceKey<RuneEnchantmentDefinition> DENSITY = createKey(Enchantments.DENSITY);
+    public static final ResourceKey<RuneEnchantmentDefinition> BREACH = createKey(Enchantments.BREACH);
+    public static final ResourceKey<RuneEnchantmentDefinition> WIND_BURST = createKey(Enchantments.WIND_BURST);
 
     public static final ResourceKey<RuneEnchantmentDefinition> LIFESTEAL = createKey(EnchantmentsPM.LIFESTEAL);
     public static final ResourceKey<RuneEnchantmentDefinition> ENDERLOCK = createKey(EnchantmentsPM.ENDERLOCK);
@@ -122,6 +125,9 @@ public class RuneEnchantmentDefinitions {
         register(context, SMITE, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROJECT).noun(Rune.CREATURE).source(Rune.SUN).build());
         register(context, SOUL_SPEED, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROJECT).noun(Rune.SELF).source(Rune.INFERNAL).build());
         register(context, SWIFT_SNEAK, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROJECT).noun(Rune.SELF).source(Rune.SKY).build());
+        register(context, DENSITY, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROJECT).noun(Rune.CREATURE).source(Rune.EARTH).build());
+        register(context, BREACH, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROJECT).noun(Rune.ITEM).source(Rune.EARTH).build());
+        register(context, WIND_BURST, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROJECT).noun(Rune.SELF).source(Rune.SKY).build());
 
         // Register rune combinations for mod enchantments
         register(context, LIFESTEAL, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.ABSORB).noun(Rune.SELF).source(Rune.BLOOD).build());
