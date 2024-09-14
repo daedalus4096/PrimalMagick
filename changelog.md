@@ -1,6 +1,6 @@
 v5.0.1-beta
 -----------
-* Updated to Forge 52.0.13
+* Updated to Forge 52.0.15
 * Added affinity data for new items and creatures
 * Added sanguine cores for new creature types
 * Added rune enchantment definitions for new mace enchantments
