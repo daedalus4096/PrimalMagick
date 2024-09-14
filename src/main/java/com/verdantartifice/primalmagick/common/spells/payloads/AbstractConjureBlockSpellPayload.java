@@ -90,9 +90,9 @@ public abstract class AbstractConjureBlockSpellPayload<T extends AbstractConjure
             
             // Otherwise set the target state, with facing and waterlogging if applicable, into the world
             BlockState newState = this.targetStateSupplier.get();
-            if (state.hasProperty(BlockStateProperties.FACING)) {
+            if (state.hasProperty(BlockStateProperties.FACING) && newState.hasProperty(BlockStateProperties.FACING)) {
                 newState = newState.setValue(BlockStateProperties.FACING, state.getValue(BlockStateProperties.FACING));
-            } else if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+            } else if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING) && newState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
                 newState = newState.setValue(BlockStateProperties.HORIZONTAL_FACING, state.getValue(BlockStateProperties.HORIZONTAL_FACING));
             }
             if (fluidState.isSourceOfType(Fluids.WATER) && newState.hasProperty(BlockStateProperties.WATERLOGGED)) {

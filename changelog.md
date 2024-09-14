@@ -13,6 +13,7 @@ v5.0.1-beta
 * Removed the shear use statistic from mod tracking
 * Fixed Dissolution Chamber research requirements to use metal dust tags instead of specific items
 * Updated the Conjure Animal spell to allow summoning armadillos
+* Fixed a bug where conjuring light could crash a multiplayer server in certain circumstances
 
 v5.0.0-beta
 -----------
