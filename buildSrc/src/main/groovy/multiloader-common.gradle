@@ -5,7 +5,7 @@ plugins {
 }
 
 base {
-    archivesName = "${mod_id}-${project.name}-${minecraft_version}"
+    archivesName = "${mod_id}-${project.name}-${minecraft_version}-${version}"
 }
 
 java {
@@ -83,7 +83,7 @@ jar {
 
 processResources {
     var expandProps = [
-            'version'                      : gitVersion(),
+            'version'                      : version,
             'group'                        : project.group, //Else we target the task's group.
             'minecraft_version'            : minecraft_version,
             'minecraft_version_range'      : minecraft_version_range,
