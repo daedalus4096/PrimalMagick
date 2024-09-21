@@ -5,7 +5,7 @@ license="MIT License"
 
 [[mods]]
 modId="primalmagick"
-version="${mod_version}"
+version="${version}"
 displayName="Primal Magick"
 updateJSONURL="https://pastebin.com/raw/MZu4yZi8"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/primal-magick"
