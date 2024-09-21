@@ -1,7 +1,7 @@
-package com.example.examplemod.platform;
+package com.verdantartifice.primalmagick.platform;
 
-import com.example.examplemod.Constants;
-import com.example.examplemod.platform.services.IPlatformHelper;
+import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.platform.services.IPlatformHelper;
 
 import java.util.ServiceLoader;
 
