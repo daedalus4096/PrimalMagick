@@ -3,6 +3,8 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+version = gitVersion()
+
 neoForge {
     neoFormVersion = neo_form_version
     // Automatically enable AccessTransformers if the file exists
