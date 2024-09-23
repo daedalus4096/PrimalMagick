@@ -62,6 +62,17 @@ minecraft {
                 }
             }
         }
+
+        gameTestServer {
+            workingDirectory file('runs/gametests')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'GameTestServer'
+            mods {
+                modGameTestsRun {
+                    source sourceSets.main
+                }
+            }
+        }
     }
 }
 
@@ -71,7 +82,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
-    // FIXME 2024/08/11 - JEI does not have a build for MC 1.21.1 yet, and may never as it's a minor bugfix version.
+    // JEI API
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
 
