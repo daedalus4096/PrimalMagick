@@ -3,3 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '0.1.110' apply false
     id 'com.palantir.git-version' version '3.1.0'
 }
+
+allprojects {
+    version = gitVersion()
+}

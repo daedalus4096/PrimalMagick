@@ -4,8 +4,6 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
-version = gitVersion()
-
 base {
     archivesName = "${mod_id}-forge-${minecraft_version}"
 }
