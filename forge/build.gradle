@@ -86,11 +86,8 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
 
-    // FIXME 2024/08/12 - When the following line is active, as of MC1.21.1, attempting to run the client or data generator
-    // will result in a ResolutionException, saying that the jei.api and jei modules each export a package, one of many, to
-    // either forge or primalmagick.  This error only occurs when starting the run from Eclipse, and *not* when doing so
-    // from the command-line interface.  Uncomment this line when this bug no longer occurs.  Check in MC1.22.
-    //runtimeOnly "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
+    // JEI implementation
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
 
     // Forge's hack fix
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
