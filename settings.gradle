@@ -36,6 +36,10 @@ pluginManagement {
                 includeGroupAndSubgroups('net.minecraftforge')
             }
         }
+        maven {
+            name = 'Parchment'
+            url = 'https://maven.parchmentmc.org'
+        }
     }
 }
 
