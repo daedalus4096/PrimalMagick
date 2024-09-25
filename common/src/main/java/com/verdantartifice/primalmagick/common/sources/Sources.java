@@ -21,15 +21,15 @@ import net.minecraft.resources.ResourceLocation;
 public class Sources {
     private static final Map<ResourceLocation, Source> SOURCES = new HashMap<>();
     
-    public static final Source EARTH = new Source(PrimalMagick.resource("earth"), 0x20702B, ChatFormatting.DARK_GREEN, 0.5D, StatsPM.MANA_SPENT_EARTH, 100);
-    public static final Source SEA = new Source(PrimalMagick.resource("sea"), 0x117899, ChatFormatting.BLUE, 1.0D, StatsPM.MANA_SPENT_SEA, 200);
-    public static final Source SKY = new Source(PrimalMagick.resource("sky"), 0x87CEEB, ChatFormatting.AQUA, 1.0D, StatsPM.MANA_SPENT_SKY, 300);
-    public static final Source SUN = new Source(PrimalMagick.resource("sun"), 0xF9C81C, ChatFormatting.YELLOW, 0.75D, StatsPM.MANA_SPENT_SUN, 400);
-    public static final Source MOON = new Source(PrimalMagick.resource("moon"), 0xD1DDE3, ChatFormatting.GRAY, 1.0D, StatsPM.MANA_SPENT_MOON, 500);
-    public static final Source BLOOD = new Source(PrimalMagick.resource("blood"), 0x8A0303, ChatFormatting.DARK_RED, 1.5D, StatsPM.MANA_SPENT_BLOOD, ResearchEntries.DISCOVER_BLOOD, 600);
-    public static final Source INFERNAL = new Source(PrimalMagick.resource("infernal"), 0xED2F1B, ChatFormatting.GOLD, 2.0D, StatsPM.MANA_SPENT_INFERNAL, ResearchEntries.DISCOVER_INFERNAL, 700);
-    public static final Source VOID = new Source(PrimalMagick.resource("void"), 0x551A8B, ChatFormatting.DARK_PURPLE, 2.0D, StatsPM.MANA_SPENT_VOID, ResearchEntries.DISCOVER_VOID, 800);
-    public static final Source HALLOWED = new Source(PrimalMagick.resource("hallowed"), 0xEEEBD9, ChatFormatting.WHITE, 3.0D, StatsPM.MANA_SPENT_HALLOWED, ResearchEntries.DISCOVER_HALLOWED, 900);
+    public static final Source EARTH = new Source(ResourceUtils.loc("earth"), 0x20702B, ChatFormatting.DARK_GREEN, 0.5D, StatsPM.MANA_SPENT_EARTH, 100);
+    public static final Source SEA = new Source(ResourceUtils.loc("sea"), 0x117899, ChatFormatting.BLUE, 1.0D, StatsPM.MANA_SPENT_SEA, 200);
+    public static final Source SKY = new Source(ResourceUtils.loc("sky"), 0x87CEEB, ChatFormatting.AQUA, 1.0D, StatsPM.MANA_SPENT_SKY, 300);
+    public static final Source SUN = new Source(ResourceUtils.loc("sun"), 0xF9C81C, ChatFormatting.YELLOW, 0.75D, StatsPM.MANA_SPENT_SUN, 400);
+    public static final Source MOON = new Source(ResourceUtils.loc("moon"), 0xD1DDE3, ChatFormatting.GRAY, 1.0D, StatsPM.MANA_SPENT_MOON, 500);
+    public static final Source BLOOD = new Source(ResourceUtils.loc("blood"), 0x8A0303, ChatFormatting.DARK_RED, 1.5D, StatsPM.MANA_SPENT_BLOOD, ResearchEntries.DISCOVER_BLOOD, 600);
+    public static final Source INFERNAL = new Source(ResourceUtils.loc("infernal"), 0xED2F1B, ChatFormatting.GOLD, 2.0D, StatsPM.MANA_SPENT_INFERNAL, ResearchEntries.DISCOVER_INFERNAL, 700);
+    public static final Source VOID = new Source(ResourceUtils.loc("void"), 0x551A8B, ChatFormatting.DARK_PURPLE, 2.0D, StatsPM.MANA_SPENT_VOID, ResearchEntries.DISCOVER_VOID, 800);
+    public static final Source HALLOWED = new Source(ResourceUtils.loc("hallowed"), 0xEEEBD9, ChatFormatting.WHITE, 3.0D, StatsPM.MANA_SPENT_HALLOWED, ResearchEntries.DISCOVER_HALLOWED, 900);
     
     private static Supplier<List<Source>> cachedGetAllSorted = Suppliers.memoize(Sources::getAllSortedInner);
     

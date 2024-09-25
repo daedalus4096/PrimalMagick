@@ -1,12 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.VocabularyWidget;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
@@ -15,7 +11,7 @@ import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
@@ -35,18 +31,21 @@ import net.minecraft.util.StringDecomposer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * GUI screen for the study vocabulary mode of the scribe table block.
  * 
  * @author Daedalus4096
  */
 public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<ScribeStudyVocabularyMenu> {
-    private static final ResourceLocation[] ENABLED_LEVEL_SPRITES = new ResourceLocation[]{PrimalMagick.resource("scribe_table/level_1"), PrimalMagick.resource("scribe_table/level_2"), PrimalMagick.resource("scribe_table/level_3")};
-    private static final ResourceLocation[] DISABLED_LEVEL_SPRITES = new ResourceLocation[]{PrimalMagick.resource("scribe_table/level_1_disabled"), PrimalMagick.resource("scribe_table/level_2_disabled"), PrimalMagick.resource("scribe_table/level_3_disabled")};
-    private static final ResourceLocation SLOT_DISABLED_SPRITE = PrimalMagick.resource("scribe_table/slot_disabled");
-    private static final ResourceLocation SLOT_HIGHLIGHTED_SPRITE = PrimalMagick.resource("scribe_table/slot_highlighted");
-    private static final ResourceLocation SLOT_SPRITE = PrimalMagick.resource("scribe_table/slot");
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_study_vocabulary.png");
+    private static final ResourceLocation[] ENABLED_LEVEL_SPRITES = new ResourceLocation[]{ResourceUtils.loc("scribe_table/level_1"), ResourceUtils.loc("scribe_table/level_2"), ResourceUtils.loc("scribe_table/level_3")};
+    private static final ResourceLocation[] DISABLED_LEVEL_SPRITES = new ResourceLocation[]{ResourceUtils.loc("scribe_table/level_1_disabled"), ResourceUtils.loc("scribe_table/level_2_disabled"), ResourceUtils.loc("scribe_table/level_3_disabled")};
+    private static final ResourceLocation SLOT_DISABLED_SPRITE = ResourceUtils.loc("scribe_table/slot_disabled");
+    private static final ResourceLocation SLOT_HIGHLIGHTED_SPRITE = ResourceUtils.loc("scribe_table/slot_highlighted");
+    private static final ResourceLocation SLOT_SPRITE = ResourceUtils.loc("scribe_table/slot");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/scribe_study_vocabulary.png");
     /** The ResourceLocation containing the texture for the Book rendered above the enchantment table */
     private static final ResourceLocation ENCHANTING_BOOK_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/enchanting_table_book.png");
 

@@ -26,7 +26,7 @@ public class AttunementThresholdLanguageBuilder extends AbstractLanguageBuilder<
 
     @Override
     protected ResourceLocation getBaseRegistryKey(AttunementThreshold base) {
-        return PrimalMagick.resource(base.getSerializedName());
+        return ResourceUtils.loc(base.getSerializedName());
     }
     
     public AttunementThresholdLanguageBuilder effect(Source source, String value) {

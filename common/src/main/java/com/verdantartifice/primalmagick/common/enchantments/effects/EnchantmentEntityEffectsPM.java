@@ -14,6 +14,6 @@ public class EnchantmentEntityEffectsPM {
     }
     
     private static void register(Registry<MapCodec<? extends EnchantmentEntityEffect>> registry, String name, MapCodec<? extends EnchantmentEntityEffect> codec) {
-        Registry.register(registry, PrimalMagick.resource(name), codec);
+        Registry.register(registry, ResourceUtils.loc(name), codec);
     }
 }

@@ -87,6 +87,6 @@ public class ItemTagsPM {
     public static final TagKey<Item> ESSENCE_THIEF_ENCHANTABLE = tag("enchantable/essence_thief");
 
     private static TagKey<Item> tag(String name) {
-        return ItemTags.create(PrimalMagick.resource(name));
+        return ItemTags.create(ResourceUtils.loc(name));
     }
 }

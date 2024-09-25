@@ -16,7 +16,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class SpellPropertyTagsProviderPM extends IntrinsicHolderTagsProvider<SpellProperty> {
     public SpellPropertyTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
-        super(output, RegistryKeysPM.SPELL_PROPERTIES, future, p -> SpellPropertiesPM.PROPERTIES.get().getResourceKey(p).orElseThrow(), PrimalMagick.MODID, helper);
+        super(output, RegistryKeysPM.SPELL_PROPERTIES, future, p -> SpellPropertiesPM.PROPERTIES.get().getResourceKey(p).orElseThrow(), Constants.MOD_ID, helper);
     }
 
     @Override

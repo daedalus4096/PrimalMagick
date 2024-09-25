@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerWard;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -14,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class WardingHudOverlay {
-    protected static final ResourceLocation GUI_ICONS_LOCATION = PrimalMagick.resource("textures/gui/hud.png");
+    protected static final ResourceLocation GUI_ICONS_LOCATION = ResourceUtils.loc("textures/gui/hud.png");
     
     public static boolean shouldRender() {
         Minecraft mc = Minecraft.getInstance();

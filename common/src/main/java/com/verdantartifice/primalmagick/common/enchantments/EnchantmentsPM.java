@@ -638,6 +638,6 @@ public class EnchantmentsPM {
     }
 
     private static ResourceKey<Enchantment> key(String pName) {
-        return ResourceKey.create(Registries.ENCHANTMENT, PrimalMagick.resource(pName));
+        return ResourceKey.create(Registries.ENCHANTMENT, ResourceUtils.loc(pName));
     }
 }

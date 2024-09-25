@@ -111,13 +111,13 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
 public class PlayerEvents {
     public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
     
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
-    private static final ResourceLocation STEP_MODIFIER_EARTH_ID = PrimalMagick.resource("step_modifier");
+    private static final ResourceLocation STEP_MODIFIER_EARTH_ID = ResourceUtils.loc("step_modifier");
     private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_ID, 0.4D, AttributeModifier.Operation.ADD_VALUE);
     private static final ResearchStageKey SOURCE_EARTH_START = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 1);
     private static final ResearchStageKey SOURCE_EARTH_END = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 2);

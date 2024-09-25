@@ -1,20 +1,18 @@
 package com.verdantartifice.primalmagick.test.research;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.test.TestUtils;
-
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 import net.minecraftforge.gametest.GameTestHolder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@GameTestHolder(PrimalMagick.MODID + ".research")
+@GameTestHolder(Constants.MOD_ID + ".research")
 public class ResearchTest {
     protected static final Logger LOGGER = LogManager.getLogger();
     

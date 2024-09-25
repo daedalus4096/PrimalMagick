@@ -1,20 +1,19 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
-import java.awt.Color;
-import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
+import java.awt.Color;
+import java.text.DecimalFormat;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Display widget for showing how much of a given source something has as a mana cost.

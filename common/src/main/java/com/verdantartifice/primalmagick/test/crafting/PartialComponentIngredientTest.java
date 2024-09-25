@@ -1,24 +1,22 @@
 package com.verdantartifice.primalmagick.test.crafting;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.PartialComponentIngredient;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.test.TestUtils;
-
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.gametest.GameTestHolder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@GameTestHolder(PrimalMagick.MODID + ".partial_component_ingredient")
+@GameTestHolder(Constants.MOD_ID + ".partial_component_ingredient")
 public class PartialComponentIngredientTest {
     protected static final Logger LOGGER = LogManager.getLogger();
 

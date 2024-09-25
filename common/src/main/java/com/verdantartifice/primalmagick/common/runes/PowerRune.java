@@ -27,7 +27,7 @@ public class PowerRune extends Rune {
     }, p -> p.getId());
     
     public PowerRune(@Nonnull String tag, @Nonnull ResourceKey<ResearchEntry> discoveryKey, Rarity rarity, int limit) {
-        super(PrimalMagick.resource(tag), new ResearchRequirement(new ResearchEntryKey(discoveryKey)), rarity, true, limit);
+        super(ResourceUtils.loc(tag), new ResearchRequirement(new ResearchEntryKey(discoveryKey)), rarity, true, limit);
     }
     
     @Override

@@ -58,7 +58,7 @@ public class WandCore implements IWandComponent {
     protected final ResourceLocation staffMrlNamespace; // Resource location of the staff core's model, stored in a blockstate file
 
     public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned) {
-        this(tag, rarity, spellSlots, bonusSlot, aligned, PrimalMagick.resource(tag + "_wand_core"), PrimalMagick.resource(tag + "_staff_core"));
+        this(tag, rarity, spellSlots, bonusSlot, aligned, ResourceUtils.loc(tag + "_wand_core"), ResourceUtils.loc(tag + "_staff_core"));
     }
     
     public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned, @Nonnull ResourceLocation wmrln, @Nonnull ResourceLocation smrln) {

@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class StructureFeaturesPM {
-    private static final DeferredRegister<StructureType<?>> STRUCTURES = DeferredRegister.create(Registries.STRUCTURE_TYPE, PrimalMagick.MODID);
+    private static final DeferredRegister<StructureType<?>> STRUCTURES = DeferredRegister.create(Registries.STRUCTURE_TYPE, Constants.MOD_ID);
     
     public static void init() {
         STRUCTURES.register(PrimalMagick.getModLoadingContext().getModEventBus());

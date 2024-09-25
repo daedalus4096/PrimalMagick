@@ -157,6 +157,6 @@ public class ConcoctingRecipeBuilder {
         if (type == null) {
             throw new IllegalStateException("Output is not a concoction for concocting recipe with output " + this.result.getHoverName().getString());
         }
-        this.build(output, PrimalMagick.resource(ForgeRegistries.POTIONS.getKey(contents.potion().get().value()).getPath() + "_" + type.getSerializedName()));
+        this.build(output, ResourceUtils.loc(ForgeRegistries.POTIONS.getKey(contents.potion().get().value()).getPath() + "_" + type.getSerializedName()));
     }
 }

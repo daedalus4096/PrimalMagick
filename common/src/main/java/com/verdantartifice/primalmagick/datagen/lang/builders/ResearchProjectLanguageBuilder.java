@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class ResearchProjectLanguageBuilder extends AbstractLanguageBuilder<String, ResearchProjectLanguageBuilder> {
     public ResearchProjectLanguageBuilder(String id, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(id, () -> String.join(".", "research_project", PrimalMagick.MODID, id.toLowerCase()), untracker, adder);
+        super(id, () -> String.join(".", "research_project", Constants.MOD_ID, id.toLowerCase()), untracker, adder);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class ResearchProjectLanguageBuilder extends AbstractLanguageBuilder<Stri
 
     @Override
     protected ResourceLocation getBaseRegistryKey(String base) {
-        return PrimalMagick.resource(base.toLowerCase());
+        return ResourceUtils.loc(base.toLowerCase());
     }
 
     @Override

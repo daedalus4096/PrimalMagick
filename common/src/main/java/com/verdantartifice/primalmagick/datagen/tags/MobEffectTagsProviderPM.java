@@ -16,7 +16,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class MobEffectTagsProviderPM extends TagsProvider<MobEffect> {
     public MobEffectTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
-        super(output, Registries.MOB_EFFECT, future, PrimalMagick.MODID, helper);
+        super(output, Registries.MOB_EFFECT, future, Constants.MOD_ID, helper);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.network.chat.Component;
+
+import javax.annotation.Nullable;
 
 public abstract class RadialMenuItem {
     private final GenericRadialMenu owner;

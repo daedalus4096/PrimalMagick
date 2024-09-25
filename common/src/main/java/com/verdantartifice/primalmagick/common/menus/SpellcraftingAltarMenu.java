@@ -60,7 +60,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarTileEntity> {
-    protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("spellcrafting");
+    protected static final ResourceLocation RECIPE_LOC = ResourceUtils.loc("spellcrafting");
     protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.spellcrafting_altar.slot.scroll");
 
     protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);

@@ -1,14 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -23,6 +16,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nonnull;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Display widget for showing all the possible itemstacks for a given tag.  Used
  * on the requirements pages.
@@ -30,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ItemTagWidget extends AbstractWidget {
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     protected final TagKey<Item> tag;
     protected final int amount;

@@ -1,18 +1,17 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.LinguisticsButton;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+
+import java.util.List;
 
 /**
  * Grimoire page showing the list of discovered static book languages.

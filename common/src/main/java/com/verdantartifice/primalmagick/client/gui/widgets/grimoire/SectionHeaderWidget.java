@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+
+import java.awt.Color;
 
 /**
  * Display widget to mark a new section of research entries (e.g. "Updated") in the grimoire index.

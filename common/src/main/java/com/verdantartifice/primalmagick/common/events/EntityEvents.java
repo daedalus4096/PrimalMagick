@@ -45,7 +45,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
 public class EntityEvents {
     @SubscribeEvent
     public static void onEnderEntityTeleport(EntityTeleportEvent.EnderEntity event) {

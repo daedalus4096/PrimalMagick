@@ -17,6 +17,6 @@ public class StructureTagsPM {
     public static final TagKey<Structure> LIBRARY = create("library");
 
     private static TagKey<Structure> create(String name) {
-        return TagKey.create(Registries.STRUCTURE, PrimalMagick.resource(name));
+        return TagKey.create(Registries.STRUCTURE, ResourceUtils.loc(name));
     }
 }

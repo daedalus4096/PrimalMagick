@@ -337,19 +337,19 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNKNOWN_RUNE = create("unknown_rune");
     
     // Commonly used research icons
-    private static final ResourceLocation ICON_MANAWEAVING = PrimalMagick.resource("textures/research/discipline_manaweaving.png");
-    private static final ResourceLocation ICON_ALCHEMY = PrimalMagick.resource("textures/research/discipline_alchemy.png");
-    private static final ResourceLocation ICON_SORCERY = PrimalMagick.resource("textures/research/discipline_sorcery.png");
-    private static final ResourceLocation ICON_RUNEWORKING = PrimalMagick.resource("textures/research/discipline_runeworking.png");
-    private static final ResourceLocation ICON_RITUAL = PrimalMagick.resource("textures/research/discipline_ritual.png");
-    private static final ResourceLocation ICON_MAGITECH = PrimalMagick.resource("textures/research/discipline_magitech.png");
-    private static final ResourceLocation ICON_BAG = PrimalMagick.resource("textures/research/research_bag.png");
-    private static final ResourceLocation ICON_MAP = PrimalMagick.resource("textures/research/research_map.png");
-    private static final ResourceLocation ICON_TUBE = PrimalMagick.resource("textures/research/research_tube.png");
-    private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
+    private static final ResourceLocation ICON_MANAWEAVING = ResourceUtils.loc("textures/research/discipline_manaweaving.png");
+    private static final ResourceLocation ICON_ALCHEMY = ResourceUtils.loc("textures/research/discipline_alchemy.png");
+    private static final ResourceLocation ICON_SORCERY = ResourceUtils.loc("textures/research/discipline_sorcery.png");
+    private static final ResourceLocation ICON_RUNEWORKING = ResourceUtils.loc("textures/research/discipline_runeworking.png");
+    private static final ResourceLocation ICON_RITUAL = ResourceUtils.loc("textures/research/discipline_ritual.png");
+    private static final ResourceLocation ICON_MAGITECH = ResourceUtils.loc("textures/research/discipline_magitech.png");
+    private static final ResourceLocation ICON_BAG = ResourceUtils.loc("textures/research/research_bag.png");
+    private static final ResourceLocation ICON_MAP = ResourceUtils.loc("textures/research/research_map.png");
+    private static final ResourceLocation ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
+    private static final ResourceLocation ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
     
     public static ResourceKey<ResearchEntry> create(String name) {
-        return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
+        return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, ResourceUtils.loc(name));
     }
     
     public static void bootstrap(BootstrapContext<ResearchEntry> context) {

@@ -61,7 +61,7 @@ import net.minecraftforge.common.loot.LootTableIdCondition;
  */
 public class LootModifierProvider extends GlobalLootModifierProvider {
     public LootModifierProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
-        super(packOutput, PrimalMagick.MODID, registries);
+        super(packOutput, Constants.MOD_ID, registries);
     }
 
     @Override

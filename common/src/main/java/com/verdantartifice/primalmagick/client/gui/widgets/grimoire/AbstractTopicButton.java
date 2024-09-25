@@ -1,18 +1,17 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
+
+import java.awt.Color;
 
 /**
  * Base class for research topic selector buttons (e.g. research disciplines).

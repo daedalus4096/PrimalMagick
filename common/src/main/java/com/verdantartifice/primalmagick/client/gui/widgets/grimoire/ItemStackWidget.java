@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.awt.Color;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -17,13 +14,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
+import java.awt.Color;
+
 /**
  * Display widget for showing a single itemstack.  Used on the requirements and recipe pages.
  * 
  * @author Daedalus4096
  */
 public class ItemStackWidget extends AbstractWidget {
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     protected ItemStack stack;
     protected boolean isComplete;

@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearch
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;

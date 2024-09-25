@@ -38,8 +38,8 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
  * @author Daedalus4096
  */
 public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTableTileEntity> implements ContainerListener {
-    public static final ResourceLocation PAPER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_paper_slot");
-    public static final ResourceLocation PENCIL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_pencil_slot");
+    public static final ResourceLocation PAPER_SLOT_TEXTURE = ResourceUtils.loc("item/empty_paper_slot");
+    public static final ResourceLocation PENCIL_SLOT_TEXTURE = ResourceUtils.loc("item/empty_pencil_slot");
     protected static final Component PAPER_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.research_table.slot.paper");
     protected static final Component PENCIL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.research_table.slot.pencil");
     

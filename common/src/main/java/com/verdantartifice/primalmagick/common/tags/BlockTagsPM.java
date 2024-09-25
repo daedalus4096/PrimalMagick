@@ -40,6 +40,6 @@ public class BlockTagsPM {
     public static final TagKey<Block> MAY_PLACE_HALLOWOOD_SAPLINGS = tag("may_place/hallowood_sapling");
     
     private static TagKey<Block> tag(String name) {
-        return BlockTags.create(PrimalMagick.resource(name));
+        return BlockTags.create(ResourceUtils.loc(name));
     }
 }

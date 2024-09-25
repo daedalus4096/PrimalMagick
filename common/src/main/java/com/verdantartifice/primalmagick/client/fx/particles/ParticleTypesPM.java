@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagick.client.fx.particles;
 
-import java.util.function.Function;
-
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -15,13 +13,15 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.function.Function;
+
 /**
  * Deferred registry for mod particle types.
  * 
  * @author Daedalus4096
  */
 public class ParticleTypesPM {
-    private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Constants.MOD_ID);
 
     public static void init() {
         PARTICLE_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());

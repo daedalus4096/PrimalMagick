@@ -1,18 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.apache.commons.lang3.mutable.MutableObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.joml.Vector2i;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.VocabularyWidget;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -24,7 +11,7 @@ import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
 import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -42,6 +29,17 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import org.apache.commons.lang3.mutable.MutableObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.joml.Vector2i;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * GUI screen for the gain comprehension mode of the scribe table block.
@@ -49,8 +47,8 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<ScribeGainComprehensionMenu> {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_gain_comprehension.png");
-    protected static final ResourceLocation PARCHMENT_SPRITE = PrimalMagick.resource("scribe_table/parchment");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/scribe_gain_comprehension.png");
+    protected static final ResourceLocation PARCHMENT_SPRITE = ResourceUtils.loc("scribe_table/parchment");
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected final Map<Vector2i, NodeButton> nodeButtons = new HashMap<>();
@@ -162,8 +160,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     }
     
     protected static class NodeButton extends ImageButton {
-        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(PrimalMagick.resource("scribe_table/grid_node_button"), PrimalMagick.resource("scribe_table/grid_node_button_disabled"), PrimalMagick.resource("scribe_table/grid_node_button_highlighted"), PrimalMagick.resource("scribe_table/grid_node_button_disabled_highlighted"));
-        protected static final ResourceLocation PLACEHOLDER = PrimalMagick.resource("scribe_table/grid_node_placeholder");
+        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(ResourceUtils.loc("scribe_table/grid_node_button"), ResourceUtils.loc("scribe_table/grid_node_button_disabled"), ResourceUtils.loc("scribe_table/grid_node_button_highlighted"), ResourceUtils.loc("scribe_table/grid_node_button_disabled_highlighted"));
+        protected static final ResourceLocation PLACEHOLDER = ResourceUtils.loc("scribe_table/grid_node_placeholder");
         
         protected final Player player;
         protected final RegistryAccess registryAccess;

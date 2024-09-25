@@ -1,19 +1,10 @@
 package com.verdantartifice.primalmagick.client.fx.particles;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import org.joml.Matrix4fStack;
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.client.renderers.types.ThickLinesRenderType;
 import com.verdantartifice.primalmagick.common.util.LineSegment;
 import com.verdantartifice.primalmagick.common.util.VectorUtils;
-
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -23,6 +14,12 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4fStack;
+import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Particle type shown when casting a bolt-vehicle spell.

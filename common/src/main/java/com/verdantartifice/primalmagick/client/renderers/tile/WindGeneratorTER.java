@@ -1,13 +1,10 @@
 package com.verdantartifice.primalmagick.client.renderers.tile;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.blocks.devices.AbstractWindGeneratorBlock;
 import com.verdantartifice.primalmagick.common.tiles.devices.WindGeneratorTileEntity;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -17,6 +14,8 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.awt.*;
 
 /**
  * Custom tile entity renderer for zephyr engine and void turbine blocks.

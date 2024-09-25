@@ -10,6 +10,6 @@ public class SpellPropertyTagsPM {
     public static final TagKey<SpellProperty> AMPLIFIABLE = create("amplifiable");
     
     private static TagKey<SpellProperty> create(String name) {
-        return TagKey.create(RegistryKeysPM.SPELL_PROPERTIES, PrimalMagick.resource(name));
+        return TagKey.create(RegistryKeysPM.SPELL_PROPERTIES, ResourceUtils.loc(name));
     }
 }

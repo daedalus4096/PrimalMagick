@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.awt.Color;
-import java.util.List;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
@@ -12,12 +9,14 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RequirementW
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
+
+import java.awt.Color;
+import java.util.List;
 
 /**
  * Grimoire page showing the requirements needed to advance a research entry to its next stage.

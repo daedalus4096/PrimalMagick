@@ -1,16 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui.hud;
 
-import java.awt.Color;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -21,13 +16,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.item.ItemStack;
 
+import java.awt.Color;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * HUD overlay to show wand mana levels.
  * 
  * @author Daedalus4096
  */
 public class WandHudOverlay {
-    private static final ResourceLocation HUD_TEXTURE = PrimalMagick.resource("textures/gui/hud.png");
+    private static final ResourceLocation HUD_TEXTURE = ResourceUtils.loc("textures/gui/hud.png");
     
     public static boolean shouldRender() {
         Minecraft mc = Minecraft.getInstance();

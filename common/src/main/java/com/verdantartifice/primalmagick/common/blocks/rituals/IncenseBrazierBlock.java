@@ -44,7 +44,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
     public static final MapCodec<IncenseBrazierBlock> CODEC = simpleCodec(IncenseBrazierBlock::new);
     
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/incense_brazier"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/incense_brazier"));
 
     public IncenseBrazierBlock(Block.Properties properties) {
         super(properties);

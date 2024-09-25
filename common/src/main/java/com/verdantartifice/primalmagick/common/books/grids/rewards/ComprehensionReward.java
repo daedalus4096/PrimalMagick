@@ -30,7 +30,7 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
-    private static final ResourceLocation ICON_LOC = PrimalMagick.resource("textures/gui/sprites/scribe_table/gain_comprehension.png");
+    private static final ResourceLocation ICON_LOC = ResourceUtils.loc("textures/gui/sprites/scribe_table/gain_comprehension.png");
     
     public static final MapCodec<ComprehensionReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ResourceKey.codec(RegistryKeysPM.BOOK_LANGUAGES).fieldOf("language").forGetter(r -> r.language),

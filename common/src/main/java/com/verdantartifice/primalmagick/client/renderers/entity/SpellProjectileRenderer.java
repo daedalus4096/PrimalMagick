@@ -24,7 +24,7 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntity> {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/spell_projectile.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/spell_projectile.png");
     protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);
 
     protected final SpellProjectileModel model;

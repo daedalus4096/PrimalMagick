@@ -1,14 +1,9 @@
 package com.verdantartifice.primalmagick.client.fx;
 
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticleData;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticleData;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
@@ -20,6 +15,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Create client-side special effects, usually involving particles.

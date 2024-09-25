@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+
+import java.awt.Color;
 
 /**
  * A string element to be rendered on a grimoire page.

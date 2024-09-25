@@ -108,7 +108,7 @@ public class PlayerWard implements IPlayerWard {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = PrimalMagick.resource("capability_ward");
+        public static final ResourceLocation NAME = ResourceUtils.loc("capability_ward");
         
         private final IPlayerWard instance = new PlayerWard();
         private final LazyOptional<IPlayerWard> holder = LazyOptional.of(() -> instance);   // Cache a lazy optional of the capability instance

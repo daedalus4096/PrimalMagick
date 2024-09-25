@@ -19,7 +19,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * @see {@link net.minecraft.world.level.levelgen.structure.DesertPyramidPiece}
  */
 public class LibraryPiece extends AbstractLibraryPiece {
-    protected static final ResourceLocation TEMPLATE = PrimalMagick.resource("library/default");
+    protected static final ResourceLocation TEMPLATE = ResourceUtils.loc("library/default");
     
     public LibraryPiece(StructureTemplateManager templateManager, ResourceKey<Culture> cultureKey, BlockPos pos) {
         super(templateManager, TEMPLATE, cultureKey, pos);

@@ -36,7 +36,7 @@ public class TrimMaterialsPM {
     public static final ResourceKey<TrimMaterial> RUNE_HALLOWED = registryKey("rune_hallowed", Sources.HALLOWED);
     
     private static ResourceKey<TrimMaterial> registryKey(String name, Source source) {
-        ResourceKey<TrimMaterial> key = ResourceKey.create(Registries.TRIM_MATERIAL, PrimalMagick.resource(name));
+        ResourceKey<TrimMaterial> key = ResourceKey.create(Registries.TRIM_MATERIAL, ResourceUtils.loc(name));
         if (SOURCE_MAPPING.containsKey(key)) {
             throw new IllegalStateException("Source mapping already set for trim material " + name);
         }

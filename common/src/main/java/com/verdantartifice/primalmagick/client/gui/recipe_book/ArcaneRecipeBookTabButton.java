@@ -1,14 +1,10 @@
 package com.verdantartifice.primalmagick.client.gui.recipe_book;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
-
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -18,6 +14,9 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Tab button for an arcane recipe book category.

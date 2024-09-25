@@ -144,7 +144,7 @@ public class GridDefinition {
         }
         
         public static Builder grid(String name, HolderLookup.Provider registries) {
-            return new Builder(PrimalMagick.resource(name), registries);
+            return new Builder(ResourceUtils.loc(name), registries);
         }
         
         public static Builder grid(ResourceLocation key, HolderLookup.Provider registries) {

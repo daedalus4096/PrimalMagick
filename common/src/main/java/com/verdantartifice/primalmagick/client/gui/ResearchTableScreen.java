@@ -1,12 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.awt.Color;
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.OptionalInt;
-import java.util.Set;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.InactiveWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidListWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidUnlockWidget;
@@ -26,7 +19,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.MaterialInstance;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -39,14 +32,20 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 
+import java.awt.Color;
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.OptionalInt;
+import java.util.Set;
+
 /**
  * GUI screen for the research table block.
  * 
  * @author Daedalus4096
  */
 public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTableMenu> {
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table.png");
-    private static final ResourceLocation OVERLAY = PrimalMagick.resource("textures/gui/research_table_overlay.png");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table.png");
+    private static final ResourceLocation OVERLAY = ResourceUtils.loc("textures/gui/research_table_overlay.png");
     private static final DecimalFormat FORMATTER = new DecimalFormat("###.#");
     
     protected long lastCheck = 0L;

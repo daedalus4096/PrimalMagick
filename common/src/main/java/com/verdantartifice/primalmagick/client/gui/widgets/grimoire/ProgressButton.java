@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
-
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 

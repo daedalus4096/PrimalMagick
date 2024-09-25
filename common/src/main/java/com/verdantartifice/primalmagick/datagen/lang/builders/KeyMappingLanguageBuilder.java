@@ -28,6 +28,6 @@ public class KeyMappingLanguageBuilder extends AbstractLanguageBuilder<KeyMappin
 
     @Override
     protected ResourceLocation getBaseRegistryKey(KeyMapping base) {
-        return PrimalMagick.resource(this.regName.toLowerCase());
+        return ResourceUtils.loc(this.regName.toLowerCase());
     }
 }

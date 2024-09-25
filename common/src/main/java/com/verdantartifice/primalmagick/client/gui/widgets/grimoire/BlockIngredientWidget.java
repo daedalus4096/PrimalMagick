@@ -1,11 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -19,6 +15,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Display widget for showing all the possible blocks for a given block ingredient.  Used on

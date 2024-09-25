@@ -58,7 +58,7 @@ public class KnowledgeGainItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        String translationKey = "item." + PrimalMagick.MODID + "." + ForgeRegistries.ITEMS.getKey(this).getPath() + ".tooltip";
+        String translationKey = "item." + Constants.MOD_ID + "." + ForgeRegistries.ITEMS.getKey(this).getPath() + ".tooltip";
         tooltip.add(Component.translatable(translationKey).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 }

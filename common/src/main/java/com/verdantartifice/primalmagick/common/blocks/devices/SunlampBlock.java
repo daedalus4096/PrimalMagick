@@ -56,8 +56,8 @@ public class SunlampBlock extends BaseEntityBlock {
     protected static final Logger LOGGER = LogManager.getLogger();
     public static final DirectionProperty ATTACHMENT = DirectionProperty.create("attachment", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
     
-    protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/sunlamp_ground_base"));
-    protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/sunlamp_hanging_base"));
+    protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/sunlamp_ground_base"));
+    protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/sunlamp_hanging_base"));
     
     protected final ResourceKey<Block> glowBlockKey;
     

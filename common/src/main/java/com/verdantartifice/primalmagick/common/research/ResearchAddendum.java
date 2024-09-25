@@ -92,11 +92,11 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         }
         
         public Builder(ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int addendumIndex) {
-            this(PrimalMagick.MODID, entryBuilder, parentKey, addendumIndex);
+            this(Constants.MOD_ID, entryBuilder, parentKey, addendumIndex);
         }
         
         public Builder recipe(String name) {
-            return this.recipe(PrimalMagick.resource(name));
+            return this.recipe(ResourceUtils.loc(name));
         }
         
         public Builder recipe(String modId, String name) {

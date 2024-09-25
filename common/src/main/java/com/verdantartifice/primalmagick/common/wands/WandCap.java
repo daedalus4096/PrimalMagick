@@ -44,7 +44,7 @@ public class WandCap implements IWandComponent {
     protected final ResourceLocation staffMrlNamespace; // Resource location of the staff cap's model, stored in a blockstate file
     
     public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, int siphon) {
-        this(tag, rarity, costModifier, siphon, PrimalMagick.resource(tag + "_wand_cap"), PrimalMagick.resource(tag + "_staff_cap"));
+        this(tag, rarity, costModifier, siphon, ResourceUtils.loc(tag + "_wand_cap"), ResourceUtils.loc(tag + "_staff_cap"));
     }
     
     public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, int siphon, @Nonnull ResourceLocation wmrln, @Nonnull ResourceLocation smrln) {

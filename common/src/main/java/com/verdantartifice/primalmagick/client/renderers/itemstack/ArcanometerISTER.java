@@ -35,11 +35,11 @@ import net.minecraftforge.entity.PartEntity;
  */
 @SuppressWarnings("deprecation")
 public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL0 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_0"), "");
-    private static final ModelResourceLocation MRL1 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_1"), "");
-    private static final ModelResourceLocation MRL2 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_2"), "");
-    private static final ModelResourceLocation MRL3 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_3"), "");
-    private static final ModelResourceLocation MRL4 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_4"), "");
+    private static final ModelResourceLocation MRL0 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_0"), "");
+    private static final ModelResourceLocation MRL1 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_1"), "");
+    private static final ModelResourceLocation MRL2 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_2"), "");
+    private static final ModelResourceLocation MRL3 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_3"), "");
+    private static final ModelResourceLocation MRL4 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_4"), "");
     private static AtomicBoolean isRenderingScreen = new AtomicBoolean(false);
     
     public ArcanometerISTER() {

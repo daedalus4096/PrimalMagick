@@ -20,7 +20,7 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
     public static final MapCodec<ResearchEntryKey> CODEC = ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("rootKey").xmap(ResearchEntryKey::new, key -> key.rootKey);
     public static final StreamCodec<ByteBuf, ResearchEntryKey> STREAM_CODEC = ResourceKey.streamCodec(RegistryKeysPM.RESEARCH_ENTRIES).map(ResearchEntryKey::new, key -> key.rootKey);
     
-    private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
+    private static final ResourceLocation ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
 
     protected final ResourceKey<ResearchEntry> rootKey;
     

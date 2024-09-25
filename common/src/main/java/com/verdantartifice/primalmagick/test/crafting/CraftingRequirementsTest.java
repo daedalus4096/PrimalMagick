@@ -1,23 +1,21 @@
 package com.verdantartifice.primalmagick.test.crafting;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.test.TestUtils;
-
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraftforge.common.crafting.SimpleCraftingContainer;
 import net.minecraftforge.gametest.GameTestHolder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@GameTestHolder(PrimalMagick.MODID + ".crafting_requirements")
+@GameTestHolder(Constants.MOD_ID + ".crafting_requirements")
 public class CraftingRequirementsTest {
     protected static final Logger LOGGER = LogManager.getLogger();
 

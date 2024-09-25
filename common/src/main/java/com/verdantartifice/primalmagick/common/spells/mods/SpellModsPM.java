@@ -17,7 +17,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class SpellModsPM {
-    private static final DeferredRegister<SpellModType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.SPELL_MOD_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<SpellModType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.SPELL_MOD_TYPES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<SpellModType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
@@ -33,6 +33,6 @@ public class SpellModsPM {
     
     protected static <T extends AbstractSpellMod<T>> RegistryObject<SpellModType<T>> register(String id, int sortOrder, Supplier<T> instanceSupplier, Supplier<AbstractRequirement<?>> requirementSupplier,
             Supplier<SpellProperty> tiebreaker, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return DEFERRED_TYPES.register(id, () -> new SpellModType<T>(PrimalMagick.resource(id), sortOrder, instanceSupplier, requirementSupplier, tiebreaker, codec, streamCodec));
+        return DEFERRED_TYPES.register(id, () -> new SpellModType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, tiebreaker, codec, streamCodec));
     }
 }

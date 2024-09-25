@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarMenu;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+
+import javax.annotation.Nonnull;
 
 /**
  * Base GUI screen for runescribing altar blocks.

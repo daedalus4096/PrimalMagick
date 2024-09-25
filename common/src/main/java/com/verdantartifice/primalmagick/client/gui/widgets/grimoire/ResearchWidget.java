@@ -1,16 +1,12 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.util.List;
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,14 +19,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Display widget for showing a specific required research entry on the requirements page.
  * 
  * @author Daedalus4096
  */
 public class ResearchWidget extends AbstractWidget {
-    protected static final ResourceLocation UNKNOWN_TEXTURE = PrimalMagick.resource("textures/research/research_unknown.png");
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
+    protected static final ResourceLocation UNKNOWN_TEXTURE = ResourceUtils.loc("textures/research/research_unknown.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
     
     protected final AbstractResearchKey<?> key;
     protected final ResearchEntry researchEntry;

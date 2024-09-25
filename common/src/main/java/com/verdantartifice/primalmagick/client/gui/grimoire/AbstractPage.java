@@ -1,19 +1,17 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.awt.Color;
-
-import javax.annotation.Nullable;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+
+import javax.annotation.Nullable;
+import java.awt.Color;
 
 /**
  * Root class for all grimoire pages.
@@ -21,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public abstract class AbstractPage implements GuiEventListener {
-    private static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
+    private static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     /**
      * Render this grimoire page

@@ -1,19 +1,18 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IShapedArcaneRecipePM;
 import com.verdantartifice.primalmagick.common.crafting.IShapelessArcaneRecipePM;
-
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
+
+import javax.annotation.Nonnull;
 
 /**
  * Factory class to create an appropriate grimoire recipe page for a given recipe type.

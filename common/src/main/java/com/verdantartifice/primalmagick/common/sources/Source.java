@@ -30,8 +30,8 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class Source implements StringRepresentable {
-    protected static final ResourceLocation UNKNOWN_IMAGE = PrimalMagick.resource("textures/research/research_unknown.png");
-    protected static final ResourceLocation UNKNOWN_ATLAS_LOC = PrimalMagick.resource("research/research_unknown");
+    protected static final ResourceLocation UNKNOWN_IMAGE = ResourceUtils.loc("textures/research/research_unknown.png");
+    protected static final ResourceLocation UNKNOWN_ATLAS_LOC = ResourceUtils.loc("research/research_unknown");
     
     public static final Codec<Source> CODEC = ResourceLocation.CODEC.xmap(Sources::get, Source::getId);
     public static final StreamCodec<ByteBuf, Source> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(Sources::get, Source::getId);
@@ -144,7 +144,7 @@ public class Source implements StringRepresentable {
     
     @Nonnull
     public static String getUnknownTranslationKey() {
-        return getNameTranslationKey(PrimalMagick.resource("unknown"));
+        return getNameTranslationKey(ResourceUtils.loc("unknown"));
     }
     
     @Nonnull

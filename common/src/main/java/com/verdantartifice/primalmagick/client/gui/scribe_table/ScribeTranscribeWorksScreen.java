@@ -1,11 +1,10 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeTranscribeWorksMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.TranscribeActionPacket;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
@@ -19,7 +18,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<ScribeTranscribeWorksMenu> {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_transcribe_works.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/scribe_transcribe_works.png");
     
     public ScribeTranscribeWorksScreen(ScribeTranscribeWorksMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -49,7 +48,7 @@ public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<Scrib
     }
     
     protected static class TranscribeButton extends ImageButton {
-        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(PrimalMagick.resource("scribe_table/transcribe_button"), PrimalMagick.resource("scribe_table/transcribe_button_highlighted"));
+        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(ResourceUtils.loc("scribe_table/transcribe_button"), ResourceUtils.loc("scribe_table/transcribe_button_highlighted"));
         protected static final Component TRANSCRIBE_BUTTON_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.button.transcribe");
 
         public TranscribeButton(ScribeTranscribeWorksMenu menu, int leftPos, int topPos) {

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.test.research;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -23,7 +23,6 @@ import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.test.TestUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -36,7 +35,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder(PrimalMagick.MODID + ".research_requirements")
+@GameTestHolder(Constants.MOD_ID + ".research_requirements")
 public class ResearchRequirementsTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void research_requirement(GameTestHelper helper) {

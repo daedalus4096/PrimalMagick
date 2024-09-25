@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualLecternBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEntity;
-
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;

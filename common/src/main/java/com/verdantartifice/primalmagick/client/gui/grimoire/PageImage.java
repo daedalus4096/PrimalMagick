@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import javax.annotation.Nullable;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+
+import javax.annotation.Nullable;
 
 /**
  * An image element to be rendered on a grimoire page.

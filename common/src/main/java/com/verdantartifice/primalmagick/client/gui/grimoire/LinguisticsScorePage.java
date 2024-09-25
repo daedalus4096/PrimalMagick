@@ -1,19 +1,18 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+
+import java.awt.Color;
 
 /**
  * Grimoire page showing the player's relevant linguistics scores (i.e. comprehension and vocabulary)

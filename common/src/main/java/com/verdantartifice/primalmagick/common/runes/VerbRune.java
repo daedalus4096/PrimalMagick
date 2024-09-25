@@ -27,7 +27,7 @@ public class VerbRune extends Rune {
     }, v -> v.getId());
     
     public VerbRune(@Nonnull String tag, @Nonnull ResourceKey<ResearchEntry> discoveryKey) {
-        super(PrimalMagick.resource(tag), new ResearchRequirement(new ResearchEntryKey(discoveryKey)), Rarity.COMMON, false, -1);
+        super(ResourceUtils.loc(tag), new ResearchRequirement(new ResearchEntryKey(discoveryKey)), Rarity.COMMON, false, -1);
     }
     
     @Override

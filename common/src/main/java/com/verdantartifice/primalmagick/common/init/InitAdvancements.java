@@ -25,6 +25,6 @@ public class InitAdvancements {
     }
     
     private static void registerCriterion(String name, CriterionTrigger<?> trigger) {
-        CriteriaTriggers.register(String.join(":", PrimalMagick.MODID, name), trigger);
+        CriteriaTriggers.register(String.join(":", Constants.MOD_ID, name), trigger);
     }
 }

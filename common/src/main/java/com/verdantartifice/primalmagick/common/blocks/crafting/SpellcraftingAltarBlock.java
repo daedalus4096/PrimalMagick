@@ -41,7 +41,7 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock {
     public static final MapCodec<SpellcraftingAltarBlock> CODEC = simpleCodec(SpellcraftingAltarBlock::new);
     
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/spellcrafting_altar"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/spellcrafting_altar"));
 
     public SpellcraftingAltarBlock(Block.Properties properties) {
         super(properties);

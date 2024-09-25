@@ -1,11 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
-import org.joml.Matrix4fStack;
-
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Matrix4fStack;
 
 public class ItemStackRadialMenuItem extends TextRadialMenuItem {
     private final int slot;

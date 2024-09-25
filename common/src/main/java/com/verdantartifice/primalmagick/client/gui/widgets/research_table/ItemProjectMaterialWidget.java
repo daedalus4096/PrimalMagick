@@ -1,13 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,6 +14,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Display widget for an item research project material.  Used on the research table screen.

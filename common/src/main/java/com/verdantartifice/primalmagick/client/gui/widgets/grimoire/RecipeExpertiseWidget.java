@@ -2,10 +2,9 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class RecipeExpertiseWidget extends AbstractWidget {
-    protected static final ResourceLocation ICON_LOC = PrimalMagick.resource("textures/research/expertise_expert.png");
+    protected static final ResourceLocation ICON_LOC = ResourceUtils.loc("textures/research/expertise_expert.png");
     
     protected final RecipeHolder<?> recipeHolder;
     

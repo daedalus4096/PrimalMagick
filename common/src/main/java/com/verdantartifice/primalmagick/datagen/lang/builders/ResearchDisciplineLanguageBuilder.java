@@ -25,6 +25,6 @@ public class ResearchDisciplineLanguageBuilder extends AbstractLanguageBuilder<R
 
     @Override
     protected ResourceLocation getBaseRegistryKey(ResearchDiscipline base) {
-        return PrimalMagick.resource(base.key().getRootKey().location().getPath().toLowerCase());
+        return ResourceUtils.loc(base.key().getRootKey().location().getPath().toLowerCase());
     }
 }

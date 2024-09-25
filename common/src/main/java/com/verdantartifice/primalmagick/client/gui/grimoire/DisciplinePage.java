@@ -1,21 +1,19 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.EntryButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.SectionHeaderWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.UpcomingEntryWidget;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Grimoire page showing the list of available research entries in a discipline.

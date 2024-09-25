@@ -1,13 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeBookComponent;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
@@ -16,7 +8,7 @@ import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -26,6 +18,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GUI screen for arcane workbench block.
@@ -34,7 +32,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  */
 public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkbenchMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/arcane_workbench.png");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/arcane_workbench.png");
     
     protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();
     protected List<ManaCostWidget> costWidgets = new ArrayList<>();

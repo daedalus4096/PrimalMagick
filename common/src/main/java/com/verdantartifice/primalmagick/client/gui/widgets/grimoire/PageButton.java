@@ -1,9 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -19,7 +18,7 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class PageButton extends Button {
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     protected GrimoireScreen screen;
     protected boolean isNext;

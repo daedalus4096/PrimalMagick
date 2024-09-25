@@ -28,7 +28,7 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
     });
     
     private static final String PREFIX = "*";
-    private static final ResourceLocation ICON_MAP = PrimalMagick.resource("textures/research/research_map.png");
+    private static final ResourceLocation ICON_MAP = ResourceUtils.loc("textures/research/research_map.png");
 
     protected final EntityType<?> entityType;
     

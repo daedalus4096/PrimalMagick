@@ -25,6 +25,6 @@ public class KnowledgeTypeLanguageBuilder extends AbstractLanguageBuilder<Knowle
 
     @Override
     protected ResourceLocation getBaseRegistryKey(KnowledgeType base) {
-        return PrimalMagick.resource(base.getSerializedName());
+        return ResourceUtils.loc(base.getSerializedName());
     }
 }

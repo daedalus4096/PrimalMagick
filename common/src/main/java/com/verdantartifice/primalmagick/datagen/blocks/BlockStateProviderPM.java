@@ -77,7 +77,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     protected static final ResourceLocation TRANSLUCENT = ResourceLocation.withDefaultNamespace("translucent");
 
     public BlockStateProviderPM(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, PrimalMagick.MODID, exFileHelper);
+        super(output, Constants.MOD_ID, exFileHelper);
     }
 
     @Override
@@ -237,7 +237,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleExistingBlockWithItem(BlocksPM.WOOD_TABLE.get());
         this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.ANALYSIS_TABLE.get());
         this.calcinatorBlockWithItem(BlocksPM.ESSENCE_FURNACE.get(), state -> this.models()
-                .getExistingFile(PrimalMagick.resource("block/essence_furnace").withSuffix(state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : "")));
+                .getExistingFile(ResourceUtils.loc("block/essence_furnace").withSuffix(state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : "")));
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_BASIC.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_ENCHANTED.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_FORBIDDEN.get());
@@ -322,7 +322,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void emptyBlock(Block block) {
-        this.simpleBlock(block, this.models().getExistingFile(PrimalMagick.resource("block/empty")));
+        this.simpleBlock(block, this.models().getExistingFile(ResourceUtils.loc("block/empty")));
     }
     
     private void simpleCubeBlockWithItem(Block block) {
@@ -385,14 +385,14 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void pillarBlockWithItem(PillarBlock block, ResourceLocation sideTexture, ResourceLocation innerTexture, ResourceLocation topTexture, ResourceLocation bottomTexture, ResourceLocation baseTexture) {
-        ModelFile baseModel = this.models().withExistingParent(this.name(block), PrimalMagick.resource("block/pillar"))
+        ModelFile baseModel = this.models().withExistingParent(this.name(block), ResourceUtils.loc("block/pillar"))
                 .texture("side", sideTexture)
                 .texture("inner", innerTexture);
-        ModelFile topModel = this.models().withExistingParent(this.name(block) + "_top", PrimalMagick.resource("block/pillar_top"))
+        ModelFile topModel = this.models().withExistingParent(this.name(block) + "_top", ResourceUtils.loc("block/pillar_top"))
                 .texture("side", topTexture)
                 .texture("inner", innerTexture)
                 .texture("top", baseTexture);
-        ModelFile bottomModel = this.models().withExistingParent(this.name(block) + "_bottom", PrimalMagick.resource("block/pillar_bottom"))
+        ModelFile bottomModel = this.models().withExistingParent(this.name(block) + "_bottom", ResourceUtils.loc("block/pillar_bottom"))
                 .texture("side", bottomTexture)
                 .texture("inner", innerTexture)
                 .texture("bottom", baseTexture);
@@ -544,16 +544,16 @@ public class BlockStateProviderPM extends BlockStateProvider {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
             ResourceLocation renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
-            models.put(PillarBlock.Type.BASE, phase, this.models().withExistingParent(baseName + "_" + phaseName, PrimalMagick.resource("block/pillar"))
+            models.put(PillarBlock.Type.BASE, phase, this.models().withExistingParent(baseName + "_" + phaseName, ResourceUtils.loc("block/pillar"))
                     .texture("side", sideTexture.withSuffix("_" + phaseName))
                     .texture("inner", innerTexture.withSuffix("_" + phaseName))
                     .renderType(renderType));
-            models.put(PillarBlock.Type.TOP, phase, this.models().withExistingParent(baseName + "_top_" + phaseName, PrimalMagick.resource("block/pillar_top"))
+            models.put(PillarBlock.Type.TOP, phase, this.models().withExistingParent(baseName + "_top_" + phaseName, ResourceUtils.loc("block/pillar_top"))
                     .texture("side", topTexture.withSuffix("_" + phaseName))
                     .texture("inner", innerTexture.withSuffix("_" + phaseName))
                     .texture("top", baseTexture.withSuffix("_" + phaseName))
                     .renderType(renderType));
-            models.put(PillarBlock.Type.BOTTOM, phase, this.models().withExistingParent(baseName + "_bottom_" + phaseName, PrimalMagick.resource("block/pillar_bottom"))
+            models.put(PillarBlock.Type.BOTTOM, phase, this.models().withExistingParent(baseName + "_bottom_" + phaseName, ResourceUtils.loc("block/pillar_bottom"))
                     .texture("side", bottomTexture.withSuffix("_" + phaseName))
                     .texture("inner", innerTexture.withSuffix("_" + phaseName))
                     .texture("bottom", baseTexture.withSuffix("_" + phaseName))
@@ -589,12 +589,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void ritualCandleBlockWithItem(RitualCandleBlock block) {
-        this.simpleExistingBlockWithItem(block, PrimalMagick.resource("block/ritual_candle"));
+        this.simpleExistingBlockWithItem(block, ResourceUtils.loc("block/ritual_candle"));
     }
     
     private void manaFontBlockWithItem(AbstractManaFontBlock block, ResourceLocation baseTexture) {
-        this.simpleBlock(block, this.models().withExistingParent(this.name(block), PrimalMagick.resource("block/template_mana_font")).texture("base", baseTexture));
-        this.itemModels().withExistingParent(this.name(block), PrimalMagick.resource("item/template_mana_font"));
+        this.simpleBlock(block, this.models().withExistingParent(this.name(block), ResourceUtils.loc("block/template_mana_font")).texture("base", baseTexture));
+        this.itemModels().withExistingParent(this.name(block), ResourceUtils.loc("item/template_mana_font"));
     }
     
     private void horizontalExistingBlockWithItem(Block block) {
@@ -700,7 +700,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     
     private void spellcraftingAltarBlockWithItem() {
         Block block = BlocksPM.SPELLCRAFTING_ALTAR.get();
-        ModelFile model = this.models().getExistingFile(PrimalMagick.resource("block/spellcrafting_altar"));
+        ModelFile model = this.models().getExistingFile(ResourceUtils.loc("block/spellcrafting_altar"));
         this.horizontalBlock(block, model);
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("builtin/entity")).transforms()
             .transform(ItemDisplayContext.GUI).rotation(30, 225, 0).translation(0, 0, 0).scale(0.625F).end()
@@ -774,7 +774,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void runescribingAltarBlockWithItem(RunescribingAltarBlock block, ResourceLocation texture) {
-        ModelFile model = this.models().withExistingParent(this.name(block), PrimalMagick.resource("block/runescribing_altar"))
+        ModelFile model = this.models().withExistingParent(this.name(block), ResourceUtils.loc("block/runescribing_altar"))
                 .texture("altar_bottom", texture)
                 .texture("altar_side", this.blockTexture(block).withSuffix("_side"));
         this.simpleBlockWithItem(block, model);

@@ -12,8 +12,8 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class PrimaliteShieldISTER extends AbstractTieredShieldISTER {
-    public static final ResourceLocation TEXTURE_SHIELD_BASE = PrimalMagick.resource("entity/shield/primalite_shield_base");
-    public static final ResourceLocation TEXTURE_SHIELD_NO_PATTERN = PrimalMagick.resource("entity/shield/primalite_shield_base_nopattern");
+    public static final ResourceLocation TEXTURE_SHIELD_BASE = ResourceUtils.loc("entity/shield/primalite_shield_base");
+    public static final ResourceLocation TEXTURE_SHIELD_NO_PATTERN = ResourceUtils.loc("entity/shield/primalite_shield_base_nopattern");
     @SuppressWarnings("deprecation")
     protected static final Material LOCATION_SHIELD_BASE = new Material(TextureAtlas.LOCATION_BLOCKS, TEXTURE_SHIELD_BASE);
     @SuppressWarnings("deprecation")

@@ -216,7 +216,7 @@ public class PlayerStats implements IPlayerStats {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = PrimalMagick.resource("capability_stats");
+        public static final ResourceLocation NAME = ResourceUtils.loc("capability_stats");
         
         private final IPlayerStats instance = new PlayerStats();
         private final LazyOptional<IPlayerStats> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance

@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.tooltips;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

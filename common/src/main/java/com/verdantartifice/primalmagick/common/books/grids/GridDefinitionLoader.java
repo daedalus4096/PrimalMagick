@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
 public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();

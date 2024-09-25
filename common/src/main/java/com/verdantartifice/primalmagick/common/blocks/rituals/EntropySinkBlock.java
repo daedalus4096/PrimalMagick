@@ -50,7 +50,7 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
     
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/entropy_sink"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/entropy_sink"));
     
     public EntropySinkBlock(Block.Properties properties) {
         super(properties);

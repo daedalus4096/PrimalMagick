@@ -1,11 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.recipe_book;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -18,6 +14,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GUI button for a recipe collection in the arcane recipe book.

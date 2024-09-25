@@ -14,9 +14,9 @@ import net.minecraft.util.StringRepresentable;
 
 public enum ResearchTier implements StringRepresentable {
     BASIC(0, "basic", 1, 4, Optional.empty()),
-    EXPERT(1, "expert", 5, 20, Optional.of(IconDefinition.of(PrimalMagick.resource("textures/research/expertise_expert.png")))),
-    MASTER(2, "master", 25, 100, Optional.of(IconDefinition.of(PrimalMagick.resource("textures/research/expertise_master.png")))),
-    SUPREME(3, "supreme", 125, 500, Optional.of(IconDefinition.of(PrimalMagick.resource("textures/research/expertise_supreme.png"))));
+    EXPERT(1, "expert", 5, 20, Optional.of(IconDefinition.of(ResourceUtils.loc("textures/research/expertise_expert.png")))),
+    MASTER(2, "master", 25, 100, Optional.of(IconDefinition.of(ResourceUtils.loc("textures/research/expertise_master.png")))),
+    SUPREME(3, "supreme", 125, 500, Optional.of(IconDefinition.of(ResourceUtils.loc("textures/research/expertise_supreme.png"))));
     
     private static final IntFunction<ResearchTier> BY_ID = ByIdMap.continuous(ResearchTier::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
     public static final Codec<ResearchTier> CODEC = StringRepresentable.fromEnum(ResearchTier::values);

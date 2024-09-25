@@ -1,19 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -26,6 +21,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Display widget for showing attunement threshold bonuses.
@@ -51,9 +50,9 @@ public class AttunementThresholdWidget extends AbstractWidget {
         this.threshold = threshold;
         Minecraft mc = Minecraft.getInstance();
         this.suppressed = AttunementManager.isSuppressed(mc.player, source);
-        this.texture = PrimalMagick.resource("textures/attunements/threshold_" + source.getId().getPath() + "_" + threshold.getTag() + ".png");
+        this.texture = ResourceUtils.loc("textures/attunements/threshold_" + source.getId().getPath() + "_" + threshold.getTag() + ".png");
         List<Component> lines = new ArrayList<>();
-        lines.add(Component.translatable(String.join(".", "attunement_threshold", PrimalMagick.MODID, threshold.getTag(), source.getId().getPath())));
+        lines.add(Component.translatable(String.join(".", "attunement_threshold", Constants.MOD_ID, threshold.getTag(), source.getId().getPath())));
         if (this.suppressed) {
             lines.add(Component.translatable("tooltip.primalmagick.attunement_shackles.shackled").withStyle(ChatFormatting.RED));
         }

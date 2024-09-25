@@ -1,14 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.util.List;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -16,6 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.common.crafting.IShapedRecipe;
+
+import java.util.List;
 
 /**
  * Base class for grimoire shaped recipe pages.

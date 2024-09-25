@@ -1,14 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
-import java.awt.Color;
-import java.util.List;
-import java.util.function.BiConsumer;
-
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,6 +15,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+
+import java.awt.Color;
+import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * Class for interactable display widgets which show how much of a type of essence is in an

@@ -21,7 +21,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  */
 public class ResearchEntryTagsProviderPM extends TagsProvider<ResearchEntry> {
     public ResearchEntryTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
-        super(output, RegistryKeysPM.RESEARCH_ENTRIES, future, PrimalMagick.MODID, helper);
+        super(output, RegistryKeysPM.RESEARCH_ENTRIES, future, Constants.MOD_ID, helper);
     }
 
     @Override

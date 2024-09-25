@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ResearchTopicTypesPM {
-    private static final DeferredRegister<ResearchTopicType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.RESEARCH_TOPIC_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<ResearchTopicType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.RESEARCH_TOPIC_TYPES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<ResearchTopicType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
@@ -30,6 +30,6 @@ public class ResearchTopicTypesPM {
     public static final RegistryObject<ResearchTopicType<SourceResearchTopic>> SOURCE = register("source", SourceResearchTopic.CODEC, SourceResearchTopic.STREAM_CODEC);
     
     protected static <T extends AbstractResearchTopic<T>> RegistryObject<ResearchTopicType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return DEFERRED_TYPES.register(id, () -> new ResearchTopicType<T>(PrimalMagick.resource(id), codec, streamCodec));
+        return DEFERRED_TYPES.register(id, () -> new ResearchTopicType<T>(ResourceUtils.loc(id), codec, streamCodec));
     }
 }

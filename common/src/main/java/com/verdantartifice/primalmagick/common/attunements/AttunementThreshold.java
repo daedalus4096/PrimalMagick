@@ -42,7 +42,7 @@ public enum AttunementThreshold implements StringRepresentable {
 
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "attunement_threshold", PrimalMagick.MODID, this.getSerializedName());
+        return String.join(".", "attunement_threshold", Constants.MOD_ID, this.getSerializedName());
     }
 
     @Override

@@ -184,7 +184,7 @@ public class ArcaneShapedRecipeBuilder {
     }
     
     public ArcaneShapedRecipeBuilder expertiseGroup(String groupName) {
-        return this.expertiseGroup(PrimalMagick.resource(groupName));
+        return this.expertiseGroup(ResourceUtils.loc(groupName));
     }
     
     public ArcaneShapedRecipeBuilder discipline(ResourceKey<ResearchDiscipline> rawDiscipline) {

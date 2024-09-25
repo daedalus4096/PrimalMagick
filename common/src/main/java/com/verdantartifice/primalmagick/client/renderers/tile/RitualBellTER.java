@@ -2,9 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualBellTileEntity;
-
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,7 +23,7 @@ import net.minecraft.util.Mth;
  */
 @SuppressWarnings("deprecation")
 public class RitualBellTER implements BlockEntityRenderer<RitualBellTileEntity> {
-    public static final ResourceLocation TEXTURE = PrimalMagick.resource("entity/ritual_bell_body");
+    public static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/ritual_bell_body");
     public static final Material BODY_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS, TEXTURE);
     protected final ModelPart modelRenderer;
 

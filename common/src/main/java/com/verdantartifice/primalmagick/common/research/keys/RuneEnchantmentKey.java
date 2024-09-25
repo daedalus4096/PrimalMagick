@@ -23,7 +23,7 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
     public static final StreamCodec<RegistryFriendlyByteBuf, RuneEnchantmentKey> STREAM_CODEC = StreamCodec.composite(Enchantment.STREAM_CODEC, k -> k.enchant, RuneEnchantmentKey::new);
     
     private static final String PREFIX = "&";
-    private static final ResourceLocation ICON_TUBE = PrimalMagick.resource("textures/research/research_tube.png");
+    private static final ResourceLocation ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
 
     protected final Holder<Enchantment> enchant;
     

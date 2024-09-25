@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.events.InputEvents;
 import com.verdantartifice.primalmagick.client.gui.radial.GenericRadialMenu;
@@ -16,7 +12,6 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,6 +19,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class SpellSelectionRadialScreen extends Screen {
     private ItemStack stackEquipped = ItemStack.EMPTY;

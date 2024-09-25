@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.test.research;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -17,7 +17,6 @@ import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.test.TestUtils;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -28,7 +27,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameType;
 import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder(PrimalMagick.MODID + ".research_keys")
+@GameTestHolder(Constants.MOD_ID + ".research_keys")
 public class ResearchKeysTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void research_discipline(GameTestHelper helper) {

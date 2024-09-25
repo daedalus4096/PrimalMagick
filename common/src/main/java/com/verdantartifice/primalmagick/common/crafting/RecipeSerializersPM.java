@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class RecipeSerializersPM {
-    private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, PrimalMagick.MODID);
+    private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Constants.MOD_ID);
     
     public static void init() {
         RECIPE_SERIALIZERS.register(PrimalMagick.getModLoadingContext().getModEventBus());

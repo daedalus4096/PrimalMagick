@@ -35,7 +35,7 @@ import net.minecraftforge.items.IItemHandler;
  */
 public class WandInscriptionTableMenu extends AbstractContainerMenu {
     protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.scroll");
-    protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("wand_inscription");
+    protected static final ResourceLocation RECIPE_LOC = ResourceUtils.loc("wand_inscription");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final InscriptionComponentInventory componentInv = new InscriptionComponentInventory();

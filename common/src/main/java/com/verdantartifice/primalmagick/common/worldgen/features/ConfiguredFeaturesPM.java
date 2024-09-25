@@ -49,7 +49,7 @@ public class ConfiguredFeaturesPM {
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_HALLOWOOD = registerKey("tree_hallowood");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, PrimalMagick.resource(name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceUtils.loc(name));
     }
     
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {

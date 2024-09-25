@@ -21,6 +21,6 @@ public class LootConditionTypesPM {
     }
     
     protected static LootItemConditionType register(String name, MapCodec<? extends LootItemCondition> codec) {
-        return Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, PrimalMagick.resource(name), new LootItemConditionType(codec));
+        return Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, ResourceUtils.loc(name), new LootItemConditionType(codec));
     }
 }

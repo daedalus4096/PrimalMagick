@@ -1,17 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
-import org.lwjgl.glfw.GLFW;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
 import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -23,7 +13,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.SpellComponent;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -33,6 +23,14 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import org.lwjgl.glfw.GLFW;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * GUI screen for the spellcrafting altar block.
@@ -40,7 +38,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<SpellcraftingAltarMenu> {
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/spellcrafting_altar.png");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/spellcrafting_altar.png");
     
     private final Map<Vec3i, Component> texts = new HashMap<>();
     private final List<GuiEventListener> localWidgets = new ArrayList<>();

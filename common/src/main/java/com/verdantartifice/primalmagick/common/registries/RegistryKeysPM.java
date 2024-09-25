@@ -51,6 +51,6 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<RitualStepType<?>>> RITUAL_STEP_TYPES = key("ritual_step_types");
     
     private static <T> ResourceKey<Registry<T>> key(String name) {
-        return ResourceKey.createRegistryKey(PrimalMagick.resource(name));
+        return ResourceKey.createRegistryKey(ResourceUtils.loc(name));
     }
 }

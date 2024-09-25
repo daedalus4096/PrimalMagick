@@ -10,6 +10,6 @@ public class ItemReferencesPM {
     public static final ResourceKey<Item> HYDROMELON_SEEDS = createKey("hydromelon_seeds");
     
     private static ResourceKey<Item> createKey(String id) {
-        return ResourceKey.create(Registries.ITEM, PrimalMagick.resource(id));
+        return ResourceKey.create(Registries.ITEM, ResourceUtils.loc(id));
     }
 }

@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class MenuTypesPM {
-    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Constants.MOD_ID);
     
     public static void init() {
         MENU_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());

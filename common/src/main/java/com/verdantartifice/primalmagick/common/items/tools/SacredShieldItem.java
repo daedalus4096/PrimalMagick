@@ -22,7 +22,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class SacredShieldItem extends AbstractTieredShieldItem implements IEnchantedByDefault {
-    public static final ResourceLocation TEXTURE = PrimalMagick.resource("entity/shield/sacred_shield");
+    public static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/shield/sacred_shield");
     
     public SacredShieldItem(Item.Properties properties) {
         super(ItemTierPM.HALLOWSTEEL, properties);

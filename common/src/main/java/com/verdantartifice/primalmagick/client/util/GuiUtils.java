@@ -1,16 +1,5 @@
 package com.verdantartifice.primalmagick.client.util;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -20,7 +9,6 @@ import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -45,6 +33,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.joml.Matrix4f;
+import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Utility methods for dealing with GUI rendering.

@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class SpellPropertyLanguageBuilder extends AbstractLanguageBuilder<String, SpellPropertyLanguageBuilder> {
     public SpellPropertyLanguageBuilder(String id, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(id, () -> String.join(".", "spells", PrimalMagick.MODID, "property", id), untracker, adder);
+        super(id, () -> String.join(".", "spells", Constants.MOD_ID, "property", id), untracker, adder);
     }
 
     @Override
@@ -24,6 +24,6 @@ public class SpellPropertyLanguageBuilder extends AbstractLanguageBuilder<String
 
     @Override
     protected ResourceLocation getBaseRegistryKey(String base) {
-        return PrimalMagick.resource(base.toLowerCase());
+        return ResourceUtils.loc(base.toLowerCase());
     }
 }

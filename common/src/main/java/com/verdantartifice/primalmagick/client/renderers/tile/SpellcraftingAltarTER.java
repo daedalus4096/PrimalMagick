@@ -1,17 +1,13 @@
 package com.verdantartifice.primalmagick.client.renderers.tile;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -23,13 +19,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.awt.*;
+
 /**
  * Custom tile entity renderer for spellcrafting altar blocks.
  * 
  * @author Daedalus4096
  */
 public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingAltarTileEntity> {
-    public static final ResourceLocation RING_TEXTURE = PrimalMagick.resource("entity/spellcrafting_altar/spellcrafting_altar_ring");
+    public static final ResourceLocation RING_TEXTURE = ResourceUtils.loc("entity/spellcrafting_altar/spellcrafting_altar_ring");
     public static final Material RING_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, RING_TEXTURE);
 
     protected final SpellcraftingAltarRingModel ringModel;

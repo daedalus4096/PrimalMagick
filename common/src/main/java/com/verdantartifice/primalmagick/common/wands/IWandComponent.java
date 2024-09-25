@@ -44,7 +44,7 @@ public interface IWandComponent {
      */
     @Nonnull
     public default String getNameTranslationKey() {
-        return String.join(".", this.getComponentType().getSerializedName(), PrimalMagick.MODID, this.getTag());
+        return String.join(".", this.getComponentType().getSerializedName(), Constants.MOD_ID, this.getTag());
     }
 
     /**

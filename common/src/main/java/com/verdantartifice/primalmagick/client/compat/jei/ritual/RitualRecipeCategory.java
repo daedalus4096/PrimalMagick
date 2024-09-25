@@ -1,10 +1,6 @@
 package com.verdantartifice.primalmagick.client.compat.jei.ritual;
 
-import java.awt.Color;
-import java.util.List;
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
@@ -13,7 +9,6 @@ import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
@@ -30,15 +25,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
+import java.awt.*;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Recipe category class for a ritual recipe.
  * 
  * @author Daedalus4096
  */
 public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualRecipe>> {
-    public static final ResourceLocation UID = PrimalMagick.resource("ritual_altar");
-    private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/ritual_altar.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
+    public static final ResourceLocation UID = ResourceUtils.loc("ritual_altar");
+    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/ritual_altar.png");
+    private static final ResourceLocation RESEARCH_TEXTURE = ResourceUtils.loc("textures/item/grimoire.png");
     private static final int MANA_COST_X_OFFSET = 118;
     private static final int MANA_COST_Y_OFFSET = 14;
     private static final int RESEARCH_X_OFFSET = 118;

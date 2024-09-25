@@ -1,15 +1,10 @@
 package com.verdantartifice.primalmagick.client.books;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.resources.ResourceLocation;
+import java.util.*;
 
 /**
  * Container for mod style guides.

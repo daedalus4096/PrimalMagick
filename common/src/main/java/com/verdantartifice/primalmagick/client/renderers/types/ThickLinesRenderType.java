@@ -1,11 +1,10 @@
 package com.verdantartifice.primalmagick.client.renderers.types;
 
-import java.util.OptionalDouble;
-
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
-
 import net.minecraft.client.renderer.RenderType;
+
+import java.util.OptionalDouble;
 
 public class ThickLinesRenderType extends RenderType {
     private static final LineStateShard THICK_LINE_STATE = new LineStateShard(OptionalDouble.of(6.0D));

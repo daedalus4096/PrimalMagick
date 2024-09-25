@@ -1,17 +1,5 @@
 package com.verdantartifice.primalmagick.client.books;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.stream.Stream;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.books.BookHelper;
@@ -20,7 +8,6 @@ import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.books.Lexicon;
 import com.verdantartifice.primalmagick.common.books.LexiconManager;
-
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.resources.language.I18n;
@@ -36,6 +23,17 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.world.item.enchantment.Enchantment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * Helper methods for dealing with static books on the client side.

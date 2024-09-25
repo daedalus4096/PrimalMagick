@@ -13,9 +13,9 @@ import net.minecraft.stats.StatFormatter;
  */
 public class StatsPM {
     // Commonly used research icons
-    private static final ResourceLocation ICON_BAG = PrimalMagick.resource("textures/research/research_bag.png");
-    private static final ResourceLocation ICON_MAP = PrimalMagick.resource("textures/research/research_map.png");
-    private static final ResourceLocation ICON_TUBE = PrimalMagick.resource("textures/research/research_tube.png");
+    private static final ResourceLocation ICON_BAG = ResourceUtils.loc("textures/research/research_bag.png");
+    private static final ResourceLocation ICON_MAP = ResourceUtils.loc("textures/research/research_map.png");
+    private static final ResourceLocation ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
     
     // Display stats
     public static final Stat GRIMOIRE_READ = Stat.builder("grimoire_read").icon(ICON_BAG).build();

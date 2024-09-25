@@ -26,7 +26,7 @@ public enum ScribeTableMode implements StringRepresentable {
     private ScribeTableMode(String tag) {
         this.tag = tag;
         this.tooltip = Component.translatable("tooltip.primalmagick.scribe_table.mode." + tag);
-        this.iconSprite = PrimalMagick.resource("scribe_table/" + tag);
+        this.iconSprite = ResourceUtils.loc("scribe_table/" + tag);
     }
 
     public String getTag() {

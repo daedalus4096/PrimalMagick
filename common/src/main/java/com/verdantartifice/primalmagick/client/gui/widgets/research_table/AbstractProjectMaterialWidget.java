@@ -1,13 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,13 +13,18 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Base class for a display widget for a research project material.  Used on the research table screen.
  * 
  * @author Daedalus4096
  */
 public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMaterial<T>> extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
 
     protected final T material;
     protected final boolean complete;

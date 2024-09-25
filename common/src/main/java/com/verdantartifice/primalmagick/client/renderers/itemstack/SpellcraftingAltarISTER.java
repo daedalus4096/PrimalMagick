@@ -33,7 +33,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class SpellcraftingAltarISTER extends BlockEntityWithoutLevelRenderer {
     private static final ModelResourceLocation MRL = BlockModelShaper.stateToModelLocation(BlocksPM.SPELLCRAFTING_ALTAR.get().defaultBlockState());
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("entity/spellcrafting_altar/spellcrafting_altar_ring");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/spellcrafting_altar/spellcrafting_altar_ring");
     private static final Material RING_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, TEXTURE);
     
     protected SpellcraftingAltarRingModel model;

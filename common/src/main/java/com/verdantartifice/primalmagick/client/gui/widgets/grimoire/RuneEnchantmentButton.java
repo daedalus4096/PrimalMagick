@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.core.Holder;

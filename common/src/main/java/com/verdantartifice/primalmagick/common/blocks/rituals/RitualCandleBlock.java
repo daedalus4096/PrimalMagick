@@ -55,7 +55,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     ).apply(instance, RitualCandleBlock::new));
     
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/ritual_candle"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/ritual_candle"));
     
     protected static final List<RitualCandleBlock> REGISTRY = new ArrayList<>();
 

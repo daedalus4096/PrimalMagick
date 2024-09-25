@@ -39,7 +39,7 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
     protected static final Component CORE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_glamour_table.slot.core");
     protected static final Component CAP_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_glamour_table.slot.cap");
     protected static final Component GEM_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_glamour_table.slot.gem");
-    protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("wand_glamour");
+    protected static final ResourceLocation RECIPE_LOC = ResourceUtils.loc("wand_glamour");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final GlamourComponentInventory componentInv = new GlamourComponentInventory();

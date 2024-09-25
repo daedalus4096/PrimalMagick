@@ -1,13 +1,10 @@
 package com.verdantartifice.primalmagick.client.util;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.StaticBookViewScreen;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +12,8 @@ import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nullable;
 
 /**
  * Collection of utility methods for accessing client-side data.

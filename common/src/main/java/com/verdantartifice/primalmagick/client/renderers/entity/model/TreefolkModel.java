@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.renderers.entity.model;
 
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkArmPose;
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
-
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

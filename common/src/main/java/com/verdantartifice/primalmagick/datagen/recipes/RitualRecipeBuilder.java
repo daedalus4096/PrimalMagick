@@ -295,7 +295,7 @@ public class RitualRecipeBuilder {
     }
     
     public RitualRecipeBuilder expertiseGroup(String groupName) {
-        return this.expertiseGroup(PrimalMagick.resource(groupName));
+        return this.expertiseGroup(ResourceUtils.loc(groupName));
     }
     
     public RitualRecipeBuilder discipline(ResourceKey<ResearchDiscipline> rawDiscipline) {

@@ -17,7 +17,7 @@ import net.minecraft.world.damagesource.DamageType;
  */
 public class DamageTypeLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<DamageType>, DamageTypeLanguageBuilder> {
     public DamageTypeLanguageBuilder(ResourceKey<DamageType> patternKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(patternKey, () -> String.join(".", "death", "attack", PrimalMagick.MODID, patternKey.location().getPath()), untracker, adder);
+        super(patternKey, () -> String.join(".", "death", "attack", Constants.MOD_ID, patternKey.location().getPath()), untracker, adder);
     }
 
     @Override

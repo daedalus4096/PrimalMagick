@@ -16,7 +16,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class RitualStepTypesPM {
-    private static final DeferredRegister<RitualStepType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.RITUAL_STEP_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<RitualStepType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.RITUAL_STEP_TYPES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<RitualStepType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
@@ -29,6 +29,6 @@ public class RitualStepTypesPM {
     
     protected static <T extends AbstractRitualStep<T>> RegistryObject<RitualStepType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec,
             BiFunction<RitualAltarTileEntity, T, Boolean> action) {
-        return DEFERRED_TYPES.register(id, () -> new RitualStepType<T>(PrimalMagick.resource(id), codec, streamCodec, action));
+        return DEFERRED_TYPES.register(id, () -> new RitualStepType<T>(ResourceUtils.loc(id), codec, streamCodec, action));
     }
 }

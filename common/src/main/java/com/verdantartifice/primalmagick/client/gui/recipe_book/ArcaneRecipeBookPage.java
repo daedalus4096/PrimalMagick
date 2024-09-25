@@ -1,14 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.recipe_book;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -19,6 +12,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.world.item.crafting.RecipeHolder;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * GUI page for the arcane recipe book.

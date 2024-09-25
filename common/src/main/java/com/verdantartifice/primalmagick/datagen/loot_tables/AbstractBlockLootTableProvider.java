@@ -81,7 +81,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     @Override
     protected Iterable<Block> getKnownBlocks() {
         // Limit this data provider to blocks added by the mod
-        return ForgeRegistries.BLOCKS.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(PrimalMagick.MODID)).map(entry -> entry.getValue()).toList();
+        return ForgeRegistries.BLOCKS.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(entry -> entry.getValue()).toList();
     }
 
     private void registerLootTableBuilder(Block block, LootTable.Builder builder) {
@@ -176,7 +176,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> blocks = ForgeRegistries.BLOCKS.getKeys().stream().filter(loc -> loc.getNamespace().equals(PrimalMagick.MODID)).collect(Collectors.toSet());
+        Set<ResourceLocation> blocks = ForgeRegistries.BLOCKS.getKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
         
         // Warn for each mod block that didn't have a loot table registered
         blocks.removeAll(this.registeredBlocks);

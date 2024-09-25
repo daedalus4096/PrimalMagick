@@ -17,6 +17,6 @@ public class EnchantmentTagsPM {
     public static final TagKey<Enchantment> RUNE_EXCLUSIVE_ENCHANTMENTS = create("rune_exclusive_enchantments");
     
     private static TagKey<Enchantment> create(String name) {
-        return TagKey.create(Registries.ENCHANTMENT, PrimalMagick.resource(name));
+        return TagKey.create(Registries.ENCHANTMENT, ResourceUtils.loc(name));
     }
 }

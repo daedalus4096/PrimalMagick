@@ -21,7 +21,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  */
 public class RecipeSerializerTagsProviderPM extends TagsProvider<RecipeSerializer<?>> {
     public RecipeSerializerTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
-        super(output, Registries.RECIPE_SERIALIZER, future, PrimalMagick.MODID, helper);
+        super(output, Registries.RECIPE_SERIALIZER, future, Constants.MOD_ID, helper);
     }
 
     @Override

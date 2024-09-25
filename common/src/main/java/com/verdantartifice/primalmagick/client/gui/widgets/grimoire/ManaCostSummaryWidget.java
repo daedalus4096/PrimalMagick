@@ -2,10 +2,9 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -22,7 +21,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ManaCostSummaryWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/mana_cost_summary_widget.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/mana_cost_summary_widget.png");
 
     protected SourceList manaCosts;
     

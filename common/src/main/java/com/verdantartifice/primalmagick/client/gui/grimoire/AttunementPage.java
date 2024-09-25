@@ -1,23 +1,21 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementMeterWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementThresholdWidget;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Grimoire page showing the details of a discovered attunement.
@@ -25,7 +23,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class AttunementPage extends AbstractPage {
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/attunement_meter.png");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/attunement_meter.png");
 
     protected Source source;
     protected List<IPageElement> contents = new ArrayList<>();

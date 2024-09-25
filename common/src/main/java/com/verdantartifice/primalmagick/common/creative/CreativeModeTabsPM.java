@@ -22,7 +22,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class CreativeModeTabsPM {
-    private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, PrimalMagick.MODID);
+    private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
     private static final List<ICreativeTabRegistration> TAB_REGISTRATIONS = new ArrayList<>();
     
     public static void init() {
@@ -46,7 +46,7 @@ public class CreativeModeTabsPM {
     }
     
     // Register mod creative tab
-    public static final RegistryObject<CreativeModeTab> TAB = TABS.register(PrimalMagick.MODID, () -> CreativeModeTab.builder()
+    public static final RegistryObject<CreativeModeTab> TAB = TABS.register(Constants.MOD_ID, () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.primalmagick"))
             .icon(() -> new ItemStack(ItemsPM.GRIMOIRE.get()))
             .displayItems((params, output) -> {

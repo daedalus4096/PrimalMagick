@@ -14,7 +14,7 @@ import net.minecraftforge.items.IItemHandler;
  * @author Daedalus4096
  */
 public class WandSlot extends FilteredSlot {
-    public static final ResourceLocation TEXTURE = PrimalMagick.resource("item/empty_wand_slot");
+    public static final ResourceLocation TEXTURE = ResourceUtils.loc("item/empty_wand_slot");
     protected static final Component WAND_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_gui.slot.wand");
     protected static final Component STAFF_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_gui.slot.staff");
     

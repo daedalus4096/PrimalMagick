@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.awt.Color;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -13,13 +10,15 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import java.awt.Color;
+
 /**
  * Display widget for showing required knowledge (e.g. observations).
  * 
  * @author Daedalus4096
  */
 public class KnowledgeWidget extends AbstractWidget {
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     protected KnowledgeType type;
     protected int amount;

@@ -1,12 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ResearchWidget;
@@ -15,7 +8,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
@@ -23,13 +16,18 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Grimoire page showing the page elements for a rune enchantment.
  * 
  * @author Daedalus4096
  */
 public class RuneEnchantmentPage extends AbstractPage {
-    protected static final ResourceLocation OVERLAY = PrimalMagick.resource("textures/gui/grimoire_overlay.png");
+    protected static final ResourceLocation OVERLAY = ResourceUtils.loc("textures/gui/grimoire_overlay.png");
     protected static final ResearchEntryKey UNKNOWN_RUNE_KEY = new ResearchEntryKey(ResearchEntries.UNKNOWN_RUNE);
     
     protected Holder<Enchantment> enchant;

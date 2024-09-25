@@ -30,7 +30,7 @@ public class SourceRune extends Rune {
     protected final Source source;
     
     public SourceRune(@Nonnull String tag, @Nonnull ResourceKey<ResearchEntry> discoveryKey, @Nonnull Source source) {
-        super(PrimalMagick.resource(tag), new ResearchRequirement(new ResearchEntryKey(discoveryKey)), Rarity.COMMON, false, -1);
+        super(ResourceUtils.loc(tag), new ResearchRequirement(new ResearchEntryKey(discoveryKey)), Rarity.COMMON, false, -1);
         this.source = source;
     }
     

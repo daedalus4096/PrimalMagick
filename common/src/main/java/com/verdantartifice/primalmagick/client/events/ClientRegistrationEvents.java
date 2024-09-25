@@ -1,24 +1,9 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.books.LexiconLoader;
 import com.verdantartifice.primalmagick.client.books.StyleGuideLoader;
-import com.verdantartifice.primalmagick.client.fx.particles.AirCurrentParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.DripParticlePM;
-import com.verdantartifice.primalmagick.client.fx.particles.InfernalFlameParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.ManaSparkleParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.OfferingParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
-import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.PropMarkerParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.SpellSparkleParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.SpellcraftingRuneParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
+import com.verdantartifice.primalmagick.client.fx.particles.*;
 import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecorator;
 import com.verdantartifice.primalmagick.client.tips.TipLoader;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
@@ -29,24 +14,21 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.IItemDecorator;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
-import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Respond to client-only Forge registration events.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistrationEvents {
     protected static final Logger LOGGER = LogManager.getLogger();
     
@@ -79,7 +61,7 @@ public class ClientRegistrationEvents {
      */
     @SubscribeEvent
     public static void onModelRegister(ModelEvent.RegisterAdditional event) {
-        event.register(new ModelResourceLocation(PrimalMagick.resource("mundane_wand_core"), ""));
+        event.register(new ModelResourceLocation(ResourceUtils.loc("mundane_wand_core"), ""));
         for (WandCore core : WandCore.getAllWandCores()) {
             event.register(new ModelResourceLocation(core.getWandModelResourceLocationNamespace(), ""));
             event.register(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), ""));
@@ -92,7 +74,7 @@ public class ClientRegistrationEvents {
             event.register(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), ""));
         }
         for (int index = 0; index <= 4; index++) {
-            event.register(new ModelResourceLocation(PrimalMagick.resource("arcanometer_" + index), ""));
+            event.register(new ModelResourceLocation(ResourceUtils.loc("arcanometer_" + index), ""));
         }
     }
     

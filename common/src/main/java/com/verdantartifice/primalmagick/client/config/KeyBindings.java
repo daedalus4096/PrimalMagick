@@ -1,23 +1,20 @@
 package com.verdantartifice.primalmagick.client.config;
 
-import org.lwjgl.glfw.GLFW;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.lwjgl.glfw.GLFW;
 
 /**
  * Define and register custom client key-bindings.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class KeyBindings {
-    public static final String KEY_CATEGORY = "key.categories." + PrimalMagick.MODID;
+    public static final String KEY_CATEGORY = "key.categories." + Constants.MOD_ID;
     
     public static final KeyMapping CHANGE_SPELL_KEY = new KeyMapping("key.primalmagick.change_spell", GLFW.GLFW_KEY_R, KEY_CATEGORY);                   // Key for changing the active spell of a wand
     public static final KeyMapping CARPET_FORWARD_KEY = new KeyMapping("key.primalmagick.carpet_forward", GLFW.GLFW_KEY_W, KEY_CATEGORY);               // Key for commanding a flying carpet forward

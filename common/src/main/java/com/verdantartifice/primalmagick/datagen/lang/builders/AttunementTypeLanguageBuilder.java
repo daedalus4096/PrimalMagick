@@ -25,6 +25,6 @@ public class AttunementTypeLanguageBuilder extends AbstractLanguageBuilder<Attun
 
     @Override
     protected ResourceLocation getBaseRegistryKey(AttunementType base) {
-        return PrimalMagick.resource(base.getSerializedName());
+        return ResourceUtils.loc(base.getSerializedName());
     }
 }

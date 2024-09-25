@@ -14,6 +14,6 @@ public class EnchantmentLocationBasedEffectsPM {
     }
     
     private static void register(Registry<MapCodec<? extends EnchantmentLocationBasedEffect>> registry, String name, MapCodec<? extends EnchantmentLocationBasedEffect> codec) {
-        Registry.register(registry, PrimalMagick.resource(name), codec);
+        Registry.register(registry, ResourceUtils.loc(name), codec);
     }
 }

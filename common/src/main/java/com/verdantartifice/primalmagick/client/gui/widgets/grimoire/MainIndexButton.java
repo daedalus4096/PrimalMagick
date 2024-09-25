@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;

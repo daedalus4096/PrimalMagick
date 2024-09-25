@@ -200,7 +200,7 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<Tag> {
-        public static final ResourceLocation NAME = PrimalMagick.resource("capability_mana_storage");
+        public static final ResourceLocation NAME = ResourceUtils.loc("capability_mana_storage");
         private static final Logger LOGGER = LogManager.getLogger();
         
         private ManaStorage instance;

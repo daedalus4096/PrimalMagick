@@ -34,7 +34,7 @@ public class DamageTypesPM {
     public static final ResourceKey<DamageType> SORCERY_HALLOWED = createSorcery("sorcery_hallowed", Sources.HALLOWED);
     
     private static ResourceKey<DamageType> create(String name) {
-        return ResourceKey.create(Registries.DAMAGE_TYPE, PrimalMagick.resource(name));
+        return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceUtils.loc(name));
     }
     
     private static ResourceKey<DamageType> createSorcery(String name, Source source) {
@@ -52,17 +52,17 @@ public class DamageTypesPM {
     }
     
     public static void bootstrap(BootstrapContext<DamageType> context) {
-        context.register(BLEEDING, new DamageType(String.join(".", PrimalMagick.MODID, "bleeding"), 0.1F));
-        context.register(BLOOD_ROSE, new DamageType(String.join(".", PrimalMagick.MODID, "blood_rose"), 0.1F));
-        context.register(HELLISH_CHAIN, new DamageType(String.join(".", PrimalMagick.MODID, "hellish_chain"), 0F));
-        context.register(SORCERY_EARTH, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_earth"), 0F));
-        context.register(SORCERY_SEA, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_sea"), 0F));
-        context.register(SORCERY_SKY, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_sky"), 0F));
-        context.register(SORCERY_SUN, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_sun"), 0F));
-        context.register(SORCERY_MOON, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_moon"), 0F));
-        context.register(SORCERY_BLOOD, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_blood"), 0F));
-        context.register(SORCERY_INFERNAL, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_infernal"), 0F));
-        context.register(SORCERY_VOID, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_void"), 0F));
-        context.register(SORCERY_HALLOWED, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_hallowed"), 0F));
+        context.register(BLEEDING, new DamageType(String.join(".", Constants.MOD_ID, "bleeding"), 0.1F));
+        context.register(BLOOD_ROSE, new DamageType(String.join(".", Constants.MOD_ID, "blood_rose"), 0.1F));
+        context.register(HELLISH_CHAIN, new DamageType(String.join(".", Constants.MOD_ID, "hellish_chain"), 0F));
+        context.register(SORCERY_EARTH, new DamageType(String.join(".", Constants.MOD_ID, "sorcery_earth"), 0F));
+        context.register(SORCERY_SEA, new DamageType(String.join(".", Constants.MOD_ID, "sorcery_sea"), 0F));
+        context.register(SORCERY_SKY, new DamageType(String.join(".", Constants.MOD_ID, "sorcery_sky"), 0F));
+        context.register(SORCERY_SUN, new DamageType(String.join(".", Constants.MOD_ID, "sorcery_sun"), 0F));
+        context.register(SORCERY_MOON, new DamageType(String.join(".", Constants.MOD_ID, "sorcery_moon"), 0F));
+        context.register(SORCERY_BLOOD, new DamageType(String.join(".", Constants.MOD_ID, "sorcery_blood"), 0F));
+        context.register(SORCERY_INFERNAL, new DamageType(String.join(".", Constants.MOD_ID, "sorcery_infernal"), 0F));
+        context.register(SORCERY_VOID, new DamageType(String.join(".", Constants.MOD_ID, "sorcery_void"), 0F));
+        context.register(SORCERY_HALLOWED, new DamageType(String.join(".", Constants.MOD_ID, "sorcery_hallowed"), 0F));
     }
 }

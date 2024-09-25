@@ -36,13 +36,13 @@ import net.minecraftforge.items.IItemHandler;
  * @author Daedalus4096
  */
 public class WandAssemblyTableMenu extends AbstractContainerMenu {
-    public static final ResourceLocation CAP_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_cap_slot");
-    public static final ResourceLocation CORE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_core_slot");
-    public static final ResourceLocation GEM_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_gem_slot");
+    public static final ResourceLocation CAP_SLOT_TEXTURE = ResourceUtils.loc("item/empty_wand_cap_slot");
+    public static final ResourceLocation CORE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_wand_core_slot");
+    public static final ResourceLocation GEM_SLOT_TEXTURE = ResourceUtils.loc("item/empty_wand_gem_slot");
     protected static final Component CORE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_assembly_table.slot.core");
     protected static final Component CAP_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_assembly_table.slot.cap");
     protected static final Component GEM_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_assembly_table.slot.gem");
-    protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("wand_assembly");
+    protected static final ResourceLocation RECIPE_LOC = ResourceUtils.loc("wand_assembly");
     
     protected final ContainerLevelAccess worldPosCallable;
     protected final WandComponentInventory componentInv = new WandComponentInventory();

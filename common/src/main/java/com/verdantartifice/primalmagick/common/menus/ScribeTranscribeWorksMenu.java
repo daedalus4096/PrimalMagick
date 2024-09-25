@@ -24,8 +24,8 @@ import net.minecraft.world.item.Items;
  * @author Daedalus4096
  */
 public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
-    public static final ResourceLocation BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_book_slot");
-    public static final ResourceLocation WRITABLE_BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_writable_book_slot");
+    public static final ResourceLocation BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
+    public static final ResourceLocation WRITABLE_BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_writable_book_slot");
     protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
     protected static final Component WRITABLE_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.writable_book");
 

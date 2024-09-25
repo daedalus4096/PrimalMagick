@@ -21,22 +21,22 @@ import net.minecraft.world.item.DyeColor;
  * @author Daedalus4096
  */
 public class FlyingCarpetRenderer extends EntityRenderer<FlyingCarpetEntity> {
-    private static final ResourceLocation TEXTURE_WHITE = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_white.png");
-    private static final ResourceLocation TEXTURE_ORANGE = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_orange.png");
-    private static final ResourceLocation TEXTURE_MAGENTA = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_magenta.png");
-    private static final ResourceLocation TEXTURE_LIGHT_BLUE = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_light_blue.png");
-    private static final ResourceLocation TEXTURE_YELLOW = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_yellow.png");
-    private static final ResourceLocation TEXTURE_LIME = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_lime.png");
-    private static final ResourceLocation TEXTURE_PINK = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_pink.png");
-    private static final ResourceLocation TEXTURE_GRAY = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_gray.png");
-    private static final ResourceLocation TEXTURE_LIGHT_GRAY = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_light_gray.png");
-    private static final ResourceLocation TEXTURE_CYAN = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_cyan.png");
-    private static final ResourceLocation TEXTURE_PURPLE = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_purple.png");
-    private static final ResourceLocation TEXTURE_BLUE = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_blue.png");
-    private static final ResourceLocation TEXTURE_BROWN = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_brown.png");
-    private static final ResourceLocation TEXTURE_GREEN = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_green.png");
-    private static final ResourceLocation TEXTURE_RED = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_red.png");
-    private static final ResourceLocation TEXTURE_BLACK = PrimalMagick.resource("textures/entity/flying_carpet/flying_carpet_black.png");
+    private static final ResourceLocation TEXTURE_WHITE = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_white.png");
+    private static final ResourceLocation TEXTURE_ORANGE = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_orange.png");
+    private static final ResourceLocation TEXTURE_MAGENTA = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_magenta.png");
+    private static final ResourceLocation TEXTURE_LIGHT_BLUE = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_light_blue.png");
+    private static final ResourceLocation TEXTURE_YELLOW = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_yellow.png");
+    private static final ResourceLocation TEXTURE_LIME = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_lime.png");
+    private static final ResourceLocation TEXTURE_PINK = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_pink.png");
+    private static final ResourceLocation TEXTURE_GRAY = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_gray.png");
+    private static final ResourceLocation TEXTURE_LIGHT_GRAY = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_light_gray.png");
+    private static final ResourceLocation TEXTURE_CYAN = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_cyan.png");
+    private static final ResourceLocation TEXTURE_PURPLE = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_purple.png");
+    private static final ResourceLocation TEXTURE_BLUE = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_blue.png");
+    private static final ResourceLocation TEXTURE_BROWN = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_brown.png");
+    private static final ResourceLocation TEXTURE_GREEN = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_green.png");
+    private static final ResourceLocation TEXTURE_RED = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_red.png");
+    private static final ResourceLocation TEXTURE_BLACK = ResourceUtils.loc("textures/entity/flying_carpet/flying_carpet_black.png");
     
     protected final FlyingCarpetModel model;
 

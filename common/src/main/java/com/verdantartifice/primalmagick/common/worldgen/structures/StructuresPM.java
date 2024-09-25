@@ -43,7 +43,7 @@ public class StructuresPM {
     public static final ResourceKey<Structure> FORBIDDEN_LIBRARY = registryKey("forbidden_library");
     
     private static ResourceKey<Structure> registryKey(String name) {
-        return ResourceKey.create(Registries.STRUCTURE, PrimalMagick.resource(name));
+        return ResourceKey.create(Registries.STRUCTURE, ResourceUtils.loc(name));
     }
 
     private static Structure.StructureSettings structure(HolderSet<Biome> pBiomes, Map<MobCategory, StructureSpawnOverride> pSpawnOverrides, GenerationStep.Decoration pStep, TerrainAdjustment pTerrainAdaptation) {

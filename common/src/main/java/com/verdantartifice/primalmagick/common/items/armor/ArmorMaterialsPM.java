@@ -26,7 +26,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class ArmorMaterialsPM {
-    private static final DeferredRegister<ArmorMaterial> DEFERRED_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, PrimalMagick.MODID);
+    private static final DeferredRegister<ArmorMaterial> DEFERRED_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, Constants.MOD_ID);
     
     public static void init() {
         DEFERRED_MATERIALS.register(PrimalMagick.getModLoadingContext().getModEventBus());
@@ -91,7 +91,7 @@ public class ArmorMaterialsPM {
         float pKnockbackResistance,
         Supplier<Ingredient> pRepairIngredient
     ) {
-        List<ArmorMaterial.Layer> list = List.of(new ArmorMaterial.Layer(PrimalMagick.resource(pName)));
+        List<ArmorMaterial.Layer> list = List.of(new ArmorMaterial.Layer(ResourceUtils.loc(pName)));
         return register(pName, pDefense, pEnchantmentValue, pEquipSound, pToughness, pKnockbackResistance, pRepairIngredient, list);
     }
 

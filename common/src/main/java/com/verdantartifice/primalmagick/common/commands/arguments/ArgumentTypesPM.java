@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class ArgumentTypesPM {
-    private static final DeferredRegister<ArgumentTypeInfo<?, ?>> COMMAND_ARGUMENT_TYPES = DeferredRegister.create(ForgeRegistries.COMMAND_ARGUMENT_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<ArgumentTypeInfo<?, ?>> COMMAND_ARGUMENT_TYPES = DeferredRegister.create(ForgeRegistries.COMMAND_ARGUMENT_TYPES, Constants.MOD_ID);
 
     public static void init() {
         COMMAND_ARGUMENT_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());

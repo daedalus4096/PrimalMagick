@@ -1,12 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.util.List;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -18,13 +15,15 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
+import java.util.List;
+
 /**
  * GUI screen for runecarving table block.
  * 
  * @author Daedalus4096
  */
 public class RunecarvingTableScreen extends AbstractContainerScreenPM<RunecarvingTableMenu> {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/runecarving_table.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/runecarving_table.png");
     
     protected float sliderProgress;
     protected boolean clickedOnSroll;

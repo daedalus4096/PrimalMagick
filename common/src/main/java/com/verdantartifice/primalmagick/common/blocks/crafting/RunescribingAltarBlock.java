@@ -35,7 +35,7 @@ public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDe
             propertiesCodec()
     ).apply(instance, RunescribingAltarBlock::new));
     
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/runescribing_altar_basic"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/runescribing_altar_basic"));
     
     protected final DeviceTier tier;
 

@@ -43,7 +43,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
     public static final MapCodec<BloodletterBlock> CODEC = simpleCodec(BloodletterBlock::new);
     
     public static final BooleanProperty FILLED = BooleanProperty.create("filled");
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/bloodletter"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/bloodletter"));
     
     public BloodletterBlock(Block.Properties properties) {
         super(properties);

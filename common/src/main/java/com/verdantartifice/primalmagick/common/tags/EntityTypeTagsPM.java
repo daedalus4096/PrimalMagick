@@ -38,6 +38,6 @@ public class EntityTypeTagsPM {
     public static final TagKey<EntityType<?>> GUILLOTINE_PLAYER_HEAD = tag("guillotine/player_head");
 
     private static TagKey<EntityType<?>> tag(String name) {
-        return TagKey.create(Registries.ENTITY_TYPE, PrimalMagick.resource(name));
+        return TagKey.create(Registries.ENTITY_TYPE, ResourceUtils.loc(name));
     }
 }

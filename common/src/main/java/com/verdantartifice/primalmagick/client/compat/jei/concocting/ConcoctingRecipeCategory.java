@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagick.client.compat.jei.concocting;
 
-import java.util.List;
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
@@ -12,7 +9,6 @@ import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -28,10 +24,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
+import java.util.List;
+import java.util.Optional;
+
 public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IConcoctingRecipe>> {
-    public static final ResourceLocation UID = PrimalMagick.resource("concocter");
-    private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/arcane_workbench.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
+    public static final ResourceLocation UID = ResourceUtils.loc("concocter");
+    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/arcane_workbench.png");
+    private static final ResourceLocation RESEARCH_TEXTURE = ResourceUtils.loc("textures/item/grimoire.png");
     private static final int MANA_COST_X_OFFSET = 64;
     private static final int MANA_COST_Y_OFFSET = 1;
     private static final int RESEARCH_X_OFFSET = 64;

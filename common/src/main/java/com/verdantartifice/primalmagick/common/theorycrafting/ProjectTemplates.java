@@ -81,7 +81,7 @@ public class ProjectTemplates {
     public static final ResourceKey<ProjectTemplate> WAND_TINKERING = create("wand_tinkering");
     
     public static ResourceKey<ProjectTemplate> create(String name) {
-        return ResourceKey.create(RegistryKeysPM.PROJECT_TEMPLATES, PrimalMagick.resource(name));
+        return ResourceKey.create(RegistryKeysPM.PROJECT_TEMPLATES, ResourceUtils.loc(name));
     }
     
     public static void bootstrap(BootstrapContext<ProjectTemplate> context) {

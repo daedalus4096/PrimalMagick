@@ -430,7 +430,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = PrimalMagick.resource("capability_knowledge");
+        public static final ResourceLocation NAME = ResourceUtils.loc("capability_knowledge");
         
         private final IPlayerKnowledge instance = new PlayerKnowledge();
         private final LazyOptional<IPlayerKnowledge> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance

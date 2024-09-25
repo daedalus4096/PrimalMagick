@@ -32,7 +32,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * @see {@link net.minecraft.world.level.levelgen.structure.DesertPyramidPiece}
  */
 public class ShrinePiece extends TemplateStructurePiece {
-    protected static final ResourceLocation TEMPLATE = PrimalMagick.resource("shrine");
+    protected static final ResourceLocation TEMPLATE = ResourceUtils.loc("shrine");
     
     protected final ShrineStructure.Type type;
     

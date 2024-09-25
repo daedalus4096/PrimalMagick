@@ -29,10 +29,10 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerTileEntity> {
-    public static final ResourceLocation DUST_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_dust_slot");
-    public static final ResourceLocation SHARD_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_shard_slot");
-    public static final ResourceLocation CRYSTAL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_crystal_slot");
-    public static final ResourceLocation CLUSTER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_cluster_slot");
+    public static final ResourceLocation DUST_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_dust_slot");
+    public static final ResourceLocation SHARD_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_shard_slot");
+    public static final ResourceLocation CRYSTAL_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_crystal_slot");
+    public static final ResourceLocation CLUSTER_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_cluster_slot");
     protected static final Component ESSENCE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_charger.slot.essence");
     protected static final Component WAND_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_charger.slot.wand");
     protected static final AbstractRequirement<?> SHARD_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SHARD_SYNTHESIS));

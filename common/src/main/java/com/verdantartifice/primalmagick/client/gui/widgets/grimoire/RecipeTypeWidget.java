@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;

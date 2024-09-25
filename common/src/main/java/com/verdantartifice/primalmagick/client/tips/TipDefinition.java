@@ -1,21 +1,20 @@
 package com.verdantartifice.primalmagick.client.tips;
 
-import java.util.Optional;
-import java.util.function.BiConsumer;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Optional;
+import java.util.function.BiConsumer;
 
 /**
  * Contains the definition of a game hint that can be displayed to the user in the Grimoire if
@@ -44,7 +43,7 @@ public record TipDefinition(String translationKey, Optional<AbstractRequirement<
     }
     
     public static Builder builder(String id) {
-        return new Builder(PrimalMagick.resource(id));
+        return new Builder(ResourceUtils.loc(id));
     }
     
     public static class Builder {

@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class AdvancementLanguageBuilder extends AbstractLanguageBuilder<String, AdvancementLanguageBuilder> {
     public AdvancementLanguageBuilder(String id, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(id, () -> String.join(".", "advancements", PrimalMagick.MODID, id.toLowerCase()), untracker, adder);
+        super(id, () -> String.join(".", "advancements", Constants.MOD_ID, id.toLowerCase()), untracker, adder);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class AdvancementLanguageBuilder extends AbstractLanguageBuilder<String, 
 
     @Override
     protected ResourceLocation getBaseRegistryKey(String base) {
-        return PrimalMagick.resource(base.toLowerCase());
+        return ResourceUtils.loc(base.toLowerCase());
     }
 
     @Override

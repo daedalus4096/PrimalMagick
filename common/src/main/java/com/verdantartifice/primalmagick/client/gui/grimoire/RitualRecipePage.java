@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
@@ -13,7 +11,6 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeExpert
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,6 +20,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
+
+import java.awt.Color;
 
 /**
  * Grimoire page showing a ritual recipe.

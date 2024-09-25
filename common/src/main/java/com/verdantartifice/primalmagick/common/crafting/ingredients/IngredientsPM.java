@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class IngredientsPM {
-    private static final DeferredRegister<IIngredientSerializer<?>> DEFERRED_SERIALIZERS = DeferredRegister.create(ForgeRegistries.INGREDIENT_SERIALIZERS, PrimalMagick.MODID);
+    private static final DeferredRegister<IIngredientSerializer<?>> DEFERRED_SERIALIZERS = DeferredRegister.create(ForgeRegistries.INGREDIENT_SERIALIZERS, Constants.MOD_ID);
     
     public static void init() {
         DEFERRED_SERIALIZERS.register(PrimalMagick.getModLoadingContext().getModEventBus());

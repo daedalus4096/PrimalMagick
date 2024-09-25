@@ -144,7 +144,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
         
         public Builder(ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int stageIndex) {
-            this(PrimalMagick.MODID, entryBuilder, parentKey, stageIndex);
+            this(Constants.MOD_ID, entryBuilder, parentKey, stageIndex);
         }
         
         public Builder requirement(AbstractRequirement<?> req) {
@@ -221,7 +221,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
         
         public Builder recipe(String name) {
-            return this.recipe(PrimalMagick.resource(name));
+            return this.recipe(ResourceUtils.loc(name));
         }
         
         public Builder recipe(String modId, String name) {

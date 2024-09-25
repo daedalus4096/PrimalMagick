@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.research.requirements.ItemTagRequ
 import com.verdantartifice.primalmagick.common.research.requirements.KnowledgeRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 

@@ -1,12 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -17,6 +12,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Display widget for the list of non-theory project rewards.  Used on the research table screen.

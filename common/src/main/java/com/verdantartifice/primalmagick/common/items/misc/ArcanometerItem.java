@@ -39,7 +39,7 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
  * @author Daedalus4096
  */
 public class ArcanometerItem extends Item {
-    public static final ResourceLocation SCAN_STATE_PROPERTY = PrimalMagick.resource("scan_state");
+    public static final ResourceLocation SCAN_STATE_PROPERTY = ResourceUtils.loc("scan_state");
 
     public ArcanometerItem() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));

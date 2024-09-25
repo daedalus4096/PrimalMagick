@@ -1,19 +1,18 @@
 package com.verdantartifice.primalmagick.client.gui.recipe_book;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
-
 import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ArcaneRecipeCollection {
     protected final RegistryAccess registryAccess;

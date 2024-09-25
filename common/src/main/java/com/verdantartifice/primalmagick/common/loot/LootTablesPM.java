@@ -66,15 +66,15 @@ public class LootTablesPM {
     public static final ResourceKey<LootTable> LIBRARY_CATALOG_TREASURE = registerLibrary("gameplay/library/catalog/treasure");
 
     private static ResourceKey<LootTable> registerTreefolk(String id) {
-        return register(ResourceKey.create(Registries.LOOT_TABLE, PrimalMagick.resource(id)), SUBSET_TREEFOLK_BARTERING);
+        return register(ResourceKey.create(Registries.LOOT_TABLE, ResourceUtils.loc(id)), SUBSET_TREEFOLK_BARTERING);
     }
 
     private static ResourceKey<LootTable> registerTheorycraft(String id) {
-        return register(ResourceKey.create(Registries.LOOT_TABLE, PrimalMagick.resource(id)), SUBSET_THEORYCRAFTING);
+        return register(ResourceKey.create(Registries.LOOT_TABLE, ResourceUtils.loc(id)), SUBSET_THEORYCRAFTING);
     }
 
     private static ResourceKey<LootTable> registerLibrary(String id) {
-        return register(ResourceKey.create(Registries.LOOT_TABLE, PrimalMagick.resource(id)), SUBSET_LIBRARY);
+        return register(ResourceKey.create(Registries.LOOT_TABLE, ResourceUtils.loc(id)), SUBSET_LIBRARY);
     }
 
     private static ResourceKey<LootTable> register(ResourceKey<LootTable> id, Set<ResourceKey<LootTable>> tableSubset) {

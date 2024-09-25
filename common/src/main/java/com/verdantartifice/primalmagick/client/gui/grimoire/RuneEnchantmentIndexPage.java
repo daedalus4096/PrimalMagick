@@ -1,19 +1,17 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RuneEnchantmentButton;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.enchantment.Enchantment;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Grimoire page showing the list of discovered rune enchantments.

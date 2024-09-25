@@ -287,7 +287,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         }
         
         public Builder(ResearchEntryKey key) {
-            this(PrimalMagick.MODID, key);
+            this(Constants.MOD_ID, key);
         }
         
         public Builder(ResourceKey<ResearchEntry> rawKey) {
@@ -315,7 +315,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         }
         
         public Builder icon(String path) {
-            return this.icon(PrimalMagick.resource(path));
+            return this.icon(ResourceUtils.loc(path));
         }
         
         public Builder parent(ResearchEntryKey key) {

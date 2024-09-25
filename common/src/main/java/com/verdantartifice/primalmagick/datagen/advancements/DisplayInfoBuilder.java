@@ -76,11 +76,11 @@ public class DisplayInfoBuilder {
     }
     
     protected Component makeTitle(String id) {
-        return Component.translatable(String.join(".", "advancements", PrimalMagick.MODID, id, "title"));
+        return Component.translatable(String.join(".", "advancements", Constants.MOD_ID, id, "title"));
     }
     
     protected Component makeDescription(String id) {
-        return Component.translatable(String.join(".", "advancements", PrimalMagick.MODID, id, "description"));
+        return Component.translatable(String.join(".", "advancements", Constants.MOD_ID, id, "description"));
     }
     
     public DisplayInfo build() {

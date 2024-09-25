@@ -322,7 +322,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = PrimalMagick.resource("capability_linguistics");
+        public static final ResourceLocation NAME = ResourceUtils.loc("capability_linguistics");
         
         private final IPlayerLinguistics instance = new PlayerLinguistics();
         private final LazyOptional<IPlayerLinguistics> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance

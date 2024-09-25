@@ -31,10 +31,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  * @author Daedalus4096
  */
 public class EssenceCaskMenu extends AbstractTileSidedInventoryMenu<EssenceCaskTileEntity> {
-    public static final ResourceLocation DUST_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_dust_slot");
-    public static final ResourceLocation SHARD_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_shard_slot");
-    public static final ResourceLocation CRYSTAL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_crystal_slot");
-    public static final ResourceLocation CLUSTER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_cluster_slot");
+    public static final ResourceLocation DUST_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_dust_slot");
+    public static final ResourceLocation SHARD_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_shard_slot");
+    public static final ResourceLocation CRYSTAL_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_crystal_slot");
+    public static final ResourceLocation CLUSTER_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_cluster_slot");
     protected static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.essence_cask.slot.essence");
     protected static final AbstractRequirement<?> SHARD_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SHARD_SYNTHESIS));
     protected static final AbstractRequirement<?> CRYSTAL_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CRYSTAL_SYNTHESIS));

@@ -1,17 +1,15 @@
 package com.verdantartifice.primalmagick.client.compat.jei;
 
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.client.util.RecipeUtils;
-
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 /**
  * Re-implementation of CategoryRecipeValidator from the full JEI mod, but only requiring the API.

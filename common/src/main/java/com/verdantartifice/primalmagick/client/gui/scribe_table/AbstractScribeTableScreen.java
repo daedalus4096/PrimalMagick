@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.verdantartifice.primalmagick.client.gui.AbstractContainerScreenPM;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class for GUI screens for the scribe table.

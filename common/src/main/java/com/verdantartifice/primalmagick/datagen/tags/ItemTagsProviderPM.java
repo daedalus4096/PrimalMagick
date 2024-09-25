@@ -26,7 +26,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  */
 public class ItemTagsProviderPM extends ItemTagsProvider {
     public ItemTagsProviderPM(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> blockTagLookup, ExistingFileHelper helper) {
-        super(packOutput, lookupProvider, blockTagLookup, PrimalMagick.MODID, helper);
+        super(packOutput, lookupProvider, blockTagLookup, Constants.MOD_ID, helper);
     }
 
     @Override

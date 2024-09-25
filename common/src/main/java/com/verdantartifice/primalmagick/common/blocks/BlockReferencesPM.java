@@ -14,6 +14,6 @@ public class BlockReferencesPM {
     public static final ResourceKey<Block> SOUL_GLOW_FIELD = createKey("soul_glow_field");
     
     private static ResourceKey<Block> createKey(String id) {
-        return ResourceKey.create(Registries.BLOCK, PrimalMagick.resource(id));
+        return ResourceKey.create(Registries.BLOCK, ResourceUtils.loc(id));
     }
 }

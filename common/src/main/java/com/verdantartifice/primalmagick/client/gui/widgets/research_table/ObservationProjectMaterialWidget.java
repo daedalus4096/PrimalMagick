@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Display widget for an observation research project material.  Used on the research table screen.

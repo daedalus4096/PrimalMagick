@@ -18,9 +18,9 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class HallowsteelGolemCracksLayer extends AbstractEnchantedGolemCracksLayer<HallowsteelGolemEntity> {
     protected static final Map<Cracks, ResourceLocation> TEXTURES = ImmutableMap.<Cracks, ResourceLocation>builder()
-            .put(Cracks.LOW, PrimalMagick.resource("textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_low.png"))
-            .put(Cracks.MEDIUM, PrimalMagick.resource("textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_medium.png"))
-            .put(Cracks.HIGH, PrimalMagick.resource("textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_high.png"))
+            .put(Cracks.LOW, ResourceUtils.loc("textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_low.png"))
+            .put(Cracks.MEDIUM, ResourceUtils.loc("textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_medium.png"))
+            .put(Cracks.HIGH, ResourceUtils.loc("textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_high.png"))
             .build();
     
     public HallowsteelGolemCracksLayer(RenderLayerParent<HallowsteelGolemEntity, EnchantedGolemModel<HallowsteelGolemEntity>> entityRendererIn) {

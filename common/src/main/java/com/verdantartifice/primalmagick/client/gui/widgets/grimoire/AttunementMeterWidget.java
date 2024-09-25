@@ -1,16 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.awt.Color;
-
-import javax.annotation.Nonnull;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -22,8 +17,11 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
+import javax.annotation.Nonnull;
+import java.awt.Color;
+
 public class AttunementMeterWidget extends AbstractWidget {
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/attunement_meter.png");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/attunement_meter.png");
 
     protected final Source source;
     protected final Color permanentColor;

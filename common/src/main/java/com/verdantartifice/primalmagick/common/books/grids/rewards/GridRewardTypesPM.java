@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class GridRewardTypesPM {
-    private static final DeferredRegister<GridRewardType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.GRID_REWARD_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<GridRewardType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.GRID_REWARD_TYPES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<GridRewardType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
@@ -27,6 +27,6 @@ public class GridRewardTypesPM {
     public static final RegistryObject<GridRewardType<KnowledgeReward>> KNOWLEDGE = register("knowledge", KnowledgeReward.CODEC, KnowledgeReward.STREAM_CODEC);
     
     protected static <T extends AbstractReward<T>> RegistryObject<GridRewardType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super FriendlyByteBuf, T> streamCodec) {
-        return DEFERRED_TYPES.register(id, () -> new GridRewardType<T>(PrimalMagick.resource(id), codec, streamCodec));
+        return DEFERRED_TYPES.register(id, () -> new GridRewardType<T>(ResourceUtils.loc(id), codec, streamCodec));
     }
 }

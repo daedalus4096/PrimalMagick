@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.util.Optional;
-
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Optional;
 
 /**
  * Icon to show an item stack texture on a grimoire topic button.

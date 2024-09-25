@@ -23,9 +23,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class PillarBlock extends Block {
-    protected static final VoxelShape SHAPE_BASE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/pillar"));
-    protected static final VoxelShape SHAPE_BOTTOM = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/pillar_bottom"));
-    protected static final VoxelShape SHAPE_TOP = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/pillar_top"));
+    protected static final VoxelShape SHAPE_BASE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/pillar"));
+    protected static final VoxelShape SHAPE_BOTTOM = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/pillar_bottom"));
+    protected static final VoxelShape SHAPE_TOP = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/pillar_top"));
 
     public static final EnumProperty<Type> PROPERTY_TYPE = EnumProperty.create("type", Type.class);
     

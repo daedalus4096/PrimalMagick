@@ -26,6 +26,6 @@ public class DamageTypeTagsPM {
     public static final TagKey<DamageType> IS_SORCERY_HALLOWED = create("is_sorcery/hallowed");
     
     private static TagKey<DamageType> create(String name) {
-        return TagKey.create(Registries.DAMAGE_TYPE, PrimalMagick.resource(name));
+        return TagKey.create(Registries.DAMAGE_TYPE, ResourceUtils.loc(name));
     }
 }

@@ -1,11 +1,6 @@
 package com.verdantartifice.primalmagick.client.compat.jei;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting.ArcaneCraftingRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctingRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctionSubtypeInterpreter;
@@ -17,17 +12,9 @@ import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
 import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
 import com.verdantartifice.primalmagick.client.gui.InfernalFurnaceScreen;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.*;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
-import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
-import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
-import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
-import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
+import com.verdantartifice.primalmagick.common.menus.*;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -36,25 +23,23 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IRecipeTransferRegistration;
-import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.registration.*;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main class for JEI integration.
@@ -63,7 +48,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  */
 @JeiPlugin
 public class JeiHelper implements IModPlugin {
-    private static final ResourceLocation UID = PrimalMagick.resource("jei");
+    private static final ResourceLocation UID = ResourceUtils.loc("jei");
     
     @Nullable
     private IRecipeCategory<RecipeHolder<IArcaneRecipe>> arcaneCategory;

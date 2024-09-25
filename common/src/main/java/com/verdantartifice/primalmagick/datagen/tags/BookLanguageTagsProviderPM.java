@@ -20,7 +20,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  */
 public class BookLanguageTagsProviderPM extends TagsProvider<BookLanguage> {
     public BookLanguageTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
-        super(output, RegistryKeysPM.BOOK_LANGUAGES, future, PrimalMagick.MODID, helper);
+        super(output, RegistryKeysPM.BOOK_LANGUAGES, future, Constants.MOD_ID, helper);
     }
 
     @Override

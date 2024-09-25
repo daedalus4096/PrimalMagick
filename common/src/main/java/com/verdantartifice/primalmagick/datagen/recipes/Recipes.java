@@ -644,11 +644,11 @@ public class Recipes extends RecipeProvider {
         
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, Items.CHARCOAL, 0.15F, 200)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))
-            .save(consumer, PrimalMagick.resource("charcoal_from_smelting_heartwood"));
+            .save(consumer, ResourceUtils.loc("charcoal_from_smelting_heartwood"));
         
         SmithingTrimRecipeBuilder.smithingTrim(Ingredient.of(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()), Ingredient.of(ItemTagsPM.RUNIC_TRIMMABLE_ARMOR), 
                 Ingredient.of(ItemTagsPM.RUNIC_TRIM_MATERIALS), RecipeCategory.MISC).unlocks("has_smithing_trim_template", has(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()))
-            .save(consumer, PrimalMagick.resource("runic_armor_trim_smithing_template_smithing_trim"));
+            .save(consumer, ResourceUtils.loc("runic_armor_trim_smithing_template_smithing_trim"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get())
             .patternLine("#R#")
             .patternLine("#M#")
@@ -660,15 +660,15 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 40).add(Sources.SEA, 40).add(Sources.SKY, 40).add(Sources.SUN, 40).add(Sources.MOON, 40))
             .build(consumer);
 
-        SpecialRecipeBuilder.special(WandAssemblyRecipe::new).save(consumer, PrimalMagick.resource("wand_assembly"));
-        SpecialRecipeBuilder.special(WandInscriptionRecipe::new).save(consumer, PrimalMagick.resource("wand_inscription"));
-        SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(consumer, PrimalMagick.resource("spellcrafting"));
-        SpecialRecipeBuilder.special(FlyingCarpetDyeRecipe::new).save(consumer, PrimalMagick.resource("flying_carpet_dye"));
-        SpecialRecipeBuilder.special(TieredShieldDecorationRecipe::new).save(consumer, PrimalMagick.resource("tiered_shield_decoration"));
-        SpecialRecipeBuilder.special(WandGlamourRecipe::new).save(consumer, PrimalMagick.resource("wand_glamour"));
-        SpecialRecipeBuilder.special(WardingModuleApplicationRecipe::new).save(consumer, PrimalMagick.resource("warding_module_application"));
-        SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(consumer, PrimalMagick.resource("static_book_cloning"));
-        SpecialRecipeBuilder.special(WritableBookCraftingRecipe::new).save(consumer, PrimalMagick.resource("writable_book_crafting"));
+        SpecialRecipeBuilder.special(WandAssemblyRecipe::new).save(consumer, ResourceUtils.loc("wand_assembly"));
+        SpecialRecipeBuilder.special(WandInscriptionRecipe::new).save(consumer, ResourceUtils.loc("wand_inscription"));
+        SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(consumer, ResourceUtils.loc("spellcrafting"));
+        SpecialRecipeBuilder.special(FlyingCarpetDyeRecipe::new).save(consumer, ResourceUtils.loc("flying_carpet_dye"));
+        SpecialRecipeBuilder.special(TieredShieldDecorationRecipe::new).save(consumer, ResourceUtils.loc("tiered_shield_decoration"));
+        SpecialRecipeBuilder.special(WandGlamourRecipe::new).save(consumer, ResourceUtils.loc("wand_glamour"));
+        SpecialRecipeBuilder.special(WardingModuleApplicationRecipe::new).save(consumer, ResourceUtils.loc("warding_module_application"));
+        SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(consumer, ResourceUtils.loc("static_book_cloning"));
+        SpecialRecipeBuilder.special(WritableBookCraftingRecipe::new).save(consumer, ResourceUtils.loc("writable_book_crafting"));
     }
 
     protected void registerMarbleRecipes(RecipeOutput consumer) {
@@ -679,10 +679,10 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_brick_slab_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_brick_slab_from_marble_raw_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_brick_slab_from_marble_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_brick_slab_from_marble_bricks_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_STAIRS.get(), 4)
             .pattern("M  ")
             .pattern("MM ")
@@ -692,10 +692,10 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_STAIRS.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_brick_stairs_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_brick_stairs_from_marble_raw_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_STAIRS.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_brick_stairs_from_marble_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_brick_stairs_from_marble_bricks_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_WALL.get(), 6)
             .pattern("MMM")
             .pattern("MMM")
@@ -704,10 +704,10 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_WALL.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_brick_wall_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_brick_wall_from_marble_raw_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_WALL.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_brick_wall_from_marble_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_brick_wall_from_marble_bricks_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICKS.get(), 4)
             .pattern("MM")
             .pattern("MM")
@@ -716,7 +716,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICKS.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_bricks_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_bricks_from_marble_raw_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_CHISELED.get())
             .pattern("M")
             .pattern("M")
@@ -725,7 +725,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_CHISELED.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_chiseled_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_chiseled_from_marble_raw_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_PILLAR.get(), 2)
             .pattern("M")
             .pattern("M")
@@ -734,7 +734,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_PILLAR.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_pillar_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_pillar_from_marble_raw_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_RUNED.get(), 5)
             .pattern(" M ")
             .pattern("MCM")
@@ -745,7 +745,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_RUNED.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_runed_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_runed_from_marble_raw_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SLAB.get(), 6)
             .pattern("MMM")
             .define('M', BlocksPM.MARBLE_RAW.get())
@@ -753,7 +753,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SLAB.get(), 2)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_slab_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_slab_from_marble_raw_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_STAIRS.get(), 4)
             .pattern("M  ")
             .pattern("MM ")
@@ -763,7 +763,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_STAIRS.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_stairs_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_stairs_from_marble_raw_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_WALL.get(), 6)
             .pattern("MMM")
             .pattern("MMM")
@@ -772,7 +772,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_WALL.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_wall_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_wall_from_marble_raw_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_TILES.get(), 4)
             .pattern("MM")
             .pattern("MM")
@@ -781,10 +781,10 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_TILES.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
-            .save(consumer, PrimalMagick.resource("marble_tiles_from_marble_raw_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_tiles_from_marble_raw_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_TILES.get())
             .unlockedBy("has_marble_bricks", has(BlocksPM.MARBLE_BRICKS.get()))
-            .save(consumer, PrimalMagick.resource("marble_tiles_from_marble_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_tiles_from_marble_bricks_stonecutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BOOKSHELF.get())
             .pattern("MMM")
             .pattern("SSS")
@@ -809,10 +809,10 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_brick_slab_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_brick_slab_from_marble_enchanted_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_brick_slab_from_marble_enchanted_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_brick_slab_from_marble_enchanted_bricks_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -823,10 +823,10 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_brick_stairs_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_brick_stairs_from_marble_enchanted_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_brick_stairs_from_marble_enchanted_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_brick_stairs_from_marble_enchanted_bricks_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -836,10 +836,10 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_brick_wall_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_brick_wall_from_marble_enchanted_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_brick_wall_from_marble_enchanted_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_brick_wall_from_marble_enchanted_bricks_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_BRICKS.get(), 4)
             .patternLine("MM")
             .patternLine("MM")
@@ -849,7 +849,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICKS.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_bricks_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_bricks_from_marble_enchanted_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_CHISELED.get())
             .patternLine("M")
             .patternLine("M")
@@ -859,7 +859,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_CHISELED.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_chiseled_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_chiseled_from_marble_enchanted_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_PILLAR.get(), 2)
             .patternLine("M")
             .patternLine("M")
@@ -869,7 +869,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_PILLAR.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_pillar_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_pillar_from_marble_enchanted_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), 5)
             .patternLine(" M ")
             .patternLine("MCM")
@@ -881,7 +881,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_RUNED.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_runed_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_runed_from_marble_enchanted_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_ENCHANTED.get())
@@ -890,7 +890,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_SLAB.get(), 2)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_slab_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_slab_from_marble_enchanted_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -901,7 +901,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_STAIRS.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_stairs_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_stairs_from_marble_enchanted_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -911,7 +911,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_WALL.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(consumer, PrimalMagick.resource("marble_enchanted_wall_from_marble_enchanted_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_enchanted_wall_from_marble_enchanted_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get())
             .patternLine("MMM")
             .patternLine("SSS")
@@ -941,10 +941,10 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_brick_slab_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_brick_slab_from_marble_smoked_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_brick_slab_from_marble_smoked_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_brick_slab_from_marble_smoked_bricks_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -955,10 +955,10 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_brick_stairs_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_brick_stairs_from_marble_smoked_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_brick_stairs_from_marble_smoked_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_brick_stairs_from_marble_smoked_bricks_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -968,10 +968,10 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_WALL.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_brick_wall_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_brick_wall_from_marble_smoked_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_WALL.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_brick_wall_from_marble_smoked_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_brick_wall_from_marble_smoked_bricks_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_BRICKS.get(), 4)
             .patternLine("MM")
             .patternLine("MM")
@@ -981,7 +981,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICKS.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_bricks_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_bricks_from_marble_smoked_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_CHISELED.get())
             .patternLine("M")
             .patternLine("M")
@@ -991,7 +991,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_CHISELED.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_chiseled_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_chiseled_from_marble_smoked_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_PILLAR.get(), 2)
             .patternLine("M")
             .patternLine("M")
@@ -1001,7 +1001,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_PILLAR.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_pillar_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_pillar_from_marble_smoked_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_RUNED.get(), 5)
             .patternLine(" M ")
             .patternLine("MCM")
@@ -1013,7 +1013,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_RUNED.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_runed_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_runed_from_marble_smoked_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_SMOKED.get())
@@ -1022,7 +1022,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_SLAB.get(), 2)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_slab_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_slab_from_marble_smoked_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -1033,7 +1033,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_STAIRS.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_stairs_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_stairs_from_marble_smoked_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -1043,7 +1043,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_WALL.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(consumer, PrimalMagick.resource("marble_smoked_wall_from_marble_smoked_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_smoked_wall_from_marble_smoked_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_BOOKSHELF.get())
             .patternLine("MMM")
             .patternLine("SSS")
@@ -1073,10 +1073,10 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_brick_slab_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_brick_slab_from_marble_hallowed_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_brick_slab_from_marble_hallowed_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_brick_slab_from_marble_hallowed_bricks_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -1087,10 +1087,10 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_brick_stairs_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_brick_stairs_from_marble_hallowed_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_brick_stairs_from_marble_hallowed_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_brick_stairs_from_marble_hallowed_bricks_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -1100,10 +1100,10 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_brick_wall_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_brick_wall_from_marble_hallowed_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_brick_wall_from_marble_hallowed_bricks_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_brick_wall_from_marble_hallowed_bricks_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_BRICKS.get(), 4)
             .patternLine("MM")
             .patternLine("MM")
@@ -1113,7 +1113,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICKS.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_bricks_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_bricks_from_marble_hallowed_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_CHISELED.get())
             .patternLine("M")
             .patternLine("M")
@@ -1123,7 +1123,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_CHISELED.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_chiseled_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_chiseled_from_marble_hallowed_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_PILLAR.get(), 2)
             .patternLine("M")
             .patternLine("M")
@@ -1133,7 +1133,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_PILLAR.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_pillar_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_pillar_from_marble_hallowed_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_RUNED.get(), 5)
             .patternLine(" M ")
             .patternLine("MCM")
@@ -1145,7 +1145,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_RUNED.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_runed_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_runed_from_marble_hallowed_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_HALLOWED.get())
@@ -1154,7 +1154,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_SLAB.get(), 2)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_slab_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_slab_from_marble_hallowed_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -1165,7 +1165,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_STAIRS.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_stairs_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_stairs_from_marble_hallowed_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -1175,7 +1175,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_WALL.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(consumer, PrimalMagick.resource("marble_hallowed_wall_from_marble_hallowed_stonecutting"));
+            .save(consumer, ResourceUtils.loc("marble_hallowed_wall_from_marble_hallowed_stonecutting"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get())
             .patternLine("MMM")
             .patternLine("SSS")
@@ -1371,7 +1371,7 @@ public class Recipes extends RecipeProvider {
     protected void registerSaltRecipes(RecipeOutput consumer) {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(BlocksPM.ROCK_SALT_ORE.get()), RecipeCategory.MISC, ItemsPM.ROCK_SALT.get(), 0, 200)
             .unlockedBy("has_rock_salt_ore", has(BlocksPM.ROCK_SALT_ORE.get()))
-            .save(consumer, PrimalMagick.resource("rock_salt_from_smelting"));
+            .save(consumer, ResourceUtils.loc("rock_salt_from_smelting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.ROCK_SALT.get()), RecipeCategory.MISC, ItemsPM.REFINED_SALT.get(), 0.2F, 200)
             .unlockedBy("has_rock_salt", has(ItemsPM.ROCK_SALT.get()))
             .save(consumer);
@@ -1382,7 +1382,7 @@ public class Recipes extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.REFINED_SALT.get(), 9)
             .requires(ItemsPM.SALT_BLOCK.get())
             .unlockedBy("has_salt_block", has(ItemsPM.SALT_BLOCK.get()))
-            .save(consumer, PrimalMagick.resource("refined_salt_from_salt_block"));
+            .save(consumer, ResourceUtils.loc("refined_salt_from_salt_block"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemsPM.SALTED_BAKED_POTATO.get())
             .requires(ItemsPM.REFINED_SALT.get())
             .requires(Items.BAKED_POTATO)
@@ -1649,7 +1649,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_block")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_black_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_black_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLACK.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1659,7 +1659,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_black_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_black_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1667,7 +1667,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_blue_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_blue_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1677,7 +1677,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_blue_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_blue_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1685,7 +1685,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_brown_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_brown_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1695,7 +1695,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_brown_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_brown_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1703,7 +1703,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_cyan_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_cyan_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1713,7 +1713,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_cyan_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_cyan_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1721,7 +1721,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_gray_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_gray_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1731,7 +1731,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_gray_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_gray_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1739,7 +1739,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_green_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_green_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1749,7 +1749,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_green_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_green_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1757,7 +1757,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_light_blue_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_light_blue_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1767,7 +1767,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_light_blue_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_light_blue_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1775,7 +1775,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_light_gray_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_light_gray_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1785,7 +1785,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_light_gray_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_light_gray_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIME.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1793,7 +1793,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_lime_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_lime_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIME.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1803,7 +1803,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_lime_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_lime_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1811,7 +1811,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_magenta_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_magenta_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1821,7 +1821,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_magenta_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_magenta_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1829,7 +1829,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_orange_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_orange_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1839,7 +1839,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_orange_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_orange_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PINK.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1847,7 +1847,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_pink_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_pink_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PINK.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1857,7 +1857,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_pink_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_pink_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1865,7 +1865,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_purple_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_purple_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1875,7 +1875,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_purple_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_purple_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1883,7 +1883,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_red_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_red_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1893,7 +1893,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_red_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_red_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1901,7 +1901,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_white_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_white_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1911,7 +1911,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_white_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_white_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1919,7 +1919,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_yellow_from_blocks"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_yellow_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1929,7 +1929,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("stained_skyglass_pane")
             .requiredResearch(ResearchEntries.SKYGLASS)
             .expertiseGroup("skyglass_pane")
-            .build(consumer, PrimalMagick.resource("stained_skyglass_pane_yellow_from_panes"));
+            .build(consumer, ResourceUtils.loc("stained_skyglass_pane_yellow_from_panes"));
     }
 
     protected void registerEarthshatterHammerRecipes(RecipeOutput consumer) {
@@ -1951,8 +1951,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(Tags.Items.ORES_IRON)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("iron_grit_from_ore")))
-            .save(consumer, PrimalMagick.resource("iron_grit_from_ore"));
+                    .build(output, ResourceUtils.loc("iron_grit_from_ore")))
+            .save(consumer, ResourceUtils.loc("iron_grit_from_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, Tags.Items.RAW_MATERIALS_IRON)))
             .condition(TrueCondition.INSTANCE)
@@ -1961,8 +1961,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(Tags.Items.RAW_MATERIALS_IRON)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("iron_grit_from_raw_metal")))
-            .save(consumer, PrimalMagick.resource("iron_grit_from_raw_metal"));
+                    .build(output, ResourceUtils.loc("iron_grit_from_raw_metal")))
+            .save(consumer, ResourceUtils.loc("iron_grit_from_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, Tags.Items.ORES_GOLD)))
             .condition(TrueCondition.INSTANCE)
@@ -1971,8 +1971,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(Tags.Items.ORES_GOLD)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("gold_grit_from_ore")))
-            .save(consumer, PrimalMagick.resource("gold_grit_from_ore"));
+                    .build(output, ResourceUtils.loc("gold_grit_from_ore")))
+            .save(consumer, ResourceUtils.loc("gold_grit_from_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, Tags.Items.RAW_MATERIALS_GOLD)))
             .condition(TrueCondition.INSTANCE)
@@ -1981,8 +1981,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(Tags.Items.RAW_MATERIALS_GOLD)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("gold_grit_from_raw_metal")))
-            .save(consumer, PrimalMagick.resource("gold_grit_from_raw_metal"));
+                    .build(output, ResourceUtils.loc("gold_grit_from_raw_metal")))
+            .save(consumer, ResourceUtils.loc("gold_grit_from_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, Tags.Items.ORES_COPPER)))
             .condition(TrueCondition.INSTANCE)
@@ -1991,8 +1991,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(Tags.Items.ORES_COPPER)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("copper_grit_from_ore")))
-            .save(consumer, PrimalMagick.resource("copper_grit_from_ore"));
+                    .build(output, ResourceUtils.loc("copper_grit_from_ore")))
+            .save(consumer, ResourceUtils.loc("copper_grit_from_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, Tags.Items.RAW_MATERIALS_COPPER)))
             .condition(TrueCondition.INSTANCE)
@@ -2001,8 +2001,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(Tags.Items.RAW_MATERIALS_COPPER)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("copper_grit_from_raw_metal")))
-            .save(consumer, PrimalMagick.resource("copper_grit_from_raw_metal"));
+                    .build(output, ResourceUtils.loc("copper_grit_from_raw_metal")))
+            .save(consumer, ResourceUtils.loc("copper_grit_from_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.ORES_TIN)))
             .condition(TrueCondition.INSTANCE)
@@ -2011,8 +2011,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(ItemTagsForgeExt.ORES_TIN)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("tin_dust_from_ore")))
-            .save(consumer, PrimalMagick.resource("tin_dust_from_ore"));
+                    .build(output, ResourceUtils.loc("tin_dust_from_ore")))
+            .save(consumer, ResourceUtils.loc("tin_dust_from_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.RAW_MATERIALS_TIN)))
             .condition(TrueCondition.INSTANCE)
@@ -2021,8 +2021,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_TIN)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("tin_dust_from_raw_metal")))
-            .save(consumer, PrimalMagick.resource("tin_dust_from_raw_metal"));
+                    .build(output, ResourceUtils.loc("tin_dust_from_raw_metal")))
+            .save(consumer, ResourceUtils.loc("tin_dust_from_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.ORES_LEAD)))
             .condition(TrueCondition.INSTANCE)
@@ -2031,8 +2031,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(ItemTagsForgeExt.ORES_LEAD)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("lead_dust_from_ore")))
-            .save(consumer, PrimalMagick.resource("lead_dust_from_ore"));
+                    .build(output, ResourceUtils.loc("lead_dust_from_ore")))
+            .save(consumer, ResourceUtils.loc("lead_dust_from_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.RAW_MATERIALS_LEAD)))
             .condition(TrueCondition.INSTANCE)
@@ -2041,8 +2041,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_LEAD)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("lead_dust_from_raw_metal")))
-            .save(consumer, PrimalMagick.resource("lead_dust_from_raw_metal"));
+                    .build(output, ResourceUtils.loc("lead_dust_from_raw_metal")))
+            .save(consumer, ResourceUtils.loc("lead_dust_from_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.ORES_SILVER)))
             .condition(TrueCondition.INSTANCE)
@@ -2051,8 +2051,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(ItemTagsForgeExt.ORES_SILVER)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("silver_dust_from_ore")))
-            .save(consumer, PrimalMagick.resource("silver_dust_from_ore"));
+                    .build(output, ResourceUtils.loc("silver_dust_from_ore")))
+            .save(consumer, ResourceUtils.loc("silver_dust_from_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.RAW_MATERIALS_SILVER)))
             .condition(TrueCondition.INSTANCE)
@@ -2061,8 +2061,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_SILVER)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("silver_dust_from_raw_metal")))
-            .save(consumer, PrimalMagick.resource("silver_dust_from_raw_metal"));
+                    .build(output, ResourceUtils.loc("silver_dust_from_raw_metal")))
+            .save(consumer, ResourceUtils.loc("silver_dust_from_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.ORES_URANIUM)))
             .condition(TrueCondition.INSTANCE)
@@ -2071,8 +2071,8 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(ItemTagsForgeExt.ORES_URANIUM)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("uranium_dust_from_ore")))
-            .save(consumer, PrimalMagick.resource("uranium_dust_from_ore"));
+                    .build(output, ResourceUtils.loc("uranium_dust_from_ore")))
+            .save(consumer, ResourceUtils.loc("uranium_dust_from_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.RAW_MATERIALS_URANIUM)))
             .condition(TrueCondition.INSTANCE)
@@ -2081,77 +2081,77 @@ public class Recipes extends RecipeProvider {
                     .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_URANIUM)
                     .setGroup("earthshatter_hammer_grit")
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("uranium_dust_from_raw_metal")))
-            .save(consumer, PrimalMagick.resource("uranium_dust_from_raw_metal"));
+                    .build(output, ResourceUtils.loc("uranium_dust_from_raw_metal")))
+            .save(consumer, ResourceUtils.loc("uranium_dust_from_raw_metal"));
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.COBBLESTONE)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemTagsPM.SURFACE_STONE)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(consumer, PrimalMagick.resource("cobblestone_from_earthshatter_hammer"));
+            .save(consumer, ResourceUtils.loc("cobblestone_from_earthshatter_hammer"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.COBBLED_DEEPSLATE)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemTagsPM.DEEP_STONE)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(consumer, PrimalMagick.resource("cobbled_deepslate_from_earthshatter_hammer"));
+            .save(consumer, ResourceUtils.loc("cobbled_deepslate_from_earthshatter_hammer"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.GRAVEL)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(Tags.Items.COBBLESTONE)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(consumer, PrimalMagick.resource("gravel_from_earthshatter_hammer"));
+            .save(consumer, ResourceUtils.loc("gravel_from_earthshatter_hammer"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.SAND)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(Tags.Items.GRAVEL)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(consumer, PrimalMagick.resource("sand_from_earthshatter_hammer"));
+            .save(consumer, ResourceUtils.loc("sand_from_earthshatter_hammer"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.NETHERITE_SCRAP, 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(Items.ANCIENT_DEBRIS)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(consumer, PrimalMagick.resource("netherite_scrap_from_earthshatter_hammer"));
+            .save(consumer, ResourceUtils.loc("netherite_scrap_from_earthshatter_hammer"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.ROCK_SALT.get(), 8)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemsPM.ROCK_SALT_ORE.get())
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(consumer, PrimalMagick.resource("rock_salt_from_earthshatter_hammer"));
+            .save(consumer, ResourceUtils.loc("rock_salt_from_earthshatter_hammer"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.REFINED_SALT.get(), 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemsPM.ROCK_SALT.get())
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(consumer, PrimalMagick.resource("refined_salt_from_earthshatter_hammer"));
+            .save(consumer, ResourceUtils.loc("refined_salt_from_earthshatter_hammer"));
     }
 
     protected void registerMineralRecipes(RecipeOutput consumer) {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.IRON_GRIT.get()), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 200)
             .unlockedBy("has_grit", has(ItemsPM.IRON_GRIT.get()))
             .group("iron_ingot")
-            .save(consumer, PrimalMagick.resource("iron_ingot_from_grit_smelting"));
+            .save(consumer, ResourceUtils.loc("iron_ingot_from_grit_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemsPM.IRON_GRIT.get()), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 100)
             .unlockedBy("has_grit", has(ItemsPM.IRON_GRIT.get()))
             .group("iron_ingot")
-            .save(consumer, PrimalMagick.resource("iron_ingot_from_grit_blasting"));
+            .save(consumer, ResourceUtils.loc("iron_ingot_from_grit_blasting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.GOLD_GRIT.get()), RecipeCategory.MISC, Items.GOLD_INGOT, 0.7F, 200)
             .unlockedBy("has_grit", has(ItemsPM.GOLD_GRIT.get()))
             .group("gold_ingot")
-            .save(consumer, PrimalMagick.resource("gold_ingot_from_grit_smelting"));
+            .save(consumer, ResourceUtils.loc("gold_ingot_from_grit_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemsPM.GOLD_GRIT.get()), RecipeCategory.MISC, Items.GOLD_INGOT, 0.7F, 100)
             .unlockedBy("has_grit", has(ItemsPM.GOLD_GRIT.get()))
             .group("gold_ingot")
-            .save(consumer, PrimalMagick.resource("gold_ingot_from_grit_blasting"));
+            .save(consumer, ResourceUtils.loc("gold_ingot_from_grit_blasting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.COPPER_GRIT.get()), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 200)
             .unlockedBy("has_grit", has(ItemsPM.COPPER_GRIT.get()))
             .group("copper_ingot")
-            .save(consumer, PrimalMagick.resource("copper_ingot_from_grit_smelting"));
+            .save(consumer, ResourceUtils.loc("copper_ingot_from_grit_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemsPM.COPPER_GRIT.get()), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 100)
             .unlockedBy("has_grit", has(ItemsPM.COPPER_GRIT.get()))
             .group("copper_ingot")
-            .save(consumer, PrimalMagick.resource("copper_ingot_from_grit_blasting"));
+            .save(consumer, ResourceUtils.loc("copper_ingot_from_grit_blasting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(BlocksPM.QUARTZ_ORE.get()), RecipeCategory.MISC, Items.QUARTZ, 0.2F, 200)
             .unlockedBy("has_quartz_ore", has(BlocksPM.QUARTZ_ORE.get()))
-            .save(consumer, PrimalMagick.resource("quartz_from_smelting"));
+            .save(consumer, ResourceUtils.loc("quartz_from_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(BlocksPM.QUARTZ_ORE.get()), RecipeCategory.MISC, Items.QUARTZ, 0.2F, 200)
             .unlockedBy("has_quartz_ore", has(BlocksPM.QUARTZ_ORE.get()))
-            .save(consumer, PrimalMagick.resource("quartz_from_blasting"));
+            .save(consumer, ResourceUtils.loc("quartz_from_blasting"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.QUARTZ_NUGGET.get(), 9)
             .requires(Items.QUARTZ)
             .unlockedBy("has_quartz", has(Items.QUARTZ))
@@ -2162,7 +2162,7 @@ public class Recipes extends RecipeProvider {
             .pattern("NNN")
             .define('N', ItemTagsForgeExt.NUGGETS_QUARTZ)
             .unlockedBy("has_nugget", has(ItemTagsForgeExt.NUGGETS_QUARTZ))
-            .save(consumer, PrimalMagick.resource("quartz_from_nuggets"));
+            .save(consumer, ResourceUtils.loc("quartz_from_nuggets"));
     }
     
     protected void registerPrimaliteRecipes(RecipeOutput consumer) {
@@ -2187,12 +2187,12 @@ public class Recipes extends RecipeProvider {
             .define('N', ItemTagsPM.NUGGETS_PRIMALITE)
             .group("primalite_ingot")
             .unlockedBy("has_nugget", has(ItemTagsPM.NUGGETS_PRIMALITE))
-            .save(consumer, PrimalMagick.resource("primalite_ingot_from_nuggets"));
+            .save(consumer, ResourceUtils.loc("primalite_ingot_from_nuggets"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.PRIMALITE_INGOT.get(), 9)
             .requires(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE)
             .group("primalite_ingot")
             .unlockedBy("has_block", has(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE))
-            .save(consumer, PrimalMagick.resource("primalite_ingots_from_block"));
+            .save(consumer, ResourceUtils.loc("primalite_ingots_from_block"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ItemsPM.PRIMALITE_BLOCK.get())
             .pattern("III")
             .pattern("III")
@@ -2333,12 +2333,12 @@ public class Recipes extends RecipeProvider {
             .define('N', ItemTagsPM.NUGGETS_HEXIUM)
             .group("hexium_ingot")
             .unlockedBy("has_nugget", has(ItemTagsPM.NUGGETS_HEXIUM))
-            .save(consumer, PrimalMagick.resource("hexium_ingot_from_nuggets"));
+            .save(consumer, ResourceUtils.loc("hexium_ingot_from_nuggets"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.HEXIUM_INGOT.get(), 9)
             .requires(ItemTagsPM.STORAGE_BLOCKS_HEXIUM)
             .group("hexium_ingot")
             .unlockedBy("has_block", has(ItemTagsPM.STORAGE_BLOCKS_HEXIUM))
-            .save(consumer, PrimalMagick.resource("hexium_ingots_from_block"));
+            .save(consumer, ResourceUtils.loc("hexium_ingots_from_block"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ItemsPM.HEXIUM_BLOCK.get())
             .pattern("III")
             .pattern("III")
@@ -2477,12 +2477,12 @@ public class Recipes extends RecipeProvider {
             .define('N', ItemTagsPM.NUGGETS_HALLOWSTEEL)
             .group("hallowsteel_ingot")
             .unlockedBy("has_nugget", has(ItemTagsPM.NUGGETS_HALLOWSTEEL))
-            .save(consumer, PrimalMagick.resource("hallowsteel_ingot_from_nuggets"));
+            .save(consumer, ResourceUtils.loc("hallowsteel_ingot_from_nuggets"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.HALLOWSTEEL_INGOT.get(), 9)
             .requires(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL)
             .group("hallowsteel_ingot")
             .unlockedBy("has_block", has(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL))
-            .save(consumer, PrimalMagick.resource("hallowsteel_ingots_from_block"));
+            .save(consumer, ResourceUtils.loc("hallowsteel_ingots_from_block"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ItemsPM.HALLOWSTEEL_BLOCK.get())
             .pattern("III")
             .pattern("III")
@@ -2963,7 +2963,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("ritual_candles")
             .requiredResearch(ResearchEntries.RITUAL_CANDLES)
             .expertiseGroup("ritual_candle")
-            .build(consumer, PrimalMagick.resource("ritual_candle_white_from_tallow"));
+            .build(consumer, ResourceUtils.loc("ritual_candle_white_from_tallow"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RITUAL_CANDLE_WHITE.get())
             .patternLine("S")
             .patternLine("W")
@@ -2973,7 +2973,7 @@ public class Recipes extends RecipeProvider {
             .setGroup("ritual_candles")
             .requiredResearch(ResearchEntries.RITUAL_CANDLES)
             .expertiseGroup("ritual_candle")
-            .build(consumer, PrimalMagick.resource("ritual_candle_white_from_beeswax"));
+            .build(consumer, ResourceUtils.loc("ritual_candle_white_from_beeswax"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ItemsPM.RITUAL_CANDLE_BLACK.get())
             .requires(ItemTagsPM.RITUAL_CANDLES)
             .requires(Tags.Items.DYES_BLACK)
@@ -3305,7 +3305,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .requiredResearch(ResearchEntries.PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_basic_earth_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_basic_earth_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
@@ -3323,7 +3323,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .requiredResearch(ResearchEntries.PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_basic_sea_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_basic_sea_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
@@ -3341,7 +3341,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .requiredResearch(ResearchEntries.PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_basic_sky_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_basic_sky_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
@@ -3359,7 +3359,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .requiredResearch(ResearchEntries.PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_basic_sun_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_basic_sun_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
@@ -3377,7 +3377,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .requiredResearch(ResearchEntries.PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_basic_moon_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_basic_moon_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -3397,7 +3397,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_basic_blood_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_basic_blood_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
@@ -3417,7 +3417,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_basic_infernal_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_basic_infernal_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -3437,7 +3437,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_basic_void_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_basic_void_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_HALLOWED.get())
@@ -3457,7 +3457,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_basic_hallowed_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_basic_hallowed_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
@@ -3478,7 +3478,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .requiredResearch(ResearchEntries.GRAND_PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_grand_earth_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_grand_earth_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_SEA_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
@@ -3499,7 +3499,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .requiredResearch(ResearchEntries.GRAND_PIXIES) 
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_grand_sea_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_grand_sea_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_SKY_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
@@ -3520,7 +3520,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .requiredResearch(ResearchEntries.GRAND_PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_grand_sky_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_grand_sky_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_SUN_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
@@ -3541,7 +3541,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .requiredResearch(ResearchEntries.GRAND_PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_grand_sun_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_grand_sun_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_MOON_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
@@ -3562,7 +3562,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .requiredResearch(ResearchEntries.GRAND_PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_grand_moon_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_grand_moon_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
@@ -3585,7 +3585,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.GRAND_PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_grand_blood_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_grand_blood_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
@@ -3608,7 +3608,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.GRAND_PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_grand_infernal_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_grand_infernal_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_VOID_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_VOID.get())
@@ -3631,7 +3631,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.GRAND_PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_grand_void_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_grand_void_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get())
@@ -3654,7 +3654,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.GRAND_PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_grand_hallowed_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_grand_hallowed_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_EARTH.get())
@@ -3676,7 +3676,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .requiredResearch(ResearchEntries.MAJESTIC_PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_majestic_earth_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_majestic_earth_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_SEA.get())
@@ -3698,7 +3698,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .requiredResearch(ResearchEntries.MAJESTIC_PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_majestic_sea_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_majestic_sea_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_SKY.get())
@@ -3720,7 +3720,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .requiredResearch(ResearchEntries.MAJESTIC_PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_majestic_sky_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_majestic_sky_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_SUN.get())
@@ -3742,7 +3742,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .requiredResearch(ResearchEntries.MAJESTIC_PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_majestic_sun_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_majestic_sun_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_MOON.get())
@@ -3764,7 +3764,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .requiredResearch(ResearchEntries.MAJESTIC_PIXIES)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_majestic_moon_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_majestic_moon_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_BLOOD.get())
@@ -3788,7 +3788,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.MAJESTIC_PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_majestic_blood_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_majestic_blood_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
@@ -3812,7 +3812,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.MAJESTIC_PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_majestic_infernal_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_majestic_infernal_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_VOID.get())
@@ -3836,7 +3836,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.MAJESTIC_PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_majestic_void_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_majestic_void_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get())
@@ -3860,7 +3860,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.MAJESTIC_PIXIES)
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .noExpertise()
-            .build(consumer, PrimalMagick.resource("pixie_majestic_hallowed_revive"));
+            .build(consumer, ResourceUtils.loc("pixie_majestic_hallowed_revive"));
     }
 
     protected void registerAmbrosiaRecipes(RecipeOutput consumer) {
@@ -6891,8 +6891,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(Tags.Items.ORES_IRON)
                     .setGroup("iron_grit_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("iron_grit_from_dissolving_ore")))
-            .save(consumer, PrimalMagick.resource("iron_grit_from_dissolving_ore"));
+                    .build(output, ResourceUtils.loc("iron_grit_from_dissolving_ore")))
+            .save(consumer, ResourceUtils.loc("iron_grit_from_dissolving_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, Tags.Items.RAW_MATERIALS_IRON)))
             .condition(TrueCondition.INSTANCE)
@@ -6900,8 +6900,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(Tags.Items.RAW_MATERIALS_IRON)
                     .setGroup("iron_grit_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("iron_grit_from_dissolving_raw_metal")))
-            .save(consumer, PrimalMagick.resource("iron_grit_from_dissolving_raw_metal"));
+                    .build(output, ResourceUtils.loc("iron_grit_from_dissolving_raw_metal")))
+            .save(consumer, ResourceUtils.loc("iron_grit_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, Tags.Items.ORES_GOLD)))
             .condition(TrueCondition.INSTANCE)
@@ -6909,8 +6909,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(Tags.Items.ORES_GOLD)
                     .setGroup("gold_grit_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("gold_grit_from_dissolving_ore")))
-            .save(consumer, PrimalMagick.resource("gold_grit_from_dissolving_ore"));
+                    .build(output, ResourceUtils.loc("gold_grit_from_dissolving_ore")))
+            .save(consumer, ResourceUtils.loc("gold_grit_from_dissolving_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, Tags.Items.RAW_MATERIALS_GOLD)))
             .condition(TrueCondition.INSTANCE)
@@ -6918,8 +6918,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(Tags.Items.RAW_MATERIALS_GOLD)
                     .setGroup("gold_grit_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("gold_grit_from_dissolving_raw_metal")))
-            .save(consumer, PrimalMagick.resource("gold_grit_from_dissolving_raw_metal"));
+                    .build(output, ResourceUtils.loc("gold_grit_from_dissolving_raw_metal")))
+            .save(consumer, ResourceUtils.loc("gold_grit_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, Tags.Items.ORES_COPPER)))
             .condition(TrueCondition.INSTANCE)
@@ -6927,8 +6927,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(Tags.Items.ORES_COPPER)
                     .setGroup("copper_grit_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("copper_grit_from_dissolving_ore")))
-            .save(consumer, PrimalMagick.resource("copper_grit_from_dissolving_ore"));
+                    .build(output, ResourceUtils.loc("copper_grit_from_dissolving_ore")))
+            .save(consumer, ResourceUtils.loc("copper_grit_from_dissolving_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, Tags.Items.RAW_MATERIALS_COPPER)))
             .condition(TrueCondition.INSTANCE)
@@ -6936,8 +6936,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(Tags.Items.RAW_MATERIALS_COPPER)
                     .setGroup("copper_grit_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("copper_grit_from_dissolving_raw_metal")))
-            .save(consumer, PrimalMagick.resource("copper_grit_from_dissolving_raw_metal"));
+                    .build(output, ResourceUtils.loc("copper_grit_from_dissolving_raw_metal")))
+            .save(consumer, ResourceUtils.loc("copper_grit_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.ORES_TIN)))
             .condition(TrueCondition.INSTANCE)
@@ -6945,8 +6945,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(ItemTagsForgeExt.ORES_TIN)
                     .setGroup("tin_dust_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("tin_dust_from_dissolving_ore")))
-            .save(consumer, PrimalMagick.resource("tin_dust_from_dissolving_ore"));
+                    .build(output, ResourceUtils.loc("tin_dust_from_dissolving_ore")))
+            .save(consumer, ResourceUtils.loc("tin_dust_from_dissolving_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.RAW_MATERIALS_TIN)))
             .condition(TrueCondition.INSTANCE)
@@ -6954,8 +6954,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(ItemTagsForgeExt.RAW_MATERIALS_TIN)
                     .setGroup("tin_dust_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("tin_dust_from_dissolving_raw_metal")))
-            .save(consumer, PrimalMagick.resource("tin_dust_from_dissolving_raw_metal"));
+                    .build(output, ResourceUtils.loc("tin_dust_from_dissolving_raw_metal")))
+            .save(consumer, ResourceUtils.loc("tin_dust_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.ORES_LEAD)))
             .condition(TrueCondition.INSTANCE)
@@ -6963,8 +6963,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(ItemTagsForgeExt.ORES_LEAD)
                     .setGroup("lead_dust_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("lead_dust_from_dissolving_ore")))
-            .save(consumer, PrimalMagick.resource("lead_dust_from_dissolving_ore"));
+                    .build(output, ResourceUtils.loc("lead_dust_from_dissolving_ore")))
+            .save(consumer, ResourceUtils.loc("lead_dust_from_dissolving_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.RAW_MATERIALS_LEAD)))
             .condition(TrueCondition.INSTANCE)
@@ -6972,8 +6972,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(ItemTagsForgeExt.RAW_MATERIALS_LEAD)
                     .setGroup("lead_dust_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("lead_dust_from_dissolving_raw_metal")))
-            .save(consumer, PrimalMagick.resource("lead_dust_from_dissolving_raw_metal"));
+                    .build(output, ResourceUtils.loc("lead_dust_from_dissolving_raw_metal")))
+            .save(consumer, ResourceUtils.loc("lead_dust_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.ORES_SILVER)))
             .condition(TrueCondition.INSTANCE)
@@ -6981,8 +6981,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(ItemTagsForgeExt.ORES_SILVER)
                     .setGroup("silver_dust_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("silver_dust_from_dissolving_ore")))
-            .save(consumer, PrimalMagick.resource("silver_dust_from_dissolving_ore"));
+                    .build(output, ResourceUtils.loc("silver_dust_from_dissolving_ore")))
+            .save(consumer, ResourceUtils.loc("silver_dust_from_dissolving_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.RAW_MATERIALS_SILVER)))
             .condition(TrueCondition.INSTANCE)
@@ -6990,8 +6990,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(ItemTagsForgeExt.RAW_MATERIALS_SILVER)
                     .setGroup("silver_dust_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("silver_dust_from_dissolving_raw_metal")))
-            .save(consumer, PrimalMagick.resource("silver_dust_from_dissolving_raw_metal"));
+                    .build(output, ResourceUtils.loc("silver_dust_from_dissolving_raw_metal")))
+            .save(consumer, ResourceUtils.loc("silver_dust_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.ORES_URANIUM)))
             .condition(TrueCondition.INSTANCE)
@@ -6999,8 +6999,8 @@ public class Recipes extends RecipeProvider {
                     .ingredient(ItemTagsForgeExt.ORES_URANIUM)
                     .setGroup("uranium_dust_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("uranium_dust_from_dissolving_ore")))
-            .save(consumer, PrimalMagick.resource("uranium_dust_from_dissolving_ore"));
+                    .build(output, ResourceUtils.loc("uranium_dust_from_dissolving_ore")))
+            .save(consumer, ResourceUtils.loc("uranium_dust_from_dissolving_ore"));
         ConditionalRecipe.builder()
             .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.RAW_MATERIALS_URANIUM)))
             .condition(TrueCondition.INSTANCE)
@@ -7008,57 +7008,57 @@ public class Recipes extends RecipeProvider {
                     .ingredient(ItemTagsForgeExt.RAW_MATERIALS_URANIUM)
                     .setGroup("uranium_dust_dissolution")
                     .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, PrimalMagick.resource("uranium_dust_from_dissolving_raw_metal")))
-            .save(consumer, PrimalMagick.resource("uranium_dust_from_dissolving_raw_metal"));
+                    .build(output, ResourceUtils.loc("uranium_dust_from_dissolving_raw_metal")))
+            .save(consumer, ResourceUtils.loc("uranium_dust_from_dissolving_raw_metal"));
         
         DissolutionRecipeBuilder.dissolutionRecipe(Items.COBBLESTONE, 2)
             .ingredient(ItemTagsPM.SURFACE_STONE)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("cobblestone_from_dissolving_surface_stone"));
+            .build(consumer, ResourceUtils.loc("cobblestone_from_dissolving_surface_stone"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.COBBLED_DEEPSLATE, 2)
             .ingredient(ItemTagsPM.DEEP_STONE)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("cobbled_deepslate_from_dissolving_deep_stone"));
+            .build(consumer, ResourceUtils.loc("cobbled_deepslate_from_dissolving_deep_stone"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.GRAVEL, 2)
             .ingredient(Tags.Items.COBBLESTONE)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("gravel_from_dissolving_cobblestone"));
+            .build(consumer, ResourceUtils.loc("gravel_from_dissolving_cobblestone"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.SAND, 2)
             .ingredient(Tags.Items.GRAVEL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("sand_from_dissolving_gravel"));
+            .build(consumer, ResourceUtils.loc("sand_from_dissolving_gravel"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.BONE_MEAL, 6)
             .ingredient(Tags.Items.BONES)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("bone_meal_from_dissolving_bone"));
+            .build(consumer, ResourceUtils.loc("bone_meal_from_dissolving_bone"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.BLAZE_POWDER, 4)
             .ingredient(Tags.Items.RODS_BLAZE)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("blaze_powder_from_dissolving_blaze_rod"));
+            .build(consumer, ResourceUtils.loc("blaze_powder_from_dissolving_blaze_rod"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.STRING, 4)
             .ingredient(ItemTags.WOOL)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("string_from_dissolving_wool"));
+            .build(consumer, ResourceUtils.loc("string_from_dissolving_wool"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.QUARTZ, 4)
             .ingredient(Items.QUARTZ_BLOCK)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("quartz_from_dissolving_quartz_block"));
+            .build(consumer, ResourceUtils.loc("quartz_from_dissolving_quartz_block"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.GLOWSTONE_DUST, 4)
             .ingredient(Items.GLOWSTONE)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("glowstone_dust_from_dissolving_glowstone_block"));
+            .build(consumer, ResourceUtils.loc("glowstone_dust_from_dissolving_glowstone_block"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.NETHERITE_SCRAP, 3)
             .ingredient(Items.ANCIENT_DEBRIS)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("netherite_scrap_from_dissolving_ancient_debris"));
+            .build(consumer, ResourceUtils.loc("netherite_scrap_from_dissolving_ancient_debris"));
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.ROCK_SALT.get(), 12)
             .ingredient(ItemsPM.ROCK_SALT_ORE.get())
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("rock_salt_from_dissolving_rock_salt_ore"));
+            .build(consumer, ResourceUtils.loc("rock_salt_from_dissolving_rock_salt_ore"));
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.REFINED_SALT.get(), 3)
             .ingredient(ItemsPM.ROCK_SALT.get())
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("refined_salt_from_dissolving_rock_salt"));
+            .build(consumer, ResourceUtils.loc("refined_salt_from_dissolving_rock_salt"));
     }
     
     protected void registerHummingArtifactRecipes(RecipeOutput consumer) {
@@ -7320,7 +7320,7 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.COBBLESTONE_NORMAL)
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
             .requiredResearch(ResearchEntries.STONEMELDING)
-            .build(consumer, PrimalMagick.resource("stone_from_stonemelding"));
+            .build(consumer, ResourceUtils.loc("stone_from_stonemelding"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.DEEPSLATE, 8)
             .patternLine("SSS")
             .patternLine("SDS")
@@ -7328,7 +7328,7 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.COBBLESTONE_DEEPSLATE)
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
             .requiredResearch(ResearchEntries.STONEMELDING)
-            .build(consumer, PrimalMagick.resource("deepslate_from_stonemelding"));
+            .build(consumer, ResourceUtils.loc("deepslate_from_stonemelding"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.COBBLESTONE, 8)
             .patternLine("SSS")
             .patternLine("SDS")
@@ -7336,7 +7336,7 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.GRAVEL)
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
             .requiredResearch(ResearchEntries.STONEMELDING)
-            .build(consumer, PrimalMagick.resource("cobblestone_from_stonemelding"));
+            .build(consumer, ResourceUtils.loc("cobblestone_from_stonemelding"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.GRAVEL, 8)
             .patternLine("SSS")
             .patternLine("SDS")
@@ -7344,7 +7344,7 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.SAND)
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
             .requiredResearch(ResearchEntries.STONEMELDING)
-            .build(consumer, PrimalMagick.resource("gravel_from_stonemelding"));
+            .build(consumer, ResourceUtils.loc("gravel_from_stonemelding"));
     }
     
     protected void registerCryotreatmentRecipes(RecipeOutput consumer) {
@@ -7352,17 +7352,17 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.WATER_BUCKET)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .requiredResearch(ResearchEntries.CRYOTREATMENT)
-            .build(consumer, PrimalMagick.resource("ice_from_cryotreatment"));
+            .build(consumer, ResourceUtils.loc("ice_from_cryotreatment"));
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.OBSIDIAN)
             .addIngredient(Items.LAVA_BUCKET)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .requiredResearch(ResearchEntries.CRYOTREATMENT)
-            .build(consumer, PrimalMagick.resource("obsidian_from_cryotreatment"));
+            .build(consumer, ResourceUtils.loc("obsidian_from_cryotreatment"));
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.SLIME_BALL)
             .addIngredient(Items.MAGMA_CREAM)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .requiredResearch(ResearchEntries.CRYOTREATMENT)
-            .build(consumer, PrimalMagick.resource("slime_ball_from_cryotreatment"));
+            .build(consumer, ResourceUtils.loc("slime_ball_from_cryotreatment"));
     }
     
     protected void registerCropRecipes(RecipeOutput consumer) {
@@ -7376,7 +7376,7 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HYDROMELON)
             .manaCost(SourceList.EMPTY.add(Sources.SEA, 50))
             .instability(3)
-            .build(consumer, PrimalMagick.resource("hydromelon_seeds_from_ritual"));
+            .build(consumer, ResourceUtils.loc("hydromelon_seeds_from_ritual"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemsPM.HYDROMELON.get())
             .requires(ItemsPM.HYDROMELON_SLICE.get(), 9)
             .unlockedBy("has_hydromelon_slice", has(ItemsPM.HYDROMELON_SLICE.get()))
@@ -7412,7 +7412,7 @@ public class Recipes extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BREWING, Items.BLAZE_POWDER)
             .requires(ItemsPM.EMBERFLOWER.get())
             .unlockedBy("has_emberflower", has(ItemsPM.EMBERFLOWER.get()))
-            .save(consumer, PrimalMagick.resource("blaze_powder_from_emberflower"));
+            .save(consumer, ResourceUtils.loc("blaze_powder_from_emberflower"));
     }
     
     protected void registerIgnyxRecipes(RecipeOutput consumer) {
@@ -7429,12 +7429,12 @@ public class Recipes extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IGNYX.get(), 9)
             .requires(ItemsPM.IGNYX_BLOCK.get())
             .unlockedBy("has_ignyx_block", has(ItemsPM.IGNYX_BLOCK.get()))
-            .save(consumer, PrimalMagick.resource("ignyx_from_storage_block"));
+            .save(consumer, ResourceUtils.loc("ignyx_from_storage_block"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, Items.TORCH, 32)
             .requires(ItemsPM.IGNYX.get())
             .requires(Ingredient.of(Tags.Items.RODS_WOODEN), 8)
             .unlockedBy("has_ignyx", has(ItemsPM.IGNYX.get()))
-            .save(consumer, PrimalMagick.resource("torch_from_ignyx"));
+            .save(consumer, ResourceUtils.loc("torch_from_ignyx"));
     }
     
     protected void registerGemBudRecipes(RecipeOutput consumer) {

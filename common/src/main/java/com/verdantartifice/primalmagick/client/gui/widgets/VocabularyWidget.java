@@ -1,13 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
-import java.awt.Color;
-import java.util.Collections;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -17,13 +13,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
+import java.awt.Color;
+import java.util.Collections;
+
 /**
  * Display widget for showing how much vocabulary a player knows for a given static book language.
  * 
  * @author Daedalus4096
  */
 public class VocabularyWidget extends AbstractWidget {
-    private static final ResourceLocation BORDER_SPRITE = PrimalMagick.resource("scribe_table/glyph_border");
+    private static final ResourceLocation BORDER_SPRITE = ResourceUtils.loc("scribe_table/glyph_border");
 
     protected Holder<BookLanguage> language;
     protected int amount;

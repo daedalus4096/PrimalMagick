@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class SpellVehiclesPM {
-    private static final DeferredRegister<SpellVehicleType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.SPELL_VEHICLE_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<SpellVehicleType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.SPELL_VEHICLE_TYPES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<SpellVehicleType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
@@ -30,6 +30,6 @@ public class SpellVehiclesPM {
     
     protected static <T extends AbstractSpellVehicle<T>> RegistryObject<SpellVehicleType<T>> register(String id, int sortOrder, Supplier<T> instanceSupplier, 
             Supplier<AbstractRequirement<?>> requirementSupplier, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return DEFERRED_TYPES.register(id, () -> new SpellVehicleType<T>(PrimalMagick.resource(id), sortOrder, instanceSupplier, requirementSupplier, codec, streamCodec));
+        return DEFERRED_TYPES.register(id, () -> new SpellVehicleType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, codec, streamCodec));
     }
 }

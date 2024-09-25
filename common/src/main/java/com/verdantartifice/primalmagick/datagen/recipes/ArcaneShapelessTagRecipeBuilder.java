@@ -169,7 +169,7 @@ public class ArcaneShapelessTagRecipeBuilder {
     }
     
     public ArcaneShapelessTagRecipeBuilder expertiseGroup(String groupName) {
-        return this.expertiseGroup(PrimalMagick.resource(groupName));
+        return this.expertiseGroup(ResourceUtils.loc(groupName));
     }
     
     public ArcaneShapelessTagRecipeBuilder discipline(ResourceKey<ResearchDiscipline> rawDiscipline) {

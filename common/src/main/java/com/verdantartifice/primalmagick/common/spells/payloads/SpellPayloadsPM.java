@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class SpellPayloadsPM {
-    private static final DeferredRegister<SpellPayloadType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.SPELL_PAYLOAD_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<SpellPayloadType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.SPELL_PAYLOAD_TYPES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<SpellPayloadType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
@@ -50,6 +50,6 @@ public class SpellPayloadsPM {
     public static final RegistryObject<SpellPayloadType<ConsecrateSpellPayload>> CONSECRATE = register(ConsecrateSpellPayload.TYPE, 2400, ConsecrateSpellPayload::getInstance, ConsecrateSpellPayload::getRequirement, ConsecrateSpellPayload.CODEC, ConsecrateSpellPayload.STREAM_CODEC);
     
     protected static <T extends AbstractSpellPayload<T>> RegistryObject<SpellPayloadType<T>> register(String id, int sortOrder, Supplier<T> instanceSupplier, Supplier<AbstractRequirement<?>> requirementSupplier, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return DEFERRED_TYPES.register(id, () -> new SpellPayloadType<T>(PrimalMagick.resource(id), sortOrder, instanceSupplier, requirementSupplier, codec, streamCodec));
+        return DEFERRED_TYPES.register(id, () -> new SpellPayloadType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, codec, streamCodec));
     }
 }

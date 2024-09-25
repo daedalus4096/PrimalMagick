@@ -1,16 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.awt.Color;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.OptionalInt;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,13 +15,19 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.LazyOptional;
 
+import java.awt.Color;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.OptionalInt;
+
 /**
  * Display widget for showing accumulated knowledge (e.g. observations) in the research table GUI.
  * 
  * @author Daedalus4096
  */
 public class KnowledgeTotalWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
     protected static final DecimalFormat FORMATTER = new DecimalFormat("###.##");
 
     protected final KnowledgeType type;

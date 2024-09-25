@@ -18,7 +18,7 @@ public abstract class AbstractTokenizedLanguageBuilder extends AbstractLanguageB
     private final String rootToken;
     
     public AbstractTokenizedLanguageBuilder(String cmd, String rootToken, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(cmd, () -> String.join(".", rootToken, PrimalMagick.MODID, cmd.toLowerCase()), untracker, adder);
+        super(cmd, () -> String.join(".", rootToken, Constants.MOD_ID, cmd.toLowerCase()), untracker, adder);
         this.rootToken = rootToken;
     }
 
@@ -29,7 +29,7 @@ public abstract class AbstractTokenizedLanguageBuilder extends AbstractLanguageB
 
     @Override
     protected ResourceLocation getBaseRegistryKey(String base) {
-        return PrimalMagick.resource(base.toLowerCase());
+        return ResourceUtils.loc(base.toLowerCase());
     }
     
     public SubtokenBuilder sub(String token) {

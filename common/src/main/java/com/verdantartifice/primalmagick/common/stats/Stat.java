@@ -36,7 +36,7 @@ public record Stat(ResourceLocation key, StatFormatter formatter, Optional<Resou
     }
     
     public static Builder builder(String rawKey) {
-        return new Builder(PrimalMagick.resource(rawKey));
+        return new Builder(ResourceUtils.loc(rawKey));
     }
     
     public static class Builder {

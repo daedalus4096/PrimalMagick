@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import java.util.function.Function;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
@@ -13,7 +10,6 @@ import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
-
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.item.BlockItem;
@@ -26,12 +22,14 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.function.Function;
+
 /**
  * Respond to client-only block/item color events.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ColorEvents {
     @SubscribeEvent
     public static void onBlockColorInit(RegisterColorHandlersEvent.Block event) {

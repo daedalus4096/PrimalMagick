@@ -13,15 +13,15 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class RecipeTypesPM {
-    private static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Constants.MOD_ID);
     
     public static void init() {
         RECIPE_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
     }
     
-    public static final RegistryObject<RecipeType<IArcaneRecipe>> ARCANE_CRAFTING = RECIPE_TYPES.register("arcane_crafting", () -> RecipeType.simple(PrimalMagick.resource("arcane_crafting")));
-    public static final RegistryObject<RecipeType<IRitualRecipe>> RITUAL = RECIPE_TYPES.register("ritual", () -> RecipeType.simple(PrimalMagick.resource("ritual")));
-    public static final RegistryObject<RecipeType<IRunecarvingRecipe>> RUNECARVING = RECIPE_TYPES.register("runecarving", () -> RecipeType.simple(PrimalMagick.resource("runecarving")));
-    public static final RegistryObject<RecipeType<IConcoctingRecipe>> CONCOCTING = RECIPE_TYPES.register("concocting", () -> RecipeType.simple(PrimalMagick.resource("concocting")));
-    public static final RegistryObject<RecipeType<IDissolutionRecipe>> DISSOLUTION = RECIPE_TYPES.register("dissolution", () -> RecipeType.simple(PrimalMagick.resource("dissolution")));
+    public static final RegistryObject<RecipeType<IArcaneRecipe>> ARCANE_CRAFTING = RECIPE_TYPES.register("arcane_crafting", () -> RecipeType.simple(ResourceUtils.loc("arcane_crafting")));
+    public static final RegistryObject<RecipeType<IRitualRecipe>> RITUAL = RECIPE_TYPES.register("ritual", () -> RecipeType.simple(ResourceUtils.loc("ritual")));
+    public static final RegistryObject<RecipeType<IRunecarvingRecipe>> RUNECARVING = RECIPE_TYPES.register("runecarving", () -> RecipeType.simple(ResourceUtils.loc("runecarving")));
+    public static final RegistryObject<RecipeType<IConcoctingRecipe>> CONCOCTING = RECIPE_TYPES.register("concocting", () -> RecipeType.simple(ResourceUtils.loc("concocting")));
+    public static final RegistryObject<RecipeType<IDissolutionRecipe>> DISSOLUTION = RECIPE_TYPES.register("dissolution", () -> RecipeType.simple(ResourceUtils.loc("dissolution")));
 }

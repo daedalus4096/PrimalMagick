@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class SensorTypesPM {
-    private static final DeferredRegister<SensorType<?>> SENSOR_TYPES = DeferredRegister.create(ForgeRegistries.SENSOR_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<SensorType<?>> SENSOR_TYPES = DeferredRegister.create(ForgeRegistries.SENSOR_TYPES, Constants.MOD_ID);
     
     public static void init() {
         SENSOR_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());

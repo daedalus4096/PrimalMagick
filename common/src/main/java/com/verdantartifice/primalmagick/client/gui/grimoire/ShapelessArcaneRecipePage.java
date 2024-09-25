@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeExpertiseWidget;
 import com.verdantartifice.primalmagick.common.crafting.IShapelessArcaneRecipePM;
-
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.RecipeHolder;
 

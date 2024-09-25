@@ -31,7 +31,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class DataComponentsPM {
-    private static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, PrimalMagick.MODID);
+    private static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
     
     public static void init() {
         DATA_COMPONENT_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());

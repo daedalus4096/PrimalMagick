@@ -25,6 +25,6 @@ public class WandComponentLanguageBuilder extends AbstractLanguageBuilder<IWandC
 
     @Override
     protected ResourceLocation getBaseRegistryKey(IWandComponent base) {
-        return PrimalMagick.resource(base.getTag());
+        return ResourceUtils.loc(base.getTag());
     }
 }

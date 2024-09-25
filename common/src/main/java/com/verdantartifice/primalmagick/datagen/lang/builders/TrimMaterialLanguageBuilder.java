@@ -17,7 +17,7 @@ import net.minecraft.world.item.armortrim.TrimMaterial;
  */
 public class TrimMaterialLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<TrimMaterial>, TrimMaterialLanguageBuilder> {
     public TrimMaterialLanguageBuilder(ResourceKey<TrimMaterial> materialKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(materialKey, () -> String.join(".", "trim_material", PrimalMagick.MODID, materialKey.location().getPath()), untracker, adder);
+        super(materialKey, () -> String.join(".", "trim_material", Constants.MOD_ID, materialKey.location().getPath()), untracker, adder);
     }
 
     @Override

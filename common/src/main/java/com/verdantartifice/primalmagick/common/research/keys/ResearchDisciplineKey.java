@@ -26,7 +26,7 @@ public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplin
     public static final MapCodec<ResearchDisciplineKey> CODEC = ResourceKey.codec(RegistryKeysPM.RESEARCH_DISCIPLINES).fieldOf("rootKey").xmap(ResearchDisciplineKey::new, key -> key.rootKey);
     public static final StreamCodec<ByteBuf, ResearchDisciplineKey> STREAM_CODEC = ResourceKey.streamCodec(RegistryKeysPM.RESEARCH_DISCIPLINES).map(ResearchDisciplineKey::new, key -> key.rootKey);
     
-    private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
+    private static final ResourceLocation ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
 
     protected final ResourceKey<ResearchDiscipline> rootKey;
     

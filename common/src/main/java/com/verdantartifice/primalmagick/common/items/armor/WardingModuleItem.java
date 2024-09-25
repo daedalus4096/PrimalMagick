@@ -21,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class WardingModuleItem extends Item implements ITieredDevice {
-    public static final String TAG_NAME = String.join(":", PrimalMagick.MODID, "WardingModule");
+    public static final String TAG_NAME = String.join(":", Constants.MOD_ID, "WardingModule");
     
     /**
      * The total amount of centimana that can be infused into a warded armor stack at once.

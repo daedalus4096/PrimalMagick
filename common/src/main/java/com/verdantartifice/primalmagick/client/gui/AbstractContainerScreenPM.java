@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.util.Optional;
-
 import com.verdantartifice.primalmagick.common.menus.slots.IHasCyclingBackgrounds;
 import com.verdantartifice.primalmagick.common.menus.slots.IHasTooltip;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+
+import java.util.Optional;
 
 /**
  * Base class GUI for a container screen.  Provides some common functionality to extenders, such as showing tooltips

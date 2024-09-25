@@ -38,7 +38,7 @@ public class BiomeModifiersPM {
     public static final ResourceKey<BiomeModifier> ADD_SPAWN_TREEFOLK = registerKey("add_spawn_treefolk");
     
     public static ResourceKey<BiomeModifier> registerKey(String name) {
-        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, PrimalMagick.resource(name));
+        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, ResourceUtils.loc(name));
     }
     
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {

@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWid
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;

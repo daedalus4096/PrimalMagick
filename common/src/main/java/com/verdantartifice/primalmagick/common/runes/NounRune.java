@@ -27,7 +27,7 @@ public class NounRune extends Rune {
     }, n -> n.getId());
     
     public NounRune(@Nonnull String tag, @Nonnull ResourceKey<ResearchEntry> discoveryKey) {
-        super(PrimalMagick.resource(tag), new ResearchRequirement(new ResearchEntryKey(discoveryKey)), Rarity.COMMON, false, -1);
+        super(ResourceUtils.loc(tag), new ResearchRequirement(new ResearchEntryKey(discoveryKey)), Rarity.COMMON, false, -1);
     }
     
     @Override

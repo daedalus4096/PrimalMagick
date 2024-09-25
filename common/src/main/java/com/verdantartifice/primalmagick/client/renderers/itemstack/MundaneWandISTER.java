@@ -22,7 +22,7 @@ import net.minecraft.world.item.ItemStack;
  * @see {@link com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem}
  */
 public class MundaneWandISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation CORE_MRL = new ModelResourceLocation(PrimalMagick.resource("mundane_wand_core"), "");
+    private static final ModelResourceLocation CORE_MRL = new ModelResourceLocation(ResourceUtils.loc("mundane_wand_core"), "");
     
     public MundaneWandISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 

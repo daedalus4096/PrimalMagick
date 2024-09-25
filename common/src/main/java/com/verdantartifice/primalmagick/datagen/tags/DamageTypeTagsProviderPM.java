@@ -22,7 +22,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  */
 public class DamageTypeTagsProviderPM extends TagsProvider<DamageType> {
     public DamageTypeTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
-        super(output, Registries.DAMAGE_TYPE, future, PrimalMagick.MODID, helper);
+        super(output, Registries.DAMAGE_TYPE, future, Constants.MOD_ID, helper);
     }
 
     @Override

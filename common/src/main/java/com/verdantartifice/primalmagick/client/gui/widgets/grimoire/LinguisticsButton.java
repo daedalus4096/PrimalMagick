@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.research.topics.LanguageResearchTopic;
-
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;

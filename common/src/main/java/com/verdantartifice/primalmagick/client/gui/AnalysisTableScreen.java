@@ -1,12 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.mutable.MutableObject;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
@@ -15,7 +8,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
@@ -27,6 +20,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.mutable.MutableObject;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GUI screen for analysis table block.
@@ -34,7 +32,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class AnalysisTableScreen extends AbstractContainerScreenPM<AnalysisTableMenu> {
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/analysis_table.png");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/analysis_table.png");
     
     protected Level world;
     protected final List<AffinityWidget> affinityWidgets = new ArrayList<>();
@@ -117,7 +115,7 @@ public class AnalysisTableScreen extends AbstractContainerScreenPM<AnalysisTable
     }
     
     protected static class AnalyzeButton extends ImageButton {
-        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(PrimalMagick.resource("analysis_table/button"), PrimalMagick.resource("analysis_table/button_highlighted"));
+        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(ResourceUtils.loc("analysis_table/button"), ResourceUtils.loc("analysis_table/button_highlighted"));
         protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = Component.translatable("tooltip.primalmagick.analyze_button.1");
         protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = Component.translatable("tooltip.primalmagick.analyze_button.2").withStyle(ChatFormatting.RED);
 

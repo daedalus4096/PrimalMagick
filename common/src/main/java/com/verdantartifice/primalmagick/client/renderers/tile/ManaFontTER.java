@@ -1,14 +1,10 @@
 package com.verdantartifice.primalmagick.client.renderers.tile;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.tiles.mana.AbstractManaFontTileEntity;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -19,6 +15,8 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
+import java.awt.*;
+
 /**
  * Custom tile entity renderer for mana font blocks.
  * 
@@ -26,7 +24,7 @@ import net.minecraft.world.level.block.Block;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock}
  */
 public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEntity> {
-    public static final ResourceLocation TEXTURE = PrimalMagick.resource("entity/mana_font_core");
+    public static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/mana_font_core");
     
     public ManaFontTER(BlockEntityRendererProvider.Context context) {
     }

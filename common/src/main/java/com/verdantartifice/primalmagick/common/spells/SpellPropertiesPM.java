@@ -16,7 +16,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class SpellPropertiesPM {
-    private static final DeferredRegister<SpellProperty> DEFERRED_PROPERTIES = DeferredRegister.create(RegistryKeysPM.SPELL_PROPERTIES, PrimalMagick.MODID);
+    private static final DeferredRegister<SpellProperty> DEFERRED_PROPERTIES = DeferredRegister.create(RegistryKeysPM.SPELL_PROPERTIES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<SpellProperty>> PROPERTIES = DEFERRED_PROPERTIES.makeRegistry(() -> new RegistryBuilder<SpellProperty>().hasTags());
     
     public static void init() {
@@ -36,7 +36,7 @@ public class SpellPropertiesPM {
     public static final RegistryObject<SpellProperty> SILK_TOUCH = register("silk_touch", id -> new SpellProperty(id, "spells.primalmagick.property.silk_touch", 0, 1));
     
     protected static RegistryObject<SpellProperty> register(String id, Function<ResourceLocation, SpellProperty> propertySupplier) {
-        return DEFERRED_PROPERTIES.register(id, () -> propertySupplier.apply(PrimalMagick.resource(id)));
+        return DEFERRED_PROPERTIES.register(id, () -> propertySupplier.apply(ResourceUtils.loc(id)));
     }
     
     @Nullable

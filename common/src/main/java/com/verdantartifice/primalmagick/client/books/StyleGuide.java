@@ -1,16 +1,10 @@
 package com.verdantartifice.primalmagick.client.books;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
-
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
@@ -18,6 +12,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 /**
  * Represents a mapping of translation keys of localized words to the text styles that should be

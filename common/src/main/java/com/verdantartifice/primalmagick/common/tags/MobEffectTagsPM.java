@@ -18,6 +18,6 @@ public class MobEffectTagsPM {
     public static final TagKey<MobEffect> IMMUNITY_HALLOWSTEEL_GOLEM = create("immunity/hallowsteel_golems");
 
     private static TagKey<MobEffect> create(String name) {
-        return TagKey.create(Registries.MOB_EFFECT, PrimalMagick.resource(name));
+        return TagKey.create(Registries.MOB_EFFECT, ResourceUtils.loc(name));
     }
 }

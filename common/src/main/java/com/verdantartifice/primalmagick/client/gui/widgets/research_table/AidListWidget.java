@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.util.List;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
@@ -13,13 +10,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.List;
+
 /**
  * Display widget for showing all nearby research aids on the research table.
  * 
  * @author Daedalus4096
  */
 public class AidListWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
     
     protected final List<Component> aidNames;
 

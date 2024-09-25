@@ -1,13 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
-import java.awt.Color;
-import java.text.DecimalFormat;
-import java.util.Collections;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -15,13 +10,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
+import java.awt.Color;
+import java.text.DecimalFormat;
+import java.util.Collections;
+
 /**
  * Class for display widgets which show a gauge of a mana pool.
  * 
  * @author Daedalus4096
  */
 public class ManaGaugeWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/mana_gauge.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/mana_gauge.png");
     protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
 
     protected final Source source;

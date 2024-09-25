@@ -93,7 +93,7 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
 
     public AbstractLanguageProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProviderFuture, String locale) {
         this.output = output;
-        this.modid = PrimalMagick.MODID;
+        this.modid = Constants.MOD_ID;
         this.locale = locale;
         this.lookupProviderFuture = lookupProviderFuture;
     }

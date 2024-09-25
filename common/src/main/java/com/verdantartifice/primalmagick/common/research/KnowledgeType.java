@@ -16,8 +16,8 @@ import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 
 public enum KnowledgeType implements StringRepresentable {
-    OBSERVATION(0, "observation", 16, PrimalMagick.resource("textures/research/knowledge_observation.png")),
-    THEORY(1, "theory", 32, PrimalMagick.resource("textures/research/knowledge_theory.png"));
+    OBSERVATION(0, "observation", 16, ResourceUtils.loc("textures/research/knowledge_observation.png")),
+    THEORY(1, "theory", 32, ResourceUtils.loc("textures/research/knowledge_theory.png"));
     
     private static final IntFunction<KnowledgeType> BY_ID = ByIdMap.continuous(KnowledgeType::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
     public static final Codec<KnowledgeType> CODEC = StringRepresentable.fromValues(KnowledgeType::values);
@@ -50,7 +50,7 @@ public enum KnowledgeType implements StringRepresentable {
     
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "knowledge_type", PrimalMagick.MODID, this.getSerializedName());
+        return String.join(".", "knowledge_type", Constants.MOD_ID, this.getSerializedName());
     }
 
     @Override

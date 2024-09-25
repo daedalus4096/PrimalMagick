@@ -1,11 +1,7 @@
 package com.verdantartifice.primalmagick.client.toast;
 
-import java.awt.Color;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
@@ -13,13 +9,15 @@ import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import java.awt.*;
+
 /**
  * GUI element for the toast that shows when you complete a research entry.
  * 
  * @author Daedalus4096
  */
 public class ResearchToast implements Toast {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/hud.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/hud.png");
     
     protected final ResearchEntry entry;
     protected final boolean isComplete;

@@ -1,11 +1,10 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.ChangeScribeTableModePacket;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -18,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ScribeTableModeTabButton extends StateSwitchingButton {
-    protected static final WidgetSprites SPRITES = new WidgetSprites(PrimalMagick.resource("scribe_table/tab"), PrimalMagick.resource("scribe_table/tab_selected"));
+    protected static final WidgetSprites SPRITES = new WidgetSprites(ResourceUtils.loc("scribe_table/tab"), ResourceUtils.loc("scribe_table/tab_selected"));
 
     protected final ScribeTableMode mode;
     protected final AbstractScribeTableScreen<?> owner;

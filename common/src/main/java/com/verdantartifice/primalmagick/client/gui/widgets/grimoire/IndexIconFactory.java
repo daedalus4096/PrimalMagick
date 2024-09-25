@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
-
 import net.minecraft.world.item.Item;
 
 /**

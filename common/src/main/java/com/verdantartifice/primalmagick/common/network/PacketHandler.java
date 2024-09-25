@@ -82,7 +82,7 @@ import net.minecraftforge.network.SimpleChannel;
  */
 public class PacketHandler {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation CHANNEL_NAME = PrimalMagick.resource("main_channel");
+    private static final ResourceLocation CHANNEL_NAME = ResourceUtils.loc("main_channel");
     private static final int PROTOCOL_VERSION = 1;
     
     private static final SimpleChannel CHANNEL = ChannelBuilder

@@ -21,7 +21,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  */
 public class StructureTagsProviderPM extends TagsProvider<Structure> {
     public StructureTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
-        super(output, Registries.STRUCTURE, future, PrimalMagick.MODID, helper);
+        super(output, Registries.STRUCTURE, future, Constants.MOD_ID, helper);
     }
 
     @Override

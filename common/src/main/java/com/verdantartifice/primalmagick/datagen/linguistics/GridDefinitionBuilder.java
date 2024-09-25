@@ -49,7 +49,7 @@ public class GridDefinitionBuilder {
     }
     
     public static GridDefinitionBuilder grid(@Nonnull String keyPath, HolderLookup.Provider lookupProvider) {
-        return grid(PrimalMagick.resource(keyPath), lookupProvider);
+        return grid(ResourceUtils.loc(keyPath), lookupProvider);
     }
     
     public GridDefinitionBuilder language(@Nullable ResourceKey<BookLanguage> lang) {

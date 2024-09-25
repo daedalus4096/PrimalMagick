@@ -31,7 +31,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
-    public static final ResourceLocation BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_book_slot");
+    public static final ResourceLocation BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
     protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
 
     private final DataSlot languageClue = DataSlot.standalone();

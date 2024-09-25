@@ -1,16 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.util.Set;
-
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ExperienceProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;
-
 import net.minecraft.world.level.block.Block;
+
+import javax.annotation.Nullable;
+import java.util.Set;
 
 /**
  * Factory for creating widgets to display research project materials.

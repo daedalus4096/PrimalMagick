@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementIndexPage;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 

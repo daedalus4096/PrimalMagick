@@ -44,8 +44,8 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * @author Daedalus4096
  */
 public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<RunecarvingTableTileEntity> implements ContainerListener {
-    public static final ResourceLocation BASE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_slab_slot");
-    public static final ResourceLocation ETCHING_SLOT_TEXTURE = PrimalMagick.resource("item/empty_lapis_slot");
+    public static final ResourceLocation BASE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_slab_slot");
+    public static final ResourceLocation ETCHING_SLOT_TEXTURE = ResourceUtils.loc("item/empty_lapis_slot");
     protected static final Component BASE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runecarving_table.slot.base");
     protected static final Component ETCHING_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runecarving_table.slot.etching");
 

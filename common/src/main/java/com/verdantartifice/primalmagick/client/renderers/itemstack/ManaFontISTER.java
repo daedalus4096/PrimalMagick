@@ -31,10 +31,10 @@ import net.minecraft.world.item.ItemStack;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock}
  */
 public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL_BASIC = new ModelResourceLocation(PrimalMagick.resource("ancient_font_earth"), "");
-    private static final ModelResourceLocation MRL_ENCHANTED = new ModelResourceLocation(PrimalMagick.resource("artificial_font_earth"), "");
-    private static final ModelResourceLocation MRL_FORBIDDEN = new ModelResourceLocation(PrimalMagick.resource("forbidden_font_earth"), "");
-    private static final ModelResourceLocation MRL_HEAVENLY = new ModelResourceLocation(PrimalMagick.resource("heavenly_font_earth"), "");
+    private static final ModelResourceLocation MRL_BASIC = new ModelResourceLocation(ResourceUtils.loc("ancient_font_earth"), "");
+    private static final ModelResourceLocation MRL_ENCHANTED = new ModelResourceLocation(ResourceUtils.loc("artificial_font_earth"), "");
+    private static final ModelResourceLocation MRL_FORBIDDEN = new ModelResourceLocation(ResourceUtils.loc("forbidden_font_earth"), "");
+    private static final ModelResourceLocation MRL_HEAVENLY = new ModelResourceLocation(ResourceUtils.loc("heavenly_font_earth"), "");
     
     public ManaFontISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 

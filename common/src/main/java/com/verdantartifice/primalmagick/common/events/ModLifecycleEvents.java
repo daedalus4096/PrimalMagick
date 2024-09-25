@@ -21,7 +21,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ModLifecycleEvents {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {

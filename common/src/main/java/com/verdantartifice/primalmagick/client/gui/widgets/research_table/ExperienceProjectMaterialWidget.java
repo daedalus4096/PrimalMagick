@@ -1,18 +1,17 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.awt.Color;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ExperienceProjectMaterial;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+
+import java.awt.Color;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Display widget for an experience research project material.  Used on the research table screen.

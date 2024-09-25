@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ResearchKeyTypesPM {
-    private static final DeferredRegister<ResearchKeyType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.RESEARCH_KEY_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<ResearchKeyType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.RESEARCH_KEY_TYPES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<ResearchKeyType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
@@ -32,6 +32,6 @@ public class ResearchKeyTypesPM {
     public static final RegistryObject<ResearchKeyType<RuneEnchantmentPartialKey>> RUNE_ENCHANTMENT_PARTIAL = register("rune_enchantment_partial", RuneEnchantmentPartialKey.CODEC, RuneEnchantmentPartialKey.STREAM_CODEC);
     
     protected static <T extends AbstractResearchKey<T>> RegistryObject<ResearchKeyType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return DEFERRED_TYPES.register(id, () -> new ResearchKeyType<T>(PrimalMagick.resource(id), codec, streamCodec));
+        return DEFERRED_TYPES.register(id, () -> new ResearchKeyType<T>(ResourceUtils.loc(id), codec, streamCodec));
     }
 }

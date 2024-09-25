@@ -16,7 +16,7 @@ public abstract class AbstractSpellComponentLanguageBuilder extends AbstractLang
     protected final String componentType;
     
     public AbstractSpellComponentLanguageBuilder(String componentName, String componentType, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(componentName, () -> String.join(".", "spells", PrimalMagick.MODID, componentType, componentName), untracker, adder);
+        super(componentName, () -> String.join(".", "spells", Constants.MOD_ID, componentType, componentName), untracker, adder);
         this.componentType = componentType;
     }
 
@@ -27,7 +27,7 @@ public abstract class AbstractSpellComponentLanguageBuilder extends AbstractLang
 
     @Override
     protected ResourceLocation getBaseRegistryKey(String base) {
-        return PrimalMagick.resource(base.toLowerCase());
+        return ResourceUtils.loc(base.toLowerCase());
     }
 
     @Override

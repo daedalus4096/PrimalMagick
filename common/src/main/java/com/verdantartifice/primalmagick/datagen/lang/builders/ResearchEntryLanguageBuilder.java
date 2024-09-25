@@ -25,7 +25,7 @@ public class ResearchEntryLanguageBuilder extends AbstractLanguageBuilder<Resear
 
     @Override
     protected ResourceLocation getBaseRegistryKey(ResearchEntry base) {
-        return PrimalMagick.resource(base.key().getRootKey().location().getPath().toLowerCase());
+        return ResourceUtils.loc(base.key().getRootKey().location().getPath().toLowerCase());
     }
 
     @Override

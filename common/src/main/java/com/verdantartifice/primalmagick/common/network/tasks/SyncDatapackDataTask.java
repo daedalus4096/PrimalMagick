@@ -27,7 +27,7 @@ import net.minecraftforge.network.config.ConfigurationTaskContext;
  */
 public class SyncDatapackDataTask implements ConfigurationTask {
     private static final Logger LOGGER = LogManager.getLogger();
-    public static final Type TYPE = new Type(PrimalMagick.MODID + ":sync_datapack_data");
+    public static final Type TYPE = new Type(Constants.MOD_ID + ":sync_datapack_data");
 
     private ConfigurationTaskContext taskCtx;
     private int expectedToken;

@@ -19,7 +19,7 @@ import net.minecraftforge.registries.DataPackRegistryEvent;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ModRegistrationEvents {
     @SubscribeEvent
     public static void onNewDatapackRegistry(DataPackRegistryEvent.NewRegistry event) {

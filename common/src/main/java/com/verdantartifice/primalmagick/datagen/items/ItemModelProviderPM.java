@@ -65,7 +65,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     private final CompletableFuture<HolderLookup.Provider> lookupProviderFuture;
 
     public ItemModelProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper exFileHelper) {
-        super(output, PrimalMagick.MODID, ITEM_FOLDER, ItemModelBuilderPM::new, exFileHelper);
+        super(output, Constants.MOD_ID, ITEM_FOLDER, ItemModelBuilderPM::new, exFileHelper);
         this.lookupProviderFuture = lookupProvider;
     }
 
@@ -175,7 +175,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         // Do not generate an item model for the sacred shield
         
         // Generate mana arrow items
-        ManaArrowItem.getManaArrows().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_mana_arrow")));
+        ManaArrowItem.getManaArrows().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_mana_arrow")));
         
         // Generate armor items
         this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_HEAD.get(), lookupProvider);
@@ -263,20 +263,20 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         RuneItem.getAllRunes().forEach(this::basicItem);
         
         // Generate ambrosia items
-        AmbrosiaItem.getAllAmbrosiasOfType(AmbrosiaItem.Type.BASIC).forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_ambrosia")));
-        AmbrosiaItem.getAllAmbrosiasOfType(AmbrosiaItem.Type.GREATER).forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_ambrosia_greater")));
-        AmbrosiaItem.getAllAmbrosiasOfType(AmbrosiaItem.Type.SUPREME).forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_ambrosia_supreme")));
+        AmbrosiaItem.getAllAmbrosiasOfType(AmbrosiaItem.Type.BASIC).forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_ambrosia")));
+        AmbrosiaItem.getAllAmbrosiasOfType(AmbrosiaItem.Type.GREATER).forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_ambrosia_greater")));
+        AmbrosiaItem.getAllAmbrosiasOfType(AmbrosiaItem.Type.SUPREME).forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_ambrosia_supreme")));
         
         // Generate attunement shackles items
-        AttunementShacklesItem.getAllShackles().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_attunement_shackles")));
+        AttunementShacklesItem.getAllShackles().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_attunement_shackles")));
         
         // Generate humming artifact items
         this.basicItem(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get());
-        HummingArtifactItem.getAllHummingArtifacts().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_humming_artifact")));
+        HummingArtifactItem.getAllHummingArtifacts().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_humming_artifact")));
         
         // Generate sanguine core items
-        this.itemWithParent(ItemsPM.SANGUINE_CORE_BLANK.get(), PrimalMagick.resource("item/template_sanguine_core"));
-        SanguineCoreItem.getAllCores().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_sanguine_core")));
+        this.itemWithParent(ItemsPM.SANGUINE_CORE_BLANK.get(), ResourceUtils.loc("item/template_sanguine_core"));
+        SanguineCoreItem.getAllCores().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_sanguine_core")));
         
         // Generate concoction items
         this.basicItem(ItemsPM.SKYGLASS_FLASK.get());
@@ -511,10 +511,10 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     private ResourceLocation getArmorTrimOverlay(ArmorItem item) {
         if (item instanceof RobeArmorItem) {
             return switch (item.getEquipmentSlot()) {
-                case HEAD -> PrimalMagick.resource("trims/items/robe_head_trim");
-                case CHEST -> PrimalMagick.resource("trims/items/robe_chest_trim");
-                case LEGS -> PrimalMagick.resource("trims/items/robe_legs_trim");
-                case FEET -> PrimalMagick.resource("trims/items/robe_feet_trim");
+                case HEAD -> ResourceUtils.loc("trims/items/robe_head_trim");
+                case CHEST -> ResourceUtils.loc("trims/items/robe_chest_trim");
+                case LEGS -> ResourceUtils.loc("trims/items/robe_legs_trim");
+                case FEET -> ResourceUtils.loc("trims/items/robe_feet_trim");
                 default -> throw new IllegalArgumentException("Invalid armor type for trim overlay detection");
             };
         } else {
@@ -550,8 +550,8 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
     
     private void pixieItem(PixieItem item) {
-        this.itemWithParent(item, PrimalMagick.resource("item/template_pixie"));
-        this.getBuilder(this.key(item).withPrefix("drained_").toString()).parent(this.existingModel(PrimalMagick.resource("item/template_drained_pixie")));
+        this.itemWithParent(item, ResourceUtils.loc("item/template_pixie"));
+        this.getBuilder(this.key(item).withPrefix("drained_").toString()).parent(this.existingModel(ResourceUtils.loc("item/template_drained_pixie")));
     }
     
     private ItemModelBuilderPM dyeableItem(Item item, DyeColor defaultColor) {
@@ -563,7 +563,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         // It's very important that the overrides be written in ascending order of value, otherwise you may get the wrong texture for any given property value
         List<DyeColor> sortedColors = Stream.of(DyeColor.values()).sorted((c1, c2) -> Integer.compare(c1.getId(), c2.getId())).toList();
         for (DyeColor color : sortedColors) {
-            builder = builder.override().predicate(PrimalMagick.resource("color"), color.getId() / 16F).model(this.dyedItemModel(item, color)).end();
+            builder = builder.override().predicate(ResourceUtils.loc("color"), color.getId() / 16F).model(this.dyedItemModel(item, color)).end();
         }
         return builder;
     }

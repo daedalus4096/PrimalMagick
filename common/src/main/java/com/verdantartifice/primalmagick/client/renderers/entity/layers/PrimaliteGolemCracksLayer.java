@@ -18,9 +18,9 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class PrimaliteGolemCracksLayer extends AbstractEnchantedGolemCracksLayer<PrimaliteGolemEntity> {
     protected static final Map<Cracks, ResourceLocation> TEXTURES = ImmutableMap.<Cracks, ResourceLocation>builder()
-            .put(Cracks.LOW, PrimalMagick.resource("textures/entity/primalite_golem/primalite_golem_crackiness_low.png"))
-            .put(Cracks.MEDIUM, PrimalMagick.resource("textures/entity/primalite_golem/primalite_golem_crackiness_medium.png"))
-            .put(Cracks.HIGH, PrimalMagick.resource("textures/entity/primalite_golem/primalite_golem_crackiness_high.png"))
+            .put(Cracks.LOW, ResourceUtils.loc("textures/entity/primalite_golem/primalite_golem_crackiness_low.png"))
+            .put(Cracks.MEDIUM, ResourceUtils.loc("textures/entity/primalite_golem/primalite_golem_crackiness_medium.png"))
+            .put(Cracks.HIGH, ResourceUtils.loc("textures/entity/primalite_golem/primalite_golem_crackiness_high.png"))
             .build();
     
     public PrimaliteGolemCracksLayer(RenderLayerParent<PrimaliteGolemEntity, EnchantedGolemModel<PrimaliteGolemEntity>> entityRendererIn) {

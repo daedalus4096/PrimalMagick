@@ -1,14 +1,7 @@
 package com.verdantartifice.primalmagick.test.ftux;
 
-import java.util.Collection;
-import java.util.Map;
-
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
@@ -19,7 +12,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.test.TestUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -43,8 +35,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.crafting.SimpleCraftingContainer;
 import net.minecraftforge.gametest.GameTestHolder;
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@GameTestHolder(PrimalMagick.MODID + ".ftux")
+import java.util.Collection;
+import java.util.Map;
+
+@GameTestHolder(Constants.MOD_ID + ".ftux")
 public class FtuxTest {
     protected static final Logger LOGGER = LogManager.getLogger();
     

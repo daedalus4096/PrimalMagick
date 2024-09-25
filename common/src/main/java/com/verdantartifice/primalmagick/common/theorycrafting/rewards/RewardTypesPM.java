@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class RewardTypesPM {
-    private static final DeferredRegister<RewardType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.PROJECT_REWARD_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<RewardType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.PROJECT_REWARD_TYPES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<RewardType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
@@ -26,6 +26,6 @@ public class RewardTypesPM {
     public static final RegistryObject<RewardType<LootTableReward>> LOOT_TABLE = register("loot_table", LootTableReward.CODEC, LootTableReward.STREAM_CODEC);
 
     protected static <T extends AbstractReward<T>> RegistryObject<RewardType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return DEFERRED_TYPES.register(id, () -> new RewardType<T>(PrimalMagick.resource(id), codec, streamCodec));
+        return DEFERRED_TYPES.register(id, () -> new RewardType<T>(ResourceUtils.loc(id), codec, streamCodec));
     }
 }

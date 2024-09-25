@@ -1,20 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.NavigableMap;
-import java.util.Optional;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.lwjgl.glfw.GLFW;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractRecipePage;
@@ -77,7 +63,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -98,6 +84,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.glfw.GLFW;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.NavigableMap;
+import java.util.Optional;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * GUI screen for the grimoire research browser.
@@ -106,7 +105,7 @@ import net.minecraft.world.level.Level;
  */
 public class GrimoireScreen extends Screen {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagick:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     private static final int HISTORY_LIMIT = 64;
@@ -1039,7 +1038,7 @@ public class GrimoireScreen extends Screen {
     protected static boolean isValidRecipeIndexEntry(RecipeHolder<?> recipe) {
         Minecraft mc = Minecraft.getInstance();
         RegistryAccess registryAccess = mc.level.registryAccess();
-        if (!recipe.id().getNamespace().equals(PrimalMagick.MODID) || recipe.value().getResultItem(registryAccess).isEmpty()) {
+        if (!recipe.id().getNamespace().equals(Constants.MOD_ID) || recipe.value().getResultItem(registryAccess).isEmpty()) {
             return false;
         }
         if (recipe.value() instanceof IHasRequirement hrr) {

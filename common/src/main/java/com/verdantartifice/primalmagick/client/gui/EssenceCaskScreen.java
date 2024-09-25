@@ -1,10 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.EssenceCaskWidget;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.EssenceCaskMenu;
@@ -12,12 +7,16 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * GUI screen for the essence cask block.
@@ -25,7 +24,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class EssenceCaskScreen extends AbstractContainerScreenPM<EssenceCaskMenu> {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/essence_cask.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/essence_cask.png");
     
     protected final List<EssenceCaskWidget> caskWidgets = new ArrayList<>();
     protected long lastCheck = 0L;

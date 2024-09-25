@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
-
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.RecipeHolder;
 

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.test.crafting;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -19,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder(PrimalMagick.MODID + ".runecarving")
+@GameTestHolder(Constants.MOD_ID + ".runecarving")
 public class RunecarvingTest extends AbstractBaseTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void craft_works(GameTestHelper helper) {

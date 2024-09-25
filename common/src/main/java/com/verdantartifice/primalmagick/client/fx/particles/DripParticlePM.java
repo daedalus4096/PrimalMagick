@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.fx.particles;
 
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;

@@ -1,15 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeBookComponent;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
 import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -18,6 +14,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * GUI screen for concocter block.
@@ -26,7 +24,7 @@ import net.minecraft.world.inventory.Slot;
  */
 public class ConcocterScreen extends AbstractContainerScreenPM<ConcocterMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/concocter.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/concocter.png");
     
     protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();
     protected boolean widthTooNarrow;

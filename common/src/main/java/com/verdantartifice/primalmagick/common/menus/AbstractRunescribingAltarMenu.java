@@ -43,7 +43,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
  * @author Daedalus4096
  */
 public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<RunescribingAltarTileEntity> {
-    public static final ResourceLocation RUNE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_rune_slot");
+    public static final ResourceLocation RUNE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_rune_slot");
     public static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runescribing_altar.slot.input");
     public static final Component RUNE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runescribing_altar.slot.rune");
 

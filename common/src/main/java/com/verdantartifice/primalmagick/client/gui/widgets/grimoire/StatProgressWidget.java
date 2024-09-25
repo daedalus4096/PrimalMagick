@@ -2,10 +2,9 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,8 +23,8 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class StatProgressWidget extends AbstractWidget {
-    protected static final ResourceLocation UNKNOWN_TEXTURE = PrimalMagick.resource("textures/research/research_unknown.png");
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
+    protected static final ResourceLocation UNKNOWN_TEXTURE = ResourceUtils.loc("textures/research/research_unknown.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     protected final Stat stat;
     protected final int maxValue;

@@ -1,21 +1,10 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.joml.Vector2i;
-import org.lwjgl.glfw.GLFW;
-
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
 import com.verdantartifice.primalmagick.client.gui.widgets.StaticBookPageButton;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -26,6 +15,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.joml.Vector2i;
+import org.lwjgl.glfw.GLFW;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * GUI screen for reading static books.

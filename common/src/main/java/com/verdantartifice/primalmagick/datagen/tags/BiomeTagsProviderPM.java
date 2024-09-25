@@ -22,7 +22,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class BiomeTagsProviderPM extends IntrinsicHolderTagsProvider<Biome> {
     public BiomeTagsProviderPM(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(packOutput, Registries.BIOME, lookupProvider, b -> ForgeRegistries.BIOMES.getResourceKey(b).orElseThrow(), PrimalMagick.MODID, existingFileHelper);
+        super(packOutput, Registries.BIOME, lookupProvider, b -> ForgeRegistries.BIOMES.getResourceKey(b).orElseThrow(), Constants.MOD_ID, existingFileHelper);
     }
 
     @Override

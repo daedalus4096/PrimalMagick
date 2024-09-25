@@ -50,7 +50,7 @@ public class PlacedFeaturesPM {
     public static final ResourceKey<PlacedFeature> TREE_WILD_MOONWOOD = registerKey("tree_wild_moonwood");
     
     public static ResourceKey<PlacedFeature> registerKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, PrimalMagick.resource(name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, ResourceUtils.loc(name));
     }
     
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {

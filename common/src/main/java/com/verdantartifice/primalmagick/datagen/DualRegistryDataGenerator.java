@@ -25,7 +25,7 @@ public class DualRegistryDataGenerator extends DatapackBuiltinEntriesProvider {
     
     // Use addProviders() instead
     private DualRegistryDataGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
-        super(output, provider, BUILDER, Set.of("minecraft", PrimalMagick.MODID));
+        super(output, provider, BUILDER, Set.of("minecraft", Constants.MOD_ID));
     }
     
     public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {

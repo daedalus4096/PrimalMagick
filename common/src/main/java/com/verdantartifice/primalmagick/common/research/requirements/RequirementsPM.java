@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 public class RequirementsPM {
-    private static final DeferredRegister<RequirementType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.REQUIREMENT_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<RequirementType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.REQUIREMENT_TYPES, Constants.MOD_ID);
     public static final Supplier<IForgeRegistry<RequirementType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static void init() {
@@ -34,6 +34,6 @@ public class RequirementsPM {
     public static final RegistryObject<RequirementType<QuorumRequirement>> QUORUM = register("quorum", QuorumRequirement::codec, QuorumRequirement::streamCodec);
     
     protected static <T extends AbstractRequirement<T>> RegistryObject<RequirementType<T>> register(String id, Supplier<MapCodec<T>> codecSupplier, Supplier<StreamCodec<? super RegistryFriendlyByteBuf, T>> streamCodecSupplier) {
-        return DEFERRED_TYPES.register(id, () -> new RequirementType<T>(PrimalMagick.resource(id), codecSupplier, streamCodecSupplier));
+        return DEFERRED_TYPES.register(id, () -> new RequirementType<T>(ResourceUtils.loc(id), codecSupplier, streamCodecSupplier));
     }
 }

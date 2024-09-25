@@ -32,7 +32,7 @@ public abstract class AbstractTagCraftingRecipe<T extends RecipeInput> extends A
         // Retrieve the first item in this recipe's tag that was defined in Primal Magick or, failing that, the first item in the tag.
         // TODO Memoize this function
         Optional<HolderSet.Named<Item>> tagOpt = pRegistries.lookupOrThrow(Registries.ITEM).get(this.outputTag);
-        Optional<Holder<Item>> modItemOpt = tagOpt.flatMap(tag -> tag.stream().filter(h -> h.is(key -> key.location().getNamespace().equals(PrimalMagick.MODID))).findFirst());
+        Optional<Holder<Item>> modItemOpt = tagOpt.flatMap(tag -> tag.stream().filter(h -> h.is(key -> key.location().getNamespace().equals(Constants.MOD_ID))).findFirst());
         if (modItemOpt.isPresent()) {
             return new ItemStack(modItemOpt.get().get(), this.outputAmount);
         } else {

@@ -25,8 +25,8 @@ import net.minecraft.world.item.Items;
  * @author Daedalus4096
  */
 public class HoneyExtractorMenu extends AbstractTileSidedInventoryMenu<HoneyExtractorTileEntity> {
-    public static final ResourceLocation BOTTLE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_bottle_slot");
-    public static final ResourceLocation HONEYCOMB_SLOT_TEXTURE = PrimalMagick.resource("item/empty_honeycomb_slot");
+    public static final ResourceLocation BOTTLE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_bottle_slot");
+    public static final ResourceLocation HONEYCOMB_SLOT_TEXTURE = ResourceUtils.loc("item/empty_honeycomb_slot");
     protected static final Component BOTTLE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.honey_extractor.slot.bottle");
     protected static final Component HONEYCOMB_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.honey_extractor.slot.honeycomb");
 

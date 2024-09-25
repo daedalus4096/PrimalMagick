@@ -46,7 +46,7 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
     protected final Set<ResourceLocation> trackedSingles = new HashSet<>();
     
     public SpriteSourceProviderPM(PackOutput packOutput, ExistingFileHelper helper) {
-        super(packOutput, helper, PrimalMagick.MODID);
+        super(packOutput, helper, Constants.MOD_ID);
     }
     
     protected void addSingle(SourceList atlas, ResourceLocation loc) {
@@ -98,10 +98,10 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         
         // Add robe armor trim item overlays to the block atlas
         blockAtlas.addSource(new PalettedPermutations(
-                List.of(PrimalMagick.resource("trims/items/robe_chest_trim"), 
-                        PrimalMagick.resource("trims/items/robe_feet_trim"), 
-                        PrimalMagick.resource("trims/items/robe_head_trim"), 
-                        PrimalMagick.resource("trims/items/robe_legs_trim")),
+                List.of(ResourceUtils.loc("trims/items/robe_chest_trim"),
+                        ResourceUtils.loc("trims/items/robe_feet_trim"),
+                        ResourceUtils.loc("trims/items/robe_head_trim"),
+                        ResourceUtils.loc("trims/items/robe_legs_trim")),
                 ResourceLocation.withDefaultNamespace("trims/color_palettes/trim_palette"),
                 ImmutableMap.<String, ResourceLocation>builder()
                         .put("quartz", ResourceLocation.withDefaultNamespace("trims/color_palettes/quartz"))
@@ -118,8 +118,8 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         
         // Add mod armor trim pattern model overlays to the armor trims atlas
         armorTrimsAtlas.addSource(new PalettedPermutations(
-                List.of(PrimalMagick.resource("trims/models/armor/runic"), 
-                        PrimalMagick.resource("trims/models/armor/runic_leggings")),
+                List.of(ResourceUtils.loc("trims/models/armor/runic"),
+                        ResourceUtils.loc("trims/models/armor/runic_leggings")),
                 ResourceLocation.withDefaultNamespace("trims/color_palettes/trim_palette"),
                 ImmutableMap.<String, ResourceLocation>builder()
                         .put("rune_earth", ResourceLocation.withDefaultNamespace("trims/color_palettes/emerald"))

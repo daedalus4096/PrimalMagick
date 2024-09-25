@@ -30,7 +30,7 @@ public class SoundDefinitionsProviderPM extends SoundDefinitionsProvider {
     private final List<ResourceLocation> generatedSounds = new ArrayList<>();
     
     public SoundDefinitionsProviderPM(PackOutput output, ExistingFileHelper helper) {
-        super(output, PrimalMagick.MODID, helper);
+        super(output, Constants.MOD_ID, helper);
     }
     
     @Override
@@ -80,11 +80,11 @@ public class SoundDefinitionsProviderPM extends SoundDefinitionsProvider {
     }
     
     protected void verifyComplete() {
-        List<ResourceLocation> registeredSounds = new ArrayList<>(ForgeRegistries.SOUND_EVENTS.getKeys().stream().filter(loc -> loc.getNamespace().equals(PrimalMagick.MODID)).toList());
+        List<ResourceLocation> registeredSounds = new ArrayList<>(ForgeRegistries.SOUND_EVENTS.getKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).toList());
         registeredSounds.removeAll(this.generatedSounds);
         if (!registeredSounds.isEmpty()) {
             registeredSounds.forEach(loc -> LOGGER.warn("No sound definition generated for sound {}", loc.toString()));
-            throw new IllegalStateException("Missing sound definitions for " + PrimalMagick.MODID);
+            throw new IllegalStateException("Missing sound definitions for " + Constants.MOD_ID);
         }
     }
 }

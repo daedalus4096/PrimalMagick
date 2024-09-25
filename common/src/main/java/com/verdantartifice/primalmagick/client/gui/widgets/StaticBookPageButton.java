@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.gui.widgets;
 
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
 import com.verdantartifice.primalmagick.common.books.BookType;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.PageButton;

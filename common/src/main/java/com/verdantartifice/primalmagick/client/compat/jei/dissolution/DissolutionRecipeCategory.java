@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.compat.jei.dissolution;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
@@ -28,8 +27,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  * @author Daedalus4096
  */
 public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDissolutionRecipe>> {
-    public static final ResourceLocation UID = PrimalMagick.resource("dissolution_chamber");
-    private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/dissolution_chamber.png");
+    public static final ResourceLocation UID = ResourceUtils.loc("dissolution_chamber");
+    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/dissolution_chamber.png");
     private static final int MANA_COST_X_OFFSET = 28;
     private static final int MANA_COST_Y_OFFSET = 1;
 

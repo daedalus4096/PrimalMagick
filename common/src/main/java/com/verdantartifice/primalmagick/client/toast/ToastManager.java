@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.toast;
 
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-
 import net.minecraft.client.Minecraft;
 
 /**

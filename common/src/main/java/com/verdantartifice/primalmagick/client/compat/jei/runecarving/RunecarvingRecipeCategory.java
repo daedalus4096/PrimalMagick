@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.client.compat.jei.runecarving;
 
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
@@ -10,7 +8,6 @@ import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
@@ -25,15 +22,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
+import java.util.Optional;
+
 /**
  * Recipe category for a runecarving recipe.
  * 
  * @author Daedalus4096
  */
 public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRunecarvingRecipe>> {
-    public static final ResourceLocation UID = PrimalMagick.resource("runecarving_table");
-    private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/runecarving_table.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
+    public static final ResourceLocation UID = ResourceUtils.loc("runecarving_table");
+    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/runecarving_table.png");
+    private static final ResourceLocation RESEARCH_TEXTURE = ResourceUtils.loc("textures/item/grimoire.png");
     private static final int RESEARCH_X_OFFSET = 79;
     private static final int RESEARCH_Y_OFFSET = 19;
 

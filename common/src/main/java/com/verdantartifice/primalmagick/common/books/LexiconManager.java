@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class LexiconManager {
-    public static final ResourceLocation LOREM_IPSUM = PrimalMagick.resource("lorem_ipsum");
+    public static final ResourceLocation LOREM_IPSUM = ResourceUtils.loc("lorem_ipsum");
     protected static final Map<ResourceLocation, Lexicon> REGISTRY = new HashMap<>();
     private static final Logger LOGGER = LogManager.getLogger();
     

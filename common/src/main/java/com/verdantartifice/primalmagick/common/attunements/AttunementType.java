@@ -37,7 +37,7 @@ public enum AttunementType implements StringRepresentable {
     
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "attunement_type", PrimalMagick.MODID, this.getSerializedName());
+        return String.join(".", "attunement_type", Constants.MOD_ID, this.getSerializedName());
     }
 
     @Override

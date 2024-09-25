@@ -1,18 +1,17 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
-import java.awt.Color;
-import java.util.List;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+
+import java.awt.Color;
+import java.util.List;
 
 /**
  * Base class for display widgets which show a source icon with amount.

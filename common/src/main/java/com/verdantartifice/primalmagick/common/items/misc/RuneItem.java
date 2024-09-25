@@ -51,7 +51,7 @@ public class RuneItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack != null && stack.getItem() instanceof RuneItem runeItem) {
-            String key = String.join(".", "item", PrimalMagick.MODID, ForgeRegistries.ITEMS.getKey(this).getPath(), "tooltip");
+            String key = String.join(".", "item", Constants.MOD_ID, ForgeRegistries.ITEMS.getKey(this).getPath(), "tooltip");
             tooltip.add(Component.translatable(key).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
             
             if (runeItem.rune.hasLimit()) {

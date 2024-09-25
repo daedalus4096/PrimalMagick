@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import java.util.Optional;
-
 import com.mojang.datafixers.util.Either;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
@@ -19,7 +16,6 @@ import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -34,12 +30,14 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Optional;
+
 /**
  * Respond to client-only rendering events.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT)
 public class ClientRenderEvents {
     @SubscribeEvent
     public static void renderTooltip(ItemTooltipEvent event) {

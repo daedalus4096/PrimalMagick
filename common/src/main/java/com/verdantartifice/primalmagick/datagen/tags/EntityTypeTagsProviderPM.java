@@ -21,7 +21,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  */
 public class EntityTypeTagsProviderPM extends EntityTypeTagsProvider {
     public EntityTypeTagsProviderPM(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(packOutput, lookupProvider, PrimalMagick.MODID, existingFileHelper);
+        super(packOutput, lookupProvider, Constants.MOD_ID, existingFileHelper);
     }
 
     @Override

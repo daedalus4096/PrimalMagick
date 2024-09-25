@@ -1,22 +1,12 @@
 package com.verdantartifice.primalmagick.client.compat.jei;
 
-import java.util.List;
-
-import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
-import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
-
+import com.verdantartifice.primalmagick.common.crafting.*;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeInput;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
+
+import java.util.List;
 
 /**
  * Helper class to fetch which recipes belong to each recipe category.

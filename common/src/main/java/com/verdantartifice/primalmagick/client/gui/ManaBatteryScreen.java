@@ -1,20 +1,19 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * GUI screen for mana battery blocks.
@@ -22,7 +21,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class ManaBatteryScreen extends AbstractContainerScreenPM<ManaBatteryMenu> {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/mana_battery.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/mana_battery.png");
     protected static final int AVAILABLE_GAUGE_WIDTH = 116;
     protected static final int GAUGE_START_X = 57;
     protected static final int GAUGE_WIDTH = 12;

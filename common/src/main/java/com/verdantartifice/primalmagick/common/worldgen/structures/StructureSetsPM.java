@@ -23,7 +23,7 @@ public class StructureSetsPM {
     public static final ResourceKey<StructureSet> LIBRARIES = registryKey("libraries");
     
     private static ResourceKey<StructureSet> registryKey(String name) {
-        return ResourceKey.create(Registries.STRUCTURE_SET, PrimalMagick.resource(name));
+        return ResourceKey.create(Registries.STRUCTURE_SET, ResourceUtils.loc(name));
     }
     
     public static void bootstrap(BootstrapContext<StructureSet> context) {

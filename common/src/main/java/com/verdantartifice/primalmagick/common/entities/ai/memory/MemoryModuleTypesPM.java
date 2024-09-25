@@ -18,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class MemoryModuleTypesPM {
-    private static final DeferredRegister<MemoryModuleType<?>> MEMORY_MODULE_TYPES = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, PrimalMagick.MODID);
+    private static final DeferredRegister<MemoryModuleType<?>> MEMORY_MODULE_TYPES = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, Constants.MOD_ID);
     
     public static void init() {
         MEMORY_MODULE_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());

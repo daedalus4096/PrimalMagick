@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
@@ -12,13 +9,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
+import javax.annotation.Nonnull;
+
 /**
  * Display widget for showing that a project was unlocked by a research aid in the research table GUI.
  * 
  * @author Daedalus4096
  */
 public class AidUnlockWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
     
     protected Block aidBlock;
 

@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
 public class CapabilityEvents {
     @SubscribeEvent
     public static void attachEntityCapability(AttachCapabilitiesEvent<Entity> event) {

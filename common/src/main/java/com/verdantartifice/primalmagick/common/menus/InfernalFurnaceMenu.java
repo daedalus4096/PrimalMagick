@@ -34,7 +34,7 @@ import net.minecraftforge.items.SlotItemHandler;
  * @author Daedalus4096
  */
 public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<SingleRecipeInput, AbstractCookingRecipe> {
-    public static final ResourceLocation IGNYX_SLOT_TEXTURE = PrimalMagick.resource("item/empty_ignyx_slot");
+    public static final ResourceLocation IGNYX_SLOT_TEXTURE = ResourceUtils.loc("item/empty_ignyx_slot");
     protected static final Component IGNYX_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.infernal_furnace.slot.ignyx");
 
     protected final ContainerData furnaceData;

@@ -63,7 +63,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
 public class AffinityManager extends SimpleJsonResourceReloadListener {
     protected static final int MAX_AFFINITY = 100;
     protected static final int HISTORY_LIMIT = 100;

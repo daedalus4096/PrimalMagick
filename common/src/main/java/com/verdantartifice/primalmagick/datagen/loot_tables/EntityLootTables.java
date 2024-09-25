@@ -47,7 +47,7 @@ public class EntityLootTables extends EntityLootSubProvider {
 
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> entityTypes = ForgeRegistries.ENTITY_TYPES.getKeys().stream().filter(loc -> loc.getNamespace().equals(PrimalMagick.MODID)).collect(Collectors.toSet());
+        Set<ResourceLocation> entityTypes = ForgeRegistries.ENTITY_TYPES.getKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
         
         // Warn for each mod entity that didn't have a loot table registered
         entityTypes.removeAll(this.registeredEntities);
@@ -67,7 +67,7 @@ public class EntityLootTables extends EntityLootSubProvider {
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
         // Limit this data provider to entity types added by the mod
-        return ForgeRegistries.ENTITY_TYPES.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(PrimalMagick.MODID)).map(entry -> entry.getValue());
+        return ForgeRegistries.ENTITY_TYPES.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(entry -> entry.getValue());
     }
 
     @Override

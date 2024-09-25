@@ -33,7 +33,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * @author Daedalus4096
  */
 public class FlyingCarpetItem extends Item {
-    public static final ResourceLocation COLOR_PROPERTY = PrimalMagick.resource("color");
+    public static final ResourceLocation COLOR_PROPERTY = ResourceUtils.loc("color");
     
     public static final CauldronInteraction DYED_CARPET = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
         Item item = stack.getItem();

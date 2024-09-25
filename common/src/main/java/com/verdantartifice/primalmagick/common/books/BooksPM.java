@@ -109,7 +109,7 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> OUR_FAILURE = create("our_failure");
 
     public static ResourceKey<BookDefinition> create(String name) {
-        return ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource(name));
+        return ResourceKey.create(RegistryKeysPM.BOOKS, ResourceUtils.loc(name));
     }
     
     public static void bootstrap(BootstrapContext<BookDefinition> context) {

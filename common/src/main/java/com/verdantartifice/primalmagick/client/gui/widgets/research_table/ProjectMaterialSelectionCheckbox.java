@@ -1,8 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.ResearchTableScreen;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -14,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ProjectMaterialSelectionCheckbox extends Button {
-    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/checkbox.png");
+    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/checkbox.png");
     
     protected ResearchTableScreen screen;
     protected boolean selected;

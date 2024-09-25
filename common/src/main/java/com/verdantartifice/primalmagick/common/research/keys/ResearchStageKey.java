@@ -34,7 +34,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
             ResearchStageKey::getStage,
             ResearchStageKey::new);
     
-    private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
+    private static final ResourceLocation ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
 
     protected final ResourceKey<ResearchEntry> rootKey;
     protected final int stage;

@@ -27,12 +27,12 @@ public class TrimPatternsPM {
 
     protected static final ChatFormatting TITLE_FORMAT = ChatFormatting.GRAY;
     protected static final ChatFormatting DESCRIPTION_FORMAT = ChatFormatting.BLUE;
-    protected static final Component RUNIC_ARMOR_TRIM_APPLIES_TO = Component.translatable(Util.makeDescriptionId("tooltip", PrimalMagick.resource("smithing_template.runic_armor_trim.applies_to"))).withStyle(DESCRIPTION_FORMAT);
-    protected static final Component RUNIC_ARMOR_TRIM_INGREDIENTS = Component.translatable(Util.makeDescriptionId("tooltip", PrimalMagick.resource("smithing_template.runic_armor_trim.ingredients"))).withStyle(DESCRIPTION_FORMAT);
-    protected static final Component RUNIC_ARMOR_TRIM_BASE_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("tooltip", PrimalMagick.resource("smithing_template.runic_armor_trim.base_slot_description")));
-    protected static final Component RUNIC_ARMOR_TRIM_ADDITIONS_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("tooltip", PrimalMagick.resource("smithing_template.runic_armor_trim.additions_slot_description")));
+    protected static final Component RUNIC_ARMOR_TRIM_APPLIES_TO = Component.translatable(Util.makeDescriptionId("tooltip", ResourceUtils.loc("smithing_template.runic_armor_trim.applies_to"))).withStyle(DESCRIPTION_FORMAT);
+    protected static final Component RUNIC_ARMOR_TRIM_INGREDIENTS = Component.translatable(Util.makeDescriptionId("tooltip", ResourceUtils.loc("smithing_template.runic_armor_trim.ingredients"))).withStyle(DESCRIPTION_FORMAT);
+    protected static final Component RUNIC_ARMOR_TRIM_BASE_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("tooltip", ResourceUtils.loc("smithing_template.runic_armor_trim.base_slot_description")));
+    protected static final Component RUNIC_ARMOR_TRIM_ADDITIONS_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("tooltip", ResourceUtils.loc("smithing_template.runic_armor_trim.additions_slot_description")));
     protected static final List<ResourceLocation> RUNIC_TRIMMABLE_ARMOR_ICONS = List.of(ResourceLocation.withDefaultNamespace("item/empty_armor_slot_helmet"), ResourceLocation.withDefaultNamespace("item/empty_armor_slot_chestplate"), ResourceLocation.withDefaultNamespace("item/empty_armor_slot_leggings"), ResourceLocation.withDefaultNamespace("item/empty_armor_slot_boots"));
-    protected static final List<ResourceLocation> RUNIC_TRIMMABLE_MATERIAL_ICONS = List.of(PrimalMagick.resource("item/empty_rune_slot"));
+    protected static final List<ResourceLocation> RUNIC_TRIMMABLE_MATERIAL_ICONS = List.of(ResourceUtils.loc("item/empty_rune_slot"));
 
     public static SmithingTemplateItem createRunicArmorTrimTemplate(ResourceKey<TrimPattern> patternKey) {
         return new SmithingTemplateItem(
@@ -46,7 +46,7 @@ public class TrimPatternsPM {
     }
 
     private static ResourceKey<TrimPattern> registryKey(String name) {
-        return ResourceKey.create(Registries.TRIM_PATTERN, PrimalMagick.resource(name));
+        return ResourceKey.create(Registries.TRIM_PATTERN, ResourceUtils.loc(name));
     }
     
     private static void register(BootstrapContext<TrimPattern> context, Item templateItem, ResourceKey<TrimPattern> patternKey) {

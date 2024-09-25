@@ -10,6 +10,6 @@ public class ResearchEntryTagsPM {
     public static final TagKey<ResearchEntry> OPAQUE = create("opaque");
     
     private static TagKey<ResearchEntry> create(String name) {
-        return TagKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
+        return TagKey.create(RegistryKeysPM.RESEARCH_ENTRIES, ResourceUtils.loc(name));
     }
 }

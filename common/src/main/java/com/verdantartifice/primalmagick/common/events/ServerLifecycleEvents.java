@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
+@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
 public class ServerLifecycleEvents {
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
