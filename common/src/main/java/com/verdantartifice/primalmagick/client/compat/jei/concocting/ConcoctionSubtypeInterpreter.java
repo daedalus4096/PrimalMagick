@@ -10,7 +10,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
-import org.jetbrains.annotations.Nullable;
 
 public class ConcoctionSubtypeInterpreter implements ISubtypeInterpreter<ItemStack> {
     public static final ConcoctionSubtypeInterpreter INSTANCE = new ConcoctionSubtypeInterpreter();

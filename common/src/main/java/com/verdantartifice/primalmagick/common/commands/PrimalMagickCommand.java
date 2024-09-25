@@ -93,7 +93,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class PrimalMagickCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext) {
-        LiteralCommandNode<CommandSourceStack> node = dispatcher.register(Commands.literal("primalmagick")
+        LiteralCommandNode<CommandSourceStack> node = dispatcher.register(Commands.literal("assets/primalmagick")
             .requires((source) -> { return source.hasPermission(2); })
             .then(Commands.literal("reset")
                 .then(Commands.argument("target", EntityArgument.player()).executes((context) -> { return resetAll(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
@@ -203,12 +203,12 @@ public class PrimalMagickCommand {
             .then(Commands.literal("affinities")
                 .then(Commands.literal("lint")
                     // By default, invoke excluding vanilla and PM items on the assumption they should be in the intended place.
-                    .executes((context) -> {return getSourcelessItems(context.getSource(), Arrays.asList("minecraft", "primalmagick"));})
+                    .executes((context) -> {return getSourcelessItems(context.getSource(), Arrays.asList("minecraft", "assets/primalmagick"));})
                     .then(Commands.literal("all").executes((context) -> {return getSourcelessItems(context.getSource(),null);}))
                 )
                 .then(Commands.literal("generateDatapack")
                     // By default, invoke excluding vanilla and PM items on the assumption they should be in the intended places.
-                    .executes(context -> { return writeSourcelessItemDatapack(context.getSource(), Arrays.asList("minecraft", "primalmagick"));})
+                    .executes(context -> { return writeSourcelessItemDatapack(context.getSource(), Arrays.asList("minecraft", "assets/primalmagick"));})
                     .then(Commands.literal("all").executes((context) -> {return writeSourcelessItemDatapack(context.getSource(),null);}))
                 )
                 .then(Commands.literal("explain")
