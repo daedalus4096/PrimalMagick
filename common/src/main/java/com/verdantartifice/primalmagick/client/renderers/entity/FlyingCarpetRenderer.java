@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.model.FlyingCarp
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

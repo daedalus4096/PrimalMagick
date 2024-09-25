@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;

@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -111,7 +113,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class PlayerEvents {
     public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
     

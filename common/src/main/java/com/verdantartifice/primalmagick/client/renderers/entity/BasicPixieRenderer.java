@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 

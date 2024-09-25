@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.renderers.tile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualBellTileEntity;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;

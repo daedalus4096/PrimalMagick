@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.model.EnchantedG
 import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity.Cracks;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.HexiumGolemEntity;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.resources.ResourceLocation;
 

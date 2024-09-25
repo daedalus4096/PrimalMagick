@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.EnchantmentTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.EntityTypePredicate;
