@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;

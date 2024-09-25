@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 

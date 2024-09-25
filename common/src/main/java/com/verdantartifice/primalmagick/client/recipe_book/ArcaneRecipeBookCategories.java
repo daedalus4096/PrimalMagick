@@ -1,22 +1,20 @@
 package com.verdantartifice.primalmagick.client.recipe_book;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Blocks;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Filtering categories for the arcane recipe book.

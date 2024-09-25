@@ -1,15 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.books;
 
-import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Supplier;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
@@ -24,7 +14,6 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -42,6 +31,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Item definition for a readable book populated by static, localized text rather than carrying

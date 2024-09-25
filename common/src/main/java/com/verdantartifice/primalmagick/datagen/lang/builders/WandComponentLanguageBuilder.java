@@ -4,6 +4,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 
 import net.minecraft.resources.ResourceLocation;

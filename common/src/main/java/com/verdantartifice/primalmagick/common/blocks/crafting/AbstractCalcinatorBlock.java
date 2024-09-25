@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

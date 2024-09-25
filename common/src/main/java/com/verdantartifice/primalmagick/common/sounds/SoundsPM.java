@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.common.sounds;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.blocks.trees;
 
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

@@ -15,7 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Custom tile entity renderer for zephyr engine and void turbine blocks.

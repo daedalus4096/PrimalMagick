@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.blocks.flowers;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;

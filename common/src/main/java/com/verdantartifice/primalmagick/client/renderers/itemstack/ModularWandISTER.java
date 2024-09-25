@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;

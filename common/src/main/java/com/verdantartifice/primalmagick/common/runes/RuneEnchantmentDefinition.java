@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.common.runes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -14,10 +8,14 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
-
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Class encapsulating a data-defined definition for a rune enchantment.  These definitions specify the

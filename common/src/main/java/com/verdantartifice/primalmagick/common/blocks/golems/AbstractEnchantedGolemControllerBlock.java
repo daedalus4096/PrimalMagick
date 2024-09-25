@@ -1,13 +1,10 @@
 package com.verdantartifice.primalmagick.common.blocks.golems;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -29,6 +26,8 @@ import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.Vec3;
+
+import javax.annotation.Nullable;
 
 /**
  * Definition for the "head" block of an enchanted golem.  Place it on top of a T shape of

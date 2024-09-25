@@ -1,12 +1,9 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
-import java.util.function.Supplier;
-
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -14,6 +11,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class GridRewardTypesPM {
     private static final DeferredRegister<GridRewardType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.GRID_REWARD_TYPES, Constants.MOD_ID);

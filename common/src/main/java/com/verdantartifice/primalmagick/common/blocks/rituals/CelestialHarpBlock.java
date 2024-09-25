@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
-import java.awt.Color;
-
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticleData;
@@ -9,7 +7,6 @@ import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.CelestialHarpTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -36,6 +33,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.awt.Color;
 
 /**
  * Block definition for a celestial harp.  Celestial harps serve as props in magickal rituals;

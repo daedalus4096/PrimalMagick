@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
-
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 

@@ -1,17 +1,15 @@
 package com.verdantartifice.primalmagick.common.items.essence;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Item definition for magickal essences.

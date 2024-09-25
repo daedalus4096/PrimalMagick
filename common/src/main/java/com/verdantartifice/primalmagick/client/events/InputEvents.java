@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.events;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.SpellSelectionRadialScreen;
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
@@ -21,7 +22,7 @@ import org.lwjgl.glfw.GLFW;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT)
 public class InputEvents {
     private static boolean SPELL_SELECT_KEY_WAS_DOWN = false;
     

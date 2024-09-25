@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 import com.mojang.serialization.Codec;
@@ -11,7 +7,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -20,6 +15,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nonnull;
+import java.util.Optional;
 
 /**
  * Linguistics grid reward that grants research knowledge (i.e. theories or observations).

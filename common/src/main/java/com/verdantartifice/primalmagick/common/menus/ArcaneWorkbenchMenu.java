@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
@@ -14,7 +10,6 @@ import com.verdantartifice.primalmagick.common.menus.slots.ArcaneCraftingResultS
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,6 +29,9 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * Server data container for the arcane workbench GUI.

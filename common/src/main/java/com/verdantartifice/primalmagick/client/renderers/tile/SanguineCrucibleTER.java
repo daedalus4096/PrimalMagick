@@ -20,7 +20,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import org.joml.Matrix4f;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Custom tile entity renderer for sanguine crucible blocks.

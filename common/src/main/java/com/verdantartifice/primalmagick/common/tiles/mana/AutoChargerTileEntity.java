@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import java.util.HashSet;
-import java.util.OptionalInt;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
@@ -12,7 +8,6 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -23,6 +18,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.HashSet;
+import java.util.OptionalInt;
+import java.util.Set;
 
 /**
  * Definition of an auto-charger tile entity.  Provides the siphoning functionality for the

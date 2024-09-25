@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
-import java.util.Optional;
-
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Optional;
 
 /**
  * Abstraction interface intended for use in determining rewards for linguistics comprehension grids.

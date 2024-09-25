@@ -1,15 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
-
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -18,6 +9,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Definition of a GUI slot whose accepted contents are filtered in some way.  Can be customized

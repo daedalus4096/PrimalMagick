@@ -1,18 +1,8 @@
 package com.verdantartifice.primalmagick.common.misc;
 
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -27,6 +17,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.ForgeEventFactory;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Definition of a block swapper data structure.  Processed during server ticks to replace a given source

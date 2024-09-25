@@ -1,12 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import java.util.HashSet;
-import java.util.OptionalInt;
-import java.util.Set;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
@@ -25,7 +18,6 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -47,6 +39,12 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.HashSet;
+import java.util.OptionalInt;
+import java.util.Set;
 
 /**
  * Definition of a mana battery tile entity.  Holds the charge for the corresponding block.

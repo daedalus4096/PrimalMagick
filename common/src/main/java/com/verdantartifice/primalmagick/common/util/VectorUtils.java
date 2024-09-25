@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
+
+import javax.annotation.Nonnull;
 
 /**
  * Collection of utility methods pertaining to 3D vectors.

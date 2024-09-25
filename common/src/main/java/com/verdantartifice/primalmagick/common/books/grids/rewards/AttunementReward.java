@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
-import java.util.Optional;
-
 import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 import com.mojang.serialization.Codec;
@@ -10,7 +8,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -20,6 +17,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Optional;
 
 /**
  * Linguistics grid reward that grants permanent attunement to a source.

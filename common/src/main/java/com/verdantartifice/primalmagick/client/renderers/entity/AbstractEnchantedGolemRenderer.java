@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.EnchantedGolemModel;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity;
-
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

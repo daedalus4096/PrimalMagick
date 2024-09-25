@@ -1,16 +1,16 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Supplier;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Definition of a non-blank sanguine core.  Slotted into a sanguine crucible to determine what

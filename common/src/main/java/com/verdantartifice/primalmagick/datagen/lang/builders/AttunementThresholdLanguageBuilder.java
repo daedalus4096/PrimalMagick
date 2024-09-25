@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.resources.ResourceLocation;
 
 /**

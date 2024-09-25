@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.tags;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;

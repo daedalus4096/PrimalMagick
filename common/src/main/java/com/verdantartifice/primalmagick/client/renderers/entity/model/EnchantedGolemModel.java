@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.renderers.entity.model;
 
 import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity;
-
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;

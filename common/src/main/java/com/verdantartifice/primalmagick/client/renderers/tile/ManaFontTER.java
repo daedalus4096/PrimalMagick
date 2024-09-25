@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Custom tile entity renderer for mana font blocks.

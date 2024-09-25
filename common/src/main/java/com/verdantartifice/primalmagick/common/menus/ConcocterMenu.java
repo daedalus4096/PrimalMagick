@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

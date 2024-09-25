@@ -1,13 +1,11 @@
 package com.verdantartifice.primalmagick.common.stats;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
+
+import javax.annotation.Nonnull;
+import java.util.Optional;
 
 /**
  * Definition of a statistic tracked by the mod, such as how many times the grimoire is opened.  Does

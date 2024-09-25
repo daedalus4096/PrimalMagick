@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

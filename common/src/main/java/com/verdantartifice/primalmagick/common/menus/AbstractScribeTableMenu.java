@@ -1,16 +1,11 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import javax.annotation.Nonnull;
-
-import org.joml.Vector2i;
-
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.data.ContainerSynchronizerLarge;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -22,6 +17,9 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.joml.Vector2i;
+
+import javax.annotation.Nonnull;
 
 /**
  * Base server data container for the scribe table GUIs.

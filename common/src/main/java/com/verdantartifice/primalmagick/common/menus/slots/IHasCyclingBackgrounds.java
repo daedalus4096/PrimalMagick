@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.resources.ResourceLocation;
 
 /**

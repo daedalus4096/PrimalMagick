@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

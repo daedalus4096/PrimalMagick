@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.common.items.food;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 /**
  * Item definition for bloody flesh.  Bloody flesh drops from human-like mobs and unlocks the Blood source when eaten.

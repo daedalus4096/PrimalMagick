@@ -1,16 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandISTER;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
@@ -20,7 +9,6 @@ import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -34,6 +22,16 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Item definition for a modular wand.  Modular wands are made up of cores, caps, and gems, and their

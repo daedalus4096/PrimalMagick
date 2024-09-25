@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
-import java.awt.Color;
-import java.util.Arrays;
-import java.util.List;
-
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -12,7 +8,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -26,6 +21,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+
+import java.awt.Color;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Definition of a spellcrafting altar tile entity.  Holds the tile inventory and controls its

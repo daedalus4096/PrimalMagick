@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import java.util.stream.IntStream;
-
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.Item;
@@ -14,6 +11,8 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.stream.IntStream;
 
 /**
  * Global loot modifier that always adds an item to a generated loot set if its loot conditions are met.  An

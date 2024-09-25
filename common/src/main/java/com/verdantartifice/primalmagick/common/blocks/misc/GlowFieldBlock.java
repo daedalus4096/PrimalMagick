@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.blocks.misc;
 
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

@@ -1,13 +1,9 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import org.joml.Vector2i;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -18,6 +14,7 @@ import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import org.joml.Vector2i;
 
 /**
  * Server data container for the study vocabulary mode of the scribe table GUI.

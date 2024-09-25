@@ -1,5 +1,24 @@
 package com.verdantartifice.primalmagick.common.runes;
 
+import com.google.common.collect.ImmutableList;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,27 +29,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.google.common.collect.ImmutableList;
-import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
-import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
-import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-
-import net.minecraft.core.Holder;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 /**
  * Primary access point for rune-related methods.

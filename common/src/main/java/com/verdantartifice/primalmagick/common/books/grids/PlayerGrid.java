@@ -1,15 +1,5 @@
 package com.verdantartifice.primalmagick.common.books.grids;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
-
-import org.apache.commons.lang3.mutable.MutableBoolean;
-import org.joml.Vector2i;
-import org.joml.Vector2ic;
-
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
@@ -17,12 +7,20 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.UnlockGridNodeActionPacket;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * Definition of a player's instance of a linguistics grid, including any and all nodes they've

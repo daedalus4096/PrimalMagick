@@ -1,16 +1,5 @@
 package com.verdantartifice.primalmagick.common.stats;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
@@ -22,7 +11,6 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -33,6 +21,15 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Wrapper around {@link StatsManager} specifically for dealing with expertise stats.

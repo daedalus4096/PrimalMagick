@@ -1,8 +1,7 @@
 package com.verdantartifice.primalmagick.common.init;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
-
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
 

@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+
+import javax.annotation.Nonnull;
 
 /**
  * Server data container for the heavenly runescribing altar GUI.

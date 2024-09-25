@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import org.slf4j.Logger;
 
 import com.google.common.collect.ImmutableMap;

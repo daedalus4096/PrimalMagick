@@ -1,11 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.misc;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,6 +24,9 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * Block definitions for an Enderward, which blocks incoming teleportation attempts within

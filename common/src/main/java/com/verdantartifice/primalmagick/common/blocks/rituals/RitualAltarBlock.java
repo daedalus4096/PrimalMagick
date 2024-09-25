@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;

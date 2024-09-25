@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.renderers.itemstack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredTridentItem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.TridentModel;
 import net.minecraft.client.model.geom.ModelLayers;

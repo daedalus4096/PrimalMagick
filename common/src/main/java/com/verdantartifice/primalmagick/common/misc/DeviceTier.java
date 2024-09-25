@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.misc;
 
 import com.mojang.serialization.Codec;
-
 import net.minecraft.util.StringRepresentable;
 
 /**

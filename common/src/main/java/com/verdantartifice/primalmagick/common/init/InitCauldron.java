@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.items.concoctions.BombCasingItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.ConcoctionItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.SkyglassFlaskItem;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
-
 import net.minecraft.core.cauldron.CauldronInteraction;
 
 /**

@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.runes;
 
-import java.util.function.Function;
-
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+
+import java.util.function.Function;
 
 /**
  * Datapack registry for the mod's definitions of rune combination enchantments.

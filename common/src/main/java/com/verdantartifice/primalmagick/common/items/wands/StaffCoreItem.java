@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
+import com.verdantartifice.primalmagick.common.wands.WandCore;
+import net.minecraft.world.item.Item;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import com.verdantartifice.primalmagick.common.wands.WandCore;
-
-import net.minecraft.world.item.Item;
 
 /**
  * Item definition for a staff core.  May be used to construct modular staves.

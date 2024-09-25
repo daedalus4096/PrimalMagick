@@ -1,13 +1,10 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import java.util.OptionalInt;
-
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -20,6 +17,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.OptionalInt;
 
 /**
  * Definition of a research table tile entity.  Holds the writing materials for the corresponding block.

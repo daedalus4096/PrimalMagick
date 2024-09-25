@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
-import java.util.Optional;
-
 import com.mojang.serialization.MapCodec;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -11,6 +8,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Optional;
 
 /**
  * Linguistics grid reward placeholder that grants nothing.

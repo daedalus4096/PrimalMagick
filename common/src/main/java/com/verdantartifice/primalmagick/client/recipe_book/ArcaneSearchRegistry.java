@@ -1,12 +1,7 @@
 package com.verdantartifice.primalmagick.client.recipe_book;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
-
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeCollection;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -20,6 +15,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 /**
  * Helper class for managing the mod's search tree for arcane recipes.

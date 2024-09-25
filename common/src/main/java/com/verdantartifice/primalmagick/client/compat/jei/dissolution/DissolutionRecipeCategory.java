@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.compat.jei.dissolution;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;

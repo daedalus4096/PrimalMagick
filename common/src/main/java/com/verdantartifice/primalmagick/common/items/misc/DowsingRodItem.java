@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;

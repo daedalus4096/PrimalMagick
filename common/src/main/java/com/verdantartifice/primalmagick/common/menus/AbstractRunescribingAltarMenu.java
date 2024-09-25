@@ -1,12 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
@@ -15,7 +8,6 @@ import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -37,6 +29,11 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.InvWrapper;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Base server data container for the runescribing altar GUIs.

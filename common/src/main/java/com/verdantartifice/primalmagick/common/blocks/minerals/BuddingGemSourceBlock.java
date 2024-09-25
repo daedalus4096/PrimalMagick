@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.minerals;
 
-import java.util.function.Supplier;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -14,6 +10,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Supplier;
 
 /**
  * Definition of a block that grows gem clusters like amethyst geodes.  Unlike amethyst geodes, these

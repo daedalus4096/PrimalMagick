@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableR
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;

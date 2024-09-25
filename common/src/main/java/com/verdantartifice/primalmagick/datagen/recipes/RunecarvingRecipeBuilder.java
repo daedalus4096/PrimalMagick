@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

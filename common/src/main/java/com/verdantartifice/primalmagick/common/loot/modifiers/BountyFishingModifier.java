@@ -1,14 +1,10 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +16,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Global loot modifier that gives a chance for bonus rolls on the fishing loot table.

@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
+import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.sources.Source;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import com.verdantartifice.primalmagick.common.attunements.AttunementType;
-import com.verdantartifice.primalmagick.common.sources.Source;
 
 /**
  * Definition of a specialized attunement gain item that grants a single point of permanent attunement.

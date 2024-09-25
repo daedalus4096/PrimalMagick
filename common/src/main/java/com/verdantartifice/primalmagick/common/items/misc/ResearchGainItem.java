@@ -1,15 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,6 +16,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Definition of an item that unlocks arcane research when used.

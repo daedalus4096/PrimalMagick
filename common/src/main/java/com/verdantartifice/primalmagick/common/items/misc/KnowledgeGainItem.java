@@ -1,14 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import java.util.List;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,6 +17,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
 
 /**
  * Definition of an item that grants observation or theory progress when used by a player.

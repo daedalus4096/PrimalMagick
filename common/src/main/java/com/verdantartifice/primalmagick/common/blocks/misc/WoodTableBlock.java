@@ -1,9 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.misc;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;

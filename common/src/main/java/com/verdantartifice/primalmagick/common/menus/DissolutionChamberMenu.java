@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

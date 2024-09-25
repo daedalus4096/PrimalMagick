@@ -1,10 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -13,7 +8,6 @@ import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
-
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -22,6 +16,11 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Custom GUI slot for runescribing results.

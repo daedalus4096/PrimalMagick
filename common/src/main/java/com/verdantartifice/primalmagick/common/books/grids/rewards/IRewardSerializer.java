@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
 import com.google.gson.JsonObject;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 

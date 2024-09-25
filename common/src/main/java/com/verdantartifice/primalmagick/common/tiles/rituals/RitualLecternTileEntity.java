@@ -1,12 +1,9 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
-import java.util.OptionalInt;
-
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -17,6 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.OptionalInt;
 
 /**
  * Definition of a ritual lectern tile entity.  Holds the lectern's inventory.

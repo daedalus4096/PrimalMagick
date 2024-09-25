@@ -1,15 +1,5 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Predicate;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.joml.Vector3d;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,6 +19,14 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.joml.Vector3d;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Collection of utility methods pertaining to raytracing.

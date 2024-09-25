@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.common.menus.base;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ServerPlaceArcaneRecipe;
-
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.StackedContents;
@@ -13,6 +10,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
+
+import java.util.List;
 
 /**
  * Interface for a menu that's compatible with the arcane recipe book.

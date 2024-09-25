@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.CalcinatorTileEntity;
@@ -34,7 +35,6 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.RitualBellTileEntit
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualCandleTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.SoulAnvilTileEntity;
-
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

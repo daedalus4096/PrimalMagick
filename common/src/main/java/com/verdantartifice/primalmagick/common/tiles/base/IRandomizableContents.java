@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.common.tiles.base;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.loot.LootTable;
+
+import javax.annotation.Nullable;
 
 /**
  * Interface marking a tile entity as one that can have its contents randomized upon first

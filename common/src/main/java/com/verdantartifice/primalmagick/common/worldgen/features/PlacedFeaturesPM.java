@@ -5,6 +5,7 @@ import java.util.List;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;

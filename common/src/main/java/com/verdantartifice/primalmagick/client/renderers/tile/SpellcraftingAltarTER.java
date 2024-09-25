@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Custom tile entity renderer for spellcrafting altar blocks.

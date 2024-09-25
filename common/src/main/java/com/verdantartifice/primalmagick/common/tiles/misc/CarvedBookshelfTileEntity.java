@@ -1,17 +1,9 @@
 package com.verdantartifice.primalmagick.common.tiles.misc;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.OptionalInt;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -24,6 +16,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Definition of a carved bookshelf tile entity.  Provides the storage for a carved bookshelf block.  Like

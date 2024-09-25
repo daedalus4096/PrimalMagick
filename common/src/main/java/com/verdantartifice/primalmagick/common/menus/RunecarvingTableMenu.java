@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
@@ -18,7 +12,6 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,6 +31,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Server data container for the runecarving table GUI.

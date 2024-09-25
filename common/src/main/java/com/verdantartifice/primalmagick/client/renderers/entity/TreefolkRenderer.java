@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.TreefolkModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;

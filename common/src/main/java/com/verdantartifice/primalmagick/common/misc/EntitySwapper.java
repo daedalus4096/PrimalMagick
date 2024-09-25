@@ -1,20 +1,10 @@
 package com.verdantartifice.primalmagick.common.misc;
 
-import java.awt.Color;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Queue;
-import java.util.UUID;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.capabilities.IWorldEntitySwappers;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -32,6 +22,14 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.INBTSerializable;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.Color;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Queue;
+import java.util.UUID;
 
 /**
  * Definition of an entity swapper data structure.  Processed during server ticks to replace a specific

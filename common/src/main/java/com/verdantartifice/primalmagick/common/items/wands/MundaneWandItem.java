@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Consumer;
-
 import com.verdantartifice.primalmagick.client.renderers.itemstack.MundaneWandISTER;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
-
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Item definition for a mundane wand.  Unlike modular wands, mundane wands cannot be inscribed with

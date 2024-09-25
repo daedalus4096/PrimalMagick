@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Table;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
@@ -34,6 +35,7 @@ import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.data.PackOutput;

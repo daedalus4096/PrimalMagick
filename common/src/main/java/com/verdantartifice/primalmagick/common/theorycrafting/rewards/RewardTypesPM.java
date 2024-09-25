@@ -3,9 +3,11 @@ package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 import java.util.function.Supplier;
 
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.registries.DeferredRegister;

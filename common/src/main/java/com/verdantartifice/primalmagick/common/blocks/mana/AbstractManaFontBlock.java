@@ -1,16 +1,8 @@
 package com.verdantartifice.primalmagick.common.blocks.mana;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -19,6 +11,13 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Base block definition for a mana font.  Mana fonts contain a slowly replenishing supply of mana,

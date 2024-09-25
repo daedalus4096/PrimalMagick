@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.common.enchantments.effects.EnchantmentEntityEffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.effects.EnchantmentLocationBasedEffectsPM;
-
 import net.minecraft.core.registries.BuiltInRegistries;
 
 public class InitEnchantments {

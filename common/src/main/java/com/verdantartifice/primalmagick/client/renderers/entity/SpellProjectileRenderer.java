@@ -3,11 +3,9 @@ package com.verdantartifice.primalmagick.client.renderers.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellProjectileModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellProjectileEntity;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

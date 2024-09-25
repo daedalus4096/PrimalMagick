@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorFuelSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

@@ -1,13 +1,10 @@
 package com.verdantartifice.primalmagick.common.items.armor;
 
-import java.util.Optional;
-
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.runes.SourceRune;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +13,8 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
+
+import java.util.Optional;
 
 /**
  * Item definition for armor that gives a mana discount.  Intended for wizard robes.

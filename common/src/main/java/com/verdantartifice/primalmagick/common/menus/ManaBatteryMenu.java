@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
@@ -15,7 +14,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import java.util.Optional;
-import java.util.OptionalInt;
-
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
@@ -16,7 +13,6 @@ import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -33,6 +29,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Definition of a scribe table tile entity.  Holds the inventory for the corresponding block.

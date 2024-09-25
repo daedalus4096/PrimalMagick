@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AndRequirem
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.recipes.RecipeOutput;

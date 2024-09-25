@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks;
 
-import java.util.Optional;
-
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.base.SaplingBlockPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ArcaneWorkbenchBlock;
@@ -81,7 +80,6 @@ import com.verdantartifice.primalmagick.common.items.ItemReferencesPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
@@ -107,6 +105,8 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Optional;
 
 /**
  * Deferred registry for mod blocks.

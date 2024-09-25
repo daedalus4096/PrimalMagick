@@ -1,21 +1,12 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.SunlampTileEntity;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
@@ -39,6 +30,11 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * Block definition for a sunlamp.  Sunlamps are like normal lanterns, but they spawn glow fields

@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.renderers.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
-
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.Mth;

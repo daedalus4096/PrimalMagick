@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import org.apache.logging.log4j.LogManager;
 
 import com.verdantartifice.primalmagick.PrimalMagick;

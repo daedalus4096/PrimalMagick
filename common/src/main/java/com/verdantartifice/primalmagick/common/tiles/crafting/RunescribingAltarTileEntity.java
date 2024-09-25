@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.menus.RunescribingAltarForbiddenM
 import com.verdantartifice.primalmagick.common.menus.RunescribingAltarHeavenlyMenu;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;

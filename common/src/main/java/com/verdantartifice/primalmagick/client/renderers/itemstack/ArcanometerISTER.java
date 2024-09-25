@@ -1,14 +1,10 @@
 package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -27,6 +23,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.entity.PartEntity;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Custom item stack renderer for the arcanometer.

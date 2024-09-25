@@ -1,18 +1,11 @@
 package com.verdantartifice.primalmagick.common.sources;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.stats.Stat;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -21,6 +14,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Definition of a primal source.  Each source represents a different type of magick in the mod, and

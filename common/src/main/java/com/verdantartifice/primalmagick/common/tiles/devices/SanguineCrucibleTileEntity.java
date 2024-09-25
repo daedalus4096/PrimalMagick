@@ -1,12 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import java.awt.Color;
-import java.util.Objects;
-import java.util.OptionalInt;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
@@ -15,7 +8,6 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -34,6 +26,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.ItemStackHandler;
+
+import javax.annotation.Nullable;
+import java.awt.Color;
+import java.util.Objects;
+import java.util.OptionalInt;
+import java.util.Set;
 
 /**
  * Definition of a sanguine crucible tile entity.  Holds the crucible's core inventory and souls,

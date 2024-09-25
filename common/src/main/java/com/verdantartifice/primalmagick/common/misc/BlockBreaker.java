@@ -1,19 +1,8 @@
 package com.verdantartifice.primalmagick.common.misc;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentNavigableMap;
-import java.util.concurrent.ConcurrentSkipListMap;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -34,6 +23,15 @@ import net.minecraft.world.level.block.StructureBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * Definition of a block breaker data structure.  Processed during server ticks to gradually break blocks

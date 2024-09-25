@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.commons.lang3.function.TriFunction;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Collection of utility methods pertaining to functions and functional programming.

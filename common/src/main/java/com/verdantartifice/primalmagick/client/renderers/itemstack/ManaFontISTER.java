@@ -1,15 +1,11 @@
 package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
-import java.awt.Color;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -24,6 +20,8 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+
+import java.awt.Color;
 
 /**
  * Custom item stack renderer for ancient mana fonts.

@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

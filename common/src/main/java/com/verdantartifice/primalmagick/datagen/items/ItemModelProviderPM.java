@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -24,6 +25,7 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;

@@ -1,16 +1,12 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
-import java.awt.Color;
-
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.rituals.IRitualStabilizer;
 import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -30,6 +26,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.awt.Color;
 
 /**
  * Block definition for an offering pedestal.  An offering pedestal holds an item stack for use as

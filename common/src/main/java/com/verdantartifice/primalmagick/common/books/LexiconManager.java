@@ -1,18 +1,15 @@
 package com.verdantartifice.primalmagick.common.books;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Container for mod lexicons.

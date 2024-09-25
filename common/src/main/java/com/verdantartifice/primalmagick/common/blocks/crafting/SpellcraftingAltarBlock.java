@@ -1,12 +1,10 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

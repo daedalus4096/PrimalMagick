@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
@@ -12,7 +11,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

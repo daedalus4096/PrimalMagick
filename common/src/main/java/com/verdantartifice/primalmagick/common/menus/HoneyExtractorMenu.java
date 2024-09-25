@@ -1,12 +1,10 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -1,12 +1,6 @@
 package com.verdantartifice.primalmagick.common.books;
 
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
-
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
-
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -14,6 +8,11 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * Helper methods for dealing with static books on the client and server sides.

@@ -1,15 +1,10 @@
 package com.verdantartifice.primalmagick.common.items.concoctions;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -41,6 +36,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Definition of an alchemical concoction.  Similar to a brewed potion, but a single vial contains

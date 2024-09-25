@@ -1,11 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
-import java.awt.Color;
-import java.util.Map;
-
 import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
@@ -13,7 +9,6 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.SoulAnvilTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
-
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,6 +36,9 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.awt.Color;
+import java.util.Map;
 
 /**
  * Block definition for a soul anvil.  Soul anvils serve as props in magickal rituals; breaking a soul

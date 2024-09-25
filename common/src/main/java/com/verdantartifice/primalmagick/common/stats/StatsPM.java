@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.stats;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
 

@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import java.util.OptionalInt;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
@@ -12,7 +9,6 @@ import com.verdantartifice.primalmagick.common.menus.WandChargerMenu;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -29,6 +25,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.OptionalInt;
+import java.util.Set;
 
 /**
  * Definition of a wand charger tile entity.  Provides the recharge and wand interaction functionality

@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.world.phys.Vec3;
+
+import javax.annotation.Nonnull;
 
 /**
  * Definition of a line segment between two points in 3D space.

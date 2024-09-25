@@ -1,16 +1,9 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -21,6 +14,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.Set;
 
 /**
  * Definition of an offering pedestal tile entity.  Holds the pedestal's inventory.

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.worldgen.structures.library.LibraryStructure;
 import com.verdantartifice.primalmagick.common.worldgen.structures.library.NetherLibraryStructure;
 

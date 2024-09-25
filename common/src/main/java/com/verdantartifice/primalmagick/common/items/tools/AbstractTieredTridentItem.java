@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvent;
@@ -28,6 +25,8 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 /**
  * Base class definition of a craftable, repairable trident item made of a magickal metal.

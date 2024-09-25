@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
-import java.awt.Color;
-import java.util.Comparator;
-import java.util.Map;
-
 import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
@@ -12,7 +8,6 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.OpenEnchante
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEntity;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
-
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -49,6 +44,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.awt.Color;
+import java.util.Comparator;
+import java.util.Map;
 
 /**
  * Block definition for a ritual lectern.  Ritual lecterns serve as props in magickal rituals; placing

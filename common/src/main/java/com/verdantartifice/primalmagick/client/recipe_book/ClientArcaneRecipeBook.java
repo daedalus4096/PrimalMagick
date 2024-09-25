@@ -1,14 +1,5 @@
 package com.verdantartifice.primalmagick.client.recipe_book;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
@@ -18,7 +9,6 @@ import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeColle
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
-
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -26,6 +16,14 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraftforge.common.Tags;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A client-side representation of the arcane recipe book data, capable of interacting safely with

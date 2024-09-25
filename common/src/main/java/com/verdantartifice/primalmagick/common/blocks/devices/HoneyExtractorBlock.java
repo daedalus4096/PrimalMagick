@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

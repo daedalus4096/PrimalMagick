@@ -1,20 +1,8 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
-import org.joml.Vector3f;
-
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.blockstates.properties.SaltSide;
 import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -35,6 +23,15 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.joml.Vector3f;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Definition of a salt trail block.  Intended to work similarly to redstone wire, but transmitting

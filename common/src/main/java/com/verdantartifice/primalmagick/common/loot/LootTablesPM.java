@@ -1,15 +1,13 @@
 package com.verdantartifice.primalmagick.common.loot;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootTable;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Stores IDs for built-in mod loot tables, i.e. loot tables which are not based directly on a block or entity ID.

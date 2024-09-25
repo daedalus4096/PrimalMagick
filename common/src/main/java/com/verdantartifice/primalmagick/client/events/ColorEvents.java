@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.events;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
@@ -29,7 +30,7 @@ import java.util.function.Function;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ColorEvents {
     @SubscribeEvent
     public static void onBlockColorInit(RegisterColorHandlersEvent.Block event) {

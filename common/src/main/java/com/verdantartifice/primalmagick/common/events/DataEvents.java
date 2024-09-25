@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class DataEvents {
     @SubscribeEvent
     public static void onDatapackSync(OnDatapackSyncEvent event) {

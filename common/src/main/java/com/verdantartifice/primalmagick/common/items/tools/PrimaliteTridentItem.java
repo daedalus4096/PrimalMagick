@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import java.util.function.Consumer;
-
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteTridentISTER;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.PrimaliteTridentEntity;
-
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
+import java.util.function.Consumer;
 
 /**
  * Definition for a trident made of the magickal metal primalite.

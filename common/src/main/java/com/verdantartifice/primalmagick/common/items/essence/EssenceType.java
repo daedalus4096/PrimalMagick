@@ -1,21 +1,19 @@
 package com.verdantartifice.primalmagick.common.items.essence;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * Definition of an essence type, e.g. the quality of an essence item.

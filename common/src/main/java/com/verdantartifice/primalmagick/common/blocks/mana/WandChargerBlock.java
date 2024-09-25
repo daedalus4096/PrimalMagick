@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.blocks.mana;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;

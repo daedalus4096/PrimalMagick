@@ -1,18 +1,17 @@
 package com.verdantartifice.primalmagick.common.items.armor;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.google.common.collect.ImmutableList;
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Item definition for a warding module, a magitech device that can be attached to hard armor

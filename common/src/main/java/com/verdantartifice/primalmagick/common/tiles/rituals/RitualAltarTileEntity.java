@@ -1,29 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.Queue;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
-import java.util.function.Predicate;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.mutable.MutableFloat;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.rituals.OfferingPedestalBlock;
@@ -60,7 +36,6 @@ import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -95,6 +70,28 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.mutable.MutableFloat;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Predicate;
 
 /**
  * Definition of a ritual altar tile entity.  Provides the core functionality for the corresponding

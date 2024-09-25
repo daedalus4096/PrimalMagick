@@ -1,14 +1,9 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.IntStream;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
@@ -22,6 +17,10 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * Global loot modifier that gives a chance for bonus nuggets when mining quartz or metal ores.

@@ -1,5 +1,13 @@
 package com.verdantartifice.primalmagick.common.sources;
 
+import com.google.common.base.Suppliers;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.ChatFormatting;
+import net.minecraft.resources.ResourceLocation;
+
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,16 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-
-import javax.annotation.Nullable;
-
-import com.google.common.base.Suppliers;
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.stats.StatsPM;
-
-import net.minecraft.ChatFormatting;
-import net.minecraft.resources.ResourceLocation;
 
 public class Sources {
     private static final Map<ResourceLocation, Source> SOURCES = new HashMap<>();

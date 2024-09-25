@@ -1,5 +1,12 @@
 package com.verdantartifice.primalmagick.common.books;
 
+import com.google.common.base.Suppliers;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.minecraft.Util;
+import net.minecraft.util.Mth;
+
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -8,15 +15,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import javax.annotation.Nonnull;
-
-import com.google.common.base.Suppliers;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import net.minecraft.Util;
-import net.minecraft.util.Mth;
 
 /**
  * Maps the full set of words used in a book language, plus metadata.

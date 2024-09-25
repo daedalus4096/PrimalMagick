@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

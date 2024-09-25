@@ -1,18 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.OptionalInt;
-import java.util.Set;
-import java.util.UUID;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.mutable.MutableBoolean;
-
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
@@ -29,7 +16,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -52,6 +38,17 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
+import java.util.OptionalInt;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Base definition of a calcinator tile entity.  Provides the melting functionality for the corresponding

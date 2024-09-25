@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.wands;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -9,6 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import javax.annotation.Nullable;
 
 /**
  * Control interface for a block or tile entity that can interact with wands when right-clicked wtih them.

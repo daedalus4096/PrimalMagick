@@ -3,12 +3,10 @@ package com.verdantartifice.primalmagick.client.renderers.itemstack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;

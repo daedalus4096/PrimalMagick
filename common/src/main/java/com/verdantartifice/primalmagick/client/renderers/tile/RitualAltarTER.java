@@ -16,7 +16,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Custom tile entity renderer for ritual altar tile entities.

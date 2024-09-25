@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.renderers.entity.layers.InnerDemonArmorLayer;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;

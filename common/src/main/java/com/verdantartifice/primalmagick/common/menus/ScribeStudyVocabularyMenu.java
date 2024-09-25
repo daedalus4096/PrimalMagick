@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import org.joml.Vector2i;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -18,7 +12,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -31,6 +25,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Vector2i;
+
+import java.util.Optional;
 
 /**
  * Server data container for the study vocabulary mode of the scribe table GUI.

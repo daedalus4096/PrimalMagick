@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
@@ -11,7 +9,6 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -23,6 +20,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Global loot modifier that controls essence drops from the Essence Thief enchantment.

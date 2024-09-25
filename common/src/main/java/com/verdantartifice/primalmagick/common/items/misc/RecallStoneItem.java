@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

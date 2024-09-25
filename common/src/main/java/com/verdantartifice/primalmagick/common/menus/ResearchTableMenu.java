@@ -1,20 +1,10 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntity;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,6 +22,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Server data container for the research table GUI.

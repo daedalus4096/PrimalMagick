@@ -1,13 +1,8 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import java.util.List;
-import java.util.Map;
-
 import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.IEnchantedByDefault;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -16,6 +11,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Definition of a shield that comes pre-enchanted with Bulwark.

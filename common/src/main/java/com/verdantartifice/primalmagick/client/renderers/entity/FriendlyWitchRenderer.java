@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
-
 import net.minecraft.client.model.WitchModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;

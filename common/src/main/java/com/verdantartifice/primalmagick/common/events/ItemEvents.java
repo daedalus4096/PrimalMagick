@@ -1,14 +1,8 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import java.util.Comparator;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenEnchantedBookScreenPacket;
-
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -20,13 +14,17 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Comparator;
 
 /**
  * Handlers for item related events.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class ItemEvents {
     protected static final Logger LOGGER = LogManager.getLogger();
     

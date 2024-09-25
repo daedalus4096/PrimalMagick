@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
-import java.util.Optional;
-
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
-
 import net.minecraft.world.level.block.grower.TreeGrower;
+
+import java.util.Optional;
 
 public class TreeGrowersPM {
     public static final TreeGrower SUNWOOD = new TreeGrower("primalmagick:sunwood", Optional.empty(), Optional.of(ConfiguredFeaturesPM.TREE_SUNWOOD_FULL), Optional.empty());

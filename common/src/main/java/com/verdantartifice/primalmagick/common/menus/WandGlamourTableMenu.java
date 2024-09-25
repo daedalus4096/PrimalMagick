@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.WandGlamourRecipe;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
@@ -12,7 +9,6 @@ import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -32,6 +28,8 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.Optional;
 
 public class WandGlamourTableMenu extends AbstractContainerMenu {
     public static final ResourceLocation CAP_SLOT_TEXTURE = WandAssemblyTableMenu.CAP_SLOT_TEXTURE;

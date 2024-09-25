@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.tiles.base;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nullable;
 
 /**
  * Interface marking a tile entity as one that can have an owner.  This may involved specific

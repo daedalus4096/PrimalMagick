@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.client.renderers.entity.layers;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.PlayerModel;

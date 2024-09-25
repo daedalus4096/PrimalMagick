@@ -1,13 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.entities;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.verdantartifice.primalmagick.common.entities.projectiles.ManaArrowEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
@@ -15,6 +9,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Definition of an arrow infused with mana for a secondary effect.

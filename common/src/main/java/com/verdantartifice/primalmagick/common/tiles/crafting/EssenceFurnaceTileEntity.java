@@ -1,20 +1,18 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
-
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Definition of an essence furnace tile entity.  Provides the melting functionality for the corresponding

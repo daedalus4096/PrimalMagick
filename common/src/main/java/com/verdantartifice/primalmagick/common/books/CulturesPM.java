@@ -1,9 +1,7 @@
 package com.verdantartifice.primalmagick.common.books;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;

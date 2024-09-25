@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
-
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 

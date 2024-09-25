@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;

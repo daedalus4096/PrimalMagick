@@ -1,18 +1,14 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
-import java.util.Optional;
-
 import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
@@ -24,6 +20,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Optional;
 
 /**
  * Linguistics grid reward that grants comprehension of a language.

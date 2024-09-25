@@ -1,14 +1,12 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Base class for a reward provided by a linguistics grid node upon successful unlock.

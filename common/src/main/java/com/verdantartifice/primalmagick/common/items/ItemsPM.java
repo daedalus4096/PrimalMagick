@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.items;
 
-import java.util.function.Supplier;
-
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -85,7 +84,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.FoodProperties;
@@ -106,6 +104,8 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 /**
  * Deferred registry for mod items.

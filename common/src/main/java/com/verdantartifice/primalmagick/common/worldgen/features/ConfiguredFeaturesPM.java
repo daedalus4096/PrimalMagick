@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodLogBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;

@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.blocks.trees;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

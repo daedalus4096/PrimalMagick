@@ -1,12 +1,9 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
-import java.util.OptionalInt;
-
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -20,6 +17,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.OptionalInt;
 
 /**
  * Definition of a runecarving table tile entity.  Holds the crafting materials for the corresponding block.

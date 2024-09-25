@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.menus.data;
 
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.ContainerSetVarintDataPacket;
-
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;

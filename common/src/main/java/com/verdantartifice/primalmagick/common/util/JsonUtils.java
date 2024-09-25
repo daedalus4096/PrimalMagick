@@ -1,19 +1,17 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Collection of utility methods pertaining to JSON parsing.

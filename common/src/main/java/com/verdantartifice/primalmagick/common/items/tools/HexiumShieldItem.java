@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import java.util.function.Consumer;
-
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldISTER;
-
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
+import java.util.function.Consumer;
 
 /**
  * Definition of a shield item made of the magickal metal hexium.

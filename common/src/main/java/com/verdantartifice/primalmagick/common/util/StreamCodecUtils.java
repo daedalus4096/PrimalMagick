@@ -1,13 +1,8 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import java.util.function.Function;
-
-import org.joml.Vector2i;
-
 import com.mojang.datafixers.util.Function7;
 import com.mojang.datafixers.util.Function8;
 import com.mojang.datafixers.util.Function9;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Registry;
 import net.minecraft.network.VarInt;
@@ -15,6 +10,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import org.joml.Vector2i;
+
+import java.util.function.Function;
 
 public class StreamCodecUtils {
     public static <T> StreamCodec<ByteBuf, TagKey<T>> tagKey(ResourceKey<? extends Registry<T>> pRegistry) {

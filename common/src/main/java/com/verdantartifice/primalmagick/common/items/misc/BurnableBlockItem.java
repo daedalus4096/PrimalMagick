@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
+
+import javax.annotation.Nullable;
 
 /**
  * Block item definition for a block that can be used as fuel in a furnace or similar device.

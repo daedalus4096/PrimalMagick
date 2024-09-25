@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -12,6 +9,8 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nullable;
 
 /**
  * Base class for a ritual prop tile entity.  Holds information about the altar it interacts with.

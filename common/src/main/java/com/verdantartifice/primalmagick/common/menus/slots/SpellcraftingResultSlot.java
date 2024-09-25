@@ -1,18 +1,17 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.function.Supplier;
 
 /**
  * Custom GUI slot for spellcrafting altar outputs.

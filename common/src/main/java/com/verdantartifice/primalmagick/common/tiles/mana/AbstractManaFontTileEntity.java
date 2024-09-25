@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

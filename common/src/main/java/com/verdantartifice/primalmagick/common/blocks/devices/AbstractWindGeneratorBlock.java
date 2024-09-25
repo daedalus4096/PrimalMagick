@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.WindGeneratorTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;

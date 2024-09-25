@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.OrRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
-
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;

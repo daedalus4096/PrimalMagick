@@ -1,10 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import java.util.function.Consumer;
-
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ArcanometerISTER;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPacket;
@@ -14,7 +9,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
@@ -32,6 +26,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
+import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 /**
  * Item definition for an arcanometer.  An arcanometer is a PKE meter-like device that scans the 

@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
-import java.util.Objects;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredShieldItem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ShieldModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -20,6 +17,8 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
+
+import java.util.Objects;
 
 /**
  * Custom item stack renderer for magickal metal shields.

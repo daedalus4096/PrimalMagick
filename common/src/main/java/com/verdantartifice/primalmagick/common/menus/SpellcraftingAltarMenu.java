@@ -1,13 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
@@ -37,7 +29,6 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltar
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -54,6 +45,12 @@ import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Server data container for the spellcrafting altar GUI.

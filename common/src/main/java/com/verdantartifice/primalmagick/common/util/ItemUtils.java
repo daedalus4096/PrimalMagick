@@ -1,17 +1,15 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Collection of utility methods pertaining to items.

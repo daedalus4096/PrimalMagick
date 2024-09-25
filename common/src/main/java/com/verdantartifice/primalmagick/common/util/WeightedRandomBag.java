@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.util.RandomSource;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import net.minecraft.util.RandomSource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Collection of elements from which they can be pulled randomly, based on given weights.

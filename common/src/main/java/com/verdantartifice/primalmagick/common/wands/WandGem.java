@@ -1,21 +1,19 @@
 package com.verdantartifice.primalmagick.common.wands;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Definition of a wand gem data structure.  Wand gems determine the maximum amount of mana that can be

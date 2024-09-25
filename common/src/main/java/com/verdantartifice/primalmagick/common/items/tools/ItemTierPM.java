@@ -1,14 +1,13 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
+
+import java.util.function.Supplier;
 
 /**
  * Definition of tiered item materials for the mod.

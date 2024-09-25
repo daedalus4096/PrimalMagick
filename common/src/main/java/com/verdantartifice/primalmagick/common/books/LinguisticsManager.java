@@ -1,21 +1,5 @@
 package com.verdantartifice.primalmagick.common.books;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.mutable.MutableBoolean;
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.commons.lang3.mutable.MutableLong;
-import org.apache.commons.lang3.mutable.MutableObject;
-import org.joml.Vector2i;
-
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
 import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
@@ -23,12 +7,25 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
-
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.mutable.MutableLong;
+import org.apache.commons.lang3.mutable.MutableObject;
+import org.joml.Vector2i;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Primary access point for linguistics-related methods.

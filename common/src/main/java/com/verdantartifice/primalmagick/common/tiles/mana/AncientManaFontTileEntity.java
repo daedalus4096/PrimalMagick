@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -10,7 +8,6 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -18,6 +15,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.List;
 
 /**
  * Definition of an ancient mana font tile entity.  The focal point for discovering ancient

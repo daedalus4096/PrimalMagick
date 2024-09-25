@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.menus.base;
 
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileInventoryPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;

@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;

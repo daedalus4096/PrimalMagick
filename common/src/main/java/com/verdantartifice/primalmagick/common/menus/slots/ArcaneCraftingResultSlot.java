@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
-import java.util.Optional;
-
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
@@ -9,7 +7,6 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +21,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
+
+import java.util.Optional;
 
 /**
  * Custom GUI slot for arcane crafting results.

@@ -1,14 +1,10 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
-import java.util.List;
-import java.util.function.Consumer;
-
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularStaffISTER;
 import com.verdantartifice.primalmagick.common.wands.IStaff;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -19,6 +15,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Item definition for a modular staff.  Modular staves are made up of cores, caps, and gems, and their

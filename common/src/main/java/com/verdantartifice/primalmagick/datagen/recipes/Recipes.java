@@ -30,6 +30,7 @@ import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;

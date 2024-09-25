@@ -1,12 +1,9 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -22,6 +19,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Global loot modifier that has a chance per Guillotine enchantment level to add the given item to

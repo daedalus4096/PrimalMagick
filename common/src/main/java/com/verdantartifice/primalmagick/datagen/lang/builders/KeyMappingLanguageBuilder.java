@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.resources.ResourceLocation;
 

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.events;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.books.LexiconLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT)
 public class ClientEntityEvents {
     @SubscribeEvent
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {

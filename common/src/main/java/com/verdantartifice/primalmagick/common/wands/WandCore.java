@@ -1,25 +1,23 @@
 package com.verdantartifice.primalmagick.common.wands;
 
+import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Rarity;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.Sources;
-
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Rarity;
 
 /**
  * Definition of a wand core data structure.  Wand cores determine the number of spells that may be

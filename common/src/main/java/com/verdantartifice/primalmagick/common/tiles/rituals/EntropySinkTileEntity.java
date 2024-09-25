@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tiles.rituals;
 
 import com.verdantartifice.primalmagick.common.blocks.rituals.EntropySinkBlock;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;

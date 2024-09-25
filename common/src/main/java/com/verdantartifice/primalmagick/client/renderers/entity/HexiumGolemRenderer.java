@@ -1,9 +1,7 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.layers.HexiumGolemCracksLayer;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.HexiumGolemEntity;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

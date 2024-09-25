@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.runes;
 
-import javax.annotation.Nonnull;
-
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
+
+import javax.annotation.Nonnull;
 
 /**
  * Definition of a source rune data structure.  One of three rune types needed to imbue an enchantment.

@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.flowers;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BlockTags;

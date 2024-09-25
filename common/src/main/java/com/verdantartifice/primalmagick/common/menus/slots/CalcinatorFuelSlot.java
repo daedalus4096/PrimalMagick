@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
 import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

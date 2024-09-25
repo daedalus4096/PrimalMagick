@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.items;
 
-import java.util.Map;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -9,6 +7,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+
+import java.util.Map;
 
 /**
  * Interface for items that are intended to come with one or more enchantments applied

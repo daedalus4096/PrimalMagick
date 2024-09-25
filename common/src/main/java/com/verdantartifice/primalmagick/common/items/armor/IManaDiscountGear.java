@@ -1,13 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.armor;
 
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * Interface describing a piece of gear that gives a discount to mana expenditures from wands.

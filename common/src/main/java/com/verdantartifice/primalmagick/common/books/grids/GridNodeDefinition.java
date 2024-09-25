@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.books.grids;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.EmptyReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+
+import javax.annotation.Nonnull;
 
 /**
  * Class encapsulating a data-defined node definition for a linguistics grid.  These definitions

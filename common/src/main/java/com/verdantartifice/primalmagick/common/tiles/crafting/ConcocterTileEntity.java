@@ -1,19 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
-import java.util.Collections;
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.Set;
-import java.util.UUID;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.annotation.Nullable;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
@@ -37,7 +23,6 @@ import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -67,6 +52,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();

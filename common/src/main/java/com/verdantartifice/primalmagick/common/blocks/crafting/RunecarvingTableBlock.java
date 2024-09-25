@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

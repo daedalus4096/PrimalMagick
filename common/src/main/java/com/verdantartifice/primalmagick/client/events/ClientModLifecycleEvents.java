@@ -1,12 +1,44 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import com.verdantartifice.primalmagick.client.gui.*;
+import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.client.gui.AnalysisTableScreen;
+import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
+import com.verdantartifice.primalmagick.client.gui.CalcinatorScreen;
+import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
+import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
+import com.verdantartifice.primalmagick.client.gui.EssenceCaskScreen;
+import com.verdantartifice.primalmagick.client.gui.EssenceTransmuterScreen;
+import com.verdantartifice.primalmagick.client.gui.HoneyExtractorScreen;
+import com.verdantartifice.primalmagick.client.gui.InfernalFurnaceScreen;
+import com.verdantartifice.primalmagick.client.gui.ManaBatteryScreen;
+import com.verdantartifice.primalmagick.client.gui.ResearchTableScreen;
+import com.verdantartifice.primalmagick.client.gui.RunecarvingTableScreen;
+import com.verdantartifice.primalmagick.client.gui.RunescribingAltarBasicScreen;
+import com.verdantartifice.primalmagick.client.gui.RunescribingAltarEnchantedScreen;
+import com.verdantartifice.primalmagick.client.gui.RunescribingAltarForbiddenScreen;
+import com.verdantartifice.primalmagick.client.gui.RunescribingAltarHeavenlyScreen;
+import com.verdantartifice.primalmagick.client.gui.RunicGrindstoneScreen;
+import com.verdantartifice.primalmagick.client.gui.SpellcraftingAltarScreen;
+import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
+import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
+import com.verdantartifice.primalmagick.client.gui.WandGlamourTableScreen;
+import com.verdantartifice.primalmagick.client.gui.WandInscriptionTableScreen;
 import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
 import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeGainComprehensionScreen;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeStudyVocabularyScreen;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeTranscribeWorksScreen;
-import com.verdantartifice.primalmagick.client.renderers.tile.*;
+import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.OfferingPedestalTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.RitualAltarTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.RitualLecternTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.RunescribingAltarTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.SanguineCrucibleTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.WandChargerTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.WindGeneratorTER;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
@@ -37,7 +69,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
  * @author Daedalus4096
  */
 @SuppressWarnings("deprecation")
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientModLifecycleEvents {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {

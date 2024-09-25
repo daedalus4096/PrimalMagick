@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagick.common.init;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;

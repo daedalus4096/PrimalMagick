@@ -1,16 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.concoctions;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBombEntity;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -30,6 +25,10 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Definition of an alchemical bomb.  Similar to a splash potion, but a single bomb has multiple

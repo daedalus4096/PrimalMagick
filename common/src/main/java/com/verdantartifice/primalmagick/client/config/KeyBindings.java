@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.config;
 
+import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -12,7 +13,7 @@ import org.lwjgl.glfw.GLFW;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class KeyBindings {
     public static final String KEY_CATEGORY = "key.categories." + Constants.MOD_ID;
     

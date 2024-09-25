@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.common.config;
 
-import java.nio.file.Path;
-
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftSpeed;
-
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
+
+import java.nio.file.Path;
 
 /**
  * Definition of common and client configuration files for the mod.

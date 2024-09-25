@@ -1,19 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.OptionalInt;
-import java.util.Set;
-import java.util.UUID;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
@@ -36,7 +22,6 @@ import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -61,6 +46,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
+import java.util.OptionalInt;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Definition of an essence transmuter tile entity.  Performs the processing for the corresponding block.

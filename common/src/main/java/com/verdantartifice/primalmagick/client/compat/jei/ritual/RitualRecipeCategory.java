@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.compat.jei.ritual;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
@@ -26,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
 

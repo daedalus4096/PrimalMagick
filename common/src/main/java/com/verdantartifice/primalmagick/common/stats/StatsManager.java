@@ -1,17 +1,5 @@
 package com.verdantartifice.primalmagick.common.stats;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -20,13 +8,23 @@ import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Primary access point for statistics-related methods.  Also stores the sorted list of stat definitions

@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
-import java.text.DecimalFormat;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
@@ -30,7 +24,6 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -56,6 +49,11 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * Base item definition for a wand.  Wands store mana for use in crafting and, optionally, casting spells.

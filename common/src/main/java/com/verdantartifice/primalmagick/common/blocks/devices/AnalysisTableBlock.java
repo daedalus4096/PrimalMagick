@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.verdantartifice.primalmagick.common.menus.AnalysisTableMenu;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

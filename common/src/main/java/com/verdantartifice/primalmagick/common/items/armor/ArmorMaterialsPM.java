@@ -1,14 +1,9 @@
 package com.verdantartifice.primalmagick.common.items.armor;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
@@ -21,6 +16,10 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Deferred registry for mod armor material types.

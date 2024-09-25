@@ -1,12 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.misc;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
-
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -38,6 +33,10 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Definition of a bookshelf which can have books placed upon it.  Like a chiseled book shelf, but

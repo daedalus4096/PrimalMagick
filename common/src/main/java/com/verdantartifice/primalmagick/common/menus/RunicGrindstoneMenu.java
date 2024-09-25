@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import org.apache.commons.lang3.mutable.MutableInt;
-
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -17,7 +11,6 @@ import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
-
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -44,6 +37,11 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.mutable.MutableInt;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Server data container for the runic grindstone GUI.

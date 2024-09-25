@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
@@ -9,7 +8,6 @@ import com.verdantartifice.primalmagick.common.menus.slots.InfernalFurnaceResult
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

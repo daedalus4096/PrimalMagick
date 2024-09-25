@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.tags;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;

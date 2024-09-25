@@ -1,10 +1,19 @@
 package com.verdantartifice.primalmagick.client.compat.jei;
 
-import com.verdantartifice.primalmagick.common.crafting.*;
+import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
 
 import java.util.List;
 

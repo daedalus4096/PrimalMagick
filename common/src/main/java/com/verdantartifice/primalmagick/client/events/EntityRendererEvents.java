@@ -1,6 +1,25 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import com.verdantartifice.primalmagick.client.renderers.entity.*;
+import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.client.renderers.entity.BasicPixieRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.FlyingCarpetRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.ForbiddenTridentRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.FriendlyWitchRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.GrandPixieRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.HallowsteelGolemRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.HallowsteelTridentRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.HexiumGolemRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.HexiumTridentRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.InnerDemonRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.MajesticPixieRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.ManaArrowRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.PrimaliteGolemRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.PrimaliteTridentRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.SinCrashRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.SinCrystalRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.SpellMineRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.SpellProjectileRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.TreefolkRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.FlyingCarpetModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellMineModel;
@@ -22,7 +41,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class EntityRendererEvents {
     @SubscribeEvent
     public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {

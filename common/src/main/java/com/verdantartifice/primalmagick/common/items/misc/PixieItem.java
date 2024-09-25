@@ -1,16 +1,8 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -26,6 +18,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeSpawnEggItem;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * Definition of a spawn item for a pixie companion.

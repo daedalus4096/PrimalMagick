@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.common.blocks.devices.AbstractWindGeneratorBlock;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +12,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 /**
  * Definition of a wind generator tile entity.  Works with either a Zephyr Engine (wind pushes) or a

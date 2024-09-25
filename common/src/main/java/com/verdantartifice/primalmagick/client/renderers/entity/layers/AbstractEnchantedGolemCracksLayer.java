@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.client.renderers.entity.layers;
 
-import java.util.Map;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.EnchantedGolemModel;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity.Cracks;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.Map;
 
 /**
  * Base layer renderer for damage cracks on an enchanted golem.

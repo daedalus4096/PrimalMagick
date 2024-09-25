@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.common.entities.projectiles.IgnyxEntity;
-
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundEvents;

@@ -1,18 +1,19 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
-import java.util.function.Supplier;
-
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class SpellVehiclesPM {
     private static final DeferredRegister<SpellVehicleType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.SPELL_VEHICLE_TYPES, Constants.MOD_ID);

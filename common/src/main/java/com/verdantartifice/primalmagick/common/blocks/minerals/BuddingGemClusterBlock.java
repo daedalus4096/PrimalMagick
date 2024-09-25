@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.minerals;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -30,6 +24,11 @@ import net.minecraft.world.level.storage.loot.LootParams.Builder;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Definition of a gem cluster grown from a {@link BuddingGemSourceBlock}.

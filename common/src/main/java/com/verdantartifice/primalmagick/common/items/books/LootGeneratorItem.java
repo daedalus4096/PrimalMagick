@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.books;
 
-import java.util.List;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -20,6 +18,8 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+
+import java.util.List;
 
 /**
  * Item which is transformed into a randomized item from the given loot table upon use.  Exists so

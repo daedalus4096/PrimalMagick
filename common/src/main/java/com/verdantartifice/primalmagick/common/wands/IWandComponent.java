@@ -1,11 +1,10 @@
 package com.verdantartifice.primalmagick.common.wands;
 
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Rarity;
+
+import javax.annotation.Nonnull;
 
 /**
  * Definition of a wand component data structure.  Components are either cores, caps, or gems.

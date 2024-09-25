@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

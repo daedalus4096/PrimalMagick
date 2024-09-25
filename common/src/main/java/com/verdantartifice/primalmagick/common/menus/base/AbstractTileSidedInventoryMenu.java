@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.base;
 
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.MenuType;

@@ -1,16 +1,12 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
-import java.awt.Color;
-
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.IncenseBrazierTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
@@ -34,6 +30,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.awt.Color;
 
 /**
  * Block definition for an incense brazier.  Incense braziers serve as props in magickal rituals; placing

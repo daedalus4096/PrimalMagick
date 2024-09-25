@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.OptionalInt;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
@@ -19,7 +13,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -42,6 +35,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
+
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.OptionalInt;
 
 /**
  * Definition of an essence cask tile entity.

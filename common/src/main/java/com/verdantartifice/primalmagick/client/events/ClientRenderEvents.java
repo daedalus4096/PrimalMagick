@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.events;
 
 import com.mojang.datafixers.util.Either;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
@@ -37,7 +38,7 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT)
 public class ClientRenderEvents {
     @SubscribeEvent
     public static void renderTooltip(ItemTooltipEvent event) {

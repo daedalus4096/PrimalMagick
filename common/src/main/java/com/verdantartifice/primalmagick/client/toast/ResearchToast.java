@@ -10,7 +10,7 @@ import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * GUI element for the toast that shows when you complete a research entry.

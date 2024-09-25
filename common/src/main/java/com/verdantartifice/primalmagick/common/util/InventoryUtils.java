@@ -1,14 +1,6 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -28,6 +20,11 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import org.apache.commons.lang3.tuple.Pair;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * Collection of utility methods pertaining to a player inventories.
