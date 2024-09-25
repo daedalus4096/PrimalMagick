@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.serialization.MapCodec;

@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.google.common.base.Preconditions;

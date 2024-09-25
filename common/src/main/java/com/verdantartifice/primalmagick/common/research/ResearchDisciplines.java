@@ -1,17 +1,15 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * Collection of all defined research disciplines and their defining JSON data files.

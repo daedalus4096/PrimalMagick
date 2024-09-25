@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.network;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

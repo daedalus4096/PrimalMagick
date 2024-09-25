@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import org.joml.Vector2i;
 
 import com.verdantartifice.primalmagick.PrimalMagick;

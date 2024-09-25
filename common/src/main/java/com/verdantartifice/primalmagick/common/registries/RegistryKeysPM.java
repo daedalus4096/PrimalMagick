@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectM
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionType;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 

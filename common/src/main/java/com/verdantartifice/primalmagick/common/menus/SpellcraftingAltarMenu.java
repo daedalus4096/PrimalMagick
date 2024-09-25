@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.EmptySpellVehicle
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;

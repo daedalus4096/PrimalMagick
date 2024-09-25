@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.serialization.MapCodec;

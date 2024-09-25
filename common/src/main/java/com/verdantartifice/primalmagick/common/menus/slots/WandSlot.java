@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IStaff;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
