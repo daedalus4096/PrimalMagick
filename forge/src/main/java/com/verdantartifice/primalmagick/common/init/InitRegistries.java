@@ -41,6 +41,8 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePiec
 public class InitRegistries {
     public static void initDeferredRegistries() {
         BlockRegistration.init();
+
+        // TODO To be converted
         ItemsPM.init();
         CreativeModeTabsPM.init();
         TileEntityTypesPM.init();

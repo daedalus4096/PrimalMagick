@@ -11,9 +11,9 @@ import javax.annotation.Nullable;
  * Main class of the Primal Magick mod.  Most initialization doesn't happen here,
  * but rather in response to Forge events.
  * 
- * @see {@link com.verdantartifice.primalmagick.common.events.ModLifecycleEvents}
- * @see {@link com.verdantartifice.primalmagick.common.events.ServerLifecycleEvents}
- * @see {@link com.verdantartifice.primalmagick.client.events.ClientModLifecycleEvents}
+ * @see com.verdantartifice.primalmagick.common.events.ModLifecycleEvents
+ * @see com.verdantartifice.primalmagick.common.events.ServerLifecycleEvents
+ * @see com.verdantartifice.primalmagick.client.events.ClientModLifecycleEvents
  * 
  * @author Daedalus4096
  */
