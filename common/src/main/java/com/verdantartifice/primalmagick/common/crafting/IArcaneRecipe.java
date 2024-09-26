@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -27,7 +27,7 @@ public interface IArcaneRecipe extends CraftingRecipe, IHasManaCost, IHasRequire
     
     @Override
     default ItemStack getToastSymbol() {
-        return new ItemStack(BlocksPM.ARCANE_WORKBENCH.get());
+        return new ItemStack(BlockRegistration.ARCANE_WORKBENCH.get());
     }
 
     @Override

@@ -17,7 +17,7 @@ import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -344,10 +344,10 @@ public class PlayerEvents {
                 AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.GREATER) && 
                 !player.isShiftKeyDown() && 
                 world.isEmptyBlock(pos) && 
-                world.getBlockState(pos) != BlocksPM.GLOW_FIELD.get().defaultBlockState() && 
+                world.getBlockState(pos) != BlockRegistration.GLOW_FIELD.get().defaultBlockState() &&
                 world.getBrightness(LightLayer.BLOCK, pos) < 11) {
             // If an attuned, non-sneaking player is in a dark area, they have a chance to drop a sparkling glow field
-            world.setBlock(pos, BlocksPM.GLOW_FIELD.get().defaultBlockState().setValue(GlowFieldBlock.SPARKLING, Boolean.TRUE), Block.UPDATE_ALL);
+            world.setBlock(pos, BlockRegistration.GLOW_FIELD.get().defaultBlockState().setValue(GlowFieldBlock.SPARKLING, Boolean.TRUE), Block.UPDATE_ALL);
         }
     }
 

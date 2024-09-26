@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
 import com.google.common.collect.ImmutableSet;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.blocks.rituals.OfferingPedestalBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualAltarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.SaltTrailBlock;
@@ -563,7 +563,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
             return;
         }
         
-        if (block == BlocksPM.SALT_TRAIL.get()) {
+        if (block == BlockRegistration.SALT_TRAIL.get()) {
             // Keep scanning along the salt lines
             this.saltPositions.add(pos);
             for (Map.Entry<Direction, EnumProperty<SaltSide>> entry : SaltTrailBlock.FACING_PROPERTY_MAP.entrySet()) {
@@ -577,7 +577,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                     toScan.add(nextPos.below());
                 }
             }
-        } else if (block == BlocksPM.OFFERING_PEDESTAL.get()) {
+        } else if (block == BlockRegistration.OFFERING_PEDESTAL.get()) {
             // Add this position to the offering pedestal collection
             OfferingPedestalBlock pedestalBlock = (OfferingPedestalBlock)block;
             if (pedestalBlock.isBlockSaltPowered(this.level, pos)) {
@@ -966,7 +966,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 // Search for one or more salt trails in range
                 BlockPos saltPos = this.saltPositions.get(this.level.random.nextInt(this.saltPositions.size()));
                 Block block = this.level.getBlockState(saltPos).getBlock();
-                if (block == BlocksPM.SALT_TRAIL.get()) {
+                if (block == BlockRegistration.SALT_TRAIL.get()) {
                     Containers.dropItemStack(this.level, saltPos.getX() + 0.5D, saltPos.getY() + 0.5D, saltPos.getZ() + 0.5D, new ItemStack(ItemsPM.REFINED_SALT.get()));
                     this.level.removeBlock(saltPos, false);
                     this.doMishapEffects(saltPos, breakIndex == 0); // Only play sounds once

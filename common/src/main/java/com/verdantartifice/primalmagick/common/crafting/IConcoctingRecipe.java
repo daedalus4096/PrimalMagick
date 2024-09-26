@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
@@ -24,6 +24,6 @@ public interface IConcoctingRecipe extends Recipe<CraftingInput>, IHasManaCost, 
     
     @Override
     default ItemStack getToastSymbol() {
-        return new ItemStack(BlocksPM.CONCOCTER.get());
+        return new ItemStack(BlockRegistration.CONCOCTER.get());
     }
 }

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -112,7 +112,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.containerLevelAccess, playerIn, BlocksPM.SPELLCRAFTING_ALTAR.get());
+        return stillValid(this.containerLevelAccess, playerIn, BlockRegistration.SPELLCRAFTING_ALTAR.get());
     }
 
     public SourceList getManaCosts() {

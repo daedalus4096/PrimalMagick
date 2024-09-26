@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.worldgen.structures.library;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.books.Culture;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -36,11 +36,11 @@ public class LibraryPiece extends AbstractLibraryPiece {
 
     @Override
     protected BlockState getFillerBlockState() {
-        return BlocksPM.MARBLE_RAW.get().defaultBlockState();
+        return BlockRegistration.MARBLE_RAW.get().defaultBlockState();
     }
 
     @Override
     protected BlockState getBrickBlockState() {
-        return BlocksPM.MARBLE_BRICKS.get().defaultBlockState();
+        return BlockRegistration.MARBLE_BRICKS.get().defaultBlockState();
     }
 }

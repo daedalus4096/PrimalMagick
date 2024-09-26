@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.theorycrafting;
 import java.util.stream.Stream;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -449,7 +449,7 @@ public class ProjectTemplates {
                 .material(ItemTagProjectMaterial.builder(Tags.Items.OBSIDIAN).quantity(10).weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.FLINT_AND_STEEL).weight(1).build())
                 .build());
-        context.register(OBSERVATION_ANALYSIS, ProjectTemplate.builder().aid(BlocksPM.ANALYSIS_TABLE.get()).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+        context.register(OBSERVATION_ANALYSIS, ProjectTemplate.builder().aid(BlockRegistration.ANALYSIS_TABLE.get()).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
                 .weightFunction(new ConstantWeight(5))
                 .material(ObservationProjectMaterial.builder(1).consumed().weight(1).build())
                 .build());

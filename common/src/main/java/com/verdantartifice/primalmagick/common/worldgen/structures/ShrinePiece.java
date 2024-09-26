@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.worldgen.structures;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
@@ -78,15 +78,15 @@ public class ShrinePiece extends TemplateStructurePiece {
         if (this.type == null) {
             return Blocks.AIR;
         } else if (this.type.equals(ShrineStructure.Type.EARTH)) {
-            return BlocksPM.ANCIENT_FONT_EARTH.get();
+            return BlockRegistration.ANCIENT_FONT_EARTH.get();
         } else if (this.type.equals(ShrineStructure.Type.SEA)) {
-            return BlocksPM.ANCIENT_FONT_SEA.get();
+            return BlockRegistration.ANCIENT_FONT_SEA.get();
         } else if (this.type.equals(ShrineStructure.Type.SKY)) {
-            return BlocksPM.ANCIENT_FONT_SKY.get();
+            return BlockRegistration.ANCIENT_FONT_SKY.get();
         } else if (this.type.equals(ShrineStructure.Type.SUN)) {
-            return BlocksPM.ANCIENT_FONT_SUN.get();
+            return BlockRegistration.ANCIENT_FONT_SUN.get();
         } else if (this.type.equals(ShrineStructure.Type.MOON)) {
-            return BlocksPM.ANCIENT_FONT_MOON.get();
+            return BlockRegistration.ANCIENT_FONT_MOON.get();
         } else {
             return Blocks.AIR;
         }
@@ -97,15 +97,15 @@ public class ShrinePiece extends TemplateStructurePiece {
         if (this.type == null) {
             return Blocks.AIR;
         } else if (this.type.equals(ShrineStructure.Type.EARTH)) {
-            return BlocksPM.INFUSED_STONE_EARTH.get();
+            return BlockRegistration.INFUSED_STONE_EARTH.get();
         } else if (this.type.equals(ShrineStructure.Type.SEA)) {
-            return BlocksPM.INFUSED_STONE_SEA.get();
+            return BlockRegistration.INFUSED_STONE_SEA.get();
         } else if (this.type.equals(ShrineStructure.Type.SKY)) {
-            return BlocksPM.INFUSED_STONE_SKY.get();
+            return BlockRegistration.INFUSED_STONE_SKY.get();
         } else if (this.type.equals(ShrineStructure.Type.SUN)) {
-            return BlocksPM.INFUSED_STONE_SUN.get();
+            return BlockRegistration.INFUSED_STONE_SUN.get();
         } else if (this.type.equals(ShrineStructure.Type.MOON)) {
-            return BlocksPM.INFUSED_STONE_MOON.get();
+            return BlockRegistration.INFUSED_STONE_MOON.get();
         } else {
             return Blocks.AIR;
         }

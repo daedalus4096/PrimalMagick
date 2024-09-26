@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.crafting.WandAssemblyRecipe;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
@@ -97,7 +97,7 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.WAND_ASSEMBLY_TABLE.get());
+        return stillValid(this.worldPosCallable, playerIn, BlockRegistration.WAND_ASSEMBLY_TABLE.get());
     }
     
     @Override

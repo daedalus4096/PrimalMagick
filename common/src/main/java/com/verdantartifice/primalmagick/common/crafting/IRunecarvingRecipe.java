@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
 
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +27,6 @@ public interface IRunecarvingRecipe extends Recipe<RunecarvingRecipeInput>, IHas
     
     @Override
     default ItemStack getToastSymbol() {
-        return new ItemStack(BlocksPM.RUNECARVING_TABLE.get());
+        return new ItemStack(BlockRegistration.RUNECARVING_TABLE.get());
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -39,7 +39,7 @@ public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload<Con
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONSECRATE));
 
     public ConsecrateSpellPayload() {
-        super(() -> BlocksPM.CONSECRATION_FIELD.get().defaultBlockState(), 2);
+        super(() -> BlockRegistration.CONSECRATION_FIELD.get().defaultBlockState(), 2);
     }
     
     public static AbstractRequirement<?> getRequirement() {

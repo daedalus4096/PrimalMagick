@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.golems;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -35,11 +35,11 @@ public class HexiumGolemControllerBlock extends AbstractEnchantedGolemController
 
     @Override
     protected Block getBaseBlock() {
-        return BlocksPM.HEXIUM_BLOCK.get();
+        return BlockRegistration.HEXIUM_BLOCK.get();
     }
 
     @Override
     protected Block getControllerBlock() {
-        return BlocksPM.HEXIUM_GOLEM_CONTROLLER.get();
+        return BlockRegistration.HEXIUM_GOLEM_CONTROLLER.get();
     }
 }

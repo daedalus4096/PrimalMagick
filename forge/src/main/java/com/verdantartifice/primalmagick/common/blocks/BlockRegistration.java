@@ -113,7 +113,7 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public class BlocksPM {
+public class BlockRegistration {
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MOD_ID);
     
     public static void init() {
@@ -206,7 +206,7 @@ public class BlocksPM {
     public static final RegistryObject<StrippableLogBlock> HALLOWOOD_LOG = BLOCKS.register("hallowood_log", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_LOG.get(), Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<RotatedPillarBlock> STRIPPED_HALLOWOOD_WOOD = BLOCKS.register("stripped_hallowood_wood", () -> new RotatedPillarBlock(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<StrippableLogBlock> HALLOWOOD_WOOD = BLOCKS.register("hallowood_wood", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_WOOD.get(), Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
-    public static final RegistryObject<LeavesBlock> HALLOWOOD_LEAVES = BLOCKS.register("hallowood_leaves", () -> new LeavesBlock(Block.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).strength(0.2F).noOcclusion().sound(SoundType.GRASS).lightLevel((state) -> { return 10; }).isSuffocating(BlocksPM::never).isViewBlocking(BlocksPM::never).isValidSpawn(BlocksPM::allowsSpawnOnLeaves)));
+    public static final RegistryObject<LeavesBlock> HALLOWOOD_LEAVES = BLOCKS.register("hallowood_leaves", () -> new LeavesBlock(Block.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).strength(0.2F).noOcclusion().sound(SoundType.GRASS).lightLevel((state) -> { return 10; }).isSuffocating(BlockRegistration::never).isViewBlocking(BlockRegistration::never).isValidSpawn(BlockRegistration::allowsSpawnOnLeaves)));
     public static final RegistryObject<SaplingBlockPM> HALLOWOOD_SAPLING = BLOCKS.register("hallowood_sapling", () -> new SaplingBlockPM(TreeGrowersPM.HALLOWOOD, BlockTagsPM.MAY_PLACE_HALLOWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final RegistryObject<Block> HALLOWOOD_PLANKS = BLOCKS.register("hallowood_planks", () -> new Block(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<SlabBlock> HALLOWOOD_SLAB = BLOCKS.register("hallowood_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(HALLOWOOD_PLANKS.get())));

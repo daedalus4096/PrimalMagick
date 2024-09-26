@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.test.ftux;
 
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -49,11 +49,11 @@ public class FtuxTest {
     @GameTestGenerator
     public static Collection<TestFunction> font_discovery_tests() {
         Map<String, Block> testParams = ImmutableMap.<String, Block>builder()
-                .put("earth", BlocksPM.ANCIENT_FONT_EARTH.get())
-                .put("sea", BlocksPM.ANCIENT_FONT_SEA.get())
-                .put("sky", BlocksPM.ANCIENT_FONT_SKY.get())
-                .put("sun", BlocksPM.ANCIENT_FONT_SUN.get())
-                .put("moon", BlocksPM.ANCIENT_FONT_MOON.get())
+                .put("earth", BlockRegistration.ANCIENT_FONT_EARTH.get())
+                .put("sea", BlockRegistration.ANCIENT_FONT_SEA.get())
+                .put("sky", BlockRegistration.ANCIENT_FONT_SKY.get())
+                .put("sun", BlockRegistration.ANCIENT_FONT_SUN.get())
+                .put("moon", BlockRegistration.ANCIENT_FONT_MOON.get())
                 .build();
         return TestUtils.createParameterizedTestFunctions("font_discovery_tests", testParams, (helper, block) -> {
             // Create a player in the level and confirm that they start out not having found a shrine

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
@@ -43,6 +43,6 @@ public interface IRitualRecipe extends Recipe<CraftingInput>, IHasManaCost, IHas
     
     @Override
     default ItemStack getToastSymbol() {
-        return new ItemStack(BlocksPM.RITUAL_ALTAR.get());
+        return new ItemStack(BlockRegistration.RITUAL_ALTAR.get());
     }
 }

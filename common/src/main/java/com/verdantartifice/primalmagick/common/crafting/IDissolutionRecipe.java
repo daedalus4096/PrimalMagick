@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -21,6 +21,6 @@ public interface IDissolutionRecipe extends Recipe<SingleRecipeInput>, IHasManaC
     
     @Override
     default ItemStack getToastSymbol() {
-        return new ItemStack(BlocksPM.DISSOLUTION_CHAMBER.get());
+        return new ItemStack(BlockRegistration.DISSOLUTION_CHAMBER.get());
     }
 }

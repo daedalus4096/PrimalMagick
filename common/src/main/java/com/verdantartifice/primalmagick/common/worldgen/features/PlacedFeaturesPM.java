@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.worldgen.features;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderGetter;
@@ -66,21 +66,21 @@ public class PlacedFeaturesPM {
         context.register(ORE_QUARTZ_LOWER, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.ORE_QUARTZ), commonOrePlacement(20, HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(60)))));
 
         // Register placed tree features (cultivated)
-        context.register(TREE_SUNWOOD_FULL_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_FULL), List.of(PlacementUtils.filteredByBlockSurvival(BlocksPM.SUNWOOD_SAPLING.get()))));
-        context.register(TREE_SUNWOOD_WAXING_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_WAXING), List.of(PlacementUtils.filteredByBlockSurvival(BlocksPM.SUNWOOD_SAPLING.get()))));
-        context.register(TREE_SUNWOOD_WANING_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_WANING), List.of(PlacementUtils.filteredByBlockSurvival(BlocksPM.SUNWOOD_SAPLING.get()))));
-        context.register(TREE_SUNWOOD_FADED_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_FADED), List.of(PlacementUtils.filteredByBlockSurvival(BlocksPM.SUNWOOD_SAPLING.get()))));
+        context.register(TREE_SUNWOOD_FULL_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_FULL), List.of(PlacementUtils.filteredByBlockSurvival(BlockRegistration.SUNWOOD_SAPLING.get()))));
+        context.register(TREE_SUNWOOD_WAXING_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_WAXING), List.of(PlacementUtils.filteredByBlockSurvival(BlockRegistration.SUNWOOD_SAPLING.get()))));
+        context.register(TREE_SUNWOOD_WANING_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_WANING), List.of(PlacementUtils.filteredByBlockSurvival(BlockRegistration.SUNWOOD_SAPLING.get()))));
+        context.register(TREE_SUNWOOD_FADED_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_FADED), List.of(PlacementUtils.filteredByBlockSurvival(BlockRegistration.SUNWOOD_SAPLING.get()))));
         
-        context.register(TREE_MOONWOOD_FULL_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_FULL), List.of(PlacementUtils.filteredByBlockSurvival(BlocksPM.MOONWOOD_SAPLING.get()))));
-        context.register(TREE_MOONWOOD_WAXING_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_WAXING), List.of(PlacementUtils.filteredByBlockSurvival(BlocksPM.MOONWOOD_SAPLING.get()))));
-        context.register(TREE_MOONWOOD_WANING_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_WANING), List.of(PlacementUtils.filteredByBlockSurvival(BlocksPM.MOONWOOD_SAPLING.get()))));
-        context.register(TREE_MOONWOOD_FADED_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_FADED), List.of(PlacementUtils.filteredByBlockSurvival(BlocksPM.MOONWOOD_SAPLING.get()))));
+        context.register(TREE_MOONWOOD_FULL_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_FULL), List.of(PlacementUtils.filteredByBlockSurvival(BlockRegistration.MOONWOOD_SAPLING.get()))));
+        context.register(TREE_MOONWOOD_WAXING_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_WAXING), List.of(PlacementUtils.filteredByBlockSurvival(BlockRegistration.MOONWOOD_SAPLING.get()))));
+        context.register(TREE_MOONWOOD_WANING_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_WANING), List.of(PlacementUtils.filteredByBlockSurvival(BlockRegistration.MOONWOOD_SAPLING.get()))));
+        context.register(TREE_MOONWOOD_FADED_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_FADED), List.of(PlacementUtils.filteredByBlockSurvival(BlockRegistration.MOONWOOD_SAPLING.get()))));
         
-        context.register(TREE_HALLOWOOD_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_HALLOWOOD), List.of(PlacementUtils.filteredByBlockSurvival(BlocksPM.HALLOWOOD_SAPLING.get()))));
+        context.register(TREE_HALLOWOOD_CHECKED, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_HALLOWOOD), List.of(PlacementUtils.filteredByBlockSurvival(BlockRegistration.HALLOWOOD_SAPLING.get()))));
 
         // Register placed tree features (wild)
-        context.register(TREE_WILD_SUNWOOD, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_FULL), VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.05f, 1), BlocksPM.SUNWOOD_SAPLING.get())));
-        context.register(TREE_WILD_MOONWOOD, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_FULL), VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.05f, 1), BlocksPM.MOONWOOD_SAPLING.get())));
+        context.register(TREE_WILD_SUNWOOD, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_SUNWOOD_FULL), VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.05f, 1), BlockRegistration.SUNWOOD_SAPLING.get())));
+        context.register(TREE_WILD_MOONWOOD, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.TREE_MOONWOOD_FULL), VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.05f, 1), BlockRegistration.MOONWOOD_SAPLING.get())));
     }
 
     private static List<PlacementModifier> orePlacement(PlacementModifier frequencyModifier, PlacementModifier positionModifier) {

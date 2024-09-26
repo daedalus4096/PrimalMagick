@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypesPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
@@ -40,7 +40,7 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePiec
  */
 public class InitRegistries {
     public static void initDeferredRegistries() {
-        BlocksPM.init();
+        BlockRegistration.init();
         ItemsPM.init();
         CreativeModeTabsPM.init();
         TileEntityTypesPM.init();

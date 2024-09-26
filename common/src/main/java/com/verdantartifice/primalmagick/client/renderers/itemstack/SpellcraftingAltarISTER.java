@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
@@ -31,7 +31,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL = BlockModelShaper.stateToModelLocation(BlocksPM.SPELLCRAFTING_ALTAR.get().defaultBlockState());
+    private static final ModelResourceLocation MRL = BlockModelShaper.stateToModelLocation(BlockRegistration.SPELLCRAFTING_ALTAR.get().defaultBlockState());
     private static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/spellcrafting_altar/spellcrafting_altar_ring");
     private static final Material RING_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, TEXTURE);
     

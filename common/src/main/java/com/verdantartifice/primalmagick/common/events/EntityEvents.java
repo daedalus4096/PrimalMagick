@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.blocks.misc.EnderwardBlock;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -84,7 +84,7 @@ public class EntityEvents {
         if (event.isCancelable() && !event.isCanceled()) {
             double edgeLength = 2D * EnderwardBlock.EFFECT_RADIUS;
             AABB searchAABB = AABB.ofSize(event.getTarget(), edgeLength, edgeLength, edgeLength);
-            if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> entity.level().getBlockState(pos).is(BlocksPM.ENDERWARD.get()))) {
+            if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> entity.level().getBlockState(pos).is(BlockRegistration.ENDERWARD.get()))) {
                 event.setCanceled(true);
                 if (entity instanceof Player player) {
                     player.displayClientMessage(Component.translatable("event.primalmagick.enderward.block").withStyle(ChatFormatting.RED), true);
