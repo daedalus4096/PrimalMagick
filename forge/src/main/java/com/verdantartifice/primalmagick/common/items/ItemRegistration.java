@@ -114,6 +114,10 @@ import java.util.function.Supplier;
  */
 public class ItemRegistration {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
+
+    public static DeferredRegister<Item> getDeferredRegister() {
+        return ITEMS;
+    }
     
     public static void init() {
         ITEMS.register(PrimalMagick.getModLoadingContext().getModEventBus());
