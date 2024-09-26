@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.platform.services;
 
-public interface IPlatformHelper {
-
+public interface IPlatformService {
     /**
      * Gets the name of the current platform
      *
