@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -25,7 +25,7 @@ public class FourLeafCloverModifier extends LootModifier {
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         // Random chance is controlled by the RandomChanceWithLooting condition in the modifier JSON
-        generatedLoot.add(new ItemStack(ItemsPM.FOUR_LEAF_CLOVER.get()));
+        generatedLoot.add(new ItemStack(ItemRegistration.FOUR_LEAF_CLOVER.get()));
         return generatedLoot;
     }
 

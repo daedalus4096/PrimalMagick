@@ -32,7 +32,7 @@ import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingPilla
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingSlabBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingStairsBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -301,7 +301,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.HALLOWSTEEL_BLOCK));
         this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.IGNYX_BLOCK));
         this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.SALT_BLOCK));
-        this.crossBlockWithItem(BlocksPM.get(BlocksPM.TREEFOLK_SPROUT), this.key(ItemsPM.TREEFOLK_SEED.get()));
+        this.crossBlockWithItem(BlocksPM.get(BlocksPM.TREEFOLK_SPROUT), this.key(ItemRegistration.TREEFOLK_SEED.get()));
         this.horizontalExistingBlockWithBasicItem(BlocksPM.get(BlocksPM.ENDERWARD));
 
         // TODO Genreate arcanometer blockstates

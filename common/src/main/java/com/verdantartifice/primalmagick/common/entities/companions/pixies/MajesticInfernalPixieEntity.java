@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.companions.pixies;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 
 import net.minecraft.world.entity.EntityType;
@@ -18,7 +18,7 @@ public class MajesticInfernalPixieEntity extends AbstractInfernalPixieEntity imp
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemsPM.MAJESTIC_INFERNAL_PIXIE.get();
+        return ItemRegistration.MAJESTIC_INFERNAL_PIXIE.get();
     }
 
     @Override

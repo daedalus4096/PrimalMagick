@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.armortrim;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
@@ -55,6 +55,6 @@ public class TrimPatternsPM {
     }
     
     public static void bootstrap(BootstrapContext<TrimPattern> context) {
-        register(context, ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get(), RUNIC);
+        register(context, ItemRegistration.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get(), RUNIC);
     }
 }

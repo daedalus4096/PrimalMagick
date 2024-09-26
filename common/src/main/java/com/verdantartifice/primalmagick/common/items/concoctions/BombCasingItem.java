@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.concoctions;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.sounds.SoundEvents;
@@ -26,7 +26,7 @@ public class BombCasingItem extends AbstractConcoctionContainerItem {
     public static final CauldronInteraction FILL_BOMB = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
         if (!level.isClientSide) {
             Item item = stack.getItem();
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, ItemsPM.ALCHEMICAL_BOMB.get().getDefaultInstance().copy()));
+            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, ItemRegistration.ALCHEMICAL_BOMB.get().getDefaultInstance().copy()));
             player.awardStat(Stats.USE_CAULDRON);
             player.awardStat(Stats.ITEM_USED.get(item));
             LayeredCauldronBlock.lowerFillLevel(state, level, pos);
@@ -42,6 +42,6 @@ public class BombCasingItem extends AbstractConcoctionContainerItem {
 
     @Override
     protected ItemStack getConcoctionContainerItem() {
-        return ItemsPM.ALCHEMICAL_BOMB.get().getDefaultInstance().copy();
+        return ItemRegistration.ALCHEMICAL_BOMB.get().getDefaultInstance().copy();
     }
 }

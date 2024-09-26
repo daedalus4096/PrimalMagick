@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
@@ -77,9 +77,9 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     private static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(FriendlyWitchEntity.class, EntityDataSerializers.INT);
     private static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     private static final List<VillagerTrades.ItemListing> TRADE_LISTINGS = Util.make(new ArrayList<>(), list -> {
-        list.add(new ItemsForEmeralds(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), 1, 1, 5));
-        list.add(new ItemsForEmeralds(ItemsPM.BLOOD_NOTES.get(), 4, 1, 5));
-        list.add(new ItemsForEmeralds(ItemsPM.SHEEP_TOME.get(), 8, 1, 5));
+        list.add(new ItemsForEmeralds(ItemRegistration.MYSTICAL_RELIC_FRAGMENT.get(), 1, 1, 5));
+        list.add(new ItemsForEmeralds(ItemRegistration.BLOOD_NOTES.get(), 4, 1, 5));
+        list.add(new ItemsForEmeralds(ItemRegistration.SHEEP_TOME.get(), 8, 1, 5));
     });
 
     protected UUID angerTarget;

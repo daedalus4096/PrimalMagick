@@ -112,7 +112,7 @@ import java.util.function.Supplier;
  * 
  * @author Daedalus4096
  */
-public class ItemsPM {
+public class ItemRegistration {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
     
     public static void init() {

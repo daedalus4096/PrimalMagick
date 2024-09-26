@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
@@ -113,7 +113,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
                 SanguineCrucibleTileEntity crucibleTile = (SanguineCrucibleTileEntity)tile;
                 if (entityIn instanceof ItemEntity) {
                     ItemEntity itemEntity = (ItemEntity)entityIn;
-                    if (itemEntity.getItem().getItem() == ItemsPM.SOUL_GEM.get()) {
+                    if (itemEntity.getItem().getItem() == ItemRegistration.SOUL_GEM.get()) {
                         crucibleTile.addSouls(itemEntity.getItem().getCount());
                         entityIn.discard();
                         worldIn.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);

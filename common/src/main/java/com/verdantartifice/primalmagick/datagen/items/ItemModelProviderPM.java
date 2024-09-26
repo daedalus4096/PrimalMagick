@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
@@ -106,162 +106,162 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     
     protected void registerModels(HolderLookup.Provider lookupProvider) {
         // Generate crop items
-        this.basicItem(ItemsPM.HYDROMELON_SEEDS.get());
-        this.basicItem(ItemsPM.HYDROMELON_SLICE.get());
+        this.basicItem(ItemRegistration.HYDROMELON_SEEDS.get());
+        this.basicItem(ItemRegistration.HYDROMELON_SLICE.get());
         
         // Generate salted food items
-        this.itemWithParent(ItemsPM.SALTED_BAKED_POTATO.get(), Items.BAKED_POTATO);
-        this.itemWithParent(ItemsPM.SALTED_COOKED_BEEF.get(), Items.COOKED_BEEF);
-        this.itemWithParent(ItemsPM.SALTED_COOKED_CHICKEN.get(), Items.COOKED_CHICKEN);
-        this.itemWithParent(ItemsPM.SALTED_COOKED_COD.get(), Items.COOKED_COD);
-        this.itemWithParent(ItemsPM.SALTED_COOKED_MUTTON.get(), Items.COOKED_MUTTON);
-        this.itemWithParent(ItemsPM.SALTED_COOKED_PORKCHOP.get(), Items.COOKED_PORKCHOP);
-        this.itemWithParent(ItemsPM.SALTED_COOKED_RABBIT.get(), Items.COOKED_RABBIT);
-        this.itemWithParent(ItemsPM.SALTED_COOKED_SALMON.get(), Items.COOKED_SALMON);
-        this.itemWithParent(ItemsPM.SALTED_BEETROOT_SOUP.get(), Items.BEETROOT_SOUP);
-        this.itemWithParent(ItemsPM.SALTED_MUSHROOM_STEW.get(), Items.MUSHROOM_STEW);
-        this.itemWithParent(ItemsPM.SALTED_RABBIT_STEW.get(), Items.RABBIT_STEW);
+        this.itemWithParent(ItemRegistration.SALTED_BAKED_POTATO.get(), Items.BAKED_POTATO);
+        this.itemWithParent(ItemRegistration.SALTED_COOKED_BEEF.get(), Items.COOKED_BEEF);
+        this.itemWithParent(ItemRegistration.SALTED_COOKED_CHICKEN.get(), Items.COOKED_CHICKEN);
+        this.itemWithParent(ItemRegistration.SALTED_COOKED_COD.get(), Items.COOKED_COD);
+        this.itemWithParent(ItemRegistration.SALTED_COOKED_MUTTON.get(), Items.COOKED_MUTTON);
+        this.itemWithParent(ItemRegistration.SALTED_COOKED_PORKCHOP.get(), Items.COOKED_PORKCHOP);
+        this.itemWithParent(ItemRegistration.SALTED_COOKED_RABBIT.get(), Items.COOKED_RABBIT);
+        this.itemWithParent(ItemRegistration.SALTED_COOKED_SALMON.get(), Items.COOKED_SALMON);
+        this.itemWithParent(ItemRegistration.SALTED_BEETROOT_SOUP.get(), Items.BEETROOT_SOUP);
+        this.itemWithParent(ItemRegistration.SALTED_MUSHROOM_STEW.get(), Items.MUSHROOM_STEW);
+        this.itemWithParent(ItemRegistration.SALTED_RABBIT_STEW.get(), Items.RABBIT_STEW);
         
         // Generate mineral items
-        this.basicItem(ItemsPM.IRON_GRIT.get());
-        this.basicItem(ItemsPM.GOLD_GRIT.get());
-        this.basicItem(ItemsPM.COPPER_GRIT.get());
-        this.basicItem(ItemsPM.PRIMALITE_INGOT.get());
-        this.basicItem(ItemsPM.HEXIUM_INGOT.get());
-        this.basicItem(ItemsPM.HALLOWSTEEL_INGOT.get());
-        this.basicItem(ItemsPM.PRIMALITE_NUGGET.get());
-        this.basicItem(ItemsPM.HEXIUM_NUGGET.get());
-        this.basicItem(ItemsPM.HALLOWSTEEL_NUGGET.get());
-        this.basicItem(ItemsPM.QUARTZ_NUGGET.get());
-        this.itemWithParent(ItemsPM.ENERGIZED_AMETHYST.get(), Items.AMETHYST_SHARD);
-        this.itemWithParent(ItemsPM.ENERGIZED_DIAMOND.get(), Items.DIAMOND);
-        this.itemWithParent(ItemsPM.ENERGIZED_EMERALD.get(), Items.EMERALD);
-        this.itemWithParent(ItemsPM.ENERGIZED_QUARTZ.get(), Items.QUARTZ);
+        this.basicItem(ItemRegistration.IRON_GRIT.get());
+        this.basicItem(ItemRegistration.GOLD_GRIT.get());
+        this.basicItem(ItemRegistration.COPPER_GRIT.get());
+        this.basicItem(ItemRegistration.PRIMALITE_INGOT.get());
+        this.basicItem(ItemRegistration.HEXIUM_INGOT.get());
+        this.basicItem(ItemRegistration.HALLOWSTEEL_INGOT.get());
+        this.basicItem(ItemRegistration.PRIMALITE_NUGGET.get());
+        this.basicItem(ItemRegistration.HEXIUM_NUGGET.get());
+        this.basicItem(ItemRegistration.HALLOWSTEEL_NUGGET.get());
+        this.basicItem(ItemRegistration.QUARTZ_NUGGET.get());
+        this.itemWithParent(ItemRegistration.ENERGIZED_AMETHYST.get(), Items.AMETHYST_SHARD);
+        this.itemWithParent(ItemRegistration.ENERGIZED_DIAMOND.get(), Items.DIAMOND);
+        this.itemWithParent(ItemRegistration.ENERGIZED_EMERALD.get(), Items.EMERALD);
+        this.itemWithParent(ItemRegistration.ENERGIZED_QUARTZ.get(), Items.QUARTZ);
         
         // Generate tool items
-        this.handheldItem(ItemsPM.PRIMALITE_SWORD.get());
-        this.tridentItem(ItemsPM.PRIMALITE_TRIDENT.get());
-        this.bowItem(ItemsPM.PRIMALITE_BOW.get());
-        this.handheldItem(ItemsPM.PRIMALITE_SHOVEL.get());
-        this.handheldItem(ItemsPM.PRIMALITE_PICKAXE.get());
-        this.handheldItem(ItemsPM.PRIMALITE_AXE.get());
-        this.handheldItem(ItemsPM.PRIMALITE_HOE.get());
-        this.fishingRodItem(ItemsPM.PRIMALITE_FISHING_ROD.get());
-        this.shieldItem(ItemsPM.PRIMALITE_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.PRIMALITE_BLOCK)));
-        this.handheldItem(ItemsPM.HEXIUM_SWORD.get());
-        this.tridentItem(ItemsPM.HEXIUM_TRIDENT.get());
-        this.bowItem(ItemsPM.HEXIUM_BOW.get());
-        this.handheldItem(ItemsPM.HEXIUM_SHOVEL.get());
-        this.handheldItem(ItemsPM.HEXIUM_PICKAXE.get());
-        this.handheldItem(ItemsPM.HEXIUM_AXE.get());
-        this.handheldItem(ItemsPM.HEXIUM_HOE.get());
-        this.fishingRodItem(ItemsPM.HEXIUM_FISHING_ROD.get());
-        this.shieldItem(ItemsPM.HEXIUM_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.HEXIUM_BLOCK)));
-        this.handheldItem(ItemsPM.HALLOWSTEEL_SWORD.get());
-        this.tridentItem(ItemsPM.HALLOWSTEEL_TRIDENT.get());
-        this.bowItem(ItemsPM.HALLOWSTEEL_BOW.get());
-        this.handheldItem(ItemsPM.HALLOWSTEEL_SHOVEL.get());
-        this.handheldItem(ItemsPM.HALLOWSTEEL_PICKAXE.get());
-        this.handheldItem(ItemsPM.HALLOWSTEEL_AXE.get());
-        this.handheldItem(ItemsPM.HALLOWSTEEL_HOE.get());
-        this.fishingRodItem(ItemsPM.HALLOWSTEEL_FISHING_ROD.get());
-        this.shieldItem(ItemsPM.HALLOWSTEEL_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.HALLOWSTEEL_BLOCK)));
-        this.handheldItem(ItemsPM.FORBIDDEN_SWORD.get());
-        this.tridentItem(ItemsPM.FORBIDDEN_TRIDENT.get());
-        this.bowItem(ItemsPM.FORBIDDEN_BOW.get());
-        this.handheldItem(ItemsPM.PRIMAL_SHOVEL.get());
-        this.handheldItem(ItemsPM.PRIMAL_PICKAXE.get());
-        this.handheldItem(ItemsPM.PRIMAL_AXE.get());
-        this.handheldItem(ItemsPM.PRIMAL_HOE.get());
-        this.fishingRodItem(ItemsPM.PRIMAL_FISHING_ROD.get());
+        this.handheldItem(ItemRegistration.PRIMALITE_SWORD.get());
+        this.tridentItem(ItemRegistration.PRIMALITE_TRIDENT.get());
+        this.bowItem(ItemRegistration.PRIMALITE_BOW.get());
+        this.handheldItem(ItemRegistration.PRIMALITE_SHOVEL.get());
+        this.handheldItem(ItemRegistration.PRIMALITE_PICKAXE.get());
+        this.handheldItem(ItemRegistration.PRIMALITE_AXE.get());
+        this.handheldItem(ItemRegistration.PRIMALITE_HOE.get());
+        this.fishingRodItem(ItemRegistration.PRIMALITE_FISHING_ROD.get());
+        this.shieldItem(ItemRegistration.PRIMALITE_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.PRIMALITE_BLOCK)));
+        this.handheldItem(ItemRegistration.HEXIUM_SWORD.get());
+        this.tridentItem(ItemRegistration.HEXIUM_TRIDENT.get());
+        this.bowItem(ItemRegistration.HEXIUM_BOW.get());
+        this.handheldItem(ItemRegistration.HEXIUM_SHOVEL.get());
+        this.handheldItem(ItemRegistration.HEXIUM_PICKAXE.get());
+        this.handheldItem(ItemRegistration.HEXIUM_AXE.get());
+        this.handheldItem(ItemRegistration.HEXIUM_HOE.get());
+        this.fishingRodItem(ItemRegistration.HEXIUM_FISHING_ROD.get());
+        this.shieldItem(ItemRegistration.HEXIUM_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.HEXIUM_BLOCK)));
+        this.handheldItem(ItemRegistration.HALLOWSTEEL_SWORD.get());
+        this.tridentItem(ItemRegistration.HALLOWSTEEL_TRIDENT.get());
+        this.bowItem(ItemRegistration.HALLOWSTEEL_BOW.get());
+        this.handheldItem(ItemRegistration.HALLOWSTEEL_SHOVEL.get());
+        this.handheldItem(ItemRegistration.HALLOWSTEEL_PICKAXE.get());
+        this.handheldItem(ItemRegistration.HALLOWSTEEL_AXE.get());
+        this.handheldItem(ItemRegistration.HALLOWSTEEL_HOE.get());
+        this.fishingRodItem(ItemRegistration.HALLOWSTEEL_FISHING_ROD.get());
+        this.shieldItem(ItemRegistration.HALLOWSTEEL_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.HALLOWSTEEL_BLOCK)));
+        this.handheldItem(ItemRegistration.FORBIDDEN_SWORD.get());
+        this.tridentItem(ItemRegistration.FORBIDDEN_TRIDENT.get());
+        this.bowItem(ItemRegistration.FORBIDDEN_BOW.get());
+        this.handheldItem(ItemRegistration.PRIMAL_SHOVEL.get());
+        this.handheldItem(ItemRegistration.PRIMAL_PICKAXE.get());
+        this.handheldItem(ItemRegistration.PRIMAL_AXE.get());
+        this.handheldItem(ItemRegistration.PRIMAL_HOE.get());
+        this.fishingRodItem(ItemRegistration.PRIMAL_FISHING_ROD.get());
         // Do not generate an item model for the sacred shield
         
         // Generate mana arrow items
         ManaArrowItem.getManaArrows().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_mana_arrow")));
         
         // Generate armor items
-        this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_HEAD.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_CHEST.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_LEGS.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_FEET.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.SPELLCLOTH_HEAD.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.SPELLCLOTH_CHEST.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.SPELLCLOTH_LEGS.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.SPELLCLOTH_FEET.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HEXWEAVE_HEAD.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HEXWEAVE_CHEST.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HEXWEAVE_LEGS.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HEXWEAVE_FEET.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.SAINTSWOOL_HEAD.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.SAINTSWOOL_CHEST.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.SAINTSWOOL_LEGS.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.SAINTSWOOL_FEET.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.PRIMALITE_HEAD.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.PRIMALITE_CHEST.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.PRIMALITE_LEGS.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.PRIMALITE_FEET.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HEXIUM_HEAD.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HEXIUM_CHEST.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HEXIUM_LEGS.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HEXIUM_FEET.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_HEAD.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_CHEST.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_LEGS.get(), lookupProvider);
-        this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.IMBUED_WOOL_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.IMBUED_WOOL_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.IMBUED_WOOL_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.IMBUED_WOOL_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.SPELLCLOTH_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.SPELLCLOTH_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.SPELLCLOTH_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.SPELLCLOTH_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HEXWEAVE_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HEXWEAVE_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HEXWEAVE_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HEXWEAVE_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.SAINTSWOOL_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.SAINTSWOOL_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.SAINTSWOOL_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.SAINTSWOOL_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.PRIMALITE_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.PRIMALITE_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.PRIMALITE_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.PRIMALITE_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HEXIUM_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HEXIUM_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HEXIUM_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HEXIUM_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HALLOWSTEEL_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HALLOWSTEEL_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HALLOWSTEEL_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemRegistration.HALLOWSTEEL_FEET.get(), lookupProvider);
         
         // Generate miscellaneous items
-        this.basicItem(ItemsPM.GRIMOIRE.get());
-        this.basicItem(ItemsPM.CREATIVE_GRIMOIRE.get());
+        this.basicItem(ItemRegistration.GRIMOIRE.get());
+        this.basicItem(ItemRegistration.CREATIVE_GRIMOIRE.get());
         // TODO Generate arcanometer
-        this.basicItem(ItemsPM.MAGNIFYING_GLASS.get());
-        this.basicItem(ItemsPM.ALCHEMICAL_WASTE.get());
-        this.basicItem(ItemsPM.BLOODY_FLESH.get());
-        this.basicItem(ItemsPM.HALLOWED_ORB.get());
-        this.basicItem(ItemsPM.HEARTWOOD.get());
-        this.basicItem(ItemsPM.ENCHANTED_INK.get());
-        this.basicItem(ItemsPM.ENCHANTED_INK_AND_QUILL.get());
-        this.basicItem(ItemsPM.SEASCRIBE_PEN.get());
-        this.basicItem(ItemsPM.ROCK_SALT.get());
-        this.basicItem(ItemsPM.EARTHSHATTER_HAMMER.get());
-        this.basicItem(ItemsPM.MANA_PRISM.get());
-        this.basicItem(ItemsPM.TALLOW.get());
-        this.basicItem(ItemsPM.BEESWAX.get());
-        this.basicItem(ItemsPM.MANA_SALTS.get());
-        this.basicItem(ItemsPM.MANAFRUIT.get());
-        this.basicItem(ItemsPM.INCENSE_STICK.get());
-        this.basicItem(ItemsPM.SOUL_GEM.get());
-        this.basicItem(ItemsPM.SOUL_GEM_SLIVER.get());
-        this.basicItem(ItemsPM.SPELLCLOTH.get());
-        this.basicItem(ItemsPM.HEXWEAVE.get());
-        this.basicItem(ItemsPM.SAINTSWOOL.get());
-        this.basicItem(ItemsPM.MAGITECH_PARTS_BASIC.get());
-        this.basicItem(ItemsPM.MAGITECH_PARTS_ENCHANTED.get());
-        this.basicItem(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get());
-        this.basicItem(ItemsPM.MAGITECH_PARTS_HEAVENLY.get());
-        this.dyeableItem(ItemsPM.FLYING_CARPET.get(), DyeColor.WHITE);
-        this.basicItem(ItemsPM.DREAM_VISION_TALISMAN.get());
-        this.basicItem(ItemsPM.IGNYX.get());
-        this.basicItem(ItemsPM.DOWSING_ROD.get());
-        this.basicItem(ItemsPM.FOUR_LEAF_CLOVER.get());
-        this.basicItem(ItemsPM.RECALL_STONE.get());
-        this.basicItem(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get());
-        this.basicItem(ItemsPM.BASIC_WARDING_MODULE.get());
-        this.basicItem(ItemsPM.GREATER_WARDING_MODULE.get());
-        this.basicItem(ItemsPM.SUPREME_WARDING_MODULE.get());
+        this.basicItem(ItemRegistration.MAGNIFYING_GLASS.get());
+        this.basicItem(ItemRegistration.ALCHEMICAL_WASTE.get());
+        this.basicItem(ItemRegistration.BLOODY_FLESH.get());
+        this.basicItem(ItemRegistration.HALLOWED_ORB.get());
+        this.basicItem(ItemRegistration.HEARTWOOD.get());
+        this.basicItem(ItemRegistration.ENCHANTED_INK.get());
+        this.basicItem(ItemRegistration.ENCHANTED_INK_AND_QUILL.get());
+        this.basicItem(ItemRegistration.SEASCRIBE_PEN.get());
+        this.basicItem(ItemRegistration.ROCK_SALT.get());
+        this.basicItem(ItemRegistration.EARTHSHATTER_HAMMER.get());
+        this.basicItem(ItemRegistration.MANA_PRISM.get());
+        this.basicItem(ItemRegistration.TALLOW.get());
+        this.basicItem(ItemRegistration.BEESWAX.get());
+        this.basicItem(ItemRegistration.MANA_SALTS.get());
+        this.basicItem(ItemRegistration.MANAFRUIT.get());
+        this.basicItem(ItemRegistration.INCENSE_STICK.get());
+        this.basicItem(ItemRegistration.SOUL_GEM.get());
+        this.basicItem(ItemRegistration.SOUL_GEM_SLIVER.get());
+        this.basicItem(ItemRegistration.SPELLCLOTH.get());
+        this.basicItem(ItemRegistration.HEXWEAVE.get());
+        this.basicItem(ItemRegistration.SAINTSWOOL.get());
+        this.basicItem(ItemRegistration.MAGITECH_PARTS_BASIC.get());
+        this.basicItem(ItemRegistration.MAGITECH_PARTS_ENCHANTED.get());
+        this.basicItem(ItemRegistration.MAGITECH_PARTS_FORBIDDEN.get());
+        this.basicItem(ItemRegistration.MAGITECH_PARTS_HEAVENLY.get());
+        this.dyeableItem(ItemRegistration.FLYING_CARPET.get(), DyeColor.WHITE);
+        this.basicItem(ItemRegistration.DREAM_VISION_TALISMAN.get());
+        this.basicItem(ItemRegistration.IGNYX.get());
+        this.basicItem(ItemRegistration.DOWSING_ROD.get());
+        this.basicItem(ItemRegistration.FOUR_LEAF_CLOVER.get());
+        this.basicItem(ItemRegistration.RECALL_STONE.get());
+        this.basicItem(ItemRegistration.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get());
+        this.basicItem(ItemRegistration.BASIC_WARDING_MODULE.get());
+        this.basicItem(ItemRegistration.GREATER_WARDING_MODULE.get());
+        this.basicItem(ItemRegistration.SUPREME_WARDING_MODULE.get());
         
         // Generate knowledge items
-        this.basicItem(ItemsPM.OBSERVATION_NOTES.get());
-        this.basicItem(ItemsPM.THEORY_NOTES.get());
-        this.basicItem(ItemsPM.MYSTICAL_RELIC.get());
-        this.basicItem(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get());
-        this.basicItem(ItemsPM.BLOOD_NOTES.get());
-        this.basicItem(ItemsPM.SHEEP_TOME.get());
+        this.basicItem(ItemRegistration.OBSERVATION_NOTES.get());
+        this.basicItem(ItemRegistration.THEORY_NOTES.get());
+        this.basicItem(ItemRegistration.MYSTICAL_RELIC.get());
+        this.basicItem(ItemRegistration.MYSTICAL_RELIC_FRAGMENT.get());
+        this.basicItem(ItemRegistration.BLOOD_NOTES.get());
+        this.basicItem(ItemRegistration.SHEEP_TOME.get());
         
         // Generate essence items
         EssenceItem.getAllEssences().forEach(this::basicItem);
         
         // Generate rune items
-        this.basicItem(ItemsPM.RUNE_UNATTUNED.get());
+        this.basicItem(ItemRegistration.RUNE_UNATTUNED.get());
         RuneItem.getAllRunes().forEach(this::basicItem);
         
         // Generate ambrosia items
@@ -273,22 +273,22 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         AttunementShacklesItem.getAllShackles().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_attunement_shackles")));
         
         // Generate humming artifact items
-        this.basicItem(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get());
+        this.basicItem(ItemRegistration.HUMMING_ARTIFACT_UNATTUNED.get());
         HummingArtifactItem.getAllHummingArtifacts().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_humming_artifact")));
         
         // Generate sanguine core items
-        this.itemWithParent(ItemsPM.SANGUINE_CORE_BLANK.get(), ResourceUtils.loc("item/template_sanguine_core"));
+        this.itemWithParent(ItemRegistration.SANGUINE_CORE_BLANK.get(), ResourceUtils.loc("item/template_sanguine_core"));
         SanguineCoreItem.getAllCores().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_sanguine_core")));
         
         // Generate concoction items
-        this.basicItem(ItemsPM.SKYGLASS_FLASK.get());
-        this.itemWithOverlay(ItemsPM.CONCOCTION.get());
-        this.basicItem(ItemsPM.BOMB_CASING.get());
-        this.itemWithOverlay(ItemsPM.ALCHEMICAL_BOMB.get());
+        this.basicItem(ItemRegistration.SKYGLASS_FLASK.get());
+        this.itemWithOverlay(ItemRegistration.CONCOCTION.get());
+        this.basicItem(ItemRegistration.BOMB_CASING.get());
+        this.itemWithOverlay(ItemRegistration.ALCHEMICAL_BOMB.get());
         
         // Generate caster items
-        this.basicItem(ItemsPM.SPELL_SCROLL_BLANK.get());
-        this.basicItem(ItemsPM.SPELL_SCROLL_FILLED.get());
+        this.basicItem(ItemRegistration.SPELL_SCROLL_BLANK.get());
+        this.basicItem(ItemRegistration.SPELL_SCROLL_FILLED.get());
         // TODO Generate mundane wand
         // TODO Generate modular wand
         // TODO Generate modular staff
@@ -300,24 +300,24 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         WandGemItem.getAllGems().forEach(this::basicItem);
         
         // Generate spawn items
-        this.spawnEggItem(ItemsPM.TREEFOLK_SPAWN_EGG.get());
-        this.spawnEggItem(ItemsPM.PRIMALITE_GOLEM_SPAWN_EGG.get());
-        this.spawnEggItem(ItemsPM.HEXIUM_GOLEM_SPAWN_EGG.get());
-        this.spawnEggItem(ItemsPM.HALLOWSTEEL_GOLEM_SPAWN_EGG.get());
+        this.spawnEggItem(ItemRegistration.TREEFOLK_SPAWN_EGG.get());
+        this.spawnEggItem(ItemRegistration.PRIMALITE_GOLEM_SPAWN_EGG.get());
+        this.spawnEggItem(ItemRegistration.HEXIUM_GOLEM_SPAWN_EGG.get());
+        this.spawnEggItem(ItemRegistration.HALLOWSTEEL_GOLEM_SPAWN_EGG.get());
         
         // Generate pixie and drained pixie items
         PixieItem.getAllPixies().forEach(this::pixieItem);
         
         // Generate book items
-        this.basicItem(ItemsPM.STATIC_BOOK.get());
-        this.basicItem(ItemsPM.STATIC_BOOK_UNCOMMON.get());
-        this.basicItem(ItemsPM.STATIC_BOOK_RARE.get());
-        this.itemWithParent(ItemsPM.STATIC_TABLET.get(), ItemsPM.MYSTICAL_RELIC.get());
-        this.itemWithParent(ItemsPM.LORE_TABLET_FRAGMENT.get(), ItemsPM.MYSTICAL_RELIC_FRAGMENT.get());
-        this.itemWithParent(ItemsPM.LORE_TABLET_DIRTY.get(), ItemsPM.MYSTICAL_RELIC.get());
+        this.basicItem(ItemRegistration.STATIC_BOOK.get());
+        this.basicItem(ItemRegistration.STATIC_BOOK_UNCOMMON.get());
+        this.basicItem(ItemRegistration.STATIC_BOOK_RARE.get());
+        this.itemWithParent(ItemRegistration.STATIC_TABLET.get(), ItemRegistration.MYSTICAL_RELIC.get());
+        this.itemWithParent(ItemRegistration.LORE_TABLET_FRAGMENT.get(), ItemRegistration.MYSTICAL_RELIC_FRAGMENT.get());
+        this.itemWithParent(ItemRegistration.LORE_TABLET_DIRTY.get(), ItemRegistration.MYSTICAL_RELIC.get());
         
         // Generate debug items
-        this.itemWithParent(ItemsPM.TICK_STICK.get(), Items.STICK);
+        this.itemWithParent(ItemRegistration.TICK_STICK.get(), Items.STICK);
     }
     
     private ResourceLocation key(Item item) {

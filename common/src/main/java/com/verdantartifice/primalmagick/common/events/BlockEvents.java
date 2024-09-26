@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -184,7 +184,7 @@ public class BlockEvents {
                     player.drop(bookStack, false);
                 }
                 return InteractionResult.SUCCESS;
-            } else if (lecternEntity.getBook().is(ItemsPM.GRIMOIRE.get())) {
+            } else if (lecternEntity.getBook().is(ItemRegistration.GRIMOIRE.get())) {
                 // Open the grimoire screen
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     StatsManager.incrementValue(player, StatsPM.GRIMOIRE_READ);

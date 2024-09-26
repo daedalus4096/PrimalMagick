@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.init.InitCauldron;
 import com.verdantartifice.primalmagick.common.init.InitEnchantments;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;
 import com.verdantartifice.primalmagick.common.init.InitResearch;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionTypesPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -41,7 +41,7 @@ public class ModLifecycleEvents {
     
     private static void registerDispenserBehaviors(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            DispenserBlock.registerProjectileBehavior(ItemsPM.IGNYX.get());
+            DispenserBlock.registerProjectileBehavior(ItemRegistration.IGNYX.get());
         });
     }
 }

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.IncenseBrazierTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -99,7 +99,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pPlayer != null && pStack.is(ItemsPM.INCENSE_STICK.get()) && !pState.getValue(LIT)) {
+        if (pPlayer != null && pStack.is(ItemRegistration.INCENSE_STICK.get()) && !pState.getValue(LIT)) {
             // If using an incense stick on an unlit brazier, light it
             pLevel.playSound(pPlayer, pPos, SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 0.8F + (pLevel.random.nextFloat() * 0.4F));
             if (!pLevel.isClientSide) {

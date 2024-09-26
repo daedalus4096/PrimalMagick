@@ -49,7 +49,7 @@ import com.verdantartifice.primalmagick.common.commands.arguments.SourceArgument
 import com.verdantartifice.primalmagick.common.commands.arguments.StatValueArgument;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
@@ -901,7 +901,7 @@ public class PrimalMagickCommand {
     }
 
     private static int giveBook(CommandSourceStack source, Collection<ServerPlayer> targets, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage, Optional<Integer> comprehension) {
-        ItemStack bookStack = new ItemStack(ItemsPM.STATIC_BOOK.get());
+        ItemStack bookStack = new ItemStack(ItemRegistration.STATIC_BOOK.get());
         StaticBookItem.setBookDefinition(bookStack, bookDef);
         StaticBookItem.setBookLanguage(bookStack, bookLanguage);
         StaticBookItem.setGeneration(bookStack, 0);

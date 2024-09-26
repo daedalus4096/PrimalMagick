@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.test.crafting;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -48,7 +48,7 @@ public class RunecarvingTest extends AbstractBaseTest {
         
         // Take the result that should be there and confirm it's the right type of rune
         var output = menu.quickMoveStack(player, 2);
-        helper.assertTrue(output.is(ItemsPM.RUNE_UNATTUNED.get()), "Output item not of expected type");
+        helper.assertTrue(output.is(ItemRegistration.RUNE_UNATTUNED.get()), "Output item not of expected type");
         
         // Confirm that crafting materials were consumed
         helper.assertTrue(tile.getItem(0, 0).isEmpty(), "Stone slab material stack not empty");

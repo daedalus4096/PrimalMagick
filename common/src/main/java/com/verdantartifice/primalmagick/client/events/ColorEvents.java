@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.SaltTrailBlock;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
@@ -83,7 +83,7 @@ public class ColorEvents {
                 }
             }
             return FastColor.ARGB32.opaque(DyeColor.WHITE.getFireworkColor());
-        }, ItemsPM.STAINED_SKYGLASS_BLACK.get(), ItemsPM.STAINED_SKYGLASS_BLUE.get(), ItemsPM.STAINED_SKYGLASS_BROWN.get(), ItemsPM.STAINED_SKYGLASS_CYAN.get(), ItemsPM.STAINED_SKYGLASS_GRAY.get(), ItemsPM.STAINED_SKYGLASS_GREEN.get(), ItemsPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), ItemsPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), ItemsPM.STAINED_SKYGLASS_LIME.get(), ItemsPM.STAINED_SKYGLASS_MAGENTA.get(), ItemsPM.STAINED_SKYGLASS_ORANGE.get(), ItemsPM.STAINED_SKYGLASS_PINK.get(), ItemsPM.STAINED_SKYGLASS_PURPLE.get(), ItemsPM.STAINED_SKYGLASS_RED.get(), ItemsPM.STAINED_SKYGLASS_WHITE.get(), ItemsPM.STAINED_SKYGLASS_YELLOW.get());
+        }, ItemRegistration.STAINED_SKYGLASS_BLACK.get(), ItemRegistration.STAINED_SKYGLASS_BLUE.get(), ItemRegistration.STAINED_SKYGLASS_BROWN.get(), ItemRegistration.STAINED_SKYGLASS_CYAN.get(), ItemRegistration.STAINED_SKYGLASS_GRAY.get(), ItemRegistration.STAINED_SKYGLASS_GREEN.get(), ItemRegistration.STAINED_SKYGLASS_LIGHT_BLUE.get(), ItemRegistration.STAINED_SKYGLASS_LIGHT_GRAY.get(), ItemRegistration.STAINED_SKYGLASS_LIME.get(), ItemRegistration.STAINED_SKYGLASS_MAGENTA.get(), ItemRegistration.STAINED_SKYGLASS_ORANGE.get(), ItemRegistration.STAINED_SKYGLASS_PINK.get(), ItemRegistration.STAINED_SKYGLASS_PURPLE.get(), ItemRegistration.STAINED_SKYGLASS_RED.get(), ItemRegistration.STAINED_SKYGLASS_WHITE.get(), ItemRegistration.STAINED_SKYGLASS_YELLOW.get());
 
         event.register((stack, dummy) -> {
             if (stack.getItem() instanceof BlockItem blockItem) {
@@ -97,7 +97,7 @@ public class ColorEvents {
                 }
             }
             return FastColor.ARGB32.opaque(DyeColor.WHITE.getFireworkColor());
-        }, ItemsPM.STAINED_SKYGLASS_PANE_BLACK.get(), ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get(), ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get(), ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get(), ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get(), ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get(), ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), ItemsPM.STAINED_SKYGLASS_PANE_LIME.get(), ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get(), ItemsPM.STAINED_SKYGLASS_PANE_PINK.get(), ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get(), ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get(), ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get());
+        }, ItemRegistration.STAINED_SKYGLASS_PANE_BLACK.get(), ItemRegistration.STAINED_SKYGLASS_PANE_BLUE.get(), ItemRegistration.STAINED_SKYGLASS_PANE_BROWN.get(), ItemRegistration.STAINED_SKYGLASS_PANE_CYAN.get(), ItemRegistration.STAINED_SKYGLASS_PANE_GRAY.get(), ItemRegistration.STAINED_SKYGLASS_PANE_GREEN.get(), ItemRegistration.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), ItemRegistration.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), ItemRegistration.STAINED_SKYGLASS_PANE_LIME.get(), ItemRegistration.STAINED_SKYGLASS_PANE_MAGENTA.get(), ItemRegistration.STAINED_SKYGLASS_PANE_ORANGE.get(), ItemRegistration.STAINED_SKYGLASS_PANE_PINK.get(), ItemRegistration.STAINED_SKYGLASS_PANE_PURPLE.get(), ItemRegistration.STAINED_SKYGLASS_PANE_RED.get(), ItemRegistration.STAINED_SKYGLASS_PANE_WHITE.get(), ItemRegistration.STAINED_SKYGLASS_PANE_YELLOW.get());
         
         event.register((stack, dummy) -> {
             if (stack.getItem() instanceof BlockItem blockItem) {
@@ -111,11 +111,11 @@ public class ColorEvents {
                 }
             }
             return FastColor.ARGB32.opaque(DyeColor.WHITE.getFireworkColor());
-        }, ItemsPM.RITUAL_CANDLE_BLACK.get(), ItemsPM.RITUAL_CANDLE_BLUE.get(), ItemsPM.RITUAL_CANDLE_BROWN.get(), ItemsPM.RITUAL_CANDLE_CYAN.get(), ItemsPM.RITUAL_CANDLE_GRAY.get(), ItemsPM.RITUAL_CANDLE_GREEN.get(), ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get(), ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get(), ItemsPM.RITUAL_CANDLE_LIME.get(), ItemsPM.RITUAL_CANDLE_MAGENTA.get(), ItemsPM.RITUAL_CANDLE_ORANGE.get(), ItemsPM.RITUAL_CANDLE_PINK.get(), ItemsPM.RITUAL_CANDLE_PURPLE.get(), ItemsPM.RITUAL_CANDLE_RED.get(), ItemsPM.RITUAL_CANDLE_WHITE.get(), ItemsPM.RITUAL_CANDLE_YELLOW.get());
+        }, ItemRegistration.RITUAL_CANDLE_BLACK.get(), ItemRegistration.RITUAL_CANDLE_BLUE.get(), ItemRegistration.RITUAL_CANDLE_BROWN.get(), ItemRegistration.RITUAL_CANDLE_CYAN.get(), ItemRegistration.RITUAL_CANDLE_GRAY.get(), ItemRegistration.RITUAL_CANDLE_GREEN.get(), ItemRegistration.RITUAL_CANDLE_LIGHT_BLUE.get(), ItemRegistration.RITUAL_CANDLE_LIGHT_GRAY.get(), ItemRegistration.RITUAL_CANDLE_LIME.get(), ItemRegistration.RITUAL_CANDLE_MAGENTA.get(), ItemRegistration.RITUAL_CANDLE_ORANGE.get(), ItemRegistration.RITUAL_CANDLE_PINK.get(), ItemRegistration.RITUAL_CANDLE_PURPLE.get(), ItemRegistration.RITUAL_CANDLE_RED.get(), ItemRegistration.RITUAL_CANDLE_WHITE.get(), ItemRegistration.RITUAL_CANDLE_YELLOW.get());
         
         event.register((stack, color) -> {
             return color == 0 ? stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor() : -1;
-        }, ItemsPM.CONCOCTION.get(), ItemsPM.ALCHEMICAL_BOMB.get());
+        }, ItemRegistration.CONCOCTION.get(), ItemRegistration.ALCHEMICAL_BOMB.get());
         
         AmbrosiaItem.getAllAmbrosias().forEach(ambrosia -> event.register((stack, tintIndex) -> getStackColor(stack, tintIndex, ambrosia::getColor), ambrosia));
         ManaArrowItem.getManaArrows().forEach(arrow -> event.register((stack, tintIndex) -> getStackColor(stack, tintIndex, arrow::getColor), arrow));

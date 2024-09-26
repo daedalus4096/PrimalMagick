@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -210,7 +210,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
             
             ItemStack beeswaxStack = this.getItem(OUTPUT_INV_INDEX, 1);
             if (beeswaxStack.isEmpty()) {
-                this.setItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemsPM.BEESWAX.get()));
+                this.setItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemRegistration.BEESWAX.get()));
             } else {
                 beeswaxStack.grow(1);
             }

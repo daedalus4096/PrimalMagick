@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -108,11 +108,11 @@ public class FtuxTest {
     @GameTestGenerator
     public static Collection<TestFunction> mundane_wand_crafting_tests() {
         Map<String, Item> testParams = ImmutableMap.<String, Item>builder()
-                .put("earth", ItemsPM.ESSENCE_DUST_EARTH.get())
-                .put("sea", ItemsPM.ESSENCE_DUST_SEA.get())
-                .put("sky", ItemsPM.ESSENCE_DUST_SKY.get())
-                .put("sun", ItemsPM.ESSENCE_DUST_SUN.get())
-                .put("moon", ItemsPM.ESSENCE_DUST_MOON.get())
+                .put("earth", ItemRegistration.ESSENCE_DUST_EARTH.get())
+                .put("sea", ItemRegistration.ESSENCE_DUST_SEA.get())
+                .put("sky", ItemRegistration.ESSENCE_DUST_SKY.get())
+                .put("sun", ItemRegistration.ESSENCE_DUST_SUN.get())
+                .put("moon", ItemRegistration.ESSENCE_DUST_MOON.get())
                 .build();
         return TestUtils.createParameterizedTestFunctions("mundane_wand_crafting_tests", testParams, (helper, dust) -> {
             var container = SimpleCraftingContainer.builder()
@@ -122,7 +122,7 @@ public class FtuxTest {
                     .build();
             var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, container, helper.getLevel());
             helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
-            helper.assertTrue(recipe.get().value().getResultItem(helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
+            helper.assertTrue(recipe.get().value().getResultItem(helper.getLevel().registryAccess()).is(ItemRegistration.MUNDANE_WAND.get()), "Recipe result does not match expectations");
             helper.succeed();
         });
     }
@@ -135,7 +135,7 @@ public class FtuxTest {
         helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Newly created player already has sought research");
         
         // Put a mundane wand in that player's main hand
-        ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
+        ItemStack wandStack = new ItemStack(ItemRegistration.MUNDANE_WAND.get());
         Item wandItem = wandStack.getItem();
         player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
         
@@ -143,7 +143,7 @@ public class FtuxTest {
         BlockPos pos = new BlockPos(1, 1, 1);
         helper.setBlock(pos, Blocks.BOOKSHELF);
         helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
-        helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+        helper.assertItemEntityNotPresent(ItemRegistration.GRIMOIRE.get(), pos, 1D);
         
         // Start transforming the table
         BlockPos posAbs = helper.absolutePos(pos);
@@ -165,7 +165,7 @@ public class FtuxTest {
         helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
         
         // Put a mundane wand in that player's main hand
-        ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
+        ItemStack wandStack = new ItemStack(ItemRegistration.MUNDANE_WAND.get());
         Item wandItem = wandStack.getItem();
         player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
         
@@ -173,7 +173,7 @@ public class FtuxTest {
         BlockPos pos = new BlockPos(1, 1, 1);
         helper.setBlock(pos, Blocks.BOOKSHELF);
         helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
-        helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+        helper.assertItemEntityNotPresent(ItemRegistration.GRIMOIRE.get(), pos, 1D);
         
         // Start transforming the table
         BlockPos posAbs = helper.absolutePos(pos);
@@ -188,7 +188,7 @@ public class FtuxTest {
         });
         helper.succeedWhen(() -> {
             helper.assertBlockNotPresent(Blocks.BOOKSHELF, pos);
-            helper.assertItemEntityPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+            helper.assertItemEntityPresent(ItemRegistration.GRIMOIRE.get(), pos, 1D);
         });
     }
 }

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
@@ -37,7 +37,7 @@ public class BloodNotesModifier extends LootModifier {
         // Random chance is controlled by the RandomChanceWithLooting condition in the modifier JSON
         Entity targetEntity = context.getParam(LootContextParams.THIS_ENTITY);
         if (targetEntity.getType().is(this.targetTag)) {
-            generatedLoot.add(new ItemStack(ItemsPM.BLOOD_NOTES.get()));
+            generatedLoot.add(new ItemStack(ItemRegistration.BLOOD_NOTES.get()));
         }
         return generatedLoot;
     }

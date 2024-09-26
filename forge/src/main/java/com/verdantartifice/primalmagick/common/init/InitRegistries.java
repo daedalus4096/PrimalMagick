@@ -13,7 +13,7 @@ import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
@@ -43,7 +43,7 @@ public class InitRegistries {
         BlockRegistration.init();
 
         // TODO To be converted
-        ItemsPM.init();
+        ItemRegistration.init();
         CreativeModeTabsPM.init();
         TileEntityTypesPM.init();
         MenuTypesPM.init();

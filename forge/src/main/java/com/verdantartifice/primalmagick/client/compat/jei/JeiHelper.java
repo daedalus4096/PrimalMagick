@@ -16,7 +16,7 @@ import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
 import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
 import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
@@ -75,8 +75,8 @@ public class JeiHelper implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.CONCOCTION.get(), ConcoctionSubtypeInterpreter.INSTANCE);
-        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.ALCHEMICAL_BOMB.get(), ConcoctionSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemRegistration.CONCOCTION.get(), ConcoctionSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemRegistration.ALCHEMICAL_BOMB.get(), ConcoctionSubtypeInterpreter.INSTANCE);
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.loot_tables;
 import java.util.function.BiConsumer;
 
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 
 import net.minecraft.core.HolderGetter;
@@ -55,8 +55,8 @@ public class TreefolkBarteringLootTables extends AbstractGameplayLootTableSubPro
                 .add(LootItem.lootTableItem(Items.ACACIA_SAPLING).setWeight(10))
                 .add(LootItem.lootTableItem(Items.DARK_OAK_SAPLING).setWeight(10))
                 .add(LootItem.lootTableItem(Items.MANGROVE_PROPAGULE).setWeight(10))
-                .add(LootItem.lootTableItem(ItemsPM.SUNWOOD_SAPLING.get()).setWeight(5))
-                .add(LootItem.lootTableItem(ItemsPM.MOONWOOD_SAPLING.get()).setWeight(5))
+                .add(LootItem.lootTableItem(ItemRegistration.SUNWOOD_SAPLING.get()).setWeight(5))
+                .add(LootItem.lootTableItem(ItemRegistration.MOONWOOD_SAPLING.get()).setWeight(5))
                 .add(LootItem.lootTableItem(Items.BAMBOO).setWeight(10))));
         this.registerLootTable(writer, LootTablesPM.TREEFOLK_BARTERING_SEEDS, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).setWeight(10))
@@ -70,8 +70,8 @@ public class TreefolkBarteringLootTables extends AbstractGameplayLootTableSubPro
                 .add(LootItem.lootTableItem(Items.LILY_PAD).setWeight(10))));
         this.registerLootTable(writer, LootTablesPM.TREEFOLK_BARTERING_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(LootItem.lootTableItem(Items.NAME_TAG).setWeight(10))
-                .add(LootItem.lootTableItem(ItemsPM.FOUR_LEAF_CLOVER.get()).setWeight(10))
-                .add(LootItem.lootTableItem(ItemsPM.TREEFOLK_SEED.get()).setWeight(20))
+                .add(LootItem.lootTableItem(ItemRegistration.FOUR_LEAF_CLOVER.get()).setWeight(10))
+                .add(LootItem.lootTableItem(ItemRegistration.TREEFOLK_SEED.get()).setWeight(20))
                 .add(LootItem.lootTableItem(Items.GOLDEN_APPLE).setWeight(5))
                 .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(1))
                 .add(LootItem.lootTableItem(Items.BOOK).setWeight(5).apply(new EnchantRandomlyFunction.Builder().withEnchantment(enchLookup.getOrThrow(EnchantmentsPM.VERDANT))))

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -45,7 +45,7 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
                     ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE);
                     player.sendSystemMessage(Component.translatable("event.primalmagick.found_shrine").withStyle(ChatFormatting.GREEN));
                 }
-                if (!ResearchManager.isResearchComplete(player, ResearchEntries.SIPHON_PROMPT) && InventoryUtils.isPlayerCarrying(player, new ItemStack(ItemsPM.MUNDANE_WAND.get()))) {
+                if (!ResearchManager.isResearchComplete(player, ResearchEntries.SIPHON_PROMPT) && InventoryUtils.isPlayerCarrying(player, new ItemStack(ItemRegistration.MUNDANE_WAND.get()))) {
                     ResearchManager.completeResearch(player, ResearchEntries.SIPHON_PROMPT);
                     player.sendSystemMessage(Component.translatable("event.primalmagick.siphon_prompt").withStyle(ChatFormatting.GREEN));
                 }

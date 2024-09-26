@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.essence;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -109,7 +109,7 @@ public enum EssenceType implements StringRepresentable {
         return switch (this) {
             case CLUSTER -> Optional.of(Items.QUARTZ_BLOCK);
             case CRYSTAL -> Optional.of(Items.QUARTZ);
-            case SHARD -> Optional.of(ItemsPM.QUARTZ_NUGGET.get());
+            case SHARD -> Optional.of(ItemRegistration.QUARTZ_NUGGET.get());
             case DUST -> Optional.empty();
         };
     }

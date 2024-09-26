@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PotionExplosionPacket;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -62,7 +62,7 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
     
     @Override
     protected Item getDefaultItem() {
-        return ItemsPM.ALCHEMICAL_BOMB.get();
+        return ItemRegistration.ALCHEMICAL_BOMB.get();
     }
 
     @Override

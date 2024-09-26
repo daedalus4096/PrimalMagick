@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.test.research;
 
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -84,7 +84,7 @@ public class ResearchKeysTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void stack_crafted(GameTestHelper helper) {
         var player = helper.makeMockServerPlayer();
-        var item = ItemsPM.PRIMALITE_INGOT.get();
+        var item = ItemRegistration.PRIMALITE_INGOT.get();
         var key = new StackCraftedKey(item);
         helper.assertFalse(key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.completeResearch(player, key);

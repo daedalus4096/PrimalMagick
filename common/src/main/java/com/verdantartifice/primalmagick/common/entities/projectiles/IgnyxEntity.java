@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.entities.projectiles;
 
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +30,7 @@ public class IgnyxEntity extends ThrowableItemProjectile {
 
     @Override
     protected Item getDefaultItem() {
-        return ItemsPM.IGNYX.get();
+        return ItemRegistration.IGNYX.get();
     }
 
     @Override

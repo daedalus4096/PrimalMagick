@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,7 +25,7 @@ public class RunescribingAltarTER implements BlockEntityRenderer<RunescribingAlt
     
     protected ItemStack getRuneStack() {
         if (this.runeStack == null) {
-            this.runeStack = new ItemStack(ItemsPM.RUNE_UNATTUNED.get());
+            this.runeStack = new ItemStack(ItemRegistration.RUNE_UNATTUNED.get());
         }
         return this.runeStack;
     }

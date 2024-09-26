@@ -25,7 +25,7 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.items.misc.DreamVisionTalismanItem;
@@ -545,7 +545,7 @@ public class PlayerEvents {
                 grantDreamJournal(player);
             }
             
-            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
+            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemRegistration.DREAM_VISION_TALISMAN.get().getDefaultInstance());
             if (!foundTalismans.isEmpty()) {
                 // Drain any full Dream Vision Talismans upon waking to grant new observation knowledge
                 boolean success = false;
@@ -570,7 +570,7 @@ public class PlayerEvents {
         ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM);
         
         // Construct the dream journal item
-        ItemStack journal = StaticBookItem.builder(ItemsPM.STATIC_BOOK, player.registryAccess()).book(BooksPM.DREAM_JOURNAL).language(BookLanguagesPM.DEFAULT).author(player.getName().getString()).build();
+        ItemStack journal = StaticBookItem.builder(ItemRegistration.STATIC_BOOK, player.registryAccess()).book(BooksPM.DREAM_JOURNAL).language(BookLanguagesPM.DEFAULT).author(player.getName().getString()).build();
         
         // Give the dream journal to the player and announce it
         if (!player.addItem(journal)) {
@@ -602,7 +602,7 @@ public class PlayerEvents {
         Player player = event.getEntity();
         Level level = player.level();
         if (player != null && !level.isClientSide) {
-            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
+            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemRegistration.DREAM_VISION_TALISMAN.get().getDefaultInstance());
             if (!foundTalismans.isEmpty()) {
                 int xpValue = event.getOrb().value;
                 for (ItemStack foundStack : foundTalismans) {

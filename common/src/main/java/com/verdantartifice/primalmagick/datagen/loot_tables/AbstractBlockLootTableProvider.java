@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
@@ -157,7 +157,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     
     protected void registerPulsingLogTable(Block block) {
         LootPool.Builder logBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block)).when(ExplosionCondition.survivesExplosion());
-        LootPool.Builder pulseBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(ItemsPM.HEARTWOOD.get()))
+        LootPool.Builder pulseBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(ItemRegistration.HEARTWOOD.get()))
                 .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(AbstractPhasingLogBlock.PULSING, true)));
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(logBuilder).withPool(pulseBuilder);
         this.registerLootTableBuilder(block, tableBuilder);

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.companions.pixies;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 
 import net.minecraft.world.entity.EntityType;
@@ -18,6 +18,6 @@ public class GrandEarthPixieEntity extends AbstractEarthPixieEntity implements I
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemsPM.GRAND_EARTH_PIXIE.get();
+        return ItemRegistration.GRAND_EARTH_PIXIE.get();
     }
 }

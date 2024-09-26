@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.SoulAnvilTileEntity;
@@ -102,7 +102,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (player != null && stack.is(ItemsPM.SOUL_GEM.get()) && !state.getValue(DIRTY)) {
+        if (player != null && stack.is(ItemRegistration.SOUL_GEM.get()) && !state.getValue(DIRTY)) {
             // If using a soul gem on a clean anvil, break it
             worldIn.playSound(player, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {

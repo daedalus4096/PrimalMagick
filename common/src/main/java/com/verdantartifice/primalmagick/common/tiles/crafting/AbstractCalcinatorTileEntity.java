@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
@@ -328,7 +328,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
             return EssenceItem.getEssence(type, source, count);
         } else {
             // If the calcinator's owner hasn't discovered the given source, only produce alchemical waste
-            return new ItemStack(ItemsPM.ALCHEMICAL_WASTE.get(), count);
+            return new ItemStack(ItemRegistration.ALCHEMICAL_WASTE.get(), count);
         }
     }
 

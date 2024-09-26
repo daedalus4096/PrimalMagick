@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.ConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.PartialComponentIngredient;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
@@ -81,7 +81,7 @@ public class ConcoctingRecipeBuilder {
     
     public ConcoctingRecipeBuilder addWaterFlaskIngredient() {
         return this.addIngredient(PartialComponentIngredient.builder()
-                .item(ItemsPM.CONCOCTION.get())
+                .item(ItemRegistration.CONCOCTION.get())
                 .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
                 .data(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
                 .build());
@@ -89,7 +89,7 @@ public class ConcoctingRecipeBuilder {
     
     public ConcoctingRecipeBuilder addWaterBombIngredient() {
         return this.addIngredient(PartialComponentIngredient.builder()
-                .item(ItemsPM.ALCHEMICAL_BOMB.get())
+                .item(ItemRegistration.ALCHEMICAL_BOMB.get())
                 .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
                 .data(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
                 .build());

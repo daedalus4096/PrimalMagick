@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -214,8 +214,8 @@ public class CombatEvents {
                     entity.getMaxHealth() / 20.0F;
             int wholeGems = Mth.floor(gems);
             int slivers = Mth.floor(Mth.frac(gems) * 10.0F);
-            Containers.dropItemStack(entity.getCommandSenderWorld(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsPM.SOUL_GEM.get(), wholeGems));
-            Containers.dropItemStack(entity.getCommandSenderWorld(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), slivers));
+            Containers.dropItemStack(entity.getCommandSenderWorld(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemRegistration.SOUL_GEM.get(), wholeGems));
+            Containers.dropItemStack(entity.getCommandSenderWorld(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemRegistration.SOUL_GEM_SLIVER.get(), slivers));
         }
     }
     
@@ -239,7 +239,7 @@ public class CombatEvents {
                     if (soulpiercingLevel > 0) {
                         MobEffectInstance soulpiercedInstance = new MobEffectInstance(EffectsPM.SOULPIERCED.getHolder().get(), 12000, 0, false, false);
                         if (target.canBeAffected(soulpiercedInstance) && !target.hasEffect(soulpiercedInstance.getEffect())) {
-                            Containers.dropItemStack(target.level(), target.getX(), target.getY(), target.getZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), soulpiercingLevel));
+                            Containers.dropItemStack(target.level(), target.getX(), target.getY(), target.getZ(), new ItemStack(ItemRegistration.SOUL_GEM_SLIVER.get(), soulpiercingLevel));
                             target.addEffect(soulpiercedInstance);
                         }
                     }

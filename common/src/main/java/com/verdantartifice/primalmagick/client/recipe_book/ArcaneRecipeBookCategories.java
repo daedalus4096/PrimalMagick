@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -27,7 +27,7 @@ public enum ArcaneRecipeBookCategories {
     CRAFTING_REDSTONE(RecipeBookCategories.CRAFTING_REDSTONE, new ItemStack(Items.REDSTONE)),
     CRAFTING_EQUIPMENT(RecipeBookCategories.CRAFTING_EQUIPMENT, new ItemStack(Items.IRON_AXE), new ItemStack(Items.GOLDEN_SWORD)),
     CRAFTING_MISC(RecipeBookCategories.CRAFTING_MISC, new ItemStack(Items.LAVA_BUCKET), new ItemStack(Items.APPLE)),
-    CRAFTING_ARCANE(RecipeBookCategories.UNKNOWN, new ItemStack(ItemsPM.GRIMOIRE.get())),
+    CRAFTING_ARCANE(RecipeBookCategories.UNKNOWN, new ItemStack(ItemRegistration.GRIMOIRE.get())),
     CONCOCTER_SEARCH(RecipeBookCategories.UNKNOWN, new ItemStack(Items.COMPASS)),
     CONCOCTER_DRINKABLE(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE)),
     CONCOCTER_BOMB(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newBomb(Potions.POISON)),

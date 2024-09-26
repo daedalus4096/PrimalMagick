@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 
 import net.minecraft.BlockUtil.FoundRectangle;
@@ -258,7 +258,7 @@ public class FlyingCarpetEntity extends Entity {
     }
 
     protected ItemStack getDropItem() {
-        ItemStack stack = new ItemStack(ItemsPM.FLYING_CARPET.get());
+        ItemStack stack = new ItemStack(ItemRegistration.FLYING_CARPET.get());
         DyeColor color = this.getDyeColor();
         if (color != null) {
             ((FlyingCarpetItem)stack.getItem()).setDyeColor(stack, color);

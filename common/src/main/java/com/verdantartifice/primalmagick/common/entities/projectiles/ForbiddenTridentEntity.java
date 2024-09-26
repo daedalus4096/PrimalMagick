@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.entities.projectiles;
 
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class ForbiddenTridentEntity extends AbstractTridentEntity {
-    private static final ItemStack DEFAULT_THROWN_STACK = new ItemStack(ItemsPM.FORBIDDEN_TRIDENT.get());
+    private static final ItemStack DEFAULT_THROWN_STACK = new ItemStack(ItemRegistration.FORBIDDEN_TRIDENT.get());
     
     public ForbiddenTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
         super(type, worldIn);

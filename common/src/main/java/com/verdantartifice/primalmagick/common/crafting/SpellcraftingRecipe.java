@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
@@ -22,12 +22,12 @@ public class SpellcraftingRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingInput inv, Level worldIn) {
-        return inv.isEmpty() ? false : inv.getItem(0).getItem().equals(ItemsPM.SPELL_SCROLL_BLANK.get());
+        return inv.isEmpty() ? false : inv.getItem(0).getItem().equals(ItemRegistration.SPELL_SCROLL_BLANK.get());
     }
 
     @Override
     public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
-        return new ItemStack(ItemsPM.SPELL_SCROLL_FILLED.get());
+        return new ItemStack(ItemRegistration.SPELL_SCROLL_FILLED.get());
     }
 
     @Override

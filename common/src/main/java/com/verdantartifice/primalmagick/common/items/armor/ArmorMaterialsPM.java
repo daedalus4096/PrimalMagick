@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.items.armor;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.Util;
@@ -46,21 +46,21 @@ public class ArmorMaterialsPM {
         defMap.put(ArmorItem.Type.CHESTPLATE, 7);
         defMap.put(ArmorItem.Type.HELMET, 2);
         defMap.put(ArmorItem.Type.BODY, 6);
-    }), 22, SoundEvents.ARMOR_EQUIP_LEATHER, 1.0F, 0.0F, () -> Ingredient.of(ItemsPM.SPELLCLOTH.get()));
+    }), 22, SoundEvents.ARMOR_EQUIP_LEATHER, 1.0F, 0.0F, () -> Ingredient.of(ItemRegistration.SPELLCLOTH.get()));
     public static final RegistryObject<ArmorMaterial> HEXWEAVE = register("hexweave", Util.make(new EnumMap<>(ArmorItem.Type.class), defMap -> {
         defMap.put(ArmorItem.Type.BOOTS, 3);
         defMap.put(ArmorItem.Type.LEGGINGS, 7);
         defMap.put(ArmorItem.Type.CHESTPLATE, 9);
         defMap.put(ArmorItem.Type.HELMET, 3);
         defMap.put(ArmorItem.Type.BODY, 8);
-    }), 27, SoundEvents.ARMOR_EQUIP_LEATHER, 2.0F, 0.0F, () -> Ingredient.of(ItemsPM.HEXWEAVE.get()));
+    }), 27, SoundEvents.ARMOR_EQUIP_LEATHER, 2.0F, 0.0F, () -> Ingredient.of(ItemRegistration.HEXWEAVE.get()));
     public static final RegistryObject<ArmorMaterial> SAINTSWOOL = register("saintswool", Util.make(new EnumMap<>(ArmorItem.Type.class), defMap -> {
         defMap.put(ArmorItem.Type.BOOTS, 4);
         defMap.put(ArmorItem.Type.LEGGINGS, 8);
         defMap.put(ArmorItem.Type.CHESTPLATE, 10);
         defMap.put(ArmorItem.Type.HELMET, 4);
         defMap.put(ArmorItem.Type.BODY, 10);
-    }), 32, SoundEvents.ARMOR_EQUIP_LEATHER, 3.0F, 0.0F, () -> Ingredient.of(ItemsPM.SAINTSWOOL.get()));
+    }), 32, SoundEvents.ARMOR_EQUIP_LEATHER, 3.0F, 0.0F, () -> Ingredient.of(ItemRegistration.SAINTSWOOL.get()));
     public static final RegistryObject<ArmorMaterial> PRIMALITE = register("primalite", Util.make(new EnumMap<>(ArmorItem.Type.class), defMap -> {
         defMap.put(ArmorItem.Type.BOOTS, 3);
         defMap.put(ArmorItem.Type.LEGGINGS, 5);

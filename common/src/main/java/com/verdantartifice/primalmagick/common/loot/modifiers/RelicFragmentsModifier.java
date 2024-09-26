@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
@@ -48,7 +48,7 @@ public class RelicFragmentsModifier extends LootModifier {
         int lootingLevel = context.getLootingModifier();
         int count = context.getRandom().nextInt((this.maxCount - this.minCount + 1) + (this.lootingBonus * lootingLevel)) + this.minCount;
         if (targetEntity.getType().is(this.targetTag) && count > 0) {
-            generatedLoot.add(new ItemStack(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), count));
+            generatedLoot.add(new ItemStack(ItemRegistration.MYSTICAL_RELIC_FRAGMENT.get(), count));
         }
         return generatedLoot;
     }

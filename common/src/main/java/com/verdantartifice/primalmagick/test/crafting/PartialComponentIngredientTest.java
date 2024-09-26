@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.PartialComponentIngredient;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
@@ -23,7 +23,7 @@ public class PartialComponentIngredientTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void predicate_works(GameTestHelper helper) {
         var ingredient = PartialComponentIngredient.builder()
-                .item(ItemsPM.CONCOCTION.get())
+                .item(ItemRegistration.CONCOCTION.get())
                 .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
                 .data(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
                 .build();

@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.menus.FakeMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
@@ -967,7 +967,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 BlockPos saltPos = this.saltPositions.get(this.level.random.nextInt(this.saltPositions.size()));
                 Block block = this.level.getBlockState(saltPos).getBlock();
                 if (block == BlocksPM.get(BlocksPM.SALT_TRAIL)) {
-                    Containers.dropItemStack(this.level, saltPos.getX() + 0.5D, saltPos.getY() + 0.5D, saltPos.getZ() + 0.5D, new ItemStack(ItemsPM.REFINED_SALT.get()));
+                    Containers.dropItemStack(this.level, saltPos.getX() + 0.5D, saltPos.getY() + 0.5D, saltPos.getZ() + 0.5D, new ItemStack(ItemRegistration.REFINED_SALT.get()));
                     this.level.removeBlock(saltPos, false);
                     this.doMishapEffects(saltPos, breakIndex == 0); // Only play sounds once
                     break;

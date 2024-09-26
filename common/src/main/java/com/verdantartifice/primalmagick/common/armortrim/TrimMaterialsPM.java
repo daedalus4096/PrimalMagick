@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
@@ -62,14 +62,14 @@ public class TrimMaterialsPM {
     }
     
     public static void bootstrap(BootstrapContext<TrimMaterial> context) {
-        register(context, RUNE_EARTH, ItemsPM.RUNE_EARTH.get(), getStyle(Sources.EARTH), 0.7F);          // Use emerald model index
-        register(context, RUNE_SEA, ItemsPM.RUNE_SEA.get(), getStyle(Sources.SEA), 0.9F);                // Use lapis model index
-        register(context, RUNE_SKY, ItemsPM.RUNE_SKY.get(), getStyle(Sources.SKY), 0.8F);                // Use diamond model index
-        register(context, RUNE_SUN, ItemsPM.RUNE_SUN.get(), getStyle(Sources.SUN), 0.6F);                // Use gold model index
-        register(context, RUNE_MOON, ItemsPM.RUNE_MOON.get(), getStyle(Sources.MOON), 0.2F);             // Use iron model index
-        register(context, RUNE_BLOOD, ItemsPM.RUNE_BLOOD.get(), getStyle(Sources.BLOOD), 0.4F);          // Use redstone model index
-        register(context, RUNE_INFERNAL, ItemsPM.RUNE_INFERNAL.get(), getStyle(Sources.INFERNAL), 0.5F); // Use copper model index
-        register(context, RUNE_VOID, ItemsPM.RUNE_VOID.get(), getStyle(Sources.VOID), 1.0F);             // Use amethyst model index
-        register(context, RUNE_HALLOWED, ItemsPM.RUNE_HALLOWED.get(), getStyle(Sources.HALLOWED), 0.1F); // Use quartz model index
+        register(context, RUNE_EARTH, ItemRegistration.RUNE_EARTH.get(), getStyle(Sources.EARTH), 0.7F);          // Use emerald model index
+        register(context, RUNE_SEA, ItemRegistration.RUNE_SEA.get(), getStyle(Sources.SEA), 0.9F);                // Use lapis model index
+        register(context, RUNE_SKY, ItemRegistration.RUNE_SKY.get(), getStyle(Sources.SKY), 0.8F);                // Use diamond model index
+        register(context, RUNE_SUN, ItemRegistration.RUNE_SUN.get(), getStyle(Sources.SUN), 0.6F);                // Use gold model index
+        register(context, RUNE_MOON, ItemRegistration.RUNE_MOON.get(), getStyle(Sources.MOON), 0.2F);             // Use iron model index
+        register(context, RUNE_BLOOD, ItemRegistration.RUNE_BLOOD.get(), getStyle(Sources.BLOOD), 0.4F);          // Use redstone model index
+        register(context, RUNE_INFERNAL, ItemRegistration.RUNE_INFERNAL.get(), getStyle(Sources.INFERNAL), 0.5F); // Use copper model index
+        register(context, RUNE_VOID, ItemRegistration.RUNE_VOID.get(), getStyle(Sources.VOID), 1.0F);             // Use amethyst model index
+        register(context, RUNE_HALLOWED, ItemRegistration.RUNE_HALLOWED.get(), getStyle(Sources.HALLOWED), 0.1F); // Use quartz model index
     }
 }

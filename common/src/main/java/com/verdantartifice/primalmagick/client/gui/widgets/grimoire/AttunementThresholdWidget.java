@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
@@ -32,10 +32,10 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class AttunementThresholdWidget extends AbstractWidget {
-    protected static final ItemStack WAND_STACK = Util.make(new ItemStack(ItemsPM.MODULAR_WAND.get()), stack -> {
-        ItemsPM.MODULAR_WAND.get().setWandCore(stack, WandCore.HEARTWOOD);
-        ItemsPM.MODULAR_WAND.get().setWandCap(stack, WandCap.IRON);
-        ItemsPM.MODULAR_WAND.get().setWandGem(stack, WandGem.APPRENTICE);
+    protected static final ItemStack WAND_STACK = Util.make(new ItemStack(ItemRegistration.MODULAR_WAND.get()), stack -> {
+        ItemRegistration.MODULAR_WAND.get().setWandCore(stack, WandCore.HEARTWOOD);
+        ItemRegistration.MODULAR_WAND.get().setWandCap(stack, WandCap.IRON);
+        ItemRegistration.MODULAR_WAND.get().setWandGem(stack, WandGem.APPRENTICE);
     });
     protected static final ItemStack SHACKLED_OVERLAY_STACK = new ItemStack(Items.BARRIER);
     

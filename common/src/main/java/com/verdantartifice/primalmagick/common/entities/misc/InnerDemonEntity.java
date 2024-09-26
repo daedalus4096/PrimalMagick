@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.common.entities.ai.goals.LongDistanceRangedAttackGoal;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SinCrashEntity;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
@@ -178,7 +178,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     @Override
     protected void dropCustomDeathLoot(ServerLevel serverLevel, DamageSource source, boolean recentlyHitIn) {
         super.dropCustomDeathLoot(serverLevel, source, recentlyHitIn);
-        ItemEntity itemEntity = this.spawnAtLocation(ItemsPM.HALLOWED_ORB.get());
+        ItemEntity itemEntity = this.spawnAtLocation(ItemRegistration.HALLOWED_ORB.get());
         if (itemEntity != null) {
             itemEntity.setExtendedLifetime();
         }

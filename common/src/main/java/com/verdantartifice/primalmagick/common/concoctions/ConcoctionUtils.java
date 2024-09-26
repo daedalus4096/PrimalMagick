@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -19,7 +19,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
  */
 public class ConcoctionUtils {
     public static ItemStack newConcoction(Holder<Potion> potion, ConcoctionType type) {
-        return setConcoctionType(PotionContents.createItemStack(ItemsPM.CONCOCTION.get(), potion), type);
+        return setConcoctionType(PotionContents.createItemStack(ItemRegistration.CONCOCTION.get(), potion), type);
     }
     
     public static ItemStack newBomb(Holder<Potion> potion) {
@@ -27,7 +27,7 @@ public class ConcoctionUtils {
     }
     
     public static ItemStack newBomb(Holder<Potion> potion, FuseType fuse) {
-        return setFuseType(setConcoctionType(PotionContents.createItemStack(ItemsPM.ALCHEMICAL_BOMB.get(), potion), ConcoctionType.BOMB), fuse);
+        return setFuseType(setConcoctionType(PotionContents.createItemStack(ItemRegistration.ALCHEMICAL_BOMB.get(), potion), ConcoctionType.BOMB), fuse);
     }
     
     @Nonnull
@@ -78,6 +78,6 @@ public class ConcoctionUtils {
     }
     
     public static boolean isBomb(@Nonnull ItemStack stack) {
-        return stack.getItem() == ItemsPM.ALCHEMICAL_BOMB.get();
+        return stack.getItem() == ItemRegistration.ALCHEMICAL_BOMB.get();
     }
 }

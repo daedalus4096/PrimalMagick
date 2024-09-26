@@ -20,7 +20,7 @@ import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecorator;
 import com.verdantartifice.primalmagick.client.tips.TipLoader;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -92,14 +92,14 @@ public class ClientRegistrationEvents {
     
     @SubscribeEvent
     public static void onClientReloadListenerRegister(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(ItemsPM.PRIMALITE_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.FORBIDDEN_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemRegistration.PRIMALITE_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemRegistration.HEXIUM_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemRegistration.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemRegistration.FORBIDDEN_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemRegistration.PRIMALITE_SHIELD.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemRegistration.HEXIUM_SHIELD.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemRegistration.HALLOWSTEEL_SHIELD.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemRegistration.SPELLCRAFTING_ALTAR.get().getRenderProperties().getCustomRenderer());
         event.registerReloadListener(LexiconLoader.getOrCreateInstance());
         event.registerReloadListener(StyleGuideLoader.getOrCreateInstance());
         event.registerReloadListener(TipLoader.getOrCreateInstance());

@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipCompone
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.config.Config;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -101,7 +101,7 @@ public class ClientRenderEvents {
     @SubscribeEvent
     public static void onHighlightEntity(RenderHighlightEvent.Entity event) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get()) {
+        if (mc.player.getMainHandItem().getItem() == ItemRegistration.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemRegistration.ARCANOMETER.get()) {
             Entity entity = event.getTarget().getEntity();
             AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.level().registryAccess()).ifPresent(affinities -> {
                 boolean isScanned = ResearchManager.isScanned(entity.getType(), mc.player);

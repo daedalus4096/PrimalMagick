@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
@@ -50,8 +50,8 @@ public class WandAssemblyRecipe extends CustomRecipe {
         ItemStack capStack = getItem(inv, 2);
         
         ItemStack outputStack = (coreStack.getItem() instanceof StaffCoreItem) ? 
-                new ItemStack(ItemsPM.MODULAR_STAFF.get()) : 
-                new ItemStack(ItemsPM.MODULAR_WAND.get());
+                new ItemStack(ItemRegistration.MODULAR_STAFF.get()) : 
+                new ItemStack(ItemRegistration.MODULAR_WAND.get());
         ModularWandItem outputItem = (ModularWandItem)outputStack.getItem();
         
         // Set the components of the modular wand/staff

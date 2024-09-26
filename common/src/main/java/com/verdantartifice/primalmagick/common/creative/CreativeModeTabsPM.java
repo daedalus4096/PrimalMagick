@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -48,7 +48,7 @@ public class CreativeModeTabsPM {
     // Register mod creative tab
     public static final RegistryObject<CreativeModeTab> TAB = TABS.register(Constants.MOD_ID, () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.primalmagick"))
-            .icon(() -> new ItemStack(ItemsPM.GRIMOIRE.get()))
+            .icon(() -> new ItemStack(ItemRegistration.GRIMOIRE.get()))
             .displayItems((params, output) -> {
                 CreativeModeTabsPM.getTabRegistrationEntries().forEach(entry -> entry.register(params, output));
             })
