@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.minerals;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -40,7 +41,7 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     protected final GemBudType gemType;
-    protected final Optional<Supplier<BuddingGemClusterBlock>> nextGemSupplierOpt;
+    protected final Optional<ResourceLocation> nextGemSupplierOpt;
     protected final VoxelShape northAabb;
     protected final VoxelShape southAabb;
     protected final VoxelShape eastAabb;
@@ -48,7 +49,7 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
     protected final VoxelShape upAabb;
     protected final VoxelShape downAabb;
 
-    public BuddingGemClusterBlock(int pSize, int pOffset, GemBudType gemType, Optional<Supplier<BuddingGemClusterBlock>> nextGemSupplierOpt, Block.Properties properties) {
+    public BuddingGemClusterBlock(int pSize, int pOffset, GemBudType gemType, Optional<ResourceLocation> nextGemSupplierOpt, Block.Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.FALSE).setValue(FACING, Direction.UP));
         this.gemType = gemType;
@@ -65,7 +66,7 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
         return this.gemType;
     }
     
-    public Optional<Supplier<BuddingGemClusterBlock>> getNextGemBlock() {
+    public Optional<ResourceLocation> getNextGemBlock() {
         return this.nextGemSupplierOpt;
     }
 

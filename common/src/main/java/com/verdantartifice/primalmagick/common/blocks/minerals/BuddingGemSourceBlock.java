@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.minerals;
 
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -9,8 +10,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.PushReaction;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -25,11 +24,11 @@ public class BuddingGemSourceBlock extends Block {
     protected static final int GROWTH_CHANCE = 5;
     
     protected final GemBudType gemType;
-    protected final Supplier<BuddingGemClusterBlock> initialBudSupplier;
+    protected final Supplier<Block> initialBudSupplier;
     protected final Supplier<Block> decayBlockSupplier;
     protected final float decayChance;
     
-    public BuddingGemSourceBlock(GemBudType gemType, Supplier<BuddingGemClusterBlock> initialBudSupplier, Supplier<Block> decayBlockSupplier, float decayChance, Block.Properties properties) {
+    public BuddingGemSourceBlock(GemBudType gemType, Supplier<Block> initialBudSupplier, Supplier<Block> decayBlockSupplier, float decayChance, Block.Properties properties) {
         super(properties);
         this.gemType = gemType;
         this.initialBudSupplier = initialBudSupplier;
@@ -43,17 +42,17 @@ public class BuddingGemSourceBlock extends Block {
             Direction dir = Direction.values()[pRandom.nextInt(Direction.values().length)];
             BlockPos targetPos = pPos.relative(dir);
             BlockState targetState = pLevel.getBlockState(targetPos);
-            BuddingGemClusterBlock newCluster = null;
+            Block newBlock = null;
             
             // Determine what the new cluster should be
             if (targetState.isAir() || (targetState.is(Blocks.WATER) && targetState.getFluidState().getAmount() == FluidState.AMOUNT_FULL)) {
-                newCluster = this.initialBudSupplier.get();
+                newBlock = this.initialBudSupplier.get();
             } else if (targetState.getBlock() instanceof BuddingGemClusterBlock cluster && cluster.getGemBudType() == this.gemType && 
                     targetState.getValue(BuddingGemClusterBlock.FACING) == dir && cluster.getNextGemBlock().isPresent()) {
-                newCluster = cluster.getNextGemBlock().get().get();
+                newBlock = BlocksPM.get(cluster.getNextGemBlock().get());
             }
             
-            if (newCluster != null) {
+            if (newBlock instanceof BuddingGemClusterBlock newCluster) {
                 // Update the world with the new cluster
                 BlockState newClusterState = newCluster.defaultBlockState()
                         .setValue(BuddingGemClusterBlock.FACING, dir)
@@ -66,10 +65,5 @@ public class BuddingGemSourceBlock extends Block {
                 }
             }
         }
-    }
-
-    @Override
-    public @Nullable PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.DESTROY;
     }
 }

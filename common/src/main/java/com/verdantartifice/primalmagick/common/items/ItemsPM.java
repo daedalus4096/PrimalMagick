@@ -239,7 +239,7 @@ public class ItemsPM {
     public static final RegistryObject<BurnableBlockItem> HALLOWOOD_PILLAR = registerSupplier("hallowood_pillar", () -> new BurnableBlockItem(BlocksPM.get(BlocksPM.HALLOWOOD_PILLAR), 300, new Item.Properties()));
     
     // Register crop items
-    public static final RegistryObject<Item> HYDROMELON_SEEDS = registerSupplier("hydromelon_seeds", () -> new ItemNameBlockItem(BlocksPM.get(BlocksPM.HYRDOMELON_STEM), new Item.Properties()));
+    public static final RegistryObject<Item> HYDROMELON_SEEDS = registerSupplier("hydromelon_seeds", () -> new ItemNameBlockItem(BlocksPM.get(BlocksPM.HYDROMELON_STEM), new Item.Properties()));
     public static final RegistryObject<Item> HYDROMELON = registerSupplier("hydromelon", () -> new BlockItem(BlocksPM.get(BlocksPM.HYDROMELON), new Item.Properties()));
     public static final RegistryObject<Item> HYDROMELON_SLICE = registerSupplier("hydromelon_slice", () -> new Item(new Item.Properties().food(FoodsPM.HYDROMELON_SLICE)));
     public static final RegistryObject<DoubleHighBlockItem> BLOOD_ROSE = registerSupplier("blood_rose", () -> new DoubleHighBlockItem(BlocksPM.get(BlocksPM.BLOOD_ROSE), new Item.Properties()));

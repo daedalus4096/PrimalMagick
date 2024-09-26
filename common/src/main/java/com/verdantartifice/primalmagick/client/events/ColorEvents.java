@@ -66,7 +66,7 @@ public class ColorEvents {
             int k = 255 - i * 8;
             int l = i * 4;
             return j << 16 | k << 8 | l;
-        }, BlocksPM.get(BlocksPM.HYRDOMELON_STEM));
+        }, BlocksPM.get(BlocksPM.HYDROMELON_STEM));
     }
     
     @SubscribeEvent
