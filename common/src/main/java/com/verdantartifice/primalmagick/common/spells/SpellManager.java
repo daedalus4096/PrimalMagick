@@ -1,18 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Supplier;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity;
@@ -36,7 +23,6 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehiclesPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
@@ -52,6 +38,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * Primary access point for spell-related methods.  Also stores defined spell component data in static registries.

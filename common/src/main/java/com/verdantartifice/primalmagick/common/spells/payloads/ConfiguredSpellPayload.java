@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.spells.AbstractConfiguredSpellComponent;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConfiguredSpellPayload<T extends AbstractSpellPayload<?>> extends AbstractConfiguredSpellComponent<T> {
     public ConfiguredSpellPayload(T payload) {

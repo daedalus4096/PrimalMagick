@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.WandGlamourRecipe;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
@@ -172,7 +172,7 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(this.worldPosCallable, player, BlockRegistration.WAND_GLAMOUR_TABLE.get());
+        return stillValid(this.worldPosCallable, player, BlocksPM.get(BlocksPM.WAND_GLAMOUR_TABLE));
     }
 
     @Override

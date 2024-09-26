@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -16,7 +14,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -36,6 +33,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 /**
  * Definition for an animal conjuration spell.  Spawns a random passive animal at the target location.

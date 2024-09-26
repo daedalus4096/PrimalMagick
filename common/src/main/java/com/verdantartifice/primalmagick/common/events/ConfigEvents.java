@@ -1,8 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.network.tasks.SyncDatapackDataTask;
-
 import net.minecraftforge.event.network.GatherLoginConfigurationTasksEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -12,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class ConfigEvents {
     @SubscribeEvent
     public static void gatherConfigTasks(GatherLoginConfigurationTasksEvent event) {

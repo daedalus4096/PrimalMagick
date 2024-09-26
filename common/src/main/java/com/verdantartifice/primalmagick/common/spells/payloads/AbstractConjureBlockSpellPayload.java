@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -23,6 +20,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.ForgeEventFactory;
+
+import java.util.function.Supplier;
 
 /**
  * Base class for a block conjuration spell.  Creates a block with the given state at the designated

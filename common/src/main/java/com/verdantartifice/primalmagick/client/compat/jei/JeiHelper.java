@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
 import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
 import com.verdantartifice.primalmagick.client.gui.InfernalFurnaceScreen;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
@@ -118,12 +118,12 @@ public class JeiHelper implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(BlockRegistration.ARCANE_WORKBENCH.get()), RecipeTypes.CRAFTING, JeiRecipeTypesPM.ARCANE_CRAFTING);
-        registration.addRecipeCatalyst(new ItemStack(BlockRegistration.INFERNAL_FURNACE.get()), RecipeTypes.SMELTING);
-        registration.addRecipeCatalyst(new ItemStack(BlockRegistration.CONCOCTER.get()), JeiRecipeTypesPM.CONCOCTING);
-        registration.addRecipeCatalyst(new ItemStack(BlockRegistration.RUNECARVING_TABLE.get()), JeiRecipeTypesPM.RUNECARVING);
-        registration.addRecipeCatalyst(new ItemStack(BlockRegistration.DISSOLUTION_CHAMBER.get()), JeiRecipeTypesPM.DISSOLUTION);
-        registration.addRecipeCatalyst(new ItemStack(BlockRegistration.RITUAL_ALTAR.get()), JeiRecipeTypesPM.RITUAL);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.get(BlocksPM.ARCANE_WORKBENCH)), RecipeTypes.CRAFTING, JeiRecipeTypesPM.ARCANE_CRAFTING);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.get(BlocksPM.INFERNAL_FURNACE)), RecipeTypes.SMELTING);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.get(BlocksPM.CONCOCTER)), JeiRecipeTypesPM.CONCOCTING);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.get(BlocksPM.RUNECARVING_TABLE)), JeiRecipeTypesPM.RUNECARVING);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.get(BlocksPM.DISSOLUTION_CHAMBER)), JeiRecipeTypesPM.DISSOLUTION);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.get(BlocksPM.RITUAL_ALTAR)), JeiRecipeTypesPM.RITUAL);
     }
 
     @Override

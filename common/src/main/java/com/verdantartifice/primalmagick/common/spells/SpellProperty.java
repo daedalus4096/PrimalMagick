@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells;
 
 import com.mojang.serialization.Codec;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;

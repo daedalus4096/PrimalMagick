@@ -1,10 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.lang3.mutable.MutableObject;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellProjectileEntity;
@@ -16,13 +11,16 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.mutable.MutableObject;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Definition of a projectile spell vehicle.  Projectiles are long range vehicles that have a travel

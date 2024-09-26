@@ -1,25 +1,24 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.BlockSwapper;
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
-
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 /**
  * Handlers for server related events.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class ServerEvents {
     @SubscribeEvent
     public static void serverWorldTick(TickEvent.LevelTickEvent event) {

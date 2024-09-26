@@ -36,11 +36,11 @@ public class NetherLibraryPiece extends AbstractLibraryPiece {
 
     @Override
     protected BlockState getFillerBlockState() {
-        return BlockRegistration.MARBLE_SMOKED.get().defaultBlockState();
+        return BlocksPM.get(BlocksPM.MARBLE_SMOKED).defaultBlockState();
     }
 
     @Override
     protected BlockState getBrickBlockState() {
-        return BlockRegistration.MARBLE_SMOKED_BRICKS.get().defaultBlockState();
+        return BlocksPM.get(BlocksPM.MARBLE_SMOKED_BRICKS).defaultBlockState();
     }
 }

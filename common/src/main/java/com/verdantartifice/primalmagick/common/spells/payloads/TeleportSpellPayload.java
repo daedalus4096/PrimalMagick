@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -14,7 +12,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
@@ -27,6 +24,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 /**
  * Definition of a teleport spell.  Teleports the caster to the target location.  Works similarly to

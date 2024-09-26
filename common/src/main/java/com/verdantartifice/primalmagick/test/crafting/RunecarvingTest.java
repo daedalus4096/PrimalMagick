@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.test.crafting;
 
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
@@ -29,8 +29,8 @@ public class RunecarvingTest extends AbstractBaseTest {
         
         // Place a runecarving table
         BlockPos tablePos = new BlockPos(1, 1, 1);
-        helper.setBlock(tablePos, BlockRegistration.RUNECARVING_TABLE.get());
-        helper.assertBlockPresent(BlockRegistration.RUNECARVING_TABLE.get(), tablePos);
+        helper.setBlock(tablePos, BlocksPM.get(BlocksPM.RUNECARVING_TABLE));
+        helper.assertBlockPresent(BlocksPM.get(BlocksPM.RUNECARVING_TABLE), tablePos);
         
         // Populate the runecarving table with materials
         var baseTile = helper.getBlockEntity(tablePos);

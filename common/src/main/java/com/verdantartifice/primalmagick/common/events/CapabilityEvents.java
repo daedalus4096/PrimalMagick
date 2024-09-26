@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanions;
@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.capabilities.PlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerWard;
 import com.verdantartifice.primalmagick.common.capabilities.WorldEntitySwappers;
-
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -23,7 +22,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class CapabilityEvents {
     @SubscribeEvent
     public static void attachEntityCapability(AttachCapabilitiesEvent<Entity> event) {

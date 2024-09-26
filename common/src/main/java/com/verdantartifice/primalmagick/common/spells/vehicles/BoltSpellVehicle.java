@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
@@ -15,7 +11,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -25,6 +20,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Definition of a bolt spell vehicle.  Bolts are mid-range, instant spell vehicles that are not

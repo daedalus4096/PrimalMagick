@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -17,7 +13,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -34,6 +29,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Definition of a healing spell.  Restores health to the target entity based on the power property of

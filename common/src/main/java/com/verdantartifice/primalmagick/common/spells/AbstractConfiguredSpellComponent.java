@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.spells;
 
-import java.util.Map;
-
 import net.minecraft.util.Mth;
+
+import java.util.Map;
 
 /**
  * A spell component that has been configured with values for any properties it has

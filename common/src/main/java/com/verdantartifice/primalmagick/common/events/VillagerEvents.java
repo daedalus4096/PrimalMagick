@@ -1,8 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades.EmeraldForItems;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemsForEmeralds;
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class VillagerEvents {
     @SubscribeEvent
     public static void onVillagerTradeSetup(VillagerTradesEvent event) {

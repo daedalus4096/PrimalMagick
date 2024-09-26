@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+
+import java.util.List;
 
 /**
  * Definition of an empty spell mod.  This mod has no effect and is not valid in spells.  Its only

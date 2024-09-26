@@ -36,11 +36,11 @@ public class LibraryPiece extends AbstractLibraryPiece {
 
     @Override
     protected BlockState getFillerBlockState() {
-        return BlockRegistration.MARBLE_RAW.get().defaultBlockState();
+        return BlocksPM.get(BlocksPM.MARBLE_RAW).defaultBlockState();
     }
 
     @Override
     protected BlockState getBrickBlockState() {
-        return BlockRegistration.MARBLE_BRICKS.get().defaultBlockState();
+        return BlocksPM.get(BlocksPM.MARBLE_BRICKS).defaultBlockState();
     }
 }

@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.spells.ISpellComponent;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Primary interface for a spell vehicle.  Spell vehicles are what determine the target of a spell

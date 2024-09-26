@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
@@ -90,7 +90,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlockRegistration.ARCANE_WORKBENCH.get());
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.get(BlocksPM.ARCANE_WORKBENCH));
     }
     
     @Override

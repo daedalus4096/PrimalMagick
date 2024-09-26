@@ -24,6 +24,6 @@ public interface IConcoctingRecipe extends Recipe<CraftingInput>, IHasManaCost, 
     
     @Override
     default ItemStack getToastSymbol() {
-        return new ItemStack(BlockRegistration.CONCOCTER.get());
+        return new ItemStack(BlocksPM.get(BlocksPM.CONCOCTER));
     }
 }

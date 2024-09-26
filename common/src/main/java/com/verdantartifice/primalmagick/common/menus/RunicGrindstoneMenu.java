@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -250,7 +250,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlockRegistration.RUNIC_GRINDSTONE.get());
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.get(BlocksPM.RUNIC_GRINDSTONE));
     }
     
     protected void grantHints(ItemStack stack) {

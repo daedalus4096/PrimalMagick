@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells.mods;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -12,9 +8,12 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Definition of the Quicken spell mod.  This mod causes spells to incur a shorter cooldown upon being

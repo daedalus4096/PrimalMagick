@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -14,13 +12,14 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 /**
  * Definition for a light conjuration spell.  Creates a fading glow field at the designated point.
@@ -38,7 +37,7 @@ public class ConjureLightSpellPayload extends AbstractConjureBlockSpellPayload<C
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_LIGHT));
     
     public ConjureLightSpellPayload() {
-        super(() -> BlockRegistration.GLOW_FIELD.get().defaultBlockState().setValue(GlowFieldBlock.FADING, Boolean.TRUE));
+        super(() -> BlocksPM.get(BlocksPM.GLOW_FIELD).defaultBlockState().setValue(GlowFieldBlock.FADING, Boolean.TRUE));
     }
 
     public static AbstractRequirement<?> getRequirement() {

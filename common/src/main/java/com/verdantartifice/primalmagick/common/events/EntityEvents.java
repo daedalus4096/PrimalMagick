@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.EnderwardBlock;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -45,7 +44,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
+@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class EntityEvents {
     @SubscribeEvent
     public static void onEnderEntityTeleport(EntityTeleportEvent.EnderEntity event) {
@@ -84,7 +83,7 @@ public class EntityEvents {
         if (event.isCancelable() && !event.isCanceled()) {
             double edgeLength = 2D * EnderwardBlock.EFFECT_RADIUS;
             AABB searchAABB = AABB.ofSize(event.getTarget(), edgeLength, edgeLength, edgeLength);
-            if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> entity.level().getBlockState(pos).is(BlockRegistration.ENDERWARD.get()))) {
+            if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> entity.level().getBlockState(pos).is(BlocksPM.get(BlocksPM.ENDERWARD)))) {
                 event.setCanceled(true);
                 if (entity instanceof Player player) {
                     player.displayClientMessage(Component.translatable("event.primalmagick.enderward.block").withStyle(ChatFormatting.RED), true);

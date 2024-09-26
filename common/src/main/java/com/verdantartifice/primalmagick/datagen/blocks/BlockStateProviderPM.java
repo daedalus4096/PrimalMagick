@@ -85,141 +85,141 @@ public class BlockStateProviderPM extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         // Generate marble blocks
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_RAW.get());
-        this.slabBlockWithItem(BlockRegistration.MARBLE_SLAB.get(), BlockRegistration.MARBLE_RAW.get());
-        this.stairsBlockWithItem(BlockRegistration.MARBLE_STAIRS.get(), this.blockTexture(BlockRegistration.MARBLE_RAW.get()));
-        this.wallBlockWithItem(BlockRegistration.MARBLE_WALL.get(), this.blockTexture(BlockRegistration.MARBLE_RAW.get()));
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_BRICKS.get());
-        this.slabBlockWithItem(BlockRegistration.MARBLE_BRICK_SLAB.get(), BlockRegistration.MARBLE_BRICKS.get());
-        this.stairsBlockWithItem(BlockRegistration.MARBLE_BRICK_STAIRS.get(), this.blockTexture(BlockRegistration.MARBLE_BRICKS.get()));
-        this.wallBlockWithItem(BlockRegistration.MARBLE_BRICK_WALL.get(), this.blockTexture(BlockRegistration.MARBLE_BRICKS.get()));
-        this.pillarBlockWithItem(BlockRegistration.MARBLE_PILLAR.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlockRegistration.MARBLE_RUNED.get(), this.blockTexture(BlockRegistration.MARBLE_RAW.get()));
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_TILES.get());
-        this.carvedBookshelfBlockWithItem(BlockRegistration.MARBLE_BOOKSHELF.get(), BlockRegistration.MARBLE_RAW.get());
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_RAW));
+        this.slabBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SLAB), BlocksPM.get(BlocksPM.MARBLE_RAW));
+        this.stairsBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_RAW)));
+        this.wallBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_WALL), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_RAW)));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_BRICKS));
+        this.slabBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_BRICK_SLAB), BlocksPM.get(BlocksPM.MARBLE_BRICKS));
+        this.stairsBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_BRICK_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_BRICKS)));
+        this.wallBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_BRICK_WALL), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_BRICKS)));
+        this.pillarBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_PILLAR));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_CHISELED));
+        this.cubeColumnBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_RUNED), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_RAW)));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_TILES));
+        this.carvedBookshelfBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_BOOKSHELF), BlocksPM.get(BlocksPM.MARBLE_RAW));
         
         // Generate enchanted marble blocks
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_ENCHANTED.get());
-        this.slabBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_SLAB.get(), BlockRegistration.MARBLE_ENCHANTED.get());
-        this.stairsBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_STAIRS.get(), this.blockTexture(BlockRegistration.MARBLE_ENCHANTED.get()));
-        this.wallBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_WALL.get(), this.blockTexture(BlockRegistration.MARBLE_ENCHANTED.get()));
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_BRICKS.get());
-        this.slabBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_BRICK_SLAB.get(), BlockRegistration.MARBLE_ENCHANTED_BRICKS.get());
-        this.stairsBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_BRICK_STAIRS.get(), this.blockTexture(BlockRegistration.MARBLE_ENCHANTED_BRICKS.get()));
-        this.wallBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_BRICK_WALL.get(), this.blockTexture(BlockRegistration.MARBLE_ENCHANTED_BRICKS.get()));
-        this.pillarBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_PILLAR.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_RUNED.get(), this.blockTexture(BlockRegistration.MARBLE_ENCHANTED.get()));
-        this.carvedBookshelfBlockWithItem(BlockRegistration.MARBLE_ENCHANTED_BOOKSHELF.get(), BlockRegistration.MARBLE_ENCHANTED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED));
+        this.slabBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_SLAB), BlocksPM.get(BlocksPM.MARBLE_ENCHANTED));
+        this.stairsBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED)));
+        this.wallBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_WALL), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED)));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_BRICKS));
+        this.slabBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB), BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_BRICKS));
+        this.stairsBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_BRICKS)));
+        this.wallBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_BRICKS)));
+        this.pillarBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_PILLAR));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_CHISELED));
+        this.cubeColumnBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_RUNED), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED)));
+        this.carvedBookshelfBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF), BlocksPM.get(BlocksPM.MARBLE_ENCHANTED));
         
         // Generate smoked marble blocks
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_SMOKED.get());
-        this.slabBlockWithItem(BlockRegistration.MARBLE_SMOKED_SLAB.get(), BlockRegistration.MARBLE_SMOKED.get());
-        this.stairsBlockWithItem(BlockRegistration.MARBLE_SMOKED_STAIRS.get(), this.blockTexture(BlockRegistration.MARBLE_SMOKED.get()));
-        this.wallBlockWithItem(BlockRegistration.MARBLE_SMOKED_WALL.get(), this.blockTexture(BlockRegistration.MARBLE_SMOKED.get()));
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_SMOKED_BRICKS.get());
-        this.slabBlockWithItem(BlockRegistration.MARBLE_SMOKED_BRICK_SLAB.get(), BlockRegistration.MARBLE_SMOKED_BRICKS.get());
-        this.stairsBlockWithItem(BlockRegistration.MARBLE_SMOKED_BRICK_STAIRS.get(), this.blockTexture(BlockRegistration.MARBLE_SMOKED_BRICKS.get()));
-        this.wallBlockWithItem(BlockRegistration.MARBLE_SMOKED_BRICK_WALL.get(), this.blockTexture(BlockRegistration.MARBLE_SMOKED_BRICKS.get()));
-        this.pillarBlockWithItem(BlockRegistration.MARBLE_SMOKED_PILLAR.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_SMOKED_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlockRegistration.MARBLE_SMOKED_RUNED.get(), this.blockTexture(BlockRegistration.MARBLE_SMOKED.get()));
-        this.carvedBookshelfBlockWithItem(BlockRegistration.MARBLE_SMOKED_BOOKSHELF.get(), BlockRegistration.MARBLE_SMOKED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED));
+        this.slabBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_SLAB), BlocksPM.get(BlocksPM.MARBLE_SMOKED));
+        this.stairsBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_SMOKED)));
+        this.wallBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_WALL), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_SMOKED)));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_BRICKS));
+        this.slabBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_BRICK_SLAB), BlocksPM.get(BlocksPM.MARBLE_SMOKED_BRICKS));
+        this.stairsBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_SMOKED_BRICKS)));
+        this.wallBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_BRICK_WALL), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_SMOKED_BRICKS)));
+        this.pillarBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_PILLAR));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_CHISELED));
+        this.cubeColumnBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_RUNED), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_SMOKED)));
+        this.carvedBookshelfBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_SMOKED_BOOKSHELF), BlocksPM.get(BlocksPM.MARBLE_SMOKED));
         
         // Generate hallowed marble blocks
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_HALLOWED.get());
-        this.slabBlockWithItem(BlockRegistration.MARBLE_HALLOWED_SLAB.get(), BlockRegistration.MARBLE_HALLOWED.get());
-        this.stairsBlockWithItem(BlockRegistration.MARBLE_HALLOWED_STAIRS.get(), this.blockTexture(BlockRegistration.MARBLE_HALLOWED.get()));
-        this.wallBlockWithItem(BlockRegistration.MARBLE_HALLOWED_WALL.get(), this.blockTexture(BlockRegistration.MARBLE_HALLOWED.get()));
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_HALLOWED_BRICKS.get());
-        this.slabBlockWithItem(BlockRegistration.MARBLE_HALLOWED_BRICK_SLAB.get(), BlockRegistration.MARBLE_HALLOWED_BRICKS.get());
-        this.stairsBlockWithItem(BlockRegistration.MARBLE_HALLOWED_BRICK_STAIRS.get(), this.blockTexture(BlockRegistration.MARBLE_HALLOWED_BRICKS.get()));
-        this.wallBlockWithItem(BlockRegistration.MARBLE_HALLOWED_BRICK_WALL.get(), this.blockTexture(BlockRegistration.MARBLE_HALLOWED_BRICKS.get()));
-        this.pillarBlockWithItem(BlockRegistration.MARBLE_HALLOWED_PILLAR.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.MARBLE_HALLOWED_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlockRegistration.MARBLE_HALLOWED_RUNED.get(), this.blockTexture(BlockRegistration.MARBLE_HALLOWED.get()));
-        this.carvedBookshelfBlockWithItem(BlockRegistration.MARBLE_HALLOWED_BOOKSHELF.get(), BlockRegistration.MARBLE_HALLOWED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED));
+        this.slabBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_SLAB), BlocksPM.get(BlocksPM.MARBLE_HALLOWED));
+        this.stairsBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_HALLOWED)));
+        this.wallBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_WALL), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_HALLOWED)));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_BRICKS));
+        this.slabBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB), BlocksPM.get(BlocksPM.MARBLE_HALLOWED_BRICKS));
+        this.stairsBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_BRICKS)));
+        this.wallBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_BRICK_WALL), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_BRICKS)));
+        this.pillarBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_PILLAR));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_CHISELED));
+        this.cubeColumnBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_RUNED), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_HALLOWED)));
+        this.carvedBookshelfBlockWithItem(BlocksPM.get(BlocksPM.MARBLE_HALLOWED_BOOKSHELF), BlocksPM.get(BlocksPM.MARBLE_HALLOWED));
         
         // Generate sunwood blocks
-        this.phasingLogBlockWithItem(BlockRegistration.SUNWOOD_LOG.get());
-        this.phasingLogBlockWithItem(BlockRegistration.STRIPPED_SUNWOOD_LOG.get());
-        this.phasingWoodBlockWithItem(BlockRegistration.SUNWOOD_WOOD.get(), this.blockTexture(BlockRegistration.SUNWOOD_LOG.get()));
-        this.phasingWoodBlockWithItem(BlockRegistration.STRIPPED_SUNWOOD_WOOD.get(), this.blockTexture(BlockRegistration.STRIPPED_SUNWOOD_LOG.get()));
-        this.phasingLeavesBlockWithItem(BlockRegistration.SUNWOOD_LEAVES.get());
-        this.saplingBlockWithItem(BlockRegistration.SUNWOOD_SAPLING.get());
-        this.phasingCubeBlockWithItem(BlockRegistration.SUNWOOD_PLANKS.get());
-        this.phasingSlabBlockWithItem(BlockRegistration.SUNWOOD_SLAB.get(), BlockRegistration.SUNWOOD_PLANKS.get());
-        this.phasingStairsBlockWithItem(BlockRegistration.SUNWOOD_STAIRS.get(), this.blockTexture(BlockRegistration.SUNWOOD_PLANKS.get()));
-        this.phasingPillarBlockWithItem(BlockRegistration.SUNWOOD_PILLAR.get());
+        this.phasingLogBlockWithItem(BlocksPM.get(BlocksPM.SUNWOOD_LOG));
+        this.phasingLogBlockWithItem(BlocksPM.get(BlocksPM.STRIPPED_SUNWOOD_LOG));
+        this.phasingWoodBlockWithItem(BlocksPM.get(BlocksPM.SUNWOOD_WOOD), this.blockTexture(BlocksPM.get(BlocksPM.SUNWOOD_LOG)));
+        this.phasingWoodBlockWithItem(BlocksPM.get(BlocksPM.STRIPPED_SUNWOOD_WOOD), this.blockTexture(BlocksPM.get(BlocksPM.STRIPPED_SUNWOOD_LOG)));
+        this.phasingLeavesBlockWithItem(BlocksPM.get(BlocksPM.SUNWOOD_LEAVES));
+        this.saplingBlockWithItem(BlocksPM.get(BlocksPM.SUNWOOD_SAPLING));
+        this.phasingCubeBlockWithItem(BlocksPM.get(BlocksPM.SUNWOOD_PLANKS));
+        this.phasingSlabBlockWithItem(BlocksPM.get(BlocksPM.SUNWOOD_SLAB), BlocksPM.get(BlocksPM.SUNWOOD_PLANKS));
+        this.phasingStairsBlockWithItem(BlocksPM.get(BlocksPM.SUNWOOD_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.SUNWOOD_PLANKS)));
+        this.phasingPillarBlockWithItem(BlocksPM.get(BlocksPM.SUNWOOD_PILLAR));
         
         // Generate moonwood blocks
-        this.phasingLogBlockWithItem(BlockRegistration.MOONWOOD_LOG.get());
-        this.phasingLogBlockWithItem(BlockRegistration.STRIPPED_MOONWOOD_LOG.get());
-        this.phasingWoodBlockWithItem(BlockRegistration.MOONWOOD_WOOD.get(), this.blockTexture(BlockRegistration.MOONWOOD_LOG.get()));
-        this.phasingWoodBlockWithItem(BlockRegistration.STRIPPED_MOONWOOD_WOOD.get(), this.blockTexture(BlockRegistration.STRIPPED_MOONWOOD_LOG.get()));
-        this.phasingLeavesBlockWithItem(BlockRegistration.MOONWOOD_LEAVES.get());
-        this.saplingBlockWithItem(BlockRegistration.MOONWOOD_SAPLING.get());
-        this.phasingCubeBlockWithItem(BlockRegistration.MOONWOOD_PLANKS.get());
-        this.phasingSlabBlockWithItem(BlockRegistration.MOONWOOD_SLAB.get(), BlockRegistration.MOONWOOD_PLANKS.get());
-        this.phasingStairsBlockWithItem(BlockRegistration.MOONWOOD_STAIRS.get(), this.blockTexture(BlockRegistration.MOONWOOD_PLANKS.get()));
-        this.phasingPillarBlockWithItem(BlockRegistration.MOONWOOD_PILLAR.get());
+        this.phasingLogBlockWithItem(BlocksPM.get(BlocksPM.MOONWOOD_LOG));
+        this.phasingLogBlockWithItem(BlocksPM.get(BlocksPM.STRIPPED_MOONWOOD_LOG));
+        this.phasingWoodBlockWithItem(BlocksPM.get(BlocksPM.MOONWOOD_WOOD), this.blockTexture(BlocksPM.get(BlocksPM.MOONWOOD_LOG)));
+        this.phasingWoodBlockWithItem(BlocksPM.get(BlocksPM.STRIPPED_MOONWOOD_WOOD), this.blockTexture(BlocksPM.get(BlocksPM.STRIPPED_MOONWOOD_LOG)));
+        this.phasingLeavesBlockWithItem(BlocksPM.get(BlocksPM.MOONWOOD_LEAVES));
+        this.saplingBlockWithItem(BlocksPM.get(BlocksPM.MOONWOOD_SAPLING));
+        this.phasingCubeBlockWithItem(BlocksPM.get(BlocksPM.MOONWOOD_PLANKS));
+        this.phasingSlabBlockWithItem(BlocksPM.get(BlocksPM.MOONWOOD_SLAB), BlocksPM.get(BlocksPM.MOONWOOD_PLANKS));
+        this.phasingStairsBlockWithItem(BlocksPM.get(BlocksPM.MOONWOOD_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.MOONWOOD_PLANKS)));
+        this.phasingPillarBlockWithItem(BlocksPM.get(BlocksPM.MOONWOOD_PILLAR));
         
         // Generate hallowood blocks
-        this.logBlockWithItem(BlockRegistration.HALLOWOOD_LOG.get());
-        this.logBlockWithItem(BlockRegistration.STRIPPED_HALLOWOOD_LOG.get());
-        this.woodBlockWithItem(BlockRegistration.HALLOWOOD_WOOD.get(), this.blockTexture(BlockRegistration.HALLOWOOD_LOG.get()));
-        this.woodBlockWithItem(BlockRegistration.STRIPPED_HALLOWOOD_WOOD.get(), this.blockTexture(BlockRegistration.STRIPPED_HALLOWOOD_LOG.get()));
-        this.leavesBlockWithItem(BlockRegistration.HALLOWOOD_LEAVES.get());
-        this.saplingBlockWithItem(BlockRegistration.HALLOWOOD_SAPLING.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.HALLOWOOD_PLANKS.get());
-        this.slabBlockWithItem(BlockRegistration.HALLOWOOD_SLAB.get(), BlockRegistration.HALLOWOOD_PLANKS.get());
-        this.stairsBlockWithItem(BlockRegistration.HALLOWOOD_STAIRS.get(), this.blockTexture(BlockRegistration.HALLOWOOD_PLANKS.get()));
-        this.pillarBlockWithItem(BlockRegistration.HALLOWOOD_PILLAR.get());
+        this.logBlockWithItem(BlocksPM.get(BlocksPM.HALLOWOOD_LOG));
+        this.logBlockWithItem(BlocksPM.get(BlocksPM.STRIPPED_HALLOWOOD_LOG));
+        this.woodBlockWithItem(BlocksPM.get(BlocksPM.HALLOWOOD_WOOD), this.blockTexture(BlocksPM.get(BlocksPM.HALLOWOOD_LOG)));
+        this.woodBlockWithItem(BlocksPM.get(BlocksPM.STRIPPED_HALLOWOOD_WOOD), this.blockTexture(BlocksPM.get(BlocksPM.STRIPPED_HALLOWOOD_LOG)));
+        this.leavesBlockWithItem(BlocksPM.get(BlocksPM.HALLOWOOD_LEAVES));
+        this.saplingBlockWithItem(BlocksPM.get(BlocksPM.HALLOWOOD_SAPLING));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.HALLOWOOD_PLANKS));
+        this.slabBlockWithItem(BlocksPM.get(BlocksPM.HALLOWOOD_SLAB), BlocksPM.get(BlocksPM.HALLOWOOD_PLANKS));
+        this.stairsBlockWithItem(BlocksPM.get(BlocksPM.HALLOWOOD_STAIRS), this.blockTexture(BlocksPM.get(BlocksPM.HALLOWOOD_PLANKS)));
+        this.pillarBlockWithItem(BlocksPM.get(BlocksPM.HALLOWOOD_PILLAR));
         
         // Generate crop blocks
-        this.cubeColumnBlockWithItem(BlockRegistration.HYDROMELON.get());
-        this.stemBlock(BlockRegistration.HYRDOMELON_STEM.get());
-        this.attachedStemBlock(BlockRegistration.ATTACHED_HYDROMELON_STEM.get(), this.blockTexture(BlockRegistration.HYRDOMELON_STEM.get()));
-        this.tallCrossBlockWithItem(BlockRegistration.BLOOD_ROSE.get());
-        this.tallExistingBlockWithItem(BlockRegistration.EMBERFLOWER.get(), this.blockTexture(BlockRegistration.EMBERFLOWER.get()).withSuffix("_front"));
+        this.cubeColumnBlockWithItem(BlocksPM.get(BlocksPM.HYDROMELON));
+        this.stemBlock(BlocksPM.get(BlocksPM.HYRDOMELON_STEM));
+        this.attachedStemBlock(BlocksPM.get(BlocksPM.ATTACHED_HYDROMELON_STEM), this.blockTexture(BlocksPM.get(BlocksPM.HYRDOMELON_STEM)));
+        this.tallCrossBlockWithItem(BlocksPM.get(BlocksPM.BLOOD_ROSE));
+        this.tallExistingBlockWithItem(BlocksPM.get(BlocksPM.EMBERFLOWER), this.blockTexture(BlocksPM.get(BlocksPM.EMBERFLOWER)).withSuffix("_front"));
         
         // Generate infused stone blocks
-        this.simpleCubeBlockWithItem(BlockRegistration.INFUSED_STONE_EARTH.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.INFUSED_STONE_SEA.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.INFUSED_STONE_SKY.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.INFUSED_STONE_SUN.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.INFUSED_STONE_MOON.get());
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.INFUSED_STONE_EARTH));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.INFUSED_STONE_SEA));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.INFUSED_STONE_SKY));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.INFUSED_STONE_SUN));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.INFUSED_STONE_MOON));
         
         // Generate budding gem blocks
-        this.directionalCrossBlockWithItem(BlockRegistration.SYNTHETIC_AMETHYST_CLUSTER.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.LARGE_SYNTHETIC_AMETHYST_BUD.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.MEDIUM_SYNTHETIC_AMETHYST_BUD.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.SMALL_SYNTHETIC_AMETHYST_BUD.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.DAMAGED_BUDDING_AMETHYST_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.CHIPPED_BUDDING_AMETHYST_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.FLAWED_BUDDING_AMETHYST_BLOCK.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.SYNTHETIC_DIAMOND_CLUSTER.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.LARGE_SYNTHETIC_DIAMOND_BUD.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.MEDIUM_SYNTHETIC_DIAMOND_BUD.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.SMALL_SYNTHETIC_DIAMOND_BUD.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.DAMAGED_BUDDING_DIAMOND_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.CHIPPED_BUDDING_DIAMOND_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.FLAWED_BUDDING_DIAMOND_BLOCK.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.SYNTHETIC_EMERALD_CLUSTER.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.LARGE_SYNTHETIC_EMERALD_BUD.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.MEDIUM_SYNTHETIC_EMERALD_BUD.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.SMALL_SYNTHETIC_EMERALD_BUD.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.DAMAGED_BUDDING_EMERALD_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.CHIPPED_BUDDING_EMERALD_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.FLAWED_BUDDING_EMERALD_BLOCK.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.SYNTHETIC_QUARTZ_CLUSTER.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.LARGE_SYNTHETIC_QUARTZ_BUD.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.MEDIUM_SYNTHETIC_QUARTZ_BUD.get());
-        this.directionalCrossBlockWithItem(BlockRegistration.SMALL_SYNTHETIC_QUARTZ_BUD.get());
-        this.cubeColumnBlockWithItem(BlockRegistration.DAMAGED_BUDDING_QUARTZ_BLOCK.get());
-        this.cubeColumnBlockWithItem(BlockRegistration.CHIPPED_BUDDING_QUARTZ_BLOCK.get());
-        this.cubeColumnBlockWithItem(BlockRegistration.FLAWED_BUDDING_QUARTZ_BLOCK.get());
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.SYNTHETIC_EMERALD_CLUSTER));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD));
+        this.directionalCrossBlockWithItem(BlocksPM.get(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD));
+        this.cubeColumnBlockWithItem(BlocksPM.get(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK));
+        this.cubeColumnBlockWithItem(BlocksPM.get(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK));
+        this.cubeColumnBlockWithItem(BlocksPM.get(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK));
         
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
@@ -228,81 +228,81 @@ public class BlockStateProviderPM extends BlockStateProvider {
         RitualCandleBlock.getAllCandles().forEach(this::ritualCandleBlockWithItem);
         
         // Generate mana font blocks
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlockRegistration.MARBLE_RAW.get())));
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.ENCHANTED).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlockRegistration.MARBLE_ENCHANTED.get())));
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.FORBIDDEN).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlockRegistration.MARBLE_SMOKED.get())));
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlockRegistration.MARBLE_HALLOWED.get())));
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_RAW))));
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.ENCHANTED).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED))));
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.FORBIDDEN).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_SMOKED))));
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_HALLOWED))));
         
         // Generate device blocks
-        this.simpleExistingBlockWithItem(BlockRegistration.ARCANE_WORKBENCH.get());
-        this.horizontalExistingBlockWithItem(BlockRegistration.WAND_ASSEMBLY_TABLE.get());
-        this.simpleExistingBlockWithItem(BlockRegistration.WOOD_TABLE.get());
-        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlockRegistration.ANALYSIS_TABLE.get());
-        this.calcinatorBlockWithItem(BlockRegistration.ESSENCE_FURNACE.get(), state -> this.models()
+        this.simpleExistingBlockWithItem(BlocksPM.get(BlocksPM.ARCANE_WORKBENCH));
+        this.horizontalExistingBlockWithItem(BlocksPM.get(BlocksPM.WAND_ASSEMBLY_TABLE));
+        this.simpleExistingBlockWithItem(BlocksPM.get(BlocksPM.WOOD_TABLE));
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.get(BlocksPM.ANALYSIS_TABLE));
+        this.calcinatorBlockWithItem(BlocksPM.get(BlocksPM.ESSENCE_FURNACE), state -> this.models()
                 .getExistingFile(ResourceUtils.loc("block/essence_furnace").withSuffix(state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : "")));
-        this.calcinatorBlockWithItem(BlockRegistration.CALCINATOR_BASIC.get());
-        this.calcinatorBlockWithItem(BlockRegistration.CALCINATOR_ENCHANTED.get());
-        this.calcinatorBlockWithItem(BlockRegistration.CALCINATOR_FORBIDDEN.get());
-        this.calcinatorBlockWithItem(BlockRegistration.CALCINATOR_HEAVENLY.get());
-        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlockRegistration.WAND_INSCRIPTION_TABLE.get());
+        this.calcinatorBlockWithItem(BlocksPM.get(BlocksPM.CALCINATOR_BASIC));
+        this.calcinatorBlockWithItem(BlocksPM.get(BlocksPM.CALCINATOR_ENCHANTED));
+        this.calcinatorBlockWithItem(BlocksPM.get(BlocksPM.CALCINATOR_FORBIDDEN));
+        this.calcinatorBlockWithItem(BlocksPM.get(BlocksPM.CALCINATOR_HEAVENLY));
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.get(BlocksPM.WAND_INSCRIPTION_TABLE));
         this.spellcraftingAltarBlockWithItem();
-        this.simpleExistingBlockWithItem(BlockRegistration.WAND_CHARGER.get());
-        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlockRegistration.RESEARCH_TABLE.get());
-        this.sunlampBlockWithItem(BlockRegistration.SUNLAMP.get());
-        this.sunlampBlockWithItem(BlockRegistration.SPIRIT_LANTERN.get());
-        this.simpleExistingBlockWithItem(BlockRegistration.RITUAL_ALTAR.get());
-        this.simpleExistingBlockWithItem(BlockRegistration.OFFERING_PEDESTAL.get());
+        this.simpleExistingBlockWithItem(BlocksPM.get(BlocksPM.WAND_CHARGER));
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.get(BlocksPM.RESEARCH_TABLE));
+        this.sunlampBlockWithItem(BlocksPM.get(BlocksPM.SUNLAMP));
+        this.sunlampBlockWithItem(BlocksPM.get(BlocksPM.SPIRIT_LANTERN));
+        this.simpleExistingBlockWithItem(BlocksPM.get(BlocksPM.RITUAL_ALTAR));
+        this.simpleExistingBlockWithItem(BlocksPM.get(BlocksPM.OFFERING_PEDESTAL));
         this.incenseBrazierBlockWithItem();
-        this.horizontalExistingBlockWithItem(BlockRegistration.RITUAL_LECTERN.get());
+        this.horizontalExistingBlockWithItem(BlocksPM.get(BlocksPM.RITUAL_LECTERN));
         this.ritualBellBlockWithItem();
         this.bloodletterBlockWithItem();
-        this.horizontalBlockWithItem(BlockRegistration.SOUL_ANVIL.get(), state -> this.models()
-                .getExistingFile(this.defaultModel(BlockRegistration.SOUL_ANVIL.get()).withSuffix(state.getValue(SoulAnvilBlock.DIRTY) ? "_dirty" : "")));
-        this.runescribingAltarBlockWithItem(BlockRegistration.RUNESCRIBING_ALTAR_BASIC.get(), this.blockTexture(BlockRegistration.MARBLE_RAW.get()));
-        this.runescribingAltarBlockWithItem(BlockRegistration.RUNESCRIBING_ALTAR_ENCHANTED.get(), this.blockTexture(BlockRegistration.MARBLE_ENCHANTED.get()));
-        this.runescribingAltarBlockWithItem(BlockRegistration.RUNESCRIBING_ALTAR_FORBIDDEN.get(), this.blockTexture(BlockRegistration.MARBLE_SMOKED.get()));
-        this.runescribingAltarBlockWithItem(BlockRegistration.RUNESCRIBING_ALTAR_HEAVENLY.get(), this.blockTexture(BlockRegistration.MARBLE_HALLOWED.get()));
-        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlockRegistration.RUNECARVING_TABLE.get());
-        this.horizontalFaceExistingBlockWithItem(BlockRegistration.RUNIC_GRINDSTONE.get());
-        this.horizontalExistingBlockWithItem(BlockRegistration.HONEY_EXTRACTOR.get());
-        this.golemControllerBlockWithItem(BlockRegistration.PRIMALITE_GOLEM_CONTROLLER.get(), this.blockTexture(BlockRegistration.PRIMALITE_BLOCK.get()));
-        this.golemControllerBlockWithItem(BlockRegistration.HEXIUM_GOLEM_CONTROLLER.get(), this.blockTexture(BlockRegistration.HEXIUM_BLOCK.get()));
-        this.golemControllerBlockWithItem(BlockRegistration.HALLOWSTEEL_GOLEM_CONTROLLER.get(), this.blockTexture(BlockRegistration.HALLOWSTEEL_BLOCK.get()));
-        this.horizontalBlockWithItem(BlockRegistration.SANGUINE_CRUCIBLE.get(), state -> this.models()
-                .getExistingFile(this.defaultModel(BlockRegistration.SANGUINE_CRUCIBLE.get()).withSuffix(state.getValue(SanguineCrucibleBlock.LIT) ? "_lit" : "")));
-        this.horizontalBlockWithItem(BlockRegistration.CONCOCTER.get(), state -> this.models()
-                .getExistingFile(this.defaultModel(BlockRegistration.CONCOCTER.get()).withSuffix(state.getValue(ConcocterBlock.HAS_BOTTLE) ? "_bottle" : "")));
-        this.horizontalExistingBlockWithItem(BlockRegistration.CELESTIAL_HARP.get());
-        this.horizontalExistingBlockWithItem(BlockRegistration.ENTROPY_SINK.get());
-        this.simpleExistingBlockWithItem(BlockRegistration.AUTO_CHARGER.get());
-        this.horizontalExistingBlockWithItem(BlockRegistration.ESSENCE_TRANSMUTER.get());
-        this.horizontalExistingBlockWithItem(BlockRegistration.DISSOLUTION_CHAMBER.get());
-        this.directionalExistingBlockWithItem(BlockRegistration.ZEPHYR_ENGINE.get());
-        this.directionalExistingBlockWithItem(BlockRegistration.VOID_TURBINE.get());
-        this.essenceCaskBlockWithItem(BlockRegistration.ESSENCE_CASK_ENCHANTED.get());
-        this.essenceCaskBlockWithItem(BlockRegistration.ESSENCE_CASK_FORBIDDEN.get());
-        this.essenceCaskBlockWithItem(BlockRegistration.ESSENCE_CASK_HEAVENLY.get());
-        this.horizontalExistingBlockWithItem(BlockRegistration.WAND_GLAMOUR_TABLE.get());
+        this.horizontalBlockWithItem(BlocksPM.get(BlocksPM.SOUL_ANVIL), state -> this.models()
+                .getExistingFile(this.defaultModel(BlocksPM.get(BlocksPM.SOUL_ANVIL)).withSuffix(state.getValue(SoulAnvilBlock.DIRTY) ? "_dirty" : "")));
+        this.runescribingAltarBlockWithItem(BlocksPM.get(BlocksPM.RUNESCRIBING_ALTAR_BASIC), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_RAW)));
+        this.runescribingAltarBlockWithItem(BlocksPM.get(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_ENCHANTED)));
+        this.runescribingAltarBlockWithItem(BlocksPM.get(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_SMOKED)));
+        this.runescribingAltarBlockWithItem(BlocksPM.get(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY), this.blockTexture(BlocksPM.get(BlocksPM.MARBLE_HALLOWED)));
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.get(BlocksPM.RUNECARVING_TABLE));
+        this.horizontalFaceExistingBlockWithItem(BlocksPM.get(BlocksPM.RUNIC_GRINDSTONE));
+        this.horizontalExistingBlockWithItem(BlocksPM.get(BlocksPM.HONEY_EXTRACTOR));
+        this.golemControllerBlockWithItem(BlocksPM.get(BlocksPM.PRIMALITE_GOLEM_CONTROLLER), this.blockTexture(BlocksPM.get(BlocksPM.PRIMALITE_BLOCK)));
+        this.golemControllerBlockWithItem(BlocksPM.get(BlocksPM.HEXIUM_GOLEM_CONTROLLER), this.blockTexture(BlocksPM.get(BlocksPM.HEXIUM_BLOCK)));
+        this.golemControllerBlockWithItem(BlocksPM.get(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER), this.blockTexture(BlocksPM.get(BlocksPM.HALLOWSTEEL_BLOCK)));
+        this.horizontalBlockWithItem(BlocksPM.get(BlocksPM.SANGUINE_CRUCIBLE), state -> this.models()
+                .getExistingFile(this.defaultModel(BlocksPM.get(BlocksPM.SANGUINE_CRUCIBLE)).withSuffix(state.getValue(SanguineCrucibleBlock.LIT) ? "_lit" : "")));
+        this.horizontalBlockWithItem(BlocksPM.get(BlocksPM.CONCOCTER), state -> this.models()
+                .getExistingFile(this.defaultModel(BlocksPM.get(BlocksPM.CONCOCTER)).withSuffix(state.getValue(ConcocterBlock.HAS_BOTTLE) ? "_bottle" : "")));
+        this.horizontalExistingBlockWithItem(BlocksPM.get(BlocksPM.CELESTIAL_HARP));
+        this.horizontalExistingBlockWithItem(BlocksPM.get(BlocksPM.ENTROPY_SINK));
+        this.simpleExistingBlockWithItem(BlocksPM.get(BlocksPM.AUTO_CHARGER));
+        this.horizontalExistingBlockWithItem(BlocksPM.get(BlocksPM.ESSENCE_TRANSMUTER));
+        this.horizontalExistingBlockWithItem(BlocksPM.get(BlocksPM.DISSOLUTION_CHAMBER));
+        this.directionalExistingBlockWithItem(BlocksPM.get(BlocksPM.ZEPHYR_ENGINE));
+        this.directionalExistingBlockWithItem(BlocksPM.get(BlocksPM.VOID_TURBINE));
+        this.essenceCaskBlockWithItem(BlocksPM.get(BlocksPM.ESSENCE_CASK_ENCHANTED));
+        this.essenceCaskBlockWithItem(BlocksPM.get(BlocksPM.ESSENCE_CASK_FORBIDDEN));
+        this.essenceCaskBlockWithItem(BlocksPM.get(BlocksPM.ESSENCE_CASK_HEAVENLY));
+        this.horizontalExistingBlockWithItem(BlocksPM.get(BlocksPM.WAND_GLAMOUR_TABLE));
         this.infernalFurnaceBlockWithItem();
-        this.simpleExistingBlockWithItem(BlockRegistration.MANA_NEXUS.get());
-        this.simpleExistingBlockWithItem(BlockRegistration.MANA_SINGULARITY.get());
-        this.simpleExistingBlockWithItem(BlockRegistration.MANA_SINGULARITY_CREATIVE.get());
-        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlockRegistration.SCRIBE_TABLE.get());
+        this.simpleExistingBlockWithItem(BlocksPM.get(BlocksPM.MANA_NEXUS));
+        this.simpleExistingBlockWithItem(BlocksPM.get(BlocksPM.MANA_SINGULARITY));
+        this.simpleExistingBlockWithItem(BlocksPM.get(BlocksPM.MANA_SINGULARITY_CREATIVE));
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.get(BlocksPM.SCRIBE_TABLE));
 
         // Generate misc blocks
-        this.emptyBlock(BlockRegistration.CONSECRATION_FIELD.get()); // Do not generate an item
-        this.emptyBlock(BlockRegistration.GLOW_FIELD.get());         // Do not generate an item
-        this.emptyBlock(BlockRegistration.SOUL_GLOW_FIELD.get());    // Do not generate an item
+        this.emptyBlock(BlocksPM.get(BlocksPM.CONSECRATION_FIELD)); // Do not generate an item
+        this.emptyBlock(BlocksPM.get(BlocksPM.GLOW_FIELD));         // Do not generate an item
+        this.emptyBlock(BlocksPM.get(BlocksPM.SOUL_GLOW_FIELD));    // Do not generate an item
         // TODO Generate salt trail block
-        this.simpleCubeBlockWithItem(BlockRegistration.ROCK_SALT_ORE.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.QUARTZ_ORE.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.PRIMALITE_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.HEXIUM_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.HALLOWSTEEL_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.IGNYX_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlockRegistration.SALT_BLOCK.get());
-        this.crossBlockWithItem(BlockRegistration.TREEFOLK_SPROUT.get(), this.key(ItemsPM.TREEFOLK_SEED.get()));
-        this.horizontalExistingBlockWithBasicItem(BlockRegistration.ENDERWARD.get());
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.ROCK_SALT_ORE));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.QUARTZ_ORE));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.PRIMALITE_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.HEXIUM_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.HALLOWSTEEL_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.IGNYX_BLOCK));
+        this.simpleCubeBlockWithItem(BlocksPM.get(BlocksPM.SALT_BLOCK));
+        this.crossBlockWithItem(BlocksPM.get(BlocksPM.TREEFOLK_SPROUT), this.key(ItemsPM.TREEFOLK_SEED.get()));
+        this.horizontalExistingBlockWithBasicItem(BlocksPM.get(BlocksPM.ENDERWARD));
 
         // TODO Genreate arcanometer blockstates
     }
@@ -688,7 +688,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void infernalFurnaceBlockWithItem() {
-        Block block = BlockRegistration.INFERNAL_FURNACE.get();
+        Block block = BlocksPM.get(BlocksPM.INFERNAL_FURNACE);
         ResourceLocation texture = this.blockTexture(block);
         Function<BlockState, ModelFile> modelFunc = state -> this.models().orientableWithBottom(
                 this.name(block) + (state.getValue(BlockStateProperties.LIT) ? "_on" : ""), 
@@ -701,7 +701,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void spellcraftingAltarBlockWithItem() {
-        Block block = BlockRegistration.SPELLCRAFTING_ALTAR.get();
+        Block block = BlocksPM.get(BlocksPM.SPELLCRAFTING_ALTAR);
         ModelFile model = this.models().getExistingFile(ResourceUtils.loc("block/spellcrafting_altar"));
         this.horizontalBlock(block, model);
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("builtin/entity")).transforms()
@@ -730,7 +730,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void incenseBrazierBlockWithItem() {
-        Block block = BlockRegistration.INCENSE_BRAZIER.get();
+        Block block = BlocksPM.get(BlocksPM.INCENSE_BRAZIER);
         ResourceLocation modelLoc = this.defaultModel(block);
         this.getVariantBuilder(block)
             .partialState().with(IncenseBrazierBlock.LIT, false).modelForState().modelFile(this.models().getExistingFile(modelLoc)).addModel()
@@ -739,7 +739,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void ritualBellBlockWithItem() {
-        Block block = BlockRegistration.RITUAL_BELL.get();
+        Block block = BlocksPM.get(BlocksPM.RITUAL_BELL);
         this.getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(this.getRitualBellModel(state))
                 .rotationY(this.getRitualBellRotationY(state))
@@ -767,7 +767,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void bloodletterBlockWithItem() {
-        Block block = BlockRegistration.BLOODLETTER.get();
+        Block block = BlocksPM.get(BlocksPM.BLOODLETTER);
         ResourceLocation modelLoc = this.defaultModel(block);
         this.getVariantBuilder(block)
             .partialState().with(BloodletterBlock.FILLED, false).modelForState().modelFile(this.models().getExistingFile(modelLoc)).addModel()

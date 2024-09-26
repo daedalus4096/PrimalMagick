@@ -147,7 +147,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.handheldItem(ItemsPM.PRIMALITE_AXE.get());
         this.handheldItem(ItemsPM.PRIMALITE_HOE.get());
         this.fishingRodItem(ItemsPM.PRIMALITE_FISHING_ROD.get());
-        this.shieldItem(ItemsPM.PRIMALITE_SHIELD.get(), this.blockTexture(BlockRegistration.PRIMALITE_BLOCK.get()));
+        this.shieldItem(ItemsPM.PRIMALITE_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.PRIMALITE_BLOCK)));
         this.handheldItem(ItemsPM.HEXIUM_SWORD.get());
         this.tridentItem(ItemsPM.HEXIUM_TRIDENT.get());
         this.bowItem(ItemsPM.HEXIUM_BOW.get());
@@ -156,7 +156,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.handheldItem(ItemsPM.HEXIUM_AXE.get());
         this.handheldItem(ItemsPM.HEXIUM_HOE.get());
         this.fishingRodItem(ItemsPM.HEXIUM_FISHING_ROD.get());
-        this.shieldItem(ItemsPM.HEXIUM_SHIELD.get(), this.blockTexture(BlockRegistration.HEXIUM_BLOCK.get()));
+        this.shieldItem(ItemsPM.HEXIUM_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.HEXIUM_BLOCK)));
         this.handheldItem(ItemsPM.HALLOWSTEEL_SWORD.get());
         this.tridentItem(ItemsPM.HALLOWSTEEL_TRIDENT.get());
         this.bowItem(ItemsPM.HALLOWSTEEL_BOW.get());
@@ -165,7 +165,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.handheldItem(ItemsPM.HALLOWSTEEL_AXE.get());
         this.handheldItem(ItemsPM.HALLOWSTEEL_HOE.get());
         this.fishingRodItem(ItemsPM.HALLOWSTEEL_FISHING_ROD.get());
-        this.shieldItem(ItemsPM.HALLOWSTEEL_SHIELD.get(), this.blockTexture(BlockRegistration.HALLOWSTEEL_BLOCK.get()));
+        this.shieldItem(ItemsPM.HALLOWSTEEL_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.HALLOWSTEEL_BLOCK)));
         this.handheldItem(ItemsPM.FORBIDDEN_SWORD.get());
         this.tridentItem(ItemsPM.FORBIDDEN_TRIDENT.get());
         this.bowItem(ItemsPM.FORBIDDEN_BOW.get());

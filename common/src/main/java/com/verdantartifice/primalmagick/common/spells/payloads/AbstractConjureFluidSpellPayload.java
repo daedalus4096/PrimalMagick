@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
@@ -23,6 +20,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import javax.annotation.Nonnull;
 
 /**
  * Base class for a fluid conjuration spell.  Creates a source block of fluid at the designated point.

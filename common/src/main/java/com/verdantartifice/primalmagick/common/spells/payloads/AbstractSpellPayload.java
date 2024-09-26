@@ -1,15 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.text.DecimalFormat;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.mutable.MutableInt;
-
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -19,13 +9,20 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.tags.SpellPropertyTagsPM;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.mutable.MutableInt;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.text.DecimalFormat;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Base class for a spell payload.  Handles property management and serialization.

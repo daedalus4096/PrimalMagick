@@ -1,17 +1,9 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import org.apache.commons.lang3.mutable.MutableObject;
-
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
-
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -21,6 +13,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.mutable.MutableObject;
+
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Base class for a raycast-based spell vehicle.  Finds the first target within a defined distance

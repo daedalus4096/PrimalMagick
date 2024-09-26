@@ -1,23 +1,10 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-
-import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.mojang.datafixers.util.Pair;
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -58,7 +45,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -107,6 +94,16 @@ import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Handlers for player related events.
@@ -344,10 +341,10 @@ public class PlayerEvents {
                 AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.GREATER) && 
                 !player.isShiftKeyDown() && 
                 world.isEmptyBlock(pos) && 
-                world.getBlockState(pos) != BlockRegistration.GLOW_FIELD.get().defaultBlockState() &&
+                world.getBlockState(pos) != BlocksPM.get(BlocksPM.GLOW_FIELD).defaultBlockState() &&
                 world.getBrightness(LightLayer.BLOCK, pos) < 11) {
             // If an attuned, non-sneaking player is in a dark area, they have a chance to drop a sparkling glow field
-            world.setBlock(pos, BlockRegistration.GLOW_FIELD.get().defaultBlockState().setValue(GlowFieldBlock.SPARKLING, Boolean.TRUE), Block.UPDATE_ALL);
+            world.setBlock(pos, BlocksPM.get(BlocksPM.GLOW_FIELD).defaultBlockState().setValue(GlowFieldBlock.SPARKLING, Boolean.TRUE), Block.UPDATE_ALL);
         }
     }
 

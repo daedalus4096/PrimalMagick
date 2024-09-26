@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.events;
 
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
@@ -36,29 +36,29 @@ public class ColorEvents {
     public static void onBlockColorInit(RegisterColorHandlersEvent.Block event) {
         event.register((state, lightReader, pos, dummy) -> {
             return SaltTrailBlock.colorMultiplier(state.getValue(SaltTrailBlock.POWER));
-        }, BlockRegistration.SALT_TRAIL.get());
+        }, BlocksPM.get(BlocksPM.SALT_TRAIL));
         
         event.register((state, lightReader, pos, dummy) -> {
             return (state.getBlock() instanceof StainedSkyglassBlock) ? 
                     ((StainedSkyglassBlock)state.getBlock()).getColor().getFireworkColor() : 
                     DyeColor.WHITE.getFireworkColor();
-        }, BlockRegistration.STAINED_SKYGLASS_BLACK.get(), BlockRegistration.STAINED_SKYGLASS_BLUE.get(), BlockRegistration.STAINED_SKYGLASS_BROWN.get(), BlockRegistration.STAINED_SKYGLASS_CYAN.get(), BlockRegistration.STAINED_SKYGLASS_GRAY.get(), BlockRegistration.STAINED_SKYGLASS_GREEN.get(), BlockRegistration.STAINED_SKYGLASS_LIGHT_BLUE.get(), BlockRegistration.STAINED_SKYGLASS_LIGHT_GRAY.get(), BlockRegistration.STAINED_SKYGLASS_LIME.get(), BlockRegistration.STAINED_SKYGLASS_MAGENTA.get(), BlockRegistration.STAINED_SKYGLASS_ORANGE.get(), BlockRegistration.STAINED_SKYGLASS_PINK.get(), BlockRegistration.STAINED_SKYGLASS_PURPLE.get(), BlockRegistration.STAINED_SKYGLASS_RED.get(), BlockRegistration.STAINED_SKYGLASS_WHITE.get(), BlockRegistration.STAINED_SKYGLASS_YELLOW.get());
+        }, BlocksPM.get(BlocksPM.STAINED_SKYGLASS_BLACK), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_BLUE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_BROWN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_CYAN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_GRAY), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_GREEN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_LIME), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_MAGENTA), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_ORANGE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PINK), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PURPLE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_RED), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_WHITE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_YELLOW));
         
         event.register((state, lightReader, pos, dummy) -> {
             return (state.getBlock() instanceof StainedSkyglassPaneBlock) ? 
                     ((StainedSkyglassPaneBlock)state.getBlock()).getColor().getFireworkColor() : 
                     DyeColor.WHITE.getFireworkColor();
-        }, BlockRegistration.STAINED_SKYGLASS_PANE_BLACK.get(), BlockRegistration.STAINED_SKYGLASS_PANE_BLUE.get(), BlockRegistration.STAINED_SKYGLASS_PANE_BROWN.get(), BlockRegistration.STAINED_SKYGLASS_PANE_CYAN.get(), BlockRegistration.STAINED_SKYGLASS_PANE_GRAY.get(), BlockRegistration.STAINED_SKYGLASS_PANE_GREEN.get(), BlockRegistration.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), BlockRegistration.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), BlockRegistration.STAINED_SKYGLASS_PANE_LIME.get(), BlockRegistration.STAINED_SKYGLASS_PANE_MAGENTA.get(), BlockRegistration.STAINED_SKYGLASS_PANE_ORANGE.get(), BlockRegistration.STAINED_SKYGLASS_PANE_PINK.get(), BlockRegistration.STAINED_SKYGLASS_PANE_PURPLE.get(), BlockRegistration.STAINED_SKYGLASS_PANE_RED.get(), BlockRegistration.STAINED_SKYGLASS_PANE_WHITE.get(), BlockRegistration.STAINED_SKYGLASS_PANE_YELLOW.get());
+        }, BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_BLACK), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_BLUE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_BROWN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_CYAN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_GRAY), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_GREEN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_LIME), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_ORANGE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_PINK), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_PURPLE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_RED), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_WHITE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW));
         
         event.register((state, lightReader, pos, dummy) -> {
             return (state.getBlock() instanceof RitualCandleBlock) ?
                     ((RitualCandleBlock)state.getBlock()).getColor().getFireworkColor() :
                     DyeColor.WHITE.getFireworkColor();
-        }, BlockRegistration.RITUAL_CANDLE_BLACK.get(), BlockRegistration.RITUAL_CANDLE_BLUE.get(), BlockRegistration.RITUAL_CANDLE_BROWN.get(), BlockRegistration.RITUAL_CANDLE_CYAN.get(), BlockRegistration.RITUAL_CANDLE_GRAY.get(), BlockRegistration.RITUAL_CANDLE_GREEN.get(), BlockRegistration.RITUAL_CANDLE_LIGHT_BLUE.get(), BlockRegistration.RITUAL_CANDLE_LIGHT_GRAY.get(), BlockRegistration.RITUAL_CANDLE_LIME.get(), BlockRegistration.RITUAL_CANDLE_MAGENTA.get(), BlockRegistration.RITUAL_CANDLE_ORANGE.get(), BlockRegistration.RITUAL_CANDLE_PINK.get(), BlockRegistration.RITUAL_CANDLE_PURPLE.get(), BlockRegistration.RITUAL_CANDLE_RED.get(), BlockRegistration.RITUAL_CANDLE_WHITE.get(), BlockRegistration.RITUAL_CANDLE_YELLOW.get());
+        }, BlocksPM.get(BlocksPM.RITUAL_CANDLE_BLACK), BlocksPM.get(BlocksPM.RITUAL_CANDLE_BLUE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_BROWN), BlocksPM.get(BlocksPM.RITUAL_CANDLE_CYAN), BlocksPM.get(BlocksPM.RITUAL_CANDLE_GRAY), BlocksPM.get(BlocksPM.RITUAL_CANDLE_GREEN), BlocksPM.get(BlocksPM.RITUAL_CANDLE_LIGHT_BLUE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_LIGHT_GRAY), BlocksPM.get(BlocksPM.RITUAL_CANDLE_LIME), BlocksPM.get(BlocksPM.RITUAL_CANDLE_MAGENTA), BlocksPM.get(BlocksPM.RITUAL_CANDLE_ORANGE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_PINK), BlocksPM.get(BlocksPM.RITUAL_CANDLE_PURPLE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_RED), BlocksPM.get(BlocksPM.RITUAL_CANDLE_WHITE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_YELLOW));
         
         event.register((state, lightReader, pos, dummy) -> {
             return 14731036;
-        }, BlockRegistration.ATTACHED_HYDROMELON_STEM.get());
+        }, BlocksPM.get(BlocksPM.ATTACHED_HYDROMELON_STEM));
         
         event.register((state, lightReader, pos, dummy) -> {
             int i = state.getValue(StemBlock.AGE);
@@ -66,7 +66,7 @@ public class ColorEvents {
             int k = 255 - i * 8;
             int l = i * 4;
             return j << 16 | k << 8 | l;
-        }, BlockRegistration.HYRDOMELON_STEM.get());
+        }, BlocksPM.get(BlocksPM.HYRDOMELON_STEM));
     }
     
     @SubscribeEvent

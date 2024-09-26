@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
@@ -17,7 +15,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
@@ -48,6 +45,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+
+import java.util.List;
 
 /**
  * Definition for a shearing spell.  Acts as if the player used shears on the target, either

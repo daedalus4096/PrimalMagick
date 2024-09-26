@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.common.spells;
 
-import java.util.Map;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
+
+import java.util.Map;
 
 public class SpellPropertyConfiguration {
     public static final Codec<SpellPropertyConfiguration> CODEC = RecordCodecBuilder.create(instance -> {

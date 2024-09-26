@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -13,13 +11,14 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 /**
  * Definition for a consecration spell.  Creates a two-high field of holy energy at the target location
@@ -39,7 +38,7 @@ public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload<Con
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONSECRATE));
 
     public ConsecrateSpellPayload() {
-        super(() -> BlockRegistration.CONSECRATION_FIELD.get().defaultBlockState(), 2);
+        super(() -> BlocksPM.get(BlocksPM.CONSECRATION_FIELD).defaultBlockState(), 2);
     }
     
     public static AbstractRequirement<?> getRequirement() {
