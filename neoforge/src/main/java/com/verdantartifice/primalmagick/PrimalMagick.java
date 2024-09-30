@@ -1,17 +1,28 @@
 package com.verdantartifice.primalmagick;
 
-
+import com.verdantartifice.primalmagick.common.init.InitRegistries;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
+import javax.annotation.Nullable;
+
+/**
+ * Main class of the Primal Magick mod.  Most initialization doesn't happen here,
+ * but rather in response to Neoforge events.
+ *
+ * @author Daedalus4096
+ */
 @Mod(Constants.MOD_ID)
 public class PrimalMagick {
-    public PrimalMagick(IEventBus eventBus) {
-        // This method is invoked by the NeoForge mod loader when it is ready
-        // to load your mod. You can access NeoForge and Common code in this
-        // project.
+    private static IEventBus eventBus;
 
-        // Use NeoForge to bootstrap the Common mod.
-        Constants.LOG.info("Hello NeoForge world!");
+    public PrimalMagick(IEventBus eventBus) {
+        PrimalMagick.eventBus = eventBus;
+        InitRegistries.initDeferredRegistries();
+    }
+
+    @Nullable
+    public static IEventBus getEventBus() {
+        return PrimalMagick.eventBus;
     }
 }
