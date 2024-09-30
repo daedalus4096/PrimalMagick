@@ -147,7 +147,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.handheldItem(ItemRegistration.PRIMALITE_AXE.get());
         this.handheldItem(ItemRegistration.PRIMALITE_HOE.get());
         this.fishingRodItem(ItemRegistration.PRIMALITE_FISHING_ROD.get());
-        this.shieldItem(ItemRegistration.PRIMALITE_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.PRIMALITE_BLOCK)));
+        this.shieldItem(ItemRegistration.PRIMALITE_SHIELD.get(), this.blockTexture(BlocksPM.PRIMALITE_BLOCK.get()));
         this.handheldItem(ItemRegistration.HEXIUM_SWORD.get());
         this.tridentItem(ItemRegistration.HEXIUM_TRIDENT.get());
         this.bowItem(ItemRegistration.HEXIUM_BOW.get());
@@ -156,7 +156,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.handheldItem(ItemRegistration.HEXIUM_AXE.get());
         this.handheldItem(ItemRegistration.HEXIUM_HOE.get());
         this.fishingRodItem(ItemRegistration.HEXIUM_FISHING_ROD.get());
-        this.shieldItem(ItemRegistration.HEXIUM_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.HEXIUM_BLOCK)));
+        this.shieldItem(ItemRegistration.HEXIUM_SHIELD.get(), this.blockTexture(BlocksPM.HEXIUM_BLOCK.get()));
         this.handheldItem(ItemRegistration.HALLOWSTEEL_SWORD.get());
         this.tridentItem(ItemRegistration.HALLOWSTEEL_TRIDENT.get());
         this.bowItem(ItemRegistration.HALLOWSTEEL_BOW.get());
@@ -165,7 +165,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.handheldItem(ItemRegistration.HALLOWSTEEL_AXE.get());
         this.handheldItem(ItemRegistration.HALLOWSTEEL_HOE.get());
         this.fishingRodItem(ItemRegistration.HALLOWSTEEL_FISHING_ROD.get());
-        this.shieldItem(ItemRegistration.HALLOWSTEEL_SHIELD.get(), this.blockTexture(BlocksPM.get(BlocksPM.HALLOWSTEEL_BLOCK)));
+        this.shieldItem(ItemRegistration.HALLOWSTEEL_SHIELD.get(), this.blockTexture(BlocksPM.HALLOWSTEEL_BLOCK.get()));
         this.handheldItem(ItemRegistration.FORBIDDEN_SWORD.get());
         this.tridentItem(ItemRegistration.FORBIDDEN_TRIDENT.get());
         this.bowItem(ItemRegistration.FORBIDDEN_BOW.get());

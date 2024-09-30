@@ -97,7 +97,7 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.get(BlocksPM.WAND_ASSEMBLY_TABLE));
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.WAND_ASSEMBLY_TABLE.get());
     }
     
     @Override

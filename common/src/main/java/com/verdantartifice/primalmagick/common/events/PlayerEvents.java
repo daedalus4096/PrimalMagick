@@ -341,10 +341,10 @@ public class PlayerEvents {
                 AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.GREATER) && 
                 !player.isShiftKeyDown() && 
                 world.isEmptyBlock(pos) && 
-                world.getBlockState(pos) != BlocksPM.get(BlocksPM.GLOW_FIELD).defaultBlockState() &&
+                world.getBlockState(pos) != BlocksPM.GLOW_FIELD.get().defaultBlockState() &&
                 world.getBrightness(LightLayer.BLOCK, pos) < 11) {
             // If an attuned, non-sneaking player is in a dark area, they have a chance to drop a sparkling glow field
-            world.setBlock(pos, BlocksPM.get(BlocksPM.GLOW_FIELD).defaultBlockState().setValue(GlowFieldBlock.SPARKLING, Boolean.TRUE), Block.UPDATE_ALL);
+            world.setBlock(pos, BlocksPM.GLOW_FIELD.get().defaultBlockState().setValue(GlowFieldBlock.SPARKLING, Boolean.TRUE), Block.UPDATE_ALL);
         }
     }
 

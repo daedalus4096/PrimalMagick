@@ -90,7 +90,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.get(BlocksPM.ARCANE_WORKBENCH));
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.ARCANE_WORKBENCH.get());
     }
     
     @Override

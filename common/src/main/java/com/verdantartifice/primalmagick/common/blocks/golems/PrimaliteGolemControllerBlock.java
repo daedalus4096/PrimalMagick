@@ -35,11 +35,11 @@ public class PrimaliteGolemControllerBlock extends AbstractEnchantedGolemControl
 
     @Override
     protected Block getBaseBlock() {
-        return BlocksPM.get(BlocksPM.PRIMALITE_BLOCK);
+        return BlocksPM.PRIMALITE_BLOCK.get();
     }
 
     @Override
     protected Block getControllerBlock() {
-        return BlocksPM.get(BlocksPM.PRIMALITE_GOLEM_CONTROLLER);
+        return BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get();
     }
 }

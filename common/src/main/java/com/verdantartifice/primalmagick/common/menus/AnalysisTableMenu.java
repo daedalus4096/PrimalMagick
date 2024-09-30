@@ -69,7 +69,7 @@ public class AnalysisTableMenu extends AbstractContainerMenu {
     
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.get(BlocksPM.ANALYSIS_TABLE));
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.ANALYSIS_TABLE.get());
     }
     
     @Override

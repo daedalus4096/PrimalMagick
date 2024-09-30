@@ -49,11 +49,11 @@ public class FtuxTest {
     @GameTestGenerator
     public static Collection<TestFunction> font_discovery_tests() {
         Map<String, Block> testParams = ImmutableMap.<String, Block>builder()
-                .put("earth", BlocksPM.get(BlocksPM.ANCIENT_FONT_EARTH))
-                .put("sea", BlocksPM.get(BlocksPM.ANCIENT_FONT_SEA))
-                .put("sky", BlocksPM.get(BlocksPM.ANCIENT_FONT_SKY))
-                .put("sun", BlocksPM.get(BlocksPM.ANCIENT_FONT_SUN))
-                .put("moon", BlocksPM.get(BlocksPM.ANCIENT_FONT_MOON))
+                .put("earth", BlocksPM.ANCIENT_FONT_EARTH.get())
+                .put("sea", BlocksPM.ANCIENT_FONT_SEA.get())
+                .put("sky", BlocksPM.ANCIENT_FONT_SKY.get())
+                .put("sun", BlocksPM.ANCIENT_FONT_SUN.get())
+                .put("moon", BlocksPM.ANCIENT_FONT_MOON.get())
                 .build();
         return TestUtils.createParameterizedTestFunctions("font_discovery_tests", testParams, (helper, block) -> {
             // Create a player in the level and confirm that they start out not having found a shrine

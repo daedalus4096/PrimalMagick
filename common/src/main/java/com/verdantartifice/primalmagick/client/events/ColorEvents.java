@@ -36,29 +36,29 @@ public class ColorEvents {
     public static void onBlockColorInit(RegisterColorHandlersEvent.Block event) {
         event.register((state, lightReader, pos, dummy) -> {
             return SaltTrailBlock.colorMultiplier(state.getValue(SaltTrailBlock.POWER));
-        }, BlocksPM.get(BlocksPM.SALT_TRAIL));
+        }, BlocksPM.SALT_TRAIL.get());
         
         event.register((state, lightReader, pos, dummy) -> {
             return (state.getBlock() instanceof StainedSkyglassBlock) ? 
                     ((StainedSkyglassBlock)state.getBlock()).getColor().getFireworkColor() : 
                     DyeColor.WHITE.getFireworkColor();
-        }, BlocksPM.get(BlocksPM.STAINED_SKYGLASS_BLACK), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_BLUE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_BROWN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_CYAN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_GRAY), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_GREEN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_LIME), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_MAGENTA), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_ORANGE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PINK), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PURPLE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_RED), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_WHITE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_YELLOW));
+        }, BlocksPM.STAINED_SKYGLASS_BLACK.get(), BlocksPM.STAINED_SKYGLASS_BLUE.get(), BlocksPM.STAINED_SKYGLASS_BROWN.get(), BlocksPM.STAINED_SKYGLASS_CYAN.get(), BlocksPM.STAINED_SKYGLASS_GRAY.get(), BlocksPM.STAINED_SKYGLASS_GREEN.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_LIME.get(), BlocksPM.STAINED_SKYGLASS_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PINK.get(), BlocksPM.STAINED_SKYGLASS_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_RED.get(), BlocksPM.STAINED_SKYGLASS_WHITE.get(), BlocksPM.STAINED_SKYGLASS_YELLOW.get());
         
         event.register((state, lightReader, pos, dummy) -> {
             return (state.getBlock() instanceof StainedSkyglassPaneBlock) ? 
                     ((StainedSkyglassPaneBlock)state.getBlock()).getColor().getFireworkColor() : 
                     DyeColor.WHITE.getFireworkColor();
-        }, BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_BLACK), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_BLUE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_BROWN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_CYAN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_GRAY), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_GREEN), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_LIME), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_ORANGE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_PINK), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_PURPLE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_RED), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_WHITE), BlocksPM.get(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW));
+        }, BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get(), BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get(), BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIME.get(), BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PANE_PINK.get(), BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
         
         event.register((state, lightReader, pos, dummy) -> {
             return (state.getBlock() instanceof RitualCandleBlock) ?
                     ((RitualCandleBlock)state.getBlock()).getColor().getFireworkColor() :
                     DyeColor.WHITE.getFireworkColor();
-        }, BlocksPM.get(BlocksPM.RITUAL_CANDLE_BLACK), BlocksPM.get(BlocksPM.RITUAL_CANDLE_BLUE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_BROWN), BlocksPM.get(BlocksPM.RITUAL_CANDLE_CYAN), BlocksPM.get(BlocksPM.RITUAL_CANDLE_GRAY), BlocksPM.get(BlocksPM.RITUAL_CANDLE_GREEN), BlocksPM.get(BlocksPM.RITUAL_CANDLE_LIGHT_BLUE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_LIGHT_GRAY), BlocksPM.get(BlocksPM.RITUAL_CANDLE_LIME), BlocksPM.get(BlocksPM.RITUAL_CANDLE_MAGENTA), BlocksPM.get(BlocksPM.RITUAL_CANDLE_ORANGE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_PINK), BlocksPM.get(BlocksPM.RITUAL_CANDLE_PURPLE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_RED), BlocksPM.get(BlocksPM.RITUAL_CANDLE_WHITE), BlocksPM.get(BlocksPM.RITUAL_CANDLE_YELLOW));
+        }, BlocksPM.RITUAL_CANDLE_BLACK.get(), BlocksPM.RITUAL_CANDLE_BLUE.get(), BlocksPM.RITUAL_CANDLE_BROWN.get(), BlocksPM.RITUAL_CANDLE_CYAN.get(), BlocksPM.RITUAL_CANDLE_GRAY.get(), BlocksPM.RITUAL_CANDLE_GREEN.get(), BlocksPM.RITUAL_CANDLE_LIGHT_BLUE.get(), BlocksPM.RITUAL_CANDLE_LIGHT_GRAY.get(), BlocksPM.RITUAL_CANDLE_LIME.get(), BlocksPM.RITUAL_CANDLE_MAGENTA.get(), BlocksPM.RITUAL_CANDLE_ORANGE.get(), BlocksPM.RITUAL_CANDLE_PINK.get(), BlocksPM.RITUAL_CANDLE_PURPLE.get(), BlocksPM.RITUAL_CANDLE_RED.get(), BlocksPM.RITUAL_CANDLE_WHITE.get(), BlocksPM.RITUAL_CANDLE_YELLOW.get());
         
         event.register((state, lightReader, pos, dummy) -> {
             return 14731036;
-        }, BlocksPM.get(BlocksPM.ATTACHED_HYDROMELON_STEM));
+        }, BlocksPM.ATTACHED_HYDROMELON_STEM.get());
         
         event.register((state, lightReader, pos, dummy) -> {
             int i = state.getValue(StemBlock.AGE);
@@ -66,7 +66,7 @@ public class ColorEvents {
             int k = 255 - i * 8;
             int l = i * 4;
             return j << 16 | k << 8 | l;
-        }, BlocksPM.get(BlocksPM.HYDROMELON_STEM));
+        }, BlocksPM.HYDROMELON_STEM.get());
     }
     
     @SubscribeEvent

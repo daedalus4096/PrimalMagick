@@ -78,7 +78,7 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.get(BlocksPM.WAND_INSCRIPTION_TABLE));
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.WAND_INSCRIPTION_TABLE.get());
     }
 
     @Override

@@ -83,7 +83,7 @@ public class EntityEvents {
         if (event.isCancelable() && !event.isCanceled()) {
             double edgeLength = 2D * EnderwardBlock.EFFECT_RADIUS;
             AABB searchAABB = AABB.ofSize(event.getTarget(), edgeLength, edgeLength, edgeLength);
-            if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> entity.level().getBlockState(pos).is(BlocksPM.get(BlocksPM.ENDERWARD)))) {
+            if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> entity.level().getBlockState(pos).is(BlocksPM.ENDERWARD.get()))) {
                 event.setCanceled(true);
                 if (entity instanceof Player player) {
                     player.displayClientMessage(Component.translatable("event.primalmagick.enderward.block").withStyle(ChatFormatting.RED), true);

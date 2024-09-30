@@ -35,11 +35,11 @@ public class HallowsteelGolemControllerBlock extends AbstractEnchantedGolemContr
 
     @Override
     protected Block getBaseBlock() {
-        return BlocksPM.get(BlocksPM.HALLOWSTEEL_BLOCK);
+        return BlocksPM.HALLOWSTEEL_BLOCK.get();
     }
 
     @Override
     protected Block getControllerBlock() {
-        return BlocksPM.get(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER);
+        return BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER.get();
     }
 }

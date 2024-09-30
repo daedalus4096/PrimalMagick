@@ -112,7 +112,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.containerLevelAccess, playerIn, BlocksPM.get(BlocksPM.SPELLCRAFTING_ALTAR));
+        return stillValid(this.containerLevelAccess, playerIn, BlocksPM.SPELLCRAFTING_ALTAR.get());
     }
 
     public SourceList getManaCosts() {

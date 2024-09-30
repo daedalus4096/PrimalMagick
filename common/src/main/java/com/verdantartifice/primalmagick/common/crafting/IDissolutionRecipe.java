@@ -21,6 +21,6 @@ public interface IDissolutionRecipe extends Recipe<SingleRecipeInput>, IHasManaC
     
     @Override
     default ItemStack getToastSymbol() {
-        return new ItemStack(BlocksPM.get(BlocksPM.DISSOLUTION_CHAMBER));
+        return new ItemStack(BlocksPM.DISSOLUTION_CHAMBER.get());
     }
 }

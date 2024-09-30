@@ -172,7 +172,7 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(this.worldPosCallable, player, BlocksPM.get(BlocksPM.WAND_GLAMOUR_TABLE));
+        return stillValid(this.worldPosCallable, player, BlocksPM.WAND_GLAMOUR_TABLE.get());
     }
 
     @Override

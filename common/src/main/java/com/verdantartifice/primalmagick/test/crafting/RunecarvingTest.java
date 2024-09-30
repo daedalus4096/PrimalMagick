@@ -29,8 +29,8 @@ public class RunecarvingTest extends AbstractBaseTest {
         
         // Place a runecarving table
         BlockPos tablePos = new BlockPos(1, 1, 1);
-        helper.setBlock(tablePos, BlocksPM.get(BlocksPM.RUNECARVING_TABLE));
-        helper.assertBlockPresent(BlocksPM.get(BlocksPM.RUNECARVING_TABLE), tablePos);
+        helper.setBlock(tablePos, BlocksPM.RUNECARVING_TABLE.get());
+        helper.assertBlockPresent(BlocksPM.RUNECARVING_TABLE.get(), tablePos);
         
         // Populate the runecarving table with materials
         var baseTile = helper.getBlockEntity(tablePos);

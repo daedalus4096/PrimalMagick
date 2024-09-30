@@ -250,7 +250,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.get(BlocksPM.RUNIC_GRINDSTONE));
+        return stillValid(this.worldPosCallable, playerIn, BlocksPM.RUNIC_GRINDSTONE.get());
     }
     
     protected void grantHints(ItemStack stack) {

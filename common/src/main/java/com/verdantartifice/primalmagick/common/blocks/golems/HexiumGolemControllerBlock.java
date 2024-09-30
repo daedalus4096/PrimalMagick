@@ -35,11 +35,11 @@ public class HexiumGolemControllerBlock extends AbstractEnchantedGolemController
 
     @Override
     protected Block getBaseBlock() {
-        return BlocksPM.get(BlocksPM.HEXIUM_BLOCK);
+        return BlocksPM.HEXIUM_BLOCK.get();
     }
 
     @Override
     protected Block getControllerBlock() {
-        return BlocksPM.get(BlocksPM.HEXIUM_GOLEM_CONTROLLER);
+        return BlocksPM.HEXIUM_GOLEM_CONTROLLER.get();
     }
 }

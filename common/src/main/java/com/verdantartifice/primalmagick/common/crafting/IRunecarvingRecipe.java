@@ -27,6 +27,6 @@ public interface IRunecarvingRecipe extends Recipe<RunecarvingRecipeInput>, IHas
     
     @Override
     default ItemStack getToastSymbol() {
-        return new ItemStack(BlocksPM.get(BlocksPM.RUNECARVING_TABLE));
+        return new ItemStack(BlocksPM.RUNECARVING_TABLE.get());
     }
 }
