@@ -48,7 +48,7 @@ public class RelicFragmentsModifier extends LootModifier {
         int lootingLevel = context.getLootingModifier();
         int count = context.getRandom().nextInt((this.maxCount - this.minCount + 1) + (this.lootingBonus * lootingLevel)) + this.minCount;
         if (targetEntity.getType().is(this.targetTag) && count > 0) {
-            generatedLoot.add(new ItemStack(ItemRegistration.MYSTICAL_RELIC_FRAGMENT.get(), count));
+            generatedLoot.add(new ItemStack(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), count));
         }
         return generatedLoot;
     }

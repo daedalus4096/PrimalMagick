@@ -18,6 +18,6 @@ public class MajesticSkyPixieEntity extends AbstractSkyPixieEntity implements IM
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.MAJESTIC_SKY_PIXIE.get();
+        return ItemsPM.MAJESTIC_SKY_PIXIE.get();
     }
 }

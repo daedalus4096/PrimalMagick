@@ -81,7 +81,7 @@ public class ConcoctingRecipeBuilder {
     
     public ConcoctingRecipeBuilder addWaterFlaskIngredient() {
         return this.addIngredient(PartialComponentIngredient.builder()
-                .item(ItemRegistration.CONCOCTION.get())
+                .item(ItemsPM.CONCOCTION.get())
                 .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
                 .data(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
                 .build());
@@ -89,7 +89,7 @@ public class ConcoctingRecipeBuilder {
     
     public ConcoctingRecipeBuilder addWaterBombIngredient() {
         return this.addIngredient(PartialComponentIngredient.builder()
-                .item(ItemRegistration.ALCHEMICAL_BOMB.get())
+                .item(ItemsPM.ALCHEMICAL_BOMB.get())
                 .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
                 .data(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
                 .build());

@@ -27,7 +27,7 @@ public enum ArcaneRecipeBookCategories {
     CRAFTING_REDSTONE(RecipeBookCategories.CRAFTING_REDSTONE, new ItemStack(Items.REDSTONE)),
     CRAFTING_EQUIPMENT(RecipeBookCategories.CRAFTING_EQUIPMENT, new ItemStack(Items.IRON_AXE), new ItemStack(Items.GOLDEN_SWORD)),
     CRAFTING_MISC(RecipeBookCategories.CRAFTING_MISC, new ItemStack(Items.LAVA_BUCKET), new ItemStack(Items.APPLE)),
-    CRAFTING_ARCANE(RecipeBookCategories.UNKNOWN, new ItemStack(ItemRegistration.GRIMOIRE.get())),
+    CRAFTING_ARCANE(RecipeBookCategories.UNKNOWN, new ItemStack(ItemsPM.GRIMOIRE.get())),
     CONCOCTER_SEARCH(RecipeBookCategories.UNKNOWN, new ItemStack(Items.COMPASS)),
     CONCOCTER_DRINKABLE(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE)),
     CONCOCTER_BOMB(RecipeBookCategories.UNKNOWN, ConcoctionUtils.newBomb(Potions.POISON)),

@@ -52,7 +52,7 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 116, 0, 16, 16);
         this.researchIcon = guiHelper.drawableBuilder(RESEARCH_TEXTURE, 0, 0, 32, 32).setTextureSize(32, 32).build();
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 116, 54));
-        this.setIcon(new ItemStack(ItemRegistration.ARCANE_WORKBENCH.get()));
+        this.setIcon(new ItemStack(ItemsPM.ARCANE_WORKBENCH.get()));
     }
 
     @Override

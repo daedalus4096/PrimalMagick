@@ -48,7 +48,7 @@ public class CreativeModeTabsPM {
     // Register mod creative tab
     public static final RegistryObject<CreativeModeTab> TAB = TABS.register(Constants.MOD_ID, () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.primalmagick"))
-            .icon(() -> new ItemStack(ItemRegistration.GRIMOIRE.get()))
+            .icon(() -> new ItemStack(ItemsPM.GRIMOIRE.get()))
             .displayItems((params, output) -> {
                 CreativeModeTabsPM.getTabRegistrationEntries().forEach(entry -> entry.register(params, output));
             })

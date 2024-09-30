@@ -18,6 +18,6 @@ public class GrandBloodPixieEntity extends AbstractBloodPixieEntity implements I
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.GRAND_BLOOD_PIXIE.get();
+        return ItemsPM.GRAND_BLOOD_PIXIE.get();
     }
 }

@@ -38,7 +38,7 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
         super(guiHelper, UID, "block.primalmagick.dissolution_chamber");
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 82, 0, 16, 16);
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 82, 44));
-        this.setIcon(new ItemStack(ItemRegistration.DISSOLUTION_CHAMBER.get()));
+        this.setIcon(new ItemStack(ItemsPM.DISSOLUTION_CHAMBER.get()));
     }
 
     @Override

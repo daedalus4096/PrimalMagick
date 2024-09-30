@@ -25,7 +25,7 @@ public class RunescribingAltarTER implements BlockEntityRenderer<RunescribingAlt
     
     protected ItemStack getRuneStack() {
         if (this.runeStack == null) {
-            this.runeStack = new ItemStack(ItemRegistration.RUNE_UNATTUNED.get());
+            this.runeStack = new ItemStack(ItemsPM.RUNE_UNATTUNED.get());
         }
         return this.runeStack;
     }

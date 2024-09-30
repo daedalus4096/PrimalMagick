@@ -25,7 +25,7 @@ public class FourLeafCloverModifier extends LootModifier {
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         // Random chance is controlled by the RandomChanceWithLooting condition in the modifier JSON
-        generatedLoot.add(new ItemStack(ItemRegistration.FOUR_LEAF_CLOVER.get()));
+        generatedLoot.add(new ItemStack(ItemsPM.FOUR_LEAF_CLOVER.get()));
         return generatedLoot;
     }
 

@@ -30,7 +30,7 @@ public class IgnyxEntity extends ThrowableItemProjectile {
 
     @Override
     protected Item getDefaultItem() {
-        return ItemRegistration.IGNYX.get();
+        return ItemsPM.IGNYX.get();
     }
 
     @Override

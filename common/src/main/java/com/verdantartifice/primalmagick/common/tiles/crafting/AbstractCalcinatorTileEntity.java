@@ -328,7 +328,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
             return EssenceItem.getEssence(type, source, count);
         } else {
             // If the calcinator's owner hasn't discovered the given source, only produce alchemical waste
-            return new ItemStack(ItemRegistration.ALCHEMICAL_WASTE.get(), count);
+            return new ItemStack(ItemsPM.ALCHEMICAL_WASTE.get(), count);
         }
     }
 

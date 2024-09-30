@@ -18,6 +18,6 @@ public class GrandMoonPixieEntity extends AbstractMoonPixieEntity implements IGr
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.GRAND_MOON_PIXIE.get();
+        return ItemsPM.GRAND_MOON_PIXIE.get();
     }
 }

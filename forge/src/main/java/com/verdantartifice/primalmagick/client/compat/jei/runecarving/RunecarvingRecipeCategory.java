@@ -42,7 +42,7 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
         super(guiHelper, UID, "block.primalmagick.runecarving_table");
         this.researchIcon = guiHelper.drawableBuilder(RESEARCH_TEXTURE, 0, 0, 32, 32).setTextureSize(32, 32).build();
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 125, 36));
-        this.setIcon(new ItemStack(ItemRegistration.RUNECARVING_TABLE.get()));
+        this.setIcon(new ItemStack(ItemsPM.RUNECARVING_TABLE.get()));
     }
 
     @Override

@@ -37,7 +37,7 @@ public class BloodyFleshModifier extends LootModifier {
         // Random chance is controlled by the RandomChanceWithLooting condition in the modifier JSON
         Entity targetEntity = context.getParam(LootContextParams.THIS_ENTITY);
         if (targetEntity.getType().is(this.targetTag)) {
-            generatedLoot.add(new ItemStack(ItemRegistration.BLOODY_FLESH.get()));
+            generatedLoot.add(new ItemStack(ItemsPM.BLOODY_FLESH.get()));
         }
         return generatedLoot;
     }

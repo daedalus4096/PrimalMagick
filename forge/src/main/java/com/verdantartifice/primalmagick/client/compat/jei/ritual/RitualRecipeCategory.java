@@ -51,7 +51,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 170, 0, 16, 16);
         this.researchIcon = guiHelper.drawableBuilder(RESEARCH_TEXTURE, 0, 0, 32, 32).setTextureSize(32, 32).build();
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 170, 80));
-        this.setIcon(new ItemStack(ItemRegistration.RITUAL_ALTAR.get()));
+        this.setIcon(new ItemStack(ItemsPM.RITUAL_ALTAR.get()));
     }
 
     @Override

@@ -12,10 +12,10 @@ import net.minecraft.world.item.Item;
 public class IndexIconFactory {
     public static AbstractIndexIcon fromEntryIcon(IconDefinition data, boolean large) {
         if (data == null) {
-            return ItemIndexIcon.of(ItemRegistration.GRIMOIRE.get(), large);
+            return ItemIndexIcon.of(ItemsPM.GRIMOIRE.get(), large);
         } else if (data.isItem()) {
             Item item = data.asItem();
-            return ItemIndexIcon.of(item == null ? ItemRegistration.GRIMOIRE.get() : item, large);
+            return ItemIndexIcon.of(item == null ? ItemsPM.GRIMOIRE.get() : item, large);
         } else {
             return GenericIndexIcon.of(data.getLocation(), large);
         }

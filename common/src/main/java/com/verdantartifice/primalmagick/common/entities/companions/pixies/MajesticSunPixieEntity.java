@@ -18,6 +18,6 @@ public class MajesticSunPixieEntity extends AbstractSunPixieEntity implements IM
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.MAJESTIC_SUN_PIXIE.get();
+        return ItemsPM.MAJESTIC_SUN_PIXIE.get();
     }
 }

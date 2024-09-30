@@ -157,7 +157,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     
     protected void registerPulsingLogTable(Block block) {
         LootPool.Builder logBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block)).when(ExplosionCondition.survivesExplosion());
-        LootPool.Builder pulseBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(ItemRegistration.HEARTWOOD.get()))
+        LootPool.Builder pulseBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(ItemsPM.HEARTWOOD.get()))
                 .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(AbstractPhasingLogBlock.PULSING, true)));
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(logBuilder).withPool(pulseBuilder);
         this.registerLootTableBuilder(block, tableBuilder);

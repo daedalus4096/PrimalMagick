@@ -52,7 +52,7 @@ public class ConcoctionItem extends Item {
         if (stack.has(DataComponents.POTION_CONTENTS) && stack.get(DataComponents.POTION_CONTENTS).is(Potions.WATER)) {
             if (!level.isClientSide) {
                 Item item = stack.getItem();
-                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(ItemRegistration.SKYGLASS_FLASK.get())));
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(ItemsPM.SKYGLASS_FLASK.get())));
                 player.awardStat(Stats.USE_CAULDRON);
                 player.awardStat(Stats.ITEM_USED.get(item));
                 level.setBlockAndUpdate(pos, Blocks.WATER_CAULDRON.defaultBlockState());
@@ -68,7 +68,7 @@ public class ConcoctionItem extends Item {
         if (state.getValue(LayeredCauldronBlock.LEVEL) < 3 && stack.has(DataComponents.POTION_CONTENTS) && stack.get(DataComponents.POTION_CONTENTS).is(Potions.WATER)) {
             if (!level.isClientSide) {
                 Item item = stack.getItem();
-                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(ItemRegistration.SKYGLASS_FLASK.get())));
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(ItemsPM.SKYGLASS_FLASK.get())));
                 player.awardStat(Stats.USE_CAULDRON);
                 player.awardStat(Stats.ITEM_USED.get(item));
                 level.setBlockAndUpdate(pos, state.cycle(LayeredCauldronBlock.LEVEL));
@@ -117,7 +117,7 @@ public class ConcoctionItem extends Item {
             }
         }
         
-        return stack.isEmpty() ? new ItemStack(ItemRegistration.SKYGLASS_FLASK.get()) : stack;
+        return stack.isEmpty() ? new ItemStack(ItemsPM.SKYGLASS_FLASK.get()) : stack;
     }
 
     @Override

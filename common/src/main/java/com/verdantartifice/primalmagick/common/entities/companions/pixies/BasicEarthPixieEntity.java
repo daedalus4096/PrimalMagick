@@ -18,6 +18,6 @@ public class BasicEarthPixieEntity extends AbstractEarthPixieEntity implements I
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.BASIC_EARTH_PIXIE.get();
+        return ItemsPM.BASIC_EARTH_PIXIE.get();
     }
 }

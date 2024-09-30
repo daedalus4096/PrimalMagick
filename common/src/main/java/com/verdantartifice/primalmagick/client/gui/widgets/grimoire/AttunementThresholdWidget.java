@@ -32,10 +32,10 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class AttunementThresholdWidget extends AbstractWidget {
-    protected static final ItemStack WAND_STACK = Util.make(new ItemStack(ItemRegistration.MODULAR_WAND.get()), stack -> {
-        ItemRegistration.MODULAR_WAND.get().setWandCore(stack, WandCore.HEARTWOOD);
-        ItemRegistration.MODULAR_WAND.get().setWandCap(stack, WandCap.IRON);
-        ItemRegistration.MODULAR_WAND.get().setWandGem(stack, WandGem.APPRENTICE);
+    protected static final ItemStack WAND_STACK = Util.make(new ItemStack(ItemsPM.MODULAR_WAND.get()), stack -> {
+        ItemsPM.MODULAR_WAND.get().setWandCore(stack, WandCore.HEARTWOOD);
+        ItemsPM.MODULAR_WAND.get().setWandCap(stack, WandCap.IRON);
+        ItemsPM.MODULAR_WAND.get().setWandGem(stack, WandGem.APPRENTICE);
     });
     protected static final ItemStack SHACKLED_OVERLAY_STACK = new ItemStack(Items.BARRIER);
     

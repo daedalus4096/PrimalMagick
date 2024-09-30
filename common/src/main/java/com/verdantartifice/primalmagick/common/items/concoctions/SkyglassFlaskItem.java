@@ -26,7 +26,7 @@ public class SkyglassFlaskItem extends AbstractConcoctionContainerItem {
     public static final CauldronInteraction FILL_CONCOCTION = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
         if (!level.isClientSide) {
             Item item = stack.getItem();
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, ItemRegistration.CONCOCTION.get().getDefaultInstance().copy()));
+            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, ItemsPM.CONCOCTION.get().getDefaultInstance().copy()));
             player.awardStat(Stats.USE_CAULDRON);
             player.awardStat(Stats.ITEM_USED.get(item));
             LayeredCauldronBlock.lowerFillLevel(state, level, pos);
@@ -42,6 +42,6 @@ public class SkyglassFlaskItem extends AbstractConcoctionContainerItem {
 
     @Override
     protected ItemStack getConcoctionContainerItem() {
-        return ItemRegistration.CONCOCTION.get().getDefaultInstance().copy();
+        return ItemsPM.CONCOCTION.get().getDefaultInstance().copy();
     }
 }

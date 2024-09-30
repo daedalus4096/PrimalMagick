@@ -18,6 +18,6 @@ public class BasicBloodPixieEntity extends AbstractBloodPixieEntity implements I
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.BASIC_BLOOD_PIXIE.get();
+        return ItemsPM.BASIC_BLOOD_PIXIE.get();
     }
 }

@@ -95,7 +95,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
 
         // Slot 2: Blank scroll
         this.scrollSlot = this.addSlot(new FilteredSlot(InventoryUtils.wrapInventory(this.scrollInv, null), 0, 160, 8, 
-                new FilteredSlot.Properties().item(ItemRegistration.SPELL_SCROLL_BLANK.get()).tooltip(SCROLL_SLOT_TOOLTIP)));
+                new FilteredSlot.Properties().item(ItemsPM.SPELL_SCROLL_BLANK.get()).tooltip(SCROLL_SLOT_TOOLTIP)));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {

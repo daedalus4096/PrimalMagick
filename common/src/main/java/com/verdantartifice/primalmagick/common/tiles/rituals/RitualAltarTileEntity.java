@@ -967,7 +967,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 BlockPos saltPos = this.saltPositions.get(this.level.random.nextInt(this.saltPositions.size()));
                 Block block = this.level.getBlockState(saltPos).getBlock();
                 if (block == BlocksPM.SALT_TRAIL.get()) {
-                    Containers.dropItemStack(this.level, saltPos.getX() + 0.5D, saltPos.getY() + 0.5D, saltPos.getZ() + 0.5D, new ItemStack(ItemRegistration.REFINED_SALT.get()));
+                    Containers.dropItemStack(this.level, saltPos.getX() + 0.5D, saltPos.getY() + 0.5D, saltPos.getZ() + 0.5D, new ItemStack(ItemsPM.REFINED_SALT.get()));
                     this.level.removeBlock(saltPos, false);
                     this.doMishapEffects(saltPos, breakIndex == 0); // Only play sounds once
                     break;

@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class PrimaliteTridentEntity extends AbstractTridentEntity {
-    private static final ItemStack DEFAULT_THROWN_STACK = new ItemStack(ItemRegistration.PRIMALITE_TRIDENT.get());
+    private static final ItemStack DEFAULT_THROWN_STACK = new ItemStack(ItemsPM.PRIMALITE_TRIDENT.get());
     
     public PrimaliteTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
         super(type, worldIn);

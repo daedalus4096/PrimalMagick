@@ -18,6 +18,6 @@ public class MajesticVoidPixieEntity extends AbstractVoidPixieEntity implements 
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.MAJESTIC_VOID_PIXIE.get();
+        return ItemsPM.MAJESTIC_VOID_PIXIE.get();
     }
 }

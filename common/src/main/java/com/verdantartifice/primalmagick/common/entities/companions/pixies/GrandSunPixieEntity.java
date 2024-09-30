@@ -18,6 +18,6 @@ public class GrandSunPixieEntity extends AbstractSunPixieEntity implements IGran
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.GRAND_SUN_PIXIE.get();
+        return ItemsPM.GRAND_SUN_PIXIE.get();
     }
 }

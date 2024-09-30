@@ -18,6 +18,6 @@ public class BasicSunPixieEntity extends AbstractSunPixieEntity implements IBasi
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.BASIC_SUN_PIXIE.get();
+        return ItemsPM.BASIC_SUN_PIXIE.get();
     }
 }

@@ -18,7 +18,7 @@ public class GrandInfernalPixieEntity extends AbstractInfernalPixieEntity implem
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.GRAND_INFERNAL_PIXIE.get();
+        return ItemsPM.GRAND_INFERNAL_PIXIE.get();
     }
 
     @Override

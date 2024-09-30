@@ -901,7 +901,7 @@ public class PrimalMagickCommand {
     }
 
     private static int giveBook(CommandSourceStack source, Collection<ServerPlayer> targets, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage, Optional<Integer> comprehension) {
-        ItemStack bookStack = new ItemStack(ItemRegistration.STATIC_BOOK.get());
+        ItemStack bookStack = new ItemStack(ItemsPM.STATIC_BOOK.get());
         StaticBookItem.setBookDefinition(bookStack, bookDef);
         StaticBookItem.setBookLanguage(bookStack, bookLanguage);
         StaticBookItem.setGeneration(bookStack, 0);

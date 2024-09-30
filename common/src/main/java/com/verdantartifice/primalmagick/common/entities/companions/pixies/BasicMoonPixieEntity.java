@@ -18,6 +18,6 @@ public class BasicMoonPixieEntity extends AbstractMoonPixieEntity implements IBa
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.BASIC_MOON_PIXIE.get();
+        return ItemsPM.BASIC_MOON_PIXIE.get();
     }
 }

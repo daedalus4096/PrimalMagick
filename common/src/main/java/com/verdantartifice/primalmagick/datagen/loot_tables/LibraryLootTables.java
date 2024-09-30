@@ -267,7 +267,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     protected static LootPoolEntryContainer.Builder<?> autoTranslatingBook(HolderLookup.Provider registries, ResourceKey<BookDefinition> bookKey) {
         Holder<BookDefinition> bookHolder = registries.lookupOrThrow(RegistryKeysPM.BOOKS).getOrThrow(bookKey);
         Holder<BookLanguage> langHolder = registries.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getOrThrow(BookLanguagesPM.BABELTONGUE);
-        return LootItem.lootTableItem(ItemRegistration.STATIC_BOOK.get()).setWeight(1).apply(SetComponentsFunction.setComponent(DataComponentsPM.BOOK_LANGUAGE.get(), langHolder))
+        return LootItem.lootTableItem(ItemsPM.STATIC_BOOK.get()).setWeight(1).apply(SetComponentsFunction.setComponent(DataComponentsPM.BOOK_LANGUAGE.get(), langHolder))
                 .apply(SetComponentsFunction.setComponent(DataComponentsPM.BOOK_DEFINITION.get(), bookHolder));
     }
     

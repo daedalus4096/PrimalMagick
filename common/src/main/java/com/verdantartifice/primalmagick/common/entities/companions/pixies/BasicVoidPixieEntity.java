@@ -18,6 +18,6 @@ public class BasicVoidPixieEntity extends AbstractVoidPixieEntity implements IBa
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.BASIC_VOID_PIXIE.get();
+        return ItemsPM.BASIC_VOID_PIXIE.get();
     }
 }

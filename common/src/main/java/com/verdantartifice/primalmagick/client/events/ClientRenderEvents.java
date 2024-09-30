@@ -101,7 +101,7 @@ public class ClientRenderEvents {
     @SubscribeEvent
     public static void onHighlightEntity(RenderHighlightEvent.Entity event) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player.getMainHandItem().getItem() == ItemRegistration.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemRegistration.ARCANOMETER.get()) {
+        if (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get()) {
             Entity entity = event.getTarget().getEntity();
             AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.level().registryAccess()).ifPresent(affinities -> {
                 boolean isScanned = ResearchManager.isScanned(entity.getType(), mc.player);

@@ -18,6 +18,6 @@ public class GrandSkyPixieEntity extends AbstractSkyPixieEntity implements IGran
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.GRAND_SKY_PIXIE.get();
+        return ItemsPM.GRAND_SKY_PIXIE.get();
     }
 }

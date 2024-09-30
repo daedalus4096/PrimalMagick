@@ -258,9 +258,9 @@ public class InventoryUtils {
         } else if (stack.is(Items.POTION)) {
             // Potions don't use the standard container mechanism, so test for them directly
             refundStack = new ItemStack(Items.GLASS_BOTTLE, refundCount);
-        } else if (stack.is(ItemRegistration.CONCOCTION.get())) {
+        } else if (stack.is(ItemsPM.CONCOCTION.get())) {
             // Concoctions don't use the standard container mechanism, so test for them directly
-            refundStack = new ItemStack(ItemRegistration.SKYGLASS_FLASK.get(), refundCount);
+            refundStack = new ItemStack(ItemsPM.SKYGLASS_FLASK.get(), refundCount);
         }
         
         if (!refundStack.isEmpty() && !player.addItem(refundStack)) {

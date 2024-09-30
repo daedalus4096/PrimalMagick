@@ -18,6 +18,6 @@ public class BasicSkyPixieEntity extends AbstractSkyPixieEntity implements IBasi
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.BASIC_SKY_PIXIE.get();
+        return ItemsPM.BASIC_SKY_PIXIE.get();
     }
 }

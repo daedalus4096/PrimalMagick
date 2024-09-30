@@ -48,7 +48,7 @@ public class RunecarvingTest extends AbstractBaseTest {
         
         // Take the result that should be there and confirm it's the right type of rune
         var output = menu.quickMoveStack(player, 2);
-        helper.assertTrue(output.is(ItemRegistration.RUNE_UNATTUNED.get()), "Output item not of expected type");
+        helper.assertTrue(output.is(ItemsPM.RUNE_UNATTUNED.get()), "Output item not of expected type");
         
         // Confirm that crafting materials were consumed
         helper.assertTrue(tile.getItem(0, 0).isEmpty(), "Stone slab material stack not empty");

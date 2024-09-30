@@ -258,7 +258,7 @@ public class FlyingCarpetEntity extends Entity {
     }
 
     protected ItemStack getDropItem() {
-        ItemStack stack = new ItemStack(ItemRegistration.FLYING_CARPET.get());
+        ItemStack stack = new ItemStack(ItemsPM.FLYING_CARPET.get());
         DyeColor color = this.getDyeColor();
         if (color != null) {
             ((FlyingCarpetItem)stack.getItem()).setDyeColor(stack, color);

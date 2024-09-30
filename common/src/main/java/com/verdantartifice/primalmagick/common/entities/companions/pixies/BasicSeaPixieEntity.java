@@ -18,6 +18,6 @@ public class BasicSeaPixieEntity extends AbstractSeaPixieEntity implements IBasi
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.BASIC_SEA_PIXIE.get();
+        return ItemsPM.BASIC_SEA_PIXIE.get();
     }
 }

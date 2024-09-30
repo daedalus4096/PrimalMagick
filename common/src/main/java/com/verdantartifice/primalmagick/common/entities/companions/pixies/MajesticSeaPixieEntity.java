@@ -18,6 +18,6 @@ public class MajesticSeaPixieEntity extends AbstractSeaPixieEntity implements IM
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.MAJESTIC_SEA_PIXIE.get();
+        return ItemsPM.MAJESTIC_SEA_PIXIE.get();
     }
 }

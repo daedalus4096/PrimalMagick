@@ -545,7 +545,7 @@ public class PlayerEvents {
                 grantDreamJournal(player);
             }
             
-            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemRegistration.DREAM_VISION_TALISMAN.get().getDefaultInstance());
+            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
             if (!foundTalismans.isEmpty()) {
                 // Drain any full Dream Vision Talismans upon waking to grant new observation knowledge
                 boolean success = false;
@@ -602,7 +602,7 @@ public class PlayerEvents {
         Player player = event.getEntity();
         Level level = player.level();
         if (player != null && !level.isClientSide) {
-            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemRegistration.DREAM_VISION_TALISMAN.get().getDefaultInstance());
+            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
             if (!foundTalismans.isEmpty()) {
                 int xpValue = event.getOrb().value;
                 for (ItemStack foundStack : foundTalismans) {

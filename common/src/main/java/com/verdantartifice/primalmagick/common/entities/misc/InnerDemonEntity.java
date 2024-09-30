@@ -178,7 +178,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     @Override
     protected void dropCustomDeathLoot(ServerLevel serverLevel, DamageSource source, boolean recentlyHitIn) {
         super.dropCustomDeathLoot(serverLevel, source, recentlyHitIn);
-        ItemEntity itemEntity = this.spawnAtLocation(ItemRegistration.HALLOWED_ORB.get());
+        ItemEntity itemEntity = this.spawnAtLocation(ItemsPM.HALLOWED_ORB.get());
         if (itemEntity != null) {
             itemEntity.setExtendedLifetime();
         }

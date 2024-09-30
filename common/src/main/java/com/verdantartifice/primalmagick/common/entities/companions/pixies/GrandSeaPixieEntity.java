@@ -18,6 +18,6 @@ public class GrandSeaPixieEntity extends AbstractSeaPixieEntity implements IGran
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.GRAND_SEA_PIXIE.get();
+        return ItemsPM.GRAND_SEA_PIXIE.get();
     }
 }

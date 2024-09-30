@@ -27,8 +27,8 @@ public class CraftingRequirementsTest {
         var container = SimpleCraftingContainer.builder()
                 .pattern("RSE")
                 .define('R', Items.REDSTONE)
-                .define('S', ItemRegistration.REFINED_SALT.get())
-                .define('E', ItemRegistration.ESSENCE_DUST_EARTH.get())
+                .define('S', ItemsPM.REFINED_SALT.get())
+                .define('E', ItemsPM.ESSENCE_DUST_EARTH.get())
                 .build();
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), container, helper.getLevel());
         helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
@@ -53,7 +53,7 @@ public class CraftingRequirementsTest {
                 .pattern("AHM")
                 .define('A', Items.APPLE)
                 .define('H', Items.HONEY_BOTTLE)
-                .define('M', ItemRegistration.MANA_SALTS.get())
+                .define('M', ItemsPM.MANA_SALTS.get())
                 .build();
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), container, helper.getLevel());
         helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");

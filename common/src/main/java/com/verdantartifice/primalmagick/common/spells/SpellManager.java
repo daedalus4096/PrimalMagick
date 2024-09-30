@@ -181,10 +181,10 @@ public class SpellManager {
             }
             
             // Show the shared cooldown visually
-            player.getCooldowns().addCooldown(ItemRegistration.SPELL_SCROLL_FILLED.get(), durationTicks);
-            player.getCooldowns().addCooldown(ItemRegistration.MUNDANE_WAND.get(), durationTicks);
-            player.getCooldowns().addCooldown(ItemRegistration.MODULAR_WAND.get(), durationTicks);
-            player.getCooldowns().addCooldown(ItemRegistration.MODULAR_STAFF.get(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.SPELL_SCROLL_FILLED.get(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MUNDANE_WAND.get(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MODULAR_WAND.get(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MODULAR_STAFF.get(), durationTicks);
         }
     }
     
@@ -300,7 +300,7 @@ public class SpellManager {
             
             retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));
             
-            if (!spellSource.is(ItemRegistration.SPELL_SCROLL_FILLED.get())) {
+            if (!spellSource.is(ItemsPM.SPELL_SCROLL_FILLED.get())) {
                 retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost", spell.getManaCost().getText())));
             }
         }

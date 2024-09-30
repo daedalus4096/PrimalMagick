@@ -75,8 +75,8 @@ public class JeiHelper implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemRegistration.CONCOCTION.get(), ConcoctionSubtypeInterpreter.INSTANCE);
-        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemRegistration.ALCHEMICAL_BOMB.get(), ConcoctionSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.CONCOCTION.get(), ConcoctionSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.ALCHEMICAL_BOMB.get(), ConcoctionSubtypeInterpreter.INSTANCE);
     }
 
     @Override

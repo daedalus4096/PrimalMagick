@@ -210,7 +210,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
             
             ItemStack beeswaxStack = this.getItem(OUTPUT_INV_INDEX, 1);
             if (beeswaxStack.isEmpty()) {
-                this.setItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemRegistration.BEESWAX.get()));
+                this.setItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemsPM.BEESWAX.get()));
             } else {
                 beeswaxStack.grow(1);
             }

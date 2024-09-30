@@ -23,7 +23,7 @@ public class PartialComponentIngredientTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void predicate_works(GameTestHelper helper) {
         var ingredient = PartialComponentIngredient.builder()
-                .item(ItemRegistration.CONCOCTION.get())
+                .item(ItemsPM.CONCOCTION.get())
                 .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
                 .data(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
                 .build();

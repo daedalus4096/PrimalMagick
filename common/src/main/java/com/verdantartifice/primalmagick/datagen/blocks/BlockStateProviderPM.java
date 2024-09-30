@@ -301,7 +301,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.HALLOWSTEEL_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.IGNYX_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.SALT_BLOCK.get());
-        this.crossBlockWithItem(BlocksPM.TREEFOLK_SPROUT.get(), this.key(ItemRegistration.TREEFOLK_SEED.get()));
+        this.crossBlockWithItem(BlocksPM.TREEFOLK_SPROUT.get(), this.key(ItemsPM.TREEFOLK_SEED.get()));
         this.horizontalExistingBlockWithBasicItem(BlocksPM.ENDERWARD.get());
 
         // TODO Genreate arcanometer blockstates

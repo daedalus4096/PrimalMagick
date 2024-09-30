@@ -18,6 +18,6 @@ public class MajesticHallowedPixieEntity extends AbstractHallowedPixieEntity imp
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.MAJESTIC_HALLOWED_PIXIE.get();
+        return ItemsPM.MAJESTIC_HALLOWED_PIXIE.get();
     }
 }

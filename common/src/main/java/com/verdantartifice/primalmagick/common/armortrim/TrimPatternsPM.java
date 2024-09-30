@@ -55,6 +55,6 @@ public class TrimPatternsPM {
     }
     
     public static void bootstrap(BootstrapContext<TrimPattern> context) {
-        register(context, ItemRegistration.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get(), RUNIC);
+        register(context, ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get(), RUNIC);
     }
 }

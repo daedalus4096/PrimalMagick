@@ -127,7 +127,7 @@ public class ClientModLifecycleEvents {
     private static void registerItemProperties(FMLClientSetupEvent event) {
         // Register properties for items on the main thread in a thread-safe fashion
         event.enqueueWork(() -> {
-            ItemProperties.register(ItemRegistration.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, new ItemPropertyFunction() {
+            ItemProperties.register(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, new ItemPropertyFunction() {
                 protected float scanState = 0;
 
                 @Override
@@ -154,7 +154,7 @@ public class ClientModLifecycleEvents {
                 }
             });
             
-            ItemProperties.register(ItemRegistration.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
+            ItemProperties.register(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
                 DyeColor color = null;
                 if (stack != null && stack.getItem() instanceof FlyingCarpetItem) {
                     color = ((FlyingCarpetItem)stack.getItem()).getDyeColor(stack);
@@ -178,22 +178,22 @@ public class ClientModLifecycleEvents {
                     return (inMain || inOff) && entity instanceof Player && ((Player)entity).fishing != null ? 1.0F : 0.0F;
                 }
             };
-            ItemProperties.register(ItemRegistration.PRIMALITE_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
-            ItemProperties.register(ItemRegistration.HEXIUM_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
-            ItemProperties.register(ItemRegistration.HALLOWSTEEL_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
-            ItemProperties.register(ItemRegistration.PRIMAL_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
+            ItemProperties.register(ItemsPM.PRIMAL_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
             
             ItemPropertyFunction handActiveProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
             };
-            ItemProperties.register(ItemRegistration.PRIMALITE_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.HEXIUM_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.HALLOWSTEEL_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.FORBIDDEN_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.PRIMALITE_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.HEXIUM_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.HALLOWSTEEL_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.SACRED_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
+            ItemProperties.register(ItemsPM.FORBIDDEN_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
+            ItemProperties.register(ItemsPM.SACRED_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
             
             ItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 if (entity == null) {
@@ -202,14 +202,14 @@ public class ClientModLifecycleEvents {
                     return entity.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 20.0F;
                 }
             };
-            ItemProperties.register(ItemRegistration.PRIMALITE_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
-            ItemProperties.register(ItemRegistration.PRIMALITE_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.HEXIUM_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
-            ItemProperties.register(ItemRegistration.HEXIUM_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.HALLOWSTEEL_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
-            ItemProperties.register(ItemRegistration.HALLOWSTEEL_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
-            ItemProperties.register(ItemRegistration.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
-            ItemProperties.register(ItemRegistration.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
+            ItemProperties.register(ItemsPM.PRIMALITE_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
+            ItemProperties.register(ItemsPM.HEXIUM_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
+            ItemProperties.register(ItemsPM.HALLOWSTEEL_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
+            ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
+            ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
         });
     }
     

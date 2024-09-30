@@ -41,7 +41,7 @@ public class ModLifecycleEvents {
     
     private static void registerDispenserBehaviors(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            DispenserBlock.registerProjectileBehavior(ItemRegistration.IGNYX.get());
+            DispenserBlock.registerProjectileBehavior(ItemsPM.IGNYX.get());
         });
     }
 }

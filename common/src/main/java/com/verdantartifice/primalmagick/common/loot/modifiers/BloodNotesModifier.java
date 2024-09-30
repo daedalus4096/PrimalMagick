@@ -37,7 +37,7 @@ public class BloodNotesModifier extends LootModifier {
         // Random chance is controlled by the RandomChanceWithLooting condition in the modifier JSON
         Entity targetEntity = context.getParam(LootContextParams.THIS_ENTITY);
         if (targetEntity.getType().is(this.targetTag)) {
-            generatedLoot.add(new ItemStack(ItemRegistration.BLOOD_NOTES.get()));
+            generatedLoot.add(new ItemStack(ItemsPM.BLOOD_NOTES.get()));
         }
         return generatedLoot;
     }

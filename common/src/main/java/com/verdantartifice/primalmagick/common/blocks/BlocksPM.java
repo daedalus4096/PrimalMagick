@@ -110,7 +110,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * Common repository for block identifiers.
+ * Common repository for block registry objects.
  *
  * @author Daedalus4096
  */

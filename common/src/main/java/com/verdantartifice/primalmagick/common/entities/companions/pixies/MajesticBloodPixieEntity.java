@@ -18,6 +18,6 @@ public class MajesticBloodPixieEntity extends AbstractBloodPixieEntity implement
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.MAJESTIC_BLOOD_PIXIE.get();
+        return ItemsPM.MAJESTIC_BLOOD_PIXIE.get();
     }
 }

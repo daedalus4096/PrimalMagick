@@ -18,6 +18,6 @@ public class MajesticMoonPixieEntity extends AbstractMoonPixieEntity implements 
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.MAJESTIC_MOON_PIXIE.get();
+        return ItemsPM.MAJESTIC_MOON_PIXIE.get();
     }
 }

@@ -184,7 +184,7 @@ public class BlockEvents {
                     player.drop(bookStack, false);
                 }
                 return InteractionResult.SUCCESS;
-            } else if (lecternEntity.getBook().is(ItemRegistration.GRIMOIRE.get())) {
+            } else if (lecternEntity.getBook().is(ItemsPM.GRIMOIRE.get())) {
                 // Open the grimoire screen
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     StatsManager.incrementValue(player, StatsPM.GRIMOIRE_READ);

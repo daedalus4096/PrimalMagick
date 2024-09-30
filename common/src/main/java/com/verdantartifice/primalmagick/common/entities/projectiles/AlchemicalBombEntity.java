@@ -62,7 +62,7 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
     
     @Override
     protected Item getDefaultItem() {
-        return ItemRegistration.ALCHEMICAL_BOMB.get();
+        return ItemsPM.ALCHEMICAL_BOMB.get();
     }
 
     @Override

@@ -109,7 +109,7 @@ public enum EssenceType implements StringRepresentable {
         return switch (this) {
             case CLUSTER -> Optional.of(Items.QUARTZ_BLOCK);
             case CRYSTAL -> Optional.of(Items.QUARTZ);
-            case SHARD -> Optional.of(ItemRegistration.QUARTZ_NUGGET.get());
+            case SHARD -> Optional.of(ItemsPM.QUARTZ_NUGGET.get());
             case DUST -> Optional.empty();
         };
     }

@@ -18,6 +18,6 @@ public class GrandHallowedPixieEntity extends AbstractHallowedPixieEntity implem
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.GRAND_HALLOWED_PIXIE.get();
+        return ItemsPM.GRAND_HALLOWED_PIXIE.get();
     }
 }

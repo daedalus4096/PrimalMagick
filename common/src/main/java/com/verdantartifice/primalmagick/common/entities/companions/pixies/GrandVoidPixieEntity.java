@@ -18,6 +18,6 @@ public class GrandVoidPixieEntity extends AbstractVoidPixieEntity implements IGr
 
     @Override
     protected PixieItem getSpawnItem() {
-        return ItemRegistration.GRAND_VOID_PIXIE.get();
+        return ItemsPM.GRAND_VOID_PIXIE.get();
     }
 }
