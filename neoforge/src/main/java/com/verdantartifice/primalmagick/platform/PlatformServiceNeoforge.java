@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 
-public class PlatformServiceNeoForge implements IPlatformService {
+public class PlatformServiceNeoforge implements IPlatformService {
     @Override
     public String getPlatformName() {
         return "NeoForge";
