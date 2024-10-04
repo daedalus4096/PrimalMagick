@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypesPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
-import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
+import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsPM;
@@ -44,6 +44,7 @@ public class InitRegistries {
         ItemRegistration.init();
         CreativeModeTabRegistration.init();
         ArmorMaterialRegistration.init();
+        DataComponentTypeRegistration.init();
 
         // TODO To be converted
         TileEntityTypesPM.init();
@@ -66,7 +67,6 @@ public class InitRegistries {
         ProjectMaterialTypesPM.init();
         RewardTypesPM.init();
         WeightFunctionTypesPM.init();
-        DataComponentsPM.init();
         SpellPropertiesPM.init();
         SpellModsPM.init();
         SpellVehiclesPM.init();
