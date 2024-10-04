@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.platform;
 
+import com.verdantartifice.primalmagick.platform.services.IArmorMaterialService;
 import com.verdantartifice.primalmagick.platform.services.IBlockService;
 import com.verdantartifice.primalmagick.platform.services.ICreativeModeTabService;
 import com.verdantartifice.primalmagick.platform.services.IItemService;
@@ -12,6 +13,7 @@ import java.util.ServiceLoader;
 /**
  * Definition point for cross-platform services. These are used to allow common code to call
  * into platform-specific (e.g. Forge) code using Java services.
+ *
  * @author Daedalus4096
  */
 public class Services {
@@ -21,6 +23,7 @@ public class Services {
     public static final IBlockService BLOCKS = load(IBlockService.class);
     public static final IItemService ITEMS = load(IItemService.class);
     public static final ICreativeModeTabService CREATIVE_MODE_TABS = load(ICreativeModeTabService.class);
+    public static final IArmorMaterialService ARMOR_MATERIALS = load(IArmorMaterialService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

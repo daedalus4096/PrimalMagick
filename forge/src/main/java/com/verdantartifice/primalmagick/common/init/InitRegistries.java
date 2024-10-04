@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
-import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialsPM;
+import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
@@ -43,6 +43,7 @@ public class InitRegistries {
         BlockRegistration.init();
         ItemRegistration.init();
         CreativeModeTabRegistration.init();
+        ArmorMaterialRegistration.init();
 
         // TODO To be converted
         TileEntityTypesPM.init();
@@ -70,7 +71,6 @@ public class InitRegistries {
         SpellModsPM.init();
         SpellVehiclesPM.init();
         SpellPayloadsPM.init();
-        ArmorMaterialsPM.init();
         GridRewardTypesPM.init();
         ResearchTopicTypesPM.init();
         RitualStepTypesPM.init();

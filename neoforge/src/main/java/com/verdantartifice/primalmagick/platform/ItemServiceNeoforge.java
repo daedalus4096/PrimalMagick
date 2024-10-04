@@ -9,6 +9,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
+/**
+ * Forge implementation of the item registry service.
+ *
+ * @author Daedalus4096
+ */
 public class ItemServiceNeoforge extends AbstractRegistryServiceNeoforge<Item> implements IItemService {
     @Override
     protected Supplier<DeferredRegister<Item>> getDeferredRegisterSupplier() {
