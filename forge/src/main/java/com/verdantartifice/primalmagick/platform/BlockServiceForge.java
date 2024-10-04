@@ -2,10 +2,10 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.platform.services.IBlockService;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.function.Supplier;
 
@@ -21,7 +21,7 @@ public class BlockServiceForge extends AbstractRegistryServiceForge<Block> imple
     }
 
     @Override
-    protected IForgeRegistry<Block> getRegistry() {
-        return ForgeRegistries.BLOCKS;
+    protected Registry<Block> getRegistry() {
+        return BuiltInRegistries.BLOCK;
     }
 }

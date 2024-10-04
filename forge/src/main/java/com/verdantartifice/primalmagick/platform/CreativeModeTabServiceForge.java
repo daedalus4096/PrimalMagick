@@ -2,15 +2,15 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
 import com.verdantartifice.primalmagick.platform.services.ICreativeModeTabService;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.function.Supplier;
 
 /**
- * Forge implementation of the block registry service.
+ * Forge implementation of the creative mode tab registry service.
  *
  * @author Daedalus4096
  */
@@ -21,8 +21,7 @@ public class CreativeModeTabServiceForge extends AbstractRegistryServiceForge<Cr
     }
 
     @Override
-    protected IForgeRegistry<CreativeModeTab> getRegistry() {
-        // FIXME Refactor this to separate read and write functions in the abstract service
-        throw new NotImplementedException();
+    protected Registry<CreativeModeTab> getRegistry() {
+        return BuiltInRegistries.CREATIVE_MODE_TAB;
     }
 }

@@ -7,7 +7,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Deferred registry for mod blocks in Neoforge.
+ * Deferred registry for mod creative mode tabs in Neoforge.
  *
  * @author Daedalus4096
  */

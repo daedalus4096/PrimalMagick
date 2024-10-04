@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.platform;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
 import com.verdantartifice.primalmagick.platform.services.IRegistryService;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -19,7 +20,7 @@ import java.util.function.Supplier;
  */
 abstract class AbstractRegistryServiceForge<R> implements IRegistryService<R> {
     protected abstract Supplier<DeferredRegister<R>> getDeferredRegisterSupplier();
-    protected abstract IForgeRegistry<R> getRegistry();
+    protected abstract Registry<R> getRegistry();
 
     @Override
     public <T extends R> IRegistryItem<R, T> register(String name, Supplier<T> supplier) {
@@ -28,7 +29,7 @@ abstract class AbstractRegistryServiceForge<R> implements IRegistryService<R> {
 
     @Override
     public @Nullable R get(ResourceLocation id) {
-        return this.getRegistry().getValue(id);
+        return this.getRegistry().get(id);
     }
 
     @Override

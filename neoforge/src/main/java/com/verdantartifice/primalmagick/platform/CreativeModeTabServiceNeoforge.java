@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 /**
- * Neoforge implementation of the block registry service.
+ * Neoforge implementation of the creative mode tab registry service.
  *
  * @author Daedalus4096
  */

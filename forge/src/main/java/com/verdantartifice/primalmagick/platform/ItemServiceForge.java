@@ -1,13 +1,11 @@
 package com.verdantartifice.primalmagick.platform;
 
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.platform.services.IItemService;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.function.Supplier;
 
@@ -23,7 +21,7 @@ public class ItemServiceForge extends AbstractRegistryServiceForge<Item> impleme
     }
 
     @Override
-    protected IForgeRegistry<Item> getRegistry() {
-        return ForgeRegistries.ITEMS;
+    protected Registry<Item> getRegistry() {
+        return BuiltInRegistries.ITEM;
     }
 }
