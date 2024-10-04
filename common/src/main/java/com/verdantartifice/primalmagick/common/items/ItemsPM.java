@@ -773,8 +773,8 @@ public class ItemsPM {
     public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_ZOMBIE_HORSE = registerSupplier("sanguine_core_zombie_horse", () -> new SanguineCoreItem(() -> EntityType.ZOMBIE_HORSE, 2, new Item.Properties().rarity(Rarity.UNCOMMON).durability(31)));
     public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_ZOMBIE_VILLAGER = registerSupplier("sanguine_core_zombie_villager", () -> new SanguineCoreItem(() -> EntityType.ZOMBIE_VILLAGER, 4, new Item.Properties().rarity(Rarity.UNCOMMON).durability(15)));
     public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_ZOMBIFIED_PIGLIN = registerSupplier("sanguine_core_zombified_piglin", () -> new SanguineCoreItem(() -> EntityType.ZOMBIFIED_PIGLIN, 4, new Item.Properties().rarity(Rarity.UNCOMMON).durability(15)));
-    public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_TREEFOLK = registerSupplier("sanguine_core_treefolk", () -> new SanguineCoreItem(() -> EntityTypesPM.TREEFOLK.get(), 4, new Item.Properties().rarity(Rarity.UNCOMMON).durability(15)));
-    public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_INNER_DEMON = registerSupplier("sanguine_core_inner_demon", () -> new SanguineCoreItem(() -> EntityTypesPM.INNER_DEMON.get(), 64, new Item.Properties().rarity(Rarity.UNCOMMON).durability(0).stacksTo(1)));
+    public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_TREEFOLK = registerSupplier("sanguine_core_treefolk", () -> new SanguineCoreItem(EntityTypesPM.TREEFOLK::get, 4, new Item.Properties().rarity(Rarity.UNCOMMON).durability(15)));
+    public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_INNER_DEMON = registerSupplier("sanguine_core_inner_demon", () -> new SanguineCoreItem(EntityTypesPM.INNER_DEMON::get, 64, new Item.Properties().rarity(Rarity.UNCOMMON).durability(0).stacksTo(1)));
 
     // Register concoction items
     public static final IRegistryItem<Item, SkyglassFlaskItem> SKYGLASS_FLASK = registerSupplier("skyglass_flask", () -> new SkyglassFlaskItem(new Item.Properties()));
