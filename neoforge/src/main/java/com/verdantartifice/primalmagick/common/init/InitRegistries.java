@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.init;
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
+import com.verdantartifice.primalmagick.common.entities.EntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
 
@@ -18,5 +19,6 @@ public class InitRegistries {
         CreativeModeTabRegistration.init();
         ArmorMaterialRegistration.init();
         DataComponentTypeRegistration.init();
+        EntityTypeRegistration.init();
     }
 }

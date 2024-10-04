@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.platform.services.IArmorMaterialService;
 import com.verdantartifice.primalmagick.platform.services.IBlockService;
 import com.verdantartifice.primalmagick.platform.services.ICreativeModeTabService;
 import com.verdantartifice.primalmagick.platform.services.IDataComponentTypeService;
+import com.verdantartifice.primalmagick.platform.services.IEntityTypeService;
 import com.verdantartifice.primalmagick.platform.services.IItemService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +27,7 @@ public class Services {
     public static final ICreativeModeTabService CREATIVE_MODE_TABS = load(ICreativeModeTabService.class);
     public static final IArmorMaterialService ARMOR_MATERIALS = load(IArmorMaterialService.class);
     public static final IDataComponentTypeService DATA_COMPONENT_TYPES = load(IDataComponentTypeService.class);
+    public static final IEntityTypeService ENTITY_TYPES = load(IEntityTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

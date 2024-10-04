@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
+import com.verdantartifice.primalmagick.common.entities.EntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
@@ -45,11 +46,11 @@ public class InitRegistries {
         CreativeModeTabRegistration.init();
         ArmorMaterialRegistration.init();
         DataComponentTypeRegistration.init();
+        EntityTypeRegistration.init();
 
         // TODO To be converted
         TileEntityTypesPM.init();
         MenuTypesPM.init();
-        EntityTypesPM.init();
         EffectsPM.init();
         RecipeTypesPM.init();
         RecipeSerializersPM.init();
