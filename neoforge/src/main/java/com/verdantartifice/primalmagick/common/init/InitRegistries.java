@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 
 /**
@@ -12,5 +13,6 @@ public class InitRegistries {
     public static void initDeferredRegistries() {
         BlockRegistration.init();
         ItemRegistration.init();
+        CreativeModeTabRegistration.init();
     }
 }

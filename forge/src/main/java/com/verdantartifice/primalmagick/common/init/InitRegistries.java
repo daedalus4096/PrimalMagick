@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsPM;
-import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
+import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
@@ -42,9 +42,9 @@ public class InitRegistries {
     public static void initDeferredRegistries() {
         BlockRegistration.init();
         ItemRegistration.init();
+        CreativeModeTabRegistration.init();
 
         // TODO To be converted
-        CreativeModeTabsPM.init();
         TileEntityTypesPM.init();
         MenuTypesPM.init();
         EntityTypesPM.init();

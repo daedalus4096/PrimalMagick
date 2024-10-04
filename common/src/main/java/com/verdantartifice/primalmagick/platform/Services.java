@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.platform.services.IBlockService;
+import com.verdantartifice.primalmagick.platform.services.ICreativeModeTabService;
 import com.verdantartifice.primalmagick.platform.services.IItemService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +20,7 @@ public class Services {
     public static final IPlatformService PLATFORM = load(IPlatformService.class);
     public static final IBlockService BLOCKS = load(IBlockService.class);
     public static final IItemService ITEMS = load(IItemService.class);
+    public static final ICreativeModeTabService CREATIVE_MODE_TABS = load(ICreativeModeTabService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
