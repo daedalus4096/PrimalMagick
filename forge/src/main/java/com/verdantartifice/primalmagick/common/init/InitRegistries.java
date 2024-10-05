@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsP
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypeRegistration;
-import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
@@ -30,7 +29,7 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehiclesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 
@@ -47,9 +46,9 @@ public class InitRegistries {
         ArmorMaterialRegistration.init();
         DataComponentTypeRegistration.init();
         EntityTypeRegistration.init();
+        BlockEntityTypeRegistration.init();
 
         // TODO To be converted
-        TileEntityTypesPM.init();
         MenuTypesPM.init();
         EffectsPM.init();
         RecipeTypesPM.init();

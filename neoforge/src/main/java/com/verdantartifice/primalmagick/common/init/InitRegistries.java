@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistrat
 import com.verdantartifice.primalmagick.common.entities.EntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
 
 /**
  * Point of initialization for mod deferred registries.
@@ -20,5 +21,6 @@ public class InitRegistries {
         ArmorMaterialRegistration.init();
         DataComponentTypeRegistration.init();
         EntityTypeRegistration.init();
+        BlockEntityTypeRegistration.init();
     }
 }
