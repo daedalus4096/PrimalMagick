@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.rituals;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,7 +32,7 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
     protected BlockPos altarPos = null;
 
     public OfferingPedestalTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.OFFERING_PEDESTAL.get(), pos, state);
+        super(BlockEntityTypesPM.OFFERING_PEDESTAL.get(), pos, state);
     }
     
     @Override

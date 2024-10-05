@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.verdantartifice.primalmagick.common.blocks.devices.AbstractWindGeneratorBlock;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class WindGeneratorTileEntity extends AbstractTilePM {
     public WindGeneratorTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.WIND_GENERATOR.get(), pos, state);
+        super(BlockEntityTypesPM.WIND_GENERATOR.get(), pos, state);
     }
     
     public static void tick(Level level, BlockPos pos, BlockState state, WindGeneratorTileEntity entity) {

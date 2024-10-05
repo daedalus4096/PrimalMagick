@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -130,7 +130,7 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, TileEntityTypesPM.INFERNAL_FURNACE.get(), InfernalFurnaceTileEntity::tick);
+        return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.INFERNAL_FURNACE.get(), InfernalFurnaceTileEntity::tick);
     }
 
     @Override

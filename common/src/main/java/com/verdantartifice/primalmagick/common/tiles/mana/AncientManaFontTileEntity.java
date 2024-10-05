@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import net.minecraft.ChatFormatting;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
     public AncientManaFontTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.ANCIENT_MANA_FONT.get(), pos, state);
+        super(BlockEntityTypesPM.ANCIENT_MANA_FONT.get(), pos, state);
     }
     
     @Override

@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
@@ -37,7 +37,7 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
     protected int chargeTime;
 
     public AutoChargerTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.AUTO_CHARGER.get(), pos, state);
+        super(BlockEntityTypesPM.AUTO_CHARGER.get(), pos, state);
     }
     
     @Override

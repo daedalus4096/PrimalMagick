@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.misc;
 
 import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,7 +38,7 @@ public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     private int lastInteractedSlot = -1;
 
     public CarvedBookshelfTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.CARVED_BOOKSHELF.get(), pos, state);
+        super(BlockEntityTypesPM.CARVED_BOOKSHELF.get(), pos, state);
     }
     
     public int getLastInteractedSlot() {

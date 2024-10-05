@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -11,6 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class SoulAnvilTileEntity extends AbstractRitualPropTileEntity {
     public SoulAnvilTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.SOUL_ANVIL.get(), pos, state);
+        super(BlockEntityTypesPM.SOUL_ANVIL.get(), pos, state);
     }
 }

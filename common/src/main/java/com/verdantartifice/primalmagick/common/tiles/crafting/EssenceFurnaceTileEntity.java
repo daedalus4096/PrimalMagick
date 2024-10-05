@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +22,7 @@ import java.util.function.Predicate;
  */
 public class EssenceFurnaceTileEntity extends AbstractCalcinatorTileEntity {
     public EssenceFurnaceTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.ESSENCE_FURNACE.get(), pos, state);
+        super(BlockEntityTypesPM.ESSENCE_FURNACE.get(), pos, state);
     }
     
     @Override

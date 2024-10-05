@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class ArtificialManaFontTileEntity extends AbstractManaFontTileEntity {
     public ArtificialManaFontTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.ARTIFICIAL_MANA_FONT.get(), pos, state);
+        super(BlockEntityTypesPM.ARTIFICIAL_MANA_FONT.get(), pos, state);
     }
     
     @Override

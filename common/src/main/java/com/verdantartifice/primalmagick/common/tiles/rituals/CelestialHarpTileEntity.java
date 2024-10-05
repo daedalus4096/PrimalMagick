@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +17,7 @@ public class CelestialHarpTileEntity extends AbstractRitualPropTileEntity {
     protected boolean isPlaying;
     
     public CelestialHarpTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.CELESTIAL_HARP.get(), pos, state);
+        super(BlockEntityTypesPM.CELESTIAL_HARP.get(), pos, state);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, CelestialHarpTileEntity entity) {

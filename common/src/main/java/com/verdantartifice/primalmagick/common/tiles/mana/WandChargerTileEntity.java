@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.WandChargerMenu;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
@@ -76,7 +76,7 @@ public class WandChargerTileEntity extends AbstractTileSidedInventoryPM implemen
     };
     
     public WandChargerTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.WAND_CHARGER.get(), pos, state);
+        super(BlockEntityTypesPM.WAND_CHARGER.get(), pos, state);
     }
     
     @Override

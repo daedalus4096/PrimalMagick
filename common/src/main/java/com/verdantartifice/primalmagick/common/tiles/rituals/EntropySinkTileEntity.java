@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
 import com.verdantartifice.primalmagick.common.blocks.rituals.EntropySinkBlock;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -19,7 +19,7 @@ public class EntropySinkTileEntity extends AbstractRitualPropTileEntity {
     protected boolean isGlowing;
     
     public EntropySinkTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.ENTROPY_SINK.get(), pos, state);
+        super(BlockEntityTypesPM.ENTROPY_SINK.get(), pos, state);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, EntropySinkTileEntity entity) {

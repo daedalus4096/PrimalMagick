@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ public class SunlampTileEntity extends AbstractTilePM {
     protected int ticksExisted = 0;
     
     public SunlampTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.SUNLAMP.get(), pos, state);
+        super(BlockEntityTypesPM.SUNLAMP.get(), pos, state);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SunlampTileEntity entity) {

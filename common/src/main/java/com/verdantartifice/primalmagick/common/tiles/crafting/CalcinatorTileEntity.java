@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -26,7 +26,7 @@ import java.util.function.Predicate;
  */
 public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
     public CalcinatorTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.CALCINATOR.get(), pos, state);
+        super(BlockEntityTypesPM.CALCINATOR.get(), pos, state);
     }
     
     @Override

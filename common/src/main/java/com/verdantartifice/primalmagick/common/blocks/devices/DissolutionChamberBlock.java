@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -74,7 +74,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberTileEntity::tick);
     }
 
     @Override

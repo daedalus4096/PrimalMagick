@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.menus.RunescribingAltarBasicMenu;
 import com.verdantartifice.primalmagick.common.menus.RunescribingAltarEnchantedMenu;
 import com.verdantartifice.primalmagick.common.menus.RunescribingAltarForbiddenMenu;
 import com.verdantartifice.primalmagick.common.menus.RunescribingAltarHeavenlyMenu;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class RunescribingAltarTileEntity extends AbstractTilePM implements MenuProvider {
     public RunescribingAltarTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), pos, state);
+        super(BlockEntityTypesPM.RUNESCRIBING_ALTAR.get(), pos, state);
     }
 
     @Override

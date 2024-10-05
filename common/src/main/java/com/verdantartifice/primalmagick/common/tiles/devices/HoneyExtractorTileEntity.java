@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
@@ -97,7 +97,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     };
     
     public HoneyExtractorTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.HONEY_EXTRACTOR.get(), pos, state);
+        super(BlockEntityTypesPM.HONEY_EXTRACTOR.get(), pos, state);
         this.manaStorage = new ManaStorage(10000, 100, 100, Sources.SKY);
     }
 

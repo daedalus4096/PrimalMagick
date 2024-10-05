@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -11,6 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class BloodletterTileEntity extends AbstractRitualPropTileEntity {
     public BloodletterTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.BLOODLETTER.get(), pos, state);
+        super(BlockEntityTypesPM.BLOODLETTER.get(), pos, state);
     }
 }

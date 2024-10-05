@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticleData;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.CelestialHarpTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -155,7 +155,7 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
     
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.CELESTIAL_HARP.get(), CelestialHarpTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.CELESTIAL_HARP.get(), CelestialHarpTileEntity::tick);
     }
 
     @Override

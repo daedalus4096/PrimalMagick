@@ -30,7 +30,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
@@ -132,7 +132,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     protected Map<Block, Integer> blockCounts = new HashMap<>();
     
     public RitualAltarTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.RITUAL_ALTAR.get(), pos, state);
+        super(BlockEntityTypesPM.RITUAL_ALTAR.get(), pos, state);
         this.mishaps = Util.make(new WeightedRandomBag<>(), bag -> {
             bag.add(new Mishap(this::mishapOffering, false, 0.0F), 6.0D);
             bag.add(new Mishap(this::mishapSalt, false, 10.0F), 3.0D);

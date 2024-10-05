@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.mana;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
@@ -47,7 +47,7 @@ public class AutoChargerBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.AUTO_CHARGER.get(), AutoChargerTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.AUTO_CHARGER.get(), AutoChargerTileEntity::tick);
     }
 
     @Override

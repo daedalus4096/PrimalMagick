@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -17,7 +17,7 @@ public class RitualBellTileEntity extends AbstractRitualPropTileEntity {
     protected Direction ringDirection;
 
     public RitualBellTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.RITUAL_BELL.get(), pos, state);
+        super(BlockEntityTypesPM.RITUAL_BELL.get(), pos, state);
     }
     
     public int getRingingTicks() {

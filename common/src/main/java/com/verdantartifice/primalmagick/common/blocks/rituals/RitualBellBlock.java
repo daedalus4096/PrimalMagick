@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualBellTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
@@ -193,7 +193,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.RITUAL_BELL.get(), RitualBellTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.RITUAL_BELL.get(), RitualBellTileEntity::tick);
     }
 
     @Override

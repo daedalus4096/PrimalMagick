@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
@@ -98,7 +98,7 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarTileEntity::tick);
     }
 
     @Override

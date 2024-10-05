@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.ArtificialManaFontTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -39,7 +39,7 @@ public class ArtificialManaFontBlock extends AbstractManaFontBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.ARTIFICIAL_MANA_FONT.get(), ArtificialManaFontTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.ARTIFICIAL_MANA_FONT.get(), ArtificialManaFontTileEntity::tick);
     }
 
     @Override

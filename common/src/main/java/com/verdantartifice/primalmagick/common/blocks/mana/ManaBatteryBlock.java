@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -53,7 +53,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, TileEntityTypesPM.MANA_BATTERY.get(), ManaBatteryTileEntity::tick);
+        return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.MANA_BATTERY.get(), ManaBatteryTileEntity::tick);
     }
 
     @Override

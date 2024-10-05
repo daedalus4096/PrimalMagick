@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
@@ -111,7 +111,7 @@ public class SunlampBlock extends BaseEntityBlock {
     
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.SUNLAMP.get(), SunlampTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.SUNLAMP.get(), SunlampTileEntity::tick);
     }
 
     @Override

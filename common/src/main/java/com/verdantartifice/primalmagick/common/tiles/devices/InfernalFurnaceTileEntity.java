@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -140,7 +140,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     };
     
     public InfernalFurnaceTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.INFERNAL_FURNACE.get(), pos, state);
+        super(BlockEntityTypesPM.INFERNAL_FURNACE.get(), pos, state);
         this.manaStorage = new ManaStorage(10000, 100, 100, Sources.INFERNAL);
     }
 

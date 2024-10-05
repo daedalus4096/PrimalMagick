@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.EntropySinkTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
@@ -173,7 +173,7 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.ENTROPY_SINK.get(), EntropySinkTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.ENTROPY_SINK.get(), EntropySinkTileEntity::tick);
     }
 
     @Override

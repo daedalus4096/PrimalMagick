@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.mana;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,7 +43,7 @@ public class WandChargerBlock extends BaseEntityBlock {
     
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.WAND_CHARGER.get(), WandChargerTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.WAND_CHARGER.get(), WandChargerTileEntity::tick);
     }
 
     @Override

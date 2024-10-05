@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,7 +30,7 @@ public class ResearchTableTileEntity extends AbstractTileSidedInventoryPM implem
     protected static final int INPUT_INV_INDEX = 0;
     
     public ResearchTableTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.RESEARCH_TABLE.get(), pos, state);
+        super(BlockEntityTypesPM.RESEARCH_TABLE.get(), pos, state);
     }
 
     @Override

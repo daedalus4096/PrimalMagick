@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 import net.minecraft.core.BlockPos;
@@ -76,7 +76,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.ESSENCE_TRANSMUTER.get(), EssenceTransmuterTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), EssenceTransmuterTileEntity::tick);
     }
 
     @Override

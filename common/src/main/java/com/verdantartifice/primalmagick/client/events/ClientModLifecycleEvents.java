@@ -43,7 +43,7 @@ import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.LayeredDraw;
@@ -110,18 +110,18 @@ public class ClientModLifecycleEvents {
     
     private static void registerTERs() {
         // Register tile entity renderers for those tile entities that need them
-        BlockEntityRenderers.register(TileEntityTypesPM.ANCIENT_MANA_FONT.get(), ManaFontTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.ARTIFICIAL_MANA_FONT.get(), ManaFontTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.WAND_CHARGER.get(), WandChargerTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_ALTAR.get(), RitualAltarTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.OFFERING_PEDESTAL.get(), OfferingPedestalTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_LECTERN.get(), RitualLecternTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.RITUAL_BELL.get(), RitualBellTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), RunescribingAltarTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), SanguineCrucibleTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.AUTO_CHARGER.get(), AutoChargerTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarTER::new);
-        BlockEntityRenderers.register(TileEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.ANCIENT_MANA_FONT.get(), ManaFontTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.ARTIFICIAL_MANA_FONT.get(), ManaFontTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.WAND_CHARGER.get(), WandChargerTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.RITUAL_ALTAR.get(), RitualAltarTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.OFFERING_PEDESTAL.get(), OfferingPedestalTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.RITUAL_LECTERN.get(), RitualLecternTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.RITUAL_BELL.get(), RitualBellTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.RUNESCRIBING_ALTAR.get(), RunescribingAltarTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.SANGUINE_CRUCIBLE.get(), SanguineCrucibleTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.AUTO_CHARGER.get(), AutoChargerTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTER::new);
     }
     
     private static void registerItemProperties(FMLClientSetupEvent event) {

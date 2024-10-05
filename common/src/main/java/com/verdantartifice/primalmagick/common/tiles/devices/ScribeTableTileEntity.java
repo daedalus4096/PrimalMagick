@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.menus.ScribeTranscribeWorksMenu;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -44,7 +44,7 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
     protected static final int OUTPUT_INV_INDEX = 1;
     
     public ScribeTableTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.SCRIBE_TABLE.get(), pos, state);
+        super(BlockEntityTypesPM.SCRIBE_TABLE.get(), pos, state);
     }
 
     @Override

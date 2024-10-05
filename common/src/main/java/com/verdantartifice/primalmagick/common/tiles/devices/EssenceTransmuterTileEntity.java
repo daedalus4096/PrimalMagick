@@ -16,7 +16,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
@@ -125,7 +125,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     };
     
     public EssenceTransmuterTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.ESSENCE_TRANSMUTER.get(), pos, state);
+        super(BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), pos, state);
         this.manaStorage = new ManaStorage(10000, 100, 100, Sources.MOON);
         this.researchCache = new TileResearchCache();
     }

@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
@@ -101,7 +101,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     };
     
     public DissolutionChamberTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.DISSOLUTION_CHAMBER.get(), pos, state);
+        super(BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), pos, state);
         this.manaStorage = new ManaStorage(25600, 100, 100, Sources.EARTH);
     }
     

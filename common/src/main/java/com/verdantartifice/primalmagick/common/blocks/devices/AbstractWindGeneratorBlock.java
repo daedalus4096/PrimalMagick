@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.WindGeneratorTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -95,7 +95,7 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, TileEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTileEntity::tick);
     }
 
     public abstract Direction getWindDirection(BlockState state);

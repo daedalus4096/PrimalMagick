@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -101,7 +101,7 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     };
     
     public EssenceCaskTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.ESSENCE_CASK.get(), pos, state);
+        super(BlockEntityTypesPM.ESSENCE_CASK.get(), pos, state);
         for (EssenceType row : EssenceType.values()) {
             for (Source col : Sources.getAllSorted()) {
                 this.contents.put(row, col, 0);

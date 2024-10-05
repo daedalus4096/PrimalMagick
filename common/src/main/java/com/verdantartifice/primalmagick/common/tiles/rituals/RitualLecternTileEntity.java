@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.rituals;
 
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropTileEntity;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,7 +29,7 @@ public class RitualLecternTileEntity extends AbstractTileSidedInventoryPM implem
     protected boolean isOpen = false;
     
     public RitualLecternTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.RITUAL_LECTERN.get(), pos, state);
+        super(BlockEntityTypesPM.RITUAL_LECTERN.get(), pos, state);
     }
     
     @Override

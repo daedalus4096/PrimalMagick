@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,7 +52,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
     protected int counter = 0;
     
     public SanguineCrucibleTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), pos, state);
+        super(BlockEntityTypesPM.SANGUINE_CRUCIBLE.get(), pos, state);
     }
 
     @Override

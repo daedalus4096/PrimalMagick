@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingRunePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -47,7 +47,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
     protected Source nextSource = Sources.EARTH;
     
     public SpellcraftingAltarTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.SPELLCRAFTING_ALTAR.get(), pos, state);
+        super(BlockEntityTypesPM.SPELLCRAFTING_ALTAR.get(), pos, state);
     }
     
     @Override

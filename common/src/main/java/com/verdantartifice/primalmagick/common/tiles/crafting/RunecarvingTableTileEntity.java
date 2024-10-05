@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
-import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,7 +30,7 @@ public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM imp
     protected static final int INPUT_INV_INDEX = 0;
     
     public RunecarvingTableTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.RUNECARVING_TABLE.get(), pos, state);
+        super(BlockEntityTypesPM.RUNECARVING_TABLE.get(), pos, state);
     }
 
     @Override
