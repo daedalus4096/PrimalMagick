@@ -61,7 +61,6 @@ public class InitRegistries {
         LootModifierSerializersPM.init();
 
         // TODO To be converted
-        LootModifierSerializersPM.init();
         ParticleTypesPM.init();
         ArgumentTypesPM.init();
         SensorTypesPM.init();
