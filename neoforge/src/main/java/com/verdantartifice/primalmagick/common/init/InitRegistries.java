@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistra
 import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
 import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
+import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypeRegistration;
 
 /**
  * Point of initialization for mod deferred registries.
@@ -32,5 +33,6 @@ public class InitRegistries {
         RecipeTypeRegistration.init();
         RecipeSerializerRegistration.init();
         SoundEventRegistration.init();
+        StructurePieceTypeRegistration.init();
     }
 }

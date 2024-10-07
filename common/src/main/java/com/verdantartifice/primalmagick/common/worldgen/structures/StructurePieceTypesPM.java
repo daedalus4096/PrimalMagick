@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.worldgen.structures;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.worldgen.structures.library.LibraryPiece;
-
-import net.minecraft.core.registries.Registries;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 /**
  * Holder for mod structure piece types.
@@ -14,12 +13,10 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class StructurePieceTypesPM {
-    private static final DeferredRegister<StructurePieceType> STRUCTURE_PIECES = DeferredRegister.create(Registries.STRUCTURE_PIECE, Constants.MOD_ID);
-    
-    public static void init() {
-        STRUCTURE_PIECES.register(PrimalMagick.getModLoadingContext().getModEventBus());
+    public static final IRegistryItem<StructurePieceType, StructurePieceType> SHRINE = register("shrine", () -> ShrinePiece::new);
+    public static final IRegistryItem<StructurePieceType, StructurePieceType> LIBRARY = register("library", () -> LibraryPiece::new);
+
+    private static IRegistryItem<StructurePieceType, StructurePieceType> register(String name, Supplier<StructurePieceType> supplier) {
+        return Services.STRUCTURE_PIECE_TYPES.register(name, supplier);
     }
-    
-    public static final RegistryObject<StructurePieceType> SHRINE = STRUCTURE_PIECES.register("shrine", () -> ShrinePiece::new);
-    public static final RegistryObject<StructurePieceType> LIBRARY = STRUCTURE_PIECES.register("library", () -> LibraryPiece::new);
 }

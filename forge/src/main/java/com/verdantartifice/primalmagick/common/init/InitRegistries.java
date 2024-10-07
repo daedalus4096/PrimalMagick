@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypeRegistration;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 
 /**
@@ -54,9 +55,9 @@ public class InitRegistries {
         RecipeSerializerRegistration.init();
         IngredientsPM.init();
         SoundEventRegistration.init();
+        StructurePieceTypeRegistration.init();
 
         // TODO To be converted
-        StructurePieceTypesPM.init();
         StructureFeaturesPM.init();
         LootModifierSerializersPM.init();
         ParticleTypesPM.init();
