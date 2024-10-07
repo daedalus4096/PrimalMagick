@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.loot.LootModifiers;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -42,9 +43,7 @@ public class AddItemModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        // Random chance is controlled by the LootItemRandomChance condition in the modifier JSON
-        IntStream.range(0, this.rolls.sample(context.getRandom())).forEach($ -> generatedLoot.add(new ItemStack(this.item)));
-        return generatedLoot;
+        return LootModifiers.addItem(generatedLoot, context, this.item, this.rolls);
     }
 
     @Override

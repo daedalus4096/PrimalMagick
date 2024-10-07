@@ -2,15 +2,13 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.loot.LootModifiers;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
@@ -34,12 +32,7 @@ public class BloodNotesModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        // Random chance is controlled by the RandomChanceWithLooting condition in the modifier JSON
-        Entity targetEntity = context.getParam(LootContextParams.THIS_ENTITY);
-        if (targetEntity.getType().is(this.targetTag)) {
-            generatedLoot.add(new ItemStack(ItemsPM.BLOOD_NOTES.get()));
-        }
-        return generatedLoot;
+        return LootModifiers.bloodNotes(generatedLoot, context, this.targetTag);
     }
 
     @Override
