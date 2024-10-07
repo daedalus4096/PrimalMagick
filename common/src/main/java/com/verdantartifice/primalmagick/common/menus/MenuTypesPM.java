@@ -1,12 +1,10 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.menus.base.IMenuFactory;
+import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
+import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 /**
  * Deferred registry for mod menu types.
@@ -14,85 +12,33 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class MenuTypesPM {
-    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Constants.MOD_ID);
-    
-    public static void init() {
-        MENU_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
+    public static final IRegistryItem<MenuType<?>, MenuType<ArcaneWorkbenchMenu>> ARCANE_WORKBENCH = register("arcane_workbench", (windowId, inv, data) -> new ArcaneWorkbenchMenu(windowId, inv));
+    public static final IRegistryItem<MenuType<?>, MenuType<WandAssemblyTableMenu>> WAND_ASSEMBLY_TABLE = register("wand_assembly_table", (windowId, inv, data) -> new WandAssemblyTableMenu(windowId, inv));
+    public static final IRegistryItem<MenuType<?>, MenuType<AnalysisTableMenu>> ANALYSIS_TABLE = register("analysis_table", (windowId, inv, data) -> new AnalysisTableMenu(windowId, inv));
+    public static final IRegistryItem<MenuType<?>, MenuType<CalcinatorMenu>> CALCINATOR = register("calcinator", (windowId, inv, data) -> new CalcinatorMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<WandInscriptionTableMenu>> WAND_INSCRIPTION_TABLE = register("wand_inscription_table", (windowId, inv, data) -> new WandInscriptionTableMenu(windowId, inv));
+    public static final IRegistryItem<MenuType<?>, MenuType<SpellcraftingAltarMenu>> SPELLCRAFTING_ALTAR = register("spellcrafting_altar", (windowId, inv, data) -> new SpellcraftingAltarMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<WandChargerMenu>> WAND_CHARGER = register("wand_charger", (windowId, inv, data) -> new WandChargerMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<ResearchTableMenu>> RESEARCH_TABLE = register("research_table", (windowId, inv, data) -> new ResearchTableMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<RunescribingAltarBasicMenu>> RUNESCRIBING_ALTAR_BASIC = register("runescribing_altar_basic", (windowId, inv, data) -> new RunescribingAltarBasicMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<RunescribingAltarEnchantedMenu>> RUNESCRIBING_ALTAR_ENCHANTED = register("runescribing_altar_enchanted", (windowId, inv, data) -> new RunescribingAltarEnchantedMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<RunescribingAltarForbiddenMenu>> RUNESCRIBING_ALTAR_FORBIDDEN = register("runescribing_altar_forbidden", (windowId, inv, data) -> new RunescribingAltarForbiddenMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<RunescribingAltarHeavenlyMenu>> RUNESCRIBING_ALTAR_HEAVENLY = register("runescribing_altar_heavenly", (windowId, inv, data) -> new RunescribingAltarHeavenlyMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<RunecarvingTableMenu>> RUNECARVING_TABLE = register("runecarving_table", (windowId, inv, data) -> new RunecarvingTableMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<HoneyExtractorMenu>> HONEY_EXTRACTOR = register("honey_extractor", (windowId, inv, data) -> new HoneyExtractorMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<ConcocterMenu>> CONCOCTER = register("concocter", (windowId, inv, data) -> new ConcocterMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<EssenceTransmuterMenu>> ESSENCE_TRANSMUTER = register("essence_transmuter", (windowId, inv, data) -> new EssenceTransmuterMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<DissolutionChamberMenu>> DISSOLUTION_CHAMBER = register("dissolution_chamber", (windowId, inv, data) -> new DissolutionChamberMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<EssenceCaskMenu>> ESSENCE_CASK = register("essence_cask", (windowId, inv, data) -> new EssenceCaskMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<WandGlamourTableMenu>> WAND_GLAMOUR_TABLE = register("wand_glamour_table", (windowId, inv, data) -> new WandGlamourTableMenu(windowId, inv));
+    public static final IRegistryItem<MenuType<?>, MenuType<RunicGrindstoneMenu>> RUNIC_GRINDSTONE = register("runic_grindstone", (windowId, inv, data) -> new RunicGrindstoneMenu(windowId, inv));
+    public static final IRegistryItem<MenuType<?>, MenuType<InfernalFurnaceMenu>> INFERNAL_FURNACE = register("infernal_furnace", (windowId, inv, data) -> new InfernalFurnaceMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<ManaBatteryMenu>> MANA_BATTERY = register("mana_battery", (windowId, inv, data) -> new ManaBatteryMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<ScribeStudyVocabularyMenu>> SCRIBE_STUDY_VOCABULARY = register("scribe_study_vocabulary", (windowId, inv, data) -> new ScribeStudyVocabularyMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<ScribeGainComprehensionMenu>> SCRIBE_GAIN_COMPREHENSION = register("scribe_gain_comprehension", (windowId, inv, data) -> new ScribeGainComprehensionMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<ScribeTranscribeWorksMenu>> SCRIBE_TRANSCRIBE_WORKS = register("scribe_transcribe_works", (windowId, inv, data) -> new ScribeTranscribeWorksMenu(windowId, inv, data.readBlockPos()));
+
+    private static <T extends AbstractContainerMenu> IRegistryItem<MenuType<?>, MenuType<T>> register(String name, IMenuFactory<T> factory) {
+        return Services.MENU_TYPES.register(name, factory);
     }
-    
-    public static final RegistryObject<MenuType<ArcaneWorkbenchMenu>> ARCANE_WORKBENCH = MENU_TYPES.register("arcane_workbench", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new ArcaneWorkbenchMenu(windowId, inv);
-    }));
-    public static final RegistryObject<MenuType<WandAssemblyTableMenu>> WAND_ASSEMBLY_TABLE = MENU_TYPES.register("wand_assembly_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new WandAssemblyTableMenu(windowId, inv);
-    }));
-    public static final RegistryObject<MenuType<AnalysisTableMenu>> ANALYSIS_TABLE = MENU_TYPES.register("analysis_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new AnalysisTableMenu(windowId, inv);
-    }));
-    public static final RegistryObject<MenuType<CalcinatorMenu>> CALCINATOR = MENU_TYPES.register("calcinator", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new CalcinatorMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<WandInscriptionTableMenu>> WAND_INSCRIPTION_TABLE = MENU_TYPES.register("wand_inscription_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new WandInscriptionTableMenu(windowId, inv);
-    }));
-    public static final RegistryObject<MenuType<SpellcraftingAltarMenu>> SPELLCRAFTING_ALTAR = MENU_TYPES.register("spellcrafting_altar", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new SpellcraftingAltarMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<WandChargerMenu>> WAND_CHARGER = MENU_TYPES.register("wand_charger", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new WandChargerMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<ResearchTableMenu>> RESEARCH_TABLE = MENU_TYPES.register("research_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new ResearchTableMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<RunescribingAltarBasicMenu>> RUNESCRIBING_ALTAR_BASIC = MENU_TYPES.register("runescribing_altar_basic", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunescribingAltarBasicMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<RunescribingAltarEnchantedMenu>> RUNESCRIBING_ALTAR_ENCHANTED = MENU_TYPES.register("runescribing_altar_enchanted", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunescribingAltarEnchantedMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<RunescribingAltarForbiddenMenu>> RUNESCRIBING_ALTAR_FORBIDDEN = MENU_TYPES.register("runescribing_altar_forbidden", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunescribingAltarForbiddenMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<RunescribingAltarHeavenlyMenu>> RUNESCRIBING_ALTAR_HEAVENLY = MENU_TYPES.register("runescribing_altar_heavenly", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunescribingAltarHeavenlyMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<RunecarvingTableMenu>> RUNECARVING_TABLE = MENU_TYPES.register("runecarving_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunecarvingTableMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<HoneyExtractorMenu>> HONEY_EXTRACTOR = MENU_TYPES.register("honey_extractor", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new HoneyExtractorMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<ConcocterMenu>> CONCOCTER = MENU_TYPES.register("concocter", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new ConcocterMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<EssenceTransmuterMenu>> ESSENCE_TRANSMUTER = MENU_TYPES.register("essence_transmuter", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new EssenceTransmuterMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<DissolutionChamberMenu>> DISSOLUTION_CHAMBER = MENU_TYPES.register("dissolution_chamber", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new DissolutionChamberMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<EssenceCaskMenu>> ESSENCE_CASK = MENU_TYPES.register("essence_cask", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new EssenceCaskMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<WandGlamourTableMenu>> WAND_GLAMOUR_TABLE = MENU_TYPES.register("wand_glamour_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new WandGlamourTableMenu(windowId, inv);
-    }));
-    public static final RegistryObject<MenuType<RunicGrindstoneMenu>> RUNIC_GRINDSTONE = MENU_TYPES.register("runic_grindstone", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunicGrindstoneMenu(windowId, inv);
-    }));
-    public static final RegistryObject<MenuType<InfernalFurnaceMenu>> INFERNAL_FURNACE = MENU_TYPES.register("infernal_furnace", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new InfernalFurnaceMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<ManaBatteryMenu>> MANA_BATTERY = MENU_TYPES.register("mana_battery", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new ManaBatteryMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<ScribeStudyVocabularyMenu>> SCRIBE_STUDY_VOCABULARY = MENU_TYPES.register("scribe_study_vocabulary", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new ScribeStudyVocabularyMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<ScribeGainComprehensionMenu>> SCRIBE_GAIN_COMPREHENSION = MENU_TYPES.register("scribe_gain_comprehension", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new ScribeGainComprehensionMenu(windowId, inv, data.readBlockPos());
-    }));
-    public static final RegistryObject<MenuType<ScribeTranscribeWorksMenu>> SCRIBE_TRANSCRIBE_WORKS = MENU_TYPES.register("scribe_transcribe_works", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new ScribeTranscribeWorksMenu(windowId, inv, data.readBlockPos());
-    }));
 }

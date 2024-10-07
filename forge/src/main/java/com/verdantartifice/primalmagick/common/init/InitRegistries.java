@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
+import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
@@ -47,9 +48,9 @@ public class InitRegistries {
         DataComponentTypeRegistration.init();
         EntityTypeRegistration.init();
         BlockEntityTypeRegistration.init();
+        MenuTypeRegistration.init();
 
         // TODO To be converted
-        MenuTypesPM.init();
         EffectsPM.init();
         RecipeTypesPM.init();
         RecipeSerializersPM.init();

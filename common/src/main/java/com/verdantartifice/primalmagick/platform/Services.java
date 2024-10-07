@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.platform.services.ICreativeModeTabServic
 import com.verdantartifice.primalmagick.platform.services.IDataComponentTypeService;
 import com.verdantartifice.primalmagick.platform.services.IEntityTypeService;
 import com.verdantartifice.primalmagick.platform.services.IItemService;
+import com.verdantartifice.primalmagick.platform.services.IMenuTypeService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +31,7 @@ public class Services {
     public static final IDataComponentTypeService DATA_COMPONENT_TYPES = load(IDataComponentTypeService.class);
     public static final IEntityTypeService ENTITY_TYPES = load(IEntityTypeService.class);
     public static final IBlockEntityTypeService BLOCK_ENTITY_TYPES = load(IBlockEntityTypeService.class);
+    public static final IMenuTypeService MENU_TYPES = load(IMenuTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistrat
 import com.verdantartifice.primalmagick.common.entities.EntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
+import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
 
 /**
@@ -22,5 +23,6 @@ public class InitRegistries {
         DataComponentTypeRegistration.init();
         EntityTypeRegistration.init();
         BlockEntityTypeRegistration.init();
+        MenuTypeRegistration.init();
     }
 }
