@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
+import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
 import com.verdantartifice.primalmagick.common.effects.MobEffectRegistration;
@@ -28,5 +29,6 @@ public class InitRegistries {
         MenuTypeRegistration.init();
         MobEffectRegistration.init();
         RecipeTypeRegistration.init();
+        RecipeSerializerRegistration.init();
     }
 }

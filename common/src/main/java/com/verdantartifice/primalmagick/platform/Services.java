@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.platform.services.IItemService;
 import com.verdantartifice.primalmagick.platform.services.IMenuTypeService;
 import com.verdantartifice.primalmagick.platform.services.IMobEffectService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
+import com.verdantartifice.primalmagick.platform.services.IRecipeSerializerService;
 import com.verdantartifice.primalmagick.platform.services.IRecipeTypeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +27,8 @@ public class Services {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final IPlatformService PLATFORM = load(IPlatformService.class);
+
+    // Registry services
     public static final IBlockService BLOCKS = load(IBlockService.class);
     public static final IItemService ITEMS = load(IItemService.class);
     public static final ICreativeModeTabService CREATIVE_MODE_TABS = load(ICreativeModeTabService.class);
@@ -36,6 +39,7 @@ public class Services {
     public static final IMenuTypeService MENU_TYPES = load(IMenuTypeService.class);
     public static final IMobEffectService MOB_EFFECTS = load(IMobEffectService.class);
     public static final IRecipeTypeService RECIPE_TYPES = load(IRecipeTypeService.class);
+    public static final IRecipeSerializerService RECIPE_SERIALIZERS = load(IRecipeSerializerService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

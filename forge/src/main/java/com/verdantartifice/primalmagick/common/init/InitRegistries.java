@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypesPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
@@ -50,9 +50,9 @@ public class InitRegistries {
         MenuTypeRegistration.init();
         MobEffectRegistration.init();
         RecipeTypeRegistration.init();
+        RecipeSerializerRegistration.init();
 
         // TODO To be converted
-        RecipeSerializersPM.init();
         IngredientsPM.init();
         SoundsPM.init();
         StructurePieceTypesPM.init();
