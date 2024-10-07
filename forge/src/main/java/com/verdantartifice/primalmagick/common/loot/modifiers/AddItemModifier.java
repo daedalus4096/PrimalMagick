@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
  */
 public class AddItemModifier extends LootModifier {
     protected static final UniformInt DEFAULT_ROLLS = UniformInt.of(1, 1);
-    public static final MapCodec<AddItemModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst)
+    public static final MapCodec<AddItemModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> codecStart(inst)
             .and(ForgeRegistries.ITEMS.getCodec().fieldOf("item").forGetter(m -> m.item))
             .and(UniformInt.CODEC.codec().optionalFieldOf("rolls", DEFAULT_ROLLS).forGetter(m -> m.rolls))
             .apply(inst, AddItemModifier::new));

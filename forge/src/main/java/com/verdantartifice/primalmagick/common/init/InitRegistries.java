@@ -40,6 +40,7 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.StructureType
  */
 public class InitRegistries {
     public static void initDeferredRegistries() {
+        // Platform implementations of common registries
         BlockRegistration.init();
         ItemRegistration.init();
         CreativeModeTabRegistration.init();
@@ -51,10 +52,13 @@ public class InitRegistries {
         MobEffectRegistration.init();
         RecipeTypeRegistration.init();
         RecipeSerializerRegistration.init();
-        IngredientsPM.init();
         SoundEventRegistration.init();
         StructurePieceTypeRegistration.init();
         StructureTypeRegistration.init();
+
+        // Platform specific registries
+        IngredientsPM.init();
+        LootModifierSerializersPM.init();
 
         // TODO To be converted
         LootModifierSerializersPM.init();

@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Daedalus4096
  */
 public class EssenceThiefModifier extends LootModifier {
-    public static final MapCodec<EssenceThiefModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst).apply(inst, EssenceThiefModifier::new));
+    public static final MapCodec<EssenceThiefModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, EssenceThiefModifier::new));
 
     public EssenceThiefModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);

@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Daedalus4096
  */
 public class GuillotineModifier extends LootModifier {
-    public static final MapCodec<GuillotineModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst)
+    public static final MapCodec<GuillotineModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> codecStart(inst)
             .and(TagKey.codec(Registries.ENTITY_TYPE).fieldOf("targetTag").forGetter(m -> m.targetTag))
             .and(ForgeRegistries.ITEMS.getCodec().fieldOf("item").forGetter(m -> m.item))
             .and(Codec.FLOAT.fieldOf("chance").forGetter(m -> m.chance))

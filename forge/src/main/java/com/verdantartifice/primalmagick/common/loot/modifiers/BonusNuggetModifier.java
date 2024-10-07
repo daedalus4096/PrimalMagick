@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
  * @author Daedalus4096
  */
 public class BonusNuggetModifier extends LootModifier {
-    public static final MapCodec<BonusNuggetModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst).and(inst.group(
+    public static final MapCodec<BonusNuggetModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(inst.group(
                 Codec.unboundedMap(TagKey.codec(Registries.BLOCK), TagKey.codec(Registries.ITEM)).fieldOf("nuggetMap").forGetter(m -> m.nuggetMap),
                 Codec.FLOAT.fieldOf("chance").forGetter(m -> m.chance)
             )).apply(inst, BonusNuggetModifier::new));

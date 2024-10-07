@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -16,7 +15,7 @@ import net.minecraftforge.common.loot.LootModifier;
  * @author Daedalus4096
  */
 public class FourLeafCloverModifier extends LootModifier {
-    public static final MapCodec<FourLeafCloverModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst).apply(inst, FourLeafCloverModifier::new));
+    public static final MapCodec<FourLeafCloverModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, FourLeafCloverModifier::new));
 
     public FourLeafCloverModifier(LootItemCondition[] conditions) {
         super(conditions);
