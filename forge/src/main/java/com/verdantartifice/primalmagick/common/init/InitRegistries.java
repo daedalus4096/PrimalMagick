@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
+import com.verdantartifice.primalmagick.common.effects.MobEffectRegistration;
 import com.verdantartifice.primalmagick.common.entities.EntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
@@ -49,9 +50,9 @@ public class InitRegistries {
         EntityTypeRegistration.init();
         BlockEntityTypeRegistration.init();
         MenuTypeRegistration.init();
+        MobEffectRegistration.init();
 
         // TODO To be converted
-        EffectsPM.init();
         RecipeTypesPM.init();
         RecipeSerializersPM.init();
         IngredientsPM.init();
