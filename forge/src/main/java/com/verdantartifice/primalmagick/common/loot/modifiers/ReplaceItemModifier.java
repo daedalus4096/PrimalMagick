@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.loot.LootModifiers;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,10 +33,7 @@ public class ReplaceItemModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        // Random chance is controlled by the LootItemRandomChance condition in the modifier JSON
-        generatedLoot.clear();
-        generatedLoot.add(new ItemStack(this.item));
-        return generatedLoot;
+        return LootModifiers.replaceItem(generatedLoot, context, this.item);
     }
 
     @Override

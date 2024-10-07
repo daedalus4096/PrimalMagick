@@ -133,4 +133,33 @@ public class LootModifiers {
             return 0;
         }
     }
+
+    public static ObjectArrayList<ItemStack> guillotine(ObjectArrayList<ItemStack> generatedLoot, LootContext context, TagKey<EntityType<?>> targetTag,
+                                                        Item item, float chance) {
+        if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof LivingEntity livingTarget && generatedLoot.stream().noneMatch(stack -> stack.is(item))) {
+            int enchantLevel = getEnchantLevel(context, EnchantmentsPM.GUILLOTINE);
+            if (livingTarget.getType().is(targetTag) && enchantLevel > 0 && context.getRandom().nextFloat() < (chance * enchantLevel)) {
+                generatedLoot.add(new ItemStack(item));
+            }
+        }
+        return generatedLoot;
+    }
+
+    public static ObjectArrayList<ItemStack> relicFragments(ObjectArrayList<ItemStack> generatedLoot, LootContext context, TagKey<EntityType<?>> targetTag,
+                                                            int minCount, int maxCount, int lootingBonus) {
+        Entity targetEntity = context.getParam(LootContextParams.THIS_ENTITY);
+        int lootingLevel = context.getLootingModifier();
+        int count = context.getRandom().nextInt((maxCount - minCount + 1) + (lootingBonus * lootingLevel)) + minCount;
+        if (targetEntity.getType().is(targetTag) && count > 0) {
+            generatedLoot.add(new ItemStack(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), count));
+        }
+        return generatedLoot;
+    }
+
+    public static ObjectArrayList<ItemStack> replaceItem(ObjectArrayList<ItemStack> generatedLoot, LootContext context, Item item) {
+        // Random chance is controlled by the LootItemRandomChance condition in the modifier JSON
+        generatedLoot.clear();
+        generatedLoot.add(new ItemStack(item));
+        return generatedLoot;
+    }
 }

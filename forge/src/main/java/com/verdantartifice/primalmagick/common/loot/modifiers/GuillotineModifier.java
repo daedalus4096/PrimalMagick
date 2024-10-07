@@ -3,18 +3,14 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagick.common.loot.LootModifiers;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
@@ -47,25 +43,7 @@ public class GuillotineModifier extends LootModifier {
     
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof LivingEntity livingTarget && generatedLoot.stream().allMatch(stack -> !stack.is(this.item))) {
-            int enchantLevel = getEnchantLevel(context);
-            if (livingTarget.getType().is(this.targetTag) && enchantLevel > 0 && context.getRandom().nextFloat() < (this.chance * enchantLevel)) {
-                generatedLoot.add(new ItemStack(this.item));
-            }
-        }
-        return generatedLoot;
-    }
-
-    private static int getEnchantLevel(LootContext context) {
-        if (context.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity killer) {
-            // Get the highest enchantment level among held items that could hold the Guillotine enchantment
-            Holder<Enchantment> ench = context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.GUILLOTINE);
-            return ench.value().getSlotItems(killer).values().stream().mapToInt(stack -> {
-                return stack.getEnchantments().getLevel(ench);
-            }).max().orElse(0);
-        } else {
-            return 0;
-        }
+        return LootModifiers.guillotine(generatedLoot, context, this.targetTag, this.item, this.chance);
     }
     
     @Override
