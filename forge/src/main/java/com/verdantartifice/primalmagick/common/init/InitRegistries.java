@@ -51,9 +51,9 @@ public class InitRegistries {
         MobEffectRegistration.init();
         RecipeTypeRegistration.init();
         RecipeSerializerRegistration.init();
+        IngredientsPM.init();
 
         // TODO To be converted
-        IngredientsPM.init();
         SoundsPM.init();
         StructurePieceTypesPM.init();
         StructureFeaturesPM.init();

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.crafting.ingredients;
 
 import java.util.function.Supplier;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraftforge.common.crafting.ingredients.AbstractIngredient;
@@ -19,7 +20,7 @@ public class IngredientsPM {
     
     public static final RegistryObject<IIngredientSerializer<PartialComponentIngredient>> PARTIAL_COMPONENT = register("partial_component", () -> PartialComponentIngredient.SERIALIZER);
     
-    protected static final <T extends AbstractIngredient> RegistryObject<IIngredientSerializer<T>> register(String id, Supplier<IIngredientSerializer<T>> serializerSupplier) {
+    protected static <T extends AbstractIngredient> RegistryObject<IIngredientSerializer<T>> register(String id, Supplier<IIngredientSerializer<T>> serializerSupplier) {
         return DEFERRED_SERIALIZERS.register(id, serializerSupplier);
     }
 }
