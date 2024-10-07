@@ -48,7 +48,7 @@ public class SoundDefinitionsProviderPM extends SoundDefinitionsProvider {
         this.addSingle(SoundsPM.WHISPERS);
         this.addSingle(SoundsPM.ANGELS);
         this.addSingle(SoundsPM.HEAL);
-        this.addSingle(SoundsPM.WINGFLAP);
+        this.addSingle(SoundsPM.WING_FLAP);
         this.addMultiple(SoundsPM.COINS, 3);
         this.addSingle(SoundsPM.EGG_CRACK);
         this.addSingle(SoundsPM.SHIMMER);

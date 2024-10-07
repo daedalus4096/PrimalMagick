@@ -93,7 +93,7 @@ public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload>
 
     @Override
     public void playSounds(Level world, BlockPos origin) {
-        world.playSound(null, origin, SoundsPM.WINGFLAP.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
+        world.playSound(null, origin, SoundsPM.WING_FLAP.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
     @Override
