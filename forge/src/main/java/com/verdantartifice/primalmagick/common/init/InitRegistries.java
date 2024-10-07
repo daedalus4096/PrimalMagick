@@ -6,10 +6,9 @@ import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTyp
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
-import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
-import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.effects.MobEffectRegistration;
 import com.verdantartifice.primalmagick.common.entities.EntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
@@ -18,7 +17,6 @@ import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
-import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypesPM;
@@ -51,9 +49,9 @@ public class InitRegistries {
         BlockEntityTypeRegistration.init();
         MenuTypeRegistration.init();
         MobEffectRegistration.init();
+        RecipeTypeRegistration.init();
 
         // TODO To be converted
-        RecipeTypesPM.init();
         RecipeSerializersPM.init();
         IngredientsPM.init();
         SoundsPM.init();

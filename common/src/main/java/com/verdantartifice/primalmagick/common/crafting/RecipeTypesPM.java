@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 /**
  * Holder for mod custom recipe types.
@@ -15,15 +14,23 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class RecipeTypesPM {
-    private static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Constants.MOD_ID);
-    
-    public static void init() {
-        RECIPE_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
+    public static final IRegistryItem<RecipeType<?>, RecipeType<IArcaneRecipe>> ARCANE_CRAFTING = register("arcane_crafting", () -> simple("arcane_crafting"));
+    public static final IRegistryItem<RecipeType<?>, RecipeType<IRitualRecipe>> RITUAL = register("ritual", () -> simple("ritual"));
+    public static final IRegistryItem<RecipeType<?>, RecipeType<IRunecarvingRecipe>> RUNECARVING = register("runecarving", () -> simple("runecarving"));
+    public static final IRegistryItem<RecipeType<?>, RecipeType<IConcoctingRecipe>> CONCOCTING = register("concocting", () -> simple("concocting"));
+    public static final IRegistryItem<RecipeType<?>, RecipeType<IDissolutionRecipe>> DISSOLUTION = register("dissolution", () -> simple("dissolution"));
+
+    private static <T extends Recipe<?>> IRegistryItem<RecipeType<?>, RecipeType<T>> register(String name, Supplier<RecipeType<T>> supplier) {
+        return Services.RECIPE_TYPES.register(name, supplier);
     }
-    
-    public static final RegistryObject<RecipeType<IArcaneRecipe>> ARCANE_CRAFTING = RECIPE_TYPES.register("arcane_crafting", () -> RecipeType.simple(ResourceUtils.loc("arcane_crafting")));
-    public static final RegistryObject<RecipeType<IRitualRecipe>> RITUAL = RECIPE_TYPES.register("ritual", () -> RecipeType.simple(ResourceUtils.loc("ritual")));
-    public static final RegistryObject<RecipeType<IRunecarvingRecipe>> RUNECARVING = RECIPE_TYPES.register("runecarving", () -> RecipeType.simple(ResourceUtils.loc("runecarving")));
-    public static final RegistryObject<RecipeType<IConcoctingRecipe>> CONCOCTING = RECIPE_TYPES.register("concocting", () -> RecipeType.simple(ResourceUtils.loc("concocting")));
-    public static final RegistryObject<RecipeType<IDissolutionRecipe>> DISSOLUTION = RECIPE_TYPES.register("dissolution", () -> RecipeType.simple(ResourceUtils.loc("dissolution")));
+
+    private static <T extends Recipe<?>> RecipeType<T> simple(String name) {
+        final String locStr = ResourceUtils.loc(name).toString();
+        return new RecipeType<>() {
+            @Override
+            public String toString() {
+                return locStr;
+            }
+        };
+    }
 }
