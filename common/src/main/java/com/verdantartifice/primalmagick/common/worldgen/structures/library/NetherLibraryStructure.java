@@ -6,7 +6,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypesPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -76,6 +76,6 @@ public class NetherLibraryStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return StructureFeaturesPM.NETHER_LIBRARY.get();
+        return StructureTypesPM.NETHER_LIBRARY.get();
     }
 }

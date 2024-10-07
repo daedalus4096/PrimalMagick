@@ -22,7 +22,6 @@ import com.verdantartifice.primalmagick.common.research.requirements.Requirement
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypesPM;
 import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypesPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
-import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
@@ -31,9 +30,8 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectM
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
-import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypeRegistration;
-import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
+import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypeRegistration;
 
 /**
  * Point of initialization for mod deferred registries.
@@ -56,9 +54,9 @@ public class InitRegistries {
         IngredientsPM.init();
         SoundEventRegistration.init();
         StructurePieceTypeRegistration.init();
+        StructureTypeRegistration.init();
 
         // TODO To be converted
-        StructureFeaturesPM.init();
         LootModifierSerializersPM.init();
         ParticleTypesPM.init();
         ArgumentTypesPM.init();

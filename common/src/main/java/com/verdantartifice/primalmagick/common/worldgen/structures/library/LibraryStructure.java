@@ -6,7 +6,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypesPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -44,7 +44,7 @@ public class LibraryStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return StructureFeaturesPM.LIBRARY.get();
+        return StructureTypesPM.LIBRARY.get();
     }
     
     protected void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context) {

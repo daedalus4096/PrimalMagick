@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.platform.services.IRecipeSerializerServi
 import com.verdantartifice.primalmagick.platform.services.IRecipeTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISoundEventService;
 import com.verdantartifice.primalmagick.platform.services.IStructurePieceTypeService;
+import com.verdantartifice.primalmagick.platform.services.IStructureTypeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,6 +45,7 @@ public class Services {
     public static final IRecipeSerializerService RECIPE_SERIALIZERS = load(IRecipeSerializerService.class);
     public static final ISoundEventService SOUND_EVENTS = load(ISoundEventService.class);
     public static final IStructurePieceTypeService STRUCTURE_PIECE_TYPES = load(IStructurePieceTypeService.class);
+    public static final IStructureTypeService STRUCTURE_TYPES = load(IStructureTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

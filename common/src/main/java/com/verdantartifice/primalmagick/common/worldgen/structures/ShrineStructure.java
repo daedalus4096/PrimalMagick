@@ -45,7 +45,7 @@ public class ShrineStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return StructureFeaturesPM.SHRINE.get();
+        return StructureTypesPM.SHRINE.get();
     }
 
     protected void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context) {
