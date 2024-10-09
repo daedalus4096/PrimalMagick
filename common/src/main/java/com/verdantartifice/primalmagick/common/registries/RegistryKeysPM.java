@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.registries;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.Culture;
@@ -20,7 +19,6 @@ import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialType;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionType;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
