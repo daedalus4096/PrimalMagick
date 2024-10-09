@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.init;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypeRegistration;
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypesPM;
-import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
+import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRegistration;
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
@@ -56,13 +56,13 @@ public class InitRegistries {
         StructurePieceTypeRegistration.init();
         StructureTypeRegistration.init();
         ParticleTypeRegistration.init();
+        ArgumentTypeRegistration.init();
 
         // Platform specific registries
         IngredientsPM.init();
         LootModifierSerializersPM.init();
 
         // TODO To be converted
-        ArgumentTypesPM.init();
         SensorTypesPM.init();
         MemoryModuleTypesPM.init();
         ResearchKeyTypesPM.init();

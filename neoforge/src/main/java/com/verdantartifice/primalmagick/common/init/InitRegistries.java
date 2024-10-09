@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypeRegistration;
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRegistration;
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
@@ -40,6 +41,7 @@ public class InitRegistries {
         StructurePieceTypeRegistration.init();
         StructureTypeRegistration.init();
         ParticleTypeRegistration.init();
+        ArgumentTypeRegistration.init();
 
         // Platform specific registries
         LootModifierSerializersPM.init();
