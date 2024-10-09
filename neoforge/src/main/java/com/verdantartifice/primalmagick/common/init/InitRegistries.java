@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.init;
 
+import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypeRegistration;
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
@@ -23,7 +24,7 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.StructureType
  */
 public class InitRegistries {
     public static void initDeferredRegistries() {
-        // Platform implementations of common registries
+        // Platform implementations of cross-platform registries
         BlockRegistration.init();
         ItemRegistration.init();
         CreativeModeTabRegistration.init();
@@ -38,6 +39,7 @@ public class InitRegistries {
         SoundEventRegistration.init();
         StructurePieceTypeRegistration.init();
         StructureTypeRegistration.init();
+        ParticleTypeRegistration.init();
 
         // Platform specific registries
         LootModifierSerializersPM.init();

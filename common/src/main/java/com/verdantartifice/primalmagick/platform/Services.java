@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.platform.services.IEntityTypeService;
 import com.verdantartifice.primalmagick.platform.services.IItemService;
 import com.verdantartifice.primalmagick.platform.services.IMenuTypeService;
 import com.verdantartifice.primalmagick.platform.services.IMobEffectService;
+import com.verdantartifice.primalmagick.platform.services.IParticleTypeService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import com.verdantartifice.primalmagick.platform.services.IRecipeSerializerService;
 import com.verdantartifice.primalmagick.platform.services.IRecipeTypeService;
@@ -46,6 +47,7 @@ public class Services {
     public static final ISoundEventService SOUND_EVENTS = load(ISoundEventService.class);
     public static final IStructurePieceTypeService STRUCTURE_PIECE_TYPES = load(IStructurePieceTypeService.class);
     public static final IStructureTypeService STRUCTURE_TYPES = load(IStructureTypeService.class);
+    public static final IParticleTypeService PARTICLE_TYPES = load(IParticleTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
