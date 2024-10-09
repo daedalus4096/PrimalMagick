@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.platform.services.ICreativeModeTabServic
 import com.verdantartifice.primalmagick.platform.services.IDataComponentTypeService;
 import com.verdantartifice.primalmagick.platform.services.IEntityTypeService;
 import com.verdantartifice.primalmagick.platform.services.IItemService;
+import com.verdantartifice.primalmagick.platform.services.IMemoryModuleTypeService;
 import com.verdantartifice.primalmagick.platform.services.IMenuTypeService;
 import com.verdantartifice.primalmagick.platform.services.IMobEffectService;
 import com.verdantartifice.primalmagick.platform.services.IParticleTypeService;
@@ -52,6 +53,7 @@ public class Services {
     public static final IParticleTypeService PARTICLE_TYPES = load(IParticleTypeService.class);
     public static final IArgumentTypeService ARGUMENT_TYPES = load(IArgumentTypeService.class);
     public static final ISensorTypeService SENSOR_TYPES = load(ISensorTypeService.class);
+    public static final IMemoryModuleTypeService MEMORY_MODULE_TYPES = load(IMemoryModuleTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
