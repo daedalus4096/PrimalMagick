@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.common.entities.ai.sensing;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-
+import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
+import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 /**
  * Deferred registry for mod AI sensor types.
@@ -13,12 +13,10 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class SensorTypesPM {
-    private static final DeferredRegister<SensorType<?>> SENSOR_TYPES = DeferredRegister.create(ForgeRegistries.SENSOR_TYPES, Constants.MOD_ID);
-    
-    public static void init() {
-        SENSOR_TYPES.register(PrimalMagick.getModLoadingContext().getModEventBus());
-    }
+    public static final IRegistryItem<SensorType<?>, SensorType<TreefolkSpecificSensor>> TREEFOLK_SPECIFIC_SENSOR = register("treefolk_specific_sensor", () -> new SensorType<>(TreefolkSpecificSensor::new));
+    public static final IRegistryItem<SensorType<?>, SensorType<NearestValidFertilizableBlockSensor>> NEAREST_VALID_FERTILIZABLE_BLOCKS = register("nearest_valid_fertilizable_block_sensor", () -> new SensorType<>(NearestValidFertilizableBlockSensor::new));
 
-    public static final RegistryObject<SensorType<TreefolkSpecificSensor>> TREEFOLK_SPECIFIC_SENSOR = SENSOR_TYPES.register("treefolk_specific_sensor", () -> new SensorType<>(TreefolkSpecificSensor::new));
-    public static final RegistryObject<SensorType<NearestValidFertilizableBlockSensor>> NEAREST_VALID_FERTILIZABLE_BLOCKS = SENSOR_TYPES.register("nearest_valid_fertilizable_block_sensor", () -> new SensorType<>(NearestValidFertilizableBlockSensor::new));
+    private static <T extends Sensor<?>> IRegistryItem<SensorType<?>, SensorType<T>> register(String name, Supplier<SensorType<T>> supplier) {
+        return Services.SENSOR_TYPES.register(name, supplier);
+    }
 }
