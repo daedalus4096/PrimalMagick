@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.tags.SpellPropertyTagsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -28,11 +29,11 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements ISpellMod {
     public static Codec<AbstractSpellMod<?>> dispatchCodec() {
-        return RegistryCodecs.codec(SpellModsPM.TYPES).dispatch("mod_type", AbstractSpellMod::getType, SpellModType::codec);
+        return Services.SPELL_MOD_TYPES.codec().dispatch("mod_type", AbstractSpellMod::getType, SpellModType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellMod<?>> dispatchStreamCodec() {
-        return RegistryCodecs.registryFriendlyStreamCodec(SpellModsPM.TYPES).dispatch(AbstractSpellMod::getType, SpellModType::streamCodec);
+        return Services.SPELL_MOD_TYPES.registryFriendlyStreamCodec().dispatch(AbstractSpellMod::getType, SpellModType::streamCodec);
     }
     
     public abstract SpellModType<T> getType();
