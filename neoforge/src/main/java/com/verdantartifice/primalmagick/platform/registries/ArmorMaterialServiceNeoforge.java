@@ -1,0 +1,27 @@
+package com.verdantartifice.primalmagick.platform.registries;
+
+import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
+import com.verdantartifice.primalmagick.platform.services.IArmorMaterialService;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.ArmorMaterial;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
+
+/**
+ * Neoforge implementation of the armor material registry service.
+ *
+ * @author Daedalus4096
+ */
+public class ArmorMaterialServiceNeoforge extends AbstractRegistryServiceNeoforge<ArmorMaterial> implements IArmorMaterialService {
+    @Override
+    protected Supplier<DeferredRegister<ArmorMaterial>> getDeferredRegisterSupplier() {
+        return ArmorMaterialRegistration::getDeferredRegister;
+    }
+
+    @Override
+    protected Registry<ArmorMaterial> getRegistry() {
+        return BuiltInRegistries.ARMOR_MATERIAL;
+    }
+}
