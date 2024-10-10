@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class ItemServiceForge extends AbstractRegistryServiceForge<Item> implements IItemService {
+public class ItemServiceForge extends AbstractBuiltInRegistryServiceForge<Item> implements IItemService {
     @Override
     protected Supplier<DeferredRegister<Item>> getDeferredRegisterSupplier() {
         return ItemRegistration::getDeferredRegister;

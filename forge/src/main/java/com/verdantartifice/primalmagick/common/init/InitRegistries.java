@@ -17,7 +17,7 @@ import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypesPM;
 import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypesPM;
@@ -59,13 +59,13 @@ public class InitRegistries {
         ArgumentTypeRegistration.init();
         SensorTypeRegistration.init();
         MemoryModuleTypeRegistration.init();
+        ResearchKeyTypeRegistration.init();
 
         // Platform specific registries
         IngredientsPM.init();
         LootModifierSerializersPM.init();
 
         // TODO To be converted
-        ResearchKeyTypesPM.init();
         RequirementsPM.init();
         ProjectMaterialTypesPM.init();
         RewardTypesPM.init();

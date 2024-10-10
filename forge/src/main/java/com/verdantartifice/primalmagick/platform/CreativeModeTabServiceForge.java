@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class CreativeModeTabServiceForge extends AbstractRegistryServiceForge<CreativeModeTab> implements ICreativeModeTabService {
+public class CreativeModeTabServiceForge extends AbstractBuiltInRegistryServiceForge<CreativeModeTab> implements ICreativeModeTabService {
     @Override
     protected Supplier<DeferredRegister<CreativeModeTab>> getDeferredRegisterSupplier() {
         return CreativeModeTabRegistration::getDeferredRegister;

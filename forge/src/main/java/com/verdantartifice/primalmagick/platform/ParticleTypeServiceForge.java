@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class ParticleTypeServiceForge extends AbstractRegistryServiceForge<ParticleType<?>> implements IParticleTypeService {
+public class ParticleTypeServiceForge extends AbstractBuiltInRegistryServiceForge<ParticleType<?>> implements IParticleTypeService {
     @Override
     protected Supplier<DeferredRegister<ParticleType<?>>> getDeferredRegisterSupplier() {
         return ParticleTypeRegistration::getDeferredRegister;

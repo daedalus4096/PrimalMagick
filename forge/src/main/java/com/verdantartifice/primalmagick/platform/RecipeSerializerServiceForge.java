@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class RecipeSerializerServiceForge extends AbstractRegistryServiceForge<RecipeSerializer<?>> implements IRecipeSerializerService {
+public class RecipeSerializerServiceForge extends AbstractBuiltInRegistryServiceForge<RecipeSerializer<?>> implements IRecipeSerializerService {
     @Override
     protected Supplier<DeferredRegister<RecipeSerializer<?>>> getDeferredRegisterSupplier() {
         return RecipeSerializerRegistration::getDeferredRegister;

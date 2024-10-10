@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class BlockServiceForge extends AbstractRegistryServiceForge<Block> implements IBlockService {
+public class BlockServiceForge extends AbstractBuiltInRegistryServiceForge<Block> implements IBlockService {
     @Override
     protected Supplier<DeferredRegister<Block>> getDeferredRegisterSupplier() {
         return BlockRegistration::getDeferredRegister;

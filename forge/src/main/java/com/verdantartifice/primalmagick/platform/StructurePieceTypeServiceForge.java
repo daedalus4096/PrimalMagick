@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class StructurePieceTypeServiceForge extends AbstractRegistryServiceForge<StructurePieceType> implements IStructurePieceTypeService {
+public class StructurePieceTypeServiceForge extends AbstractBuiltInRegistryServiceForge<StructurePieceType> implements IStructurePieceTypeService {
     @Override
     protected Supplier<DeferredRegister<StructurePieceType>> getDeferredRegisterSupplier() {
         return StructurePieceTypeRegistration::getDeferredRegister;

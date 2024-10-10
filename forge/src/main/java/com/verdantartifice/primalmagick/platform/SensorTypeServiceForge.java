@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class SensorTypeServiceForge extends AbstractRegistryServiceForge<SensorType<?>> implements ISensorTypeService {
+public class SensorTypeServiceForge extends AbstractBuiltInRegistryServiceForge<SensorType<?>> implements ISensorTypeService {
     @Override
     protected Supplier<DeferredRegister<SensorType<?>>> getDeferredRegisterSupplier() {
         return SensorTypeRegistration::getDeferredRegister;

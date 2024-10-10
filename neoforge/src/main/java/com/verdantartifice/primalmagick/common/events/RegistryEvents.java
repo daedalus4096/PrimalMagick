@@ -1,0 +1,20 @@
+package com.verdantartifice.primalmagick.common.events;
+
+import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
+
+/**
+ * Handlers for mod registry-related events.
+ *
+ * @author Daedalus4096
+ */
+@EventBusSubscriber(modid = Constants.MOD_ID)
+public class RegistryEvents {
+    @SubscribeEvent
+    public static void registerRegistries(NewRegistryEvent event) {
+        event.register(ResearchKeyTypeRegistration.TYPES);
+    }
+}

@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class SoundEventServiceForge extends AbstractRegistryServiceForge<SoundEvent> implements ISoundEventService {
+public class SoundEventServiceForge extends AbstractBuiltInRegistryServiceForge<SoundEvent> implements ISoundEventService {
     @Override
     protected Supplier<DeferredRegister<SoundEvent>> getDeferredRegisterSupplier() {
         return SoundEventRegistration::getDeferredRegister;

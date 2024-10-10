@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
 import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypeRegistration;
@@ -46,6 +47,7 @@ public class InitRegistries {
         ArgumentTypeRegistration.init();
         SensorTypeRegistration.init();
         MemoryModuleTypeRegistration.init();
+        ResearchKeyTypeRegistration.init();
 
         // Platform specific registries
         LootModifierSerializersPM.init();

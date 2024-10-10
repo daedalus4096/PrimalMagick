@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class MobEffectServiceForge extends AbstractRegistryServiceForge<MobEffect> implements IMobEffectService {
+public class MobEffectServiceForge extends AbstractBuiltInRegistryServiceForge<MobEffect> implements IMobEffectService {
     @Override
     protected Supplier<DeferredRegister<MobEffect>> getDeferredRegisterSupplier() {
         return MobEffectRegistration::getDeferredRegister;

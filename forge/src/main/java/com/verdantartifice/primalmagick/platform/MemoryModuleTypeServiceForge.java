@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class MemoryModuleTypeServiceForge extends AbstractRegistryServiceForge<MemoryModuleType<?>> implements IMemoryModuleTypeService {
+public class MemoryModuleTypeServiceForge extends AbstractBuiltInRegistryServiceForge<MemoryModuleType<?>> implements IMemoryModuleTypeService {
     @Override
     protected Supplier<DeferredRegister<MemoryModuleType<?>>> getDeferredRegisterSupplier() {
         return MemoryModuleTypeRegistration::getDeferredRegister;

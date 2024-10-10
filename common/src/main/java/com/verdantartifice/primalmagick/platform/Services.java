@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.platform.services.IParticleTypeService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import com.verdantartifice.primalmagick.platform.services.IRecipeSerializerService;
 import com.verdantartifice.primalmagick.platform.services.IRecipeTypeService;
+import com.verdantartifice.primalmagick.platform.services.IResearchKeyTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISensorTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISoundEventService;
 import com.verdantartifice.primalmagick.platform.services.IStructurePieceTypeService;
@@ -54,6 +55,7 @@ public class Services {
     public static final IArgumentTypeService ARGUMENT_TYPES = load(IArgumentTypeService.class);
     public static final ISensorTypeService SENSOR_TYPES = load(ISensorTypeService.class);
     public static final IMemoryModuleTypeService MEMORY_MODULE_TYPES = load(IMemoryModuleTypeService.class);
+    public static final IResearchKeyTypeService RESEARCH_KEY_TYPES = load(IResearchKeyTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

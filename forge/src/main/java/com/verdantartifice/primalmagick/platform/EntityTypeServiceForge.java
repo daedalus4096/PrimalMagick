@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class EntityTypeServiceForge extends AbstractRegistryServiceForge<EntityType<?>> implements IEntityTypeService {
+public class EntityTypeServiceForge extends AbstractBuiltInRegistryServiceForge<EntityType<?>> implements IEntityTypeService {
     @Override
     protected Supplier<DeferredRegister<EntityType<?>>> getDeferredRegisterSupplier() {
         return EntityTypeRegistration::getDeferredRegister;

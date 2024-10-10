@@ -19,7 +19,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class MenuTypeServiceForge extends AbstractRegistryServiceForge<MenuType<?>> implements IMenuTypeService {
+public class MenuTypeServiceForge extends AbstractBuiltInRegistryServiceForge<MenuType<?>> implements IMenuTypeService {
     @Override
     protected Supplier<DeferredRegister<MenuType<?>>> getDeferredRegisterSupplier() {
         return MenuTypeRegistration::getDeferredRegister;

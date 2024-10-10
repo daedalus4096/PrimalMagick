@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class ArmorMaterialServiceForge extends AbstractRegistryServiceForge<ArmorMaterial> implements IArmorMaterialService {
+public class ArmorMaterialServiceForge extends AbstractBuiltInRegistryServiceForge<ArmorMaterial> implements IArmorMaterialService {
     @Override
     protected Supplier<DeferredRegister<ArmorMaterial>> getDeferredRegisterSupplier() {
         return ArmorMaterialRegistration::getDeferredRegister;

@@ -1,6 +1,10 @@
 package com.verdantartifice.primalmagick.platform.services;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -38,4 +42,10 @@ public interface IRegistryService<R> {
      * @return true if the identified value is present in this registry, false otherwise
      */
     boolean containsKey(ResourceLocation id);
+
+    Codec<R> codec();
+
+    StreamCodec<RegistryFriendlyByteBuf, R> registryFriendlyStreamCodec();
+
+    StreamCodec<FriendlyByteBuf, R> friendlyStreamCodec();
 }

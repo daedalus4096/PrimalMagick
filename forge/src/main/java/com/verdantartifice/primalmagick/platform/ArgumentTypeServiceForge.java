@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  *
  * @author Daedalus4096
  */
-public class ArgumentTypeServiceForge extends AbstractRegistryServiceForge<ArgumentTypeInfo<?, ?>> implements IArgumentTypeService {
+public class ArgumentTypeServiceForge extends AbstractBuiltInRegistryServiceForge<ArgumentTypeInfo<?, ?>> implements IArgumentTypeService {
     @Override
     protected Supplier<DeferredRegister<ArgumentTypeInfo<?, ?>>> getDeferredRegisterSupplier() {
         return ArgumentTypeRegistration::getDeferredRegister;
