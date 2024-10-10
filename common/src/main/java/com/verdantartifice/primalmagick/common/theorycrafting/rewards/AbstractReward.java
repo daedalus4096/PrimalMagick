@@ -1,8 +1,7 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
@@ -15,11 +14,11 @@ import net.minecraft.server.level.ServerPlayer;
  */
 public abstract class AbstractReward<T extends AbstractReward<T>> {
     public static Codec<AbstractReward<?>> dispatchCodec() {
-        return RegistryCodecs.codec(RewardTypesPM.TYPES).dispatch("reward_type", AbstractReward::getType, RewardType::codec);
+        return Services.REWARD_TYPES.codec().dispatch("reward_type", AbstractReward::getType, RewardType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractReward<?>> dispatchStreamCodec() {
-        return RegistryCodecs.registryFriendlyStreamCodec(RewardTypesPM.TYPES).dispatch(AbstractReward::getType, RewardType::streamCodec);
+        return Services.REWARD_TYPES.registryFriendlyStreamCodec().dispatch(AbstractReward::getType, RewardType::streamCodec);
     }
     
     public abstract void grant(ServerPlayer player);

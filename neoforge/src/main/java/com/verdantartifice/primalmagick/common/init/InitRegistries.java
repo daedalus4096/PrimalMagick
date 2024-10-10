@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegi
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
 import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypeRegistration;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypeRegistration;
@@ -52,6 +53,7 @@ public class InitRegistries {
         ResearchKeyTypeRegistration.init();
         RequirementTypeRegistration.init();
         ProjectMaterialTypeRegistration.init();
+        RewardTypeRegistration.init();
 
         // Platform specific registries
         LootModifierSerializersPM.init();

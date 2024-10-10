@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
@@ -20,5 +21,6 @@ public class RegistryEvents {
         event.register(ResearchKeyTypeRegistration.TYPES);
         event.register(RequirementTypeRegistration.TYPES);
         event.register(ProjectMaterialTypeRegistration.TYPES);
+        event.register(RewardTypeRegistration.TYPES);
     }
 }

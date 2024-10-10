@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.platform.services.IRecipeSerializerServi
 import com.verdantartifice.primalmagick.platform.services.IRecipeTypeService;
 import com.verdantartifice.primalmagick.platform.services.IRequirementTypeService;
 import com.verdantartifice.primalmagick.platform.services.IResearchKeyTypeService;
+import com.verdantartifice.primalmagick.platform.services.IRewardTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISensorTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISoundEventService;
 import com.verdantartifice.primalmagick.platform.services.IStructurePieceTypeService;
@@ -60,6 +61,7 @@ public class Services {
     public static final IResearchKeyTypeService RESEARCH_KEY_TYPES = load(IResearchKeyTypeService.class);
     public static final IRequirementTypeService REQUIREMENT_TYPES = load(IRequirementTypeService.class);
     public static final IProjectMaterialTypeService PROJECT_MATERIAL_TYPES = load(IProjectMaterialTypeService.class);
+    public static final IRewardTypeService REWARD_TYPES = load(IRewardTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
