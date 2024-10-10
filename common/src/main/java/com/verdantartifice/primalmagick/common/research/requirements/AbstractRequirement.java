@@ -1,22 +1,20 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import java.util.Optional;
-import java.util.stream.Stream;
-
-import javax.annotation.Nullable;
-
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Represents a predicate determining whether a player meets a given requirement for
@@ -24,11 +22,11 @@ import net.minecraft.world.entity.player.Player;
  */
 public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     public static Codec<AbstractRequirement<?>> dispatchCodec() {
-        return RegistryCodecs.codec(RequirementsPM.TYPES).dispatch("requirement_type", AbstractRequirement::getType, type -> type.codecSupplier().get());
+        return Services.REQUIREMENT_TYPES.codec().dispatch("requirement_type", AbstractRequirement::getType, type -> type.codecSupplier().get());
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractRequirement<?>> dispatchStreamCodec() {
-        return RegistryCodecs.registryFriendlyStreamCodec(RequirementsPM.TYPES).dispatch(AbstractRequirement::getType, type -> type.streamCodecSupplier().get());
+        return Services.REQUIREMENT_TYPES.registryFriendlyStreamCodec().dispatch(AbstractRequirement::getType, type -> type.streamCodecSupplier().get());
     }
     
     public abstract boolean isMetBy(@Nullable Player player);
