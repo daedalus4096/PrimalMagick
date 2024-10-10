@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.Requirement
 import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypeRegistration;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypeRegistration;
@@ -54,6 +55,7 @@ public class InitRegistries {
         RequirementTypeRegistration.init();
         ProjectMaterialTypeRegistration.init();
         RewardTypeRegistration.init();
+        WeightFunctionTypeRegistration.init();
 
         // Platform specific registries
         LootModifierSerializersPM.init();

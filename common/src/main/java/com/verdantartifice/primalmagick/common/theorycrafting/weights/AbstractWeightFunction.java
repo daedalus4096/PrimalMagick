@@ -1,8 +1,7 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.weights;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
@@ -14,11 +13,11 @@ import net.minecraft.world.entity.player.Player;
  */
 public abstract class AbstractWeightFunction<T extends AbstractWeightFunction<T>> {
     public static Codec<AbstractWeightFunction<?>> dispatchCodec() {
-        return RegistryCodecs.codec(WeightFunctionTypesPM.TYPES).dispatch("reward_type", AbstractWeightFunction::getType, WeightFunctionType::codec);
+        return Services.WEIGHT_FUNCTION_TYPES.codec().dispatch("reward_type", AbstractWeightFunction::getType, WeightFunctionType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractWeightFunction<?>> dispatchStreamCodec() {
-        return RegistryCodecs.registryFriendlyStreamCodec(WeightFunctionTypesPM.TYPES).dispatch(AbstractWeightFunction::getType, WeightFunctionType::streamCodec);
+        return Services.WEIGHT_FUNCTION_TYPES.registryFriendlyStreamCodec().dispatch(AbstractWeightFunction::getType, WeightFunctionType::streamCodec);
     }
     
     public abstract double getWeight(Player player);

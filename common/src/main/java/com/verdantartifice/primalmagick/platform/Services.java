@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagick.platform.services.ISensorTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISoundEventService;
 import com.verdantartifice.primalmagick.platform.services.IStructurePieceTypeService;
 import com.verdantartifice.primalmagick.platform.services.IStructureTypeService;
+import com.verdantartifice.primalmagick.platform.services.IWeightFunctionTypeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -62,6 +63,7 @@ public class Services {
     public static final IRequirementTypeService REQUIREMENT_TYPES = load(IRequirementTypeService.class);
     public static final IProjectMaterialTypeService PROJECT_MATERIAL_TYPES = load(IProjectMaterialTypeService.class);
     public static final IRewardTypeService REWARD_TYPES = load(IRewardTypeService.class);
+    public static final IWeightFunctionTypeService WEIGHT_FUNCTION_TYPES = load(IWeightFunctionTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
