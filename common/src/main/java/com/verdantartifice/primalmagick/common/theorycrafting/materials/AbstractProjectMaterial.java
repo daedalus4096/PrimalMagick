@@ -1,22 +1,13 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import com.mojang.datafixers.util.Function4;
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -25,6 +16,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
 /**
  * Base class for a material required by a theorycrafting research project.
  * 
@@ -32,11 +30,11 @@ import net.minecraft.world.level.block.Block;
  */
 public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<T>> {
     public static Codec<AbstractProjectMaterial<?>> dispatchCodec() {
-        return RegistryCodecs.codec(ProjectMaterialTypesPM.TYPES).dispatch("material_type", AbstractProjectMaterial::getType, type -> type.codecSupplier().get());
+        return Services.PROJECT_MATERIAL_TYPES.codec().dispatch("material_type", AbstractProjectMaterial::getType, type -> type.codecSupplier().get());
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractProjectMaterial<?>> dispatchStreamCodec() {
-        return RegistryCodecs.registryFriendlyStreamCodec(ProjectMaterialTypesPM.TYPES).dispatch(AbstractProjectMaterial::getType, type -> type.streamCodecSupplier().get());
+        return Services.PROJECT_MATERIAL_TYPES.registryFriendlyStreamCodec().dispatch(AbstractProjectMaterial::getType, type -> type.streamCodecSupplier().get());
     }
     
     protected final double weight;

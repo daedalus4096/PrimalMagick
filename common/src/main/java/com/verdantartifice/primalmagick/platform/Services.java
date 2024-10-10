@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.platform.services.IMenuTypeService;
 import com.verdantartifice.primalmagick.platform.services.IMobEffectService;
 import com.verdantartifice.primalmagick.platform.services.IParticleTypeService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
+import com.verdantartifice.primalmagick.platform.services.IProjectMaterialTypeService;
 import com.verdantartifice.primalmagick.platform.services.IRecipeSerializerService;
 import com.verdantartifice.primalmagick.platform.services.IRecipeTypeService;
 import com.verdantartifice.primalmagick.platform.services.IRequirementTypeService;
@@ -58,6 +59,7 @@ public class Services {
     public static final IMemoryModuleTypeService MEMORY_MODULE_TYPES = load(IMemoryModuleTypeService.class);
     public static final IResearchKeyTypeService RESEARCH_KEY_TYPES = load(IResearchKeyTypeService.class);
     public static final IRequirementTypeService REQUIREMENT_TYPES = load(IRequirementTypeService.class);
+    public static final IProjectMaterialTypeService PROJECT_MATERIAL_TYPES = load(IProjectMaterialTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
