@@ -10,10 +10,14 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.Utf8String;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -38,8 +42,18 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
     }
 
     @Override
+    public Collection<R> getAll() {
+        return this.getRegistry().stream().toList();
+    }
+
+    @Override
     public boolean containsKey(ResourceLocation id) {
         return this.getRegistry().containsKey(id);
+    }
+
+    @Override
+    public Optional<ResourceKey<R>> getResourceKey(R value) {
+        return this.getRegistry().getResourceKey(value);
     }
 
     @Override

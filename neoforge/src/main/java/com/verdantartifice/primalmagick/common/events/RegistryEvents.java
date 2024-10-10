@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.events;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
+import com.verdantartifice.primalmagick.common.spells.SpellPropertyRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
@@ -24,5 +25,6 @@ public class RegistryEvents {
         event.register(ProjectMaterialTypeRegistration.TYPES);
         event.register(RewardTypeRegistration.TYPES);
         event.register(WeightFunctionTypeRegistration.TYPES);
+        event.register(SpellPropertyRegistration.PROPERTIES);
     }
 }

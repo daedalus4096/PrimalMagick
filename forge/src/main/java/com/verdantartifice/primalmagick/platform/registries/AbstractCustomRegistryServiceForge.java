@@ -15,6 +15,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -40,8 +42,18 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
     }
 
     @Override
+    public Collection<R> getAll() {
+        return this.getRegistry().get().getValues();
+    }
+
+    @Override
     public boolean containsKey(ResourceLocation id) {
         return this.getRegistry().get().containsKey(id);
+    }
+
+    @Override
+    public Optional<ResourceKey<R>> getResourceKey(R value) {
+        return this.getRegistry().get().getResourceKey(value);
     }
 
     @Override

@@ -5,9 +5,12 @@ import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -36,6 +39,13 @@ public interface IRegistryService<R> {
     @Nullable R get(ResourceLocation id);
 
     /**
+     * Retrieve all registered values in this registry.
+     *
+     * @return a collection of all values in this registry
+     */
+    Collection<R> getAll();
+
+    /**
      * Determine whether an object is present in this registry for the given resource location.
      *
      * @param id the ID of the value to be queried
@@ -43,9 +53,32 @@ public interface IRegistryService<R> {
      */
     boolean containsKey(ResourceLocation id);
 
+    /**
+     * Get the resource key for the given value, if it exists in the registry.
+     *
+     * @param value the value to be queried
+     * @return an optional containing the value's resource key if it is present in the registry, or empty otherwise
+     */
+    Optional<ResourceKey<R>> getResourceKey(R value);
+
+    /**
+     * Retrieve the serialization codec for this registry.
+     *
+     * @return the serialization codec for this registry
+     */
     Codec<R> codec();
 
+    /**
+     * Retrieve a networking stream codec for this registry, built on a {@link RegistryFriendlyByteBuf}.
+     *
+     * @return a networking stream codec for this registry
+     */
     StreamCodec<RegistryFriendlyByteBuf, R> registryFriendlyStreamCodec();
 
+    /**
+     * Retrieve a networking stream codec for this registry, built on a {@link FriendlyByteBuf}.
+     *
+     * @return a networking stream codec for this registry
+     */
     StreamCodec<FriendlyByteBuf, R> friendlyStreamCodec();
 }
