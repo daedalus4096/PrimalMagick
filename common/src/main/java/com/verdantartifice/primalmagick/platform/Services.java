@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagick.platform.services.ISensorTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISoundEventService;
 import com.verdantartifice.primalmagick.platform.services.ISpellModTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISpellPropertyService;
+import com.verdantartifice.primalmagick.platform.services.ISpellVehicleTypeService;
 import com.verdantartifice.primalmagick.platform.services.IStructurePieceTypeService;
 import com.verdantartifice.primalmagick.platform.services.IStructureTypeService;
 import com.verdantartifice.primalmagick.platform.services.IWeightFunctionTypeService;
@@ -68,6 +69,7 @@ public class Services {
     public static final IWeightFunctionTypeService WEIGHT_FUNCTION_TYPES = load(IWeightFunctionTypeService.class);
     public static final ISpellPropertyService SPELL_PROPERTIES = load(ISpellPropertyService.class);
     public static final ISpellModTypeService SPELL_MOD_TYPES = load(ISpellModTypeService.class);
+    public static final ISpellVehicleTypeService SPELL_VEHICLE_TYPES = load(ISpellVehicleTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

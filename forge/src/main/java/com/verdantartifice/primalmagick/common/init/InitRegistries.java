@@ -25,7 +25,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyRegistration;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
-import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehiclesPM;
+import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
@@ -66,13 +66,13 @@ public class InitRegistries {
         WeightFunctionTypeRegistration.init();
         SpellPropertyRegistration.init();
         SpellModTypeRegistration.init();
+        SpellVehicleTypeRegistration.init();
 
         // Platform specific registries
         IngredientsPM.init();
         LootModifierSerializersPM.init();
 
         // TODO To be converted
-        SpellVehiclesPM.init();
         SpellPayloadsPM.init();
         GridRewardTypesPM.init();
         ResearchTopicTypesPM.init();

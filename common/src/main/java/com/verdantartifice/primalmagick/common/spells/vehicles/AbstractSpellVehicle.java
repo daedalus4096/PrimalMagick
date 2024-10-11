@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
@@ -20,11 +21,11 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractSpellVehicle<T extends AbstractSpellVehicle<T>> implements ISpellVehicle {
     public static Codec<AbstractSpellVehicle<?>> dispatchCodec() {
-        return RegistryCodecs.codec(SpellVehiclesPM.TYPES).dispatch("mod_type", AbstractSpellVehicle::getType, SpellVehicleType::codec);
+        return Services.SPELL_VEHICLE_TYPES.codec().dispatch("mod_type", AbstractSpellVehicle::getType, SpellVehicleType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellVehicle<?>> dispatchStreamCodec() {
-        return RegistryCodecs.registryFriendlyStreamCodec(SpellVehiclesPM.TYPES).dispatch(AbstractSpellVehicle::getType, SpellVehicleType::streamCodec);
+        return Services.SPELL_VEHICLE_TYPES.registryFriendlyStreamCodec().dispatch(AbstractSpellVehicle::getType, SpellVehicleType::streamCodec);
     }
     
     public abstract SpellVehicleType<T> getType();
