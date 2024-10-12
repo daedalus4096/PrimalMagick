@@ -1,29 +1,25 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.init.InitAttunements;
 import com.verdantartifice.primalmagick.common.init.InitCauldron;
 import com.verdantartifice.primalmagick.common.init.InitEnchantments;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;
 import com.verdantartifice.primalmagick.common.init.InitResearch;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionTypesPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+
+import java.util.function.Consumer;
 
 /**
  * Handlers for mod lifecycle related events.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ModLifecycleEvents {
-    @SubscribeEvent
-    public static void commonSetup(FMLCommonSetupEvent event) {
+    public static void commonSetup(Consumer<Runnable> workConsumer) {
         PacketHandler.registerMessages();
         
         InitRecipes.initWandTransforms();
@@ -36,12 +32,10 @@ public class ModLifecycleEvents {
         
         LootConditionTypesPM.register();
 
-        registerDispenserBehaviors(event);
+        registerDispenserBehaviors(workConsumer);
     }
     
-    private static void registerDispenserBehaviors(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            DispenserBlock.registerProjectileBehavior(ItemsPM.IGNYX.get());
-        });
+    private static void registerDispenserBehaviors(Consumer<Runnable> workConsumer) {
+        workConsumer.accept(() -> DispenserBlock.registerProjectileBehavior(ItemsPM.IGNYX.get()));
     }
 }
