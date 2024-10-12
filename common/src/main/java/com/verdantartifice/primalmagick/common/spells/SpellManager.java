@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.spells;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -16,13 +16,12 @@ import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadType;
-import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
-import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehiclesPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
@@ -37,12 +36,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -90,9 +89,9 @@ public class SpellManager {
         return retVal;
     }
     
-    protected static <T extends ISpellComponentType> List<T> getFilteredTypes(@Nullable Player player, Supplier<IForgeRegistry<T>> registrySupplier) {
+    protected static <T extends ISpellComponentType> List<T> getFilteredTypes(@Nullable Player player, Collection<T> values) {
         // Compute a list of spell component types that the given player is able to use
-        return registrySupplier.get().getValues().stream()
+        return values.stream()
                 .filter(type -> type.requirementSupplier().get() == null || type.requirementSupplier().get().isMetBy(player))
                 .sorted(Comparator.comparing(T::sortOrder))
                 .toList();
@@ -100,7 +99,7 @@ public class SpellManager {
     
     @Nonnull
     public static List<SpellVehicleType<?>> getVehicleTypes(@Nullable Player player) {
-        return getFilteredTypes(player, SpellVehiclesPM.TYPES);
+        return getFilteredTypes(player, Services.SPELL_VEHICLE_TYPES.getAll());
     }
     
     @Nullable
@@ -119,7 +118,7 @@ public class SpellManager {
     
     @Nonnull
     public static List<SpellPayloadType<?>> getPayloadTypes(@Nullable Player player) {
-        return getFilteredTypes(player, SpellPayloadsPM.TYPES);
+        return getFilteredTypes(player, Services.SPELL_PAYLOAD_TYPES.getAll());
     }
     
     @Nullable
@@ -138,7 +137,7 @@ public class SpellManager {
     
     @Nonnull
     public static List<SpellModType<?>> getModTypes(@Nullable Player player) {
-        return getFilteredTypes(player, SpellModsPM.TYPES);
+        return getFilteredTypes(player, Services.SPELL_MOD_TYPES.getAll());
     }
     
     @Nullable
@@ -190,8 +189,7 @@ public class SpellManager {
     
     public static void cycleActiveSpell(@Nullable Player player, @Nullable ItemStack wandStack, boolean reverse) {
         // Change the active spell for the given wand stack to the next (or previous, if specified) one in its inscribed list
-        if (wandStack != null && wandStack.getItem() instanceof IWand) {
-            IWand wand = (IWand)wandStack.getItem();
+        if (wandStack != null && wandStack.getItem() instanceof IWand wand) {
             int newIndex = wand.getActiveSpellIndex(wandStack) + (reverse ? -1 : 1);
             
             // Cycle to the beginning from the end of the list, or to the end from the beginning of the list
@@ -262,6 +260,7 @@ public class SpellManager {
     }
     
     public static boolean canPolymorph(@Nonnull EntityType<?> entityType) {
+        // TODO Change to deny, allow, deny pattern
         if (entityType.is(EntityTypeTagsPM.POLYMORPH_ALLOW)) {
             return true;
         } else if (entityType.is(EntityTypeTagsPM.POLYMORPH_BAN)) {
