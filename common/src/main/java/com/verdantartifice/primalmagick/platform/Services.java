@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.platform.services.IRequirementTypeServic
 import com.verdantartifice.primalmagick.platform.services.IResearchKeyTypeService;
 import com.verdantartifice.primalmagick.platform.services.IResearchTopicTypeService;
 import com.verdantartifice.primalmagick.platform.services.IRewardTypeService;
+import com.verdantartifice.primalmagick.platform.services.IRitualStepTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISensorTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISoundEventService;
 import com.verdantartifice.primalmagick.platform.services.ISpellModTypeService;
@@ -76,6 +77,7 @@ public class Services {
     public static final ISpellPayloadTypeService SPELL_PAYLOAD_TYPES = load(ISpellPayloadTypeService.class);
     public static final IGridRewardTypeService GRID_REWARD_TYPES = load(IGridRewardTypeService.class);
     public static final IResearchTopicTypeService RESEARCH_TOPIC_TYPES = load(IResearchTopicTypeService.class);
+    public static final IRitualStepTypeService RITUAL_STEP_TYPES = load(IRitualStepTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
