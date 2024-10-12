@@ -34,6 +34,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -62,7 +63,7 @@ public class CombatEvents {
     public static boolean onAttack(LivingEntity targetEntity, DamageSource damageSource, float amount) {
         // Handle effects caused by damage target
         if (targetEntity instanceof Player target) {
-            // Players with greater infernal attunement are immune to all fire damage
+            // Players with greater infernal attunement are immune to all fire damage, and so the event should be cancelled
             if (damageSource.is(DamageTypeTags.IS_FIRE) && AttunementManager.meetsThreshold(target, Sources.INFERNAL, AttunementThreshold.GREATER)) {
                 return true;
             }
@@ -98,6 +99,7 @@ public class CombatEvents {
             }
         }
 
+        // Do not cancel the event
         return false;
     }
     
@@ -175,21 +177,18 @@ public class CombatEvents {
             }
         }
 
+        // Do not cancel the event
         return false;
     }
     
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onEntityHurtLowest(LivingHurtEvent event) {
+    public static void onEntityHurtLowest(LivingEntity targetEntity, DamageSource damageSource, float amount) {
         // Trigger the appropriate advancement criteria with more data than vanilla provides, namely player data
-        if (!event.isCanceled() && event.getEntity() instanceof ServerPlayer serverPlayer) {
-            CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT.trigger(serverPlayer, event.getSource(), event.getAmount());
+        if (targetEntity instanceof ServerPlayer serverPlayer) {
+            CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT.trigger(serverPlayer, damageSource, amount);
         }
     }
     
-    @SubscribeEvent
-    public static void onDeath(LivingDeathEvent event) {
-        LivingEntity entity = event.getEntity();
-        
+    public static boolean onDeath(LivingEntity entity) {
         // If the player has greater hallowed attunement and it's not on cooldown, cancel death as if using a totem of undying
         if (entity instanceof Player player) {
             Level level = player.level();
@@ -201,16 +200,18 @@ public class CombatEvents {
                 player.removeAllEffects();
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
                 player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
-                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder().get(), 6000, 0, true, false, true));
+                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder(), 6000, 0, true, false, true));
                 cooldowns.setCooldown(CooldownType.DEATH_SAVE, 6000);
                 level.playSound(null, player.blockPosition(), SoundsPM.ANGELS.get(), 
                         SoundSource.PLAYERS, 1.0F, 1.0F + (0.05F * (float)level.random.nextGaussian()));
-                event.setCanceled(true);
+
+                // Cancel the event
+                return true;
             }
         }
         
         // If the entity is afflicted with Drain Soul, drop some soul gems
-        if (entity.hasEffect(EffectsPM.DRAIN_SOUL.getHolder().get()) && !event.isCanceled()) {
+        if (entity.hasEffect(EffectsPM.DRAIN_SOUL.getHolder())) {
             float gems = entity.getType().getCategory().isFriendly() ? 
                     Mth.sqrt(entity.getMaxHealth()) / 20.0F : 
                     entity.getMaxHealth() / 20.0F;
@@ -219,27 +220,28 @@ public class CombatEvents {
             Containers.dropItemStack(entity.getCommandSenderWorld(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsPM.SOUL_GEM.get(), wholeGems));
             Containers.dropItemStack(entity.getCommandSenderWorld(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), slivers));
         }
+
+        // Do not cancel the event
+        return false;
     }
     
-    @SubscribeEvent
-    public static void onArrowImpact(ProjectileImpactEvent event) {
+    public static void onArrowImpact(Projectile projectile, HitResult hitResult) {
         // If the shooter has the Enderport enchantment, teleport to the hit location
         // TODO Could the Enderport effect be converted to an enchantment effect component?
-        Entity shooter = event.getProjectile().getOwner();
+        Entity shooter = projectile.getOwner();
         if (shooter instanceof LivingEntity livingShooter && EnchantmentHelperPM.hasEnderport(livingShooter)) {
-            EntityUtils.teleportEntity(livingShooter, event.getProjectile().level(), event.getRayTraceResult().getLocation());
+            EntityUtils.teleportEntity(livingShooter, projectile.level(), hitResult.getLocation());
         }
 
         // Handle the Soulpiercing enchantment
-        HitResult rayTraceResult = event.getRayTraceResult();
-        if (rayTraceResult.getType() == HitResult.Type.ENTITY) {
-            Entity targetEntity = ((EntityHitResult)rayTraceResult).getEntity();
+        if (hitResult.getType() == HitResult.Type.ENTITY) {
+            Entity targetEntity = ((EntityHitResult)hitResult).getEntity();
             if (targetEntity instanceof LivingEntity target) {
                 if (shooter instanceof LivingEntity livingShooter) {
                     // If the target can have its soul pierced, spawn some soul slivers
                     int soulpiercingLevel = EnchantmentHelperPM.getEnchantmentLevel(livingShooter.getMainHandItem(), EnchantmentsPM.SOULPIERCING, livingShooter.registryAccess());
                     if (soulpiercingLevel > 0) {
-                        MobEffectInstance soulpiercedInstance = new MobEffectInstance(EffectsPM.SOULPIERCED.getHolder().get(), 12000, 0, false, false);
+                        MobEffectInstance soulpiercedInstance = new MobEffectInstance(EffectsPM.SOULPIERCED.getHolder(), 12000, 0, false, false);
                         if (target.canBeAffected(soulpiercedInstance) && !target.hasEffect(soulpiercedInstance.getEffect())) {
                             Containers.dropItemStack(target.level(), target.getX(), target.getY(), target.getZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), soulpiercingLevel));
                             target.addEffect(soulpiercedInstance);
@@ -250,11 +252,12 @@ public class CombatEvents {
         }
     }
     
-    @SubscribeEvent
-    public static void onPotionApplicable(MobEffectEvent.Applicable event) {
-        if (event.getEffectInstance().getEffect() == EffectsPM.BLEEDING.get() && event.getEntity().isInvertedHealAndHarm()) {
+    public static boolean isPotionApplicable(LivingEntity livingEntity, MobEffectInstance effectInstance) {
+        if (effectInstance.getEffect().is(EffectsPM.BLEEDING.getHolder()) && livingEntity.isInvertedHealAndHarm()) {
             // The undead can't bleed
-            event.setResult(Result.DENY);
+            return false;
+        } else {
+            return true;
         }
     }
 }
