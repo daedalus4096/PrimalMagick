@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyRegistration;
@@ -32,5 +33,6 @@ public class RegistryEvents {
         event.register(SpellModTypeRegistration.TYPES);
         event.register(SpellVehicleTypeRegistration.TYPES);
         event.register(SpellPayloadTypeRegistration.TYPES);
+        event.register(GridRewardTypeRegistration.TYPES);
     }
 }

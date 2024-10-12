@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -17,11 +17,11 @@ public abstract class AbstractReward<T extends AbstractReward<T>> implements IRe
     protected static final Logger LOGGER = LogManager.getLogger();
     
     public static Codec<AbstractReward<?>> dispatchCodec() {
-        return RegistryCodecs.codec(GridRewardTypesPM.TYPES).dispatch("reward_type", AbstractReward::getType, GridRewardType::codec);
+        return Services.GRID_REWARD_TYPES.codec().dispatch("reward_type", AbstractReward::getType, GridRewardType::codec);
     }
     
     public static StreamCodec<FriendlyByteBuf, AbstractReward<?>> dispatchStreamCodec() {
-        return RegistryCodecs.friendlyStreamCodec(GridRewardTypesPM.TYPES).dispatch(AbstractReward::getType, GridRewardType::streamCodec);
+        return Services.GRID_REWARD_TYPES.friendlyStreamCodec().dispatch(AbstractReward::getType, GridRewardType::streamCodec);
     }
     
     protected abstract GridRewardType<T> getType();

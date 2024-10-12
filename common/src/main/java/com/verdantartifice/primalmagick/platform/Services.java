@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.platform.services.IBlockService;
 import com.verdantartifice.primalmagick.platform.services.ICreativeModeTabService;
 import com.verdantartifice.primalmagick.platform.services.IDataComponentTypeService;
 import com.verdantartifice.primalmagick.platform.services.IEntityTypeService;
+import com.verdantartifice.primalmagick.platform.services.IGridRewardTypeService;
 import com.verdantartifice.primalmagick.platform.services.IItemService;
 import com.verdantartifice.primalmagick.platform.services.IMemoryModuleTypeService;
 import com.verdantartifice.primalmagick.platform.services.IMenuTypeService;
@@ -72,6 +73,7 @@ public class Services {
     public static final ISpellModTypeService SPELL_MOD_TYPES = load(ISpellModTypeService.class);
     public static final ISpellVehicleTypeService SPELL_VEHICLE_TYPES = load(ISpellVehicleTypeService.class);
     public static final ISpellPayloadTypeService SPELL_PAYLOAD_TYPES = load(ISpellPayloadTypeService.class);
+    public static final IGridRewardTypeService GRID_REWARD_TYPES = load(IGridRewardTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
