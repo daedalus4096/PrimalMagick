@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.platform.services.IRecipeSerializerServi
 import com.verdantartifice.primalmagick.platform.services.IRecipeTypeService;
 import com.verdantartifice.primalmagick.platform.services.IRequirementTypeService;
 import com.verdantartifice.primalmagick.platform.services.IResearchKeyTypeService;
+import com.verdantartifice.primalmagick.platform.services.IResearchTopicTypeService;
 import com.verdantartifice.primalmagick.platform.services.IRewardTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISensorTypeService;
 import com.verdantartifice.primalmagick.platform.services.ISoundEventService;
@@ -74,6 +75,7 @@ public class Services {
     public static final ISpellVehicleTypeService SPELL_VEHICLE_TYPES = load(ISpellVehicleTypeService.class);
     public static final ISpellPayloadTypeService SPELL_PAYLOAD_TYPES = load(ISpellPayloadTypeService.class);
     public static final IGridRewardTypeService GRID_REWARD_TYPES = load(IGridRewardTypeService.class);
+    public static final IResearchTopicTypeService RESEARCH_TOPIC_TYPES = load(IResearchTopicTypeService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

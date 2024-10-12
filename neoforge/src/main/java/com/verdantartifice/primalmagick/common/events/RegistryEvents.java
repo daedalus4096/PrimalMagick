@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
+import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyRegistration;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadTypeRegistration;
@@ -34,5 +35,6 @@ public class RegistryEvents {
         event.register(SpellVehicleTypeRegistration.TYPES);
         event.register(SpellPayloadTypeRegistration.TYPES);
         event.register(GridRewardTypeRegistration.TYPES);
+        event.register(ResearchTopicTypeRegistration.TYPES);
     }
 }

@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerial
 import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
+import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypeRegistration;
 import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyRegistration;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModTypeRegistration;
@@ -66,6 +67,7 @@ public class InitRegistries {
         SpellVehicleTypeRegistration.init();
         SpellPayloadTypeRegistration.init();
         GridRewardTypeRegistration.init();
+        ResearchTopicTypeRegistration.init();
 
         // Platform specific registries
         LootModifierSerializersPM.init();
