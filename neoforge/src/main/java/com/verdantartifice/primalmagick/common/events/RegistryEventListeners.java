@@ -15,17 +15,18 @@ import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 
 /**
- * Handlers for mod registry-related events.
+ * Neoforge listeners for mod registry-related events.
  *
  * @author Daedalus4096
  */
 @EventBusSubscriber(modid = Constants.MOD_ID)
-public class RegistryEvents {
+public class RegistryEventListeners {
     @SubscribeEvent
-    public static void registerRegistries(NewRegistryEvent event) {
+    public static void onNewRegistry(NewRegistryEvent event) {
         event.register(ResearchKeyTypeRegistration.TYPES);
         event.register(RequirementTypeRegistration.TYPES);
         event.register(ProjectMaterialTypeRegistration.TYPES);
@@ -38,5 +39,10 @@ public class RegistryEvents {
         event.register(GridRewardTypeRegistration.TYPES);
         event.register(ResearchTopicTypeRegistration.TYPES);
         event.register(RitualStepTypeRegistration.TYPES);
+    }
+
+    @SubscribeEvent
+    public static void onNewDatapackRegistry(DataPackRegistryEvent.NewRegistry event) {
+        RegistryEvents.onNewDatapackRegistry(event::dataPackRegistry);
     }
 }
