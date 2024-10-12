@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
@@ -28,7 +27,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -40,6 +38,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -50,132 +49,26 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
- * Handlers for combat-related events.
+ * Forge listeners for combat-related events.
  * 
  * @author Daedalus4096
  */
-public class CombatEvents {
-    public static boolean onAttack(LivingEntity targetEntity, DamageSource damageSource, float amount) {
-        // Handle effects caused by damage target
-        if (targetEntity instanceof Player target) {
-            // Players with greater infernal attunement are immune to all fire damage
-            if (damageSource.is(DamageTypeTags.IS_FIRE) && AttunementManager.meetsThreshold(target, Sources.INFERNAL, AttunementThreshold.GREATER)) {
-                return true;
-            }
-
-            // Attuned players have a chance to turn invisible upon taking damage, if they aren't already
-            Level targetLevel = target.level();
-            if (targetLevel.random.nextDouble() < 0.5D &&
-                    !target.hasEffect(MobEffects.INVISIBILITY) && 
-                    AttunementManager.meetsThreshold(target, Sources.MOON, AttunementThreshold.LESSER)) {
-                targetLevel.playSound(target, target.blockPosition(), SoundsPM.SHIMMER.get(), 
-                        SoundSource.PLAYERS, 1.0F, 1.0F + (0.05F * (float)targetLevel.random.nextGaussian()));
-                target.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 200));
-            }
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID)
+public class CombatEventListeners {
+    @SubscribeEvent
+    public static void onAttack(LivingAttackEvent event) {
+        if (CombatEvents.onAttack(event.getEntity(), event.getSource(), event.getAmount())) {
+            event.setCanceled(true);
         }
-        
-        // Handle effects caused by damage source
-        if (damageSource.getEntity() instanceof Player attacker) {
-            // If the attacker has lesser infernal attunement, launch a hellish chain at the next closest nearby target
-            Level attackerLevel = attacker.level();
-            if (!damageSource.is(DamageTypesPM.HELLISH_CHAIN) &&
-                    amount > 0.0F &&
-                    !attackerLevel.isClientSide && 
-                    AttunementManager.meetsThreshold(attacker, Sources.INFERNAL, AttunementThreshold.LESSER)) {
-                List<LivingEntity> targets = EntityUtils.getEntitiesInRangeSorted(attackerLevel, targetEntity.position(),
-                        Arrays.asList(targetEntity, attacker), LivingEntity.class, 4.0D, EntitySelectorsPM.validHellishChainTarget(attacker));
-                if (!targets.isEmpty()) {
-                    LivingEntity target = targets.getFirst();
-                    target.hurt(DamageSourcesPM.hellishChain(attackerLevel, attacker), amount / 2.0F);
-                    PacketHandler.sendToAllAround(new SpellBoltPacket(targetEntity.getEyePosition(1.0F), target.getEyePosition(1.0F), Sources.INFERNAL.getColor()),
-                            attackerLevel.dimension(), targetEntity.blockPosition(), 64.0D);
-                    attackerLevel.playSound(null, targetEntity.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attackerLevel.random.nextGaussian() * 0.05D));
-                }
-            }
-        }
-
-        return false;
     }
     
-    public static boolean onEntityHurt(LivingEntity targetEntity, DamageSource damageSource, Supplier<Float> damageGetter, Consumer<Float> damageSetter) {
-        // Handle effects triggered by damage target
-        if (targetEntity instanceof Player target) {
-            // Gain appropriate research for damage sources, if applicable
-            if (ResearchManager.isResearchComplete(target, ResearchEntries.FIRST_STEPS)) {
-                if (damageSource == target.damageSources().drown() && !ResearchManager.isResearchComplete(target, ResearchEntries.DROWN_A_LITTLE)) {
-                    ResearchManager.completeResearch(target, ResearchEntries.DROWN_A_LITTLE);
-                }
-                if (damageSource == target.damageSources().lava() && !ResearchManager.isResearchComplete(target, ResearchEntries.FEEL_THE_BURN)) {
-                    ResearchManager.completeResearch(target, ResearchEntries.FEEL_THE_BURN);
-                }
-            }
-
-            // Reduce fall damage if the recipient has lesser sky attunement
-            if (damageSource == target.damageSources().fall() && AttunementManager.meetsThreshold(target, Sources.SKY, AttunementThreshold.LESSER)) {
-                float newDamage = Math.max(0.0F, damageGetter.get() / 3.0F - 2.0F);
-                if (newDamage < damageGetter.get()) {
-                    damageSetter.accept(newDamage);
-                }
-                if (damageGetter.get() < 1.0F) {
-                    // If the fall damage was reduced to less than one, cancel it
-                    damageSetter.accept(0.0F);
-                    return true;
-                }
-            }
-            
-            // Reduce all non-absolute (e.g. starvation) damage taken players with lesser void attunement
-            if (!damageSource.is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(target, Sources.VOID, AttunementThreshold.LESSER)) {
-                damageSetter.accept(0.9F * damageGetter.get());
-            }
-            
-            // Consume ward before health if damage is non-absolute (e.g. starvation)
-            if (!damageSource.is(DamageTypeTags.BYPASSES_EFFECTS) && damageGetter.get() > 0) {
-                PrimalMagickCapabilities.getWard(target).ifPresent(wardCap -> {
-                    if (damageGetter.get() >= wardCap.getCurrentWard()) {
-                        damageSetter.accept(damageGetter.get() - wardCap.getCurrentWard());
-                        wardCap.setCurrentWard(0);
-                    } else {
-                        wardCap.decrementCurrentWard(damageGetter.get());
-                        damageSetter.accept(0F);
-                    }
-                    wardCap.pauseRegeneration();
-                    if (target instanceof ServerPlayer serverTarget) {
-                        wardCap.sync(serverTarget);
-                    }
-                });
-            }
+    @SubscribeEvent
+    public static void onEntityHurt(LivingDamageEvent event) {
+        if (CombatEvents.onEntityHurt(event.getEntity(), event.getSource(), event::getAmount, event::setAmount)) {
+            event.setCanceled(true);
         }
-        
-        // Handle effects triggered by the damage source
-        if (damageSource.getEntity() instanceof Player attacker) {
-            Level level = attacker.level();
-            
-            // Increase all non-absolute damage dealt by players with greater void attunement
-            if (!damageSource.is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(attacker, Sources.VOID, AttunementThreshold.GREATER)) {
-                damageSetter.accept(1.25F * damageGetter.get());
-            }
-            
-            // Increase damage to undead targets by players with lesser hallowed attunement
-            if (targetEntity.isInvertedHealAndHarm() && AttunementManager.meetsThreshold(attacker, Sources.HALLOWED, AttunementThreshold.LESSER)) {
-                damageSetter.accept(2.0F * damageGetter.get());
-            }
-
-            // If at least one point of damage was done by a player with the lesser blood attunement, cause bleeding
-            if (damageGetter.get() >= 1.0F && AttunementManager.meetsThreshold(attacker, Sources.BLOOD, AttunementThreshold.LESSER)) {
-                targetEntity.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.getHolder(), 200));
-            }
-            
-            // Players with greater blood attunement can steal health, with a chance based on damage done
-            if (level.random.nextFloat() < (damageGetter.get() / 12.0F) && AttunementManager.meetsThreshold(attacker, Sources.BLOOD, AttunementThreshold.GREATER)) {
-                attacker.heal(1.0F);
-            }
-        }
-
-        return false;
     }
     
     @SubscribeEvent(priority = EventPriority.LOWEST)
