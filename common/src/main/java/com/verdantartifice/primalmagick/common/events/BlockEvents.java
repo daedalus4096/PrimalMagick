@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -28,18 +27,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.LecternBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -52,15 +46,11 @@ import java.util.Set;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class BlockEvents {
-    @SubscribeEvent
-    public static void onBlockBreak(BlockEvent.BreakEvent event) {
-        Player player = event.getPlayer();
-        Level world = (event.getLevel() instanceof Level) ? (Level)event.getLevel() : null;
-        if (!event.isCanceled() && world != null && !world.isClientSide && !player.isSecondaryUseActive() && !BlockBreaker.hasBreakerQueued(world, event.getPos())) {
-            triggerReverberation(world, event.getPos(), event.getState(), player, player.getMainHandItem());
-            triggerDisintegration(world, event.getPos(), event.getState(), player, player.getMainHandItem());
+    public static void onBlockBreak(Player player, Level level, BlockPos pos, BlockState state) {
+        if (level != null && !level.isClientSide && !player.isSecondaryUseActive() && !BlockBreaker.hasBreakerQueued(level, pos)) {
+            triggerReverberation(level, pos, state, player, player.getMainHandItem());
+            triggerDisintegration(level, pos, state, player, player.getMainHandItem());
         }
     }
     
@@ -148,27 +138,18 @@ public class BlockEvents {
         }
     }
     
-    @SubscribeEvent(priority=EventPriority.LOWEST)
-    public static void onBlockBreakLowest(BlockEvent.BreakEvent event) {
+    public static void onBlockBreakLowest(Player player, LevelAccessor level, BlockPos pos, BlockState state) {
         // Record the block break statistic
-        if (!event.isCanceled() && event.getState().getDestroySpeed(event.getLevel(), event.getPos()) >= 2.0F && event.getPlayer().getMainHandItem().isEmpty()) {
-            StatsManager.incrementValue(event.getPlayer(), StatsPM.BLOCKS_BROKEN_BAREHANDED);
+        if (state.getDestroySpeed(level, pos) >= 2.0F && player.getMainHandItem().isEmpty()) {
+            StatsManager.incrementValue(player, StatsPM.BLOCKS_BROKEN_BAREHANDED);
         }
     }
     
-    @SubscribeEvent
-    public static void onBlockRightClick(PlayerInteractEvent.RightClickBlock event) {
-        InteractionResult result = InteractionResult.PASS;
-        BlockPos pos = event.getHitVec().getBlockPos();
-        BlockEntity tileEntity = event.getLevel().getBlockEntity(pos);
-        
-        if (tileEntity instanceof LecternBlockEntity lecternEntity) {
-            result = handleLecternRightClick(lecternEntity, event.getEntity(), event.getHand());
-        }
-        
-        if (result.consumesAction()) {
-            event.setCanceled(true);
-            event.setCancellationResult(result);
+    public static InteractionResult onBlockRightClick(Player player, LevelAccessor level, BlockHitResult hitResult, InteractionHand hand) {
+        if (level.getBlockEntity(hitResult.getBlockPos()) instanceof LecternBlockEntity lecternEntity) {
+            return handleLecternRightClick(lecternEntity, player, hand);
+        } else {
+            return InteractionResult.PASS;
         }
     }
     
