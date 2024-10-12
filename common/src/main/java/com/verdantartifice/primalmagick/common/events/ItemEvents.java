@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenEnchantedBookScreenPacket;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -11,11 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Comparator;
 
@@ -24,31 +18,20 @@ import java.util.Comparator;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class ItemEvents {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
-    @SubscribeEvent
-    public static void onItemRightClick(PlayerInteractEvent.RightClickItem event) {
+    public static InteractionResult onItemRightClick(ItemStack stack, Player player, Level level) {
         InteractionResult result = InteractionResult.PASS;
-        ItemStack stack = event.getItemStack();
-        
         if (stack.is(Items.ENCHANTED_BOOK)) {
-            result = handleEnchantedBookRightClick(stack, event.getEntity(), event.getLevel());
+            result = handleEnchantedBookRightClick(stack, player, level);
         }
-        
-        if (result.consumesAction()) {
-            event.setCanceled(true);
-            event.setCancellationResult(result);
-        }
+        return result;
     }
     
     private static InteractionResult handleEnchantedBookRightClick(ItemStack stack, Player player, Level level) {
         // Get the entry for the most powerful enchantment on the book, if any
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
-                PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer);
-            });
+            EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet().stream().min(Comparator.comparing(Object2IntMap.Entry::getIntValue)).ifPresent(
+                    entry -> PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer));
         }
         return InteractionResult.SUCCESS;
     }
