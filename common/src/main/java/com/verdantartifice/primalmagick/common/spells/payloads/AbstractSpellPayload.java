@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.tags.SpellPropertyTagsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -31,11 +32,11 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> implements ISpellPayload {
     public static Codec<AbstractSpellPayload<?>> dispatchCodec() {
-        return RegistryCodecs.codec(SpellPayloadsPM.TYPES).dispatch("mod_type", AbstractSpellPayload::getType, SpellPayloadType::codec);
+        return Services.SPELL_PAYLOAD_TYPES.codec().dispatch("mod_type", AbstractSpellPayload::getType, SpellPayloadType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellPayload<?>> dispatchStreamCodec() {
-        return RegistryCodecs.registryFriendlyStreamCodec(SpellPayloadsPM.TYPES).dispatch(AbstractSpellPayload::getType, SpellPayloadType::streamCodec);
+        return Services.SPELL_PAYLOAD_TYPES.registryFriendlyStreamCodec().dispatch(AbstractSpellPayload::getType, SpellPayloadType::streamCodec);
     }
     
     protected static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("#######.##");

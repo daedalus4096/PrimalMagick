@@ -24,7 +24,7 @@ import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypesPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyRegistration;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModTypeRegistration;
-import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
@@ -67,13 +67,13 @@ public class InitRegistries {
         SpellPropertyRegistration.init();
         SpellModTypeRegistration.init();
         SpellVehicleTypeRegistration.init();
+        SpellPayloadTypeRegistration.init();
 
         // Platform specific registries
         IngredientsPM.init();
         LootModifierSerializersPM.init();
 
         // TODO To be converted
-        SpellPayloadsPM.init();
         GridRewardTypesPM.init();
         ResearchTopicTypesPM.init();
         RitualStepTypesPM.init();

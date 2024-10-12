@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.Requirement
 import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyRegistration;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModTypeRegistration;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
@@ -62,6 +63,7 @@ public class InitRegistries {
         SpellPropertyRegistration.init();
         SpellModTypeRegistration.init();
         SpellVehicleTypeRegistration.init();
+        SpellPayloadTypeRegistration.init();
 
         // Platform specific registries
         LootModifierSerializersPM.init();
