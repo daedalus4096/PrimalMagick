@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.items.misc.DreamVisionTalismanItem;
@@ -101,6 +102,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -110,7 +112,6 @@ import java.util.UUID;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class PlayerEvents {
     public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
     
@@ -130,10 +131,9 @@ public class PlayerEvents {
     private static final ResearchStageKey SOURCE_MOON_END = new ResearchStageKey(ResearchEntries.SOURCE_MOON, 2);
     private static final Logger LOGGER = LogManager.getLogger();
 
-    @SubscribeEvent
-    public static void livingTick(LivingEvent.LivingTickEvent event) {
-        Level level = event.getEntity().level();
-        if (!level.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
+    public static void livingTick(Entity entity) {
+        Level level = entity.level();
+        if (!level.isClientSide && (entity instanceof ServerPlayer player)) {
             checkNearDeathExperience(player);
             if (player.tickCount % 5 == 0) {
                 // Apply any earned buffs for attunements
@@ -160,7 +160,7 @@ public class PlayerEvents {
                 AttunementManager.decayTemporaryAttunements(player);
             }
         }
-        if (level.isClientSide && (event.getEntity() instanceof Player player)) {
+        if (level.isClientSide && (entity instanceof Player player)) {
             // If this is a client-side player, handle any double jumps from attunement bonuses
             handleDoubleJump(player);
         }
@@ -207,59 +207,13 @@ public class PlayerEvents {
         IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
         if (cooldowns != null) {
             long remaining = cooldowns.getRemainingCooldown(CooldownType.DEATH_SAVE);
-            if (remaining > 0 && !player.hasEffect(EffectsPM.WEAKENED_SOUL.getHolder().get())) {
+            if (remaining > 0 && !player.hasEffect(EffectsPM.WEAKENED_SOUL.getHolder())) {
                 // If the player's death save is on cooldown but they've cleared their marker debuff, reapply it
-                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder().get(), Mth.ceil(remaining / 50.0F), 0, true, false, true));
+                player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder(), Mth.ceil(remaining / 50.0F), 0, true, false, true));
             }
         }
     }
 
-    protected static void doScheduledSyncs(ServerPlayer player, boolean immediate) {
-        if (immediate || ResearchManager.isSyncScheduled(player)) {
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                knowledge.sync(player);
-            });
-        }
-        if (immediate || StatsManager.isSyncScheduled(player)) {
-            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-            if (stats != null) {
-                stats.sync(player);
-            }
-        }
-        if (immediate || AttunementManager.isSyncScheduled(player)) {
-            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-            if (attunements != null) {
-                attunements.sync(player);
-            }
-        }
-        if (immediate || CompanionManager.isSyncScheduled(player)) {
-            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
-            if (companions != null) {
-                companions.sync(player);
-            }
-        }
-        if (immediate || ArcaneRecipeBookManager.isSyncScheduled(player)) {
-            PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
-                recipeBook.sync(player);
-            });
-        }
-        if (immediate || LinguisticsManager.isSyncScheduled(player)) {
-            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.sync(player);
-            });
-        }
-        if (immediate) {
-            // Cooldowns and wards don't do scheduled syncs, so only sync if it needs to be done immediately
-            IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
-            if (cooldowns != null) {
-                cooldowns.sync(player);
-            }
-            PrimalMagickCapabilities.getWard(player).ifPresent(wardCap -> {
-                wardCap.sync(player);
-            });
-        }
-    }
-    
     protected static void checkEnvironmentalResearch(ServerPlayer player) {
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             Level level = player.level();
@@ -424,10 +378,8 @@ public class PlayerEvents {
         });
     }
     
-    @SubscribeEvent
-    public static void playerJoinEvent(EntityJoinLevelEvent event) {
-        Level world = event.getLevel();
-        if (!world.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
+    public static void playerJoinEvent(Entity entity, Level level) {
+        if (!level.isClientSide && (entity instanceof ServerPlayer player)) {
             // When a player first joins a world, sync that player's capabilities to their client
             doScheduledSyncs(player, true);
             
@@ -435,90 +387,119 @@ public class PlayerEvents {
             ArcaneRecipeBookManager.syncRecipesWithResearch(player);
         }
     }
-    
-    @SuppressWarnings("deprecation")
-    @SubscribeEvent
-    public static void playerCloneEvent(PlayerEvent.Clone event) {
-        // Preserve player capability data between deaths or returns from the End
-        event.getOriginal().reviveCaps();   // FIXME Workaround for a Forge issue
-        
-        RegistryAccess registryAccess = event.getEntity().registryAccess();
+
+    protected static void doScheduledSyncs(ServerPlayer player, boolean immediate) {
+        if (immediate || ResearchManager.isSyncScheduled(player)) {
+            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                knowledge.sync(player);
+            });
+        }
+        if (immediate || StatsManager.isSyncScheduled(player)) {
+            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
+            if (stats != null) {
+                stats.sync(player);
+            }
+        }
+        if (immediate || AttunementManager.isSyncScheduled(player)) {
+            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
+            if (attunements != null) {
+                attunements.sync(player);
+            }
+        }
+        if (immediate || CompanionManager.isSyncScheduled(player)) {
+            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
+            if (companions != null) {
+                companions.sync(player);
+            }
+        }
+        if (immediate || ArcaneRecipeBookManager.isSyncScheduled(player)) {
+            PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+                recipeBook.sync(player);
+            });
+        }
+        if (immediate || LinguisticsManager.isSyncScheduled(player)) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                linguistics.sync(player);
+            });
+        }
+        if (immediate) {
+            // Cooldowns and wards don't do scheduled syncs, so only sync if it needs to be done immediately
+            IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
+            if (cooldowns != null) {
+                cooldowns.sync(player);
+            }
+            PrimalMagickCapabilities.getWard(player).ifPresent(wardCap -> {
+                wardCap.sync(player);
+            });
+        }
+    }
+
+    public static void playerCloneEvent(Player oldPlayer, Player newPlayer, boolean wasFromDeath) {
+        RegistryAccess registryAccess = newPlayer.registryAccess();
         
         try {
-            CompoundTag nbtKnowledge = PrimalMagickCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getKnowledge(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtKnowledge);
+            CompoundTag nbtKnowledge = PrimalMagickCapabilities.getKnowledge(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getKnowledge(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtKnowledge);
         } catch (Exception e) {
-            LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
+            LOGGER.error("Failed to clone player {} knowledge", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtCooldowns = PrimalMagickCapabilities.getCooldowns(event.getOriginal()).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getCooldowns(event.getEntity()).deserializeNBT(registryAccess, nbtCooldowns);
+            CompoundTag nbtCooldowns = PrimalMagickCapabilities.getCooldowns(oldPlayer).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getCooldowns(newPlayer).deserializeNBT(registryAccess, nbtCooldowns);
         } catch (Exception e) {
-            LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
+            LOGGER.error("Failed to clone player {} cooldowns", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtStats = PrimalMagickCapabilities.getStats(event.getOriginal()).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getStats(event.getEntity()).deserializeNBT(registryAccess, nbtStats);
+            CompoundTag nbtStats = PrimalMagickCapabilities.getStats(oldPlayer).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getStats(newPlayer).deserializeNBT(registryAccess, nbtStats);
         } catch (Exception e) {
-            LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
+            LOGGER.error("Failed to clone player {} stats", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtAttunements = PrimalMagickCapabilities.getAttunements(event.getOriginal()).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getAttunements(event.getEntity()).deserializeNBT(registryAccess, nbtAttunements);
+            CompoundTag nbtAttunements = PrimalMagickCapabilities.getAttunements(oldPlayer).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getAttunements(newPlayer).deserializeNBT(registryAccess, nbtAttunements);
         } catch (Exception e) {
-            LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
+            LOGGER.error("Failed to clone player {} attunements", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtCompanions = PrimalMagickCapabilities.getCompanions(event.getOriginal()).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getCompanions(event.getEntity()).deserializeNBT(registryAccess, nbtCompanions);
+            CompoundTag nbtCompanions = PrimalMagickCapabilities.getCompanions(oldPlayer).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getCompanions(newPlayer).deserializeNBT(registryAccess, nbtCompanions);
         } catch (Exception e) {
-            LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
+            LOGGER.error("Failed to clone player {} companions", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getArcaneRecipeBook(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtRecipeBook, event.getEntity().level().getRecipeManager());
+            CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getArcaneRecipeBook(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtRecipeBook, newPlayer.level().getRecipeManager());
         } catch (Exception e) {
-            LOGGER.error("Failed to clone player {} arcane recipe book", event.getOriginal().getName().getString());
+            LOGGER.error("Failed to clone player {} arcane recipe book", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtWard = PrimalMagickCapabilities.getWard(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getWard(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtWard);
+            CompoundTag nbtWard = PrimalMagickCapabilities.getWard(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getWard(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtWard);
         } catch (Exception e) {
-            LOGGER.error("Failed to clone player {} ward", event.getOriginal().getName().getString());
+            LOGGER.error("Failed to clone player {} ward", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtLinguistics = PrimalMagickCapabilities.getLinguistics(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getLinguistics(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtLinguistics);
+            CompoundTag nbtLinguistics = PrimalMagickCapabilities.getLinguistics(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            PrimalMagickCapabilities.getLinguistics(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtLinguistics);
         } catch (Exception e) {
-            LOGGER.error("Failed to clone player {} linguistics", event.getOriginal().getName().getString());
+            LOGGER.error("Failed to clone player {} linguistics", oldPlayer.getName().getString());
         }
-        
-        event.getOriginal().invalidateCaps();   // FIXME Remove when the reviveCaps call is removed
         
         // If the player died, refresh any attunement attribute modifiers they may have had
-        if (event.isWasDeath()) {
-            AttunementManager.refreshAttributeModifiers(event.getEntity());
+        if (wasFromDeath) {
+            AttunementManager.refreshAttributeModifiers(newPlayer);
         }
     }
     
-    @SubscribeEvent
-    public static void onCrafting(PlayerEvent.ItemCraftedEvent event) {
-        registerItemCrafted(event.getEntity(), event.getCrafting().copy());
-    }
-    
-    @SubscribeEvent
-    public static void onSmelting(PlayerEvent.ItemSmeltedEvent event) {
-        registerItemCrafted(event.getEntity(), event.getSmelting().copy());
-    }
-    
-    protected static void registerItemCrafted(Player player, ItemStack stack) {
+    public static void registerItemCrafted(Player player, ItemStack stack) {
         if (player != null && !player.level().isClientSide) {
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
             if (ResearchManager.getAllCraftingReferences().contains(ItemUtils.getHashCode(stack))) {
@@ -526,7 +507,7 @@ public class PlayerEvents {
             }
             
             // If a research entry requires crafting the a tag containing the item that was just crafted, grant the appropriate research
-            stack.getTags().filter(tag -> tag != null).forEach(tagKey -> {
+            stack.getTags().filter(Objects::nonNull).forEach(tagKey -> {
                 int tagHash = tagKey.hashCode();
                 if (ResearchManager.getAllCraftingReferences().contains(tagHash)) {
                     ResearchManager.completeResearch(player, new TagCraftedKey(tagKey));
@@ -535,9 +516,7 @@ public class PlayerEvents {
         }
     }
     
-    @SubscribeEvent
-    public static void onWakeUp(PlayerWakeUpEvent event) {
-        Player player = event.getEntity();
+    public static void onWakeUp(Player player) {
         if (player != null && !player.level().isClientSide) {
             if ( ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE) &&
                  !ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM) ) {
@@ -570,7 +549,7 @@ public class PlayerEvents {
         ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM);
         
         // Construct the dream journal item
-        ItemStack journal = StaticBookItem.builder(ItemRegistration.STATIC_BOOK, player.registryAccess()).book(BooksPM.DREAM_JOURNAL).language(BookLanguagesPM.DEFAULT).author(player.getName().getString()).build();
+        ItemStack journal = StaticBookItem.builder(ItemsPM.STATIC_BOOK, player.registryAccess()).book(BooksPM.DREAM_JOURNAL).language(BookLanguagesPM.DEFAULT).author(player.getName().getString()).build();
         
         // Give the dream journal to the player and announce it
         if (!player.addItem(journal)) {
