@@ -1,20 +1,17 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.Constants;
+import com.mojang.brigadier.CommandDispatcher;
 import com.verdantartifice.primalmagick.common.commands.PrimalMagickCommand;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSourceStack;
 
 /**
  * Handlers for server lifecycle related events.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class ServerLifecycleEvents {
-    @SubscribeEvent
-    public static void onRegisterCommands(RegisterCommandsEvent event) {
-        PrimalMagickCommand.register(event.getDispatcher(), event.getBuildContext());
+    public static void onRegisterCommands(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
+        PrimalMagickCommand.register(dispatcher, context);
     }
 }
