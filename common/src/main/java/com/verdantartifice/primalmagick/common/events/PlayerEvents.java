@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.mojang.datafixers.util.Pair;
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -25,7 +24,6 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
@@ -88,16 +86,6 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -109,6 +97,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * Handlers for player related events.
@@ -599,13 +588,10 @@ public class PlayerEvents {
         }
     }
     
-    @SubscribeEvent
-    public static void onUseHoe(BlockEvent.BlockToolModificationEvent event) {
-        UseOnContext context = event.getContext();
+    public static void onUseHoe(Player player, UseOnContext context, Consumer<BlockState> stateUpdater) {
         ItemStack stack = context.getItemInHand();
         int enchantLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.VERDANT, context.getPlayer().registryAccess());
-        if (!event.isSimulated() && event.getToolAction().equals(ToolActions.HOE_TILL) && enchantLevel > 0) {
-            Player player = event.getPlayer();
+        if (enchantLevel > 0) {
             Level level = context.getLevel();
             BlockPos pos = context.getClickedPos();
             BlockState state = level.getBlockState(pos);
@@ -625,7 +611,7 @@ public class PlayerEvents {
                         
                         // Explicitly set the final block state in the event so that the hoe's useOn method does not return PASS and
                         // the appropriate client/server syncing is performed.
-                        event.setFinalState(level.getBlockState(pos));
+                        stateUpdater.accept(level.getBlockState(pos));
                     }
                     if (!level.isClientSide) {
                         level.levelEvent(1505, pos, 0);
@@ -635,10 +621,8 @@ public class PlayerEvents {
         }
     }
     
-    @SubscribeEvent
-    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        ItemStack stack = event.getEntity().getItemInHand(event.getHand());
-        Entity target = event.getTarget();
+    public static void onEntityInteract(Player player, InteractionHand hand, Entity target) {
+        ItemStack stack = player.getItemInHand(hand);
         Level level = target.level();
         
         // Befriend the targeted witch, if appropriate
@@ -649,8 +633,8 @@ public class PlayerEvents {
             CompoundTag originalData = target.saveWithoutId(new CompoundTag());
             EntitySwapper.enqueue(level, new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
             List<Player> nearby = EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D);
-            for (Player player : nearby) {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME));
+            for (Player nearbyPlayer : nearby) {
+                nearbyPlayer.sendSystemMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME));
             }
         }
     }
