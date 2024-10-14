@@ -1,14 +1,9 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.BlockSwapper;
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -18,47 +13,38 @@ import java.util.concurrent.LinkedBlockingQueue;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class ServerEvents {
-    @SubscribeEvent
-    public static void serverWorldTick(TickEvent.LevelTickEvent event) {
-        if (event.side == LogicalSide.CLIENT) {
-            return;
-        }
-        if (event.phase != TickEvent.Phase.START) {
-            // Process any pending world modifiers
-            tickBlockSwappers(event.level);
-            tickBlockBreakers(event.level);
-            tickEntitySwappers(event.level);
-        }
+    public static void serverLevelTick(Level level) {
+        // Process any pending world modifiers
+        tickBlockSwappers(level);
+        tickBlockBreakers(level);
+        tickEntitySwappers(level);
     }
     
-    protected static void tickBlockSwappers(Level world) {
-        Queue<BlockSwapper> swapperQueue = BlockSwapper.getWorldSwappers(world);
-        if (swapperQueue != null) {
-            // Execute each pending block swapper in turn
-            while (!swapperQueue.isEmpty()) {
-                BlockSwapper swapper = swapperQueue.poll();
-                if (swapper != null) {
-                    swapper.execute(world);
-                }
+    protected static void tickBlockSwappers(Level level) {
+        // Execute each pending block swapper in turn
+        Queue<BlockSwapper> swapperQueue = BlockSwapper.getWorldSwappers(level);
+        while (!swapperQueue.isEmpty()) {
+            BlockSwapper swapper = swapperQueue.poll();
+            if (swapper != null) {
+                swapper.execute(level);
             }
         }
     }
     
-    protected static void tickBlockBreakers(Level world) {
-        Iterable<BlockBreaker> breakers = BlockBreaker.tick(world);
+    protected static void tickBlockBreakers(Level level) {
+        Iterable<BlockBreaker> breakers = BlockBreaker.tick(level);
         for (BlockBreaker breaker : breakers) {
             // Execute each pending block breaker in turn
-            BlockBreaker newBreaker = breaker.execute(world);
+            BlockBreaker newBreaker = breaker.execute(level);
             if (newBreaker != null) {
-                BlockBreaker.schedule(world, 1, newBreaker);
+                BlockBreaker.schedule(level, 1, newBreaker);
             }
         }
     }
     
-    protected static void tickEntitySwappers(Level world) {
-        Queue<EntitySwapper> swapperQueue = EntitySwapper.getWorldSwappers(world);
+    protected static void tickEntitySwappers(Level level) {
+        Queue<EntitySwapper> swapperQueue = EntitySwapper.getWorldSwappers(level);
         if (swapperQueue != null) {
             // Execute each pending entity swapper in turn
             Queue<EntitySwapper> newQueue = new LinkedBlockingQueue<>();
@@ -66,7 +52,7 @@ public class ServerEvents {
                 EntitySwapper swapper = swapperQueue.poll();
                 if (swapper != null) {
                     if (swapper.isReady()) {
-                        EntitySwapper newSwapper = swapper.execute(world);
+                        EntitySwapper newSwapper = swapper.execute(level);
                         if (newSwapper != null) {
                             // If a return swap is triggered by this swap, queue up the new swapper
                             newQueue.offer(newSwapper);
@@ -78,7 +64,7 @@ public class ServerEvents {
                     }
                 }
             }
-            EntitySwapper.setWorldSwapperQueue(world, newQueue);
+            EntitySwapper.setWorldSwapperQueue(level, newQueue);
         }
     }
 }
