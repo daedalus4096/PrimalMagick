@@ -162,45 +162,17 @@ public class PlayerEventListeners {
     
     @SubscribeEvent
     public static void onJump(LivingEvent.LivingJumpEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player)event.getEntity();
-            if (AttunementManager.meetsThreshold(player, Sources.SKY, AttunementThreshold.GREATER)) {
-                // Boost the player's vertical motion on jump if they have greater sky attunement
-                Vec3 motion = player.getDeltaMovement();
-                motion = motion.add(0.0D, 0.275D, 0.0D);
-                player.setDeltaMovement(motion);
-            }
-        }
+        PlayerEvents.onJump(event.getEntity());
     }
     
     @SubscribeEvent
     public static void onPlayerInteractLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        LAST_BLOCK_LEFT_CLICK.put(event.getEntity().getUUID(), new InteractionRecord(event.getEntity(), event.getHand(), event.getPos(), event.getFace()));
+        PlayerEvents.onPlayerInteractLeftClickBlock(event.getEntity(), event.getHand(), event.getPos(), event.getFace());
     }
     
     @SubscribeEvent
     public static void onPickupExperience(PlayerXpEvent.PickupXp event) {
-        Player player = event.getEntity();
-        Level level = player.level();
-        if (player != null && !level.isClientSide) {
-            NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
-            if (!foundTalismans.isEmpty()) {
-                int xpValue = event.getOrb().value;
-                for (ItemStack foundStack : foundTalismans) {
-                    if (foundStack.getItem() instanceof DreamVisionTalismanItem talisman && talisman.isActive(foundStack)) {
-                        // Add as much experience as possible from the orb to each active talisman until the orb runs out
-                        xpValue = talisman.addStoredExp(foundStack, xpValue);
-                        if (xpValue <= 0) {
-                            event.getOrb().value = 0;
-                            return;
-                        }
-                    }
-                }
-                
-                // If we made it through every talisman with experience left over, update the orb to be the leftover value
-                event.getOrb().value = xpValue;
-            }
-        }
+        PlayerEvents.onPickupExperience(event.getEntity(), event.getOrb());
     }
     
     @SubscribeEvent

@@ -50,6 +50,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -63,11 +64,13 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -558,10 +561,8 @@ public class PlayerEvents {
         player.sendSystemMessage(Component.translatable("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN));
     }
     
-    @SubscribeEvent
-    public static void onJump(LivingEvent.LivingJumpEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player)event.getEntity();
+    public static void onJump(LivingEntity livingEntity) {
+        if (livingEntity instanceof Player player) {
             if (AttunementManager.meetsThreshold(player, Sources.SKY, AttunementThreshold.GREATER)) {
                 // Boost the player's vertical motion on jump if they have greater sky attunement
                 Vec3 motion = player.getDeltaMovement();
@@ -571,32 +572,29 @@ public class PlayerEvents {
         }
     }
     
-    @SubscribeEvent
-    public static void onPlayerInteractLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        LAST_BLOCK_LEFT_CLICK.put(event.getEntity().getUUID(), new InteractionRecord(event.getEntity(), event.getHand(), event.getPos(), event.getFace()));
+    public static void onPlayerInteractLeftClickBlock(Player player, InteractionHand hand, BlockPos pos, Direction face) {
+        LAST_BLOCK_LEFT_CLICK.put(player.getUUID(), new InteractionRecord(player, hand, pos, face));
     }
     
-    @SubscribeEvent
-    public static void onPickupExperience(PlayerXpEvent.PickupXp event) {
-        Player player = event.getEntity();
+    public static void onPickupExperience(Player player, ExperienceOrb orb) {
         Level level = player.level();
         if (player != null && !level.isClientSide) {
             NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
             if (!foundTalismans.isEmpty()) {
-                int xpValue = event.getOrb().value;
+                int xpValue = orb.getValue();
                 for (ItemStack foundStack : foundTalismans) {
                     if (foundStack.getItem() instanceof DreamVisionTalismanItem talisman && talisman.isActive(foundStack)) {
                         // Add as much experience as possible from the orb to each active talisman until the orb runs out
                         xpValue = talisman.addStoredExp(foundStack, xpValue);
                         if (xpValue <= 0) {
-                            event.getOrb().value = 0;
+                            orb.value = 0;
                             return;
                         }
                     }
                 }
                 
                 // If we made it through every talisman with experience left over, update the orb to be the leftover value
-                event.getOrb().value = xpValue;
+                orb.value = xpValue;
             }
         }
     }
