@@ -21,13 +21,19 @@ import com.verdantartifice.primalmagick.client.tips.TipLoader;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
+import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.IItemDecorator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -35,74 +41,81 @@ import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.function.Consumer;
+
 /**
  * Respond to client-only Forge registration events.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistrationEvents {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
-    @SubscribeEvent
-    public static void onRegisterParticleProviders(RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.OFFERING.get(), OfferingParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Factory::new);
-        event.registerSpecial(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
-        event.registerSpecial(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Factory());
-        event.registerSpriteSet(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), SpellcraftingRuneParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), SpellcraftingRuneParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), SpellcraftingRuneParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), SpellcraftingRuneParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.INFERNAL_FLAME.get(), InfernalFlameParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Factory::new);
-        event.registerSpriteSet(ParticleTypesPM.VOID_SMOKE.get(), AirCurrentParticle.Factory::new);
-        event.registerSprite(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), DripParticlePM::createBloodDropHangParticle);
-        event.registerSprite(ParticleTypesPM.FALLING_BLOOD_DROP.get(), DripParticlePM::createBloodDropFallParticle);
-        event.registerSprite(ParticleTypesPM.LANDING_BLOOD_DROP.get(), DripParticlePM::createBloodDropLandParticle);
+    public static void onRegisterParticleProviders(SpriteParticleProviderRegistrar sprite,
+            SpriteSetParticleProviderRegistrar spriteSet, SpecialParticleProviderRegistrar special) {
+        spriteSet.register(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.OFFERING.get(), OfferingParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Factory::new);
+        special.register(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
+        special.register(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Factory());
+        spriteSet.register(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), SpellcraftingRuneParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), SpellcraftingRuneParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), SpellcraftingRuneParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), SpellcraftingRuneParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.INFERNAL_FLAME.get(), InfernalFlameParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Factory::new);
+        spriteSet.register(ParticleTypesPM.VOID_SMOKE.get(), AirCurrentParticle.Factory::new);
+        sprite.register(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), DripParticlePM::createBloodDropHangParticle);
+        sprite.register(ParticleTypesPM.FALLING_BLOOD_DROP.get(), DripParticlePM::createBloodDropFallParticle);
+        sprite.register(ParticleTypesPM.LANDING_BLOOD_DROP.get(), DripParticlePM::createBloodDropLandParticle);
+    }
+
+    public interface SpriteParticleProviderRegistrar {
+        <T extends ParticleOptions> void register(ParticleType<T> type, ParticleProvider.Sprite<T> sprite);
+    }
+
+    public interface SpriteSetParticleProviderRegistrar {
+        <T extends ParticleOptions> void register(ParticleType<T> type, ParticleEngine.SpriteParticleRegistration<T> registration);
+    }
+
+    public interface SpecialParticleProviderRegistrar {
+        <T extends ParticleOptions> void register(ParticleType<T> type, ParticleProvider<T> provider);
     }
     
     /**
      * Register special model resource locations that must be loaded even if not tied to a block state.
-     * 
-     * @param event
      */
-    @SubscribeEvent
-    public static void onModelRegister(ModelEvent.RegisterAdditional event) {
-        event.register(new ModelResourceLocation(ResourceUtils.loc("mundane_wand_core"), ""));
+    public static void onModelRegister(Consumer<ModelResourceLocation> modelConsumer) {
+        modelConsumer.accept(new ModelResourceLocation(ResourceUtils.loc("mundane_wand_core"), ""));
         for (WandCore core : WandCore.getAllWandCores()) {
-            event.register(new ModelResourceLocation(core.getWandModelResourceLocationNamespace(), ""));
-            event.register(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), ""));
+            modelConsumer.accept(new ModelResourceLocation(core.getWandModelResourceLocationNamespace(), ""));
+            modelConsumer.accept(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), ""));
         }
         for (WandCap cap : WandCap.getAllWandCaps()) {
-            event.register(new ModelResourceLocation(cap.getWandModelResourceLocationNamespace(), ""));
-            event.register(new ModelResourceLocation(cap.getStaffModelResourceLocationNamespace(), ""));
+            modelConsumer.accept(new ModelResourceLocation(cap.getWandModelResourceLocationNamespace(), ""));
+            modelConsumer.accept(new ModelResourceLocation(cap.getStaffModelResourceLocationNamespace(), ""));
         }
         for (WandGem gem : WandGem.getAllWandGems()) {
-            event.register(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), ""));
+            modelConsumer.accept(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), ""));
         }
         for (int index = 0; index <= 4; index++) {
-            event.register(new ModelResourceLocation(ResourceUtils.loc("arcanometer_" + index), ""));
+            modelConsumer.accept(new ModelResourceLocation(ResourceUtils.loc("arcanometer_" + index), ""));
         }
     }
     
-    @SubscribeEvent
-    public static void onClientReloadListenerRegister(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(ItemsPM.PRIMALITE_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.FORBIDDEN_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getCustomRenderer());
-        event.registerReloadListener(LexiconLoader.getOrCreateInstance());
-        event.registerReloadListener(StyleGuideLoader.getOrCreateInstance());
-        event.registerReloadListener(TipLoader.getOrCreateInstance());
+    public static void onClientReloadListenerRegister(Consumer<PreparableReloadListener> reloadListenerConsumer) {
+        reloadListenerConsumer.accept(ItemsPM.PRIMALITE_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.FORBIDDEN_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(LexiconLoader.getOrCreateInstance());
+        reloadListenerConsumer.accept(StyleGuideLoader.getOrCreateInstance());
+        reloadListenerConsumer.accept(TipLoader.getOrCreateInstance());
     }
     
     @SubscribeEvent
