@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -79,7 +80,7 @@ public class ClientRenderEvents {
         Screen gui = mc.screen;
 
         // Assemble the tooltip components for showing primal affinities on an item stack
-        if (gui instanceof AbstractContainerScreen && (InputEvents.isKeyDown(KeyBindings.VIEW_AFFINITY_KEY) != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && stack != null && !stack.isEmpty()) {
+        if (gui instanceof AbstractContainerScreen && (Services.INPUT.isKeyDown(KeyBindings.VIEW_AFFINITY_KEY) != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && stack != null && !stack.isEmpty()) {
             AffinityManager.getInstance().getAffinityValues(stack, mc.level).ifPresentOrElse(sources -> {
                 if (sources.isEmpty()) {
                     elements.add(Either.left(Component.translatable("tooltip.primalmagick.affinities.none")));

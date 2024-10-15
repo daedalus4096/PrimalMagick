@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.platform;
 
+import com.verdantartifice.primalmagick.platform.services.IInputService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArmorMaterialService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockEntityTypeService;
@@ -46,6 +47,7 @@ public class Services {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final IPlatformService PLATFORM = load(IPlatformService.class);
+    public static final IInputService INPUT = load(IInputService.class);
 
     // Registry services
     public static final IBlockService BLOCKS = load(IBlockService.class);

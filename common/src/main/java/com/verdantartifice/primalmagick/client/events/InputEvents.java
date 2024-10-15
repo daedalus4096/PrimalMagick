@@ -1,14 +1,11 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.SpellSelectionRadialScreen;
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * Respond to client-only input-related events.
@@ -46,20 +43,6 @@ public class InputEvents {
             SPELL_SELECT_KEY_WAS_DOWN = spellSelectKeyIsDown;
         } else {
             SPELL_SELECT_KEY_WAS_DOWN = true;
-        }
-    }
-    
-    public static boolean isKeyDown(KeyMapping keybind) {
-        if (keybind.isUnbound()) {
-            return false;
-        } else {
-            Minecraft mc = Minecraft.getInstance();
-            boolean isDown = switch (keybind.getKey().getType()) {
-                case KEYSYM -> InputConstants.isKeyDown(mc.getWindow().getWindow(), keybind.getKey().getValue());
-                case MOUSE -> GLFW.glfwGetMouseButton(mc.getWindow().getWindow(), keybind.getKey().getValue()) == GLFW.GLFW_PRESS;
-                default -> false;
-            };
-            return isDown && keybind.getKeyConflictContext().isActive() && keybind.getKeyModifier().isActive(keybind.getKeyConflictContext());
         }
     }
 }

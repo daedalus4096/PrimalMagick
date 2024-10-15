@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -118,7 +119,7 @@ public class SpellSelectionRadialScreen extends Screen {
         
         if (this.stackEquipped.isEmpty()) {
             this.minecraft.setScreen(null);
-        } else if (!InputEvents.isKeyDown(KeyBindings.CHANGE_SPELL_KEY)) {
+        } else if (!Services.INPUT.isKeyDown(KeyBindings.CHANGE_SPELL_KEY)) {
             if (Config.RADIAL_RELEASE_TO_SWITCH.get()) {
                 this.processClick(false);
             } else {
