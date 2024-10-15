@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
-import com.verdantartifice.primalmagick.platform.services.IItemService;
+import com.verdantartifice.primalmagick.platform.services.registries.IItemService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;

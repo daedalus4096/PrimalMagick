@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IParticleTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IParticleTypeService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;

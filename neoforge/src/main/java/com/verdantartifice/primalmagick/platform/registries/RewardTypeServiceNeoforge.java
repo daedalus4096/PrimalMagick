@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IRewardTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IRewardTypeService;
 import net.minecraft.core.Registry;
 import net.neoforged.neoforge.registries.DeferredRegister;
 

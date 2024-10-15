@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
 import com.verdantartifice.primalmagick.common.menus.base.IMenuFactory;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
-import com.verdantartifice.primalmagick.platform.services.IMenuTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IMenuTypeService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.AbstractContainerMenu;

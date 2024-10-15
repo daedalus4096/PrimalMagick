@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
-import com.verdantartifice.primalmagick.platform.services.ISoundEventService;
+import com.verdantartifice.primalmagick.platform.services.registries.ISoundEventService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;

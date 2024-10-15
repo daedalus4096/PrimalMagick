@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionType;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IWeightFunctionTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IWeightFunctionTypeService;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IDataComponentTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IDataComponentTypeService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;

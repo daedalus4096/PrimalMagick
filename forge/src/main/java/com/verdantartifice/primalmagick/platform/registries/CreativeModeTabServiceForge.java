@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
-import com.verdantartifice.primalmagick.platform.services.ICreativeModeTabService;
+import com.verdantartifice.primalmagick.platform.services.registries.ICreativeModeTabService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTab;

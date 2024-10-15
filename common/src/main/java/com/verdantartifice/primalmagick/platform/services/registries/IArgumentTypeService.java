@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.platform.services;
+package com.verdantartifice.primalmagick.platform.services.registries;
 
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;

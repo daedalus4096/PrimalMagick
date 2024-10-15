@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialType;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IProjectMaterialTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IProjectMaterialTypeService;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 

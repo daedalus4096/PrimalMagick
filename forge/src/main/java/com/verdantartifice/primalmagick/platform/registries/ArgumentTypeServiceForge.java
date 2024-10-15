@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRegistration;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
-import com.verdantartifice.primalmagick.platform.services.IArgumentTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeService;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;

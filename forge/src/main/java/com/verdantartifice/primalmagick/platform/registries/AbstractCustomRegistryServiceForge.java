@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
-import com.verdantartifice.primalmagick.platform.services.IRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.IRegistryService;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.Utf8String;

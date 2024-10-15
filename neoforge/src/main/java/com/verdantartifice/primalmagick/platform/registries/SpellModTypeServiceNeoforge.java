@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.ISpellModTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.ISpellModTypeService;
 import net.minecraft.core.Registry;
 import net.neoforged.neoforge.registries.DeferredRegister;
 

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardType;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IGridRewardTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IGridRewardTypeService;
 import net.minecraft.core.Registry;
 import net.neoforged.neoforge.registries.DeferredRegister;
 

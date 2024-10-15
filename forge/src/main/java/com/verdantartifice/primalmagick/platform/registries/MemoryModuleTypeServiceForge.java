@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IMemoryModuleTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IMemoryModuleTypeService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;

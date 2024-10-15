@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepType;
 import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IRitualStepTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IRitualStepTypeService;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 

@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.platform.services;
+package com.verdantartifice.primalmagick.platform.services.registries;
 
 import net.minecraft.core.particles.ParticleType;
 
