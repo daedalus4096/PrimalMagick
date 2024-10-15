@@ -2,18 +2,15 @@ package com.verdantartifice.primalmagick.client.config;
 
 import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.function.Consumer;
 
 /**
  * Define and register custom client key-bindings.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class KeyBindings {
     public static final String KEY_CATEGORY = "key.categories." + Constants.MOD_ID;
     
@@ -25,14 +22,13 @@ public class KeyBindings {
     public static final KeyMapping GRIMOIRE_PREV_TOPIC = new KeyMapping("key.primalmagick.grimoire_prev_topic", GLFW.GLFW_KEY_BACKSPACE, KEY_CATEGORY); // Key for going back to the previous grimoire topic
     public static final KeyMapping VIEW_AFFINITY_KEY = new KeyMapping("key.primalmagick.view_affinity", GLFW.GLFW_KEY_LEFT_SHIFT, KEY_CATEGORY);        // Key for viewing affinities in an item stack tooltip
     
-    @SubscribeEvent
-    public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-        event.register(CHANGE_SPELL_KEY);
-        event.register(CARPET_FORWARD_KEY);
-        event.register(CARPET_BACKWARD_KEY);
-        event.register(GRIMOIRE_NEXT_PAGE);
-        event.register(GRIMOIRE_PREV_PAGE);
-        event.register(GRIMOIRE_PREV_TOPIC);
-        event.register(VIEW_AFFINITY_KEY);
+    public static void onRegisterKeyMappings(Consumer<KeyMapping> consumer) {
+        consumer.accept(CHANGE_SPELL_KEY);
+        consumer.accept(CARPET_FORWARD_KEY);
+        consumer.accept(CARPET_BACKWARD_KEY);
+        consumer.accept(GRIMOIRE_NEXT_PAGE);
+        consumer.accept(GRIMOIRE_PREV_PAGE);
+        consumer.accept(GRIMOIRE_PREV_TOPIC);
+        consumer.accept(VIEW_AFFINITY_KEY);
     }
 }
