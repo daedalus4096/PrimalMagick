@@ -1,47 +1,29 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.books.LexiconLoader;
 import com.verdantartifice.primalmagick.client.books.StyleGuideLoader;
-import com.verdantartifice.primalmagick.client.fx.particles.AirCurrentParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.DripParticlePM;
-import com.verdantartifice.primalmagick.client.fx.particles.InfernalFlameParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.OfferingParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.PropMarkerParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.SpellSparkleParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.SpellcraftingRuneParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
-import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecorator;
 import com.verdantartifice.primalmagick.client.tips.TipLoader;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
-import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.IItemDecorator;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Respond to client-only Forge registration events.
@@ -49,23 +31,10 @@ import java.util.function.Consumer;
  * @author Daedalus4096
  */
 public class ClientRegistrationEvents {
-    public static void onRegisterParticleProviders(SpriteParticleProviderRegistrar sprite,
-            SpriteSetParticleProviderRegistrar spriteSet, SpecialParticleProviderRegistrar special) {
-        spriteSet.register(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.OFFERING.get(), OfferingParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Factory::new);
+    public static void onRegisterParticleProviders(SpriteParticleProviderRegistrar sprite, SpecialParticleProviderRegistrar special) {
+        // FIXME Sprite set particles are registered in platform-specific code due to access transformer weirdness
         special.register(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
         special.register(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Factory());
-        spriteSet.register(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), SpellcraftingRuneParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), SpellcraftingRuneParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), SpellcraftingRuneParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), SpellcraftingRuneParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.INFERNAL_FLAME.get(), InfernalFlameParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Factory::new);
-        spriteSet.register(ParticleTypesPM.VOID_SMOKE.get(), AirCurrentParticle.Factory::new);
         sprite.register(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), DripParticlePM::createBloodDropHangParticle);
         sprite.register(ParticleTypesPM.FALLING_BLOOD_DROP.get(), DripParticlePM::createBloodDropFallParticle);
         sprite.register(ParticleTypesPM.LANDING_BLOOD_DROP.get(), DripParticlePM::createBloodDropLandParticle);
@@ -73,10 +42,6 @@ public class ClientRegistrationEvents {
 
     public interface SpriteParticleProviderRegistrar {
         <T extends ParticleOptions> void register(ParticleType<T> type, ParticleProvider.Sprite<T> sprite);
-    }
-
-    public interface SpriteSetParticleProviderRegistrar {
-        <T extends ParticleOptions> void register(ParticleType<T> type, ParticleEngine.SpriteParticleRegistration<T> registration);
     }
 
     public interface SpecialParticleProviderRegistrar {
@@ -118,15 +83,11 @@ public class ClientRegistrationEvents {
         reloadListenerConsumer.accept(TipLoader.getOrCreateInstance());
     }
     
-    @SubscribeEvent
-    public static void onRegisterClientTooltipComponentFactories(RegisterClientTooltipComponentFactoriesEvent event) {
-        event.register(AffinityTooltipComponent.class, ClientAffinityTooltipComponent::new);
+    public static void onRegisterClientTooltipComponentFactories(TooltipComponentRegistrar clientTooltipComponentRegistrar) {
+        clientTooltipComponentRegistrar.register(AffinityTooltipComponent.class, ClientAffinityTooltipComponent::new);
     }
-    
-    @SubscribeEvent
-    public static void onRegisterItemDecorations(RegisterItemDecorationsEvent event) {
-        // FIXME Use the WARDABLE_ARMOR tag as the source of truth if/when the RegisterItemDecorationsEvent is made to fire *after* tag data loads
-        IItemDecorator wardDecorator = new ManaStorageItemDecorator(Sources.EARTH);
-        WardingModuleItem.getApplicableItems().forEach(itemSupplier -> event.register(itemSupplier.get(), wardDecorator));
+
+    public interface TooltipComponentRegistrar {
+        <T extends TooltipComponent> void register(Class<T> type, Function<? super T, ? extends ClientTooltipComponent> factory);
     }
 }

@@ -7,7 +7,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.IItemDecorator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,16 +15,15 @@ import org.apache.logging.log4j.Logger;
  * 
  * @author Daedalus4096
  */
-public class ManaStorageItemDecorator implements IItemDecorator {
+public abstract class AbstractManaStorageItemDecorator {
     protected static final Logger LOGGER = LogManager.getLogger();
 
     protected final Source source;
     
-    public ManaStorageItemDecorator(Source source) {
+    public AbstractManaStorageItemDecorator(Source source) {
         this.source = source;
     }
     
-    @Override
     public boolean render(GuiGraphics guiGraphics, Font font, ItemStack stack, int xOffset, int yOffset) {
         ManaStorage manaCap = stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
         if (manaCap != null && manaCap.canStore(this.source)) {
