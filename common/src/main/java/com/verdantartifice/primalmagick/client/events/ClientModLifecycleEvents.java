@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.gui.AnalysisTableScreen;
 import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.CalcinatorScreen;
@@ -39,7 +38,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.SanguineCrucibleTE
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WindGeneratorTER;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
@@ -50,18 +49,16 @@ import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import java.util.function.Consumer;
 
 /**
  * Respond to client-only Forge mod lifecycle events for setup.
@@ -69,13 +66,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
  * @author Daedalus4096
  */
 @SuppressWarnings("deprecation")
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientModLifecycleEvents {
-    @SubscribeEvent
-    public static void clientSetup(FMLClientSetupEvent event) {
+    public static void clientSetup(Consumer<Runnable> workConsumer) {
         registerScreens();
         registerTERs();
-        registerItemProperties(event);
+        registerItemProperties(workConsumer);
         registerHudOverlays();
     }
 
@@ -124,14 +119,14 @@ public class ClientModLifecycleEvents {
         BlockEntityRenderers.register(BlockEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTER::new);
     }
     
-    private static void registerItemProperties(FMLClientSetupEvent event) {
+    private static void registerItemProperties(Consumer<Runnable> workConsumer) {
         // Register properties for items on the main thread in a thread-safe fashion
-        event.enqueueWork(() -> {
-            ItemProperties.register(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, new ItemPropertyFunction() {
+        workConsumer.accept(() -> {
+            ItemProperties.register(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, new ClampedItemPropertyFunction() {
                 protected float scanState = 0;
 
                 @Override
-                public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int seed) {
+                public float unclampedCall(ItemStack stack, ClientLevel world, LivingEntity entity, int seed) {
                     if (entity instanceof Player player) {
                         // If the currently moused-over block/item has not yet been scanned, raise the antennae
                         if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(world, player), world, (Player)entity)) {
@@ -165,8 +160,8 @@ public class ClientModLifecycleEvents {
                 }
                 return ((float)color.getId() / 16.0F);
             });
-            
-            ItemPropertyFunction castProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
+
+            ClampedItemPropertyFunction castProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 if (entity == null) {
                     return 0.0F;
                 } else {
@@ -182,8 +177,8 @@ public class ClientModLifecycleEvents {
             ItemProperties.register(ItemsPM.HEXIUM_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
             ItemProperties.register(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
             ItemProperties.register(ItemsPM.PRIMAL_FISHING_ROD.get(), ResourceLocation.withDefaultNamespace("cast"), castProperty);
-            
-            ItemPropertyFunction handActiveProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
+
+            ClampedItemPropertyFunction handActiveProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
             };
             ItemProperties.register(ItemsPM.PRIMALITE_TRIDENT.get(), ResourceLocation.withDefaultNamespace("throwing"), handActiveProperty);
@@ -194,8 +189,8 @@ public class ClientModLifecycleEvents {
             ItemProperties.register(ItemsPM.HEXIUM_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
             ItemProperties.register(ItemsPM.HALLOWSTEEL_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
             ItemProperties.register(ItemsPM.SACRED_SHIELD.get(), ResourceLocation.withDefaultNamespace("blocking"), handActiveProperty);
-            
-            ItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
+
+            ClampedItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 if (entity == null) {
                     return 0.0F;
                 } else {
