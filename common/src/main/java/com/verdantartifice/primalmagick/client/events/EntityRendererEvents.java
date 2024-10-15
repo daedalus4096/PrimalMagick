@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.events;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.renderers.entity.BasicPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.FlyingCarpetRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.ForbiddenTridentRenderer;
@@ -28,81 +27,85 @@ import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 /**
  * Respond to client-only entity renderer registration events.
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class EntityRendererEvents {
-    @SubscribeEvent
-    public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+    public static void onRegisterEntityRenderers(EntityRendererRegistrar entityRenderers) {
         // Register renderers for each entity type
-        event.registerEntityRenderer(EntityTypesPM.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.SPELL_MINE.get(), SpellMineRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.SIN_CRASH.get(), SinCrashRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.SIN_CRYSTAL.get(), SinCrystalRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.APPLE.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.IGNYX.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.ALCHEMICAL_BOMB.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MANA_ARROW.get(), ManaArrowRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.HEXIUM_TRIDENT.get(), HexiumTridentRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), HallowsteelTridentRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.FORBIDDEN_TRIDENT.get(), ForbiddenTridentRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.FLYING_CARPET.get(), FlyingCarpetRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.INNER_DEMON.get(), InnerDemonRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.FRIENDLY_WITCH.get(), FriendlyWitchRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.PRIMALITE_GOLEM.get(), PrimaliteGolemRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.HEXIUM_GOLEM.get(), HexiumGolemRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), HallowsteelGolemRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.BASIC_EARTH_PIXIE.get(), BasicPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.GRAND_EARTH_PIXIE.get(), GrandPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), MajesticPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.BASIC_SEA_PIXIE.get(), BasicPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.GRAND_SEA_PIXIE.get(), GrandPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MAJESTIC_SEA_PIXIE.get(), MajesticPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.BASIC_SKY_PIXIE.get(), BasicPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.GRAND_SKY_PIXIE.get(), GrandPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), MajesticPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.BASIC_SUN_PIXIE.get(), BasicPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.GRAND_SUN_PIXIE.get(), GrandPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MAJESTIC_SUN_PIXIE.get(), MajesticPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.BASIC_MOON_PIXIE.get(), BasicPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.GRAND_MOON_PIXIE.get(), GrandPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MAJESTIC_MOON_PIXIE.get(), MajesticPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.BASIC_BLOOD_PIXIE.get(), BasicPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.GRAND_BLOOD_PIXIE.get(), GrandPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), MajesticPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), BasicPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), GrandPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MAJESTIC_INFERNAL_PIXIE.get(), MajesticPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.BASIC_VOID_PIXIE.get(), BasicPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.GRAND_VOID_PIXIE.get(), GrandPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MAJESTIC_VOID_PIXIE.get(), MajesticPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), BasicPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), GrandPixieRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
+        entityRenderers.register(EntityTypesPM.SPELL_MINE.get(), SpellMineRenderer::new);
+        entityRenderers.register(EntityTypesPM.SIN_CRASH.get(), SinCrashRenderer::new);
+        entityRenderers.register(EntityTypesPM.SIN_CRYSTAL.get(), SinCrystalRenderer::new);
+        entityRenderers.register(EntityTypesPM.APPLE.get(), ThrownItemRenderer::new);
+        entityRenderers.register(EntityTypesPM.IGNYX.get(), ThrownItemRenderer::new);
+        entityRenderers.register(EntityTypesPM.ALCHEMICAL_BOMB.get(), ThrownItemRenderer::new);
+        entityRenderers.register(EntityTypesPM.MANA_ARROW.get(), ManaArrowRenderer::new);
+        entityRenderers.register(EntityTypesPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentRenderer::new);
+        entityRenderers.register(EntityTypesPM.HEXIUM_TRIDENT.get(), HexiumTridentRenderer::new);
+        entityRenderers.register(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), HallowsteelTridentRenderer::new);
+        entityRenderers.register(EntityTypesPM.FORBIDDEN_TRIDENT.get(), ForbiddenTridentRenderer::new);
+        entityRenderers.register(EntityTypesPM.FLYING_CARPET.get(), FlyingCarpetRenderer::new);
+        entityRenderers.register(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
+        entityRenderers.register(EntityTypesPM.INNER_DEMON.get(), InnerDemonRenderer::new);
+        entityRenderers.register(EntityTypesPM.FRIENDLY_WITCH.get(), FriendlyWitchRenderer::new);
+        entityRenderers.register(EntityTypesPM.PRIMALITE_GOLEM.get(), PrimaliteGolemRenderer::new);
+        entityRenderers.register(EntityTypesPM.HEXIUM_GOLEM.get(), HexiumGolemRenderer::new);
+        entityRenderers.register(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), HallowsteelGolemRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_EARTH_PIXIE.get(), BasicPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_EARTH_PIXIE.get(), GrandPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_SEA_PIXIE.get(), BasicPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_SEA_PIXIE.get(), GrandPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_SEA_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_SKY_PIXIE.get(), BasicPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_SKY_PIXIE.get(), GrandPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_SUN_PIXIE.get(), BasicPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_SUN_PIXIE.get(), GrandPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_SUN_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_MOON_PIXIE.get(), BasicPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_MOON_PIXIE.get(), GrandPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_MOON_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_BLOOD_PIXIE.get(), BasicPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_BLOOD_PIXIE.get(), GrandPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), BasicPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), GrandPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_INFERNAL_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_VOID_PIXIE.get(), BasicPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_VOID_PIXIE.get(), GrandPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_VOID_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), BasicPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), GrandPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), MajesticPixieRenderer::new);
     }
-    
-    @SubscribeEvent
-    public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+
+    public interface EntityRendererRegistrar {
+        <T extends Entity> void register(EntityType<? extends T> entityType, EntityRendererProvider<T> entityRendererProvider);
+    }
+
+    public static void onRegisterLayerDefinitions(BiConsumer<ModelLayerLocation, Supplier<LayerDefinition>> consumer) {
         // Register layer definitions for models
-        event.registerLayerDefinition(ModelLayersPM.FLYING_CARPET, FlyingCarpetModel::createBodyLayer);
-        event.registerLayerDefinition(ModelLayersPM.PIXIE_BASIC, () -> PixieModel.createBodyLayer(false));
-        event.registerLayerDefinition(ModelLayersPM.PIXIE_ROYAL, () -> PixieModel.createBodyLayer(true));
-        event.registerLayerDefinition(ModelLayersPM.SPELL_MINE, SpellMineModel::createBodyLayer);
-        event.registerLayerDefinition(ModelLayersPM.SPELL_PROJECTILE, SpellProjectileModel::createBodyLayer);
-        event.registerLayerDefinition(ModelLayersPM.TREEFOLK, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
-        event.registerLayerDefinition(ModelLayersPM.SPELLCRAFTING_ALTAR_RING, SpellcraftingAltarRingModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.FLYING_CARPET, FlyingCarpetModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.PIXIE_BASIC, () -> PixieModel.createBodyLayer(false));
+        consumer.accept(ModelLayersPM.PIXIE_ROYAL, () -> PixieModel.createBodyLayer(true));
+        consumer.accept(ModelLayersPM.SPELL_MINE, SpellMineModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.SPELL_PROJECTILE, SpellProjectileModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.TREEFOLK, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
+        consumer.accept(ModelLayersPM.SPELLCRAFTING_ALTAR_RING, SpellcraftingAltarRingModel::createBodyLayer);
     }
 }
