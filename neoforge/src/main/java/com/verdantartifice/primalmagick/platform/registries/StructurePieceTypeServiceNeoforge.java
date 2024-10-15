@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IStructurePieceTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IStructurePieceTypeService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;

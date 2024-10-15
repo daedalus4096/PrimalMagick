@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IRequirementTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IRequirementTypeService;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 

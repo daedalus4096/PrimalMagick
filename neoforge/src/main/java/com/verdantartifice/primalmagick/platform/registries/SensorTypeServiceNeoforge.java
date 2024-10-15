@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.ISensorTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.ISensorTypeService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.sensing.SensorType;

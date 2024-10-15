@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicType;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IResearchTopicTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IResearchTopicTypeService;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 

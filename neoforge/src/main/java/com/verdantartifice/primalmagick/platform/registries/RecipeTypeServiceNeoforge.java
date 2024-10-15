@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IRecipeTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IRecipeTypeService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeType;

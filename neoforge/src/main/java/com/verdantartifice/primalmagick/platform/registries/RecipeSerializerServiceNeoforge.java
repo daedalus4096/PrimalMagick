@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
-import com.verdantartifice.primalmagick.platform.services.IRecipeSerializerService;
+import com.verdantartifice.primalmagick.platform.services.registries.IRecipeSerializerService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;

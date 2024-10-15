@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IBlockEntityTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IBlockEntityTypeService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;

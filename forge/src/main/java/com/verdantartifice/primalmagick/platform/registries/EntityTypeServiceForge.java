@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.entities.EntityTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IEntityTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IEntityTypeService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;

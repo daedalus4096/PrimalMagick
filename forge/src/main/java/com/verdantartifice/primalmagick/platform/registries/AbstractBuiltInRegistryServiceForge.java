@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
-import com.verdantartifice.primalmagick.platform.services.IRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.IRegistryService;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;

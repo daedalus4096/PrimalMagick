@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyType;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
-import com.verdantartifice.primalmagick.platform.services.IResearchKeyTypeService;
+import com.verdantartifice.primalmagick.platform.services.registries.IResearchKeyTypeService;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 
