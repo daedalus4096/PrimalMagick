@@ -89,6 +89,9 @@ dependencies {
     // JEI implementation
     runtimeOnly "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
 
+    // Common Networking
+    implementation 'mysticdrew:common-networking-forge:1.0.16-1.21'
+
     // Forge's hack fix
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 }
