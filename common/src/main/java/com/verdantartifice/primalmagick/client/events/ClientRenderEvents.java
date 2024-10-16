@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
@@ -80,11 +79,11 @@ public class ClientRenderEvents {
         Screen gui = mc.screen;
 
         // Assemble the tooltip components for showing primal affinities on an item stack
-        if (gui instanceof AbstractContainerScreen && (Services.INPUT.isKeyDown(KeyBindings.VIEW_AFFINITY_KEY) != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && stack != null && !stack.isEmpty()) {
+        if (gui instanceof AbstractContainerScreen && (Services.INPUT.isKeyDown(KeyBindings.VIEW_AFFINITY_KEY) != Services.CONFIG.showAffinities()) && !mc.mouseHandler.isMouseGrabbed() && stack != null && !stack.isEmpty()) {
             AffinityManager.getInstance().getAffinityValues(stack, mc.level).ifPresentOrElse(sources -> {
                 if (sources.isEmpty()) {
                     elements.add(Either.left(Component.translatable("tooltip.primalmagick.affinities.none")));
-                } else if (!ResearchManager.isScanned(stack, mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
+                } else if (!ResearchManager.isScanned(stack, mc.player) && !Services.CONFIG.showUnscannedAffinities()) {
                     elements.add(Either.left(Component.translatable("tooltip.primalmagick.affinities.unknown")));
                 } else {
                     elements.add(Either.left(Component.translatable("tooltip.primalmagick.affinities.label")));

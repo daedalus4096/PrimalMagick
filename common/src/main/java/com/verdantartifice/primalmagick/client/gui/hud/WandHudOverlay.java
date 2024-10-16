@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -30,7 +30,7 @@ public class WandHudOverlay {
     
     public static boolean shouldRender() {
         Minecraft mc = Minecraft.getInstance();
-        return !mc.options.hideGui && !mc.player.isSpectator() && Config.SHOW_WAND_HUD.get();
+        return !mc.options.hideGui && !mc.player.isSpectator() && Services.CONFIG.showWandHud();
     }
     
     public static void render(GuiGraphics pGuiGraphics, DeltaTracker pDeltaTracker) {

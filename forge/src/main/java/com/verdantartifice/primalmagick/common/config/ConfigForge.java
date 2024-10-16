@@ -17,7 +17,7 @@ import java.nio.file.Path;
  * @author Daedalus4096
  */
 @Mod.EventBusSubscriber
-public class Config {
+public class ConfigForge {
     protected static final String CATEGORY_MISC = "misc";
     protected static final String CATEGORY_RADIAL = "radial";
     
@@ -84,10 +84,10 @@ public class Config {
             // Only allow registration once
             throw new IllegalStateException("Primal Magick config spec is already registered!");
         }
-        PrimalMagick.getModLoadingContext().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG_SPEC);
-        PrimalMagick.getModLoadingContext().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG_SPEC);
-        loadConfig(Config.COMMON_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagick-common.toml"));
-        loadConfig(Config.CLIENT_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagick-client.toml"));
+        PrimalMagick.getModLoadingContext().registerConfig(ModConfig.Type.COMMON, ConfigForge.COMMON_CONFIG_SPEC);
+        PrimalMagick.getModLoadingContext().registerConfig(ModConfig.Type.CLIENT, ConfigForge.CLIENT_CONFIG_SPEC);
+        loadConfig(ConfigForge.COMMON_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagick-common.toml"));
+        loadConfig(ConfigForge.CLIENT_CONFIG_SPEC, FMLPaths.CONFIGDIR.get().resolve("primalmagick-client.toml"));
         IS_REGISTERED = true;
     }
 }

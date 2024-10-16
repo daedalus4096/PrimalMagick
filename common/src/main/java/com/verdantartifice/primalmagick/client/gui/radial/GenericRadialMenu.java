@@ -7,7 +7,7 @@ import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.verdantartifice.primalmagick.common.config.Config;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -460,7 +460,7 @@ public class GenericRadialMenu {
             float s = (float) getAngleFor(i - 0.5, numItems);
             float e = (float) getAngleFor(i + 0.5, numItems);
 
-            if (a >= s && a < e && d >= radiusIn && (d < radiusOut || Config.RADIAL_CLIP_MOUSE.get() || Config.RADIAL_ALLOW_CLICK_OUTSIDE_BOUNDS.get()))
+            if (a >= s && a < e && d >= radiusIn && (d < radiusOut || Services.CONFIG.radialClipMouse() || Services.CONFIG.radialAllowClickOutsideBounds()))
             {
                 hovered = i;
                 break;
@@ -469,7 +469,7 @@ public class GenericRadialMenu {
         setHovered(hovered);
 
 
-        if (Config.RADIAL_CLIP_MOUSE.get())
+        if (Services.CONFIG.radialClipMouse())
         {
             Window mainWindow = minecraft.getWindow();
 

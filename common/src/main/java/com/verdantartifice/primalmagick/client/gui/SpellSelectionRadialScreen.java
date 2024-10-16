@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.client.gui.radial.IRadialMenuHost;
 import com.verdantartifice.primalmagick.client.gui.radial.ImageRadialMenuItem;
 import com.verdantartifice.primalmagick.client.gui.radial.RadialMenuItem;
 import com.verdantartifice.primalmagick.client.gui.radial.SpellPackageRadialMenuItem;
-import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -120,7 +119,7 @@ public class SpellSelectionRadialScreen extends Screen {
         if (this.stackEquipped.isEmpty()) {
             this.minecraft.setScreen(null);
         } else if (!Services.INPUT.isKeyDown(KeyBindings.CHANGE_SPELL_KEY)) {
-            if (Config.RADIAL_RELEASE_TO_SWITCH.get()) {
+            if (Services.CONFIG.radialReleaseToSwitch()) {
                 this.processClick(false);
             } else {
                 this.menu.close();

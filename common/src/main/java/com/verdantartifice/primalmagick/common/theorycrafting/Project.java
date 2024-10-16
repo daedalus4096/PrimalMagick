@@ -1,21 +1,11 @@
 package com.verdantartifice.primalmagick.common.theorycrafting;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.mutable.MutableDouble;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -25,6 +15,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.mutable.MutableDouble;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Class representing an initialized theorycrafting project, created from a data-defined template.
@@ -101,7 +98,7 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
     
     public int getTheoryPointReward() {
         int value = (int)(KnowledgeType.THEORY.getProgression() * (this.baseRewardMultiplier + this.activeMaterials().stream().filter(m -> m.isSelected()).mapToDouble(m -> m.getMaterialDefinition().getBonusReward()).sum()));
-        return switch (Config.THEORYCRAFT_SPEED.get()) {
+        return switch (Services.CONFIG.theorycraftSpeed()) {
             case SLOW -> value / 2;
             case FAST -> value * 2;
             default -> value;
