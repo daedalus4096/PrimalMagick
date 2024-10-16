@@ -1,11 +1,11 @@
-package com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting;
+package com.verdantartifice.primalmagick.client.compat.jei.concocting;
 
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
 import com.verdantartifice.primalmagick.client.util.RecipeUtils;
-import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -23,53 +23,45 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraftforge.common.crafting.IShapedRecipe;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Recipe category class for an arcane workbench recipe.
- * 
- * @author Daedalus4096
- */
-public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IArcaneRecipe>> {
-    public static final ResourceLocation UID = ResourceUtils.loc("arcane_workbench");
+public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IConcoctingRecipe>> {
+    public static final ResourceLocation UID = ResourceUtils.loc("concocter");
     private static final ResourceLocation BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/arcane_workbench.png");
     private static final ResourceLocation RESEARCH_TEXTURE = ResourceUtils.loc("textures/item/grimoire.png");
     private static final int MANA_COST_X_OFFSET = 64;
     private static final int MANA_COST_Y_OFFSET = 1;
     private static final int RESEARCH_X_OFFSET = 64;
     private static final int RESEARCH_Y_OFFSET = 36;
-    
+
     private final ICraftingGridHelper craftingGridHelper;
     private final IDrawableStatic manaCostIcon;
     private final IDrawableStatic researchIcon;
 
-    public ArcaneCraftingRecipeCategory(IGuiHelper guiHelper) {
-        super(guiHelper, UID, "block.primalmagick.arcane_workbench");
+    public ConcoctingRecipeCategory(IGuiHelper guiHelper) {
+        super(guiHelper, UID, "block.primalmagick.concocter");
         this.craftingGridHelper = guiHelper.createCraftingGridHelper();
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 116, 0, 16, 16);
         this.researchIcon = guiHelper.drawableBuilder(RESEARCH_TEXTURE, 0, 0, 32, 32).setTextureSize(32, 32).build();
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 116, 54));
-        this.setIcon(new ItemStack(ItemsPM.ARCANE_WORKBENCH.get()));
+        this.setIcon(new ItemStack(ItemsPM.CONCOCTER.get()));
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IArcaneRecipe> recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IConcoctingRecipe> recipe, IFocusGroup focuses) {
         // Initialize recipe output
         this.craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, List.of(RecipeUtils.getResultItem(recipe.value())));
         
         // Initialize recipe inputs
-        int width = (recipe.value() instanceof IShapedRecipe<?> shapedRecipe) ? shapedRecipe.getRecipeWidth() : 0;
-        int height = (recipe.value() instanceof IShapedRecipe<?> shapedRecipe) ? shapedRecipe.getRecipeHeight() : 0;
         List<List<ItemStack>> inputs = recipe.value().getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
-        this.craftingGridHelper.createAndSetInputs(builder, VanillaTypes.ITEM_STACK, inputs, width, height);
+        this.craftingGridHelper.createAndSetInputs(builder, VanillaTypes.ITEM_STACK, inputs, 0, 0);
     }
 
     @Override
-    public void draw(RecipeHolder<IArcaneRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        IArcaneRecipe recipe = recipeHolder.value();
+    public void draw(RecipeHolder<IConcoctingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        IConcoctingRecipe recipe = recipeHolder.value();
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
@@ -82,9 +74,9 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder builder, RecipeHolder<IArcaneRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public void getTooltip(ITooltipBuilder builder, RecipeHolder<IConcoctingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
-        IArcaneRecipe recipe = recipeHolder.value();
+        IConcoctingRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
         Optional<AbstractRequirement<?>> requirementOpt = recipe.getRequirement();
         if ( manaCosts != null && !manaCosts.isEmpty() && 
@@ -96,12 +88,12 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
                     mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
             builder.addAll(JeiHelper.getRequirementTooltipStrings(mc.level.registryAccess(), requirementOpt.get()));
         } else {
-            super.getTooltip(builder, recipeHolder, recipeSlotsView, mouseX, mouseY);
+            super.getTooltip(builder,   recipeHolder, recipeSlotsView, mouseX, mouseY);
         }
     }
 
     @Override
-    public RecipeType<RecipeHolder<IArcaneRecipe>> getRecipeType() {
-        return JeiRecipeTypesPM.ARCANE_CRAFTING;
+    public RecipeType<RecipeHolder<IConcoctingRecipe>> getRecipeType() {
+        return JeiRecipeTypesPM.CONCOCTING;
     }
 }
