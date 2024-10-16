@@ -2,11 +2,14 @@ package com.verdantartifice.primalmagick.common.network.packets.fx;
 
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
@@ -16,6 +19,7 @@ import javax.annotation.Nonnull;
  * @author Daedalus4096
  */
 public class WandPoofPacket implements IMessageToClient {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("wand_poof");
     public static final StreamCodec<RegistryFriendlyByteBuf, WandPoofPacket> STREAM_CODEC = StreamCodec.ofMember(WandPoofPacket::encode, WandPoofPacket::decode);
 
     protected final double x;
@@ -37,7 +41,11 @@ public class WandPoofPacket implements IMessageToClient {
     public WandPoofPacket(@Nonnull BlockPos pos, int color, boolean sound, @Nonnull Direction facing) {
         this(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, color, sound, facing);
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(WandPoofPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
@@ -51,7 +59,8 @@ public class WandPoofPacket implements IMessageToClient {
         return new WandPoofPacket(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt(), buf.readBoolean(), buf.readEnum(Direction.class));
     }
     
-    public static void onMessage(WandPoofPacket message, CustomPayloadEvent.Context ctx) {
+    public static void onMessage(PacketContext<WandPoofPacket> ctx) {
+        WandPoofPacket message = ctx.message();
         FxDispatcher.INSTANCE.wandPoof(message.x, message.y, message.z, message.color, message.sound, message.face);
     }
 }

@@ -26,7 +26,7 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class SyncKnowledgePacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_knowledge_packet");
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_knowledge");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncKnowledgePacket> STREAM_CODEC = StreamCodec.ofMember(SyncKnowledgePacket::encode, SyncKnowledgePacket::decode);
 
     protected final CompoundTag data;

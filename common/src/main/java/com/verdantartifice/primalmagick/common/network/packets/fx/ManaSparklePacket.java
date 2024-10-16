@@ -1,14 +1,16 @@
 package com.verdantartifice.primalmagick.common.network.packets.fx;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+
+import javax.annotation.Nonnull;
 
 /**
  * Packet sent from the server to trigger a mana sparkle particle effect on the client.
@@ -16,6 +18,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class ManaSparklePacket implements IMessageToClient {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("mana_sparkle");
     public static final StreamCodec<RegistryFriendlyByteBuf, ManaSparklePacket> STREAM_CODEC = StreamCodec.ofMember(ManaSparklePacket::encode, ManaSparklePacket::decode);
 
     protected final double x1;
@@ -41,7 +44,11 @@ public class ManaSparklePacket implements IMessageToClient {
     public ManaSparklePacket(@Nonnull BlockPos source, double targetX, double targetY, double targetZ, int maxAge, int color) {
         this(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D, targetX, targetY, targetZ, maxAge, color);
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(ManaSparklePacket message, RegistryFriendlyByteBuf buf) {
         buf.writeDouble(message.x1);
         buf.writeDouble(message.y1);
@@ -57,7 +64,8 @@ public class ManaSparklePacket implements IMessageToClient {
         return new ManaSparklePacket(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt(), buf.readVarInt());
     }
     
-    public static void onMessage(ManaSparklePacket message, CustomPayloadEvent.Context ctx) {
+    public static void onMessage(PacketContext<ManaSparklePacket> ctx) {
+        ManaSparklePacket message = ctx.message();
         FxDispatcher.INSTANCE.manaSparkle(message.x1, message.y1, message.z1, message.x2, message.y2, message.z2, message.maxAge, message.color);
     }
 }
