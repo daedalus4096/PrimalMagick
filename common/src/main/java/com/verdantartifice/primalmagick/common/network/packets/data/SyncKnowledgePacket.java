@@ -9,15 +9,16 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
+import commonnetwork.networking.data.Side;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  * Packet to sync knowledge capability data from the server to the client.
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  * @author Daedalus4096
  */
 public class SyncKnowledgePacket implements IMessageToClient {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_knowledge_packet");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncKnowledgePacket> STREAM_CODEC = StreamCodec.ofMember(SyncKnowledgePacket::encode, SyncKnowledgePacket::decode);
 
     protected final CompoundTag data;
@@ -34,7 +36,11 @@ public class SyncKnowledgePacket implements IMessageToClient {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
         this.data = knowledge.serializeNBT(player.registryAccess());
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     protected SyncKnowledgePacket(CompoundTag data) {
         this.data = data;
     }
@@ -48,16 +54,16 @@ public class SyncKnowledgePacket implements IMessageToClient {
     }
     
     @SuppressWarnings("deprecation")
-    public static void onMessage(SyncKnowledgePacket message, CustomPayloadEvent.Context ctx) {
-        Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+    public static void onMessage(PacketContext<SyncKnowledgePacket> ctx) {
+        Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             RegistryAccess registryAccess = player.level().registryAccess();
-            knowledge.deserializeNBT(player.registryAccess(), message.data);
+            knowledge.deserializeNBT(player.registryAccess(), ctx.message().data);
             for (AbstractResearchKey<?> key : knowledge.getResearchSet()) {
                 // Show a research completion toast for any research entries so flagged
                 if (key instanceof ResearchEntryKey entryKey && knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP)) {
                     ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
-                    if (entry != null && !entry.flags().internal() && FMLEnvironment.dist == Dist.CLIENT) {
+                    if (entry != null && !entry.flags().internal() && Side.CLIENT.equals(ctx.side())) {
                         ToastManager.showResearchToast(entry, knowledge.isResearchComplete(registryAccess, entry.key()));
                     }
                     knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
