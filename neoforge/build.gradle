@@ -45,7 +45,7 @@ dependencies {
     // at runtime, use the full JEI jar for NeoForge
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
     // Common Networking
-    implementation 'mysticdrew:common-networking-neoforge:1.0.16-1.21'
+    implementation "mysticdrew:common-networking-neoforge:${common_network_version}-${minecraft_version}"
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
