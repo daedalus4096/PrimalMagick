@@ -62,6 +62,14 @@ public interface IRegistryService<R> {
     Optional<ResourceKey<R>> getResourceKey(R value);
 
     /**
+     * Get the key for the given value, if it exists in the registry.
+     *
+     * @param value the value to be queried
+     * @return the resource location identifying the given value if it exists in the registry, or null otherwise
+     */
+    @Nullable default ResourceLocation getKey(R value) { return this.getResourceKey(value).map(ResourceKey::location).orElse(null); }
+
+    /**
      * Retrieve the serialization codec for this registry.
      *
      * @return the serialization codec for this registry

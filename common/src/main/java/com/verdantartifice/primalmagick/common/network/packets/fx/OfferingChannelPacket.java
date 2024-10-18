@@ -1,15 +1,17 @@
 package com.verdantartifice.primalmagick.common.network.packets.fx;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+
+import javax.annotation.Nonnull;
 
 /**
  * Packet sent from the server to trigger an offering channel particle effect on the client.
@@ -17,6 +19,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class OfferingChannelPacket implements IMessageToClient {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("offering_channel");
     public static final StreamCodec<RegistryFriendlyByteBuf, OfferingChannelPacket> STREAM_CODEC = StreamCodec.ofMember(OfferingChannelPacket::encode, OfferingChannelPacket::decode);
 
     protected final double x1;
@@ -40,7 +43,11 @@ public class OfferingChannelPacket implements IMessageToClient {
     public OfferingChannelPacket(double x1, double y1, double z1, @Nonnull BlockPos target, ItemStack stack) {
         this(x1, y1, z1, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, stack);
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(OfferingChannelPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeDouble(message.x1);
         buf.writeDouble(message.y1);
@@ -56,7 +63,8 @@ public class OfferingChannelPacket implements IMessageToClient {
                 ItemStack.OPTIONAL_STREAM_CODEC.decode(buf));
     }
     
-    public static void onMessage(OfferingChannelPacket message, CustomPayloadEvent.Context ctx) {
+    public static void onMessage(PacketContext<OfferingChannelPacket> ctx) {
+        OfferingChannelPacket message = ctx.message();
         FxDispatcher.INSTANCE.offeringChannel(message.x1, message.y1, message.z1, message.x2, message.y2, message.z2, message.stack);
     }
 }

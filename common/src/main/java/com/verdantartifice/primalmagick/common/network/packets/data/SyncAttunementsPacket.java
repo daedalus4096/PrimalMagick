@@ -4,14 +4,15 @@ import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
+import commonnetwork.networking.data.Side;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  * Packet to sync attunements capability data from the server to the client.
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  * @author Daedalus4096
  */
 public class SyncAttunementsPacket implements IMessageToClient {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_attunements");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncAttunementsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncAttunementsPacket::encode, SyncAttunementsPacket::decode);
 
     protected final CompoundTag data;
@@ -32,7 +34,11 @@ public class SyncAttunementsPacket implements IMessageToClient {
     protected SyncAttunementsPacket(CompoundTag data) {
         this.data = data;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(SyncAttunementsPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeNbt(message.data);
     }
@@ -42,8 +48,9 @@ public class SyncAttunementsPacket implements IMessageToClient {
     }
     
     @SuppressWarnings("deprecation")
-    public static void onMessage(SyncAttunementsPacket message, CustomPayloadEvent.Context ctx) {
-        Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+    public static void onMessage(PacketContext<SyncAttunementsPacket> ctx) {
+        SyncAttunementsPacket message = ctx.message();
+        Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
         IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
         if (attunements != null) {
             attunements.deserializeNBT(player.registryAccess(), message.data);

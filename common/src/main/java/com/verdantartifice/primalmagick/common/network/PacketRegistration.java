@@ -3,10 +3,14 @@ package com.verdantartifice.primalmagick.common.network;
 import com.verdantartifice.primalmagick.common.network.packets.config.AcknowledgementPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsConfigPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCooldownsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
+import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
+import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellTrailPacket;
@@ -32,6 +36,10 @@ public class PacketRegistration {
                 .registerPacket(TileToClientPacket.type(), TileToClientPacket.class, TileToClientPacket.STREAM_CODEC, TileToClientPacket::onMessage)
                 .registerPacket(TeleportArrivalPacket.type(), TeleportArrivalPacket.class, TeleportArrivalPacket.STREAM_CODEC, TeleportArrivalPacket::onMessage)
                 .registerPacket(SpellBoltPacket.type(), SpellBoltPacket.class, SpellBoltPacket.STREAM_CODEC, SpellBoltPacket::onMessage)
+                .registerPacket(SyncStatsPacket.type(), SyncStatsPacket.class, SyncStatsPacket.STREAM_CODEC, SyncStatsPacket::onMessage)
+                .registerPacket(SyncAttunementsPacket.type(), SyncAttunementsPacket.class, SyncAttunementsPacket.STREAM_CODEC, SyncAttunementsPacket::onMessage)
+                .registerPacket(PlayClientSoundPacket.type(), PlayClientSoundPacket.class, PlayClientSoundPacket.STREAM_CODEC, PlayClientSoundPacket::onMessage)
+                .registerPacket(OfferingChannelPacket.type(), OfferingChannelPacket.class, OfferingChannelPacket.STREAM_CODEC, OfferingChannelPacket::onMessage)
                 ;
     }
 }
