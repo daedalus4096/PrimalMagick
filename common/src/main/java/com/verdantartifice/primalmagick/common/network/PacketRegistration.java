@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.network.packets.config.Acknowledg
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCooldownsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPacket;
@@ -11,6 +12,9 @@ import com.verdantartifice.primalmagick.common.network.packets.data.TileToClient
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
+import com.verdantartifice.primalmagick.common.network.packets.fx.PotionExplosionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.fx.PropMarkerPacket;
+import com.verdantartifice.primalmagick.common.network.packets.fx.RemovePropMarkerPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellTrailPacket;
@@ -40,6 +44,10 @@ public class PacketRegistration {
                 .registerPacket(SyncAttunementsPacket.type(), SyncAttunementsPacket.class, SyncAttunementsPacket.STREAM_CODEC, SyncAttunementsPacket::onMessage)
                 .registerPacket(PlayClientSoundPacket.type(), PlayClientSoundPacket.class, PlayClientSoundPacket.STREAM_CODEC, PlayClientSoundPacket::onMessage)
                 .registerPacket(OfferingChannelPacket.type(), OfferingChannelPacket.class, OfferingChannelPacket.STREAM_CODEC, OfferingChannelPacket::onMessage)
+                .registerPacket(PropMarkerPacket.type(), PropMarkerPacket.class, PropMarkerPacket.STREAM_CODEC, PropMarkerPacket::onMessage)
+                .registerPacket(RemovePropMarkerPacket.type(), RemovePropMarkerPacket.class, RemovePropMarkerPacket.STREAM_CODEC, RemovePropMarkerPacket::onMessage)
+                .registerPacket(SyncCompanionsPacket.type(), SyncCompanionsPacket.class, SyncCompanionsPacket.STREAM_CODEC, SyncCompanionsPacket::onMessage)
+                .registerPacket(PotionExplosionPacket.type(), PotionExplosionPacket.class, PotionExplosionPacket.STREAM_CODEC, PotionExplosionPacket::onMessage)
                 ;
     }
 }
