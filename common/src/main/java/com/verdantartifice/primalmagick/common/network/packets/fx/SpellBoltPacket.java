@@ -2,11 +2,14 @@ package com.verdantartifice.primalmagick.common.network.packets.fx;
 
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 
 /**
  * Packet sent from the server to trigger a spell bolt particle effect on the client.
@@ -14,6 +17,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class SpellBoltPacket implements IMessageToClient {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("spell_bolt");
     public static final StreamCodec<RegistryFriendlyByteBuf, SpellBoltPacket> STREAM_CODEC = StreamCodec.ofMember(SpellBoltPacket::encode, SpellBoltPacket::decode);
 
     protected final double x1;
@@ -41,7 +45,11 @@ public class SpellBoltPacket implements IMessageToClient {
     public SpellBoltPacket(BlockPos source, BlockPos target, int color) {
         this(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, color);
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(SpellBoltPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeDouble(message.x1);
         buf.writeDouble(message.y1);
@@ -56,7 +64,8 @@ public class SpellBoltPacket implements IMessageToClient {
         return new SpellBoltPacket(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt());
     }
     
-    public static void onMessage(SpellBoltPacket message, CustomPayloadEvent.Context ctx) {
+    public static void onMessage(PacketContext<SpellBoltPacket> ctx) {
+        SpellBoltPacket message = ctx.message();
         FxDispatcher.INSTANCE.spellBolt(message.x1, message.y1, message.z1, message.x2, message.y2, message.z2, message.color);
     }
 }
