@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.config;
 
 import java.util.function.BiConsumer;
 
+import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
-public record AcknowledgementPacket(int token) {
+public record AcknowledgementPacket(int token) implements IMessageToServer {
     private static final Logger LOGGER = LogManager.getLogger();
     
     public static final StreamCodec<FriendlyByteBuf, AcknowledgementPacket> STREAM_CODEC = StreamCodec.ofMember(AcknowledgementPacket::encode, AcknowledgementPacket::decode);
