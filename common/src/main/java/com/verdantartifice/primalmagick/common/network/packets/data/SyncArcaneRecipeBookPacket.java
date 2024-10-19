@@ -4,14 +4,15 @@ import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
+import commonnetwork.networking.data.Side;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  * Packet to sync arcane recipe book capability data from the server to the client.
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  * @author Daedalus4096
  */
 public class SyncArcaneRecipeBookPacket implements IMessageToClient {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_arcane_recipe_book");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncArcaneRecipeBookPacket> STREAM_CODEC = StreamCodec.ofMember(SyncArcaneRecipeBookPacket::encode, SyncArcaneRecipeBookPacket::decode);
 
     protected final CompoundTag data;
@@ -34,7 +36,11 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
     protected SyncArcaneRecipeBookPacket(CompoundTag data) {
         this.data = data;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(SyncArcaneRecipeBookPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeNbt(message.data);
     }
@@ -43,8 +49,9 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
         return new SyncArcaneRecipeBookPacket(buf.readNbt());
     }
     
-    public static void onMessage(SyncArcaneRecipeBookPacket message, CustomPayloadEvent.Context ctx) {
-        Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+    public static void onMessage(PacketContext<SyncArcaneRecipeBookPacket> ctx) {
+        SyncArcaneRecipeBookPacket message = ctx.message();
+        Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
         if (player != null) {
             PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
                 recipeBook.deserializeNBT(player.registryAccess(), message.data, player.level().getRecipeManager());

@@ -3,10 +3,12 @@ package com.verdantartifice.primalmagick.common.network.packets.fx;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Packet sent from the server to trigger a spellcrafting rune particle effect on the client.
@@ -14,6 +16,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class SpellcraftingRunePacket implements IMessageToClient {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("spellcrafting_rune");
     public static final StreamCodec<RegistryFriendlyByteBuf, SpellcraftingRunePacket> STREAM_CODEC = StreamCodec.ofMember(SpellcraftingRunePacket::encode, SpellcraftingRunePacket::decode);
 
     protected final SpellcraftingAltarTileEntity.Segment segment;
@@ -35,7 +38,11 @@ public class SpellcraftingRunePacket implements IMessageToClient {
         this.dz = dz;
         this.color = color;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(SpellcraftingRunePacket message, RegistryFriendlyByteBuf buf) {
         buf.writeEnum(message.segment);
         buf.writeDouble(message.x);
@@ -52,7 +59,8 @@ public class SpellcraftingRunePacket implements IMessageToClient {
                 buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt());
     }
     
-    public static void onMessage(SpellcraftingRunePacket message, CustomPayloadEvent.Context ctx) {
+    public static void onMessage(PacketContext<SpellcraftingRunePacket> ctx) {
+        SpellcraftingRunePacket message = ctx.message();
         switch (message.segment) {
         case U1:
         case U2:

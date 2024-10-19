@@ -3,12 +3,14 @@ package com.verdantartifice.primalmagick.common.network;
 import com.verdantartifice.primalmagick.common.network.packets.config.AcknowledgementPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsConfigPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCooldownsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -18,8 +20,10 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.RemovePropMark
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellTrailPacket;
+import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingRunePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.TeleportArrivalPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
+import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 import commonnetwork.api.Network;
 
 public class PacketRegistration {
@@ -48,6 +52,10 @@ public class PacketRegistration {
                 .registerPacket(RemovePropMarkerPacket.type(), RemovePropMarkerPacket.class, RemovePropMarkerPacket.STREAM_CODEC, RemovePropMarkerPacket::onMessage)
                 .registerPacket(SyncCompanionsPacket.type(), SyncCompanionsPacket.class, SyncCompanionsPacket.STREAM_CODEC, SyncCompanionsPacket::onMessage)
                 .registerPacket(PotionExplosionPacket.type(), PotionExplosionPacket.class, PotionExplosionPacket.STREAM_CODEC, PotionExplosionPacket::onMessage)
+                .registerPacket(UpdateAffinitiesPacket.type(), UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.STREAM_CODEC, UpdateAffinitiesPacket::onMessage)
+                .registerPacket(SyncArcaneRecipeBookPacket.type(), SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket.STREAM_CODEC, SyncArcaneRecipeBookPacket::onMessage)
+                .registerPacket(PlaceGhostArcaneRecipePacket.type(), PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.STREAM_CODEC, PlaceGhostArcaneRecipePacket::onMessage)
+                .registerPacket(SpellcraftingRunePacket.type(), SpellcraftingRunePacket.class, SpellcraftingRunePacket.STREAM_CODEC, SpellcraftingRunePacket::onMessage)
                 ;
     }
 }
