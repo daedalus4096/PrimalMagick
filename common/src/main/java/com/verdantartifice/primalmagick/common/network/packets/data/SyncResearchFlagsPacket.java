@@ -4,11 +4,13 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 
 /**
  * Packet to update research entry flag data on the server (e.g. when a user clicks an "updated" entry
@@ -17,6 +19,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class SyncResearchFlagsPacket implements IMessageToServer {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_research_flags");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncResearchFlagsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncResearchFlagsPacket::encode, SyncResearchFlagsPacket::decode);
 
     protected final ResearchEntryKey key;
@@ -38,7 +41,11 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         this.isUpdated = isUpdated;
         this.isPopup = isPopup;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(SyncResearchFlagsPacket message, RegistryFriendlyByteBuf buf) {
         message.key.toNetwork(buf);
         buf.writeBoolean(message.isNew);
@@ -50,9 +57,10 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         return new SyncResearchFlagsPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
     }
     
-    public static void onMessage(SyncResearchFlagsPacket message, CustomPayloadEvent.Context ctx) {
+    public static void onMessage(PacketContext<SyncResearchFlagsPacket> ctx) {
+        SyncResearchFlagsPacket message = ctx.message();
         if (message.key != null) {
-            Player player = ctx.getSender();
+            Player player = ctx.sender();
             PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                 // Add or remove each flag from the research entry as appropriate
                 if (message.isNew) {

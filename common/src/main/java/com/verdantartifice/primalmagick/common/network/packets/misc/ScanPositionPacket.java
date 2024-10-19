@@ -1,21 +1,13 @@
 package com.verdantartifice.primalmagick.common.network.packets.misc;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
-import javax.annotation.Nonnull;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -23,11 +15,19 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.items.IItemHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Packet sent to trigger a server-side scan of a particular block in the world.  Used by the
@@ -36,6 +36,7 @@ import net.minecraftforge.items.IItemHandler;
  * @author Daedalus4096
  */
 public class ScanPositionPacket implements IMessageToServer {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("scan_position");
     public static final StreamCodec<RegistryFriendlyByteBuf, ScanPositionPacket> STREAM_CODEC = StreamCodec.ofMember(ScanPositionPacket::encode, ScanPositionPacket::decode);
 
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -47,7 +48,11 @@ public class ScanPositionPacket implements IMessageToServer {
         this.pos = pos;
         this.toolStack = toolStack;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(ScanPositionPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeBlockPos(message.pos);
         ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, message.toolStack);
@@ -57,8 +62,9 @@ public class ScanPositionPacket implements IMessageToServer {
         return new ScanPositionPacket(buf.readBlockPos(), ItemStack.OPTIONAL_STREAM_CODEC.decode(buf));
     }
     
-    public static void onMessage(ScanPositionPacket message, CustomPayloadEvent.Context ctx) {
-        ServerPlayer player = ctx.getSender();
+    public static void onMessage(PacketContext<ScanPositionPacket> ctx) {
+        ScanPositionPacket message = ctx.message();
+        ServerPlayer player = ctx.sender();
         Level world = player.getCommandSenderWorld();
 
         // Only process blocks that are currently loaded into the world.  Safety check to prevent

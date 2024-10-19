@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncCooldown
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguisticsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgressPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
@@ -28,9 +29,12 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.SpellTrailPack
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingRunePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.TeleportArrivalPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenEnchantedBookScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenGrimoireScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 import commonnetwork.api.Network;
 
@@ -73,6 +77,10 @@ public class PacketRegistration {
                 .registerPacket(UpdateLinguisticsGridsPacket.type(), UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.STREAM_CODEC, UpdateLinguisticsGridsPacket::onMessage)
                 // Server-bound play channel packets
                 .registerPacket(SyncProgressPacket.type(), SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
+                .registerPacket(SyncResearchFlagsPacket.type(), SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
+                .registerPacket(ScanItemPacket.type(), ScanItemPacket.class, ScanItemPacket.STREAM_CODEC, ScanItemPacket::onMessage)
+                .registerPacket(ScanPositionPacket.type(), ScanPositionPacket.class, ScanPositionPacket.STREAM_CODEC, ScanPositionPacket::onMessage)
+                .registerPacket(AnalysisActionPacket.type(), AnalysisActionPacket.class, AnalysisActionPacket.STREAM_CODEC, AnalysisActionPacket::onMessage)
                 ;
     }
 }
