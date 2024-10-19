@@ -4,11 +4,13 @@ import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.spells.SpellComponent;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 
 /**
  * Packet sent to update the value of a spell component's property on the server in the spellcrafting altar GUI.
@@ -16,6 +18,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class SetSpellComponentPropertyPacket implements IMessageToServer {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("set_spell_component_property");
     public static final StreamCodec<RegistryFriendlyByteBuf, SetSpellComponentPropertyPacket> STREAM_CODEC = StreamCodec.ofMember(
             SetSpellComponentPropertyPacket::encode, SetSpellComponentPropertyPacket::decode);
 
@@ -31,6 +34,10 @@ public class SetSpellComponentPropertyPacket implements IMessageToServer {
         this.value = value;
     }
 
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(SetSpellComponentPropertyPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeVarInt(message.windowId);
         buf.writeEnum(message.attr);
@@ -42,9 +49,10 @@ public class SetSpellComponentPropertyPacket implements IMessageToServer {
         return new SetSpellComponentPropertyPacket(buf.readVarInt(), buf.readEnum(SpellComponent.class), SpellProperty.STREAM_CODEC.decode(buf), buf.readVarInt());
     }
     
-    public static void onMessage(SetSpellComponentPropertyPacket message, CustomPayloadEvent.Context ctx) {
-        ServerPlayer player = ctx.getSender();
-        if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu altarMenu) {
+    public static void onMessage(PacketContext<SetSpellComponentPropertyPacket> ctx) {
+        SetSpellComponentPropertyPacket message = ctx.message();
+        ServerPlayer player = ctx.sender();
+        if (player.containerMenu instanceof SpellcraftingAltarMenu altarMenu && altarMenu.containerId == message.windowId) {
             // Update the property value if the open menu window matches the given one
             altarMenu.setSpellPropertyValue(message.attr, message.property, message.value);
         }

@@ -30,12 +30,16 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingR
 import com.verdantartifice.primalmagick.common.network.packets.fx.TeleportArrivalPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.CycleActiveSpellPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenEnchantedBookScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenGrimoireScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
+import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
+import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
+import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellNamePacket;
 import commonnetwork.api.Network;
 
 public class PacketRegistration {
@@ -81,6 +85,10 @@ public class PacketRegistration {
                 .registerPacket(ScanItemPacket.type(), ScanItemPacket.class, ScanItemPacket.STREAM_CODEC, ScanItemPacket::onMessage)
                 .registerPacket(ScanPositionPacket.type(), ScanPositionPacket.class, ScanPositionPacket.STREAM_CODEC, ScanPositionPacket::onMessage)
                 .registerPacket(AnalysisActionPacket.type(), AnalysisActionPacket.class, AnalysisActionPacket.STREAM_CODEC, AnalysisActionPacket::onMessage)
+                .registerPacket(CycleActiveSpellPacket.type(), CycleActiveSpellPacket.class, CycleActiveSpellPacket.STREAM_CODEC, CycleActiveSpellPacket::onMessage)
+                .registerPacket(SetSpellNamePacket.type(), SetSpellNamePacket.class, SetSpellNamePacket.STREAM_CODEC, SetSpellNamePacket::onMessage)
+                .registerPacket(SetSpellComponentTypeIndexPacket.type(), SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket.STREAM_CODEC, SetSpellComponentTypeIndexPacket::onMessage)
+                .registerPacket(SetSpellComponentPropertyPacket.type(), SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket.STREAM_CODEC, SetSpellComponentPropertyPacket::onMessage)
                 ;
     }
 }
