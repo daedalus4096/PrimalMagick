@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
@@ -11,12 +8,16 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Packet to progress a research entry to its next stage on the server.
@@ -24,6 +25,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class SyncProgressPacket implements IMessageToServer {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_progress");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncProgressPacket> STREAM_CODEC = StreamCodec.ofMember(SyncProgressPacket::encode, SyncProgressPacket::decode);
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -41,7 +43,11 @@ public class SyncProgressPacket implements IMessageToServer {
         this.noFlags = noFlags;
         this.noPopups = noPopups;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(SyncProgressPacket message, RegistryFriendlyByteBuf buf) {
         message.key.toNetwork(buf);
         buf.writeBoolean(message.firstSync);
@@ -54,9 +60,10 @@ public class SyncProgressPacket implements IMessageToServer {
         return new SyncProgressPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
     }
     
-    public static void onMessage(SyncProgressPacket message, CustomPayloadEvent.Context ctx) {
+    public static void onMessage(PacketContext<SyncProgressPacket> ctx) {
+        SyncProgressPacket message = ctx.message();
         if (message.key != null) {
-            Player player = ctx.getSender();
+            Player player = ctx.sender();
             if (message.firstSync != ResearchManager.isResearchStarted(player, message.key)) {
                 // If called for, ensure that prerequisites for the next stage are checked and consumed
                 if (message.runChecks && !checkAndConsumePrerequisites(player, message.key)) {

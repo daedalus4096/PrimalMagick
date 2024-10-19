@@ -3,15 +3,19 @@ package com.verdantartifice.primalmagick.common.network;
 import com.verdantartifice.primalmagick.common.network.packets.config.AcknowledgementPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsConfigPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.ContainerSetVarintDataPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCooldownsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguisticsPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -64,6 +68,11 @@ public class PacketRegistration {
                 .registerPacket(SyncWardPacket.type(), SyncWardPacket.class, SyncWardPacket.STREAM_CODEC, SyncWardPacket::onMessage)
                 .registerPacket(OpenStaticBookScreenPacket.type(), OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket.STREAM_CODEC, OpenStaticBookScreenPacket::onMessage)
                 .registerPacket(OpenEnchantedBookScreenPacket.type(), OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket.STREAM_CODEC, OpenEnchantedBookScreenPacket::onMessage)
+                .registerPacket(SyncLinguisticsPacket.type(), SyncLinguisticsPacket.class, SyncLinguisticsPacket.STREAM_CODEC, SyncLinguisticsPacket::onMessage)
+                .registerPacket(ContainerSetVarintDataPacket.type(), ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.STREAM_CODEC, ContainerSetVarintDataPacket::onMessage)
+                .registerPacket(UpdateLinguisticsGridsPacket.type(), UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.STREAM_CODEC, UpdateLinguisticsGridsPacket::onMessage)
+                // Server-bound play channel packets
+                .registerPacket(SyncProgressPacket.type(), SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                 ;
     }
 }
