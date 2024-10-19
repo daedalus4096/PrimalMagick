@@ -7,20 +7,23 @@ import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
+import commonnetwork.networking.data.Side;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
- * Packet sent from the server to trigger the opening of of a static book on the client.
+ * Packet sent from the server to trigger the opening of a static book on the client.
  * 
  * @author Daedalus4096
  */
 public class OpenStaticBookScreenPacket implements IMessageToClient {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("open_static_book_screen");
     public static final StreamCodec<RegistryFriendlyByteBuf, OpenStaticBookScreenPacket> STREAM_CODEC = StreamCodec.ofMember(OpenStaticBookScreenPacket::encode, OpenStaticBookScreenPacket::decode);
 
     // TODO Can this be strongly typed as a ResourceKey<BookDefinition> instead?
@@ -37,7 +40,11 @@ public class OpenStaticBookScreenPacket implements IMessageToClient {
         this.view = view;
         this.bookType = bookType;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(OpenStaticBookScreenPacket message, RegistryFriendlyByteBuf buf) {
         BookView.STREAM_CODEC.encode(buf, message.view);
         buf.writeEnum(message.bookType);
@@ -47,8 +54,9 @@ public class OpenStaticBookScreenPacket implements IMessageToClient {
         return new OpenStaticBookScreenPacket(BookView.STREAM_CODEC.decode(buf), buf.readEnum(BookType.class));
     }
     
-    public static void onMessage(OpenStaticBookScreenPacket message, CustomPayloadEvent.Context ctx) {
-        if (FMLEnvironment.dist.isClient()) {
+    public static void onMessage(PacketContext<OpenStaticBookScreenPacket> ctx) {
+        OpenStaticBookScreenPacket message = ctx.message();
+        if (Side.CLIENT.equals(ctx.side())) {
             ClientUtils.openStaticBookScreen(message.view, message.bookType);
         }
     }
