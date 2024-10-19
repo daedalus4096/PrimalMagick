@@ -4,11 +4,13 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 
 /**
  * Packet sent to start a research project on the server in the research table GUI.
@@ -16,6 +18,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class StartProjectPacket implements IMessageToServer {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("start_project");
     public static final StreamCodec<RegistryFriendlyByteBuf, StartProjectPacket> STREAM_CODEC = StreamCodec.ofMember(StartProjectPacket::encode, StartProjectPacket::decode);
 
     protected final int windowId;
@@ -23,7 +26,11 @@ public class StartProjectPacket implements IMessageToServer {
     public StartProjectPacket(int windowId) {
         this.windowId = windowId;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(StartProjectPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeVarInt(message.windowId);
     }
@@ -32,8 +39,9 @@ public class StartProjectPacket implements IMessageToServer {
         return new StartProjectPacket(buf.readVarInt());
     }
     
-    public static void onMessage(StartProjectPacket message, CustomPayloadEvent.Context ctx) {
-        ServerPlayer player = ctx.getSender();
+    public static void onMessage(PacketContext<StartProjectPacket> ctx) {
+        StartProjectPacket message = ctx.message();
+        ServerPlayer player = ctx.sender();
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu menu) {
                 menu.getContainerLevelAccess().execute((world, blockPos) -> {

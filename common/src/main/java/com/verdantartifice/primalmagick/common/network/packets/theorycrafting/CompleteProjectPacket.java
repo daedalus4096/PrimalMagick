@@ -12,13 +12,15 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 
 /**
  * Packet sent to complete a research project on the server in the research table GUI.
@@ -26,6 +28,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class CompleteProjectPacket implements IMessageToServer {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("complete_project");
     public static final StreamCodec<RegistryFriendlyByteBuf, CompleteProjectPacket> STREAM_CODEC = StreamCodec.ofMember(CompleteProjectPacket::encode, CompleteProjectPacket::decode);
 
     protected final int windowId;
@@ -33,7 +36,11 @@ public class CompleteProjectPacket implements IMessageToServer {
     public CompleteProjectPacket(int windowId) {
         this.windowId = windowId;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(CompleteProjectPacket message, RegistryFriendlyByteBuf buf) {
         buf.writeVarInt(message.windowId);
     }
@@ -42,11 +49,12 @@ public class CompleteProjectPacket implements IMessageToServer {
         return new CompleteProjectPacket(buf.readVarInt());
     }
     
-    public static void onMessage(CompleteProjectPacket message, CustomPayloadEvent.Context ctx) {
-        ServerPlayer player = ctx.getSender();
+    public static void onMessage(PacketContext<CompleteProjectPacket> ctx) {
+        CompleteProjectPacket message = ctx.message();
+        ServerPlayer player = ctx.sender();
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             // Consume paper and ink
-            if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu researchMenu) {
+            if (player.containerMenu instanceof ResearchTableMenu researchMenu && researchMenu.containerId == message.windowId) {
                 researchMenu.consumeWritingImplements();
                 researchMenu.getContainerLevelAccess().execute((world, blockPos) -> {
                     // Determine if current project is a success

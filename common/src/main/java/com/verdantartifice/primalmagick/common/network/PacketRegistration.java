@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearch
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
@@ -34,12 +35,15 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.CycleActiveS
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenEnchantedBookScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenGrimoireScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellNamePacket;
+import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.CompleteProjectPacket;
+import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.StartProjectPacket;
 import commonnetwork.api.Network;
 
 public class PacketRegistration {
@@ -89,6 +93,10 @@ public class PacketRegistration {
                 .registerPacket(SetSpellNamePacket.type(), SetSpellNamePacket.class, SetSpellNamePacket.STREAM_CODEC, SetSpellNamePacket::onMessage)
                 .registerPacket(SetSpellComponentTypeIndexPacket.type(), SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket.STREAM_CODEC, SetSpellComponentTypeIndexPacket::onMessage)
                 .registerPacket(SetSpellComponentPropertyPacket.type(), SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket.STREAM_CODEC, SetSpellComponentPropertyPacket::onMessage)
+                .registerPacket(TileToServerPacket.type(), TileToServerPacket.class, TileToServerPacket.STREAM_CODEC, TileToServerPacket::onMessage)
+                .registerPacket(ResetFallDistancePacket.type(), ResetFallDistancePacket.class, ResetFallDistancePacket.STREAM_CODEC, ResetFallDistancePacket::onMessage)
+                .registerPacket(StartProjectPacket.type(), StartProjectPacket.class, StartProjectPacket.STREAM_CODEC, StartProjectPacket::onMessage)
+                .registerPacket(CompleteProjectPacket.type(), CompleteProjectPacket.class, CompleteProjectPacket.STREAM_CODEC, CompleteProjectPacket::onMessage)
                 ;
     }
 }
