@@ -92,12 +92,6 @@ public class PacketHandler {
             .serverAcceptedVersions(VersionTest.exact(PROTOCOL_VERSION))
             .networkProtocolVersion(PROTOCOL_VERSION)
             .simpleChannel()
-                .play()
-                    .serverbound()
-                        .addMain(ChangeScribeTableModePacket.class, ChangeScribeTableModePacket.STREAM_CODEC, ChangeScribeTableModePacket::onMessage)
-                        .addMain(TranscribeActionPacket.class, TranscribeActionPacket.STREAM_CODEC, TranscribeActionPacket::onMessage)
-                        .addMain(StudyVocabularyActionPacket.class, StudyVocabularyActionPacket.STREAM_CODEC, StudyVocabularyActionPacket::onMessage)
-                        .addMain(UnlockGridNodeActionPacket.class, UnlockGridNodeActionPacket.STREAM_CODEC, UnlockGridNodeActionPacket::onMessage)
             .build();
 
     public static void sendToServer(IMessageToServer message) {

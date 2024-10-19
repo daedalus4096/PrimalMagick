@@ -46,6 +46,10 @@ import com.verdantartifice.primalmagick.common.network.packets.recipe_book.Chang
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.SeenArcaneRecipePacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.ChangeScribeTableModePacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.TranscribeActionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.UnlockGridNodeActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellNamePacket;
@@ -113,6 +117,10 @@ public class PacketRegistration {
                 .registerPacket(SetResearchTopicHistoryPacket.type(), SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket.STREAM_CODEC, SetResearchTopicHistoryPacket::onMessage)
                 .registerPacket(SetActiveSpellPacket.type(), SetActiveSpellPacket.class, SetActiveSpellPacket.STREAM_CODEC, SetActiveSpellPacket::onMessage)
                 .registerPacket(WithdrawCaskEssencePacket.type(), WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket.STREAM_CODEC, WithdrawCaskEssencePacket::onMessage)
+                .registerPacket(ChangeScribeTableModePacket.type(), ChangeScribeTableModePacket.class, ChangeScribeTableModePacket.STREAM_CODEC, ChangeScribeTableModePacket::onMessage)
+                .registerPacket(TranscribeActionPacket.type(), TranscribeActionPacket.class, TranscribeActionPacket.STREAM_CODEC, TranscribeActionPacket::onMessage)
+                .registerPacket(StudyVocabularyActionPacket.type(), StudyVocabularyActionPacket.class, StudyVocabularyActionPacket.STREAM_CODEC, StudyVocabularyActionPacket::onMessage)
+                .registerPacket(UnlockGridNodeActionPacket.type(), UnlockGridNodeActionPacket.class, UnlockGridNodeActionPacket.STREAM_CODEC, UnlockGridNodeActionPacket::onMessage)
                 ;
     }
 }
