@@ -36,13 +36,17 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.OpenEnchante
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenGrimoireScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDistancePacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanPositionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
+import com.verdantartifice.primalmagick.common.network.packets.recipe_book.SeenArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellNamePacket;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.CompleteProjectPacket;
+import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.StartProjectPacket;
 import commonnetwork.api.Network;
 
@@ -97,6 +101,10 @@ public class PacketRegistration {
                 .registerPacket(ResetFallDistancePacket.type(), ResetFallDistancePacket.class, ResetFallDistancePacket.STREAM_CODEC, ResetFallDistancePacket::onMessage)
                 .registerPacket(StartProjectPacket.type(), StartProjectPacket.class, StartProjectPacket.STREAM_CODEC, StartProjectPacket::onMessage)
                 .registerPacket(CompleteProjectPacket.type(), CompleteProjectPacket.class, CompleteProjectPacket.STREAM_CODEC, CompleteProjectPacket::onMessage)
+                .registerPacket(SetProjectMaterialSelectionPacket.type(), SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket.STREAM_CODEC, SetProjectMaterialSelectionPacket::onMessage)
+                .registerPacket(ScanEntityPacket.type(), ScanEntityPacket.class, ScanEntityPacket.STREAM_CODEC, ScanEntityPacket::onMessage)
+                .registerPacket(PlaceArcaneRecipePacket.type(), PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket.STREAM_CODEC, PlaceArcaneRecipePacket::onMessage)
+                .registerPacket(SeenArcaneRecipePacket.type(), SeenArcaneRecipePacket.class, SeenArcaneRecipePacket.STREAM_CODEC, SeenArcaneRecipePacket::onMessage)
                 ;
     }
 }
