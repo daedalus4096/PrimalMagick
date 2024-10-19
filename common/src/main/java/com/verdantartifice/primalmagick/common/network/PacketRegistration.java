@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.network.packets.config.Acknowledg
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffinitiesConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsConfigPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.ContainerSetVarintDataPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
@@ -39,6 +40,9 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDis
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanPositionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
+import com.verdantartifice.primalmagick.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.SeenArcaneRecipePacket;
@@ -105,6 +109,10 @@ public class PacketRegistration {
                 .registerPacket(ScanEntityPacket.type(), ScanEntityPacket.class, ScanEntityPacket.STREAM_CODEC, ScanEntityPacket::onMessage)
                 .registerPacket(PlaceArcaneRecipePacket.type(), PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket.STREAM_CODEC, PlaceArcaneRecipePacket::onMessage)
                 .registerPacket(SeenArcaneRecipePacket.type(), SeenArcaneRecipePacket.class, SeenArcaneRecipePacket.STREAM_CODEC, SeenArcaneRecipePacket::onMessage)
+                .registerPacket(ChangeArcaneRecipeBookSettingsPacket.type(), ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket.STREAM_CODEC, ChangeArcaneRecipeBookSettingsPacket::onMessage)
+                .registerPacket(SetResearchTopicHistoryPacket.type(), SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket.STREAM_CODEC, SetResearchTopicHistoryPacket::onMessage)
+                .registerPacket(SetActiveSpellPacket.type(), SetActiveSpellPacket.class, SetActiveSpellPacket.STREAM_CODEC, SetActiveSpellPacket::onMessage)
+                .registerPacket(WithdrawCaskEssencePacket.type(), WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket.STREAM_CODEC, WithdrawCaskEssencePacket::onMessage)
                 ;
     }
 }

@@ -5,22 +5,25 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 
 /**
- * Packet sent to trigger a server-side withdrawl of essence from an essence cask.
+ * Packet sent to trigger a server-side withdrawal of essence from an essence cask.
  * 
  * @author Daedalus4096
  */
 public class WithdrawCaskEssencePacket implements IMessageToServer {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("withdraw_cask_essence");
     public static final StreamCodec<RegistryFriendlyByteBuf, WithdrawCaskEssencePacket> STREAM_CODEC = StreamCodec.ofMember(WithdrawCaskEssencePacket::encode, WithdrawCaskEssencePacket::decode);
 
     protected final EssenceType essenceType;
@@ -34,7 +37,11 @@ public class WithdrawCaskEssencePacket implements IMessageToServer {
         this.amount = amount;
         this.caskPos = pos;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(WithdrawCaskEssencePacket message, RegistryFriendlyByteBuf buf) {
         buf.writeEnum(message.essenceType);
         Source.STREAM_CODEC.encode(buf, message.essenceSource);
@@ -46,8 +53,9 @@ public class WithdrawCaskEssencePacket implements IMessageToServer {
         return new WithdrawCaskEssencePacket(buf.readEnum(EssenceType.class), Source.STREAM_CODEC.decode(buf), buf.readVarInt(), buf.readBlockPos());
     }
     
-    public static void onMessage(WithdrawCaskEssencePacket message, CustomPayloadEvent.Context ctx) {
-        ServerPlayer player = ctx.getSender();
+    public static void onMessage(PacketContext<WithdrawCaskEssencePacket> ctx) {
+        WithdrawCaskEssencePacket message = ctx.message();
+        ServerPlayer player = ctx.sender();
         Level level = player.getCommandSenderWorld();
 
         // Only process blocks that are currently loaded into the world.  Safety check to prevent

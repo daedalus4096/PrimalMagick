@@ -1,16 +1,18 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+
+import java.util.List;
 
 /**
  * Packet to sync the last active grimoire research topic from the client to the server.
@@ -18,6 +20,7 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
  * @author Daedalus4096
  */
 public class SetResearchTopicHistoryPacket implements IMessageToServer {
+    public static final ResourceLocation CHANNEL = ResourceUtils.loc("set_research_topic_history");
     public static final StreamCodec<RegistryFriendlyByteBuf, SetResearchTopicHistoryPacket> STREAM_CODEC = StreamCodec.ofMember(SetResearchTopicHistoryPacket::encode, SetResearchTopicHistoryPacket::decode);
 
     protected final AbstractResearchTopic<?> current;
@@ -27,7 +30,11 @@ public class SetResearchTopicHistoryPacket implements IMessageToServer {
         this.current = current;
         this.history = history;
     }
-    
+
+    public static CustomPacketPayload.Type<CustomPacketPayload> type() {
+        return new CustomPacketPayload.Type<>(CHANNEL);
+    }
+
     public static void encode(SetResearchTopicHistoryPacket message, RegistryFriendlyByteBuf buf) {
         AbstractResearchTopic.dispatchStreamCodec().encode(buf, message.current);
         AbstractResearchTopic.dispatchStreamCodec().apply(ByteBufCodecs.list()).encode(buf, message.history);
@@ -39,8 +46,9 @@ public class SetResearchTopicHistoryPacket implements IMessageToServer {
                 AbstractResearchTopic.dispatchStreamCodec().apply(ByteBufCodecs.list()).decode(buf));
     }
     
-    public static void onMessage(SetResearchTopicHistoryPacket message, CustomPayloadEvent.Context ctx) {
-        ServerPlayer player = ctx.getSender();
+    public static void onMessage(PacketContext<SetResearchTopicHistoryPacket> ctx) {
+        SetResearchTopicHistoryPacket message = ctx.message();
+        ServerPlayer player = ctx.sender();
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             knowledge.setLastResearchTopic(message.current);
             knowledge.setResearchTopicHistory(message.history);
