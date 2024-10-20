@@ -5,12 +5,8 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import commonnetwork.api.Dispatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.PacketDistributor;
 
 /**
  * Handler class for processing packets.  Responsible for all custom communication between the client and the server.
@@ -36,10 +32,5 @@ public class PacketHandler {
     public static void sendOverConnection(Object message, Connection conn) {
         // Send a message over the given connection
         CHANNEL.send(message, conn);
-    }
-    
-    public static void reply(Object replyMessage, CustomPayloadEvent.Context ctx) {
-        // Send a reply message in response to a previous message
-        CHANNEL.reply(replyMessage, ctx);
     }
 }

@@ -9,26 +9,29 @@ import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffi
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridsConfigPacket;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.server.network.ConfigurationTask;
-import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.network.config.ConfigurationTaskContext;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.configuration.ICustomConfigurationTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.function.Consumer;
 
 /**
- * Configuration task that syncs datapack contents from the server to the client.
+ * Neoforge configuration task that syncs datapack contents from the server to the client.
  * 
  * @author Daedalus4096
  */
-public class SyncDatapackDataTask implements ConfigurationTask {
+public class SyncDatapackDataTaskNeoforge implements ICustomConfigurationTask {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final Type TYPE = new Type(Constants.MOD_ID + ":sync_datapack_data");
 
     private ConfigurationTaskContext taskCtx;
     private int expectedToken;
+
+    @Override
+    public void run(Consumer<CustomPacketPayload> consumer) {
+
+    }
 
     @Override
     public void start(ConfigurationTaskContext ctx) {
@@ -62,11 +65,6 @@ public class SyncDatapackDataTask implements ConfigurationTask {
 
     private void finish(AcknowledgementPacket msg, CustomPayloadEvent.Context ctx) {
         this.taskCtx.finish(type());
-    }
-
-    @Override
-    public void start(Consumer<Packet<?>> pTask) {
-        throw new IllegalStateException("This should never be called");
     }
 
     @Override
