@@ -91,7 +91,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
                     entity.fluidAmount -= FLUID_DRAIN;
                     entity.souls -= core.getSoulsPerSpawn();
                     
-                    if (!level.isClientSide) {
+                    if (level instanceof ServerLevel serverLevel) {
                         ItemStack coreStack = entity.getItem(INPUT_INV_INDEX, 0);
                         if (coreStack.isDamageableItem()) {
                             int newDamage = coreStack.getDamageValue() + 1;
@@ -112,7 +112,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
                             success = entity.attemptSpawn(core.getEntityType());
                         }
                         
-                        PacketHandler.sendToAllAround(new WandPoofPacket(pos.above(), Color.WHITE.getRGB(), true, Direction.UP), level.dimension(), pos, 32.0D);
+                        PacketHandler.sendToAllAround(new WandPoofPacket(pos.above(), Color.WHITE.getRGB(), true, Direction.UP), serverLevel, pos, 32.0D);
                         
                         entity.setChanged();
                         entity.syncTile(true);
@@ -129,7 +129,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
     }
     
     protected boolean attemptSpawn(EntityType<?> entityType) {
-        if (this.level.isClientSide) {
+        if (!(this.level instanceof ServerLevel serverLevel)) {
             return false;
         }
         
@@ -150,7 +150,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
                 ForgeEventFactory.onFinalizeSpawn(mobEntity, serverWorld, this.level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null);
             }
             
-            PacketHandler.sendToAllAround(new WandPoofPacket(x, y, z, Color.WHITE.getRGB(), true, Direction.UP), this.level.dimension(), entity.blockPosition(), 32.0D);
+            PacketHandler.sendToAllAround(new WandPoofPacket(x, y, z, Color.WHITE.getRGB(), true, Direction.UP), serverLevel, entity.blockPosition(), 32.0D);
             return true;
         }
         

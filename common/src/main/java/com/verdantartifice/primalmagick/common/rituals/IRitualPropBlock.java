@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.RemovePropMark
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -38,7 +39,9 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IRitualPropTileEntity propTile) {
             propTile.setPropOpen(true);
-            PacketHandler.sendToAllAround(new PropMarkerPacket(pos), world.dimension(), pos, 32.0D);
+            if (world instanceof ServerLevel serverLevel) {
+                PacketHandler.sendToAllAround(new PropMarkerPacket(pos), serverLevel, pos, 32.0D);
+            }
             if (player != null) {
                 this.sendPropStatusMessage(player);
             }
@@ -49,7 +52,9 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IRitualPropTileEntity propTile) {
             propTile.setPropOpen(false);
-            PacketHandler.sendToAllAround(new RemovePropMarkerPacket(pos), world.dimension(), pos, 32.0D);
+            if (world instanceof ServerLevel serverLevel) {
+                PacketHandler.sendToAllAround(new RemovePropMarkerPacket(pos), serverLevel, pos, 32.0D);
+            }
         }
     }
     

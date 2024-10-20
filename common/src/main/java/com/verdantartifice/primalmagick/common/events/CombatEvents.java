@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
@@ -12,7 +11,6 @@ import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
@@ -22,6 +20,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.EntitySelectorsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -39,15 +38,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.Arrays;
 import java.util.List;
@@ -85,7 +75,7 @@ public class CombatEvents {
             Level attackerLevel = attacker.level();
             if (!damageSource.is(DamageTypesPM.HELLISH_CHAIN) &&
                     amount > 0.0F &&
-                    !attackerLevel.isClientSide && 
+                    attackerLevel instanceof ServerLevel serverLevel &&
                     AttunementManager.meetsThreshold(attacker, Sources.INFERNAL, AttunementThreshold.LESSER)) {
                 List<LivingEntity> targets = EntityUtils.getEntitiesInRangeSorted(attackerLevel, targetEntity.position(),
                         Arrays.asList(targetEntity, attacker), LivingEntity.class, 4.0D, EntitySelectorsPM.validHellishChainTarget(attacker));
@@ -93,7 +83,7 @@ public class CombatEvents {
                     LivingEntity target = targets.getFirst();
                     target.hurt(DamageSourcesPM.hellishChain(attackerLevel, attacker), amount / 2.0F);
                     PacketHandler.sendToAllAround(new SpellBoltPacket(targetEntity.getEyePosition(1.0F), target.getEyePosition(1.0F), Sources.INFERNAL.getColor()),
-                            attackerLevel.dimension(), targetEntity.blockPosition(), 64.0D);
+                            serverLevel, targetEntity.blockPosition(), 64.0D);
                     attackerLevel.playSound(null, targetEntity.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attackerLevel.random.nextGaussian() * 0.05D));
                 }
             }

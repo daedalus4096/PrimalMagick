@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -74,11 +75,11 @@ public class SpellProjectileEntity extends AbstractArrow {
     public void tick() {
         super.tick();
         Level level = this.level();
-        if (!level.isClientSide && this.isAlive() && this.tickCount % 2 == 0 && this.spell != null && this.spell.payload() != null) {
+        if (level instanceof ServerLevel serverLevel && this.isAlive() && this.tickCount % 2 == 0 && this.spell != null && this.spell.payload() != null) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
-                    new SpellTrailPacket(this.position(), this.spell.payload().getComponent().getSource().getColor()), 
-                    level.dimension(), 
+                    new SpellTrailPacket(this.position(), this.spell.payload().getComponent().getSource().getColor()),
+                    serverLevel,
                     this.blockPosition(), 
                     64.0D);
         }

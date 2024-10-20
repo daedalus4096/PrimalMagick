@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.TeleportArriva
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
@@ -236,8 +237,8 @@ public class EntityUtils {
         EntityTeleportEvent.EnderEntity event = new EntityTeleportEvent.EnderEntity(player, destination.x, destination.y, destination.z);
         if (!MinecraftForge.EVENT_BUS.post(event)) {
             // Show a teleport particle effect at the destination
-            if (!world.isClientSide) {
-                PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.dimension(), BlockPos.containing(event.getTarget()), 64.0D);
+            if (world instanceof ServerLevel serverLevel) {
+                PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), serverLevel, BlockPos.containing(event.getTarget()), 64.0D);
 
                 if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection.getConnection().isConnected() && player.level() == world && !player.isSleeping()) {
                     if (player.isPassenger()) {

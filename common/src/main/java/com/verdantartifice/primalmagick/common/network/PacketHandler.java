@@ -6,6 +6,7 @@ import commonnetwork.api.Dispatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.network.CustomPayloadEvent;
@@ -27,9 +28,9 @@ public class PacketHandler {
         Dispatcher.sendToClient(message, player);
     }
     
-    public static void sendToAllAround(IMessageToClient message, ResourceKey<Level> dimension, BlockPos center, double radius) {
+    public static void sendToAllAround(IMessageToClient message, ServerLevel level, BlockPos center, double radius) {
         // Send a message to the clients of all players within a given distance of the given world position
-        CHANNEL.send(message, PacketDistributor.NEAR.with(new PacketDistributor.TargetPoint(center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, radius, dimension)));
+        Dispatcher.sendToClientsInRange(message, level, center, radius);
     }
     
     public static void sendOverConnection(Object message, Connection conn) {

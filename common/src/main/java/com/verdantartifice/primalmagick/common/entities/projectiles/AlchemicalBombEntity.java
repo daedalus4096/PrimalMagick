@@ -1,23 +1,17 @@
 package com.verdantartifice.primalmagick.common.entities.projectiles;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
-
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PotionExplosionPacket;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
@@ -38,6 +32,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Definition for a thrown alchemcial bomb entity.  Detonates after a short time and applies a loaded
@@ -107,14 +106,14 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
     private void detonate(@Nullable Entity struckEntity) {
         Level level = this.level();
         ItemStack itemStack = this.getItem();
-        if (!level.isClientSide && itemStack.has(DataComponents.POTION_CONTENTS)) {
+        if (level instanceof ServerLevel serverLevel && itemStack.has(DataComponents.POTION_CONTENTS)) {
             PotionContents contents = itemStack.get(DataComponents.POTION_CONTENTS);
             Optional<Holder<Potion>> potionHolderOpt = contents.potion();
             potionHolderOpt.ifPresent(potionHolder -> {
                 List<MobEffectInstance> effects = potionHolder.value().getEffects();
 
                 // Do explosion audio visual effects
-                PacketHandler.sendToAllAround(new PotionExplosionPacket(this.position(), PotionContents.getColor(potionHolder), potionHolder.value().hasInstantEffects()), level.dimension(), this.blockPosition(), 32.0D);
+                PacketHandler.sendToAllAround(new PotionExplosionPacket(this.position(), PotionContents.getColor(potionHolder), potionHolder.value().hasInstantEffects()), serverLevel, this.blockPosition(), 32.0D);
 
                 // Apply potion effects
                 if (contents.is(Potions.WATER) && effects.isEmpty()) {

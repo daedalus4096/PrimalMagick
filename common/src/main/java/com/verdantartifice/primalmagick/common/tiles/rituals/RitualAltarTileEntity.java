@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.FakeMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
@@ -390,8 +391,8 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     protected void doEffects() {
-        if (!this.level.isClientSide && this.activeCount % RITUAL_SOUND_LENGTH == 0) {
-            PacketHandler.sendToAllAround(new PlayClientSoundPacket(SoundsPM.RITUAL.get(), 1.0F, 1.0F), this.level.dimension(), this.getBlockPos(), 16.0D);
+        if (this.level instanceof ServerLevel serverLevel && this.activeCount % RITUAL_SOUND_LENGTH == 0) {
+            PacketHandler.sendToAllAround(new PlayClientSoundPacket(SoundsPM.RITUAL.get(), 1.0F, 1.0F), serverLevel, this.getBlockPos(), 16.0D);
         }
     }
     
@@ -891,17 +892,17 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     protected void spawnOfferingParticles(BlockPos startPos, ItemStack stack) {
-        if (!this.level.isClientSide) {
+        if (this.level instanceof ServerLevel serverLevel) {
             double sx = startPos.getX() + 0.4D + (this.level.random.nextDouble() * 0.2D);
             double sy = startPos.getY() + 1.4D + (this.level.random.nextDouble() * 0.2D);
             double sz = startPos.getZ() + 0.4D + (this.level.random.nextDouble() * 0.2D);
-            PacketHandler.sendToAllAround(new OfferingChannelPacket(sx, sy, sz, this.worldPosition.above(2), stack), this.level.dimension(), startPos, 32.0D);
+            PacketHandler.sendToAllAround(new OfferingChannelPacket(sx, sy, sz, this.worldPosition.above(2), stack), serverLevel, startPos, 32.0D);
         }
     }
     
     protected void spawnSuccessParticles() {
-        if (this.level instanceof ServerLevel) {
-            ((ServerLevel)this.level).sendParticles(
+        if (this.level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
                     ParticleTypes.HAPPY_VILLAGER, 
                     this.worldPosition.getX() + 0.5D, 
                     this.worldPosition.getY() + 1.2D, 
@@ -927,9 +928,9 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     protected void doMishapEffects(BlockPos target, boolean playSound) {
-        if (!this.level.isClientSide) {
+        if (this.level instanceof ServerLevel serverLevel) {
             BlockPos source = this.worldPosition.above(2);
-            PacketHandler.sendToAllAround(new SpellBoltPacket(source, target, this.getOrbColor().getRGB()), this.level.dimension(), source, 32.0D);
+            PacketHandler.sendToAllAround(new SpellBoltPacket(source, target, this.getOrbColor().getRGB()), serverLevel, source, 32.0D);
             if (playSound) {
                 this.level.playSound(null, source, SoundsPM.ELECTRIC.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(level.random.nextGaussian() * 0.05D));
             }

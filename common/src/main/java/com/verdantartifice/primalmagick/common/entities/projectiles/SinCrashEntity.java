@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,11 +35,11 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
     public void tick() {
         super.tick();
         Level level = this.level();
-        if (!level.isClientSide && this.isAlive() && this.tickCount % 2 == 0) {
+        if (level instanceof ServerLevel serverLevel && this.isAlive() && this.tickCount % 2 == 0) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
-                    new SpellTrailPacket(this.position(), Sources.VOID.getColor()), 
-                    level.dimension(), 
+                    new SpellTrailPacket(this.position(), Sources.VOID.getColor()),
+                    serverLevel,
                     this.blockPosition(), 
                     64.0D);
         }

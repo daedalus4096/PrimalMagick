@@ -13,6 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -150,12 +151,14 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         Vec3 movement = facingNormal.scale(0.05D);
         long time = this.getLevel().getLevelData().getGameTime();
         double bobDelta = 0.125D * Math.sin(time * (2D * Math.PI / (double)BOB_CYCLE_TIME_TICKS));
-        
-        PacketHandler.sendToAllAround(
-                new SpellcraftingRunePacket(this.nextSegment, center.x + centerOffset.x, center.y + bobDelta, center.z + centerOffset.z, movement.x, 0D, movement.z, this.nextSource.getColor()), 
-                this.level.dimension(), 
-                this.worldPosition, 
-                64.0D);
+
+        if (this.level instanceof ServerLevel serverLevel) {
+            PacketHandler.sendToAllAround(
+                    new SpellcraftingRunePacket(this.nextSegment, center.x + centerOffset.x, center.y + bobDelta, center.z + centerOffset.z, movement.x, 0D, movement.z, this.nextSource.getColor()),
+                    serverLevel,
+                    this.worldPosition,
+                    64.0D);
+        }
     }
     
     public static enum Segment {

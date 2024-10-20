@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -64,9 +65,9 @@ public abstract class AbstractTilePM extends BlockEntity {
      * @param player the player whose client is to receive the given data
      */
     public void sendMessageToClient(CompoundTag nbt, @Nullable ServerPlayer player) {
-        if (this.hasLevel() && !this.getLevel().isClientSide) {
+        if (this.hasLevel() && this.getLevel() instanceof ServerLevel serverLevel) {
             if (player == null) {
-                PacketHandler.sendToAllAround(new TileToClientPacket(this.worldPosition, nbt), this.level.dimension(), this.worldPosition, 128.0D);
+                PacketHandler.sendToAllAround(new TileToClientPacket(this.worldPosition, nbt), serverLevel, this.worldPosition, 128.0D);
             } else {
                 PacketHandler.sendToPlayer(new TileToClientPacket(this.worldPosition, nbt), player);
             }

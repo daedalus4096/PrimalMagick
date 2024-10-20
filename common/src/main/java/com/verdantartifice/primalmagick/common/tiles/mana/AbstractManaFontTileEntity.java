@@ -14,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -94,10 +95,10 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
                         this.syncTile(true);
                         
                         // Show fancy sparkles
-                        if (!level.isClientSide) {
+                        if (level instanceof ServerLevel serverLevel) {
                             PacketHandler.sendToAllAround(
-                                    new ManaSparklePacket(this.worldPosition, targetPos.x, targetPos.y, targetPos.z, 20, source.getColor()), 
-                                    this.level.dimension(), 
+                                    new ManaSparklePacket(this.worldPosition, targetPos.x, targetPos.y, targetPos.z, 20, source.getColor()),
+                                    serverLevel,
                                     this.worldPosition, 
                                     32.0D);
                         }
@@ -121,10 +122,10 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
                     this.syncTile(true);
                     
                     // Show fancy sparkles
-                    if (!level.isClientSide) {
+                    if (level instanceof ServerLevel serverLevel) {
                         PacketHandler.sendToAllAround(
-                                new ManaSparklePacket(this.worldPosition, targetPos.x, targetPos.y, targetPos.z, 20, source.getColor()), 
-                                this.level.dimension(), 
+                                new ManaSparklePacket(this.worldPosition, targetPos.x, targetPos.y, targetPos.z, 20, source.getColor()),
+                                serverLevel,
                                 this.worldPosition, 
                                 32.0D);
                     }

@@ -16,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -76,11 +77,11 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle<BoltSpellVehic
     
     @Override
     protected void drawFx(Level world, SpellPackage spell, Vec3 source, Vec3 target) {
-        if (spell.payload() != null) {
+        if (spell.payload() != null && world instanceof ServerLevel serverLevel) {
             // Show a bolt particle effect to every player in range
             PacketHandler.sendToAllAround(
-                    new SpellBoltPacket(source, target, spell.payload().getComponent().getSource().getColor()), 
-                    world.dimension(), 
+                    new SpellBoltPacket(source, target, spell.payload().getComponent().getSource().getColor()),
+                    serverLevel,
                     BlockPos.containing(source), 
                     64.0D);
         }

@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -228,7 +229,7 @@ public class SpellManager {
     public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull HitResult result, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, 
             boolean allowMine, @Nullable Entity projectileEntity) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
-        if (!world.isClientSide && spell.payload() != null) {
+        if (world instanceof ServerLevel serverLevel && spell.payload() != null) {
             Vec3 hitVec = result.getLocation();
             ConfiguredSpellMod<BurstSpellMod> burstMod = spell.getMod(SpellModsPM.BURST.get()).orElse(null);
             ConfiguredSpellMod<MineSpellMod> mineMod = spell.getMod(SpellModsPM.MINE.get()).orElse(null);
@@ -236,8 +237,8 @@ public class SpellManager {
             // Trigger spell impact FX on the clients of every player in range
             int radius = (burstMod == null || (allowMine && mineMod != null)) ? 1 : burstMod.getPropertyValue(SpellPropertiesPM.RADIUS.get());
             PacketHandler.sendToAllAround(
-                    new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.payload().getComponent().getSource().getColor()), 
-                    world.dimension(), 
+                    new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.payload().getComponent().getSource().getColor()),
+                    serverLevel,
                     BlockPos.containing(hitVec), 
                     64.0D);
             
