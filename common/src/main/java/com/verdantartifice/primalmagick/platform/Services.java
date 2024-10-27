@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.platform;
 
+import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
 import com.verdantartifice.primalmagick.platform.services.IConfigService;
 import com.verdantartifice.primalmagick.platform.services.IInputService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeService;
@@ -50,6 +51,7 @@ public class Services {
     public static final IPlatformService PLATFORM = load(IPlatformService.class);
     public static final IInputService INPUT = load(IInputService.class);
     public static final IConfigService CONFIG = load(IConfigService.class);
+    public static final ICapabilityService CAPABILITIES = load(ICapabilityService.class);
 
     // Registry services
     public static final IBlockService BLOCKS = load(IBlockService.class);

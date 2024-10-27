@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PlayerArcaneRecipeBo
 import com.verdantartifice.primalmagick.common.capabilities.PlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldowns;
+import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldownsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerStats;
@@ -29,7 +30,7 @@ public class CapabilityEvents {
         if (event.getObject() instanceof Player player) {
             // Only attach these capabilities to players, not other types of entities
             event.addCapability(PlayerKnowledge.Provider.NAME, new PlayerKnowledge.Provider());
-            event.addCapability(PlayerCooldowns.Provider.NAME, new PlayerCooldowns.Provider());
+            event.addCapability(PlayerCooldownsForge.Provider.NAME, new PlayerCooldownsForge.Provider());
             event.addCapability(PlayerStats.Provider.NAME, new PlayerStats.Provider());
             event.addCapability(PlayerAttunements.Provider.NAME, new PlayerAttunements.Provider());
             event.addCapability(PlayerCompanions.Provider.NAME, new PlayerCompanions.Provider());

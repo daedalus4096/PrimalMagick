@@ -1,20 +1,15 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.common.capabilities.AutoRegisterCapability;
-import net.minecraftforge.common.util.INBTSerializable;
+
+import javax.annotation.Nullable;
 
 /**
  * Capability interface for storing custom cooldowns.  Attached to player entities.
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
-@AutoRegisterCapability
-public interface IPlayerCooldowns extends INBTSerializable<CompoundTag> {
+public interface IPlayerCooldowns {
     /**
      * Determine if the given cooldown type is active, rendering that ability unusable.
      * 

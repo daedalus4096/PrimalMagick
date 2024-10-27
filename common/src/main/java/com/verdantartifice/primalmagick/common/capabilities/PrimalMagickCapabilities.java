@@ -19,7 +19,6 @@ import net.minecraftforge.common.util.LazyOptional;
  */
 public class PrimalMagickCapabilities {
     public static final Capability<IPlayerKnowledge> KNOWLEDGE = CapabilityManager.get(new CapabilityToken<>(){});
-    public static final Capability<IPlayerCooldowns> COOLDOWNS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerStats> STATS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerAttunements> ATTUNEMENTS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerCompanions> COMPANIONS = CapabilityManager.get(new CapabilityToken<>(){});

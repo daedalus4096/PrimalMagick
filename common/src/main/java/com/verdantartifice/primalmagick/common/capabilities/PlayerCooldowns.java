@@ -28,7 +28,6 @@ public class PlayerCooldowns implements IPlayerCooldowns {
     private final Map<CooldownType, Long> cooldowns = new ConcurrentHashMap<>();    // Map of cooldown types to recovery times, in system milliseconds
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
-    @Override
     public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         ListTag cooldownList = new ListTag();
@@ -48,12 +47,12 @@ public class PlayerCooldowns implements IPlayerCooldowns {
         return rootTag;
     }
 
-    @Override
     public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
-        
+
+        this.syncTimestamp = nbt.getLong("syncTimestamp");
         this.clearCooldowns();
         
         ListTag cooldownList = nbt.getList("Cooldowns", Tag.TAG_COMPOUND);
@@ -100,40 +99,6 @@ public class PlayerCooldowns implements IPlayerCooldowns {
     public void sync(ServerPlayer player) {
         if (player != null) {
             PacketHandler.sendToPlayer(new SyncCooldownsPacket(player), player);
-        }
-    }
-    
-    /**
-     * Capability provider for the player cooldowns capability.  Used to attach capability data to the owner.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
-     */
-    public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = ResourceUtils.loc("capability_cooldowns");
-        
-        private final IPlayerCooldowns instance = new PlayerCooldowns();
-        private final LazyOptional<IPlayerCooldowns> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
-
-        @Override
-        public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagickCapabilities.COOLDOWNS) {
-                return holder.cast();
-            } else {
-                return LazyOptional.empty();
-            }
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
-            return instance.serializeNBT(registries);
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-            instance.deserializeNBT(registries, nbt);
         }
     }
 }

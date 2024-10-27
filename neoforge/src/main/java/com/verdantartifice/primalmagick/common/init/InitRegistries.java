@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.init;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypeRegistration;
 import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypeRegistration;
+import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRegistration;
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
@@ -73,5 +74,6 @@ public class InitRegistries {
 
         // Platform specific registries
         LootModifierSerializersPM.init();
+        CapabilitiesNeoforge.init();
     }
 }
