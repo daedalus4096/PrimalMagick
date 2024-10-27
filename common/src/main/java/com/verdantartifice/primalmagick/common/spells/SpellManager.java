@@ -156,30 +156,20 @@ public class SpellManager {
     }
     
     public static boolean isOnCooldown(@Nullable Player player) {
-        if (player == null) {
-            return false;
-        }
-        
         // Determine whether the given player's spell cooldown is currently active, thus making spells unavailable
-        IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
-        if (cooldowns != null) {
-            return cooldowns.isOnCooldown(IPlayerCooldowns.CooldownType.SPELL);
-        } else {
-            return false;
-        }
+        return Services.CAPABILITIES.cooldowns(player).map(c -> c.isOnCooldown(IPlayerCooldowns.CooldownType.SPELL)).orElse(false);
     }
     
     public static void setCooldown(@Nullable Player player, int durationTicks) {
         if (player != null) {
             // Trigger a spell cooldown of the given duration for the given player and sync the data to their client
-            IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
-            if (cooldowns != null) {
-                cooldowns.setCooldown(IPlayerCooldowns.CooldownType.SPELL, durationTicks);
-                if (player instanceof ServerPlayer) {
-                    cooldowns.sync((ServerPlayer)player); // Sync immediately, since cooldowns are time-sensitive
+            Services.CAPABILITIES.cooldowns(player).ifPresent(c -> {
+                c.setCooldown(IPlayerCooldowns.CooldownType.SPELL, durationTicks);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    c.sync(serverPlayer); // Sync immediately, since cooldowns are time-sensitive
                 }
-            }
-            
+            });
+
             // Show the shared cooldown visually
             player.getCooldowns().addCooldown(ItemsPM.SPELL_SCROLL_FILLED.get(), durationTicks);
             player.getCooldowns().addCooldown(ItemsPM.MUNDANE_WAND.get(), durationTicks);

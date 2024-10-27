@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.EntitySelectorsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -182,17 +183,15 @@ public class CombatEvents {
         // If the player has greater hallowed attunement and it's not on cooldown, cancel death as if using a totem of undying
         if (entity instanceof Player player) {
             Level level = player.level();
-            IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
             if (AttunementManager.meetsThreshold(player, Sources.HALLOWED, AttunementThreshold.GREATER) &&
-                    cooldowns != null &&
-                    !cooldowns.isOnCooldown(CooldownType.DEATH_SAVE)) {
+                    Services.CAPABILITIES.cooldowns(player).map(c -> !c.isOnCooldown(CooldownType.DEATH_SAVE)).orElse(false)) {
                 player.setHealth(1.0F);
                 player.removeAllEffects();
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
                 player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
                 player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder(), 6000, 0, true, false, true));
-                cooldowns.setCooldown(CooldownType.DEATH_SAVE, 6000);
-                level.playSound(null, player.blockPosition(), SoundsPM.ANGELS.get(), 
+                Services.CAPABILITIES.cooldowns(player).ifPresent(c -> c.setCooldown(CooldownType.DEATH_SAVE, 6000));
+                level.playSound(null, player.blockPosition(), SoundsPM.ANGELS.get(),
                         SoundSource.PLAYERS, 1.0F, 1.0F + (0.05F * (float)level.random.nextGaussian()));
 
                 // Cancel the event

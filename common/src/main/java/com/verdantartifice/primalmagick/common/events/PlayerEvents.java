@@ -45,6 +45,7 @@ import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -196,14 +197,13 @@ public class PlayerEvents {
     }
 
     protected static void refreshWeakenedSoul(ServerPlayer player) {
-        IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
-        if (cooldowns != null) {
+        Services.CAPABILITIES.cooldowns(player).ifPresent(cooldowns -> {
             long remaining = cooldowns.getRemainingCooldown(CooldownType.DEATH_SAVE);
             if (remaining > 0 && !player.hasEffect(EffectsPM.WEAKENED_SOUL.getHolder())) {
                 // If the player's death save is on cooldown but they've cleared their marker debuff, reapply it
                 player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder(), Mth.ceil(remaining / 50.0F), 0, true, false, true));
             }
-        }
+        });
     }
 
     protected static void checkEnvironmentalResearch(ServerPlayer player) {
@@ -416,10 +416,7 @@ public class PlayerEvents {
         }
         if (immediate) {
             // Cooldowns and wards don't do scheduled syncs, so only sync if it needs to be done immediately
-            IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
-            if (cooldowns != null) {
-                cooldowns.sync(player);
-            }
+            Services.CAPABILITIES.cooldowns(player).ifPresent(cooldowns -> cooldowns.sync(player));
             PrimalMagickCapabilities.getWard(player).ifPresent(wardCap -> {
                 wardCap.sync(player);
             });
