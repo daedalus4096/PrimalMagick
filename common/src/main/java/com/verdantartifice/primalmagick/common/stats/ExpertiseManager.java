@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -177,21 +178,20 @@ public class ExpertiseManager {
     
     public static boolean isBonusEligible(Player player, RecipeHolder<?> recipeHolder) {
         if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
-            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-            if (stats != null) {
-                return !stats.isRecipeCrafted(recipeHolder.id()) && (expRecipe.getExpertiseGroup().isEmpty() || !stats.isRecipeGroupCrafted(expRecipe.getExpertiseGroup().get()));
-            }
+            return Services.CAPABILITIES.stats(player).map(stats ->
+                    !stats.isRecipeCrafted(recipeHolder.id()) &&
+                    (expRecipe.getExpertiseGroup().isEmpty() || !stats.isRecipeGroupCrafted(expRecipe.getExpertiseGroup().get()))
+            ).orElse(false);
         }
         return false;
     }
     
     protected static void markCrafted(Player player, RecipeHolder<?> recipeHolder) {
         if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
-            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-            if (stats != null) {
+            Services.CAPABILITIES.stats(player).ifPresent(stats -> {
                 stats.setRecipeCrafted(recipeHolder.id());
-                expRecipe.getExpertiseGroup().ifPresent(groupId -> stats.setRecipeGroupCrafted(groupId));
-            }
+                expRecipe.getExpertiseGroup().ifPresent(stats::setRecipeGroupCrafted);
+            });
         }
     }
     
@@ -231,22 +231,13 @@ public class ExpertiseManager {
     
     public static boolean isBonusEligible(Player player, Holder<Enchantment> enchantment) {
         ResourceLocation enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
-        if (player != null && enchKey != null) {
-            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-            if (stats != null) {
-                return !stats.isRuneEnchantmentCrafted(enchKey);
-            }
-        }
-        return false;
+        return player != null && enchKey != null && Services.CAPABILITIES.stats(player).map(stats -> !stats.isRuneEnchantmentCrafted(enchKey)).orElse(false);
     }
     
     protected static void markCrafted(Player player, Holder<Enchantment> enchantment) {
         ResourceLocation enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
         if (player != null && enchKey != null) {
-            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-            if (stats != null) {
-                stats.setRuneEnchantmentCrafted(enchKey);
-            }
+            Services.CAPABILITIES.stats(player).ifPresent(stats -> stats.setRuneEnchantmentCrafted(enchKey));
         }
     }
     

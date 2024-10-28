@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -79,14 +80,8 @@ public class StatsManager {
     }
     
     public static int getValue(@Nullable Player player, @Nullable Stat stat) {
-        if (player != null) {
-            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-            if (stats != null) {
-                // Get the value from the player capability
-                return stats.getValue(stat);
-            }
-        }
-        return 0;
+        // Get the value from the player capability
+        return Services.CAPABILITIES.stats(player).map(stats -> stats.getValue(stat)).orElse(0);
     }
     
     @Nonnull
@@ -106,13 +101,12 @@ public class StatsManager {
     
     public static void setValue(@Nullable Player player, @Nullable Stat stat, int value) {
         if (player instanceof ServerPlayer spe) {
-            IPlayerStats stats = PrimalMagickCapabilities.getStats(spe);
-            if (stats != null) {
+            Services.CAPABILITIES.stats(spe).ifPresent(stats -> {
                 // Set the new value into the player capability
                 stats.setValue(stat, value);
                 scheduleSync(spe);
                 CriteriaTriggersPM.STAT_VALUE.trigger(spe, stat, value);
-            }
+            });
         }
     }
     
@@ -134,18 +128,18 @@ public class StatsManager {
     }
     
     public static void discoverShrine(@Nullable Player player, @Nullable Source shrineSource, @Nullable BlockPos shrinePos) {
-        if (player instanceof ServerPlayer && shrineSource != null && shrinePos != null) {
+        if (player instanceof ServerPlayer spe && shrineSource != null && shrinePos != null) {
             Stat stat = getShrineStatForSource(shrineSource);
-            ServerPlayer spe = (ServerPlayer)player;
-            IPlayerStats stats = PrimalMagickCapabilities.getStats(spe);
-            if (stat != null && stats != null && !stats.isLocationDiscovered(shrinePos)) {
-                // If the location has not yet been discovered, mark it as such and increment the appropriate stat
-                int value = 1 + stats.getValue(stat);
-                stats.setLocationDiscovered(shrinePos);
-                stats.setValue(stat, value);
-                scheduleSync(spe);
-                CriteriaTriggersPM.STAT_VALUE.trigger(spe, stat, value);
-            }
+            Services.CAPABILITIES.stats(spe).ifPresent(stats -> {
+                if (stat != null && !stats.isLocationDiscovered(shrinePos)) {
+                    // If the location has not yet been discovered, mark it as such and increment the appropriate stat
+                    int value = 1 + stats.getValue(stat);
+                    stats.setLocationDiscovered(shrinePos);
+                    stats.setValue(stat, value);
+                    scheduleSync(spe);
+                    CriteriaTriggersPM.STAT_VALUE.trigger(spe, stat, value);
+                }
+            });
         }
     }
     

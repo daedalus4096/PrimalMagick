@@ -387,10 +387,7 @@ public class PlayerEvents {
             });
         }
         if (immediate || StatsManager.isSyncScheduled(player)) {
-            IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-            if (stats != null) {
-                stats.sync(player);
-            }
+            Services.CAPABILITIES.stats(player).ifPresent(stats -> stats.sync(player));
         }
         if (immediate || AttunementManager.isSyncScheduled(player)) {
             IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
@@ -424,6 +421,7 @@ public class PlayerEvents {
     }
 
     public static void playerCloneEvent(Player oldPlayer, Player newPlayer, boolean wasFromDeath) {
+        // TODO Move capability cloning to Forge specific listeners; Neoforge handles this automatically
         RegistryAccess registryAccess = newPlayer.registryAccess();
         
         try {
@@ -441,8 +439,8 @@ public class PlayerEvents {
         }
         
         try {
-            CompoundTag nbtStats = PrimalMagickCapabilities.getStats(oldPlayer).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getStats(newPlayer).deserializeNBT(registryAccess, nbtStats);
+            CompoundTag nbtStats = Services.CAPABILITIES.stats(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Services.CAPABILITIES.stats(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtStats);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} stats", oldPlayer.getName().getString());
         }

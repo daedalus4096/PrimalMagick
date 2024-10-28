@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.nbt.CompoundTag;
@@ -25,10 +24,8 @@ public class SyncStatsPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
-    @SuppressWarnings("deprecation")
     public SyncStatsPacket(Player player) {
-        IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-        this.data = (stats != null) ? stats.serializeNBT(player.registryAccess()) : null;
+        this.data = Services.CAPABILITIES.stats(player).map(s -> s.serializeNBT(player.registryAccess())).orElse(null);
     }
     
     protected SyncStatsPacket(CompoundTag data) {
@@ -47,13 +44,10 @@ public class SyncStatsPacket implements IMessageToClient {
         return new SyncStatsPacket(buf.readNbt());
     }
     
-    @SuppressWarnings("deprecation")
     public static void onMessage(PacketContext<SyncStatsPacket> ctx) {
-        SyncStatsPacket message = ctx.message();
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
-        IPlayerStats stats = PrimalMagickCapabilities.getStats(player);
-        if (stats != null) {
-            stats.deserializeNBT(player.registryAccess(), message.data);
+        if (player != null) {
+            Services.CAPABILITIES.stats(player).ifPresent(stats -> stats.deserializeNBT(player.registryAccess(), ctx.message().data));
         }
     }
 }

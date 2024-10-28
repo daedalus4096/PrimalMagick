@@ -15,6 +15,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -603,17 +605,16 @@ public class PrimalMagickCommand {
 
     private static int resetStats(CommandSourceStack source, ServerPlayer target) {
         // Remove all accrued stats from the player
-        IPlayerStats stats = PrimalMagickCapabilities.getStats(target);
-        if (stats == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else {
+        Services.CAPABILITIES.stats(target).ifPresentOrElse(stats -> {
             stats.clear();
             StatsManager.scheduleSync(target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.stats.reset", target.getName()), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.stats.reset.target", source.getTextName()));
             }
-        }
+        }, () -> {
+            source.sendFailure(Component.translatable("commands.primalmagick.error"));
+        });
         return 0;
     }
 
