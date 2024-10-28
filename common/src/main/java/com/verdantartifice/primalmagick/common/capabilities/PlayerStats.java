@@ -92,7 +92,8 @@ public class PlayerStats implements IPlayerStats {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
-        
+
+        this.syncTimestamp = nbt.getLong("syncTimestamp");
         this.clear();
         
         // Deserialize recorded stat values
@@ -207,40 +208,6 @@ public class PlayerStats implements IPlayerStats {
     public void sync(ServerPlayer player) {
         if (player != null) {
             PacketHandler.sendToPlayer(new SyncStatsPacket(player), player);
-        }
-    }
-
-    /**
-     * Capability provider for the player statistics capability.  Used to attach capability data to the owner.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
-     */
-    public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = ResourceUtils.loc("capability_stats");
-        
-        private final IPlayerStats instance = new PlayerStats();
-        private final LazyOptional<IPlayerStats> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
-        
-        @Override
-        public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagickCapabilities.STATS) {
-                return holder.cast();
-            } else {
-                return LazyOptional.empty();
-            }
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
-            return instance.serializeNBT(registries);
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-            instance.deserializeNBT(registries, nbt);
         }
     }
 }

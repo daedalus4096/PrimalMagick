@@ -17,4 +17,6 @@ public class CapabilitiesNeoforge {
 
     public static final Supplier<AttachmentType<PlayerCooldownsNeoforge>> COOLDOWNS = CAPABILITIES.register("cooldowns",
             () -> AttachmentType.serializable(PlayerCooldownsNeoforge::new).copyOnDeath().build());
+    public static final Supplier<AttachmentType<PlayerStatsNeoforge>> STATS = CAPABILITIES.register("stats",
+            () -> AttachmentType.serializable(PlayerStatsNeoforge::new).copyOnDeath().build());
 }

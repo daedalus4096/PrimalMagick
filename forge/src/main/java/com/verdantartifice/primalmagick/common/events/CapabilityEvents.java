@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldownsForge
 import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerStats;
+import com.verdantartifice.primalmagick.common.capabilities.PlayerStatsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerWard;
 import com.verdantartifice.primalmagick.common.capabilities.WorldEntitySwappers;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +32,7 @@ public class CapabilityEvents {
             // Only attach these capabilities to players, not other types of entities
             event.addCapability(PlayerKnowledge.Provider.NAME, new PlayerKnowledge.Provider());
             event.addCapability(PlayerCooldownsForge.Provider.NAME, new PlayerCooldownsForge.Provider());
-            event.addCapability(PlayerStats.Provider.NAME, new PlayerStats.Provider());
+            event.addCapability(PlayerStatsForge.Provider.NAME, new PlayerStatsForge.Provider());
             event.addCapability(PlayerAttunements.Provider.NAME, new PlayerAttunements.Provider());
             event.addCapability(PlayerCompanions.Provider.NAME, new PlayerCompanions.Provider());
             event.addCapability(PlayerArcaneRecipeBook.Provider.NAME, new PlayerArcaneRecipeBook.Provider(player.level().getRecipeManager()));

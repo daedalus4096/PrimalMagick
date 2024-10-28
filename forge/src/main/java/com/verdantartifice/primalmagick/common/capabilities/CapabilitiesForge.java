@@ -6,4 +6,5 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 
 public class CapabilitiesForge {
     public static final Capability<IPlayerCooldowns> COOLDOWNS = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IPlayerStats> STATS = CapabilityManager.get(new CapabilityToken<>(){});
 }
