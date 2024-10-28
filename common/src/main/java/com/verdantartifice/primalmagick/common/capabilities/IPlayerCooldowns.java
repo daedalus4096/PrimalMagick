@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 
 import javax.annotation.Nullable;
@@ -9,14 +11,14 @@ import javax.annotation.Nullable;
  * 
  * @author Daedalus4096
  */
-public interface IPlayerCooldowns {
+public interface IPlayerCooldowns extends INBTSerializablePM<CompoundTag> {
     /**
      * Determine if the given cooldown type is active, rendering that ability unusable.
      * 
      * @param type the type of cooldown
      * @return true if the ability is on cooldown and unusable, false otherwise
      */
-    public boolean isOnCooldown(@Nullable CooldownType type);
+    boolean isOnCooldown(@Nullable CooldownType type);
     
     /**
      * Determine how much time remains for the given cooldown type.
@@ -24,7 +26,7 @@ public interface IPlayerCooldowns {
      * @param type the type of cooldown
      * @return the remaining cooldown time in milliseconds, or zero if not on cooldown
      */
-    public long getRemainingCooldown(@Nullable CooldownType type);
+    long getRemainingCooldown(@Nullable CooldownType type);
     
     /**
      * Set a cooldown of the given type, rendering an ability temporarily unusable.
@@ -32,21 +34,21 @@ public interface IPlayerCooldowns {
      * @param type the type of cooldown
      * @param durationTicks the length of the cooldown to set, in ticks
      */
-    public void setCooldown(@Nullable CooldownType type, int durationTicks);
+    void setCooldown(@Nullable CooldownType type, int durationTicks);
     
     /**
      * Reset all active cooldowns.
      */
-    public void clearCooldowns();
+    void clearCooldowns();
     
     /**
-     * Sync the given player's cooldown data to the their client.
+     * Sync the given player's cooldown data to their client.
      * 
      * @param player the player whose client should receive the data
      */
-    public void sync(@Nullable ServerPlayer player);
+    void sync(@Nullable ServerPlayer player);
     
-    public enum CooldownType {
+    enum CooldownType {
         SPELL,
         DEATH_SAVE
     }

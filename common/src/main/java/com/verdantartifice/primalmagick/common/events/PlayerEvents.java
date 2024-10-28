@@ -434,8 +434,8 @@ public class PlayerEvents {
         }
         
         try {
-            CompoundTag nbtCooldowns = PrimalMagickCapabilities.getCooldowns(oldPlayer).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getCooldowns(newPlayer).deserializeNBT(registryAccess, nbtCooldowns);
+            CompoundTag nbtCooldowns = Services.CAPABILITIES.cooldowns(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Services.CAPABILITIES.cooldowns(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtCooldowns);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} cooldowns", oldPlayer.getName().getString());
         }

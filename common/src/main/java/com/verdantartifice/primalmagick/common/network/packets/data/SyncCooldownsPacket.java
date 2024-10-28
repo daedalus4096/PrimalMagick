@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.nbt.CompoundTag;
@@ -25,10 +24,8 @@ public class SyncCooldownsPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
-    @SuppressWarnings("deprecation")
     public SyncCooldownsPacket(Player player) {
-        IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
-        this.data = (cooldowns != null) ? cooldowns.serializeNBT(player.registryAccess()) : null;
+        this.data = Services.CAPABILITIES.cooldowns(player).map(c -> c.serializeNBT(player.registryAccess())).orElse(null);
     }
     
     protected SyncCooldownsPacket(CompoundTag data) {
@@ -47,12 +44,10 @@ public class SyncCooldownsPacket implements IMessageToClient {
         return new SyncCooldownsPacket(buf.readNbt());
     }
     
-    @SuppressWarnings("deprecation")
     public static void onMessage(PacketContext<SyncCooldownsPacket> ctx) {
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
-        IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
-        if (cooldowns != null) {
-            cooldowns.deserializeNBT(player.registryAccess(), ctx.message().data);
+        if (player != null) {
+            Services.CAPABILITIES.cooldowns(player).ifPresent(c -> c.deserializeNBT(player.registryAccess(), ctx.message().data));
         }
     }
 }

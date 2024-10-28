@@ -35,11 +35,6 @@ public class PrimalMagickCapabilities {
     }
     
     @Nullable
-    public static IPlayerCooldowns getCooldowns(@Nullable Player player) {
-        return player == null ? null : player.getCapability(COOLDOWNS, null).orElse(null);
-    }
-    
-    @Nullable
     public static IPlayerStats getStats(@Nullable Player player) {
         return player == null ? null : player.getCapability(STATS, null).orElse(null);
     }
