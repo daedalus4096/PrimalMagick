@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldownsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledge;
+import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledgeForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerStatsForge;
@@ -30,7 +31,7 @@ public class CapabilityEvents {
     public static void attachEntityCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player player) {
             // Only attach these capabilities to players, not other types of entities
-            event.addCapability(PlayerKnowledge.Provider.NAME, new PlayerKnowledge.Provider());
+            event.addCapability(PlayerKnowledgeForge.Provider.NAME, new PlayerKnowledgeForge.Provider());
             event.addCapability(PlayerCooldownsForge.Provider.NAME, new PlayerCooldownsForge.Provider());
             event.addCapability(PlayerStatsForge.Provider.NAME, new PlayerStatsForge.Provider());
             event.addCapability(PlayerAttunements.Provider.NAME, new PlayerAttunements.Provider());

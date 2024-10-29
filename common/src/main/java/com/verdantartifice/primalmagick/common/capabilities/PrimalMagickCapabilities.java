@@ -18,7 +18,6 @@ import net.minecraftforge.common.util.LazyOptional;
  * @author Daedalus4096
  */
 public class PrimalMagickCapabilities {
-    public static final Capability<IPlayerKnowledge> KNOWLEDGE = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerAttunements> ATTUNEMENTS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerCompanions> COMPANIONS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerArcaneRecipeBook> ARCANE_RECIPE_BOOK = CapabilityManager.get(new CapabilityToken<>(){});
@@ -27,11 +26,6 @@ public class PrimalMagickCapabilities {
     public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IManaStorage<?>> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<ITileResearchCache> RESEARCH_CACHE = CapabilityManager.get(new CapabilityToken<>(){});
-    
-    @Nonnull
-    public static LazyOptional<IPlayerKnowledge> getKnowledge(@Nullable Player player) {
-        return player == null ? LazyOptional.empty() : player.getCapability(KNOWLEDGE, null);
-    }
     
     @Nullable
     public static IPlayerAttunements getAttunements(@Nullable Player player) {

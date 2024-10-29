@@ -15,6 +15,8 @@ public class CapabilitiesNeoforge {
         CAPABILITIES.register(PrimalMagick.getEventBus());
     }
 
+    public static final Supplier<AttachmentType<PlayerKnowledgeNeoforge>> KNOWLEDGE = CAPABILITIES.register("knowledge",
+            () -> AttachmentType.serializable(PlayerKnowledgeNeoforge::new).copyOnDeath().build());
     public static final Supplier<AttachmentType<PlayerCooldownsNeoforge>> COOLDOWNS = CAPABILITIES.register("cooldowns",
             () -> AttachmentType.serializable(PlayerCooldownsNeoforge::new).copyOnDeath().build());
     public static final Supplier<AttachmentType<PlayerStatsNeoforge>> STATS = CAPABILITIES.register("stats",
