@@ -2,15 +2,16 @@ package com.verdantartifice.primalmagick.client.gui.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerWard;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.util.LazyOptional;
+
+import java.util.Optional;
 
 public class WardingHudOverlay {
     protected static final ResourceLocation GUI_ICONS_LOCATION = ResourceUtils.loc("textures/gui/hud.png");
@@ -27,13 +28,13 @@ public class WardingHudOverlay {
         RenderSystem.enableBlend();
         
         Player player = (Player)mc.getCameraEntity();
-        LazyOptional<IPlayerWard> wardCapOpt = PrimalMagickCapabilities.getWard(player);
+        Optional<IPlayerWard> wardCapOpt = Services.CAPABILITIES.ward(player);
         
-        int ward = Mth.ceil(wardCapOpt.<Float>lazyMap(wardCap -> wardCap.getCurrentWard()).orElse(0F));
+        int ward = Mth.ceil(wardCapOpt.map(IPlayerWard::getCurrentWard).orElse(0F));
         int wardLast = ward;    // FIXME Get the last ward value
         boolean highlight = false;
 
-        float wardMax = wardCapOpt.<Float>lazyMap(wardCap -> wardCap.getMaxWard()).orElse(0F);
+        float wardMax = wardCapOpt.map(IPlayerWard::getMaxWard).orElse(0F);
         int absorb = 0; // Not relevant to wards
         int wardRows = Mth.ceil(wardMax / 2.0F / 10.0F);
         int rowHeight = Math.max(10 - (wardRows - 2), 3);
@@ -44,7 +45,7 @@ public class WardingHudOverlay {
             int top = pGuiGraphics.guiHeight() - 28 - rowHeight;
 
             int regen = -1;
-            if (wardCapOpt.<Boolean>lazyMap(wardCap -> wardCap.isRegenerating()).orElse(false)) {
+            if (wardCapOpt.map(IPlayerWard::isRegenerating).orElse(false)) {
                 regen = mc.gui.getGuiTicks() % Mth.ceil(wardMax + 5.0F);
             }
 

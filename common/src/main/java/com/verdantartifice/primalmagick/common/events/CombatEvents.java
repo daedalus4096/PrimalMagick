@@ -3,9 +3,7 @@ package com.verdantartifice.primalmagick.common.events;
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -127,7 +125,7 @@ public class CombatEvents {
             
             // Consume ward before health if damage is non-absolute (e.g. starvation)
             if (!damageSource.is(DamageTypeTags.BYPASSES_EFFECTS) && damageGetter.get() > 0) {
-                PrimalMagickCapabilities.getWard(target).ifPresent(wardCap -> {
+                Services.CAPABILITIES.ward(target).ifPresent(wardCap -> {
                     if (damageGetter.get() >= wardCap.getCurrentWard()) {
                         damageSetter.accept(damageGetter.get() - wardCap.getCurrentWard());
                         wardCap.setCurrentWard(0);

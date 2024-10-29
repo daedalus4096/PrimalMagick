@@ -30,11 +30,6 @@ public class PrimalMagickCapabilities {
     }
     
     @Nonnull
-    public static LazyOptional<IPlayerWard> getWard(@Nullable Player player) {
-        return player == null ? LazyOptional.empty() : player.getCapability(WARD);
-    }
-    
-    @Nonnull
     public static LazyOptional<IPlayerLinguistics> getLinguistics(@Nullable Player player) {
         return player == null ? LazyOptional.empty() : player.getCapability(LINGUISTICS);
     }

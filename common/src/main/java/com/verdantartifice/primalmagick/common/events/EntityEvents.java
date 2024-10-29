@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.EnderwardBlock;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -11,6 +10,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -93,8 +93,8 @@ public class EntityEvents {
         // If a player is donning or removing a warded piece of armor, update their max ward level
         if (livingEntity instanceof ServerPlayer serverPlayer &&
                 (WardingModuleItem.hasWardAttached(fromStack) || WardingModuleItem.hasWardAttached(toStack) ) ) {
-            PrimalMagickCapabilities.getWard(serverPlayer).ifPresent(playerWard -> {
-                int newMax = playerWard.getApplicableSlots().stream().map(slot -> serverPlayer.getItemBySlot(slot)).filter(WardingModuleItem::hasWardAttached)
+            Services.CAPABILITIES.ward(serverPlayer).ifPresent(playerWard -> {
+                int newMax = playerWard.getApplicableSlots().stream().map(serverPlayer::getItemBySlot).filter(WardingModuleItem::hasWardAttached)
                         .mapToInt(stack -> 1 + WardingModuleItem.getAttachedWardLevel(stack)).sum();
                 playerWard.setMaxWard(newMax);
                 playerWard.sync(serverPlayer);

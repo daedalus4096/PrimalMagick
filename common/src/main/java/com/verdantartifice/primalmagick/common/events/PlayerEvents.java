@@ -345,7 +345,7 @@ public class PlayerEvents {
     }
     
     protected static void handleWardRegeneration(ServerPlayer player) {
-        PrimalMagickCapabilities.getWard(player).ifPresent(wardCap -> {
+        Services.CAPABILITIES.ward(player).ifPresent(wardCap -> {
             if (wardCap.isRegenerating()) {
                 for (EquipmentSlot slot : wardCap.getApplicableSlots()) {
                     ItemStack slotStack = player.getItemBySlot(slot);
@@ -402,9 +402,7 @@ public class PlayerEvents {
         if (immediate) {
             // Cooldowns and wards don't do scheduled syncs, so only sync if it needs to be done immediately
             Services.CAPABILITIES.cooldowns(player).ifPresent(cooldowns -> cooldowns.sync(player));
-            PrimalMagickCapabilities.getWard(player).ifPresent(wardCap -> {
-                wardCap.sync(player);
-            });
+            Services.CAPABILITIES.ward(player).ifPresent(wardCap -> wardCap.sync(player));
         }
     }
 
@@ -455,8 +453,8 @@ public class PlayerEvents {
         }
         
         try {
-            CompoundTag nbtWard = PrimalMagickCapabilities.getWard(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getWard(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtWard);
+            CompoundTag nbtWard = Services.CAPABILITIES.ward(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Services.CAPABILITIES.ward(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtWard);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} ward", oldPlayer.getName().getString());
         }
