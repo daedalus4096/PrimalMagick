@@ -1,17 +1,14 @@
 package com.verdantartifice.primalmagick.common.entities.companions;
 
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nullable;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Primary access point for companion-related methods.  Companions are entities that follow a
@@ -47,8 +44,7 @@ public class CompanionManager {
     public static void addCompanion(@Nullable Player player, @Nullable AbstractCompanionEntity companion) {
         if (player != null && companion != null) {
             companion.setCompanionOwnerId(player.getUUID());
-            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
-            if (companions != null) {
+            Services.CAPABILITIES.companions(player).ifPresent(companions -> {
                 UUID oldCompanion = companions.add(companion.getCompanionType(), companion.getUUID());
                 if (oldCompanion != null && player.level() instanceof ServerLevel serverLevel) {
                     for (ServerLevel serverWorld : serverLevel.getServer().getAllLevels()) {
@@ -60,7 +56,7 @@ public class CompanionManager {
                     }
                 }
                 CompanionManager.scheduleSync(player);
-            }
+            });
         }
     }
     
@@ -73,10 +69,11 @@ public class CompanionManager {
     public static void removeCompanion(@Nullable Player player, @Nullable AbstractCompanionEntity companion) {
         if (player != null && companion != null) {
             companion.setCompanionOwnerId(null);
-            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
-            if (companions != null && companions.remove(companion.getCompanionType(), companion.getUUID())) {
-                CompanionManager.scheduleSync(player);
-            }
+            Services.CAPABILITIES.companions(player).ifPresent(companions -> {
+                if (companions.remove(companion.getCompanionType(), companion.getUUID())) {
+                    CompanionManager.scheduleSync(player);
+                }
+            });
         }
     }
     
@@ -84,8 +81,7 @@ public class CompanionManager {
         if (player == null || companion == null) {
             return false;
         } else {
-            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
-            return companions != null && companions.contains(companion.getCompanionType(), companion.getUUID());
+            return Services.CAPABILITIES.companions(player).map(c -> c.contains(companion.getCompanionType(), companion.getUUID())).orElse(false);
         }
     }
 }

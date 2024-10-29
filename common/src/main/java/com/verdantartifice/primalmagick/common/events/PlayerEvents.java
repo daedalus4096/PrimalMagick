@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -388,10 +387,7 @@ public class PlayerEvents {
             Services.CAPABILITIES.attunements(player).ifPresent(attunements -> attunements.sync(player));
         }
         if (immediate || CompanionManager.isSyncScheduled(player)) {
-            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
-            if (companions != null) {
-                companions.sync(player);
-            }
+            Services.CAPABILITIES.companions(player).ifPresent(companions -> companions.sync(player));
         }
         if (immediate || ArcaneRecipeBookManager.isSyncScheduled(player)) {
             PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
@@ -445,8 +441,8 @@ public class PlayerEvents {
         }
         
         try {
-            CompoundTag nbtCompanions = PrimalMagickCapabilities.getCompanions(oldPlayer).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getCompanions(newPlayer).deserializeNBT(registryAccess, nbtCompanions);
+            CompoundTag nbtCompanions = Services.CAPABILITIES.companions(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Services.CAPABILITIES.companions(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtCompanions);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} companions", oldPlayer.getName().getString());
         }

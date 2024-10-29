@@ -25,11 +25,6 @@ public class PrimalMagickCapabilities {
     public static final Capability<IManaStorage<?>> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<ITileResearchCache> RESEARCH_CACHE = CapabilityManager.get(new CapabilityToken<>(){});
     
-    @Nullable
-    public static IPlayerCompanions getCompanions(@Nullable Player player) {
-        return player == null ? null : player.getCapability(COMPANIONS, null).orElse(null);
-    }
-    
     @Nonnull
     public static LazyOptional<IPlayerArcaneRecipeBook> getArcaneRecipeBook(@Nullable Player player) {
         return player == null ? LazyOptional.empty() : player.getCapability(ARCANE_RECIPE_BOOK);

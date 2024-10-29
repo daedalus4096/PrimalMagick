@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.nbt.CompoundTag;
@@ -25,10 +24,8 @@ public class SyncCompanionsPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
-    @SuppressWarnings("deprecation")
     public SyncCompanionsPacket(Player player) {
-        IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
-        this.data = (companions != null) ? companions.serializeNBT(player.registryAccess()) : null;
+        this.data = Services.CAPABILITIES.companions(player).map(c -> c.serializeNBT(player.registryAccess())).orElse(null);
     }
     
     protected SyncCompanionsPacket(CompoundTag data) {
@@ -47,13 +44,12 @@ public class SyncCompanionsPacket implements IMessageToClient {
         return new SyncCompanionsPacket(buf.readNbt());
     }
     
-    @SuppressWarnings("deprecation")
     public static void onMessage(PacketContext<SyncCompanionsPacket> ctx) {
-        SyncCompanionsPacket message = ctx.message();
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
-        IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
-        if (companions != null) {
-            companions.deserializeNBT(player.registryAccess(), message.data);
+        if (player != null) {
+            Services.CAPABILITIES.companions(player).ifPresent(companions -> {
+                companions.deserializeNBT(player.registryAccess(), ctx.message().data);
+            });
         }
     }
 }
