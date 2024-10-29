@@ -1,22 +1,10 @@
 package com.verdantartifice.primalmagick.common.attunements;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +12,15 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 /**
  * Primary access point for attunement-related methods.  As players utilize magick, they gain or
@@ -69,10 +66,7 @@ public class AttunementManager {
      */
     public static int getAttunement(@Nullable Player player, @Nullable Source source, @Nullable AttunementType type) {
         if (player != null && source != null && type != null) {
-            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-            if (attunements != null) {
-                return attunements.getValue(source, type);
-            }
+            return Services.CAPABILITIES.attunements(player).map(a -> a.getValue(source, type)).orElse(0);
         }
         return 0;
     }
@@ -86,15 +80,14 @@ public class AttunementManager {
      */
     public static int getTotalAttunement(@Nullable Player player, @Nullable Source source) {
         if (player != null && source != null) {
-            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-            if (attunements != null) {
+            return Services.CAPABILITIES.attunements(player).map(attunements -> {
                 // Sum up the partial attunement values for each attunement type
                 int total = 0;
                 for (AttunementType type : AttunementType.values()) {
                     total += attunements.getValue(source, type);
                 }
                 return total;
-            }
+            }).orElse(0);
         }
         return 0;
     }
@@ -130,8 +123,7 @@ public class AttunementManager {
         if (player == null || source == null) {
             return false;
         } else {
-            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-            return attunements != null && attunements.isSuppressed(source);
+            return Services.CAPABILITIES.attunements(player).map(attunements -> attunements.isSuppressed(source)).orElse(false);
         }
     }
     
@@ -145,15 +137,14 @@ public class AttunementManager {
      */
     public static void setSuppressed(@Nullable Player player, @Nullable Source source, boolean value) {
         if (player instanceof ServerPlayer && source != null) {
-            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-            if (attunements != null) {
+            Services.CAPABILITIES.attunements(player).ifPresent(attunements -> {
                 boolean before = attunements.isSuppressed(source);
                 Component sourceText = source.getNameText();
-                
+
                 // Set the new value into the player capability
                 attunements.setSuppressed(source, value);
                 scheduleSync(player);
-                
+
                 // Determine if any attribute modifiers need to change
                 int total = getTotalAttunement(player, source);
                 if (!before && value) {
@@ -169,7 +160,7 @@ public class AttunementManager {
                         MODIFIERS.stream().filter(mod -> source.equals(mod.getSource()) && threshold == mod.getThreshold()).forEach(mod -> mod.applyToEntity(player));
                     });
                 }
-            }
+            });
         }
     }
     
@@ -183,10 +174,9 @@ public class AttunementManager {
      */
     public static void setAttunement(@Nullable Player player, @Nullable Source source, @Nullable AttunementType type, int value) {
         if (player instanceof ServerPlayer serverPlayer && source != null && type != null) {
-            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-            if (attunements != null) {
+            Services.CAPABILITIES.attunements(serverPlayer).ifPresent(attunements -> {
                 int oldTotal = getTotalAttunement(player, source);
-                
+
                 // Set the new value into the player capability
                 attunements.setValue(source, type, value);
                 scheduleSync(player);
@@ -203,7 +193,7 @@ public class AttunementManager {
                         if (source.isDiscovered(player)) {
                             player.displayClientMessage(Component.translatable("event.primalmagick.attunement.threshold_gain", sourceText, thresholdText), false);
                         }
-                        
+
                         // Apply any new attribute modifiers from the threshold gain
                         for (AttunementAttributeModifier modifier : MODIFIERS) {
                             if (source.equals(modifier.getSource()) && threshold == modifier.getThreshold()) {
@@ -216,7 +206,7 @@ public class AttunementManager {
                         if (source.isDiscovered(player)) {
                             player.displayClientMessage(Component.translatable("event.primalmagick.attunement.threshold_loss", sourceText, thresholdText), false);
                         }
-                        
+
                         // Remove any lost attribute modifiers from the threshold loss
                         for (AttunementAttributeModifier modifier : MODIFIERS) {
                             if (source.equals(modifier.getSource()) && threshold == modifier.getThreshold()) {
@@ -225,13 +215,13 @@ public class AttunementManager {
                         }
                     }
                 }
-                
+
                 // Trigger advancement criteria
                 int permanent = getAttunement(player, source, AttunementType.PERMANENT);
                 int induced = getAttunement(player, source, AttunementType.INDUCED);
                 int temporary = getAttunement(player, source, AttunementType.TEMPORARY);
                 CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.trigger(serverPlayer, source, permanent, induced, temporary);
-            }
+            });
         }
     }
     

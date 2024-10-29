@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.nbt.CompoundTag;
@@ -27,8 +26,7 @@ public class SyncAttunementsPacket implements IMessageToClient {
 
     @SuppressWarnings("deprecation")
     public SyncAttunementsPacket(Player player) {
-        IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-        this.data = (attunements != null) ? attunements.serializeNBT(player.registryAccess()) : null;
+        this.data = Services.CAPABILITIES.attunements(player).map(a -> a.serializeNBT(player.registryAccess())).orElse(null);
     }
     
     protected SyncAttunementsPacket(CompoundTag data) {
@@ -47,13 +45,10 @@ public class SyncAttunementsPacket implements IMessageToClient {
         return new SyncAttunementsPacket(buf.readNbt());
     }
     
-    @SuppressWarnings("deprecation")
     public static void onMessage(PacketContext<SyncAttunementsPacket> ctx) {
-        SyncAttunementsPacket message = ctx.message();
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
-        IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-        if (attunements != null) {
-            attunements.deserializeNBT(player.registryAccess(), message.data);
+        if (player != null) {
+            Services.CAPABILITIES.attunements(player).ifPresent(a -> a.deserializeNBT(player.registryAccess(), ctx.message().data));
         }
     }
 }

@@ -14,7 +14,6 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -608,18 +607,13 @@ public class PrimalMagickCommand {
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.stats.reset.target", source.getTextName()));
             }
-        }, () -> {
-            source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        });
+        }, () -> source.sendFailure(Component.translatable("commands.primalmagick.error")));
         return 0;
     }
 
     private static int resetAttunements(CommandSourceStack source, ServerPlayer target) {
         // Remove all accrued attunements from the player
-        IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(target);
-        if (attunements == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else {
+        Services.CAPABILITIES.attunements(target).ifPresentOrElse(attunements -> {
             attunements.clear();
             AttunementManager.removeAllAttributeModifiers(target);
             AttunementManager.scheduleSync(target);
@@ -627,7 +621,7 @@ public class PrimalMagickCommand {
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.reset.target", source.getTextName()));
             }
-        }
+        }, () -> source.sendFailure(Component.translatable("commands.primalmagick.error")));
         return 0;
     }
 

@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
@@ -386,10 +385,7 @@ public class PlayerEvents {
             Services.CAPABILITIES.stats(player).ifPresent(stats -> stats.sync(player));
         }
         if (immediate || AttunementManager.isSyncScheduled(player)) {
-            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
-            if (attunements != null) {
-                attunements.sync(player);
-            }
+            Services.CAPABILITIES.attunements(player).ifPresent(attunements -> attunements.sync(player));
         }
         if (immediate || CompanionManager.isSyncScheduled(player)) {
             IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
@@ -442,8 +438,8 @@ public class PlayerEvents {
         }
         
         try {
-            CompoundTag nbtAttunements = PrimalMagickCapabilities.getAttunements(oldPlayer).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getAttunements(newPlayer).deserializeNBT(registryAccess, nbtAttunements);
+            CompoundTag nbtAttunements = Services.CAPABILITIES.attunements(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Services.CAPABILITIES.attunements(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtAttunements);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} attunements", oldPlayer.getName().getString());
         }
