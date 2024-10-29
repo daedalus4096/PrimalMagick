@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesForge;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
@@ -29,5 +30,10 @@ public class CapabilityServiceForge implements ICapabilityService {
     @Override
     public Optional<IPlayerAttunements> attunements(Player player) {
         return player == null ? Optional.empty() : player.getCapability(CapabilitiesForge.ATTUNEMENTS).resolve();
+    }
+
+    @Override
+    public Optional<IPlayerCompanions> companions(Player player) {
+        return player == null ? Optional.empty() : player.getCapability(CapabilitiesForge.COMPANIONS).resolve();
     }
 }

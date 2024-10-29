@@ -2,15 +2,11 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.capabilities.PlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerAttunementsForge;
-import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanions;
-import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldowns;
+import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanionsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldownsForge;
-import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledgeForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerLinguistics;
-import com.verdantartifice.primalmagick.common.capabilities.PlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerStatsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerWard;
 import com.verdantartifice.primalmagick.common.capabilities.WorldEntitySwappers;
@@ -36,7 +32,7 @@ public class CapabilityEvents {
             event.addCapability(PlayerCooldownsForge.Provider.NAME, new PlayerCooldownsForge.Provider());
             event.addCapability(PlayerStatsForge.Provider.NAME, new PlayerStatsForge.Provider());
             event.addCapability(PlayerAttunementsForge.Provider.NAME, new PlayerAttunementsForge.Provider());
-            event.addCapability(PlayerCompanions.Provider.NAME, new PlayerCompanions.Provider());
+            event.addCapability(PlayerCompanionsForge.Provider.NAME, new PlayerCompanionsForge.Provider());
             event.addCapability(PlayerArcaneRecipeBook.Provider.NAME, new PlayerArcaneRecipeBook.Provider(player.level().getRecipeManager()));
             event.addCapability(PlayerWard.Provider.NAME, new PlayerWard.Provider());
             event.addCapability(PlayerLinguistics.Provider.NAME, new PlayerLinguistics.Provider());
