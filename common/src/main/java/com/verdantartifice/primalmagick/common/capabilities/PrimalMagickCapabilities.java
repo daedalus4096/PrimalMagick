@@ -19,7 +19,6 @@ import javax.annotation.Nullable;
  */
 public class PrimalMagickCapabilities {
     public static final Capability<IPlayerArcaneRecipeBook> ARCANE_RECIPE_BOOK = CapabilityManager.get(new CapabilityToken<>(){});
-    public static final Capability<IPlayerLinguistics> LINGUISTICS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IManaStorage<?>> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<ITileResearchCache> RESEARCH_CACHE = CapabilityManager.get(new CapabilityToken<>(){});

@@ -27,4 +27,6 @@ public class CapabilitiesNeoforge {
             () -> AttachmentType.serializable(PlayerCompanionsNeoforge::new).copyOnDeath().build());
     public static final Supplier<AttachmentType<PlayerWardNeoforge>> WARD = CAPABILITIES.register("ward",
             () -> AttachmentType.serializable(PlayerWardNeoforge::new).copyOnDeath().build());
+    public static final Supplier<AttachmentType<PlayerLinguisticsNeoforge>> LINGUISTICS = CAPABILITIES.register("linguistics",
+            () -> AttachmentType.serializable(PlayerLinguisticsNeoforge::new).copyOnDeath().build());
 }

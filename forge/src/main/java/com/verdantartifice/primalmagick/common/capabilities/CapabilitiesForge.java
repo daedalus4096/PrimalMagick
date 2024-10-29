@@ -11,4 +11,5 @@ public class CapabilitiesForge {
     public static final Capability<IPlayerAttunements> ATTUNEMENTS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerCompanions> COMPANIONS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerWard> WARD = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IPlayerLinguistics> LINGUISTICS = CapabilityManager.get(new CapabilityToken<>(){});
 }

@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerWard;
 import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
@@ -41,5 +42,10 @@ public class CapabilityServiceNeoforge implements ICapabilityService {
     @Override
     public Optional<IPlayerWard> ward(Player player) {
         return player == null ? Optional.empty() : Optional.of(player.getData(CapabilitiesNeoforge.WARD));
+    }
+
+    @Override
+    public Optional<IPlayerLinguistics> linguistics(Player player) {
+        return player == null ? Optional.empty() : Optional.of(player.getData(CapabilitiesNeoforge.LINGUISTICS));
     }
 }

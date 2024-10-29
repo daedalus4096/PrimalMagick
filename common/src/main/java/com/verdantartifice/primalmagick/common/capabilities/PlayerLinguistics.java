@@ -1,23 +1,11 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import org.joml.Vector2i;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguisticsPacket;
-
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -26,9 +14,13 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.LazyOptional;
+import org.joml.Vector2i;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Default implementation of the player linguistics capability.
@@ -162,7 +154,8 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
-        
+
+        this.syncTimestamp = nbt.getLong("SyncTimestamp");
         this.clear();
         
         // Deserialize comprehension values
@@ -313,40 +306,6 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     public void sync(ServerPlayer player) {
         if (player != null) {
             PacketHandler.sendToPlayer(new SyncLinguisticsPacket(player), player);
-        }
-    }
-
-    /**
-     * Capability provider for the player linguistics capability.  Used to attach capability data to the owner.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
-     */
-    public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = ResourceUtils.loc("capability_linguistics");
-        
-        private final IPlayerLinguistics instance = new PlayerLinguistics();
-        private final LazyOptional<IPlayerLinguistics> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
-        
-        @Override
-        public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagickCapabilities.LINGUISTICS) {
-                return holder.cast();
-            } else {
-                return LazyOptional.empty();
-            }
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
-            return instance.serializeNBT(registries);
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-            instance.deserializeNBT(registries, nbt);
         }
     }
 }
