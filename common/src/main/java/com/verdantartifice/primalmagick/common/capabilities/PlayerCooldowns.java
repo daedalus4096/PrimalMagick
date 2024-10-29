@@ -46,7 +46,7 @@ public class PlayerCooldowns implements IPlayerCooldowns {
             return;
         }
 
-        this.syncTimestamp = nbt.getLong("syncTimestamp");
+        this.syncTimestamp = nbt.getLong("SyncTimestamp");
         this.clearCooldowns();
         
         ListTag cooldownList = nbt.getList("Cooldowns", Tag.TAG_COMPOUND);

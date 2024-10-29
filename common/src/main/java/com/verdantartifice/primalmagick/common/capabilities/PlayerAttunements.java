@@ -81,7 +81,7 @@ public class PlayerAttunements implements IPlayerAttunements {
             return;
         }
 
-        this.syncTimestamp = nbt.getLong("syncTimestamp");
+        this.syncTimestamp = nbt.getLong("SyncTimestamp");
         this.clear();
         
         // Deserialize attunement values

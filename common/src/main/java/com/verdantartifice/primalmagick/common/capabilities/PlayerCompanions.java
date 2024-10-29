@@ -46,7 +46,7 @@ public class PlayerCompanions implements IPlayerCompanions {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
-        this.syncTimestamp = nbt.getLong("syncTimestamp");
+        this.syncTimestamp = nbt.getLong("SyncTimestamp");
         this.clear();
         for (CompanionType type : CompanionType.values()) {
             if (nbt.contains(type.getSerializedName(), Tag.TAG_LIST)) {

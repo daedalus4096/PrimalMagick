@@ -39,7 +39,7 @@ public class PlayerWard implements IPlayerWard {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
-        this.syncTimestamp = nbt.getLong("syncTimestamp");
+        this.syncTimestamp = nbt.getLong("SyncTimestamp");
         this.clear();
         this.current = nbt.getFloat("Current");
         this.max = nbt.getFloat("Max");
