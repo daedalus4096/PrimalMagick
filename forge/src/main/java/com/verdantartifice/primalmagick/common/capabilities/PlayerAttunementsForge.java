@@ -24,20 +24,18 @@ public class PlayerAttunementsForge extends PlayerAttunements implements IPlayer
 
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagickCapabilities.ATTUNEMENTS) {
+            if (cap == CapabilitiesForge.ATTUNEMENTS) {
                 return holder.cast();
             } else {
                 return LazyOptional.empty();
             }
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public CompoundTag serializeNBT(HolderLookup.Provider registries) {
             return instance.serializeNBT(registries);
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
             instance.deserializeNBT(registries, nbt);
