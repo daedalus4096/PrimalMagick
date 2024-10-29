@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerWard;
 import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
 import net.minecraft.world.entity.player.Player;
 
@@ -35,5 +36,10 @@ public class CapabilityServiceForge implements ICapabilityService {
     @Override
     public Optional<IPlayerCompanions> companions(Player player) {
         return player == null ? Optional.empty() : player.getCapability(CapabilitiesForge.COMPANIONS).resolve();
+    }
+
+    @Override
+    public Optional<IPlayerWard> ward(Player player) {
+        return player == null ? Optional.empty() : player.getCapability(CapabilitiesForge.WARD).resolve();
     }
 }

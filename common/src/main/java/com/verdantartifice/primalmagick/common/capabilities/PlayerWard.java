@@ -1,22 +1,14 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import java.util.List;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
-
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.LazyOptional;
+
+import java.util.List;
 
 /**
  * Default implementation of the player ward capability.
@@ -47,6 +39,7 @@ public class PlayerWard implements IPlayerWard {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
+        this.syncTimestamp = nbt.getLong("syncTimestamp");
         this.clear();
         this.current = nbt.getFloat("Current");
         this.max = nbt.getFloat("Max");
@@ -99,40 +92,6 @@ public class PlayerWard implements IPlayerWard {
     public void sync(ServerPlayer player) {
         if (player != null) {
             PacketHandler.sendToPlayer(new SyncWardPacket(player), player);
-        }
-    }
-
-    /**
-     * Capability provider for the player ward capability.  Used to attach capability data to the owner.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
-     */
-    public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = ResourceUtils.loc("capability_ward");
-        
-        private final IPlayerWard instance = new PlayerWard();
-        private final LazyOptional<IPlayerWard> holder = LazyOptional.of(() -> instance);   // Cache a lazy optional of the capability instance
-
-        @Override
-        public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagickCapabilities.WARD) {
-                return holder.cast();
-            } else {
-                return LazyOptional.empty();
-            }
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
-            return instance.serializeNBT(registries);
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-            instance.deserializeNBT(registries, nbt);
         }
     }
 }
