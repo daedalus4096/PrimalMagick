@@ -1,15 +1,7 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Predicate;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +9,13 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 
 /**
  * Default implementation of the tile research cache capability.
@@ -83,7 +82,7 @@ public class TileResearchCache implements ITileResearchCache {
     
     @Override
     public void update(Player player, Predicate<AbstractResearchKey<?>> researchFilter) {
-        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+        Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
             this.clear();
             RegistryAccess registryAccess = player.level().registryAccess();
             for (AbstractResearchKey<?> key : knowledge.getResearchSet()) {

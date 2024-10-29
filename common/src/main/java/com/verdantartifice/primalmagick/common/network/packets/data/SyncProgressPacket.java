@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
@@ -9,6 +8,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -85,7 +85,7 @@ public class SyncProgressPacket implements IMessageToServer {
             return true;
         }
 
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }

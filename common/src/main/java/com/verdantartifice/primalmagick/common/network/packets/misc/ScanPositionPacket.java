@@ -2,11 +2,11 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -70,7 +70,7 @@ public class ScanPositionPacket implements IMessageToServer {
         // Only process blocks that are currently loaded into the world.  Safety check to prevent
         // resource thrashing from falsified packets.
         if (message.pos != null && world.isLoaded(message.pos)) {
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 // Scan the block
                 List<CompletableFuture<Boolean>> foundFutures = new ArrayList<>();
                 ItemStack posStack = new ItemStack(world.getBlockState(message.pos).getBlock());

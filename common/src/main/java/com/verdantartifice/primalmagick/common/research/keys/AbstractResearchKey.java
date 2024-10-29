@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -52,7 +51,7 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
             return false;
         } else {
             MutableBoolean retVal = new MutableBoolean(false);
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 retVal.setValue(knowledge.isResearchComplete(player.level().registryAccess(), this));
             });
             return retVal.booleanValue();

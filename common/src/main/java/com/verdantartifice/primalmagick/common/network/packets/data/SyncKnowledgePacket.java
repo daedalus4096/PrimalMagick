@@ -3,13 +3,13 @@ package com.verdantartifice.primalmagick.common.network.packets.data;
 import com.verdantartifice.primalmagick.client.toast.ToastManager;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.core.RegistryAccess;
@@ -33,7 +33,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
     
     @SuppressWarnings("deprecation")
     public SyncKnowledgePacket(Player player) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
         this.data = knowledge.serializeNBT(player.registryAccess());
     }
 
@@ -56,19 +56,21 @@ public class SyncKnowledgePacket implements IMessageToClient {
     @SuppressWarnings("deprecation")
     public static void onMessage(PacketContext<SyncKnowledgePacket> ctx) {
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
-        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-            RegistryAccess registryAccess = player.level().registryAccess();
-            knowledge.deserializeNBT(player.registryAccess(), ctx.message().data);
-            for (AbstractResearchKey<?> key : knowledge.getResearchSet()) {
-                // Show a research completion toast for any research entries so flagged
-                if (key instanceof ResearchEntryKey entryKey && knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP)) {
-                    ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
-                    if (entry != null && !entry.flags().internal() && Side.CLIENT.equals(ctx.side())) {
-                        ToastManager.showResearchToast(entry, knowledge.isResearchComplete(registryAccess, entry.key()));
+        if (player != null) {
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
+                RegistryAccess registryAccess = player.level().registryAccess();
+                knowledge.deserializeNBT(player.registryAccess(), ctx.message().data);
+                for (AbstractResearchKey<?> key : knowledge.getResearchSet()) {
+                    // Show a research completion toast for any research entries so flagged
+                    if (key instanceof ResearchEntryKey entryKey && knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP)) {
+                        ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
+                        if (entry != null && !entry.flags().internal() && Side.CLIENT.equals(ctx.side())) {
+                            ToastManager.showResearchToast(entry, knowledge.isResearchComplete(registryAccess, entry.key()));
+                        }
+                        knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
                     }
-                    knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
                 }
-            }
-        });
+            });
+        }
     }
 }

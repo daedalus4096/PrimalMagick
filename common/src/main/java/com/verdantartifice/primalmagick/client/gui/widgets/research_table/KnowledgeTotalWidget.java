@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -13,12 +13,12 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.util.LazyOptional;
 
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
@@ -31,7 +31,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
     protected static final DecimalFormat FORMATTER = new DecimalFormat("###.##");
 
     protected final KnowledgeType type;
-    protected final LazyOptional<IPlayerKnowledge> knowledgeOpt;
+    protected final Optional<IPlayerKnowledge> knowledgeOpt;
     protected final OptionalInt successDeltaOpt;
     protected Component lastTooltip = Component.empty();
     protected Component tooltip = Component.empty();
@@ -44,7 +44,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         super(x, y, 16, 19, Component.empty());
         Minecraft mc = Minecraft.getInstance();
         this.type = type;
-        this.knowledgeOpt = PrimalMagickCapabilities.getKnowledge(mc.player);
+        this.knowledgeOpt = Services.CAPABILITIES.knowledge(mc.player);
         this.successDeltaOpt = successDeltaOpt;
     }
     

@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import java.util.stream.Stream;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.stream.Stream;
 
 /**
  * Requirement that the player has completed a given research entry.
@@ -53,7 +52,7 @@ public class ResearchRequirement extends AbstractRequirement<ResearchRequirement
         if (this.rootKey instanceof ResearchEntryKey entryKey) {
             return ResearchManager.completeResearch(player, entryKey, true, true, false);
         } else {
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(k -> {
+            Services.CAPABILITIES.knowledge(player).ifPresent(k -> {
                 k.addResearch(this.rootKey);
             });
             return true;

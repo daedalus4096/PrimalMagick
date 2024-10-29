@@ -1,26 +1,10 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
@@ -31,7 +15,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -49,6 +33,20 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Primary access point for research-related methods.
@@ -91,7 +89,7 @@ public class ResearchManager {
     }
     
     public static boolean isRecipeVisible(ResourceLocation recipeId, Player player) {
-        IPlayerKnowledge know = PrimalMagickCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
+        IPlayerKnowledge know = Services.CAPABILITIES.knowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
         ResearchEntry entry = ResearchManager.getEntryForRecipe(player.level().registryAccess(), recipeId).orElse(null);
         if (entry == null) {
             // If the recipe has no controlling research, then assume it's not visible
@@ -165,7 +163,7 @@ public class ResearchManager {
         if (player == null || key == null) {
             return false;
         }
-        return PrimalMagickCapabilities.getKnowledge(player).map(k -> k.isResearchKnown(key)).orElse(false);
+        return Services.CAPABILITIES.knowledge(player).map(k -> k.isResearchKnown(key)).orElse(false);
     }
     
     public static boolean isResearchComplete(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
@@ -177,7 +175,7 @@ public class ResearchManager {
             return false;
         }
         RegistryAccess registryAccess = player.level().registryAccess();
-        return PrimalMagickCapabilities.getKnowledge(player).map(k -> k.isResearchComplete(registryAccess, key)).orElse(false);
+        return Services.CAPABILITIES.knowledge(player).map(k -> k.isResearchComplete(registryAccess, key)).orElse(false);
     }
     
     public static boolean completeResearch(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
@@ -210,7 +208,7 @@ public class ResearchManager {
     public static void forceGrantWithAllParents(@Nullable Player player, @Nullable ResearchEntryKey key) {
         if (player != null && key != null) {
             RegistryAccess registryAccess = player.level().registryAccess();
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 if (!knowledge.isResearchComplete(registryAccess, key)) {
                     ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
                     if (entry != null) {
@@ -243,7 +241,7 @@ public class ResearchManager {
     public static void forceGrantParentsOnly(@Nullable Player player, @Nullable ResearchEntryKey key) {
         if (player != null && key != null) {
             RegistryAccess registryAccess = player.level().registryAccess();
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 if (!knowledge.isResearchComplete(registryAccess, key)) {
                     ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
                     if (entry != null) {
@@ -273,7 +271,7 @@ public class ResearchManager {
     public static void forceRevokeWithAllChildren(@Nullable Player player, @Nullable ResearchEntryKey key) {
         if (player != null && key != null) {
             RegistryAccess registryAccess = player.level().registryAccess();
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 if (knowledge.isResearchComplete(registryAccess, key)) {
                     // Revoke all child research of this entry
                     registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(entry -> {
@@ -300,7 +298,7 @@ public class ResearchManager {
             return false;
         }
         
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -344,7 +342,7 @@ public class ResearchManager {
         }
         RegistryAccess registryAccess = player.level().registryAccess();
 
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -540,7 +538,7 @@ public class ResearchManager {
     
     public static boolean addKnowledge(Player player, KnowledgeType type, int points, boolean scheduleSync) {
         // Add the given number of knowledge points to the player and sync to their client
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -680,7 +678,7 @@ public class ResearchManager {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -719,7 +717,7 @@ public class ResearchManager {
         if (type == null || player == null) {
             return false;
         }
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
@@ -754,7 +752,7 @@ public class ResearchManager {
         if (player == null) {
             return 0;
         }
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         if (knowledge == null) {
             return 0;
         }

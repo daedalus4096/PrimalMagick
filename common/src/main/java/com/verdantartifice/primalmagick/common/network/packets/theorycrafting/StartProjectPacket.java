@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.common.network.packets.theorycrafting;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -42,8 +42,8 @@ public class StartProjectPacket implements IMessageToServer {
     public static void onMessage(PacketContext<StartProjectPacket> ctx) {
         StartProjectPacket message = ctx.message();
         ServerPlayer player = ctx.sender();
-        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-            if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu menu) {
+        Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
+            if (player.containerMenu instanceof ResearchTableMenu menu && player.containerMenu.containerId == message.windowId) {
                 menu.getContainerLevelAccess().execute((world, blockPos) -> {
                     knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
                 });

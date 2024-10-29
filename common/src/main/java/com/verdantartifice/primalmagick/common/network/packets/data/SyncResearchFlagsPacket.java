@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -28,7 +28,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
     protected final boolean isPopup;
     
     public SyncResearchFlagsPacket(Player player, ResearchEntryKey key) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
         this.key = key;
         this.isNew = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
         this.isUpdated = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.UPDATED);
@@ -61,7 +61,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         SyncResearchFlagsPacket message = ctx.message();
         if (message.key != null) {
             Player player = ctx.sender();
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 // Add or remove each flag from the research entry as appropriate
                 if (message.isNew) {
                     knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.NEW);

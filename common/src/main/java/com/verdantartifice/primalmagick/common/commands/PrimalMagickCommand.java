@@ -1,26 +1,5 @@
 package com.verdantartifice.primalmagick.common.commands;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.Vector;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
-
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.platform.Services;
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -38,7 +17,6 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeB
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.commands.arguments.AttunementTypeArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.AttunementTypeInput;
@@ -51,7 +29,7 @@ import com.verdantartifice.primalmagick.common.commands.arguments.SourceArgument
 import com.verdantartifice.primalmagick.common.commands.arguments.StatValueArgument;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
@@ -65,7 +43,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.DataPackUtils;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -87,6 +65,24 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.Vector;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 /**
  * Definition of the /primalmagick debug command and its /pm alias.
@@ -313,7 +309,7 @@ public class PrimalMagickCommand {
     }
 
     private static int listResearch(CommandSourceStack source, ServerPlayer target) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
@@ -330,7 +326,7 @@ public class PrimalMagickCommand {
     }
     
     private static int resetResearch(CommandSourceStack source, ServerPlayer target) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
@@ -346,7 +342,7 @@ public class PrimalMagickCommand {
     }
     
     private static int grantResearch(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
@@ -362,7 +358,7 @@ public class PrimalMagickCommand {
     }
     
     private static int grantResearchParents(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
@@ -378,7 +374,7 @@ public class PrimalMagickCommand {
     }
     
     private static int grantAllResearch(CommandSourceStack source, ServerPlayer target) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
@@ -393,7 +389,7 @@ public class PrimalMagickCommand {
     }
     
     private static int revokeResearch(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
@@ -409,7 +405,7 @@ public class PrimalMagickCommand {
     }
     
     private static int detailResearch(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
@@ -432,7 +428,7 @@ public class PrimalMagickCommand {
     }
     
     private static int progressResearch(CommandSourceStack source, ServerPlayer target, Holder.Reference<ResearchEntry> entryHolder) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         ResearchEntryKey entryKey = new ResearchEntryKey(entryHolder.key());
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
@@ -453,7 +449,7 @@ public class PrimalMagickCommand {
     }
     
     private static int resetKnowledge(CommandSourceStack source, ServerPlayer target) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
@@ -468,7 +464,7 @@ public class PrimalMagickCommand {
     }
     
     private static int getKnowledge(CommandSourceStack source, ServerPlayer target, KnowledgeTypeInput knowledgeTypeInput) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         KnowledgeType type = knowledgeTypeInput.getType();
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
@@ -484,7 +480,7 @@ public class PrimalMagickCommand {
     }
     
     private static int addKnowledge(CommandSourceStack source, ServerPlayer target, KnowledgeTypeInput knowledgeTypeInput, int points) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(target).orElse(null);
         KnowledgeType type = knowledgeTypeInput.getType();
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));

@@ -1,23 +1,22 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
-import java.util.Optional;
-import java.util.Set;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
+
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Definition of a project material that requires one or more observations, which may or may not be consumed as part
@@ -67,7 +66,7 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial<Observat
 
     @Override
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
+        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         return (knowledge != null && knowledge.getKnowledge(KnowledgeType.OBSERVATION) >= this.count);
     }
 

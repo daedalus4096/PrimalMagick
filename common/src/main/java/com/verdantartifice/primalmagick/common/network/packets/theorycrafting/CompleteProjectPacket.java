@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.theorycrafting;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
@@ -13,6 +12,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -52,7 +52,7 @@ public class CompleteProjectPacket implements IMessageToServer {
     public static void onMessage(PacketContext<CompleteProjectPacket> ctx) {
         CompleteProjectPacket message = ctx.message();
         ServerPlayer player = ctx.sender();
-        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+        Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
             // Consume paper and ink
             if (player.containerMenu instanceof ResearchTableMenu researchMenu && researchMenu.containerId == message.windowId) {
                 researchMenu.consumeWritingImplements();

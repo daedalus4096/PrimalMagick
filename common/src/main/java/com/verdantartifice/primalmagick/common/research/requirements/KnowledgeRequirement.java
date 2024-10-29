@@ -1,21 +1,19 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import java.util.stream.Stream;
-
-import org.apache.commons.lang3.mutable.MutableBoolean;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+
+import java.util.stream.Stream;
 
 /**
  * Requirement that the player has accumulated a given amount of the given knowledge type.
@@ -60,7 +58,7 @@ public class KnowledgeRequirement extends AbstractRequirement<KnowledgeRequireme
             return false;
         } else {
             MutableBoolean retVal = new MutableBoolean(false);
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 if (knowledge.getKnowledge(this.knowledgeType) >= this.amount) {
                     retVal.setTrue();
                 }

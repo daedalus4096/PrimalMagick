@@ -1,19 +1,13 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
-import java.util.Objects;
-
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import org.apache.commons.lang3.mutable.MutableBoolean;
-
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -22,6 +16,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+
+import java.util.Objects;
 
 public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     public static final MapCodec<ResearchStageKey> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -100,7 +97,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
             return false;
         } else {
             MutableBoolean retVal = new MutableBoolean(false);
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 int currentStage = knowledge.getResearchStage(this.strippedKey) + 1;
                 retVal.setValue(currentStage >= this.getStage());
             });

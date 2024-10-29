@@ -11,9 +11,7 @@ import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
@@ -207,7 +205,7 @@ public class PlayerEvents {
     }
 
     protected static void checkEnvironmentalResearch(ServerPlayer player) {
-        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+        Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
             Level level = player.level();
             if (!ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS)) {
                 // Only check environmental research if the player has started progression
@@ -382,9 +380,7 @@ public class PlayerEvents {
 
     protected static void doScheduledSyncs(ServerPlayer player, boolean immediate) {
         if (immediate || ResearchManager.isSyncScheduled(player)) {
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                knowledge.sync(player);
-            });
+            Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> knowledge.sync(player));
         }
         if (immediate || StatsManager.isSyncScheduled(player)) {
             Services.CAPABILITIES.stats(player).ifPresent(stats -> stats.sync(player));
@@ -421,12 +417,12 @@ public class PlayerEvents {
     }
 
     public static void playerCloneEvent(Player oldPlayer, Player newPlayer, boolean wasFromDeath) {
-        // TODO Move capability cloning to Forge specific listeners; Neoforge handles this automatically
+        // FIXME Move capability cloning to Forge specific listeners; Neoforge handles this automatically
         RegistryAccess registryAccess = newPlayer.registryAccess();
         
         try {
-            CompoundTag nbtKnowledge = PrimalMagickCapabilities.getKnowledge(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getKnowledge(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtKnowledge);
+            CompoundTag nbtKnowledge = Services.CAPABILITIES.knowledge(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Services.CAPABILITIES.knowledge(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtKnowledge);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} knowledge", oldPlayer.getName().getString());
         }

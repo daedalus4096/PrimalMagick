@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -49,7 +49,7 @@ public class SetResearchTopicHistoryPacket implements IMessageToServer {
     public static void onMessage(PacketContext<SetResearchTopicHistoryPacket> ctx) {
         SetResearchTopicHistoryPacket message = ctx.message();
         ServerPlayer player = ctx.sender();
-        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+        Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
             knowledge.setLastResearchTopic(message.current);
             knowledge.setResearchTopicHistory(message.history);
         });

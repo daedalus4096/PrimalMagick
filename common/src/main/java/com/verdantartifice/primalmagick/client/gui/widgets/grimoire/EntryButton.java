@@ -2,13 +2,13 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -41,7 +41,7 @@ public class EntryButton extends AbstractTopicButton {
                 geb.getScreen().setTopic(new EntryResearchTopic(geb.getEntry().key(), 0));
                 if (ResearchManager.isResearchStarted(mc.player, geb.getEntry().key())) {
                     // If the research entry has been flagged as new or updated, clear those flags
-                    PrimalMagickCapabilities.getKnowledge(mc.player).ifPresent(knowledge -> {
+                    Services.CAPABILITIES.knowledge(mc.player).ifPresent(knowledge -> {
                         knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.NEW);
                         knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.UPDATED);
                         PacketHandler.sendToServer(new SyncResearchFlagsPacket(mc.player, geb.getEntry().key()));
@@ -51,7 +51,7 @@ public class EntryButton extends AbstractTopicButton {
                 }
                 
                 // Set the new grimoire topic and open a new screen for it
-                geb.getScreen().getMinecraft().setScreen(new GrimoireScreen());
+                mc.setScreen(new GrimoireScreen());
             }
         }
     }
