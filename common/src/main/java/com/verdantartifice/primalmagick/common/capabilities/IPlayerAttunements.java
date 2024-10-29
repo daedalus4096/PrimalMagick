@@ -1,23 +1,19 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
+import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.common.capabilities.AutoRegisterCapability;
-import net.minecraftforge.common.util.INBTSerializable;
+
+import javax.annotation.Nullable;
 
 /**
  * Capability interface for storing attunement data.  Attached to player entities.
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
-@AutoRegisterCapability
-public interface IPlayerAttunements extends INBTSerializable<CompoundTag> {
+public interface IPlayerAttunements extends INBTSerializablePM<CompoundTag> {
     /**
      * Remove all attunement data from the player.
      */

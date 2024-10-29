@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
@@ -23,5 +24,10 @@ public class CapabilityServiceNeoforge implements ICapabilityService {
     @Override
     public Optional<IPlayerStats> stats(Player player) {
         return player == null ? Optional.empty() : Optional.of(player.getData(CapabilitiesNeoforge.STATS));
+    }
+
+    @Override
+    public Optional<IPlayerAttunements> attunements(Player player) {
+        return player == null ? Optional.empty() : Optional.of(player.getData(CapabilitiesNeoforge.ATTUNEMENTS));
     }
 }
