@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagick.common.books.grids;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.UnlockGridNodeActionPacket;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerPlayer;
@@ -102,7 +102,7 @@ public class PlayerGrid {
         } else {
             // Add the unlocked node to the player's linguistics data and update the local cache
             MutableBoolean retVal = new MutableBoolean(false);
-            PrimalMagickCapabilities.getLinguistics(this.player).ifPresent(linguistics -> {
+            Services.CAPABILITIES.linguistics(this.player).ifPresent(linguistics -> {
                 if (linguistics.unlockNode(this.definition.getKey(), node)) {
                     this.lastModified = linguistics.getGridLastModified(this.definition.getKey());
                     if (!this.player.getAbilities().instabuild) {

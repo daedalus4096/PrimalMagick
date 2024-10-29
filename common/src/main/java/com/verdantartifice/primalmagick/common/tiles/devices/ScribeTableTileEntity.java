@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
 import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
@@ -13,6 +12,7 @@ import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -27,7 +27,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.Optional;
@@ -49,9 +48,9 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
 
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        LazyOptional<IPlayerLinguistics> capOpt = PrimalMagickCapabilities.getLinguistics(pPlayer);
+        Optional<IPlayerLinguistics> capOpt = Services.CAPABILITIES.linguistics(pPlayer);
         if (capOpt.isPresent()) {
-            AbstractScribeTableMenu menu = switch (capOpt.resolve().get().getScribeTableMode()) {
+            AbstractScribeTableMenu menu = switch (capOpt.get().getScribeTableMode()) {
                 case STUDY_VOCABULARY -> new ScribeStudyVocabularyMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
                 case GAIN_COMPREHENSION -> new ScribeGainComprehensionMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
                 case TRANSCRIBE_WORKS -> new ScribeTranscribeWorksMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
@@ -128,7 +127,7 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
                 Optional<Holder<BookLanguage>> sourceLanguageOpt = StaticBookItem.getBookLanguage(sourceStack);
                 int sourceGeneration = StaticBookItem.getGeneration(sourceStack);
                 if (sourceLanguageOpt.isPresent() && sourceLanguageOpt.get().is(BookLanguageTagsPM.ANCIENT) && sourceGeneration < StaticBookItem.MAX_GENERATION) {
-                    PrimalMagickCapabilities.getLinguistics(serverPlayer).ifPresent(linguistics -> {
+                    Services.CAPABILITIES.linguistics(serverPlayer).ifPresent(linguistics -> {
                         // Construct the translated result book if all prerequisites are met
                         ItemStack resultStack = sourceStack.copyWithCount(1);
                         int playerComprehension = linguistics.getComprehension(sourceLanguageOpt.get().unwrapKey().get().location());

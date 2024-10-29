@@ -28,11 +28,6 @@ public class PrimalMagickCapabilities {
         return player == null ? LazyOptional.empty() : player.getCapability(ARCANE_RECIPE_BOOK);
     }
     
-    @Nonnull
-    public static LazyOptional<IPlayerLinguistics> getLinguistics(@Nullable Player player) {
-        return player == null ? LazyOptional.empty() : player.getCapability(LINGUISTICS);
-    }
-    
     @Nullable
     public static IWorldEntitySwappers getEntitySwappers(@Nonnull Level world) {
         return world.getCapability(ENTITY_SWAPPERS, null).orElse(null);

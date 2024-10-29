@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.nbt.CompoundTag;
@@ -25,10 +24,8 @@ public class SyncLinguisticsPacket implements IMessageToClient {
 
     protected final CompoundTag data;
 
-    @SuppressWarnings("deprecation")
     public SyncLinguisticsPacket(Player player) {
-        IPlayerLinguistics linguistics = PrimalMagickCapabilities.getLinguistics(player).orElse(null);
-        this.data = (linguistics != null) ? linguistics.serializeNBT(player.registryAccess()) : null;
+        this.data = Services.CAPABILITIES.linguistics(player).map(l -> l.serializeNBT(player.registryAccess())).orElse(null);
     }
     
     protected SyncLinguisticsPacket(CompoundTag data) {
@@ -47,12 +44,10 @@ public class SyncLinguisticsPacket implements IMessageToClient {
         return new SyncLinguisticsPacket(buf.readNbt());
     }
     
-    @SuppressWarnings("deprecation")
     public static void onMessage(PacketContext<SyncLinguisticsPacket> ctx) {
-        SyncLinguisticsPacket message = ctx.message();
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
-        PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-            linguistics.deserializeNBT(player.registryAccess(), message.data);
-        });
+        if (player != null) {
+            Services.CAPABILITIES.linguistics(player).ifPresent(l -> l.deserializeNBT(player.registryAccess(), ctx.message().data));
+        }
     }
 }

@@ -919,10 +919,7 @@ public class PrimalMagickCommand {
     }
 
     private static int resetLinguistics(CommandSourceStack source, ServerPlayer target) {
-        IPlayerLinguistics linguistics = PrimalMagickCapabilities.getLinguistics(target).orElse(null);
-        if (linguistics == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else {
+        Services.CAPABILITIES.linguistics(target).ifPresentOrElse(linguistics -> {
             // Remove all unlocked linguistics data from the target player
             linguistics.clear();
             LinguisticsManager.scheduleSync(target);
@@ -930,7 +927,7 @@ public class PrimalMagickCommand {
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.reset.target", source.getTextName()));
             }
-        }
+        }, () -> source.sendFailure(Component.translatable("commands.primalmagick.error")));
         return 0;
     }
 

@@ -395,9 +395,7 @@ public class PlayerEvents {
             });
         }
         if (immediate || LinguisticsManager.isSyncScheduled(player)) {
-            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.sync(player);
-            });
+            Services.CAPABILITIES.linguistics(player).ifPresent(linguistics -> linguistics.sync(player));
         }
         if (immediate) {
             // Cooldowns and wards don't do scheduled syncs, so only sync if it needs to be done immediately
@@ -460,8 +458,8 @@ public class PlayerEvents {
         }
         
         try {
-            CompoundTag nbtLinguistics = PrimalMagickCapabilities.getLinguistics(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getLinguistics(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtLinguistics);
+            CompoundTag nbtLinguistics = Services.CAPABILITIES.linguistics(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Services.CAPABILITIES.linguistics(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtLinguistics);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} linguistics", oldPlayer.getName().getString());
         }
