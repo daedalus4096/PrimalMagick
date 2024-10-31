@@ -9,6 +9,7 @@ import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -32,7 +33,6 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
@@ -105,7 +105,7 @@ public class GuiUtils {
                 crashreportcategory.setDetail("Item Type", () -> {
                     return String.valueOf((Object)stack.getItem());
                 });
-                crashreportcategory.setDetail("Registry Name", () -> String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem())));
+                crashreportcategory.setDetail("Registry Name", () -> String.valueOf(Services.ITEMS.getKey(stack.getItem())));
                 crashreportcategory.setDetail("Item Damage", () -> {
                     return String.valueOf(stack.getDamageValue());
                 });
@@ -289,7 +289,7 @@ public class GuiUtils {
     
     protected static ItemStack getTagDisplayStack(TagKey<Item> key, long time, long millisPerItem) {
         List<Item> tagContents = new ArrayList<>();
-        ForgeRegistries.ITEMS.tags().getTag(key).forEach(tagContents::add);
+        Services.TAGS.item(key).forEach(tagContents::add);
         if (!tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((time / millisPerItem) % tagContents.size());

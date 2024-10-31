@@ -18,4 +18,9 @@ public class TagServiceNeoforge implements ITagService {
     public ITagValue<Item> item(TagKey<Item> key) {
         return new TagValueNeoforge<>(BuiltInRegistries.ITEM.getOrCreateTag(key));
     }
+
+    @Override
+    public boolean itemTagExists(TagKey<Item> key) {
+        return BuiltInRegistries.ITEM.getTagNames().anyMatch(key::equals);
+    }
 }

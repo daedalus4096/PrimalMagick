@@ -18,4 +18,9 @@ public class TagServiceForge implements ITagService {
     public ITagValue<Item> item(TagKey<Item> key) {
         return new TagValueForge<>(ForgeRegistries.ITEMS.tags().getTag(key));
     }
+
+    @Override
+    public boolean itemTagExists(TagKey<Item> key) {
+        return ForgeRegistries.ITEMS.tags().isKnownTagName(key);
+    }
 }

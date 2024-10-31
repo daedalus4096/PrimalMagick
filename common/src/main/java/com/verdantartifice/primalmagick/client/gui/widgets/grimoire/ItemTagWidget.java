@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -14,7 +15,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -93,7 +93,7 @@ public class ItemTagWidget extends AbstractWidget {
     @Nonnull
     protected ItemStack getDisplayStack() {
         List<Item> tagContents = new ArrayList<>();
-        ForgeRegistries.ITEMS.tags().getTag(this.tag).forEach(tagContents::add);
+        Services.TAGS.item(this.tag).forEach(tagContents::add);
         if (!tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());

@@ -1,13 +1,5 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -15,7 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -26,7 +18,13 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Definition of a project material that requires an item stack from a given tag, which may or may not be
@@ -86,8 +84,8 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
         } else if (!this.consumed && this.quantity == 1 && surroundings != null) {
             // Only allow satisfaction from surroundings if not consuming the material and only one item is required
             TagKey<Block> blockTagKey = BlockTags.create(this.tag.location());
-            List<Block> tagContents = new ArrayList<Block>();
-            ForgeRegistries.BLOCKS.tags().getTag(blockTagKey).forEach(b -> tagContents.add(b));
+            List<Block> tagContents = new ArrayList<>();
+            Services.TAGS.block(blockTagKey).forEach(tagContents::add);
             Set<Block> intersection = new HashSet<>(surroundings);
             intersection.retainAll(tagContents);
             return !intersection.isEmpty();

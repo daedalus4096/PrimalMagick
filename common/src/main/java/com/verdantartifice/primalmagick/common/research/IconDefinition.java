@@ -1,15 +1,10 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -20,6 +15,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
 
 public class IconDefinition {
     public static final Codec<IconDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -95,7 +94,7 @@ public class IconDefinition {
         } else if (this.isItem) {
             return ImmutableList.of(this.asItem().getDescription());
         } else if (this.isTag) {
-            return ForgeRegistries.ITEMS.tags().getTag(this.asTagKey()).stream().map(Item::getDescription).toList();
+            return Services.TAGS.item(this.asTagKey()).stream().map(Item::getDescription).toList();
         } else {
             return ImmutableList.of();
         }

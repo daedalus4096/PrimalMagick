@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -77,8 +77,8 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
     @Nonnull
     protected ItemStack getStackToDisplay() {
         TagKey<Item> itemTag = this.material.getTag();
-        List<Item> tagContents = new ArrayList<Item>();
-        ForgeRegistries.ITEMS.tags().getTag(itemTag).forEach(i -> tagContents.add(i));
+        List<Item> tagContents = new ArrayList<>();
+        Services.TAGS.item(itemTag).forEach(tagContents::add);
         if (tagContents != null && !tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());

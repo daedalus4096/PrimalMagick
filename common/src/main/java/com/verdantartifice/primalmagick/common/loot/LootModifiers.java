@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
+import com.verdantartifice.primalmagick.platform.Services;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -67,8 +68,8 @@ public class LootModifiers {
         int enchantmentLevel = tool == null ? 0 : tool.getEnchantments().getLevel(context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.LUCKY_STRIKE));
         if (state != null && enchantmentLevel > 0) {
             nuggetMap.forEach((blockTag, itemTag) -> {
-                if (state.is(blockTag) && ForgeRegistries.ITEMS.tags().isKnownTagName(itemTag)) {
-                    Optional<Item> nuggetOpt = ForgeRegistries.ITEMS.tags().getTag(itemTag).stream().findFirst();
+                if (state.is(blockTag) && Services.TAGS.itemTagExists(itemTag)) {
+                    Optional<Item> nuggetOpt = Services.TAGS.item(itemTag).stream().findFirst();
                     nuggetOpt.ifPresent(nugget -> {
                         int nuggetCount = IntStream.range(0, enchantmentLevel).map(i -> context.getRandom().nextFloat() < chance ? 1 : 0).sum();
                         generatedLoot.add(new ItemStack(nugget, nuggetCount));

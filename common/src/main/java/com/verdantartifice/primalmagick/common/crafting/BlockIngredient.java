@@ -1,21 +1,11 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
-
-import javax.annotation.Nullable;
-
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -25,6 +15,15 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Like an Ingredient, but for testing blocks.  Used by rituals to determine if a given block
@@ -179,8 +178,8 @@ public class BlockIngredient implements Predicate<Block> {
         
         @Override
         public Collection<Block> getBlocks() {
-            List<Block> retVal = new ArrayList<Block>();
-            ForgeRegistries.BLOCKS.tags().getTag(this.tag).stream().forEach(retVal::add);
+            List<Block> retVal = new ArrayList<>();
+            Services.TAGS.block(this.tag).forEach(retVal::add);
             return retVal;
         }
     }
