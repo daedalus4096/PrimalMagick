@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.platform;
 import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
 import com.verdantartifice.primalmagick.platform.services.IConfigService;
 import com.verdantartifice.primalmagick.platform.services.IInputService;
+import com.verdantartifice.primalmagick.platform.services.ITagService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArmorMaterialService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockEntityTypeService;
@@ -52,6 +53,7 @@ public class Services {
     public static final IInputService INPUT = load(IInputService.class);
     public static final IConfigService CONFIG = load(IConfigService.class);
     public static final ICapabilityService CAPABILITIES = load(ICapabilityService.class);
+    public static final ITagService TAGS = load(ITagService.class);
 
     // Registry services
     public static final IBlockService BLOCKS = load(IBlockService.class);
