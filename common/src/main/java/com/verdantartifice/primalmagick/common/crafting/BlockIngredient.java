@@ -14,7 +14,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -86,7 +85,7 @@ public class BlockIngredient implements Predicate<Block> {
         ing.determineMatchingBlocks();
         buf.writeVarInt(ing.matchingBlocks.length);
         for (int index = 0; index < ing.matchingBlocks.length; index++) {
-            buf.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(ing.matchingBlocks[index]));
+            buf.writeResourceLocation(Services.BLOCKS.getKey(ing.matchingBlocks[index]));
         }
     }
     
@@ -121,8 +120,8 @@ public class BlockIngredient implements Predicate<Block> {
         int size = buf.readVarInt();
         return fromBlockListStream(Stream.generate(() -> {
             ResourceLocation loc = buf.readResourceLocation();
-            return new BlockIngredient.SingleBlockValue(ForgeRegistries.BLOCKS.getValue(loc));
-        }).limit((long)size));
+            return new BlockIngredient.SingleBlockValue(Services.BLOCKS.get(loc));
+        }).limit(size));
     }
     
     private static Codec<BlockIngredient> codec(boolean allowEmpty) {

@@ -14,7 +14,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -51,7 +50,7 @@ public class IconDefinition {
     }
     
     public static IconDefinition of(ItemLike item) {
-        return new IconDefinition(true, false, ForgeRegistries.ITEMS.getKey(item.asItem()), Optional.empty());
+        return new IconDefinition(true, false, Services.ITEMS.getKey(item.asItem()), Optional.empty());
     }
     
     public static IconDefinition of(TagKey<Item> tagKey) {
@@ -80,7 +79,7 @@ public class IconDefinition {
     
     @Nullable
     public Item asItem() {
-        return this.isItem ? ForgeRegistries.ITEMS.getValue(this.location) : null;
+        return this.isItem ? Services.ITEMS.get(this.location) : null;
     }
     
     @Nullable

@@ -14,7 +14,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.mutable.MutableDouble;
 
 import javax.annotation.Nonnull;
@@ -107,6 +106,6 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
     
     @Nullable
     public Optional<Block> getAidBlock() {
-        return this.aidBlock.map(loc -> ForgeRegistries.BLOCKS.getValue(loc));
+        return this.aidBlock.map(Services.BLOCKS::get);
     }
 }

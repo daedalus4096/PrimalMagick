@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.util;
 
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +30,7 @@ public class ItemUtils {
             return 0;
         }
         ItemStack temp = stack.copyWithCount(1);
-        return Objects.hash(ForgeRegistries.ITEMS.getKey(temp.getItem()), temp.getComponents());
+        return Objects.hash(Services.ITEMS.getKey(temp.getItem()), temp.getComponents());
     }
     
     /**

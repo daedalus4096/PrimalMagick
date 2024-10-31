@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.common.util;
 
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.SharedConstants;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.ByteArrayOutputStream;
@@ -94,7 +94,7 @@ public class DataPackUtils {
 
         for (Item item : sourceItems) {
             @Nullable
-            ResourceLocation resourceLocation = ForgeRegistries.ITEMS.getKey(item);
+            ResourceLocation resourceLocation = Services.ITEMS.getKey(item);
             if (resourceLocation != null) {
                 String target = resourceLocation.toString();
                 String filename = target.replace(":", "_")+".json";
@@ -107,7 +107,7 @@ public class DataPackUtils {
         }
         
         for (EntityType<?> entityType : sourceEntities) {
-            ResourceLocation resourceLocation = ForgeRegistries.ENTITY_TYPES.getKey(entityType);
+            ResourceLocation resourceLocation = Services.ENTITY_TYPES.getKey(entityType);
             if (resourceLocation != null) {
                 String target = resourceLocation.toString();
                 String filename = target.replace(":", "_") + ".json";

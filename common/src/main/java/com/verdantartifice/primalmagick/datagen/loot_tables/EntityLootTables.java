@@ -1,18 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
-
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
@@ -30,6 +20,14 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Data provider for all of the mod's entity loot tables.
@@ -56,12 +54,12 @@ public class EntityLootTables extends EntityLootSubProvider {
 
     private void registerEmptyLootTable(EntityType<?> type) {
         // Just mark that it's been registered without creating a table builder, to track expectations
-        this.registeredEntities.add(ForgeRegistries.ENTITY_TYPES.getKey(type));
+        this.registeredEntities.add(Services.ENTITY_TYPES.getKey(type));
     }
     
     private void registerLootTable(EntityType<?> type, LootTable.Builder builder) {
         this.add(type, builder);
-        this.registeredEntities.add(ForgeRegistries.ENTITY_TYPES.getKey(type));
+        this.registeredEntities.add(Services.ENTITY_TYPES.getKey(type));
     }
     
     @Override

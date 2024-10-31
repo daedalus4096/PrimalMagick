@@ -1,16 +1,5 @@
 package com.verdantartifice.primalmagick.common.theorycrafting;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -28,7 +17,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractRe
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.AbstractWeightFunction;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -38,7 +27,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Class encapsulating a data-defined template for a theorycrafting project.  These templates determine
@@ -106,7 +104,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         ResourceLocation foundAid = null;
         if (!this.aidBlocks.isEmpty()) {
             boolean found = false;
-            Set<ResourceLocation> nearbyIds = nearby.stream().map(b -> ForgeRegistries.BLOCKS.getKey(b)).collect(Collectors.toUnmodifiableSet());
+            Set<ResourceLocation> nearbyIds = nearby.stream().map(b -> Services.BLOCKS.getKey(b)).collect(Collectors.toUnmodifiableSet());
             for (ResourceLocation aidBlock : this.aidBlocks) {
                 if (nearbyIds.contains(aidBlock)) {
                     found = true;
@@ -226,7 +224,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         }
         
         public Builder aid(Block block) {
-            this.aidBlocks.add(ForgeRegistries.BLOCKS.getKey(Preconditions.checkNotNull(block)));
+            this.aidBlocks.add(Services.BLOCKS.getKey(Preconditions.checkNotNull(block)));
             return this;
         }
         

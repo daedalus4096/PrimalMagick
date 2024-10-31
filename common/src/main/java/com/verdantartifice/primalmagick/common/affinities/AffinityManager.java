@@ -1,28 +1,5 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.commons.lang3.mutable.MutableObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
@@ -31,17 +8,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.IHasManaCost;
 import com.verdantartifice.primalmagick.common.menus.FakeMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -61,7 +38,27 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.mutable.MutableObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid=Constants.MOD_ID)
 public class AffinityManager extends SimpleJsonResourceReloadListener {
@@ -208,14 +205,14 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     @Nullable
     private CompletableFuture<SourceList> getCachedItemResult(ItemStack stack) {
         synchronized (this.resultCacheLock) {
-            return this.resultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).get(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+            return this.resultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).get(Services.ITEMS.getKey(stack.getItem()));
         }
     }
     
     private void setCachedItemResult(ItemStack stack, @Nullable CompletableFuture<SourceList> result) {
         if (result != null) {
             synchronized (this.resultCacheLock) {
-                this.resultCache.computeIfAbsent(AffinityType.ITEM, $ -> new ConcurrentHashMap<>()).put(ForgeRegistries.ITEMS.getKey(stack.getItem()), result);
+                this.resultCache.computeIfAbsent(AffinityType.ITEM, $ -> new ConcurrentHashMap<>()).put(Services.ITEMS.getKey(stack.getItem()), result);
             }
         }
     }
@@ -223,14 +220,14 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     @Nullable
     private CompletableFuture<SourceList> getCachedEntityResult(EntityType<?> entityType) {
         synchronized (this.resultCacheLock) {
-            return this.resultCache.getOrDefault(AffinityType.ENTITY_TYPE, Collections.emptyMap()).get(ForgeRegistries.ENTITY_TYPES.getKey(entityType));
+            return this.resultCache.getOrDefault(AffinityType.ENTITY_TYPE, Collections.emptyMap()).get(Services.ENTITY_TYPES.getKey(entityType));
         }
     }
     
     private void setCachedEntityResult(EntityType<?> entityType, @Nullable CompletableFuture<SourceList> result) {
         if (result != null) {
             synchronized (this.resultCacheLock) {
-                this.resultCache.computeIfAbsent(AffinityType.ENTITY_TYPE, $ -> new ConcurrentHashMap<>()).put(ForgeRegistries.ENTITY_TYPES.getKey(entityType), result);
+                this.resultCache.computeIfAbsent(AffinityType.ENTITY_TYPE, $ -> new ConcurrentHashMap<>()).put(Services.ENTITY_TYPES.getKey(entityType), result);
             }
         }
     }
@@ -251,10 +248,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                 retVal = Optional.empty();
             }
         } catch (CancellationException e) {
-            LOGGER.warn("Affinity calculation for entity type {} was cancelled before completion", ForgeRegistries.ENTITY_TYPES.getKey(type));
+            LOGGER.warn("Affinity calculation for entity type {} was cancelled before completion", Services.ENTITY_TYPES.getKey(type));
             retVal = Optional.empty();
         } catch (InterruptedException e) {
-            LOGGER.warn("Affinity calculation for entity type {} was interrupted before completion", ForgeRegistries.ENTITY_TYPES.getKey(type));
+            LOGGER.warn("Affinity calculation for entity type {} was interrupted before completion", Services.ENTITY_TYPES.getKey(type));
             retVal = Optional.empty();
         } catch (ExecutionException e) {
             LOGGER.error("Failed to calculate entity type affinities", e);
@@ -265,7 +262,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     public CompletableFuture<SourceList> getAffinityValuesAsync(EntityType<?> type, RegistryAccess registryAccess) {
         return CompletableFuture.supplyAsync(() -> {
-            IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
+            IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, Services.ENTITY_TYPES.getKey(type));
             if (entityAffinity == null) {
                 return SourceList.EMPTY;
             } else {
@@ -302,10 +299,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                 retVal = Optional.empty();
             }
         } catch (CancellationException e) {
-            LOGGER.warn("Affinity calculation for stack of item {} was cancelled before completion", ForgeRegistries.ITEMS.getKey(stack.getItem()));
+            LOGGER.warn("Affinity calculation for stack of item {} was cancelled before completion", Services.ITEMS.getKey(stack.getItem()));
             retVal = Optional.empty();
         } catch (InterruptedException e) {
-            LOGGER.warn("Affinity calculation for stack of item {} was interrupted before completion", ForgeRegistries.ITEMS.getKey(stack.getItem()));
+            LOGGER.warn("Affinity calculation for stack of item {} was interrupted before completion", Services.ITEMS.getKey(stack.getItem()));
             retVal = Optional.empty();
         } catch (ExecutionException e) {
             LOGGER.error("Failed to calculate item affinities", e);
@@ -328,7 +325,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
             return CompletableFuture.completedFuture(SourceList.EMPTY);
         }
         
-        ResourceLocation stackItemLoc = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        ResourceLocation stackItemLoc = Services.ITEMS.getKey(stack.getItem());
 
         // First try looking up the affinity data from the registry
         CompletableFuture<IAffinity> itemAffinityFuture;
@@ -383,7 +380,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     protected CompletableFuture<RecipeValues> generateItemAffinityValuesFromRecipesAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         // Look up all recipes with the given item as an output
         List<CompletableFuture<RecipeValues>> recipeValueFutures = recipeManager.getRecipes().stream()
-                .filter(r -> r.value().getResultItem(registryAccess) != null && ForgeRegistries.ITEMS.getKey(r.value().getResultItem(registryAccess).getItem()).equals(id))
+                .filter(r -> r.value().getResultItem(registryAccess) != null && Services.ITEMS.getKey(r.value().getResultItem(registryAccess).getItem()).equals(id))
                 .map(recipeHolder -> {
                     // Compute the affinities from the recipe's ingredients
                     return this.generateItemAffinityValuesFromIngredientsAsync(recipeHolder, recipeManager, registryAccess, history).thenApply(ingSources -> {
@@ -530,7 +527,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (stack.has(DataComponents.POTION_CONTENTS)) {
             Optional<Holder<Potion>> potionHolderOpt = stack.get(DataComponents.POTION_CONTENTS).potion();
             potionHolderOpt.ifPresent(potionHolder -> {
-                IAffinity bonus = this.getAffinity(AffinityType.POTION_BONUS, ForgeRegistries.POTIONS.getKey(potionHolder.value()));
+                IAffinity bonus = this.getAffinity(AffinityType.POTION_BONUS, BuiltInRegistries.POTION.getKey(potionHolder.value()));
                 if (bonus != null) {
                     bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()));
                 }

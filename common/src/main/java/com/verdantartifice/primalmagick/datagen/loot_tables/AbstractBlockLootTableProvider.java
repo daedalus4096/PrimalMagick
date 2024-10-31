@@ -1,21 +1,10 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.OptionalInt;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
-
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -51,6 +40,16 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.loot.CanToolPerformAction;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.OptionalInt;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Base class for the block loot table provider for the mod.  Handles the infrastructure so that the
@@ -85,7 +84,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     }
 
     private void registerLootTableBuilder(Block block, LootTable.Builder builder) {
-        this.registeredBlocks.add(ForgeRegistries.BLOCKS.getKey(block));
+        this.registeredBlocks.add(Services.BLOCKS.getKey(block));
         this.add(block, builder);
     }
     
@@ -95,7 +94,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     
     protected void registerEmptyTable(Block block) {
         // Just mark that it's been registered without creating a table builder, to track expectations
-        this.registeredBlocks.add(ForgeRegistries.BLOCKS.getKey(block));
+        this.registeredBlocks.add(Services.BLOCKS.getKey(block));
     }
     
     protected void registerBasicTable(Block block) {

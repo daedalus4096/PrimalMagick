@@ -1,19 +1,17 @@
 package com.verdantartifice.primalmagick.datagen.affinities;
 
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class ItemAffinityBuilder {
     protected final ResourceLocation targetId;
@@ -24,7 +22,7 @@ public class ItemAffinityBuilder {
     protected SourceList.Builder removeValues = SourceList.builder();
 
     protected ItemAffinityBuilder(@Nonnull ItemLike item) {
-        this.targetId = ForgeRegistries.ITEMS.getKey(item.asItem());
+        this.targetId = Services.ITEMS.getKey(item.asItem());
     }
     
     public static ItemAffinityBuilder itemAffinity(@Nonnull ItemLike item) {
@@ -40,7 +38,7 @@ public class ItemAffinityBuilder {
     }
     
     public ItemAffinityBuilder base(@Nonnull ItemLike baseItem) {
-        this.baseId = ForgeRegistries.ITEMS.getKey(baseItem.asItem());
+        this.baseId = Services.ITEMS.getKey(baseItem.asItem());
         return this;
     }
     
@@ -80,13 +78,13 @@ public class ItemAffinityBuilder {
         if (this.targetId == null) {
             throw new IllegalStateException("No target item for affinity " + id.toString());
         }
-        if (!ForgeRegistries.ITEMS.containsKey(this.targetId)) {
+        if (!Services.ITEMS.containsKey(this.targetId)) {
             throw new IllegalStateException("Unknown target item " + this.targetId.toString() + " for affinity " + id.toString());
         }
         
         if (this.baseId != null && this.hasSetValues) {
             throw new IllegalStateException("Both base and set-values defined for affinity " + id.toString());
-        } else if (this.baseId != null && !ForgeRegistries.ITEMS.containsKey(this.baseId)) {
+        } else if (this.baseId != null && !Services.ITEMS.containsKey(this.baseId)) {
             throw new IllegalStateException("Unknown base item " + this.baseId.toString() + " for affinity " + id.toString());
         } else if (this.baseId != null && this.targetId.equals(this.baseId)) {
             throw new IllegalStateException("Target defines itself as a base for affinity " + id.toString());

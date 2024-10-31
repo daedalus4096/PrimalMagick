@@ -1,25 +1,23 @@
 package com.verdantartifice.primalmagick.datagen.affinities;
 
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class EntityTypeAffinityBuilder {
     protected final ResourceLocation targetId;
     protected SourceList.Builder values = SourceList.builder();
 
     protected EntityTypeAffinityBuilder(@Nonnull EntityType<?> target) {
-        this.targetId = ForgeRegistries.ENTITY_TYPES.getKey(target);
+        this.targetId = Services.ENTITY_TYPES.getKey(target);
     }
     
     public static EntityTypeAffinityBuilder entityAffinity(@Nonnull EntityType<?> target) {
@@ -40,7 +38,7 @@ public class EntityTypeAffinityBuilder {
         if (this.targetId == null) {
             throw new IllegalStateException("No target entity type for affinity " + id.toString());
         }
-        if (!ForgeRegistries.ENTITY_TYPES.containsKey(this.targetId)) {
+        if (!Services.ENTITY_TYPES.containsKey(this.targetId)) {
             throw new IllegalStateException("Unknown target entity type " + this.targetId.toString() + " for affinity " + id.toString());
         }
     }

@@ -1,26 +1,24 @@
 package com.verdantartifice.primalmagick.datagen.affinities;
 
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class PotionBonusAffinityBuilder {
     protected final ResourceLocation targetId;
     protected SourceList.Builder bonusValues = SourceList.builder();
     
     protected PotionBonusAffinityBuilder(@Nonnull Holder<Potion> target) {
-        this.targetId = ForgeRegistries.POTIONS.getKey(target.value());
+        this.targetId = BuiltInRegistries.POTION.getKey(target.value());
     }
     
     public static PotionBonusAffinityBuilder potionBonusAffinity(@Nonnull Holder<Potion> target) {
@@ -41,7 +39,7 @@ public class PotionBonusAffinityBuilder {
         if (this.targetId == null) {
             throw new IllegalStateException("No target potion for affinity " + id.toString());
         }
-        if (!ForgeRegistries.POTIONS.containsKey(this.targetId)) {
+        if (!BuiltInRegistries.POTION.containsKey(this.targetId)) {
             throw new IllegalStateException("Unknown target potion " + this.targetId.toString() + " for affinity " + id.toString());
         }
     }

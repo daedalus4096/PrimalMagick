@@ -1,22 +1,20 @@
 package com.verdantartifice.primalmagick.common.theorycrafting;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Primary access point for theorycraft-related methods.
@@ -63,7 +61,7 @@ public class TheorycraftManager {
     @Nonnull
     public static Set<Block> getNearbyAidBlocks(Level level, BlockPos pos) {
         Set<ResourceLocation> allAids = getAllAidBlockIds(level.registryAccess());
-        return getSurroundingsInner(level, pos, b -> allAids.contains(ForgeRegistries.BLOCKS.getKey(b)));
+        return getSurroundingsInner(level, pos, b -> allAids.contains(Services.BLOCKS.getKey(b)));
     }
     
     @Nonnull

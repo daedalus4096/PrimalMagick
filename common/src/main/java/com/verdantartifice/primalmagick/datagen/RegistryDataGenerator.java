@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagick.datagen;
 
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -25,7 +22,6 @@ import com.verdantartifice.primalmagick.datagen.tags.BookLanguageTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.DamageTypeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.ResearchEntryTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.StructureTagsProviderPM;
-
 import net.minecraft.core.Cloner;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
@@ -38,6 +34,9 @@ import net.minecraft.resources.RegistryDataLoader;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Generates datapack JSON for the Primal Magick mod.

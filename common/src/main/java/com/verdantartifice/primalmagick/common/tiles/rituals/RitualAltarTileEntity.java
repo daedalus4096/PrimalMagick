@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.FakeMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -37,6 +36,7 @@ import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -70,7 +70,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -455,7 +454,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
             if (block instanceof IRitualPropBlock) {
                 IRitualPropBlock propBlock = (IRitualPropBlock)block;
                 if (propBlock.isUniversal() && !propBlock.isPropActivated(propState, this.level, propPos)) {
-                    propSteps.add(new UniversalRitualStep(propPos, ForgeRegistries.BLOCKS.getKey(block)));
+                    propSteps.add(new UniversalRitualStep(propPos, Services.BLOCKS.getKey(block)));
                 }
             }
         }
@@ -761,7 +760,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 if ( !(block instanceof IRitualPropBlock) || 
                      !requiredProp.test(block) ||
                      !((IRitualPropBlock)block).isBlockSaltPowered(altar.level, altar.awaitedPropPos) ) {
-                    altar.onPropInterrupted(block, propState, ForgeRegistries.BLOCKS.getKey(requiredProp.getMatchingBlocks()[0]));
+                    altar.onPropInterrupted(block, propState, Services.BLOCKS.getKey(requiredProp.getMatchingBlocks()[0]));
                 }
             }
             altar.nextCheckCount = altar.activeCount + 20;
@@ -790,7 +789,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 
                 // If no match was found, warn the player the first time
                 if (!altar.skipWarningMessage && altar.getActivePlayer() != null) {
-                    Block stepBlock = ForgeRegistries.BLOCKS.getValue(expectedId);
+                    Block stepBlock = Services.BLOCKS.get(expectedId);
                     if (stepBlock == null) {
                         altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop.empty"), false);
                     } else {
@@ -830,7 +829,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     protected void onPropInterrupted(Block block, BlockState propState, ResourceLocation expectedId) {
-        Block expectedProp = ForgeRegistries.BLOCKS.getValue(expectedId);
+        Block expectedProp = Services.BLOCKS.get(expectedId);
         
         // If contact with the prop was lost, add an instability spike and start looking again
         if (this.getActivePlayer() != null) {

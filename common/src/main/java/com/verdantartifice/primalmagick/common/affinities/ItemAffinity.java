@@ -1,22 +1,20 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-
-import javax.annotation.Nonnull;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.JsonUtils;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public class ItemAffinity extends AbstractAffinity {
     public static final Serializer SERIALIZER = new Serializer();
@@ -85,7 +83,7 @@ public class ItemAffinity extends AbstractAffinity {
             }
             
             ResourceLocation targetId = ResourceLocation.parse(target);
-            if (!ForgeRegistries.ITEMS.containsKey(targetId)) {
+            if (!Services.ITEMS.containsKey(targetId)) {
                 throw new JsonSyntaxException("Unknown target item " + target + " in affinity JSON for " + affinityId.toString());
             }
             
@@ -96,7 +94,7 @@ public class ItemAffinity extends AbstractAffinity {
                 entry.setValues = JsonUtils.toSourceList(json.get("set").getAsJsonObject());
             } else if (json.has("base")) {
                 entry.baseEntryId = ResourceLocation.parse(json.getAsJsonPrimitive("base").getAsString());
-                if (!ForgeRegistries.ITEMS.containsKey(entry.baseEntryId)) {
+                if (!Services.ITEMS.containsKey(entry.baseEntryId)) {
                     throw new JsonSyntaxException("Unknown base item " + target + " in affinity JSON for " + affinityId.toString());
                 }
                 if (json.has("add")) {

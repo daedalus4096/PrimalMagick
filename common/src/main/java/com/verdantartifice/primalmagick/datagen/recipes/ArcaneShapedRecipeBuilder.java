@@ -1,13 +1,5 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
@@ -19,8 +11,8 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -30,13 +22,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Definition of a recipe data file builder for shaped arcane recipes.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.data.ShapedRecipeBuilder}
  */
 public class ArcaneShapedRecipeBuilder {
     protected final ItemStack result;
@@ -204,7 +201,7 @@ public class ArcaneShapedRecipeBuilder {
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}.
+     * Builds this recipe into a finished recipe.
      * 
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
@@ -217,14 +214,14 @@ public class ArcaneShapedRecipeBuilder {
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}. Use {@link #build(RecipeOutput)} if save is the same as the ID for
+     * Builds this recipe into a finished recipe. Use {@link #build(RecipeOutput)} if save is the same as the ID for
      * the result.
      * 
      * @param output a consumer for the finished recipe
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
+        ResourceLocation id = Services.ITEMS.getKey(this.result.getItem());
         ResourceLocation saveLoc = ResourceLocation.parse(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Arcane Shaped Recipe " + save + " should remove its 'save' argument");
@@ -234,12 +231,12 @@ public class ArcaneShapedRecipeBuilder {
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}.
+     * Builds this recipe into a finished recipe.
      * 
      * @param output a consumer for the finished recipe
      */
     public void build(RecipeOutput output) {
-        this.build(output, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
+        this.build(output, Services.ITEMS.getKey(this.result.getItem()));
     }
 
     /**

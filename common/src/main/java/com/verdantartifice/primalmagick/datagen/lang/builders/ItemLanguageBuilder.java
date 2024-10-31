@@ -1,12 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 import com.verdantartifice.primalmagick.client.util.TooltipHelper;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -14,7 +10,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying item-related localizations in a structured way.
@@ -33,7 +32,7 @@ public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item, ItemLangu
 
     @Override
     protected ResourceLocation getBaseRegistryKey(Item base) {
-        return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(base));
+        return Objects.requireNonNull(Services.ITEMS.getKey(base));
     }
 
     public ItemLanguageBuilder tooltip(String value) {

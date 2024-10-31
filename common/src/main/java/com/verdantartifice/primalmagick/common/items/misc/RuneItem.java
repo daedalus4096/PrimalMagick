@@ -2,12 +2,12 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.runes.Rune;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,7 +49,7 @@ public class RuneItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack != null && stack.getItem() instanceof RuneItem runeItem) {
-            String key = String.join(".", "item", Constants.MOD_ID, ForgeRegistries.ITEMS.getKey(this).getPath(), "tooltip");
+            String key = String.join(".", "item", Constants.MOD_ID, Services.ITEMS.getKey(this).getPath(), "tooltip");
             tooltip.add(Component.translatable(key).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
             
             if (runeItem.rune.hasLimit()) {

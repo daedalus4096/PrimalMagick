@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 import com.verdantartifice.primalmagick.client.util.TooltipHelper;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying block-related localizations in a structured way.
@@ -29,7 +28,7 @@ public class BlockLanguageBuilder extends AbstractLanguageBuilder<Block, BlockLa
 
     @Override
     protected ResourceLocation getBaseRegistryKey(Block base) {
-        return Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(base));
+        return Objects.requireNonNull(Services.BLOCKS.getKey(base));
     }
 
     public BlockLanguageBuilder tooltip(String value) {

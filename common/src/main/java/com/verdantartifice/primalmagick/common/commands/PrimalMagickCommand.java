@@ -509,9 +509,9 @@ public class PrimalMagickCommand {
         }
         // Scan the given item for the target player and grant them its research
         if (ResearchManager.setScanned(stack, target)) {
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), Services.ITEMS.getKey(item.getItem()).toString()), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), Services.ITEMS.getKey(item.getItem()).toString()));
             }
         } else {
             source.sendFailure(Component.translatable("commands.primalmagick.scans.grant.failure", target.getName()));            
@@ -672,7 +672,7 @@ public class PrimalMagickCommand {
         Logger LOGGER = LogManager.getLogger();
 
         ServerLevel level = source.getLevel();
-        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getRecipeManager();
+        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getLevel().getRecipeManager();
         RegistryAccess registryAccess = source.registryAccess();
 
         List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
@@ -685,7 +685,7 @@ public class PrimalMagickCommand {
         target.sendSystemMessage(Component.literal("Found " + Integer.toString(sourcelessItems.size()) + " items without sources"+ excludeNote + "; check system logs for details"), false);
 
         // note: technically this could result in a list with null elements. which is noncommunicative.
-        LOGGER.info("Items with no sources: " + sourcelessItems.stream().map(item -> ForgeRegistries.ITEMS.getKey(item)).toList().toString());
+        LOGGER.info("Items with no sources: " + sourcelessItems.stream().map(Services.ITEMS::getKey).toList().toString());
 
         return 0;
     }
@@ -694,7 +694,7 @@ public class PrimalMagickCommand {
         Logger LOGGER = LogManager.getLogger();
         ServerPlayer target = source.getPlayer();
         ServerLevel level = source.getLevel();
-        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getRecipeManager();
+        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getLevel().getRecipeManager();
         RegistryAccess registryAccess = source.registryAccess();
 
         List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
@@ -731,9 +731,9 @@ public class PrimalMagickCommand {
     private static List<EntityType<?>> listSourcelessEntityTypes(RegistryAccess registryAccess, Collection<String> excludeNamespaces) {
         AffinityManager am = AffinityManager.getOrCreateInstance();
         Vector<EntityType<?>> retVal = new Vector<>();
-        
+
         ForgeRegistries.ENTITY_TYPES.forEach(entityType -> {
-            ResourceLocation resourceLocation = ForgeRegistries.ENTITY_TYPES.getKey(entityType);
+            ResourceLocation resourceLocation = Services.ENTITY_TYPES.getKey(entityType);
             if (resourceLocation == null) {
                 // If the Item can't be resolved in registry, it's got problems I can't care about.
                 return;
@@ -764,7 +764,7 @@ public class PrimalMagickCommand {
         ForgeRegistries.ITEMS.forEach( (item) -> {
                 ItemStack stack = item.getDefaultInstance();
 
-                ResourceLocation resourceLocation = ForgeRegistries.ITEMS.getKey(item);
+                ResourceLocation resourceLocation = Services.ITEMS.getKey(item);
                 if (resourceLocation == null) {
                     // If the Item can't be resolved in registry, it's got problems I can't care about.
                     return;
@@ -937,7 +937,7 @@ public class PrimalMagickCommand {
     }
 
     private static int setLanguageComprehension(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage, int value) {
-        int complexity = bookLanguage.get().complexity();
+        int complexity = bookLanguage.value().complexity();
         ResourceLocation langKey = bookLanguage.key().location();
         LinguisticsManager.setComprehension(target, bookLanguage, value);
         int newValue = LinguisticsManager.getComprehension(target, bookLanguage);
@@ -998,8 +998,8 @@ public class PrimalMagickCommand {
 
     private static int explainItemAffinity(CommandSourceStack source, ItemInput item) {
         // Get the affinity data for the item
-        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item.getItem());
-        IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getRecipeManager(), source.registryAccess(), new ArrayList<>()).join();
+        ResourceLocation itemId = Services.ITEMS.getKey(item.getItem());
+        IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getLevel().getRecipeManager(), source.registryAccess(), new ArrayList<>()).join();
         if (affinityData instanceof ItemAffinity itemAffinity) {
             itemAffinity.getSourceRecipe().ifPresentOrElse(recipeLoc -> {
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.affinities.explain.from_recipe", itemId.toString(), recipeLoc.toString()), true);

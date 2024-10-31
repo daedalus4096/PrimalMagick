@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying entity type-related localizations in a structured way.
@@ -27,6 +27,6 @@ public class EntityTypeLanguageBuilder extends AbstractLanguageBuilder<EntityTyp
 
     @Override
     protected ResourceLocation getBaseRegistryKey(EntityType<?> base) {
-        return Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(base));
+        return Objects.requireNonNull(Services.ENTITY_TYPES.getKey(base));
     }
 }

@@ -1,21 +1,19 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.JsonUtils;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class EntityTypeAffinity extends AbstractAffinity {
     public static final Serializer SERIALIZER = new Serializer();
@@ -54,7 +52,7 @@ public class EntityTypeAffinity extends AbstractAffinity {
             }
             
             ResourceLocation targetId = ResourceLocation.parse(target);
-            if (!ForgeRegistries.ENTITY_TYPES.containsKey(targetId)) {
+            if (!Services.ENTITY_TYPES.containsKey(targetId)) {
                 throw new JsonSyntaxException("Unknown target entity type " + target + " in affinity JSON for " + affinityId.toString());
             }
             

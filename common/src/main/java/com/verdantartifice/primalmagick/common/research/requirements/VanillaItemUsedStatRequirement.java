@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import java.util.stream.Stream;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -20,7 +19,8 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.stream.Stream;
 
 /**
  * Requirement that the player has accumulated at least the given amount of the given Minecraft statistic.
@@ -29,11 +29,11 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaItemUsedStatRequirement> implements IVanillaStatRequirement {
     public static final MapCodec<VanillaItemUsedStatRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("item").xmap(loc -> ForgeRegistries.ITEMS.getValue(loc), item -> ForgeRegistries.ITEMS.getKey(item)).forGetter(req -> req.stat.getValue()),
+            ResourceLocation.CODEC.fieldOf("item").xmap(loc -> Services.ITEMS.get(loc), item -> Services.ITEMS.getKey(item)).forGetter(req -> req.stat.getValue()),
             Codec.INT.fieldOf("threshold").forGetter(VanillaItemUsedStatRequirement::getThreshold)
         ).apply(instance, VanillaItemUsedStatRequirement::new));
     public static final StreamCodec<ByteBuf, VanillaItemUsedStatRequirement> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC.map(loc -> ForgeRegistries.ITEMS.getValue(loc), item -> ForgeRegistries.ITEMS.getKey(item)),
+            ResourceLocation.STREAM_CODEC.map(loc -> Services.ITEMS.get(loc), item -> Services.ITEMS.getKey(item)),
             req -> req.stat.getValue(),
             ByteBufCodecs.VAR_INT,
             VanillaItemUsedStatRequirement::getThreshold,
@@ -58,12 +58,12 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
 
     @Override
     public ResourceLocation getStatTypeLoc() {
-        return ForgeRegistries.STAT_TYPES.getKey(this.stat.getType());
+        return BuiltInRegistries.STAT_TYPE.getKey(this.stat.getType());
     }
     
     @Override
     public ResourceLocation getStatValueLoc() {
-        return ForgeRegistries.ITEMS.getKey(this.stat.getValue());
+        return Services.ITEMS.getKey(this.stat.getValue());
     }
 
     @Override

@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
-import java.util.Objects;
-
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
 
 public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
     public static final MapCodec<ItemScanKey> CODEC = ItemStack.SINGLE_ITEM_CODEC.fieldOf("stack").xmap(ItemScanKey::new, key -> key.stack);
@@ -54,7 +53,7 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(ForgeRegistries.ITEMS.getKey(this.stack.getItem()));
+        return Objects.hash(Services.ITEMS.getKey(this.stack.getItem()));
     }
 
     @Override

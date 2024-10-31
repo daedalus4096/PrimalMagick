@@ -1,17 +1,11 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.ConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.PartialComponentIngredient;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
@@ -19,10 +13,10 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +27,11 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Definition of a recipe data file builder for concocting recipes.
@@ -144,7 +142,7 @@ public class ConcoctingRecipeBuilder {
     
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        String groupStr = this.useDefaultGroup ? ForgeRegistries.POTIONS.getKey(this.result.get(DataComponents.POTION_CONTENTS).potion().get().value()).getPath() : this.group;
+        String groupStr = this.useDefaultGroup ? BuiltInRegistries.POTION.getKey(this.result.get(DataComponents.POTION_CONTENTS).potion().get().value()).getPath() : this.group;
         ConcoctingRecipe recipe = new ConcoctingRecipe(Objects.requireNonNullElse(groupStr, ""), this.result, this.ingredients, this.getFinalRequirement(), Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);
     }
@@ -158,6 +156,6 @@ public class ConcoctingRecipeBuilder {
         if (type == null) {
             throw new IllegalStateException("Output is not a concoction for concocting recipe with output " + this.result.getHoverName().getString());
         }
-        this.build(output, ResourceUtils.loc(ForgeRegistries.POTIONS.getKey(contents.potion().get().value()).getPath() + "_" + type.getSerializedName()));
+        this.build(output, ResourceUtils.loc(BuiltInRegistries.POTION.getKey(contents.potion().get().value()).getPath() + "_" + type.getSerializedName()));
     }
 }

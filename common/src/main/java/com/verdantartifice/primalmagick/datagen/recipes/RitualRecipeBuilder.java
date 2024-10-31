@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagick.common.crafting.RitualRecipe;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
@@ -18,8 +12,8 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
@@ -32,7 +26,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.crafting.ingredients.PartialNBTIngredient;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Definition of a recipe data file builder for ritual recipes.
@@ -315,7 +313,7 @@ public class RitualRecipeBuilder {
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}.
+     * Builds this recipe into a finished recipe.
      * 
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
@@ -328,14 +326,14 @@ public class RitualRecipeBuilder {
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}. Use {@link #build(RecipeOutput)} if save is the same as the ID for
+     * Builds this recipe into a finished recipe. Use {@link #build(RecipeOutput)} if save is the same as the ID for
      * the result.
      * 
      * @param output a consumer for the finished recipe
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
+        ResourceLocation id = Services.ITEMS.getKey(this.result.getItem());
         ResourceLocation saveLoc = ResourceLocation.parse(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Ritual Recipe " + save + " should remove its 'save' argument");
@@ -345,12 +343,12 @@ public class RitualRecipeBuilder {
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}.
+     * Builds this recipe into a finished recipe.
      * 
      * @param output a consumer for the finished recipe
      */
     public void build(RecipeOutput output) {
-        this.build(output, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
+        this.build(output, Services.ITEMS.getKey(this.result.getItem()));
     }
     
     /**

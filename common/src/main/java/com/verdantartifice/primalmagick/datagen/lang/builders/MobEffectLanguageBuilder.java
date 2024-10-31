@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying status effect-related localizations in a structured way.
@@ -27,6 +27,6 @@ public class MobEffectLanguageBuilder extends AbstractLanguageBuilder<MobEffect,
 
     @Override
     protected ResourceLocation getBaseRegistryKey(MobEffect effect) {
-        return Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.getKey(effect));
+        return Objects.requireNonNull(Services.MOB_EFFECTS.getKey(effect));
     }
 }

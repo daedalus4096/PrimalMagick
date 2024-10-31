@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagick.common.util;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Vector2i;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class CodecUtils {
         }
     }, DataResult::success);
 
-    public static final Codec<Block> BLOCK_NONAIR_CODEC = ForgeRegistries.BLOCKS.getCodec().validate(block -> {
+    public static final Codec<Block> BLOCK_NONAIR_CODEC = Services.BLOCKS.codec().validate(block -> {
         return block == Blocks.AIR ? DataResult.error(() -> "Block must not be minecraft:air") : DataResult.success(block);
     });
     

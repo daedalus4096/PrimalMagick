@@ -1,29 +1,27 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
-import java.util.Objects;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
 
 public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
     public static final MapCodec<EntityScanKey> CODEC = ResourceLocation.CODEC.fieldOf("entityType").xmap(loc -> {
-        return new EntityScanKey(ForgeRegistries.ENTITY_TYPES.getValue(loc));
+        return new EntityScanKey(Services.ENTITY_TYPES.get(loc));
     }, key -> {
         return EntityType.getKey(key.entityType);
     });
     public static final StreamCodec<ByteBuf, EntityScanKey> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(loc -> {
-        return new EntityScanKey(ForgeRegistries.ENTITY_TYPES.getValue(loc));
+        return new EntityScanKey(Services.ENTITY_TYPES.get(loc));
     }, key -> {
         return EntityType.getKey(key.entityType);
     });
@@ -39,7 +37,7 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
 
     @Override
     public String toString() {
-        return PREFIX + ForgeRegistries.ENTITY_TYPES.getKey(this.entityType).toString();
+        return PREFIX + Services.ENTITY_TYPES.getKey(this.entityType).toString();
     }
 
     @Override
