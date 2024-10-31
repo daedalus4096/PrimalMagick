@@ -4,13 +4,13 @@ import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IShapedArcaneRecipePM;
 import com.verdantartifice.primalmagick.common.crafting.IShapelessArcaneRecipePM;
+import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
-import net.minecraftforge.common.crafting.IShapedRecipe;
 
 import javax.annotation.Nonnull;
 
@@ -34,12 +34,12 @@ public class RecipePageFactory {
             return new ConcoctingRecipePage((RecipeHolder<IConcoctingRecipe>)recipeHolder, registryAccess);
         } else if (recipe instanceof IDissolutionRecipe) {
             return new DissolutionRecipePage((RecipeHolder<IDissolutionRecipe>)recipeHolder, registryAccess);
-        } else if (recipe instanceof IShapedArcaneRecipePM) {
-            return new ShapedArcaneRecipePage((RecipeHolder<IShapedArcaneRecipePM>)recipeHolder, registryAccess);
+        } else if (recipe instanceof ShapedArcaneRecipe) {
+            return new ShapedArcaneRecipePage((RecipeHolder<ShapedArcaneRecipe>)recipeHolder, registryAccess);
         } else if (recipe instanceof IShapelessArcaneRecipePM) {
             return new ShapelessArcaneRecipePage((RecipeHolder<IShapelessArcaneRecipePM>)recipeHolder, registryAccess);
-        } else if (recipe instanceof IShapedRecipe) {
-            return new ShapedRecipePage((RecipeHolder<IShapedRecipe<?>>)recipeHolder, registryAccess);
+        } else if (recipe instanceof ShapedRecipe) {
+            return new ShapedRecipePage((RecipeHolder<ShapedRecipe>)recipeHolder, registryAccess);
         } else {
             return new ShapelessRecipePage(recipeHolder, registryAccess);
         }

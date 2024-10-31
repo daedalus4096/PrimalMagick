@@ -23,7 +23,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraftforge.common.crafting.IShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,8 +61,8 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
         this.craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, List.of(RecipeUtils.getResultItem(recipe.value())));
         
         // Initialize recipe inputs
-        int width = (recipe.value() instanceof IShapedRecipe<?> shapedRecipe) ? shapedRecipe.getRecipeWidth() : 0;
-        int height = (recipe.value() instanceof IShapedRecipe<?> shapedRecipe) ? shapedRecipe.getRecipeHeight() : 0;
+        int width = (recipe.value() instanceof ShapedRecipe shapedRecipe) ? shapedRecipe.getWidth() : 0;
+        int height = (recipe.value() instanceof ShapedRecipe shapedRecipe) ? shapedRecipe.getHeight() : 0;
         List<List<ItemStack>> inputs = recipe.value().getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
         this.craftingGridHelper.createAndSetInputs(builder, VanillaTypes.ITEM_STACK, inputs, width, height);
     }

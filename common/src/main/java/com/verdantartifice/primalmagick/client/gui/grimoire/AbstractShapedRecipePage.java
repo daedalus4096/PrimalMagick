@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraftforge.common.crafting.IShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
  * @author Daedalus4096
  * @param <T> type of recipe, e.g. ShapedArcaneRecipe
  */
-public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> extends AbstractRecipePage {
+public abstract class AbstractShapedRecipePage<T extends ShapedRecipe> extends AbstractRecipePage {
     protected RecipeHolder<? extends T> recipe;
     
     public AbstractShapedRecipePage(RecipeHolder<? extends T> recipe, RegistryAccess registryAccess) {
@@ -42,8 +42,8 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         int overlayWidth = 51;
 
         // Render ingredient stacks
-        int recipeWidth = this.recipe.value().getRecipeWidth();
-        int recipeHeight = this.recipe.value().getRecipeHeight();
+        int recipeWidth = this.recipe.value().getWidth();
+        int recipeHeight = this.recipe.value().getHeight();
         List<Ingredient> ingredients = this.recipe.value().getIngredients();
         for (int i = 0; i < Math.min(recipeWidth, 3); i++) {
             for (int j = 0; j < Math.min(recipeHeight, 3); j++) {
