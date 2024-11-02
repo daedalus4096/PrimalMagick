@@ -82,7 +82,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -326,7 +325,7 @@ public class PlayerEvents {
             PacketHandler.sendToServer(new ResetFallDistancePacket());
             
             // Trigger jump events
-            ForgeHooks.onLivingJump(player);
+            Services.EVENTS.fireLivingJumpEvent(player);
         }
         if (player.onGround() && DOUBLE_JUMP_ALLOWED.containsKey(player.getUUID())) {
             // Reset double jump permissions upon touching the ground
