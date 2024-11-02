@@ -35,9 +35,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.LogManager;
@@ -60,7 +57,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID)
 public class AffinityManager extends SimpleJsonResourceReloadListener {
     protected static final int MAX_AFFINITY = 100;
     protected static final int HISTORY_LIMIT = 100;
@@ -86,11 +82,6 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         super(GSON, "affinities");
     }
 
-    @SubscribeEvent
-    public static void onResourceReload(AddReloadListenerEvent event) {
-        event.addListener(getOrCreateInstance());
-    }
-    
     public static AffinityManager getOrCreateInstance() {
         if (INSTANCE == null) {
             INSTANCE = new AffinityManager();

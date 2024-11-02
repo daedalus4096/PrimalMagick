@@ -56,6 +56,6 @@ public class UpdateLinguisticsGridsPacket implements IMessageToClient {
     
     public static void onMessage(PacketContext<UpdateLinguisticsGridsPacket> ctx) {
         UpdateLinguisticsGridsPacket message = ctx.message();
-        GridDefinitionLoader.createInstance().replaceGridDefinitions(message.gridDefs);
+        GridDefinitionLoader.getOrCreateInstance().replaceGridDefinitions(message.gridDefs);
     }
 }

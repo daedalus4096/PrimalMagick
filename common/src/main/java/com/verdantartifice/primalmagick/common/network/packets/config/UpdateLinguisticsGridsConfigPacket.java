@@ -66,7 +66,7 @@ public class UpdateLinguisticsGridsConfigPacket implements IMessageToClient {
     
     public static void onMessage(PacketContext<UpdateLinguisticsGridsConfigPacket> ctx) {
         UpdateLinguisticsGridsConfigPacket message = ctx.message();
-        GridDefinitionLoader.createInstance().replaceGridDefinitions(message.gridDefs);
+        GridDefinitionLoader.getOrCreateInstance().replaceGridDefinitions(message.gridDefs);
         if (message.token != NO_REPLY) {
             PacketHandler.sendToServer(new AcknowledgementPacket(message.token));
         }

@@ -4,15 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +19,6 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
@@ -34,12 +29,7 @@ public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
         super(GSON, "linguistics_grids");
     }
 
-    @SubscribeEvent
-    public static void onResourceReload(AddReloadListenerEvent event) {
-        event.addListener(createInstance());
-    }
-    
-    public static GridDefinitionLoader createInstance() {
+    public static GridDefinitionLoader getOrCreateInstance() {
         if (INSTANCE == null) {
             INSTANCE = new GridDefinitionLoader();
         }
