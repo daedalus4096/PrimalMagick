@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,7 +17,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import java.util.stream.Stream;
 
@@ -92,7 +92,7 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     public int getCurrentValue(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             return serverPlayer.getStats().getValue(this.getStat());
-        } else if (FMLEnvironment.dist.isClient()) {
+        } else if (Services.PLATFORM.isClientDist()) {
             return ClientUtils.getStatsCounter().getValue(this.getStat());
         } else {
             throw new IllegalStateException("Player is neither server nor client side!");

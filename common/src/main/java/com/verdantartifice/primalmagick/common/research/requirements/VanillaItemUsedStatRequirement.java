@@ -18,7 +18,6 @@ import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import java.util.stream.Stream;
 
@@ -86,7 +85,7 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
     public int getCurrentValue(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             return serverPlayer.getStats().getValue(this.stat);
-        } else if (FMLEnvironment.dist.isClient()) {
+        } else if (Services.PLATFORM.isClientDist()) {
             return ClientUtils.getStatsCounter().getValue(this.stat);
         } else {
             throw new IllegalStateException("Player is neither server nor client side!");

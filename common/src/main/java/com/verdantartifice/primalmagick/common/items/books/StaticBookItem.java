@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -30,7 +31,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -156,7 +156,7 @@ public class StaticBookItem extends Item {
     }
     
     public static BookView makeBookView(ItemStack pStack, HolderLookup.Provider registries) {
-        Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
+        Player player = Services.PLATFORM.isClientDist() ? ClientUtils.getCurrentPlayer() : null;
         Holder<BookDefinition> book = getBookDefinition(pStack).orElseGet(() -> registries.lookupOrThrow(RegistryKeysPM.BOOKS).getOrThrow(BooksPM.TEST_BOOK));
         Holder<BookLanguage> lang = getBookLanguage(pStack).orElseGet(() -> registries.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getOrThrow(BookLanguagesPM.DEFAULT));
         int playerComprehension = 0;
@@ -172,7 +172,7 @@ public class StaticBookItem extends Item {
 
     @Override
     public Component getName(ItemStack pStack) {
-        if (FMLEnvironment.dist.isClient() && getBookId(pStack).isPresent()) {
+        if (Services.PLATFORM.isClientDist() && getBookId(pStack).isPresent()) {
             HolderLookup.Provider registries = ClientUtils.getCurrentLevel().registryAccess();
             return BookHelper.getTitleText(makeBookView(pStack, registries));
         } else {
@@ -183,22 +183,22 @@ public class StaticBookItem extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pContext, pTooltipComponents, pIsAdvanced);
-        if (FMLEnvironment.dist.isClient() && hasAuthor(pStack)) {
+        if (Services.PLATFORM.isClientDist() && hasAuthor(pStack)) {
             Component authorText = BookHelper.getAuthorText(makeBookView(pStack, pContext.registries()), getAuthor(pStack));
             pTooltipComponents.add(Component.translatable("book.byAuthor", authorText).withStyle(ChatFormatting.GRAY));
         }
         getBookDefinition(pStack).ifPresent(defHolder -> {
             getBookLanguage(pStack).ifPresent(langHolder -> {
-                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", langHolder.get().getName()).withStyle(ChatFormatting.GRAY));
+                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", langHolder.value().getName()).withStyle(ChatFormatting.GRAY));
                 pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
-                if (FMLEnvironment.dist.isClient() && hasBookDefinition(pStack) && hasBookLanguage(pStack) && langHolder.get().isComplex()) {
-                    Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
+                if (Services.PLATFORM.isClientDist() && hasBookDefinition(pStack) && hasBookLanguage(pStack) && langHolder.value().isComplex()) {
+                    Player player = Services.PLATFORM.isClientDist() ? ClientUtils.getCurrentPlayer() : null;
                     Optional<Integer> translatedComprehension = getTranslatedComprehension(pStack);
                     int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, langHolder));
                     double percentage = BookHelper.getBookComprehension(new BookView(Either.left(defHolder), langHolder, comprehension));
                     pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
                     if (translatedComprehension.isPresent()) {
-                        if (translatedComprehension.get() >= langHolder.get().complexity()) {
+                        if (translatedComprehension.get() >= langHolder.value().complexity()) {
                             pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.full").withStyle(ChatFormatting.DARK_AQUA));
                         } else if (translatedComprehension.get() > 0) {
                             pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.partial").withStyle(ChatFormatting.DARK_AQUA));

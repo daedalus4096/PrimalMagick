@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
 
 public class PlatformServiceNeoforge implements IPlatformService {
@@ -18,5 +19,10 @@ public class PlatformServiceNeoforge implements IPlatformService {
     @Override
     public boolean isDevelopmentEnvironment() {
         return !FMLLoader.isProduction();
+    }
+
+    @Override
+    public boolean isClientDist() {
+        return FMLEnvironment.dist.isClient();
     }
 }

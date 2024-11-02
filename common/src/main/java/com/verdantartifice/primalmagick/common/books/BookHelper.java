@@ -1,13 +1,13 @@
 package com.verdantartifice.primalmagick.common.books;
 
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -100,6 +100,6 @@ public class BookHelper {
     }
     
     public static double getBookComprehension(BookView view) {
-        return FMLEnvironment.dist.isClient() ? ClientBookHelper.getBookComprehension(view) : 0;
+        return Services.PLATFORM.isClientDist() ? ClientBookHelper.getBookComprehension(view) : 0;
     }
 }
