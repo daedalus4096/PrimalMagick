@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.IItemHandler;
 
 /**
@@ -18,6 +18,6 @@ public class CalcinatorResultSlot extends GenericResultSlot {
     @Override
     protected void checkTakeAchievements(ItemStack stack) {
         super.checkTakeAchievements(stack);
-        ForgeEventFactory.firePlayerSmeltedEvent(this.player, stack);
+        Services.EVENTS.firePlayerSmeltedEvent(this.player, stack);
     }
 }

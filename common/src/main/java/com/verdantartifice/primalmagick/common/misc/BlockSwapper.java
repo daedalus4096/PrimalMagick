@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.misc;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +17,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -110,6 +109,6 @@ public class BlockSwapper {
     }
     
     protected boolean canPlace(Level world, BlockState state) {
-        return !ForgeEventFactory.onBlockPlace(this.player, BlockSnapshot.create(world.dimension(), world, this.pos), Direction.UP);
+        return !Services.EVENTS.onBlockPlace(this.player, world, this.pos, Direction.UP);
     }
 }

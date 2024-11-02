@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -18,8 +19,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.function.Supplier;
 
@@ -71,7 +70,7 @@ public abstract class AbstractConjureBlockSpellPayload<T extends AbstractConjure
         BlockState state = world.getBlockState(pos);
         boolean isSolid = state.isSolid();
         boolean isReplaceable = state.canBeReplaced();
-        return world.mayInteract(player, pos) && !ForgeEventFactory.onBlockPlace(player, BlockSnapshot.create(world.dimension(), world, pos), Direction.UP) && 
+        return world.mayInteract(player, pos) && !Services.EVENTS.onBlockPlace(player, world, pos, Direction.UP) &&
                 world.isEmptyBlock(pos) || !isSolid || isReplaceable;
     }
     

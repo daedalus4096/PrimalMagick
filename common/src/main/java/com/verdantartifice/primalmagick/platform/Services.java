@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
 import com.verdantartifice.primalmagick.platform.services.IConfigService;
+import com.verdantartifice.primalmagick.platform.services.IEventService;
 import com.verdantartifice.primalmagick.platform.services.IInputService;
 import com.verdantartifice.primalmagick.platform.services.IItemAbilityService;
 import com.verdantartifice.primalmagick.platform.services.ITagService;
@@ -56,6 +57,7 @@ public class Services {
     public static final ICapabilityService CAPABILITIES = load(ICapabilityService.class);
     public static final ITagService TAGS = load(ITagService.class);
     public static final IItemAbilityService ITEM_ABILITIES = load(IItemAbilityService.class);
+    public static final IEventService EVENTS = load(IEventService.class);
 
     // Registry services
     public static final IBlockService BLOCKS = load(IBlockService.class);

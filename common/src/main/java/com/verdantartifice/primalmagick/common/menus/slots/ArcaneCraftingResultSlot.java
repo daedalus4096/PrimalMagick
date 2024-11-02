@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +21,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.Optional;
 
@@ -71,7 +71,7 @@ public class ArcaneCraftingResultSlot extends Slot {
         // Fire crafting handlers
         if (this.amountCrafted > 0) {
             stack.onCraftedBy(this.player.level(), this.player, this.amountCrafted);
-            ForgeEventFactory.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
+            Services.EVENTS.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
             
             // Increment the expertise and craft counter stats for the recipe's discipline
             if (this.container instanceof RecipeCraftingHolder recipeHolder && recipeHolder.getRecipeUsed() != null) {

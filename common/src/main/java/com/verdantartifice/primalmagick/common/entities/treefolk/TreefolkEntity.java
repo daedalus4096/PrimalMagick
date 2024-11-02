@@ -1,10 +1,5 @@
 package com.verdantartifice.primalmagick.common.entities.treefolk;
 
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
@@ -15,7 +10,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.DebugPackets;
@@ -49,7 +44,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraftforge.event.ForgeEventFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 /**
  * Definition of a treefolk entity, tree-like neutral bipeds that spawn in forest biomes.
@@ -198,7 +196,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
 
     @Override
     public boolean wantsToPickUp(ItemStack pStack) {
-        return ForgeEventFactory.getMobGriefingEvent(this.level(), this) && this.canPickUpLoot() && TreefolkAi.wantsToPickup(this, pStack);
+        return Services.EVENTS.canEntityGrief(this.level(), this) && this.canPickUpLoot() && TreefolkAi.wantsToPickup(this, pStack);
     }
 
     @Override

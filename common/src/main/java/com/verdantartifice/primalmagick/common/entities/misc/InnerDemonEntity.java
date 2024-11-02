@@ -1,21 +1,15 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.common.entities.ai.goals.LongDistanceRangedAttackGoal;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SinCrashEntity;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.BloodDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ProjectileSpellVehicle;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
-
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
@@ -46,7 +40,11 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Definition of an inner demon entity, a boss monster summoned via a sanguine crucible.
@@ -134,7 +132,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
         if (!level.isClientSide) {
             // Explode if suffocating
             if (this.isSuffocating && this.tickCount % 20 == 0) {
-                Level.ExplosionInteraction mode = ForgeEventFactory.getMobGriefingEvent(level, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
+                Level.ExplosionInteraction mode = Services.EVENTS.canEntityGrief(level, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
                 level.explode(this, this.getX(), this.getY(), this.getZ(), 7.0F, false, mode);
                 this.isSuffocating = false;
             }
