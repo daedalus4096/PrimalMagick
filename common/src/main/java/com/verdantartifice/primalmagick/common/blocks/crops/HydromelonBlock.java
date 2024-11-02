@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.crops;
 
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ToolActions;
 
 /**
  * Block definition for a hydromelon crop.  Hydromelons are similar to melons and pumpkins in that
@@ -38,7 +38,7 @@ public class HydromelonBlock extends Block {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pPlayer != null && stack.canPerformAction(ToolActions.AXE_STRIP)) {
+        if (pPlayer != null && Services.ITEM_ABILITIES.canAxeStrip(stack)) {
             // If the player right-clicks on the hydromelon with an axe, replace this block with water (or vapor if in the Nether)
             boolean shouldVaporize = pLevel.dimensionType().ultraWarm();
             RandomSource rng = pPlayer.getRandom();

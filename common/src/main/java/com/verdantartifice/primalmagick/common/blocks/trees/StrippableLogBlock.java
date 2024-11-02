@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ToolActions;
 
 /**
  * Definition for a log block that can be stripped with an axe.
@@ -34,7 +34,7 @@ public class StrippableLogBlock extends RotatedPillarBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (this.strippedVersion != null && player != null && stack.canPerformAction(ToolActions.AXE_STRIP)) {
+        if (this.strippedVersion != null && player != null && Services.ITEM_ABILITIES.canAxeStrip(stack)) {
             // If the player right-clicks on the log with an axe, replace this block with its stripped version
             worldIn.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!worldIn.isClientSide) {
