@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -19,11 +20,11 @@ import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class EntityLootTables extends EntityLootSubProvider {
 
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> entityTypes = ForgeRegistries.ENTITY_TYPES.getKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
+        Set<ResourceLocation> entityTypes = Services.ENTITY_TYPES.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
         
         // Warn for each mod entity that didn't have a loot table registered
         entityTypes.removeAll(this.registeredEntities);
@@ -65,7 +66,7 @@ public class EntityLootTables extends EntityLootSubProvider {
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
         // Limit this data provider to entity types added by the mod
-        return ForgeRegistries.ENTITY_TYPES.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(entry -> entry.getValue());
+        return Services.ENTITY_TYPES.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue);
     }
 
     @Override

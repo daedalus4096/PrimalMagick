@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform.services.registries;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
+import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -10,7 +11,9 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -46,6 +49,20 @@ public interface IRegistryService<R> {
     Collection<R> getAll();
 
     /**
+     * Retrieve the keys of all registered values in this registry.
+     *
+     * @return a set of the keys of all registered values in this registry
+     */
+    Set<ResourceLocation> getAllKeys();
+
+    /**
+     * Get the entry set of all mapping entries of resource key to registered value for this registry.
+     *
+     * @return the entry set of all mapping entries of resource key to registered value for this registry
+     */
+    Set<Map.Entry<ResourceKey<R>, R>> getEntries();
+
+    /**
      * Determine whether an object is present in this registry for the given resource location.
      *
      * @param id the ID of the value to be queried
@@ -68,6 +85,12 @@ public interface IRegistryService<R> {
      * @return the resource location identifying the given value if it exists in the registry, or null otherwise
      */
     @Nullable default ResourceLocation getKey(R value) { return this.getResourceKey(value).map(ResourceKey::location).orElse(null); }
+
+    Optional<Holder<R>> getHolder(ResourceKey<R> key);
+
+    Optional<Holder<R>> getHolder(ResourceLocation loc);
+
+    Optional<Holder<R>> getHolder(R value);
 
     /**
      * Retrieve the serialization codec for this registry.

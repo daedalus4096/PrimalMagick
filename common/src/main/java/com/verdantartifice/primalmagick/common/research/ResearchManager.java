@@ -32,7 +32,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -762,7 +761,7 @@ public class ResearchManager {
         
         // Iterate over all registered items in the game
         List<CompletableFuture<Integer>> obsPointsFutures = new ArrayList<>();
-        for (Item item : ForgeRegistries.ITEMS) {
+        for (Item item : Services.ITEMS.getAll()) {
             // Generate a research key for the itemstack and add that research to the player
             stack = new ItemStack(item);
             if (!stack.isEmpty()) { // Skip over air

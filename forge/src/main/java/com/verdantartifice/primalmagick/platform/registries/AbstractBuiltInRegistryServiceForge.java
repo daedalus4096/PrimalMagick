@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
 import com.verdantartifice.primalmagick.platform.services.registries.IRegistryService;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -16,7 +17,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -46,6 +49,16 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
     }
 
     @Override
+    public Set<ResourceLocation> getAllKeys() {
+        return this.getRegistry().keySet();
+    }
+
+    @Override
+    public Set<Map.Entry<ResourceKey<R>, R>> getEntries() {
+        return this.getRegistry().entrySet();
+    }
+
+    @Override
     public boolean containsKey(ResourceLocation id) {
         return this.getRegistry().containsKey(id);
     }
@@ -53,6 +66,21 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
     @Override
     public Optional<ResourceKey<R>> getResourceKey(R value) {
         return this.getRegistry().getResourceKey(value);
+    }
+
+    @Override
+    public Optional<Holder<R>> getHolder(ResourceKey<R> key) {
+        return this.getRegistry().getHolder(key).flatMap(Optional::of);
+    }
+
+    @Override
+    public Optional<Holder<R>> getHolder(ResourceLocation loc) {
+        return this.getRegistry().getHolder(loc).flatMap(Optional::of);
+    }
+
+    @Override
+    public Optional<Holder<R>> getHolder(R value) {
+        return this.getRegistry().getResourceKey(value).flatMap(this::getHolder);
     }
 
     @Override

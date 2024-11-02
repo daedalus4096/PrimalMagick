@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.armortrim;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
@@ -12,7 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.armortrim.TrimPattern;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class TrimPatternsPM {
     }
     
     private static void register(BootstrapContext<TrimPattern> context, Item templateItem, ResourceKey<TrimPattern> patternKey) {
-        context.register(patternKey, new TrimPattern(patternKey.location(), ForgeRegistries.ITEMS.getHolder(templateItem).orElseThrow(), Component.translatable(Util.makeDescriptionId("trim_pattern", patternKey.location())), false));
+        context.register(patternKey, new TrimPattern(patternKey.location(), Services.ITEMS.getHolder(templateItem).orElseThrow(), Component.translatable(Util.makeDescriptionId("trim_pattern", patternKey.location())), false));
     }
     
     public static void bootstrap(BootstrapContext<TrimPattern> context) {

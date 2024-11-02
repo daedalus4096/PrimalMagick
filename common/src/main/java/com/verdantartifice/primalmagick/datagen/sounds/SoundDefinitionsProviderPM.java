@@ -2,13 +2,13 @@ package com.verdantartifice.primalmagick.datagen.sounds;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinition;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -78,7 +78,7 @@ public class SoundDefinitionsProviderPM extends SoundDefinitionsProvider {
     }
     
     protected void verifyComplete() {
-        List<ResourceLocation> registeredSounds = new ArrayList<>(ForgeRegistries.SOUND_EVENTS.getKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).toList());
+        List<ResourceLocation> registeredSounds = new ArrayList<>(Services.SOUND_EVENTS.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).toList());
         registeredSounds.removeAll(this.generatedSounds);
         if (!registeredSounds.isEmpty()) {
             registeredSounds.forEach(loc -> LOGGER.warn("No sound definition generated for sound {}", loc.toString()));

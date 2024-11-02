@@ -63,7 +63,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -732,7 +731,7 @@ public class PrimalMagickCommand {
         AffinityManager am = AffinityManager.getOrCreateInstance();
         Vector<EntityType<?>> retVal = new Vector<>();
 
-        ForgeRegistries.ENTITY_TYPES.forEach(entityType -> {
+        Services.ENTITY_TYPES.getAll().forEach(entityType -> {
             ResourceLocation resourceLocation = Services.ENTITY_TYPES.getKey(entityType);
             if (resourceLocation == null) {
                 // If the Item can't be resolved in registry, it's got problems I can't care about.
@@ -760,8 +759,8 @@ public class PrimalMagickCommand {
     private static List<Item> listSourcelessItems(net.minecraft.world.item.crafting.RecipeManager recipeManager, RegistryAccess registryAccess, ServerLevel level, Collection<String> excludeNamespaces ) {
         AffinityManager am = AffinityManager.getOrCreateInstance();
 
-        Vector<Item> items = new Vector<Item>();
-        ForgeRegistries.ITEMS.forEach( (item) -> {
+        Vector<Item> items = new Vector<>();
+        Services.ITEMS.getAll().forEach( (item) -> {
                 ItemStack stack = item.getDefaultInstance();
 
                 ResourceLocation resourceLocation = Services.ITEMS.getKey(item);

@@ -39,12 +39,12 @@ import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.loot.CanToolPerformAction;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -80,7 +80,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     @Override
     protected Iterable<Block> getKnownBlocks() {
         // Limit this data provider to blocks added by the mod
-        return ForgeRegistries.BLOCKS.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(entry -> entry.getValue()).toList();
+        return Services.BLOCKS.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue).toList();
     }
 
     private void registerLootTableBuilder(Block block, LootTable.Builder builder) {
@@ -175,7 +175,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> blocks = ForgeRegistries.BLOCKS.getKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
+        Set<ResourceLocation> blocks = Services.BLOCKS.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
         
         // Warn for each mod block that didn't have a loot table registered
         blocks.removeAll(this.registeredBlocks);
