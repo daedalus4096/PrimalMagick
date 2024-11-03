@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.TeleportArrivalPacket;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,8 +19,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityTeleportEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -234,26 +233,25 @@ public class EntityUtils {
      */
     public static void teleportEntity(LivingEntity player, Level world, Vec3 destination) {
         // Fire an EntityTeleportEvent to allow cancellation or modification of the teleport
-        EntityTeleportEvent.EnderEntity event = new EntityTeleportEvent.EnderEntity(player, destination.x, destination.y, destination.z);
-        if (!MinecraftForge.EVENT_BUS.post(event)) {
+        Services.EVENTS.attemptEnderEntityTeleport(player, destination).ifPresent(target -> {
             // Show a teleport particle effect at the destination
             if (world instanceof ServerLevel serverLevel) {
-                PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), serverLevel, BlockPos.containing(event.getTarget()), 64.0D);
+                PacketHandler.sendToAllAround(new TeleportArrivalPacket(target.x(), target.y(), target.z()), serverLevel, BlockPos.containing(target), 64.0D);
 
-                if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection.getConnection().isConnected() && player.level() == world && !player.isSleeping()) {
+                if (player instanceof ServerPlayer serverPlayer && player.level() == world && !player.isSleeping()) {
                     if (player.isPassenger()) {
                         player.stopRiding();
                     }
-                    
+
                     // Record teleport distance statistic
-                    StatsManager.incrementValue(serverPlayer, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * event.getPrev().distanceTo(event.getTarget())));
-                    
+                    StatsManager.incrementValue(serverPlayer, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * player.position().distanceTo(target)));
+
                     // Do the teleportation
-                    player.teleportTo(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+                    player.teleportTo(target.x(), target.y(), target.z());
                     player.fallDistance = 0.0F;
                 }
             }
-        }
+        });
     }
     
     /**

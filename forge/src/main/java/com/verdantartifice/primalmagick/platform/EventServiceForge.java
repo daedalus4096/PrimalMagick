@@ -14,11 +14,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class EventServiceForge implements IEventService {
     @Override
@@ -54,5 +59,15 @@ public class EventServiceForge implements IEventService {
     @Override
     public void setCraftingPlayer(Player player) {
         ForgeHooks.setCraftingPlayer(player);
+    }
+
+    @Override
+    public Optional<Vec3> attemptEnderEntityTeleport(LivingEntity entity, Vec3 target) {
+        EntityTeleportEvent.EnderEntity event = new EntityTeleportEvent.EnderEntity(entity, target.x, target.y, target.z);
+        if (!MinecraftForge.EVENT_BUS.post(event)) {
+            return Optional.of(event.getTarget());
+        } else {
+            return Optional.empty();
+        }
     }
 }

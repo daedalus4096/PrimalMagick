@@ -14,11 +14,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class EventServiceNeoforge implements IEventService {
     @Override
@@ -54,5 +59,16 @@ public class EventServiceNeoforge implements IEventService {
     @Override
     public void setCraftingPlayer(Player player) {
         CommonHooks.setCraftingPlayer(player);
+    }
+
+    @Override
+    public Optional<Vec3> attemptEnderEntityTeleport(LivingEntity entity, Vec3 target) {
+        EntityTeleportEvent.EnderEntity event = new EntityTeleportEvent.EnderEntity(entity, target.x, target.y, target.z);
+        NeoForge.EVENT_BUS.post(event);
+        if (!event.isCanceled()) {
+            return Optional.of(event.getTarget());
+        } else {
+            return Optional.empty();
+        }
     }
 }

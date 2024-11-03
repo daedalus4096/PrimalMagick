@@ -13,8 +13,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public interface IEventService {
     void firePlayerCraftingEvent(Player player, ItemStack crafted, Container craftMatrix);
@@ -24,4 +27,13 @@ public interface IEventService {
     SpawnGroupData finalizeMobSpawn(Mob mob, ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData);
     void fireLivingJumpEvent(LivingEntity entity);
     void setCraftingPlayer(Player player);
+
+    /**
+     * Attempts to perform an ender entity teleport by firing the appropriate event.
+     *
+     * @param entity the entity doing the teleportation
+     * @param target the intended target point of the teleportation
+     * @return an optional containing the finalized target point of the teleportation, or empty if the teleport was cancelled
+     */
+    Optional<Vec3> attemptEnderEntityTeleport(LivingEntity entity, Vec3 target);
 }
