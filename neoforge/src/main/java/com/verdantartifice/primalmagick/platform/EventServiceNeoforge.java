@@ -50,4 +50,9 @@ public class EventServiceNeoforge implements IEventService {
     public void fireLivingJumpEvent(LivingEntity entity) {
         CommonHooks.onLivingJump(entity);
     }
+
+    @Override
+    public void setCraftingPlayer(Player player) {
+        CommonHooks.setCraftingPlayer(player);
+    }
 }

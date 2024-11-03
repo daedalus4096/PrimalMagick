@@ -23,4 +23,5 @@ public interface IEventService {
     boolean onBlockPlace(@Nullable Entity entity, @NotNull Level level, @NotNull BlockPos pos, @NotNull Direction direction);
     SpawnGroupData finalizeMobSpawn(Mob mob, ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData);
     void fireLivingJumpEvent(LivingEntity entity);
+    void setCraftingPlayer(Player player);
 }

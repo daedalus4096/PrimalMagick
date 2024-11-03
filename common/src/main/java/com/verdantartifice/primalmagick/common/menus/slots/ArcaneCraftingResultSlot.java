@@ -20,7 +20,6 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Optional;
 
@@ -110,7 +109,7 @@ public class ArcaneCraftingResultSlot extends Slot {
         int leftBound = positionedCraftingInput.left();
         int topBound = positionedCraftingInput.top();
 
-        ForgeHooks.setCraftingPlayer(thePlayer);
+        Services.EVENTS.setCraftingPlayer(thePlayer);
         
         // Get the remaining items from the recipe, checking arcane recipes first, then vanilla recipes
         Level level = thePlayer.level();
@@ -129,8 +128,8 @@ public class ArcaneCraftingResultSlot extends Slot {
                 }
             }
         }
-        
-        ForgeHooks.setCraftingPlayer(null);
+
+        Services.EVENTS.setCraftingPlayer(null);
         
         for (int y = 0; y < craftingInput.height(); y++) {
             for (int x = 0; x < craftingInput.width(); x++) {

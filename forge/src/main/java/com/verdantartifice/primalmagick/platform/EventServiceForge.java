@@ -50,4 +50,9 @@ public class EventServiceForge implements IEventService {
     public void fireLivingJumpEvent(LivingEntity entity) {
         ForgeHooks.onLivingJump(entity);
     }
+
+    @Override
+    public void setCraftingPlayer(Player player) {
+        ForgeHooks.setCraftingPlayer(player);
+    }
 }
