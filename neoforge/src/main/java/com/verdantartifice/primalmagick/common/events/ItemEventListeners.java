@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ArcanometerISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaFontISTER;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.InteractionResult;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -38,5 +40,13 @@ public class ItemEventListeners {
                 return renderer;
             }
         }, ItemsPM.ARCANOMETER.get());
+        event.registerItem(new IClientItemExtensions() {
+            final BlockEntityWithoutLevelRenderer renderer = new ManaFontISTER();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return renderer;
+            }
+        }, ManaFontBlockItem.getAllFonts().toArray(ManaFontBlockItem[]::new));
     }
 }

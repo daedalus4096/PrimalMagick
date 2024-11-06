@@ -1,33 +1,28 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaFontISTER;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Definition of a block item for a mana font.
  * 
  * @author Daedalus4096
  */
-public class ManaFontBlockItem extends BlockItem {
+public abstract class ManaFontBlockItem extends BlockItem {
+    protected static final List<ManaFontBlockItem> FONTS = new ArrayList<>();
+
     public ManaFontBlockItem(Block block, Item.Properties properties) {
         super(block, properties);
+        FONTS.add(this);
     }
 
-    @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-            final BlockEntityWithoutLevelRenderer renderer = new ManaFontISTER();
-
-            @Override
-            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return renderer;
-            }
-        });
+    public static Collection<ManaFontBlockItem> getAllFonts() {
+        return Collections.unmodifiableList(FONTS);
     }
 }
