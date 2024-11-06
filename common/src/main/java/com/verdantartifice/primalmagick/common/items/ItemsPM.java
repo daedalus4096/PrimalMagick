@@ -535,7 +535,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, ArmorItem> HALLOWSTEEL_FEET = registerSupplier("hallowsteel_feet", () -> new ArmorItem(ArmorMaterialsPM.HALLOWSTEEL.getHolder(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.BOOTS.getDurability(60))));
 
     // Register miscellaneous items
-    public static final IRegistryItem<Item, ArcanometerItem> ARCANOMETER = registerSupplier("arcanometer", ArcanometerItem::new);
+    public static final IRegistryItem<Item, ArcanometerItem> ARCANOMETER = registerSupplier("arcanometer", Services.ITEM_PROTOTYPES.arcanometer());
     public static final IRegistryItem<Item, Item> MAGNIFYING_GLASS = registerSupplier("magnifying_glass", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> ALCHEMICAL_WASTE = registerSupplier("alchemical_waste", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, BloodyFleshItem> BLOODY_FLESH = registerSupplier("bloody_flesh", BloodyFleshItem::new);

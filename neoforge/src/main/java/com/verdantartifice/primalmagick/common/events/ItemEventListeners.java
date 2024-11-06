@@ -1,9 +1,14 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ArcanometerISTER;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.InteractionResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 /**
@@ -20,5 +25,18 @@ public class ItemEventListeners {
             event.setCanceled(true);
             event.setCancellationResult(result);
         }
+    }
+
+    // TODO Does this need to subscribe to the mod event bus?
+    @SubscribeEvent
+    public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
+        event.registerItem(new IClientItemExtensions() {
+            final BlockEntityWithoutLevelRenderer renderer = new ArcanometerISTER();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return renderer;
+            }
+        }, ItemsPM.ARCANOMETER.get());
     }
 }
