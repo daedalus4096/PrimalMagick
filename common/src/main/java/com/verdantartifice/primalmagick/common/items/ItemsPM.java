@@ -373,7 +373,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_FORBIDDEN = registerSupplier("calcinator_forbidden", () -> new BlockItem(BlocksPM.CALCINATOR_FORBIDDEN.get(), new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_HEAVENLY = registerSupplier("calcinator_heavenly", () -> new BlockItem(BlocksPM.CALCINATOR_HEAVENLY.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, BurnableBlockItem> WAND_INSCRIPTION_TABLE = registerSupplier("wand_inscription_table", () -> new BurnableBlockItem(BlocksPM.WAND_INSCRIPTION_TABLE.get(), 300, new Item.Properties()));
-    public static final IRegistryItem<Item, SpellcraftingAltarBlockItem> SPELLCRAFTING_ALTAR = registerSupplier("spellcrafting_altar", () -> new SpellcraftingAltarBlockItem(BlocksPM.SPELLCRAFTING_ALTAR.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, SpellcraftingAltarBlockItem> SPELLCRAFTING_ALTAR = registerSupplier("spellcrafting_altar", Services.ITEM_PROTOTYPES.spellcraftingAltar(BlocksPM.SPELLCRAFTING_ALTAR, new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> WAND_CHARGER = registerSupplier("wand_charger", () -> new BlockItem(BlocksPM.WAND_CHARGER.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BurnableBlockItem> RESEARCH_TABLE = registerSupplier("research_table", () -> new BurnableBlockItem(BlocksPM.RESEARCH_TABLE.get(), 300, new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> SUNLAMP = registerSupplier("sunlamp", () -> new BlockItem(BlocksPM.SUNLAMP.get(), new Item.Properties()));

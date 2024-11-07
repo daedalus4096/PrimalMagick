@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform.services;
 
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelTridentItem;
@@ -17,6 +18,7 @@ import java.util.function.Supplier;
 public interface IItemPrototypeService {
     Supplier<ArcanometerItem> arcanometer();
     <T extends Block> Supplier<ManaFontBlockItem> manaFont(Supplier<T> blockSupplier, Item.Properties properties);
+    <T extends Block> Supplier<SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier, Item.Properties properties);
     Supplier<PrimaliteShieldItem> primaliteShield(Item.Properties properties);
     Supplier<HexiumShieldItem> hexiumShield(Item.Properties properties);
     Supplier<HallowsteelShieldItem> hallowsteelShield(Item.Properties properties);

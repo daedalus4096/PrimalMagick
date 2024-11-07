@@ -37,6 +37,7 @@ public class ItemEventListeners {
     public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
         registerCustomRenderer(event::registerItem, ItemsPM.ARCANOMETER.get());
         ManaFontBlockItem.getAllFonts().forEach(font -> registerCustomRenderer(event::registerItem, font));
+        registerCustomRenderer(event::registerItem, ItemsPM.SPELLCRAFTING_ALTAR.get());
         registerCustomRenderer(event::registerItem, ItemsPM.PRIMALITE_SHIELD.get());
         registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_SHIELD.get());
         registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_SHIELD.get());

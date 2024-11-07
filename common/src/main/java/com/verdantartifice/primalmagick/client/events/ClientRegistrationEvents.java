@@ -77,7 +77,7 @@ public class ClientRegistrationEvents {
         reloadListenerConsumer.accept(ItemsPM.PRIMALITE_SHIELD.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.HEXIUM_SHIELD.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_SHIELD.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.SPELLCRAFTING_ALTAR.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(LexiconLoader.getOrCreateInstance());
         reloadListenerConsumer.accept(StyleGuideLoader.getOrCreateInstance());
         reloadListenerConsumer.accept(TipLoader.getOrCreateInstance());

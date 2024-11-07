@@ -4,6 +4,8 @@ import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemForge;
+import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelShieldItem;
@@ -33,6 +35,11 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     @Override
     public <T extends Block> Supplier<ManaFontBlockItem> manaFont(Supplier<T> blockSupplier, Item.Properties properties) {
         return () -> new ManaFontBlockItemForge(blockSupplier.get(), properties);
+    }
+
+    @Override
+    public <T extends Block> Supplier<SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier, Item.Properties properties) {
+        return () -> new SpellcraftingAltarBlockItemForge(blockSupplier.get(), properties);
     }
 
     @Override
