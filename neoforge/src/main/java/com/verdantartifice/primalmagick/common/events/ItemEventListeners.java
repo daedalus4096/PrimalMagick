@@ -40,6 +40,10 @@ public class ItemEventListeners {
         registerCustomRenderer(event::registerItem, ItemsPM.PRIMALITE_SHIELD.get());
         registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_SHIELD.get());
         registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_SHIELD.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.PRIMALITE_TRIDENT.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_TRIDENT.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_TRIDENT.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.FORBIDDEN_TRIDENT.get());
     }
 
     protected static <T extends Item & IHasCustomRenderer> void registerCustomRenderer(BiConsumer<IClientItemExtensions, T> registrar, T item) {

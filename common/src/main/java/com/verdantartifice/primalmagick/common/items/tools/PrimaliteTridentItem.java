@@ -8,9 +8,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
-import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Definition for a trident made of the magickal metal primalite.
@@ -18,8 +17,6 @@ import java.util.function.Consumer;
  * @author Daedalus4096
  */
 public class PrimaliteTridentItem extends AbstractTieredTridentItem {
-    protected IClientItemExtensions renderProps;
-    
     public PrimaliteTridentItem(Item.Properties properties) {
         super(ItemTierPM.PRIMALITE, properties);
     }
@@ -30,21 +27,7 @@ public class PrimaliteTridentItem extends AbstractTieredTridentItem {
     }
 
     @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(this.getRenderProperties());
-    }
-    
-    public IClientItemExtensions getRenderProperties() {
-        if (this.renderProps == null) {
-            this.renderProps = new IClientItemExtensions() {
-                final BlockEntityWithoutLevelRenderer renderer = new PrimaliteTridentISTER();
-
-                @Override
-                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                    return renderer;
-                }
-            };
-        }
-        return this.renderProps;
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        return PrimaliteTridentISTER::new;
     }
 }

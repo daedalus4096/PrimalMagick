@@ -4,12 +4,20 @@ import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemForge;
+import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
+import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelShieldItemForge;
+import com.verdantartifice.primalmagick.common.items.tools.HallowsteelTridentItem;
+import com.verdantartifice.primalmagick.common.items.tools.HallowsteelTridentItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItemForge;
+import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItem;
+import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItemForge;
+import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
+import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItemForge;
 import com.verdantartifice.primalmagick.platform.services.IItemPrototypeService;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -40,5 +48,25 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     @Override
     public Supplier<HallowsteelShieldItem> hallowsteelShield(Item.Properties properties) {
         return () -> new HallowsteelShieldItemForge(properties);
+    }
+
+    @Override
+    public Supplier<PrimaliteTridentItem> primaliteTrident(Item.Properties properties) {
+        return () -> new PrimaliteTridentItemForge(properties);
+    }
+
+    @Override
+    public Supplier<HexiumTridentItem> hexiumTrident(Item.Properties properties) {
+        return () -> new HexiumTridentItemForge(properties);
+    }
+
+    @Override
+    public Supplier<HallowsteelTridentItem> hallowsteelTrident(Item.Properties properties) {
+        return () -> new HallowsteelTridentItemForge(properties);
+    }
+
+    @Override
+    public Supplier<ForbiddenTridentItem> forbiddenTrident(Item.Properties properties) {
+        return () -> new ForbiddenTridentItemForge(properties);
     }
 }

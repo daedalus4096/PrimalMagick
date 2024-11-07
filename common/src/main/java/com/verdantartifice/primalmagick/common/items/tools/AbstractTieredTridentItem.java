@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
+import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvent;
@@ -33,7 +34,7 @@ import java.util.List;
  *  
  * @author Daedalus4096
  */
-public abstract class AbstractTieredTridentItem extends TridentItem {
+public abstract class AbstractTieredTridentItem extends TridentItem implements IHasCustomRenderer {
     protected final Tier tier;
 
     public AbstractTieredTridentItem(Tier tier, Item.Properties properties) {

@@ -2,9 +2,13 @@ package com.verdantartifice.primalmagick.platform.services;
 
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
+import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelShieldItem;
+import com.verdantartifice.primalmagick.common.items.tools.HallowsteelTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItem;
+import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
+import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -16,4 +20,8 @@ public interface IItemPrototypeService {
     Supplier<PrimaliteShieldItem> primaliteShield(Item.Properties properties);
     Supplier<HexiumShieldItem> hexiumShield(Item.Properties properties);
     Supplier<HallowsteelShieldItem> hallowsteelShield(Item.Properties properties);
+    Supplier<PrimaliteTridentItem> primaliteTrident(Item.Properties properties);
+    Supplier<HexiumTridentItem> hexiumTrident(Item.Properties properties);
+    Supplier<HallowsteelTridentItem> hallowsteelTrident(Item.Properties properties);
+    Supplier<ForbiddenTridentItem> forbiddenTrident(Item.Properties properties);
 }

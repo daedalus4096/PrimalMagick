@@ -70,10 +70,10 @@ public class ClientRegistrationEvents {
     }
     
     public static void onClientReloadListenerRegister(Consumer<PreparableReloadListener> reloadListenerConsumer) {
-        reloadListenerConsumer.accept(ItemsPM.PRIMALITE_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        reloadListenerConsumer.accept(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        reloadListenerConsumer.accept(ItemsPM.FORBIDDEN_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.PRIMALITE_TRIDENT.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.HEXIUM_TRIDENT.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_TRIDENT.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.FORBIDDEN_TRIDENT.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.PRIMALITE_SHIELD.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.HEXIUM_SHIELD.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_SHIELD.get().getCustomRendererSupplier().get());
