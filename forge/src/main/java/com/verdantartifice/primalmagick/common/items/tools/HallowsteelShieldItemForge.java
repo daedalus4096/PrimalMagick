@@ -1,25 +1,10 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import com.verdantartifice.primalmagick.common.items.IHasCustomRendererForge;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
-import java.util.function.Consumer;
-
-public class HallowsteelShieldItemForge extends HallowsteelShieldItem {
+public class HallowsteelShieldItemForge extends HallowsteelShieldItem implements IHasCustomRendererForge {
     public HallowsteelShieldItemForge(Item.Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-            final BlockEntityWithoutLevelRenderer renderer = getCustomRendererSupplier().get();
-
-            @Override
-            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return renderer;
-            }
-        });
     }
 }

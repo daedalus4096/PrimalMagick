@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ArcanometerISTER;
+import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
@@ -9,6 +11,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -25,6 +28,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 /**
  * Item definition for an arcanometer.  An arcanometer is a PKE meter-like device that scans the 
@@ -32,7 +36,7 @@ import javax.annotation.Nullable;
  *  
  * @author Daedalus4096
  */
-public abstract class ArcanometerItem extends Item {
+public abstract class ArcanometerItem extends Item implements IHasCustomRenderer {
     public static final ResourceLocation SCAN_STATE_PROPERTY = ResourceUtils.loc("scan_state");
 
     public ArcanometerItem() {
@@ -83,5 +87,10 @@ public abstract class ArcanometerItem extends Item {
             }
         }
         return super.use(worldIn, playerIn, handIn);
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        return ArcanometerISTER::new;
     }
 }
