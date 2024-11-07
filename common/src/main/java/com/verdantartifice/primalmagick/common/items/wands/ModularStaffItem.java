@@ -14,10 +14,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Item definition for a modular staff.  Modular staves are made up of cores, caps, and gems, and their
@@ -58,16 +57,9 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
         // Staves get double the normal spell slots provided by their core
         return (core == null) ? 0 : (2 * core.getSpellSlots());
     }
-    
-    @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-            final BlockEntityWithoutLevelRenderer renderer = new ModularStaffISTER();
 
-            @Override
-            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return renderer;
-            }
-        });
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        return ModularStaffISTER::new;
     }
 }

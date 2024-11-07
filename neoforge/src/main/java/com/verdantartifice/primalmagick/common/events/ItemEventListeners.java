@@ -45,6 +45,9 @@ public class ItemEventListeners {
         registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_TRIDENT.get());
         registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_TRIDENT.get());
         registerCustomRenderer(event::registerItem, ItemsPM.FORBIDDEN_TRIDENT.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MUNDANE_WAND.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MODULAR_WAND.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MODULAR_STAFF.get());
     }
 
     protected static <T extends Item & IHasCustomRenderer> void registerCustomRenderer(BiConsumer<IClientItemExtensions, T> registrar, T item) {

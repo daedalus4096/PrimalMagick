@@ -785,9 +785,9 @@ public class ItemsPM {
     // Register caster/wand items
     public static final IRegistryItem<Item, Item> SPELL_SCROLL_BLANK = registerSupplier("spell_scroll_blank", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, SpellScrollItem> SPELL_SCROLL_FILLED = registerWithoutTab("spell_scroll_filled", SpellScrollItem::new);
-    public static final IRegistryItem<Item, MundaneWandItem> MUNDANE_WAND = registerSupplier("mundane_wand", MundaneWandItem::new);
-    public static final IRegistryItem<Item, ModularWandItem> MODULAR_WAND = registerCustom("modular_wand", ModularWandItem::registerCreativeTabItems, () -> new ModularWandItem(new Item.Properties().stacksTo(1)));
-    public static final IRegistryItem<Item, ModularStaffItem> MODULAR_STAFF = registerCustom("modular_staff", ModularWandItem::registerCreativeTabItems, () -> new ModularStaffItem(new Item.Properties().stacksTo(1).attributes(ModularStaffItem.createAttributes(5, -2.4)).component(DataComponents.TOOL, ModularStaffItem.createToolProperties())));
+    public static final IRegistryItem<Item, MundaneWandItem> MUNDANE_WAND = registerSupplier("mundane_wand", Services.ITEM_PROTOTYPES.mundaneWand());
+    public static final IRegistryItem<Item, ModularWandItem> MODULAR_WAND = registerCustom("modular_wand", ModularWandItem::registerCreativeTabItems, Services.ITEM_PROTOTYPES.modularWand(new Item.Properties().stacksTo(1)));
+    public static final IRegistryItem<Item, ModularStaffItem> MODULAR_STAFF = registerCustom("modular_staff", ModularWandItem::registerCreativeTabItems, Services.ITEM_PROTOTYPES.modularStaff(new Item.Properties().stacksTo(1).attributes(ModularStaffItem.createAttributes(5, -2.4)).component(DataComponents.TOOL, ModularStaffItem.createToolProperties())));
     public static final IRegistryItem<Item, WandCoreItem> HEARTWOOD_WAND_CORE_ITEM = registerSupplier("heartwood_wand_core_item", () -> new WandCoreItem(WandCore.HEARTWOOD, new Item.Properties()));
     public static final IRegistryItem<Item, WandCoreItem> OBSIDIAN_WAND_CORE_ITEM = registerSupplier("obsidian_wand_core_item", () -> new WandCoreItem(WandCore.OBSIDIAN, new Item.Properties()));
     public static final IRegistryItem<Item, WandCoreItem> CORAL_WAND_CORE_ITEM = registerSupplier("coral_wand_core_item", () -> new WandCoreItem(WandCore.CORAL, new Item.Properties()));

@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -62,7 +63,7 @@ import java.util.List;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractWandItem extends Item implements IWand {
+public abstract class AbstractWandItem extends Item implements IWand, IHasCustomRenderer {
     protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
     protected static final ResearchEntryKey WAND_TRANSFORM_HINT_KEY = new ResearchEntryKey(ResearchEntries.WAND_TRANSFORM_HINT);
     
