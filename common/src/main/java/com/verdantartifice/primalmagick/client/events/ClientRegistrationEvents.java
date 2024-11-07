@@ -74,9 +74,9 @@ public class ClientRegistrationEvents {
         reloadListenerConsumer.accept(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getCustomRenderer());
         reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getCustomRenderer());
         reloadListenerConsumer.accept(ItemsPM.FORBIDDEN_TRIDENT.get().getRenderProperties().getCustomRenderer());
-        reloadListenerConsumer.accept(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getCustomRenderer());
-        reloadListenerConsumer.accept(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getCustomRenderer());
-        reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getCustomRenderer());
+        reloadListenerConsumer.accept(ItemsPM.PRIMALITE_SHIELD.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.HEXIUM_SHIELD.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_SHIELD.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getCustomRenderer());
         reloadListenerConsumer.accept(LexiconLoader.getOrCreateInstance());
         reloadListenerConsumer.accept(StyleGuideLoader.getOrCreateInstance());
