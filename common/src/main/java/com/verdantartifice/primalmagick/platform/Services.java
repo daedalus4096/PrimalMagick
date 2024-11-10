@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.platform.services.IConfigService;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
 import com.verdantartifice.primalmagick.platform.services.IInputService;
 import com.verdantartifice.primalmagick.platform.services.IItemAbilityService;
+import com.verdantartifice.primalmagick.platform.services.IItemHandlerService;
 import com.verdantartifice.primalmagick.platform.services.IItemPrototypeService;
 import com.verdantartifice.primalmagick.platform.services.ITagService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeService;
@@ -60,6 +61,7 @@ public class Services {
     public static final IItemAbilityService ITEM_ABILITIES = load(IItemAbilityService.class);
     public static final IEventService EVENTS = load(IEventService.class);
     public static final IItemPrototypeService ITEM_PROTOTYPES = load(IItemPrototypeService.class);
+    public static final IItemHandlerService ITEM_HANDLERS = load(IItemHandlerService.class);
 
     // Registry services
     public static final IBlockService BLOCKS = load(IBlockService.class);
