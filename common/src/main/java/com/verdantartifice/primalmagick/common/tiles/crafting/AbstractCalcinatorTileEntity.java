@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -34,7 +35,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
@@ -233,7 +233,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
             if (entity.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
                 // If the calcinator isn't burning, but has meltable input in place, light it up
                 if (!entity.isBurning() && entity.canCalcinate(inputStack)) {
-                    entity.burnTime = ForgeHooks.getBurnTime(fuelStack, null);
+                    entity.burnTime = Services.EVENTS.getBurnTime(fuelStack, null);
                     entity.burnTimeTotal = entity.burnTime;
                     if (entity.isBurning()) {
                         shouldMarkDirty = true;
@@ -299,7 +299,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     protected abstract int getCookTimeTotal();
 
     public static boolean isFuel(ItemStack stack) {
-        return ForgeHooks.getBurnTime(stack, null) > 0;
+        return Services.EVENTS.getBurnTime(stack, null) > 0;
     }
 
     protected boolean canCalcinate(ItemStack inputStack) {

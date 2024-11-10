@@ -11,6 +11,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -36,4 +37,6 @@ public interface IEventService {
      * @return an optional containing the finalized target point of the teleportation, or empty if the teleport was cancelled
      */
     Optional<Vec3> attemptEnderEntityTeleport(LivingEntity entity, Vec3 target);
+
+    int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType);
 }
