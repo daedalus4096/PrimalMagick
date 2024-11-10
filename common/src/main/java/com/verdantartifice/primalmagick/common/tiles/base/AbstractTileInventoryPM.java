@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.base;
 
-import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -20,7 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,8 +45,8 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
     protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
     protected final int inventorySize;              // Number of slots in the tile's inventory
 
-    protected ItemStackHandlerPM itemHandler;         // Forge item handler capability instance
-    protected final LazyOptional<IItemHandler> itemHandlerOpt = LazyOptional.of(() -> this.itemHandler);
+    protected IItemHandlerPM itemHandler;         // Forge item handler capability instance
+    protected final LazyOptional<IItemHandlerPM> itemHandlerOpt = LazyOptional.of(() -> this.itemHandler);
 
     public AbstractTileInventoryPM(BlockEntityType<?> type, BlockPos pos, BlockState state, int invSize) {
         super(type, pos, state);
@@ -66,8 +66,8 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
         return this.inventorySize;
     }
     
-    protected ItemStackHandlerPM createHandler() {
-        return new ItemStackHandlerPM(this.items, this);
+    protected IItemHandlerPM createHandler() {
+        return Services.ITEM_HANDLERS.create(this.items, this);
     }
     
     @Override

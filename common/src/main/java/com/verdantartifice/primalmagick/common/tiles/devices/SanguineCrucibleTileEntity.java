@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -249,8 +250,8 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
+    protected NonNullList<IItemHandlerPM> createHandlers() {
+        NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create output handler
         retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {

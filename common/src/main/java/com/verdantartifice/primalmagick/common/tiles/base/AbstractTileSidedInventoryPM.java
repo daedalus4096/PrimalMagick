@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.base;
 
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -118,7 +119,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     
     protected abstract OptionalInt getInventoryIndexForFace(@Nonnull Direction face);
     
-    protected abstract NonNullList<ItemStackHandler> createHandlers();
+    protected abstract NonNullList<IItemHandlerPM> createHandlers();
 
     @Override
     public void invalidateCaps() {
