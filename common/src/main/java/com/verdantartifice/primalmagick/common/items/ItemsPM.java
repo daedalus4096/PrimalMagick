@@ -99,6 +99,7 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SmithingTemplateItem;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.SwordItem;
 
 import java.util.function.Supplier;
@@ -824,10 +825,10 @@ public class ItemsPM {
     public static final IRegistryItem<Item, StaffCoreItem> PURE_PRIMAL_STAFF_CORE_ITEM = registerSupplier("pure_primal_staff_core_item", () -> new StaffCoreItem(WandCore.PURE_PRIMAL, new Item.Properties()));
 
     // Register spawn egg items
-    public static final IRegistryItem<Item, ForgeSpawnEggItem> TREEFOLK_SPAWN_EGG = registerSupplier("treefolk_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.TREEFOLK.get(), 0x76440F, 0x007302, new Item.Properties()));
-    public static final IRegistryItem<Item, ForgeSpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = registerSupplier("primalite_golem_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.PRIMALITE_GOLEM.get(), 0x27E1C7, 0x026278, new Item.Properties()));
-    public static final IRegistryItem<Item, ForgeSpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = registerSupplier("hexium_golem_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.HEXIUM_GOLEM.get(), 0x791E29, 0x100736, new Item.Properties()));
-    public static final IRegistryItem<Item, ForgeSpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = registerSupplier("hallowsteel_golem_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.HALLOWSTEEL_GOLEM.get(), 0xFDFFE0, 0xEDE1A2, new Item.Properties()));
+    public static final IRegistryItem<Item, SpawnEggItem> TREEFOLK_SPAWN_EGG = registerSupplier("treefolk_spawn_egg", Services.ITEM_PROTOTYPES.deferredSpawnEgg(EntityTypesPM.TREEFOLK, 0x76440F, 0x007302, new Item.Properties()));
+    public static final IRegistryItem<Item, SpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = registerSupplier("primalite_golem_spawn_egg", Services.ITEM_PROTOTYPES.deferredSpawnEgg(EntityTypesPM.PRIMALITE_GOLEM, 0x27E1C7, 0x026278, new Item.Properties()));
+    public static final IRegistryItem<Item, SpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = registerSupplier("hexium_golem_spawn_egg", Services.ITEM_PROTOTYPES.deferredSpawnEgg(EntityTypesPM.HEXIUM_GOLEM, 0x791E29, 0x100736, new Item.Properties()));
+    public static final IRegistryItem<Item, SpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = registerSupplier("hallowsteel_golem_spawn_egg", Services.ITEM_PROTOTYPES.deferredSpawnEgg(EntityTypesPM.HALLOWSTEEL_GOLEM, 0xFDFFE0, 0xEDE1A2, new Item.Properties()));
     public static final IRegistryItem<Item, PixieItem> BASIC_EARTH_PIXIE = registerSupplier("pixie_basic_earth", () -> new PixieItem(() -> EntityTypesPM.BASIC_EARTH_PIXIE.get(), Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
     public static final IRegistryItem<Item, PixieItem> GRAND_EARTH_PIXIE = registerSupplier("pixie_grand_earth", () -> new PixieItem(() -> EntityTypesPM.GRAND_EARTH_PIXIE.get(), Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, PixieItem> MAJESTIC_EARTH_PIXIE = registerSupplier("pixie_majestic_earth", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));

@@ -13,7 +13,10 @@ import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
@@ -36,4 +39,6 @@ public interface IItemPrototypeService {
     Supplier<MundaneWandItem> mundaneWand();
     Supplier<ModularWandItem> modularWand(Item.Properties properties);
     Supplier<ModularStaffItem> modularStaff(Item.Properties properties);
+
+    Supplier<SpawnEggItem> deferredSpawnEgg(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Item.Properties props);
 }
