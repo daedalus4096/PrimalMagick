@@ -2,11 +2,9 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
@@ -37,7 +35,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -314,34 +311,22 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
-            @Override
-            public boolean isItemValid(int slot, ItemStack stack) {
-                if (slot == 0) {
-                    return stack.is(Items.HONEYCOMB);
-                } else if (slot == 1) {
-                    return stack.is(Items.GLASS_BOTTLE);
-                } else {
-                    return false;
-                }
-            }
-        });
+        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
+                .itemValidFunction((slot, stack) -> switch (slot) {
+                    case 0 -> stack.is(Items.HONEYCOMB);
+                    case 1 -> stack.is(Items.GLASS_BOTTLE);
+                    default -> false;
+                }).build());
         
         // Create fuel handler
-        retVal.set(WAND_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(WAND_INV_INDEX), this) {
-            @Override
-            public boolean isItemValid(int slot, ItemStack stack) {
-                return stack.getItem() instanceof IWand;
-            }
-        });
+        retVal.set(WAND_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(WAND_INV_INDEX), this)
+                .itemValidFunction((slot, stack) -> stack.getItem() instanceof IWand)
+                .build());
 
         // Create output handler
-        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
-            @Override
-            public boolean isItemValid(int slot, ItemStack stack) {
-                return false;
-            }
-        });
+        retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
+                .itemValidFunction((slot, stack) -> false)
+                .build());
         
         return retVal;
     }

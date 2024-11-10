@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
-import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
@@ -14,11 +13,9 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.OptionalInt;
 
@@ -71,18 +68,12 @@ public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM imp
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
-            @Override
-            public boolean isItemValid(int slot, ItemStack stack) {
-                if (slot == 0) {
-                    return stack.is(Items.STONE_SLAB);
-                } else if (slot == 1) {
-                    return stack.is(Tags.Items.GEMS_LAPIS);
-                } else {
-                    return false;
-                }
-            }
-        });
+        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
+                .itemValidFunction((slot, stack) -> switch (slot) {
+                    case 0 -> stack.is(Items.STONE_SLAB);
+                    case 1 -> stack.is(Tags.Items.GEMS_LAPIS);
+                    default -> false;
+                }).build());
         
         return retVal;
     }

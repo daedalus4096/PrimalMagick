@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
-import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
@@ -15,10 +14,8 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.OptionalInt;
 
@@ -73,18 +70,12 @@ public class ResearchTableTileEntity extends AbstractTileSidedInventoryPM implem
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
-            @Override
-            public boolean isItemValid(int slot, ItemStack stack) {
-                if (slot == 0) {
-                    return stack.getItem() instanceof IWritingImplement;
-                } else if (slot == 1) {
-                    return stack.is(Items.PAPER);
-                } else {
-                    return false;
-                }
-            }
-        });
+        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
+                .itemValidFunction((slot, stack) -> switch (slot) {
+                    case 0 -> stack.getItem() instanceof IWritingImplement;
+                    case 1 -> stack.is(Items.PAPER);
+                    default -> false;
+                }).build());
 
         return retVal;
     }

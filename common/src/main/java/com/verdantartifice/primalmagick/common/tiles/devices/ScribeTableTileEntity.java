@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
-import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
 import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
@@ -28,7 +27,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -95,26 +93,17 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
-            @Override
-            public boolean isItemValid(int slot, ItemStack stack) {
-                if (slot == 0) {
-                    return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).map(lang -> lang.is(BookLanguageTagsPM.ANCIENT)).orElse(false);
-                } else if (slot == 1) {
-                    return stack.is(Items.WRITABLE_BOOK);
-                } else {
-                    return false;
-                }
-            }
-        });
+        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
+                .itemValidFunction((slot, stack) -> switch (slot) {
+                    case 0 -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).map(lang -> lang.is(BookLanguageTagsPM.ANCIENT)).orElse(false);
+                    case 1 -> stack.is(Items.WRITABLE_BOOK);
+                    default -> false;
+                }).build());
         
         // Create output handler
-        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
-            @Override
-            public boolean isItemValid(int slot, ItemStack stack) {
-                return false;
-            }
-        });
+        retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
+                .itemValidFunction((slot, stack) -> false)
+                .build());
 
         return retVal;
     }
