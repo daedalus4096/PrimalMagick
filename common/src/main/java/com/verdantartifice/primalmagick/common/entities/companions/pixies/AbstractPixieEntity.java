@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions.Co
 import com.verdantartifice.primalmagick.common.entities.ai.goals.FollowCompanionOwnerGoal;
 import com.verdantartifice.primalmagick.common.entities.companions.AbstractCompanionEntity;
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
-import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
@@ -46,6 +45,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -72,7 +72,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     protected abstract Source getPixieSource();
     
     @Nonnull
-    protected abstract PixieItem getSpawnItem();
+    protected abstract SpawnEggItem getSpawnItem();
     
     @Nonnull
     protected SpellPackage createSpellPackage() {

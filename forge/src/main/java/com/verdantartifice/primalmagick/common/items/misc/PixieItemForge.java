@@ -31,10 +31,10 @@ import java.util.function.Supplier;
  * 
  * @author Daedalus4096
  */
-public class PixieItem extends ForgeSpawnEggItem {
-    protected static final List<PixieItem> PIXIES = new ArrayList<>();
+public class PixieItemForge extends ForgeSpawnEggItem {
+    protected static final List<PixieItemForge> PIXIES = new ArrayList<>();
     
-    public PixieItem(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties) {
+    public PixieItemForge(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties) {
         super(typeSupplier, 0xFFFFFF, source.getColor(), properties);
         PIXIES.add(this);
     }
@@ -68,7 +68,7 @@ public class PixieItem extends ForgeSpawnEggItem {
         }
     }
     
-    public static Collection<PixieItem> getAllPixies() {
+    public static Collection<PixieItemForge> getAllPixies() {
         return Collections.unmodifiableCollection(PIXIES);
     }
 }

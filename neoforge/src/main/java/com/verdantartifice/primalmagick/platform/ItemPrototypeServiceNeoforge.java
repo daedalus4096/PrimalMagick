@@ -1,9 +1,11 @@
 package com.verdantartifice.primalmagick.platform;
 
+import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemNeoforge;
+import com.verdantartifice.primalmagick.common.items.misc.PixieItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
@@ -26,6 +28,7 @@ import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItemNeoforge;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.platform.services.IItemPrototypeService;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -105,5 +108,10 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     @Override
     public Supplier<SpawnEggItem> deferredSpawnEgg(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Item.Properties props) {
         return () -> new DeferredSpawnEggItem(type, backgroundColor, highlightColor, props);
+    }
+
+    @Override
+    public Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties) {
+        return () -> new PixieItemNeoforge(typeSupplier, source, properties);
     }
 }
