@@ -23,4 +23,9 @@ public class ItemHandlerServiceNeoforge implements IItemHandlerService {
     public IItemHandlerPM create(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile) {
         return new ItemStackHandlerPMNeoforge(stacks, tile);
     }
+
+    @Override
+    public IItemHandlerPM.Builder builder(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile) {
+        return ItemStackHandlerPMNeoforge.builder(stacks, tile);
+    }
 }

@@ -23,4 +23,9 @@ public class ItemHandlerServiceForge implements IItemHandlerService {
     public IItemHandlerPM create(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile) {
         return new ItemStackHandlerPMForge(stacks, tile);
     }
+
+    @Override
+    public IItemHandlerPM.Builder builder(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile) {
+        return ItemStackHandlerPMForge.builder(stacks, tile);
+    }
 }
