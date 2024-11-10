@@ -1,17 +1,9 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.stream.Stream;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -21,10 +13,16 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
-
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.stream.Stream;
 
 /**
  * Definition of a research discipline.  A discipline represents a collection of research entries of
@@ -40,8 +38,8 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
                 ResearchDisciplineKey.CODEC.fieldOf("key").forGetter(ResearchDiscipline::key),
                 AbstractRequirement.dispatchCodec().optionalFieldOf("unlockRequirementOpt").forGetter(ResearchDiscipline::unlockRequirementOpt),
                 ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(ResearchDiscipline::iconLocation),
-                ResourceLocation.CODEC.optionalFieldOf("craftingStat").xmap(locOpt -> locOpt.map(loc -> StatsManager.getStat(loc)), statOpt -> statOpt.map(stat -> stat.key())).forGetter(ResearchDiscipline::craftingStat),
-                ResourceLocation.CODEC.optionalFieldOf("expertiseStat").xmap(locOpt -> locOpt.map(loc -> StatsManager.getStat(loc)), statOpt -> statOpt.map(stat -> stat.key())).forGetter(ResearchDiscipline::expertiseStat),
+                ResourceLocation.CODEC.optionalFieldOf("craftingStat").xmap(locOpt -> locOpt.map(StatsManager::getStat), statOpt -> statOpt.map(Stat::key)).forGetter(ResearchDiscipline::craftingStat),
+                ResourceLocation.CODEC.optionalFieldOf("expertiseStat").xmap(locOpt -> locOpt.map(StatsManager::getStat), statOpt -> statOpt.map(Stat::key)).forGetter(ResearchDiscipline::expertiseStat),
                 CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("indexSortOrder")).forGetter(ResearchDiscipline::indexSortOrder)
             ).apply(instance, ResearchDiscipline::new));
     }
@@ -114,7 +112,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
             if (this.requirements.isEmpty()) {
                 return Optional.empty();
             } else if (this.requirements.size() == 1) {
-                return Optional.of(this.requirements.get(0));
+                return Optional.of(this.requirements.getFirst());
             } else {
                 return Optional.of(new AndRequirement(this.requirements));
             }

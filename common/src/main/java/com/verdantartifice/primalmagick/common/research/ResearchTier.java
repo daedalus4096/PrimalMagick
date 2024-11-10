@@ -1,17 +1,15 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.Optional;
-import java.util.function.IntFunction;
-
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
+
+import java.util.Optional;
+import java.util.function.IntFunction;
 
 public enum ResearchTier implements StringRepresentable {
     BASIC(0, "basic", 1, 4, Optional.empty()),
