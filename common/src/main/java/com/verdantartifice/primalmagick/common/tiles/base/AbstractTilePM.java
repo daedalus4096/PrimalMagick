@@ -90,7 +90,7 @@ public abstract class AbstractTilePM extends BlockEntity {
      * 
      * @param nbt the received data
      * @param player the player whose client sent the given data
-     * @see {@link #sendMessageToServer(CompoundNBT)}
+     * @see AbstractTilePM#sendMessageToServer(CompoundTag)
      */
     public void onMessageFromClient(CompoundTag nbt, @Nonnull ServerPlayer player) {
         // Do nothing by default
@@ -100,7 +100,7 @@ public abstract class AbstractTilePM extends BlockEntity {
      * Process a message sent from the server instance of this tile entity.
      * 
      * @param nbt the received data
-     * @see {@link #sendMessageToClient(CompoundNBT, ServerPlayerEntity)}
+     * @see AbstractTilePM#sendMessageToClient(CompoundTag, ServerPlayer) 
      */
     public void onMessageFromServer(CompoundTag nbt) {
         // Do nothing by default
