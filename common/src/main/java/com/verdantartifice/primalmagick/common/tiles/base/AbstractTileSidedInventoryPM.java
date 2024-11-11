@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.common.tiles.base;
 
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,7 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.ContainerListener;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,13 +29,6 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 
 /**
@@ -59,9 +52,8 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
 
     protected final NonNullList<NonNullList<ItemStack>> inventories;
     protected final NonNullList<NonNullList<ItemStack>> syncedInventories;
-    protected final NonNullList<ItemStackHandler> itemHandlers;
-    protected final NonNullList<LazyOptional<IItemHandler>> itemHandlerOpts;
-    protected final NonNullList<List<ContainerListener>> listeners;
+    protected final NonNullList<IItemHandlerPM> itemHandlers;
+    protected final NonNullList<List<IItemHandlerChangeListener>> listeners;
     
     protected ResourceKey<LootTable> lootTable;
     protected long lootTableSeed;
@@ -88,12 +80,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         
         // Create item handler capabilities
         this.itemHandlers = this.createHandlers();
-        this.itemHandlerOpts = NonNullList.withSize(this.getInventoryCount(), LazyOptional.empty());
-        for (int index = 0; index < this.itemHandlers.size(); index++) {
-            final int optIndex = index;
-            this.itemHandlerOpts.set(index, LazyOptional.of(() -> this.itemHandlers.get(optIndex)));
-        }
-        
+
         // Create container listener list
         this.listeners = NonNullList.withSize(this.getInventoryCount(), new ArrayList<>());
     }
@@ -117,30 +104,22 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     
     protected abstract int getInventorySize(int inventoryIndex);
     
-    protected abstract OptionalInt getInventoryIndexForFace(@Nonnull Direction face);
+    protected abstract Optional<Integer> getInventoryIndexForFace(@Nonnull Direction face);
     
     protected abstract NonNullList<IItemHandlerPM> createHandlers();
 
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.itemHandlerOpts.forEach(opt -> opt.invalidate());
+    /**
+     * This method is intended to provide access to the block entity item handler for a given face during Neoforge
+     * capability registration. Prefer using other accessor methods such as {@link #getItem(int, int)} whenever possible.
+     *
+     * @param face the face of the block whose item handler to fetch
+     * @return the item handler for the given face, or none if one doesn't exist
+     */
+    public IItemHandlerPM getRawItemHandler(Direction face) {
+        return this.getInventoryIndexForFace(face).map(this.itemHandlers::get).orElse(null);
     }
 
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction face) {
-        if (!this.remove && cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (face != null && this.getInventoryIndexForFace(face).isPresent()) {
-                return this.itemHandlerOpts.get(this.getInventoryIndexForFace(face).getAsInt()).cast();
-            } else {
-                return LazyOptional.empty();
-            }
-        } else {
-            return super.getCapability(cap, face);
-        }
-    }
-
-    public void addListener(Direction face, ContainerListener listener) {
+    public void addListener(Direction face, IItemHandlerChangeListener listener) {
         if (face != null) {
             this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
                 this.listeners.get(invIndex).add(listener);
@@ -148,7 +127,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         }
     }
     
-    public void removeListener(ContainerListener listener) {
+    public void removeListener(IItemHandlerChangeListener listener) {
         this.listeners.forEach(invListeners -> invListeners.remove(listener));
     }
 
@@ -156,11 +135,11 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     public void setChanged() {
         super.setChanged();
         for (int index = 0; index < this.getInventoryCount(); index++) {
-            RecipeWrapper wrapper = new RecipeWrapper(this.itemHandlers.get(index));
-            this.listeners.get(index).forEach(listener -> listener.containerChanged(wrapper));
+            final int invIndex = index;
+            this.listeners.get(invIndex).forEach(listener -> listener.itemsChanged(this.itemHandlers.get(invIndex)));
         }
     }
-    
+
     protected boolean isSyncedSlot(int inventoryIndex, int slotIndex) {
         return this.getSyncedSlotIndices(inventoryIndex).contains(Integer.valueOf(slotIndex));
     }
@@ -262,12 +241,6 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         pTag.put("TileSidedInventoriesPM", listTag);
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        this.doInventorySync();
-    }
-    
     protected void doInventorySync() {
         if (!this.level.isClientSide) {
             // When first loaded, server-side tiles should immediately sync their contents to all nearby clients
@@ -319,7 +292,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                 paramsBuilder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
             }
             this.getTargetRandomizedInventory().ifPresentOrElse(inv -> {
-                loot.fill(new RecipeWrapper(inv), paramsBuilder.create(LootContextParamSets.CHEST), this.lootTableSeed);
+                loot.fill(Services.ITEM_HANDLERS.wrapAsContainer(inv), paramsBuilder.create(LootContextParamSets.CHEST), this.lootTableSeed);
             }, () -> {
                 LOGGER.error("Attempting to unpack loot table into undefined destination!");
             });
@@ -332,7 +305,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
      * 
      * @return an optional item handler capability
      */
-    protected Optional<IItemHandlerModifiable> getTargetRandomizedInventory() {
+    protected Optional<IItemHandlerPM> getTargetRandomizedInventory() {
         // Return an empty optional by default, so that block entities that don't need loot table support
         // don't have to override this method.
         return Optional.empty();

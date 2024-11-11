@@ -38,6 +38,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
@@ -298,7 +299,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
             case UP -> OptionalInt.of(INPUT_INV_INDEX);
             case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);

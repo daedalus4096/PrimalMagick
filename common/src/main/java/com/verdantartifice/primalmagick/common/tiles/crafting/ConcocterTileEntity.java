@@ -424,7 +424,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
             case UP -> OptionalInt.of(INPUT_INV_INDEX);
             case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);

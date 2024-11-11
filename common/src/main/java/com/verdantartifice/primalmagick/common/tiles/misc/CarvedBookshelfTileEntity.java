@@ -15,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +28,7 @@ import java.util.OptionalInt;
  * 
  * @author Daedalus4096
  */
-public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
+public abstract class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int INPUT_INV_INDEX = 0;
@@ -59,7 +58,7 @@ public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return OptionalInt.of(INPUT_INV_INDEX);
     }
 
@@ -96,7 +95,7 @@ public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    public Optional<IItemHandlerModifiable> getTargetRandomizedInventory() {
+    public Optional<IItemHandlerPM> getTargetRandomizedInventory() {
         return Optional.ofNullable(this.itemHandlers.get(INPUT_INV_INDEX));
     }
 

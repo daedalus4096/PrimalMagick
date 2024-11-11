@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 
+import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
@@ -56,7 +57,7 @@ public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM imp
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
             case DOWN -> OptionalInt.empty();
             default -> OptionalInt.of(INPUT_INV_INDEX);

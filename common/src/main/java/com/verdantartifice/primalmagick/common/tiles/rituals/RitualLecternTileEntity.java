@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
@@ -98,7 +99,7 @@ public class RitualLecternTileEntity extends AbstractTileSidedInventoryPM implem
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         // Don't connect pipes on any side of the lectern
         return OptionalInt.empty();
     }

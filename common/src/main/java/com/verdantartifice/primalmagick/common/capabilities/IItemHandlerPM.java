@@ -23,6 +23,8 @@ public interface IItemHandlerPM {
 
     boolean isItemValid(int slot, ItemStack stack);
 
+    void setStackInSlot(int slot, ItemStack stack);
+
     interface Builder {
         Builder slotLimitFunction(Function<Integer, Integer> limitFunction);
         Builder itemValidFunction(BiPredicate<Integer, ItemStack> itemValidFunction);

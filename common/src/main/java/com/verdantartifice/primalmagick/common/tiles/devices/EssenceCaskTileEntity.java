@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
@@ -284,7 +285,7 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
             case UP -> OptionalInt.of(INPUT_INV_INDEX);
             default -> OptionalInt.empty();

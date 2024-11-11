@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.misc;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -202,7 +203,7 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new CarvedBookshelfTileEntity(pPos, pState);
+        return Services.BLOCK_ENTITY_PROTOTYPES.carvedBookshelf().create(pPos, pState);
     }
 
     @Override

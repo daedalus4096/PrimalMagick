@@ -1057,7 +1057,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return OptionalInt.of(OUTPUT_INV_INDEX);
     }
 

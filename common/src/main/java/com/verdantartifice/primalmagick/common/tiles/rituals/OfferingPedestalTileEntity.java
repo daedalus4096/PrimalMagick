@@ -13,7 +13,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -92,7 +91,7 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return OptionalInt.of(INPUT_INV_INDEX);
     }
 
@@ -115,7 +114,7 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    public Optional<IItemHandlerModifiable> getTargetRandomizedInventory() {
+    public Optional<IItemHandlerPM> getTargetRandomizedInventory() {
         return Optional.ofNullable(this.itemHandlers.get(INPUT_INV_INDEX));
     }
 }

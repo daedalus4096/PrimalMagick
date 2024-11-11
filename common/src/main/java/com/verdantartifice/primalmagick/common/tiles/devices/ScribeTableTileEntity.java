@@ -81,7 +81,7 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
             case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
             default -> OptionalInt.of(INPUT_INV_INDEX);

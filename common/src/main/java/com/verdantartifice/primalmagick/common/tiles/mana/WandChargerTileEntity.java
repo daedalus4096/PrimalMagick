@@ -26,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 
@@ -204,7 +205,7 @@ public class WandChargerTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected OptionalInt getInventoryIndexForFace(Direction face) {
+    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
             case UP -> OptionalInt.of(INPUT_INV_INDEX);
             case DOWN -> OptionalInt.empty();
