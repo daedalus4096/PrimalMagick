@@ -5,11 +5,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPMFo
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.platform.services.IItemHandlerService;
 import net.minecraft.core.NonNullList;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.Nullable;
 
 public class ItemHandlerServiceForge implements IItemHandlerService {
@@ -31,14 +27,5 @@ public class ItemHandlerServiceForge implements IItemHandlerService {
     @Override
     public IItemHandlerPM.Builder builder(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile) {
         return ItemStackHandlerPMForge.builder(stacks, tile);
-    }
-
-    @Override
-    public Container wrapAsContainer(IItemHandlerPM itemHandler) {
-        if (itemHandler instanceof IItemHandlerModifiable forgeHandler) {
-            return new RecipeWrapper(forgeHandler);
-        } else {
-            return null;
-        }
     }
 }
