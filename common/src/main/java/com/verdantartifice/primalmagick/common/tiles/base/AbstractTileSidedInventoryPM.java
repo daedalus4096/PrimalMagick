@@ -113,7 +113,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
      * capability registration. Prefer using other accessor methods such as {@link #getItem(int, int)} whenever possible.
      *
      * @param face the face of the block whose item handler to fetch
-     * @return the item handler for the given face, or none if one doesn't exist
+     * @return the item handler for the given face, or null if one doesn't exist
      */
     public IItemHandlerPM getRawItemHandler(Direction face) {
         return this.getInventoryIndexForFace(face).map(this.itemHandlers::get).orElse(null);

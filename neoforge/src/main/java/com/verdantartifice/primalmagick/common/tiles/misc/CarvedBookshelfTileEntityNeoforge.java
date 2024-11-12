@@ -12,6 +12,7 @@ public class CarvedBookshelfTileEntityNeoforge extends CarvedBookshelfTileEntity
 
     @Override
     public void onLoad() {
+        this.unpackLootTable(null);
         super.onLoad();
         this.doInventorySync();
     }

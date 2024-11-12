@@ -59,7 +59,7 @@ public abstract class CarvedBookshelfTileEntity extends AbstractTileSidedInvento
 
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
-        return OptionalInt.of(INPUT_INV_INDEX);
+        return Optional.of(INPUT_INV_INDEX);
     }
 
     @Override
@@ -86,12 +86,6 @@ public abstract class CarvedBookshelfTileEntity extends AbstractTileSidedInvento
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.saveAdditional(pTag, pRegistries);
         pTag.putInt("LastInteractedSlot", this.lastInteractedSlot);
-    }
-
-    @Override
-    public void onLoad() {
-        this.unpackLootTable(null);
-        super.onLoad();
     }
 
     @Override
