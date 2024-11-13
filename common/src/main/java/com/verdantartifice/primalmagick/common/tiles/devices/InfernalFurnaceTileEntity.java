@@ -67,10 +67,10 @@ import java.util.function.Predicate;
 /**
  * Definition of an infernal furnace tile entity.  Performs the smelting for the corresponding block.
  * 
- * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.InfernalFurnaceBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.devices.InfernalFurnaceBlock
  * @author Daedalus4096
  */
-public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, RecipeCraftingHolder, StackedContentsCompatible {
+public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, RecipeCraftingHolder, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
@@ -204,12 +204,10 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     private static Optional<RecipeHolder<SmeltingRecipe>> getActiveRecipe(Level level, InfernalFurnaceTileEntity entity) {
         return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), level);
     }
-    
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
-    }
+
+    protected abstract boolean hasFuelCraftRemaining(ItemStack stack);
+
+    protected abstract ItemStack getFuelCraftRemaining(ItemStack stack);
 
     public static void tick(Level level, BlockPos pos, BlockState state, InfernalFurnaceTileEntity entity) {
         boolean shouldMarkDirty = false;
@@ -247,8 +245,8 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
                 entity.superchargeTime = entity.superchargeTimeTotal;
                 if (entity.isSupercharged()) {
                     shouldMarkDirty = true;
-                    if (fuelStack.hasCraftingRemainingItem()) {
-                        entity.setItem(FUEL_INV_INDEX, 0, fuelStack.getCraftingRemainingItem());
+                    if (entity.hasFuelCraftRemaining(fuelStack)) {
+                        entity.setItem(FUEL_INV_INDEX, 0, entity.getFuelCraftRemaining(fuelStack));
                     } else {
                         fuelStack.shrink(1);
                         if (fuelStack.isEmpty()) {
@@ -345,7 +343,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         }
     }
 
-    private static int getTotalCookTime(Level pLevel, InfernalFurnaceTileEntity pBlockEntity, int defaultTime) {
+    protected static int getTotalCookTime(Level pLevel, InfernalFurnaceTileEntity pBlockEntity, int defaultTime) {
         // Infernal furnaces take half as long to smelt items as normal
         return getActiveRecipe(pLevel, pBlockEntity).map(RecipeHolder::value).map(AbstractCookingRecipe::getCookingTime).map(t -> t / 2).orElse(defaultTime);
     }
@@ -492,9 +490,9 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> OptionalInt.of(INPUT_INV_INDEX);
-            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
-            default -> OptionalInt.of(FUEL_INV_INDEX);
+            case UP -> Optional.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.of(OUTPUT_INV_INDEX);
+            default -> Optional.of(FUEL_INV_INDEX);
         };
     }
 

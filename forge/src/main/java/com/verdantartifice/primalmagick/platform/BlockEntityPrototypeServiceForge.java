@@ -11,6 +11,8 @@ import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTi
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntityForge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityPrototypeService;
@@ -45,6 +47,11 @@ public class BlockEntityPrototypeServiceForge implements IBlockEntityPrototypeSe
     @Override
     public BlockEntityType.BlockEntitySupplier<HoneyExtractorTileEntity> honeyExtractor() {
         return HoneyExtractorTileEntityForge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<InfernalFurnaceTileEntity> infernalFurnace() {
+        return InfernalFurnaceTileEntityForge::new;
     }
 
     @Override

@@ -11,6 +11,8 @@ import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTi
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntityForge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityTickerService;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 
@@ -43,5 +45,10 @@ public class BlockEntityTickerServiceForge implements IBlockEntityTickerService 
     @Override
     public BlockEntityTicker<HoneyExtractorTileEntity> honeyExtractor() {
         return HoneyExtractorTileEntityForge::tick;
+    }
+
+    @Override
+    public BlockEntityTicker<InfernalFurnaceTileEntity> infernalFurnace() {
+        return InfernalFurnaceTileEntityForge::tick;
     }
 }

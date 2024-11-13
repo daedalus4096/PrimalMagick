@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -81,7 +82,7 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
             // Open the GUI for the furnace
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
-                serverPlayer.openMenu(furnaceTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, furnaceTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
@@ -125,12 +126,12 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new InfernalFurnaceTileEntity(pPos, pState);
+        return Services.BLOCK_ENTITY_PROTOTYPES.infernalFurnace().create(pPos, pState);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.INFERNAL_FURNACE.get(), InfernalFurnaceTileEntity::tick);
+        return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.INFERNAL_FURNACE.get(), Services.BLOCK_ENTITY_TICKERS.infernalFurnace());
     }
 
     @Override

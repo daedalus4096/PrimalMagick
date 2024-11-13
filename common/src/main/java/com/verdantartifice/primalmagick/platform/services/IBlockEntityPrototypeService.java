@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntit
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -18,6 +19,7 @@ public interface IBlockEntityPrototypeService {
     BlockEntityType.BlockEntitySupplier<DissolutionChamberTileEntity> dissolutionChamber();
     BlockEntityType.BlockEntitySupplier<EssenceTransmuterTileEntity> essenceTransmuter();
     BlockEntityType.BlockEntitySupplier<HoneyExtractorTileEntity> honeyExtractor();
+    BlockEntityType.BlockEntitySupplier<InfernalFurnaceTileEntity> infernalFurnace();
 
     // Misc tiles
     BlockEntityType.BlockEntitySupplier<CarvedBookshelfTileEntity> carvedBookshelf();
