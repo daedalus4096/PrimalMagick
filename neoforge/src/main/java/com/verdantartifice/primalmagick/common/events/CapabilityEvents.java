@@ -13,6 +13,8 @@ import net.neoforged.neoforge.items.IItemHandler;
 public class CapabilityEvents {
     @SubscribeEvent
     public static void onRegisterCapabilities(final RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.ESSENCE_FURNACE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.CALCINATOR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.CARVED_BOOKSHELF.get(), (be, face) -> cast(be.getRawItemHandler(face)));
     }
 
