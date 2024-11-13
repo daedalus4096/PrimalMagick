@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityPrototypeService;
+import com.verdantartifice.primalmagick.platform.services.IBlockEntityTickerService;
 import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
 import com.verdantartifice.primalmagick.platform.services.IConfigService;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
@@ -64,6 +65,7 @@ public class Services {
     public static final IItemPrototypeService ITEM_PROTOTYPES = load(IItemPrototypeService.class);
     public static final IItemHandlerService ITEM_HANDLERS = load(IItemHandlerService.class);
     public static final IBlockEntityPrototypeService BLOCK_ENTITY_PROTOTYPES = load(IBlockEntityPrototypeService.class);
+    public static final IBlockEntityTickerService BLOCK_ENTITY_TICKERS = load(IBlockEntityTickerService.class);
 
     // Registry services
     public static final IBlockService BLOCKS = load(IBlockService.class);

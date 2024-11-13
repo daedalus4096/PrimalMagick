@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.crafting.CalcinatorTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -45,12 +45,12 @@ public class CalcinatorBlock extends AbstractCalcinatorBlock implements ITieredD
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new CalcinatorTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.calcinator().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.CALCINATOR.get(), CalcinatorTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.CALCINATOR.get(), Services.BLOCK_ENTITY_TICKERS.calcinator());
     }
 
     @Override

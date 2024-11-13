@@ -24,8 +24,8 @@ import java.util.function.Predicate;
  * 
  * @author Daedalus4096
  */
-public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
-    public CalcinatorTileEntity(BlockPos pos, BlockState state) {
+public class CalcinatorTileEntityNeoforge extends AbstractCalcinatorTileEntityNeoforge {
+    public CalcinatorTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.CALCINATOR.get(), pos, state);
     }
     

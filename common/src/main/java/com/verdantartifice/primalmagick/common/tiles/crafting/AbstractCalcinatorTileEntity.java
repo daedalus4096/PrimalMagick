@@ -44,7 +44,6 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -55,8 +54,8 @@ import java.util.stream.Collectors;
  * block.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock}
- * @see {@link net.minecraft.tileentity.FurnaceTileEntity}
+ * @see com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock
+ * @see net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity
  */
 public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IOwnedTileEntity {
     protected static final int INPUT_INV_INDEX = 0;
@@ -141,9 +140,9 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> OptionalInt.of(INPUT_INV_INDEX);
-            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
-            default -> OptionalInt.of(FUEL_INV_INDEX);
+            case UP -> Optional.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.of(OUTPUT_INV_INDEX);
+            default -> Optional.of(FUEL_INV_INDEX);
         };
     }
 
@@ -205,14 +204,9 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         }
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (!this.level.isClientSide) {
-            this.relevantResearch = assembleRelevantResearch();
-        }
-        this.cookTimeTotal = this.getCookTimeTotal();
-    }
+    protected abstract boolean hasFuelRemainingItem(ItemStack fuelStack);
+
+    protected abstract ItemStack getFuelRemainingItem(ItemStack fuelStack);
 
     public static void tick(Level level, BlockPos pos, BlockState state, AbstractCalcinatorTileEntity entity) {
         boolean burningAtStart = entity.isBurning();
@@ -231,14 +225,14 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
                     entity.burnTimeTotal = entity.burnTime;
                     if (entity.isBurning()) {
                         shouldMarkDirty = true;
-                        if (fuelStack.hasCraftingRemainingItem()) {
+                        if (entity.hasFuelRemainingItem(fuelStack)) {
                             // If the fuel has a container item (e.g. a lava bucket), place the empty container in the fuel slot
-                            entity.setItem(FUEL_INV_INDEX, 0, fuelStack.getCraftingRemainingItem());
+                            entity.setItem(FUEL_INV_INDEX, 0, entity.getFuelRemainingItem(fuelStack));
                         } else if (!fuelStack.isEmpty()) {
                             // Otherwise, shrink the fuel stack
                             fuelStack.shrink(1);
                             if (fuelStack.isEmpty()) {
-                                entity.setItem(FUEL_INV_INDEX, 0, fuelStack.getCraftingRemainingItem());
+                                entity.setItem(FUEL_INV_INDEX, 0, entity.getFuelRemainingItem(fuelStack));
                             }
                         }
                     }

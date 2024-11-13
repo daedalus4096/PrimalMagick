@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -43,12 +43,12 @@ public class EssenceFurnaceBlock extends AbstractCalcinatorBlock {
     
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new EssenceFurnaceTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.essenceFurnace().create(pos, state);
     }
     
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.ESSENCE_FURNACE.get(), EssenceFurnaceTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.ESSENCE_FURNACE.get(), Services.BLOCK_ENTITY_TICKERS.essenceFurnace());
     }
 
     @Override

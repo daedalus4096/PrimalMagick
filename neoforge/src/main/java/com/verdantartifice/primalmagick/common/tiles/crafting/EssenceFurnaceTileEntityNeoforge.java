@@ -20,8 +20,8 @@ import java.util.function.Predicate;
  * 
  * @author Daedalus4096
  */
-public class EssenceFurnaceTileEntity extends AbstractCalcinatorTileEntity {
-    public EssenceFurnaceTileEntity(BlockPos pos, BlockState state) {
+public class EssenceFurnaceTileEntityNeoforge extends AbstractCalcinatorTileEntityNeoforge {
+    public EssenceFurnaceTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.ESSENCE_FURNACE.get(), pos, state);
     }
     
