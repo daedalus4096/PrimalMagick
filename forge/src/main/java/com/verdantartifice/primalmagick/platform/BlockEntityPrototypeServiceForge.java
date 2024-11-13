@@ -15,6 +15,8 @@ import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTile
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntityForge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityPrototypeService;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -57,5 +59,10 @@ public class BlockEntityPrototypeServiceForge implements IBlockEntityPrototypeSe
     @Override
     public BlockEntityType.BlockEntitySupplier<CarvedBookshelfTileEntity> carvedBookshelf() {
         return CarvedBookshelfTileEntityForge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<OfferingPedestalTileEntity> offeringPedestal() {
+        return OfferingPedestalTileEntityForge::new;
     }
 }

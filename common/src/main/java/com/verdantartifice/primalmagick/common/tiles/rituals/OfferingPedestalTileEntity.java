@@ -23,9 +23,9 @@ import java.util.Set;
  * Definition of an offering pedestal tile entity.  Holds the pedestal's inventory.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.rituals.OfferingPedestalBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.rituals.OfferingPedestalBlock
  */
-public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
+public abstract class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
     public static final int INPUT_INV_INDEX = 0;
     
     protected BlockPos altarPos = null;
@@ -92,7 +92,7 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
 
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
-        return OptionalInt.of(INPUT_INV_INDEX);
+        return Optional.of(INPUT_INV_INDEX);
     }
 
     @Override
@@ -105,12 +105,6 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
                 .build());
 
         return retVal;
-    }
-
-    @Override
-    public void onLoad() {
-        this.unpackLootTable(null);
-        super.onLoad();
     }
 
     @Override

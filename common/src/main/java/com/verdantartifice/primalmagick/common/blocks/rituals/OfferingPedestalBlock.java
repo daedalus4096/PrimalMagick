@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -64,7 +65,7 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
     
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new OfferingPedestalTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.offeringPedestal().create(pos, state);
     }
     
     @Override

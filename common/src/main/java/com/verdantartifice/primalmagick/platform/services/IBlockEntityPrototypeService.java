@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTi
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public interface IBlockEntityPrototypeService {
@@ -23,4 +24,7 @@ public interface IBlockEntityPrototypeService {
 
     // Misc tiles
     BlockEntityType.BlockEntitySupplier<CarvedBookshelfTileEntity> carvedBookshelf();
+
+    // Ritual tiles
+    BlockEntityType.BlockEntitySupplier<OfferingPedestalTileEntity> offeringPedestal();
 }
