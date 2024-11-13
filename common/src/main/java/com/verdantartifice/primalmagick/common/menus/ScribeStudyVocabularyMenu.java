@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -19,7 +20,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
@@ -73,8 +73,8 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     }
 
     @Override
-    public void containerChanged(Container pContainer) {
-        super.containerChanged(pContainer);
+    public void itemsChanged(IItemHandlerPM pContainer) {
+        super.itemsChanged(pContainer);
         this.refreshBookData();
     }
     

@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.data.ContainerSynchronizerLarge;
@@ -8,8 +10,6 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerListener;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerSynchronizer;
@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventoryMenu<ScribeTableTileEntity> implements ContainerListener {
+public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventoryMenu<ScribeTableTileEntity> implements IItemHandlerChangeListener {
     protected final Player player;
     protected final Level level;
 
@@ -63,7 +63,7 @@ public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventory
     }
     
     @Override
-    public void containerChanged(Container pContainer) {
+    public void itemsChanged(IItemHandlerPM pContainer) {
         // Do nothing by default
     }
 

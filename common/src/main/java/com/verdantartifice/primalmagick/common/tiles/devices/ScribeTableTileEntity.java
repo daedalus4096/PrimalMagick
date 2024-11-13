@@ -29,12 +29,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Definition of a scribe table tile entity.  Holds the inventory for the corresponding block.
  * 
- * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.ScribeTableBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.devices.ScribeTableBlock
  * @author Daedalus4096
  */
 public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
@@ -83,8 +82,8 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
-            default -> OptionalInt.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.of(OUTPUT_INV_INDEX);
+            default -> Optional.of(INPUT_INV_INDEX);
         };
     }
 
