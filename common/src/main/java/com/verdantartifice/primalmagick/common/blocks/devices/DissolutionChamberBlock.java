@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -69,12 +70,12 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new DissolutionChamberTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.dissolutionChamber().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), Services.BLOCK_ENTITY_TICKERS.dissolutionChamber());
     }
 
     @Override
@@ -83,7 +84,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
             // Open the GUI for the dissolution chamber
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof DissolutionChamberTileEntity chamberTile) {
-                serverPlayer.openMenu(chamberTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, chamberTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

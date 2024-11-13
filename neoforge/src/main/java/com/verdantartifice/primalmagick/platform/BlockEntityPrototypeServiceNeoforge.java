@@ -5,6 +5,8 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.CalcinatorTileEnti
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntityNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntityNeoforge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityPrototypeService;
@@ -24,6 +26,11 @@ public class BlockEntityPrototypeServiceNeoforge implements IBlockEntityPrototyp
     @Override
     public BlockEntityType.BlockEntitySupplier<ConcocterTileEntity> concocter() {
         return ConcocterTileEntityNeoforge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<DissolutionChamberTileEntity> dissolutionChamber() {
+        return DissolutionChamberTileEntityNeoforge::new;
     }
 
     @Override

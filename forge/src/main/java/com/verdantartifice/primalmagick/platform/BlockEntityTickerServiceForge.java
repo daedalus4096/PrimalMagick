@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.CalcinatorTileEnti
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityTickerService;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 
@@ -22,5 +23,10 @@ public class BlockEntityTickerServiceForge implements IBlockEntityTickerService 
     @Override
     public BlockEntityTicker<ConcocterTileEntity> concocter() {
         return ConcocterTileEntityForge::tick;
+    }
+
+    @Override
+    public BlockEntityTicker<DissolutionChamberTileEntity> dissolutionChamber() {
+        return DissolutionChamberTileEntity::tick;
     }
 }

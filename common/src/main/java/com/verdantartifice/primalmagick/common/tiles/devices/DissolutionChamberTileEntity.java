@@ -44,15 +44,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Definition of a dissolution chamber tile entity.  Performs the processing for the corresponding block.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.DissolutionChamberBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.devices.DissolutionChamberBlock
  */
-public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, StackedContentsCompatible {
+public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int OUTPUT_INV_INDEX = 0;
@@ -138,12 +137,6 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
 
     protected int getProcessTimeTotal() {
         return 100;
-    }
-    
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        this.processTimeTotal = this.getProcessTimeTotal();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, DissolutionChamberTileEntity entity) {
@@ -315,9 +308,9 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> OptionalInt.of(INPUT_INV_INDEX);
-            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
-            default -> OptionalInt.of(WAND_INV_INDEX);
+            case UP -> Optional.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.of(OUTPUT_INV_INDEX);
+            default -> Optional.of(WAND_INV_INDEX);
         };
     }
 
