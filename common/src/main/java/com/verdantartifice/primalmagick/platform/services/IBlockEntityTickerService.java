@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinator
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 
 public interface IBlockEntityTickerService {
@@ -15,4 +16,5 @@ public interface IBlockEntityTickerService {
     // Device tiles
     BlockEntityTicker<DissolutionChamberTileEntity> dissolutionChamber();
     BlockEntityTicker<EssenceTransmuterTileEntity> essenceTransmuter();
+    BlockEntityTicker<HoneyExtractorTileEntity> honeyExtractor();
 }

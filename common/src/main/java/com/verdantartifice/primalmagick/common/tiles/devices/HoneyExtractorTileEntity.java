@@ -39,15 +39,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Definition of a honey extractor tile entity.  Performs the extraction for the corresponding block.
  * 
- * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.HoneyExtractorBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.devices.HoneyExtractorBlock
  * @author Daedalus4096
  */
-public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
+public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int INPUT_INV_INDEX = 0;
@@ -138,12 +137,6 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     
     protected int getManaCost() {
         return 10;
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        this.spinTimeTotal = this.getSpinTimeTotal();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, HoneyExtractorTileEntity entity) {
@@ -301,9 +294,9 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> OptionalInt.of(INPUT_INV_INDEX);
-            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
-            default -> OptionalInt.of(WAND_INV_INDEX);
+            case UP -> Optional.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.of(OUTPUT_INV_INDEX);
+            default -> Optional.of(WAND_INV_INDEX);
         };
     }
 

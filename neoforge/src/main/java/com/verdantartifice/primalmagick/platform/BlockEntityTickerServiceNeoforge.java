@@ -9,6 +9,8 @@ import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberT
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntityNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntityNeoforge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityTickerService;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 
@@ -36,5 +38,10 @@ public class BlockEntityTickerServiceNeoforge implements IBlockEntityTickerServi
     @Override
     public BlockEntityTicker<EssenceTransmuterTileEntity> essenceTransmuter() {
         return EssenceTransmuterTileEntityNeoforge::tick;
+    }
+
+    @Override
+    public BlockEntityTicker<HoneyExtractorTileEntity> honeyExtractor() {
+        return HoneyExtractorTileEntityNeoforge::tick;
     }
 }

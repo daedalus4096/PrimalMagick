@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -68,12 +69,12 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new HoneyExtractorTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.honeyExtractor().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.HONEY_EXTRACTOR.get(), HoneyExtractorTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.HONEY_EXTRACTOR.get(), Services.BLOCK_ENTITY_TICKERS.honeyExtractor());
     }
 
     @Override
@@ -82,7 +83,7 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
             // Open the GUI for the honey extractor
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof HoneyExtractorTileEntity extractorTile) {
-                serverPlayer.openMenu(extractorTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, extractorTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
