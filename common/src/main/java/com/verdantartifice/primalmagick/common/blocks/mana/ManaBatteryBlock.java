@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -62,7 +63,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
             // Open the GUI for the battery
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof ManaBatteryTileEntity batteryTile) {
-                serverPlayer.openMenu(batteryTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, batteryTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

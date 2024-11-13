@@ -44,13 +44,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 
 /**
  * Definition of a mana battery tile entity.  Holds the charge for the corresponding block.
  * 
- * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock
  * @author Daedalus4096
  */
 public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
@@ -410,9 +409,9 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> OptionalInt.of(INPUT_INV_INDEX);
-            case DOWN -> OptionalInt.empty();
-            default -> OptionalInt.of(CHARGE_INV_INDEX);
+            case UP -> Optional.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.empty();
+            default -> Optional.of(CHARGE_INV_INDEX);
         };
     }
 
