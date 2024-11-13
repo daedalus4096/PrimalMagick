@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
@@ -35,7 +37,7 @@ import java.util.stream.Collectors;
  * 
  * @author Daedalus4096
  */
-public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTableTileEntity> implements ContainerListener {
+public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTableTileEntity> implements IItemHandlerChangeListener {
     public static final ResourceLocation PAPER_SLOT_TEXTURE = ResourceUtils.loc("item/empty_paper_slot");
     public static final ResourceLocation PENCIL_SLOT_TEXTURE = ResourceUtils.loc("item/empty_pencil_slot");
     protected static final Component PAPER_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.research_table.slot.paper");
@@ -85,7 +87,7 @@ public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTa
     }
 
     @Override
-    public void containerChanged(Container invBasic) {
+    public void itemsChanged(IItemHandlerPM invBasic) {
         this.checkWritingImplements();
     }
 

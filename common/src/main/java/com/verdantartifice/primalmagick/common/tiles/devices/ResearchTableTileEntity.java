@@ -23,7 +23,7 @@ import java.util.OptionalInt;
 /**
  * Definition of a research table tile entity.  Holds the writing materials for the corresponding block.
  * 
- * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.ResearchTableBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.devices.ResearchTableBlock
  * @author Daedalus4096
  */
 public class ResearchTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
@@ -61,8 +61,8 @@ public class ResearchTableTileEntity extends AbstractTileSidedInventoryPM implem
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case DOWN -> OptionalInt.empty();
-            default -> OptionalInt.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.empty();
+            default -> Optional.of(INPUT_INV_INDEX);
         };
     }
 

@@ -22,6 +22,7 @@ public class CapabilityEvents {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.HONEY_EXTRACTOR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.INFERNAL_FURNACE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.RESEARCH_TABLE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
     }
 
     private static IItemHandler cast(final IItemHandlerPM handler) {
