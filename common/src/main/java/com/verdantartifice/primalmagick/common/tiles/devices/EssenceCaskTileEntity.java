@@ -156,11 +156,11 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     public int getEssenceCountForType(EssenceType type) {
-        return this.contents.row(type).entrySet().stream().mapToInt(e -> e.getValue()).sum();
+        return this.contents.row(type).entrySet().stream().mapToInt(Map.Entry::getValue).sum();
     }
     
     public int getEssenceCountForSource(Source source) {
-        return this.contents.column(source).entrySet().stream().mapToInt(e -> e.getValue()).sum();
+        return this.contents.column(source).entrySet().stream().mapToInt(Map.Entry::getValue).sum();
     }
     
     protected EssenceType getEssenceTypeForIndex(int index) {
@@ -287,8 +287,8 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> OptionalInt.of(INPUT_INV_INDEX);
-            default -> OptionalInt.empty();
+            case UP -> Optional.of(INPUT_INV_INDEX);
+            default -> Optional.empty();
         };
     }
 

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -113,7 +114,7 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
             // Open the GUI for the essence cask
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof EssenceCaskTileEntity caskTile) {
-                serverPlayer.openMenu(caskTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, caskTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
