@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.trees;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -49,7 +50,7 @@ public class TreefolkSproutBlock extends BushBlock implements BonemealableBlock 
     @SuppressWarnings("deprecation")
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        if (pLevel.getMaxLocalRawBrightness(pPos.above()) >= 9 && pRandom.nextInt(7) == 0 && pLevel.isAreaLoaded(pPos, 1)) {
+        if (pLevel.getMaxLocalRawBrightness(pPos.above()) >= 9 && pRandom.nextInt(7) == 0 && Services.LEVEL.isAreaLoaded(pLevel, pPos, 1)) {
             this.advanceTree(pLevel, pPos, pState, pRandom);
         }
     }

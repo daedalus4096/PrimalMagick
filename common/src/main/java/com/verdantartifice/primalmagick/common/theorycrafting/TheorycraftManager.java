@@ -31,7 +31,7 @@ public class TheorycraftManager {
         // Determine what blocks are nearby so that aid blocks can be checked
         Set<Block> nearby = new HashSet<>();
         Level level = player.level();
-        if (level.isAreaLoaded(tablePos, 5)) {
+        if (Services.LEVEL.isAreaLoaded(level, tablePos, 5)) {
             Iterable<BlockPos> positions = BlockPos.betweenClosed(tablePos.offset(-5, -5, -5), tablePos.offset(5, 5, 5));
             for (BlockPos pos : positions) {
                 nearby.add(level.getBlockState(pos).getBlock());
@@ -74,7 +74,7 @@ public class TheorycraftManager {
     protected static Set<Block> getSurroundingsInner(Level level, BlockPos pos, Predicate<Block> filter) {
         Set<Block> retVal = new HashSet<>();
         
-        if (level.isAreaLoaded(pos, 5)) {
+        if (Services.LEVEL.isAreaLoaded(level, pos, 5)) {
             Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5));
             for (BlockPos searchPos : positions) {
                 Block block = level.getBlockState(searchPos).getBlock();

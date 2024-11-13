@@ -256,7 +256,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     @SuppressWarnings("deprecation")
     protected void scanSurroundings() {
         BlockPos pos = this.getBlockPos();
-        if (this.level.isAreaLoaded(pos, FONT_RANGE)) {
+        if (Services.LEVEL.isAreaLoaded(this.level, pos, FONT_RANGE)) {
             this.fontLocations.clear();
             Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-FONT_RANGE, -FONT_RANGE, -FONT_RANGE), pos.offset(FONT_RANGE, FONT_RANGE, FONT_RANGE));
             for (BlockPos searchPos : positions) {
