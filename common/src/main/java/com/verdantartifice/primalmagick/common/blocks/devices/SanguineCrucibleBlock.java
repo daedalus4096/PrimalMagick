@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
@@ -108,11 +108,8 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         if (!worldIn.isClientSide) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof SanguineCrucibleTileEntity) {
-                SanguineCrucibleTileEntity crucibleTile = (SanguineCrucibleTileEntity)tile;
-                if (entityIn instanceof ItemEntity) {
-                    ItemEntity itemEntity = (ItemEntity)entityIn;
+            if (worldIn.getBlockEntity(pos) instanceof SanguineCrucibleTileEntity crucibleTile) {
+                if (entityIn instanceof ItemEntity itemEntity) {
                     if (itemEntity.getItem().getItem() == ItemsPM.SOUL_GEM.get()) {
                         crucibleTile.addSouls(itemEntity.getItem().getCount());
                         entityIn.discard();
