@@ -21,7 +21,6 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 
 /**
@@ -29,7 +28,7 @@ import java.util.Set;
  * corresponding block.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock
  */
 public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
     protected static final int INPUT_INV_INDEX = 0;
@@ -92,7 +91,7 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
     @SuppressWarnings("deprecation")
     protected void scanSurroundings() {
         BlockPos pos = this.getBlockPos();
-        if (this.level.isAreaLoaded(pos, 5)) {
+        if (Services.LEVEL.isAreaLoaded(this.level, pos, 5)) {
             this.fontLocations.clear();
             Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5));
             for (BlockPos searchPos : positions) {
@@ -138,7 +137,7 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
 
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
-        return OptionalInt.of(INPUT_INV_INDEX);
+        return Optional.of(INPUT_INV_INDEX);
     }
 
     @Override
