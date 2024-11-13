@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -73,7 +74,7 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
             // Open the GUI for the calcinator
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof AbstractCalcinatorTileEntity calcinatorTile) {
-                serverPlayer.openMenu(calcinatorTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, calcinatorTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
