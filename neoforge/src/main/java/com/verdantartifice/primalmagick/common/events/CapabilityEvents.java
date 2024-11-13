@@ -27,6 +27,7 @@ public class CapabilityEvents {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.RESEARCH_TABLE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.SANGUINE_CRUCIBLE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.SCRIBE_TABLE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.WAND_CHARGER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
     }
 
     private static IItemHandler cast(final IItemHandlerPM handler) {

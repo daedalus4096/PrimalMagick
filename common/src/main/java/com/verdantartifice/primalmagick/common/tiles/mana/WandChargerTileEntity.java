@@ -27,7 +27,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 
 /**
@@ -35,7 +34,7 @@ import java.util.Set;
  * for the corresponding block.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.WandChargerBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.mana.WandChargerBlock
  */
 public class WandChargerTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     public static final int INPUT_INV_INDEX = 0;
@@ -207,9 +206,9 @@ public class WandChargerTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> OptionalInt.of(INPUT_INV_INDEX);
-            case DOWN -> OptionalInt.empty();
-            default -> OptionalInt.of(CHARGE_INV_INDEX);
+            case UP -> Optional.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.empty();
+            default -> Optional.of(CHARGE_INV_INDEX);
         };
     }
 

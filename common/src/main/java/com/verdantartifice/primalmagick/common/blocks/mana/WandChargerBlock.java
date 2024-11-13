@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.mana;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -52,7 +53,7 @@ public class WandChargerBlock extends BaseEntityBlock {
             // Open the GUI for the wand charger
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof WandChargerTileEntity chargerTile) {
-                serverPlayer.openMenu(chargerTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, chargerTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
