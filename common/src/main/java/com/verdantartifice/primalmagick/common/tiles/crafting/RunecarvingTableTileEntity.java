@@ -23,7 +23,7 @@ import java.util.OptionalInt;
 /**
  * Definition of a runecarving table tile entity.  Holds the crafting materials for the corresponding block.
  * 
- * @see {@link com.verdantartifice.primalmagick.common.blocks.crafting.RunecarvingTableBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.crafting.RunecarvingTableBlock
  * @author Daedalus4096
  */
 public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
@@ -59,8 +59,8 @@ public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM imp
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case DOWN -> OptionalInt.empty();
-            default -> OptionalInt.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.empty();
+            default -> Optional.of(INPUT_INV_INDEX);
         };
     }
 
