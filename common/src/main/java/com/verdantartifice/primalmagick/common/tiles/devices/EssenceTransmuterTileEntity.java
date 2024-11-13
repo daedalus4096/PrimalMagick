@@ -64,9 +64,9 @@ import java.util.stream.Collectors;
  * Definition of an essence transmuter tile entity.  Performs the processing for the corresponding block.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.EssenceTransmuterBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.devices.EssenceTransmuterBlock
  */
-public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IOwnedTileEntity {
+public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IOwnedTileEntity {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int INPUT_INV_INDEX = 0;
@@ -186,15 +186,6 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     
     protected int getManaCost() {
         return 10;
-    }
-    
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (!this.level.isClientSide) {
-            this.relevantResearch = assembleRelevantResearch();
-        }
-        this.processTimeTotal = this.getProcessTimeTotal();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceTransmuterTileEntity entity) {
@@ -416,9 +407,9 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> OptionalInt.of(INPUT_INV_INDEX);
-            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
-            default -> OptionalInt.of(WAND_INV_INDEX);
+            case UP -> Optional.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.of(OUTPUT_INV_INDEX);
+            default -> Optional.of(WAND_INV_INDEX);
         };
     }
 

@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -71,12 +72,12 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new EssenceTransmuterTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.essenceTransmuter().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), EssenceTransmuterTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), Services.BLOCK_ENTITY_TICKERS.essenceTransmuter());
     }
 
     @Override
@@ -85,7 +86,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
             // Open the GUI for the essence transmuter
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof EssenceTransmuterTileEntity transmuterTile) {
-                serverPlayer.openMenu(transmuterTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, transmuterTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
