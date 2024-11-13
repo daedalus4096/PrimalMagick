@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Definition of a ritual lectern tile entity.  Holds the lectern's inventory.
@@ -101,7 +100,7 @@ public class RitualLecternTileEntity extends AbstractTileSidedInventoryPM implem
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         // Don't connect pipes on any side of the lectern
-        return OptionalInt.empty();
+        return Optional.empty();
     }
 
     @Override
