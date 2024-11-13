@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.CalcinatorTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntityForge;
@@ -17,6 +19,11 @@ public class BlockEntityPrototypeServiceForge implements IBlockEntityPrototypeSe
     @Override
     public BlockEntityType.BlockEntitySupplier<AbstractCalcinatorTileEntity> essenceFurnace() {
         return EssenceFurnaceTileEntityForge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<ConcocterTileEntity> concocter() {
+        return ConcocterTileEntityForge::new;
     }
 
     @Override

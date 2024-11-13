@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -74,12 +75,12 @@ public class ConcocterBlock extends BaseEntityBlock {
     
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ConcocterTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.concocter().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.CONCOCTER.get(), ConcocterTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.CONCOCTER.get(), Services.BLOCK_ENTITY_TICKERS.concocter());
     }
 
     @Override
@@ -112,7 +113,7 @@ public class ConcocterBlock extends BaseEntityBlock {
             // Open the GUI for the concocter
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof ConcocterTileEntity concocterTile) {
-                serverPlayer.openMenu(concocterTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, concocterTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

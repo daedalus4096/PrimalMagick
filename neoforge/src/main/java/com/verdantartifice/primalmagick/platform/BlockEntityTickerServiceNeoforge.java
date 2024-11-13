@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.CalcinatorTileEntityNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntityNeoforge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityTickerService;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -15,5 +17,10 @@ public class BlockEntityTickerServiceNeoforge implements IBlockEntityTickerServi
     @Override
     public BlockEntityTicker<AbstractCalcinatorTileEntity> essenceFurnace() {
         return EssenceFurnaceTileEntityNeoforge::tick;
+    }
+
+    @Override
+    public BlockEntityTicker<ConcocterTileEntity> concocter() {
+        return ConcocterTileEntityNeoforge::tick;
     }
 }

@@ -58,14 +58,13 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
+public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int INPUT_INV_INDEX = 0;
@@ -217,15 +216,6 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     @Override
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (!this.level.isClientSide) {
-            this.relevantResearch = assembleRelevantResearch(this.level.getRecipeManager());
-        }
-        this.cookTimeTotal = this.getCookTimeTotal();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ConcocterTileEntity entity) {
@@ -426,9 +416,9 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> OptionalInt.of(INPUT_INV_INDEX);
-            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
-            default -> OptionalInt.of(WAND_INV_INDEX);
+            case UP -> Optional.of(INPUT_INV_INDEX);
+            case DOWN -> Optional.of(OUTPUT_INV_INDEX);
+            default -> Optional.of(WAND_INV_INDEX);
         };
     }
 
