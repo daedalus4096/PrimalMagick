@@ -97,7 +97,7 @@ import java.util.function.Predicate;
  * block.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.rituals.RitualAltarBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.rituals.RitualAltarBlock
  */
 public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implements IInteractWithWand {
     protected static final int OUTPUT_INV_INDEX = 0;
@@ -985,7 +985,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 int damage = 5 + Mth.floor(Math.sqrt(Math.abs(Math.min(0.0F, this.stability))) / 2.0D);
                 int amp = Math.max(0, damage - 6);
                 target.hurt(target.damageSources().magic(), damage);
-                target.addEffect(new MobEffectInstance(EffectsPM.MANA_IMPEDANCE.getHolder().get(), 12000, amp));
+                target.addEffect(new MobEffectInstance(EffectsPM.MANA_IMPEDANCE.getHolder(), 12000, amp));
                 this.doMishapEffects(target.blockPosition(), index == 0); // Only play sounds once
                 if (!allTargets) {
                     break;
@@ -1058,7 +1058,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
 
     @Override
     protected Optional<Integer> getInventoryIndexForFace(Direction face) {
-        return OptionalInt.of(OUTPUT_INV_INDEX);
+        return Optional.of(OUTPUT_INV_INDEX);
     }
 
     @Override
