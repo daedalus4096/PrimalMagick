@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipe
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.menus.slots.InfernalFurnaceResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -58,7 +59,7 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
         
         // Slot 2: ignyx input
         this.ignyxSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 44, 53, 
-                new FilteredSlot.Properties().background(IGNYX_SLOT_TEXTURE).tooltip(IGNYX_SLOT_TOOLTIP).tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL)));
+                new FilteredSlotProperties().background(IGNYX_SLOT_TEXTURE).tooltip(IGNYX_SLOT_TOOLTIP).tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL)));
         
         // Slot 3: wand input
         this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 1, 8, 62, false));

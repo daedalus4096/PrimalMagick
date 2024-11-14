@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -51,7 +52,7 @@ public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<Essenc
         this.transmuterData = transmuterData;
         
         // Slot 0: essence input
-        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 44, 35, new FilteredSlotProperties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)
                 .background(DUST_SLOT_TEXTURE)
                 .background(SHARD_SLOT_TEXTURE, $ -> SHARD_REQUIREMENT.isMetBy(playerInv.player))
                 .background(CRYSTAL_SLOT_TEXTURE, $ -> CRYSTAL_REQUIREMENT.isMetBy(playerInv.player))

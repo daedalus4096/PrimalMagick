@@ -19,7 +19,7 @@ public class WandSlot extends FilteredSlot {
     
     public WandSlot(IItemHandler inventoryIn, int index, int xPosition, int yPosition, boolean allowStaves) {
         super(inventoryIn, index, xPosition, yPosition, 
-                new FilteredSlot.Properties().background(TEXTURE).tooltip(allowStaves ? STAFF_SLOT_TOOLTIP : WAND_SLOT_TOOLTIP)
+                new FilteredSlotProperties().background(TEXTURE).tooltip(allowStaves ? STAFF_SLOT_TOOLTIP : WAND_SLOT_TOOLTIP)
                         .filter(stack -> (stack.getItem() instanceof IWand) && (allowStaves || !(stack.getItem() instanceof IStaff))));
     }
 }

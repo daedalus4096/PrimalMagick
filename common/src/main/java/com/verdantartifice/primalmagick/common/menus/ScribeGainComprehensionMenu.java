@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
@@ -52,7 +53,7 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     protected void createModeSlots() {
         // Slot 0: Original book
         this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 18, 
-                new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE).tooltip(ANCIENT_BOOK_TOOLTIP)));
+                new FilteredSlotProperties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE).tooltip(ANCIENT_BOOK_TOOLTIP)));
     }
 
     @Override

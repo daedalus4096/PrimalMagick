@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.menus;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -54,7 +55,7 @@ public class EssenceCaskMenu extends AbstractTileSidedInventoryMenu<EssenceCaskT
         this.tile.startOpen(playerInv.player);
         
         // Slot 0: Cask input
-        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 80, 108, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 80, 108, new FilteredSlotProperties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)
                 .background(DUST_SLOT_TEXTURE)
                 .background(SHARD_SLOT_TEXTURE, $ -> SHARD_REQUIREMENT.isMetBy(playerInv.player))
                 .background(CRYSTAL_SLOT_TEXTURE, $ -> CRYSTAL_REQUIREMENT.isMetBy(playerInv.player))

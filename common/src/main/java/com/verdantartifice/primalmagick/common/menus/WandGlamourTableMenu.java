@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -68,15 +69,15 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
         
         // Slot 2: Wand core
         this.coreSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 1, 30, 17,
-                new FilteredSlot.Properties().background(CORE_SLOT_TEXTURE).tooltip(CORE_SLOT_TOOLTIP).typeOf(WandCoreItem.class, StaffCoreItem.class)));
+                new FilteredSlotProperties().background(CORE_SLOT_TEXTURE).tooltip(CORE_SLOT_TOOLTIP).typeOf(WandCoreItem.class, StaffCoreItem.class)));
         
         // Slot 3: Wand caps
         this.capSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 2, 30, 35,
-                new FilteredSlot.Properties().background(CAP_SLOT_TEXTURE).tooltip(CAP_SLOT_TOOLTIP).typeOf(WandCapItem.class)));
+                new FilteredSlotProperties().background(CAP_SLOT_TEXTURE).tooltip(CAP_SLOT_TOOLTIP).typeOf(WandCapItem.class)));
         
         // Slot 4: Wand gem
         this.gemSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 3, 30, 53,
-                new FilteredSlot.Properties().background(GEM_SLOT_TEXTURE).tooltip(GEM_SLOT_TOOLTIP).typeOf(WandGemItem.class)));
+                new FilteredSlotProperties().background(GEM_SLOT_TEXTURE).tooltip(GEM_SLOT_TOOLTIP).typeOf(WandGemItem.class)));
         
         // Slots 5-31: Player backpack
         for (int i = 0; i < 3; i++) {

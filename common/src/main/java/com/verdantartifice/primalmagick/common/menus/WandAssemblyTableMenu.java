@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
@@ -67,11 +68,11 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
         
         // Slot 1: Wand core
         this.coreSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 0, 48, 35,
-                new FilteredSlot.Properties().background(CORE_SLOT_TEXTURE).tooltip(CORE_SLOT_TOOLTIP).typeOf(WandCoreItem.class, StaffCoreItem.class)));
+                new FilteredSlotProperties().background(CORE_SLOT_TEXTURE).tooltip(CORE_SLOT_TOOLTIP).typeOf(WandCoreItem.class, StaffCoreItem.class)));
         
         // Slot 2: Wand gem
         this.gemSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 1, 48, 17,
-                new FilteredSlot.Properties().background(GEM_SLOT_TEXTURE).tooltip(GEM_SLOT_TOOLTIP).typeOf(WandGemItem.class)));
+                new FilteredSlotProperties().background(GEM_SLOT_TEXTURE).tooltip(GEM_SLOT_TOOLTIP).typeOf(WandGemItem.class)));
         
         // Slots 3-4: Wand caps
         this.capSlot = this.addSlot(makeCapSlot(componentInvWrapper, 2, 30, 53));
@@ -92,7 +93,7 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
     
     protected static Slot makeCapSlot(IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
         return new FilteredSlot(inventoryIn, index, xPosition, yPosition, 
-                new FilteredSlot.Properties().background(CAP_SLOT_TEXTURE).tooltip(CAP_SLOT_TOOLTIP).typeOf(WandCapItem.class));
+                new FilteredSlotProperties().background(CAP_SLOT_TEXTURE).tooltip(CAP_SLOT_TOOLTIP).typeOf(WandCapItem.class));
     }
 
     @Override

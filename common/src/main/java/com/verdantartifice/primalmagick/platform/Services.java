@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.platform.services.IItemAbilityService;
 import com.verdantartifice.primalmagick.platform.services.IItemHandlerService;
 import com.verdantartifice.primalmagick.platform.services.IItemPrototypeService;
 import com.verdantartifice.primalmagick.platform.services.ILevelService;
+import com.verdantartifice.primalmagick.platform.services.IMenuService;
 import com.verdantartifice.primalmagick.platform.services.IPlayerService;
 import com.verdantartifice.primalmagick.platform.services.ITagService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeService;
@@ -70,6 +71,7 @@ public class Services {
     public static final IBlockEntityTickerService BLOCK_ENTITY_TICKERS = load(IBlockEntityTickerService.class);
     public static final IPlayerService PLAYER = load(IPlayerService.class);
     public static final ILevelService LEVEL = load(ILevelService.class);
+    public static final IMenuService MENU = load(IMenuService.class);
 
     // Registry services
     public static final IBlockService BLOCKS = load(IBlockService.class);

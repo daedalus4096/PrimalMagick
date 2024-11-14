@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -46,11 +47,11 @@ public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
 
         // Slot 1: Original book
         this.originalSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 63, 
-                new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE).tooltip(ANCIENT_BOOK_TOOLTIP)));
+                new FilteredSlotProperties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE).tooltip(ANCIENT_BOOK_TOOLTIP)));
         
         // Slot 2: Blank book and quill
         this.blankSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 66, 63,
-                new FilteredSlot.Properties().item(Items.WRITABLE_BOOK).background(WRITABLE_BOOK_SLOT_TEXTURE).tooltip(WRITABLE_BOOK_TOOLTIP)));
+                new FilteredSlotProperties().item(Items.WRITABLE_BOOK).background(WRITABLE_BOOK_SLOT_TEXTURE).tooltip(WRITABLE_BOOK_TOOLTIP)));
     }
 
     @Override

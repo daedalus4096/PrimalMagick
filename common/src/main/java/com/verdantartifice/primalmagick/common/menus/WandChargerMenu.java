@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.menus;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -52,7 +53,7 @@ public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerT
         this.chargerData = chargerData;
         
         // Slot 0: essence input
-        this.essenceSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 52, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(ESSENCE_SLOT_TOOLTIP)
+        this.essenceSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 52, 35, new FilteredSlotProperties().tag(ItemTagsPM.ESSENCES).tooltip(ESSENCE_SLOT_TOOLTIP)
                 .background(DUST_SLOT_TEXTURE)
                 .background(SHARD_SLOT_TEXTURE, $ -> SHARD_REQUIREMENT.isMetBy(playerInv.player))
                 .background(CRYSTAL_SLOT_TEXTURE, $ -> CRYSTAL_REQUIREMENT.isMetBy(playerInv.player))
@@ -60,7 +61,7 @@ public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerT
         
         // Slot 1: wand input/output
         this.wandSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 108, 35, 
-                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(WAND_SLOT_TOOLTIP)));
+                new FilteredSlotProperties().filter(stack -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(WAND_SLOT_TOOLTIP)));
         
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform.services;
 
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -14,6 +15,9 @@ public interface IItemHandlerService {
     IItemHandlerPM create(int size, @Nullable AbstractTilePM tile);
     IItemHandlerPM create(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile);
     IItemHandlerPM.Builder builder(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile);
+
+    IItemHandlerPM wrap(Container container);
+    IItemHandlerPM wrap(Container container, @Nullable Direction side);
 
     /**
      * Returns a shallow copy of the given item handler wrapped in a container.

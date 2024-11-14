@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorFuelSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,7 +36,7 @@ public class CalcinatorMenu extends AbstractTileSidedInventoryMenu<AbstractCalci
         this.calcinatorData = calcinatorData;
         
         // Slot 0: calcinator input
-        this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 34, 17, new FilteredSlot.Properties().tooltip(INPUT_SLOT_TOOLTIP)));
+        this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 34, 17, new FilteredSlotProperties().tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slot 1: calcinator fuel
         this.addSlot(new CalcinatorFuelSlot(this, this.getTileInventory(Direction.NORTH), 0, 34, 53));

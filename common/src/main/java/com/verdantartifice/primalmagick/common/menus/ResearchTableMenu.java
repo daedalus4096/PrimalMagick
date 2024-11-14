@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntity;
@@ -14,8 +15,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerListener;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
@@ -58,11 +57,11 @@ public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTa
         
         // Slot 0: Pencil
         this.pencilSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 8,
-                new FilteredSlot.Properties().background(PENCIL_SLOT_TEXTURE).tooltip(PENCIL_SLOT_TOOLTIP).typeOf(IWritingImplement.class)));
+                new FilteredSlotProperties().background(PENCIL_SLOT_TEXTURE).tooltip(PENCIL_SLOT_TOOLTIP).typeOf(IWritingImplement.class)));
         
         // Slot 1: Paper
         this.paperSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 206, 8,
-                new FilteredSlot.Properties().background(PAPER_SLOT_TEXTURE).tooltip(PAPER_SLOT_TOOLTIP).item(Items.PAPER)));
+                new FilteredSlotProperties().background(PAPER_SLOT_TEXTURE).tooltip(PAPER_SLOT_TOOLTIP).item(Items.PAPER)));
         
         // Slots 2-28: Player backpack
         for (int i = 0; i < 3; i++) {

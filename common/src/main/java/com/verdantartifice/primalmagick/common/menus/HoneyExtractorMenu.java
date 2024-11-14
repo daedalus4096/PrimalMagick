@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
@@ -45,11 +46,11 @@ public class HoneyExtractorMenu extends AbstractTileSidedInventoryMenu<HoneyExtr
         
         // Slot 0: honeycomb input
         this.honeycombSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 35,
-                new FilteredSlot.Properties().background(HONEYCOMB_SLOT_TEXTURE).tooltip(HONEYCOMB_SLOT_TOOLTIP).item(Items.HONEYCOMB)));
+                new FilteredSlotProperties().background(HONEYCOMB_SLOT_TEXTURE).tooltip(HONEYCOMB_SLOT_TOOLTIP).item(Items.HONEYCOMB)));
         
         // Slot 1: bottle input
         this.bottleSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 52, 35, 
-                new FilteredSlot.Properties().background(BOTTLE_SLOT_TEXTURE).tooltip(BOTTLE_SLOT_TOOLTIP).item(Items.GLASS_BOTTLE)));
+                new FilteredSlotProperties().background(BOTTLE_SLOT_TEXTURE).tooltip(BOTTLE_SLOT_TOOLTIP).item(Items.GLASS_BOTTLE)));
         
         // Slot 2: honey output
         this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 108, 35));

@@ -18,7 +18,7 @@ public class CalcinatorFuelSlot extends FilteredSlot {
 
     public CalcinatorFuelSlot(CalcinatorMenu container, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
         super(inventoryIn, index, xPosition, yPosition,
-                new FilteredSlot.Properties().filter(stack -> container.isFuel(stack) || isBucket(stack)).tooltip(FUEL_SLOT_TOOLTIP));
+                new FilteredSlotProperties().filter(stack -> container.isFuel(stack) || isBucket(stack)).tooltip(FUEL_SLOT_TOOLTIP));
         this.container = container;
     }
 

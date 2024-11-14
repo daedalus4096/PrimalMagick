@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -81,11 +82,11 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         
         // Slot 0: input slabs
         this.inputSlabSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 20, 21,
-                new FilteredSlot.Properties().background(BASE_SLOT_TEXTURE).tooltip(BASE_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_BASES)));
+                new FilteredSlotProperties().background(BASE_SLOT_TEXTURE).tooltip(BASE_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_BASES)));
         
         // Slot 1: input lapis
         this.inputLapisSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 20, 46,
-                new FilteredSlot.Properties().background(ETCHING_SLOT_TEXTURE).tooltip(ETCHING_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_ETCHINGS)));
+                new FilteredSlotProperties().background(ETCHING_SLOT_TEXTURE).tooltip(ETCHING_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_ETCHINGS)));
         
         // Slot 2: runecarving output
         this.outputSlot = this.addSlot(new GenericResultSlot(this.player, InventoryUtils.wrapInventory(this.outputInventory, null), 0, 143, 33) {

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
@@ -141,7 +142,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
     
     protected static Slot makeInputSlot(Container pContainer, int pSlot, int pX, int pY) {
         return new FilteredSlot(InventoryUtils.wrapInventory(pContainer, null), pSlot, pX, pY,
-                new FilteredSlot.Properties().filter(stack -> stack.isDamageableItem() || stack.is(Items.ENCHANTED_BOOK) || stack.isEnchanted() || stack.canGrindstoneRepair() || RuneManager.hasRunes(stack)));
+                new FilteredSlotProperties().filter(stack -> stack.isDamageableItem() || stack.is(Items.ENCHANTED_BOOK) || stack.isEnchanted() || stack.canGrindstoneRepair() || RuneManager.hasRunes(stack)));
     }
     
     @Override

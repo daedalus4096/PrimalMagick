@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.menus;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.AnalysisResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import net.minecraft.ChatFormatting;
@@ -48,7 +49,7 @@ public class AnalysisTableMenu extends AbstractContainerMenu {
         this.player = inv.player;
         
         // Slot 0: Item to analyze
-        this.addSlot(new FilteredSlot(new InvWrapper(this.analysisInventory), 0, 56, 35, new FilteredSlot.Properties().tooltip(INPUT_SLOT_TOOLTIP)));
+        this.addSlot(new FilteredSlot(new InvWrapper(this.analysisInventory), 0, 56, 35, new FilteredSlotProperties().tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slot 1: Last analyzed item
         this.addSlot(new AnalysisResultSlot(this.analysisInventory, 1, 103, 35));
