@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorFuelSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
@@ -39,7 +38,7 @@ public class CalcinatorMenu extends AbstractTileSidedInventoryMenu<AbstractCalci
         this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 34, 17, new FilteredSlotProperties().tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slot 1: calcinator fuel
-        this.addSlot(new CalcinatorFuelSlot(this, this.getTileInventory(Direction.NORTH), 0, 34, 53));
+        this.addSlot(Services.MENU.makeCalcinatorFuelSlot(this, this.getTileInventory(Direction.NORTH), 0, 34, 53));
         
         // Slots 2-10: calcinator output
         for (int i = 0; i < 9; i++) {

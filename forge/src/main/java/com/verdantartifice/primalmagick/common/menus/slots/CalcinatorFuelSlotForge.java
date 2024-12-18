@@ -11,12 +11,12 @@ import net.minecraftforge.items.IItemHandler;
  * 
  * @author Daedalus4096
  */
-public class CalcinatorFuelSlot extends FilteredSlot {
+public class CalcinatorFuelSlotForge extends FilteredSlotForge {
     protected static final Component FUEL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.calcinator_gui.slot.fuel");
 
     protected final CalcinatorMenu container;
 
-    public CalcinatorFuelSlot(CalcinatorMenu container, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
+    public CalcinatorFuelSlotForge(CalcinatorMenu container, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
         super(inventoryIn, index, xPosition, yPosition,
                 new FilteredSlotProperties().filter(stack -> container.isFuel(stack) || isBucket(stack)).tooltip(FUEL_SLOT_TOOLTIP));
         this.container = container;
