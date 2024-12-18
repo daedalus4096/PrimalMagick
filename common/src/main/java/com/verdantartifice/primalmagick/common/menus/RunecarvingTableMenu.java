@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
@@ -14,6 +13,7 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
@@ -81,11 +81,11 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.tile.addListener(Direction.UP, this);
         
         // Slot 0: input slabs
-        this.inputSlabSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 20, 21,
+        this.inputSlabSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 20, 21,
                 new FilteredSlotProperties().background(BASE_SLOT_TEXTURE).tooltip(BASE_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_BASES)));
         
         // Slot 1: input lapis
-        this.inputLapisSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 20, 46,
+        this.inputLapisSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 1, 20, 46,
                 new FilteredSlotProperties().background(ETCHING_SLOT_TEXTURE).tooltip(ETCHING_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_ETCHINGS)));
         
         // Slot 2: runecarving output

@@ -3,11 +3,11 @@ package com.verdantartifice.primalmagick.common.menus;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.WandInscriptionRecipe;
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
-import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -15,12 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.ResultContainer;
-import net.minecraft.world.inventory.ResultSlot;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.TransientCraftingContainer;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -62,7 +57,7 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
         this.wandSlot = this.addSlot(new WandSlot(componentInvWrapper, 0, 30, 35, true));
         
         // Slot 2: Input scroll
-        this.scrollSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 1, 66, 35, new FilteredSlotProperties().typeOf(SpellScrollItem.class).tooltip(SCROLL_SLOT_TOOLTIP)));
+        this.scrollSlot = this.addSlot(Services.MENU.makeFilteredSlot(componentInvWrapper, 1, 66, 35, new FilteredSlotProperties().typeOf(SpellScrollItem.class).tooltip(SCROLL_SLOT_TOOLTIP)));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {

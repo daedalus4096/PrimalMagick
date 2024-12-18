@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -12,6 +11,7 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -53,14 +53,14 @@ public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerT
         this.chargerData = chargerData;
         
         // Slot 0: essence input
-        this.essenceSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 52, 35, new FilteredSlotProperties().tag(ItemTagsPM.ESSENCES).tooltip(ESSENCE_SLOT_TOOLTIP)
+        this.essenceSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 52, 35, new FilteredSlotProperties().tag(ItemTagsPM.ESSENCES).tooltip(ESSENCE_SLOT_TOOLTIP)
                 .background(DUST_SLOT_TEXTURE)
                 .background(SHARD_SLOT_TEXTURE, $ -> SHARD_REQUIREMENT.isMetBy(playerInv.player))
                 .background(CRYSTAL_SLOT_TEXTURE, $ -> CRYSTAL_REQUIREMENT.isMetBy(playerInv.player))
                 .background(CLUSTER_SLOT_TEXTURE, $ -> CLUSTER_REQUIREMENT.isMetBy(playerInv.player))));
         
         // Slot 1: wand input/output
-        this.wandSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 108, 35, 
+        this.wandSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.NORTH), 0, 108, 35, 
                 new FilteredSlotProperties().filter(stack -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(WAND_SLOT_TOOLTIP)));
         
         // Slots 2-28: player backpack

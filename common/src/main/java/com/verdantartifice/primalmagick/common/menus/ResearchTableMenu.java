@@ -3,12 +3,12 @@ package com.verdantartifice.primalmagick.common.menus;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -56,11 +56,11 @@ public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTa
         this.player = inv.player;
         
         // Slot 0: Pencil
-        this.pencilSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 8,
+        this.pencilSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 8,
                 new FilteredSlotProperties().background(PENCIL_SLOT_TEXTURE).tooltip(PENCIL_SLOT_TOOLTIP).typeOf(IWritingImplement.class)));
         
         // Slot 1: Paper
-        this.paperSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 206, 8,
+        this.paperSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 1, 206, 8,
                 new FilteredSlotProperties().background(PAPER_SLOT_TEXTURE).tooltip(PAPER_SLOT_TOOLTIP).item(Items.PAPER)));
         
         // Slots 2-28: Player backpack

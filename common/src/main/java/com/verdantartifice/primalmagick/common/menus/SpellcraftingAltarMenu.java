@@ -3,10 +3,9 @@ package com.verdantartifice.primalmagick.common.menus;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.menus.slots.SpellcraftingResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
@@ -30,6 +29,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltar
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -95,7 +95,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         this.wandSlot = this.addSlot(new WandSlot(InventoryUtils.wrapInventory(this.wandInv, null), 0, 8, 8, false));
 
         // Slot 2: Blank scroll
-        this.scrollSlot = this.addSlot(new FilteredSlot(InventoryUtils.wrapInventory(this.scrollInv, null), 0, 160, 8, 
+        this.scrollSlot = this.addSlot(Services.MENU.makeFilteredSlot(InventoryUtils.wrapInventory(this.scrollInv, null), 0, 160, 8,
                 new FilteredSlotProperties().item(ItemsPM.SPELL_SCROLL_BLANK.get()).tooltip(SCROLL_SLOT_TOOLTIP)));
         
         // Slots 3-29: Player backpack

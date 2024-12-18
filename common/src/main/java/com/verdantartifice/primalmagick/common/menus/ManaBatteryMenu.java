@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.data.ContainerSynchronizerLarge;
-import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -15,6 +14,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -61,7 +61,7 @@ public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryT
         this.data = data;
         
         // Slot 0: input slot
-        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 34, new FilteredSlotProperties().typeOf(EssenceItem.class, IWand.class).tooltip(INPUT_SLOT_TOOLTIP)
+        this.inputSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 34, new FilteredSlotProperties().typeOf(EssenceItem.class, IWand.class).tooltip(INPUT_SLOT_TOOLTIP)
                 .background(DUST_SLOT_TEXTURE)
                 .background(SHARD_SLOT_TEXTURE, $ -> SHARD_REQUIREMENT.isMetBy(playerInv.player))
                 .background(CRYSTAL_SLOT_TEXTURE, $ -> CRYSTAL_REQUIREMENT.isMetBy(playerInv.player))
@@ -69,7 +69,7 @@ public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryT
                 .background(WAND_SLOT_TEXTURE)));
         
         // Slot 1: charge slot
-        this.chargeSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 206, 34, 
+        this.chargeSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.NORTH), 0, 206, 34, 
                 new FilteredSlotProperties().filter(stack -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(CHARGE_SLOT_TOOLTIP)));
 
         // Slots 2-28: player backpack
