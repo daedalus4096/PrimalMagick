@@ -6,4 +6,5 @@ import net.minecraft.world.inventory.Slot;
 
 public interface IMenuService {
     Slot makeFilteredSlot(IItemHandlerPM itemHandler, int slot, int x, int y, FilteredSlotProperties properties);
+    Slot makeWandSlot(IItemHandlerPM itemHandler, int slot, int x, int y, boolean allowStaves);
 }

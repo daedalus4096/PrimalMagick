@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.menus.slots.IWandSlot;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import org.slf4j.Logger;
@@ -69,7 +70,7 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         this.addSingle(blockAtlas, WandAssemblyTableMenu.CORE_SLOT_TEXTURE);
         this.addSingle(blockAtlas, WandAssemblyTableMenu.CAP_SLOT_TEXTURE);
         this.addSingle(blockAtlas, WandAssemblyTableMenu.GEM_SLOT_TEXTURE);
-        this.addSingle(blockAtlas, WandSlot.TEXTURE);
+        this.addSingle(blockAtlas, IWandSlot.TEXTURE);
         this.addSingle(blockAtlas, ResearchTableMenu.PAPER_SLOT_TEXTURE);
         this.addSingle(blockAtlas, ResearchTableMenu.PENCIL_SLOT_TEXTURE);
         this.addSingle(blockAtlas, AbstractRunescribingAltarMenu.RUNE_SLOT_TEXTURE);

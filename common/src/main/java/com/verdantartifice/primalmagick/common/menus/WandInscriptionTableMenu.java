@@ -54,7 +54,7 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
         this.addSlot(new ResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
         // Slot 1: Input wand
-        this.wandSlot = this.addSlot(new WandSlot(componentInvWrapper, 0, 30, 35, true));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(componentInvWrapper, 0, 30, 35, true));
         
         // Slot 2: Input scroll
         this.scrollSlot = this.addSlot(Services.MENU.makeFilteredSlot(componentInvWrapper, 1, 66, 35, new FilteredSlotProperties().typeOf(SpellScrollItem.class).tooltip(SCROLL_SLOT_TOOLTIP)));

@@ -59,7 +59,7 @@ public class HoneyExtractorMenu extends AbstractTileSidedInventoryMenu<HoneyExtr
         this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 1, 130, 35));
         
         // Slot 4: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
         
         // Slots 5-31: player backpack
         for (int i = 0; i < 3; i++) {

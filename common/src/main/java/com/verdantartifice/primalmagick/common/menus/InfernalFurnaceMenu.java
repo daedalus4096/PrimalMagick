@@ -62,7 +62,7 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
                 new FilteredSlotProperties().background(IGNYX_SLOT_TEXTURE).tooltip(IGNYX_SLOT_TOOLTIP).tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL)));
         
         // Slot 3: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 1, 8, 62, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(Direction.NORTH), 1, 8, 62, false));
         
         // Slots 4-30: player backpack
         for (int i = 0; i < 3; i++) {

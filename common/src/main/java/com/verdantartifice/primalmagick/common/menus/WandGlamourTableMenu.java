@@ -60,7 +60,7 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
         this.addSlot(new ResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
         // Slot 1: Wand/staff
-        this.wandSlot = this.addSlot(new WandSlot(componentInvWrapper, 0, 66, 35, true));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(componentInvWrapper, 0, 66, 35, true));
         
         // Slot 2: Wand core
         this.coreSlot = this.addSlot(Services.MENU.makeFilteredSlot(componentInvWrapper, 1, 30, 17,

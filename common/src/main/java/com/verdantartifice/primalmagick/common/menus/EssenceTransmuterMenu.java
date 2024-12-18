@@ -64,7 +64,7 @@ public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<Essenc
         }
         
         // Slot 10: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
         
         // Slots 11-37: player backpack
         for (int i = 0; i < 3; i++) {

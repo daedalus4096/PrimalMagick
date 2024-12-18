@@ -92,7 +92,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         this.addSlot(new SpellcraftingResultSlot(this.player, this.scrollInv, this.wandInv, this::getManaCosts, this.resultInv, 0, 206, 8));
         
         // Slot 1: Input wand
-        this.wandSlot = this.addSlot(new WandSlot(InventoryUtils.wrapInventory(this.wandInv, null), 0, 8, 8, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(InventoryUtils.wrapInventory(this.wandInv, null), 0, 8, 8, false));
 
         // Slot 2: Blank scroll
         this.scrollSlot = this.addSlot(Services.MENU.makeFilteredSlot(InventoryUtils.wrapInventory(this.scrollInv, null), 0, 160, 8,
