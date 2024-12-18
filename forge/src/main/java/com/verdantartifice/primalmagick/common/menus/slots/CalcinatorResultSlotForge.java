@@ -10,8 +10,8 @@ import net.minecraftforge.items.IItemHandler;
  * 
  * @author Daedalus4096
  */
-public class CalcinatorResultSlot extends GenericResultSlot {
-    public CalcinatorResultSlot(Player player, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
+public class CalcinatorResultSlotForge extends GenericResultSlotForge {
+    public CalcinatorResultSlotForge(Player player, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
         super(player, inventoryIn, index, xPosition, yPosition);
     }
     

@@ -44,4 +44,13 @@ public class MenuServiceForge implements IMenuService {
             throw new IllegalArgumentException("itemHandler must be an instance of IItemHandler");
         }
     }
+
+    @Override
+    public Slot makeCalcinatorResultSlot(Player player, IItemHandlerPM itemHandler, int slot, int x, int y) {
+        if (itemHandler instanceof IItemHandler forgeHandler) {
+            return new CalcinatorResultSlotForge(player, forgeHandler, slot, x, y);
+        } else {
+            throw new IllegalArgumentException("itemHandler must be an instance of IItemHandler");
+        }
+    }
 }

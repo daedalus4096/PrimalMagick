@@ -44,4 +44,13 @@ public class MenuServiceNeoforge implements IMenuService {
             throw new IllegalArgumentException("itemHandler is not an instance of IItemHandler");
         }
     }
+
+    @Override
+    public Slot makeCalcinatorResultSlot(Player player, IItemHandlerPM itemHandler, int slot, int x, int y) {
+        if (itemHandler instanceof IItemHandler neoforgeHandler) {
+            return new CalcinatorResultSlotNeoforge(player, neoforgeHandler, slot, x, y);
+        } else {
+            throw new IllegalArgumentException("itemHandler is not an instance of IItemHandler");
+        }
+    }
 }
