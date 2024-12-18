@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
-import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -53,10 +51,10 @@ public class HoneyExtractorMenu extends AbstractTileSidedInventoryMenu<HoneyExtr
                 new FilteredSlotProperties().background(BOTTLE_SLOT_TEXTURE).tooltip(BOTTLE_SLOT_TOOLTIP).item(Items.GLASS_BOTTLE)));
         
         // Slot 2: honey output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 108, 35));
+        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 108, 35));
         
         // Slot 3: beeswax output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 1, 130, 35));
+        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 1, 130, 35));
         
         // Slot 4: wand input
         this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));

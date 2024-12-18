@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
-import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -43,7 +42,7 @@ public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
     @Override
     protected void createModeSlots() {
         // Slot 0: Result
-        this.addSlot(new GenericResultSlot(this.player, this.getTileInventory(Direction.DOWN), 0, 124, 63));
+        this.addSlot(Services.MENU.makeGenericResultSlot(this.player, this.getTileInventory(Direction.DOWN), 0, 124, 63));
 
         // Slot 1: Original book
         this.originalSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 63,

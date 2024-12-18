@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
-import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -60,7 +58,7 @@ public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<Essenc
         
         // Slots 1-9: transmuter output
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), i, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
+            this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), i, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
         }
         
         // Slot 10: wand input

@@ -10,11 +10,11 @@ import net.minecraftforge.items.SlotItemHandler;
  * 
  * @author Daedalus4096
  */
-public class GenericResultSlot extends SlotItemHandler {
+public class GenericResultSlotForge extends SlotItemHandler {
     protected final Player player;
     protected int removeCount = 0;
     
-    public GenericResultSlot(Player player, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
+    public GenericResultSlotForge(Player player, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
         super(inventoryIn, index, xPosition, yPosition);
         this.player = player;
     }
