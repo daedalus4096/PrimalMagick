@@ -1,32 +1,18 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.Container;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.VanillaInventoryCodeHooks;
-import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Optional;
 
 /**
  * Collection of utility methods pertaining to a player inventories.
@@ -270,35 +256,6 @@ public class InventoryUtils {
             if (entity != null) {
                 entity.setNoPickUpDelay();
                 entity.setTarget(player.getUUID());
-            }
-        }
-    }
-    
-    /**
-     * Attempts to get an item handler capability for the given side of the given position in the given world.
-     * First searches for tiles that directly implement the capability, then attempts to wrap instances of the
-     * vanilla inventory interface.
-     * 
-     * @param world the world containing the desired tile entity
-     * @param pos the position of the desired tile entity
-     * @param side the side of the tile entity to be queried
-     * @return the item handler of the tile entity, or null if no such capability could be found
-     */
-    @Nullable
-    public static IItemHandler getItemHandler(@Nonnull Level world, @Nonnull BlockPos pos, @Nullable Direction side) {
-        Optional<Pair<IItemHandler, Object>> optional = VanillaInventoryCodeHooks.getItemHandler(world, pos.getX(), pos.getY(), pos.getZ(), side);
-        Pair<IItemHandler, Object> pair = optional.orElse(null);
-        if (pair != null && pair.getLeft() != null) {
-            // If the tile entity directly provides an item handler capability, return that
-            return pair.getLeft();
-        } else {
-            BlockEntity tile = world.getBlockEntity(pos);
-            if (tile != null && tile instanceof Container container) {
-                // If the tile entity does not provide an item handler but does have an inventory, return a wrapper around that
-                return Services.ITEM_HANDLERS.wrap(container, side);
-            } else {
-                // If the tile entity does not have an inventory at all, return null
-                return null;
             }
         }
     }

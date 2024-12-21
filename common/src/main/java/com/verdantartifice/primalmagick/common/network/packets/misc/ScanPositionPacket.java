@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
@@ -20,7 +20,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -79,7 +78,7 @@ public class ScanPositionPacket implements IMessageToServer {
                 }));
                 
                 // If the given block has an inventory, scan its contents too
-                IItemHandler handler = InventoryUtils.getItemHandler(world, message.pos, Direction.UP);
+                IItemHandlerPM handler = Services.ITEM_HANDLERS.get(world, message.pos, Direction.UP);
                 if (handler != null) {
                     int scanCount = 0;
                     ItemStack chestStack;

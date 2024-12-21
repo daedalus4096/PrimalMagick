@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -48,7 +49,7 @@ public class ItemStackHandlerPMForge extends ItemStackHandler implements IItemHa
         this.contentsChangedFuncOverride = Optional.empty();
     }
 
-    public ItemStackHandlerPMForge(IItemHandler original, AbstractTilePM tile) {
+    public ItemStackHandlerPMForge(IItemHandler original, @Nullable AbstractTilePM tile) {
         super(Util.make(NonNullList.createWithCapacity(original.getSlots()), newList -> {
             for (int i = 0; i < original.getSlots(); i++) {
                 newList.add(original.getStackInSlot(i));
