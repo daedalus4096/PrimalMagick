@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
+import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.*;
 import com.verdantartifice.primalmagick.platform.services.IMenuService;
 import net.minecraft.world.entity.player.Player;
@@ -67,6 +68,15 @@ public class MenuServiceForge implements IMenuService {
     public Slot makeConcocterResultSlot(Player player, IItemHandlerPM itemHandler, int slot, int x, int y) {
         if (itemHandler instanceof IItemHandler forgeHandler) {
             return new ConcocterResultSlotForge(player, forgeHandler, slot, x, y);
+        } else {
+            throw new IllegalArgumentException("itemHandler must be an instance of IItemHandler");
+        }
+    }
+
+    @Override
+    public Slot makeRunecarvingResultSlot(RunecarvingTableMenu menu, Player player, IItemHandlerPM itemHandler, int slot, int x, int y) {
+        if (itemHandler instanceof IItemHandler forgeHandler) {
+            return new RunecarvingResultSlotForge(menu, player, forgeHandler, slot, x, y);
         } else {
             throw new IllegalArgumentException("itemHandler must be an instance of IItemHandler");
         }

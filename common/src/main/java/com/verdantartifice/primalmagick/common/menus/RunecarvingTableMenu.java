@@ -5,10 +5,6 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
-import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
-import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
-import com.verdantartifice.primalmagick.common.stats.StatsManager;
-import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
@@ -19,13 +15,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -64,7 +59,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     protected ItemStack lapisInput = ItemStack.EMPTY;
 
     /**
-     * Stores the game time of the last time the player took items from the the crafting result slot. This is used to
+     * Stores the game time of the last time the player took items from the crafting result slot. This is used to
      * prevent the sound from being played multiple times on the same tick.
      */
     protected long lastOnTake;
@@ -89,37 +84,8 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
                 new FilteredSlotProperties().background(ETCHING_SLOT_TEXTURE).tooltip(ETCHING_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_ETCHINGS)));
         
         // Slot 2: runecarving output
-        this.outputSlot = this.addSlot(new GenericResultSlot(this.player, InventoryUtils.wrapInventory(this.outputInventory, null), 0, 143, 33) {
-            @Override
-            public void onTake(Player thePlayer, ItemStack stack) {
-                RunecarvingTableMenu.this.getTileInventory(Direction.UP).extractItem(0, 1, false);
-                RunecarvingTableMenu.this.getTileInventory(Direction.UP).extractItem(1, 1, false);
-                RunecarvingTableMenu.this.updateRecipeResultSlot(thePlayer.level().registryAccess());
-                
-                stack.getItem().onCraftedBy(stack, thePlayer.level(), thePlayer);
-                RunecarvingTableMenu.this.containerLevelAccess.execute((world, pos) -> {
-                    long time = world.getGameTime();
-                    if (RunecarvingTableMenu.this.lastOnTake != time) {
-                        world.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        RunecarvingTableMenu.this.lastOnTake = time;
-                    }
-                });
-                
-                super.onTake(thePlayer, stack);
-            }
-
-            @Override
-            protected void checkTakeAchievements(ItemStack stack) {
-                if (this.removeCount > 0) {
-                    RecipeHolder<?> recipeUsed = RunecarvingTableMenu.this.outputInventory.getRecipeUsed();
-                    if (recipeUsed != null) {
-                        ExpertiseManager.awardExpertise(this.player, recipeUsed);
-                        StatsManager.incrementValue(this.player, StatsPM.CRAFTED_RUNEWORKING, this.removeCount);
-                    }
-                }
-                super.checkTakeAchievements(stack);
-            }
-        });
+        this.outputSlot = this.addSlot(Services.MENU.makeRunecarvingResultSlot(this, this.player,
+                InventoryUtils.wrapInventory(this.outputInventory, null), 0, 143, 33));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {
@@ -136,9 +102,19 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.addDataSlot(this.selectedRecipe);
         
         // Do an immediate update of the table GUI
-        if (this.tileInvWrapper.isPresent()) {
-            this.containerChanged(this.tileInvWrapper.get());
-        }
+        this.tileInvWrapper.ifPresent(recipeWrapper -> this.containerChanged(recipeWrapper));
+    }
+
+    public RecipeCraftingHolder getOutputInventory() {
+        return this.outputInventory;
+    }
+
+    public long getLastOnTake() {
+        return this.lastOnTake;
+    }
+
+    public void setLastOnTake(long lastOnTake) {
+        this.lastOnTake = lastOnTake;
     }
 
     public int getSelectedRecipe() {
@@ -192,7 +168,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
                 .collect(Collectors.toList());
     }
     
-    protected void updateRecipeResultSlot(RegistryAccess registryAccess) {
+    public void updateRecipeResultSlot(RegistryAccess registryAccess) {
         if (!this.recipes.isEmpty() && this.tileInvWrapper.isPresent()) {
             IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get()).value();
             this.outputSlot.set(recipe.assemble(createRecipeInput(this.tileInvWrapper.get()), registryAccess));
