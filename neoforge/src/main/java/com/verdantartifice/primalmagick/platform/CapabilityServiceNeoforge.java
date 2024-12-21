@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
@@ -8,8 +9,12 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerWard;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPMNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 import java.util.Optional;
 
@@ -47,5 +52,14 @@ public class CapabilityServiceNeoforge implements ICapabilityService {
     @Override
     public Optional<IPlayerLinguistics> linguistics(Player player) {
         return player == null ? Optional.empty() : Optional.of(player.getData(CapabilitiesNeoforge.LINGUISTICS));
+    }
+
+    @Override
+    public Optional<IItemHandlerPM> itemHandler(AbstractTilePM tile, Direction face) {
+        if (tile == null || tile.getLevel() == null) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(tile.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, tile.getBlockPos(), face)).map(
+                neoforgeHandler -> new ItemStackHandlerPMNeoforge(neoforgeHandler, tile));
     }
 }

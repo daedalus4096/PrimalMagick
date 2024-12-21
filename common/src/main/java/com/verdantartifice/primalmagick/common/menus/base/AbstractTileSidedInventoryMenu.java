@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagick.common.menus.base;
 
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
 
 /**
  * Base class for a menu that serves a mod block entity with an attached sided item handler.
@@ -18,7 +18,7 @@ public abstract class AbstractTileSidedInventoryMenu<T extends AbstractTileSided
         super(menuType, containerId, tileClass, level, tilePos, tile);
     }
     
-    public IItemHandler getTileInventory(Direction face) {
-        return this.tile.getCapability(ForgeCapabilities.ITEM_HANDLER, face).orElseThrow(IllegalStateException::new);
+    public IItemHandlerPM getTileInventory(Direction face) {
+        return Services.CAPABILITIES.itemHandler(this.tile, face).orElseThrow(IllegalStateException::new);
     }
 }

@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
+import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.Optional;
@@ -40,6 +42,18 @@ public class ItemStackHandlerPMNeoforge extends ItemStackHandler implements IIte
 
     public ItemStackHandlerPMNeoforge(NonNullList<ItemStack> stacks, AbstractTilePM tile) {
         super(stacks);
+        this.tile = tile;
+        this.limitFuncOverride = Optional.empty();
+        this.validityFuncOverride = Optional.empty();
+        this.contentsChangedFuncOverride = Optional.empty();
+    }
+
+    public ItemStackHandlerPMNeoforge(IItemHandler original, AbstractTilePM tile) {
+        super(Util.make(NonNullList.createWithCapacity(original.getSlots()), newList -> {
+            for (int i = 0; i < original.getSlots(); i++) {
+                newList.add(original.getStackInSlot(i));
+            }
+        }));
         this.tile = tile;
         this.limitFuncOverride = Optional.empty();
         this.validityFuncOverride = Optional.empty();
