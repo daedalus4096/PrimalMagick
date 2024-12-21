@@ -16,7 +16,6 @@ public interface IItemHandlerService {
     IItemHandlerPM create(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile);
     IItemHandlerPM.Builder builder(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile);
 
-    IItemHandlerPM wrap(Container container);
     IItemHandlerPM wrap(Container container, @Nullable Direction side);
 
     /**

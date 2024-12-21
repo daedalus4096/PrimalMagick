@@ -1,14 +1,13 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.crafting.WandGlamourRecipe;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
-import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.chat.Component;
@@ -18,12 +17,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.ResultSlot;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
 
 import java.util.Optional;
 
@@ -54,7 +57,7 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
         this.worldPosCallable = callable;
         this.player = inv.player;
         
-        IItemHandler componentInvWrapper = InventoryUtils.wrapInventory(this.componentInv, null);
+        IItemHandlerPM componentInvWrapper = Services.ITEM_HANDLERS.wrap(this.componentInv, null);
         
         // Slot 0: Result
         this.addSlot(new ResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));

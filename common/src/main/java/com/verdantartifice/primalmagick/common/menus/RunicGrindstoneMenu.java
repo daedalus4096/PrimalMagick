@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPart
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagick.platform.Services;
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
@@ -26,7 +25,11 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AnvilMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -137,7 +140,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
     }
     
     protected static Slot makeInputSlot(Container pContainer, int pSlot, int pX, int pY) {
-        return Services.MENU.makeFilteredSlot(InventoryUtils.wrapInventory(pContainer, null), pSlot, pX, pY,
+        return Services.MENU.makeFilteredSlot(Services.ITEM_HANDLERS.wrap(pContainer, null), pSlot, pX, pY,
                 new FilteredSlotProperties().filter(stack -> stack.isDamageableItem() || stack.is(Items.ENCHANTED_BOOK) || stack.isEnchanted() || stack.canGrindstoneRepair() || RuneManager.hasRunes(stack)));
     }
     

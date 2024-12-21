@@ -7,8 +7,6 @@ import com.verdantartifice.primalmagick.common.crafting.WandInventory;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.ArcaneCraftingResultSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
@@ -69,7 +67,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
         }
         
         // Slot 10: Crafting wand
-        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(InventoryUtils.wrapInventory(this.wandInv, null), 0, 19, 52, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(Services.ITEM_HANDLERS.wrap(this.wandInv, null), 0, 19, 52, false));
         
         // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {

@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.common.util;
 
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -291,9 +293,9 @@ public class InventoryUtils {
             return pair.getLeft();
         } else {
             BlockEntity tile = world.getBlockEntity(pos);
-            if (tile != null && tile instanceof Container) {
+            if (tile != null && tile instanceof Container container) {
                 // If the tile entity does not provide an item handler but does have an inventory, return a wrapper around that
-                return wrapInventory((Container)tile, side);
+                return Services.ITEM_HANDLERS.wrap(container, side);
             } else {
                 // If the tile entity does not have an inventory at all, return null
                 return null;
@@ -364,22 +366,5 @@ public class InventoryUtils {
             }
         }
         return retVal;
-    }
-    
-    /**
-     * Wraps the given inventory object in a (possibly sided) item handler capability compliant wrapper.
-     * 
-     * @param inv the inventory to be wrapped
-     * @param side the side of the inventory to be exposed by the wrapper
-     * @return an item handler capability compliant wrapper of the given inventory
-     */
-    @Nonnull
-    public static IItemHandler wrapInventory(@Nonnull Container inv, @Nullable Direction side) {
-        if (inv instanceof WorldlyContainer) {
-            // Return a sided wrapper for the given side if the inventory is sided
-            return new SidedInvWrapper((WorldlyContainer)inv, side);
-        } else {
-            return new InvWrapper(inv);
-        }
     }
 }

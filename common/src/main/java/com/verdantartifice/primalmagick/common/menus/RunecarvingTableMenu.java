@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -85,7 +84,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         
         // Slot 2: runecarving output
         this.outputSlot = this.addSlot(Services.MENU.makeRunecarvingResultSlot(this, this.player,
-                InventoryUtils.wrapInventory(this.outputInventory, null), 0, 143, 33));
+                Services.ITEM_HANDLERS.wrap(this.outputInventory, null), 0, 143, 33));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {

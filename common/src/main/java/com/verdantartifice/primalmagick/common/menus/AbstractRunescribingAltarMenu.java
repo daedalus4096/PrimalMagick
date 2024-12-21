@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.menus.slots.RunescribingResultSlo
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -29,7 +28,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -66,7 +64,7 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<Run
         this.addSlot(new RunescribingResultSlot(this.player, this.altarInv, this.resultInv, 0, 138, 35));
         
         // Slot 1: runescribing input
-        this.addSlot(Services.MENU.makeFilteredSlot(new InvWrapper(this.altarInv), 0, 19, 35, new FilteredSlotProperties().tooltip(INPUT_SLOT_TOOLTIP)));
+        this.addSlot(Services.MENU.makeFilteredSlot(Services.ITEM_HANDLERS.wrap(this.altarInv, null), 0, 19, 35, new FilteredSlotProperties().tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slots 2-(R+1), where R = rune capacity: runes
         this.runeSlot = this.addRuneSlots();
@@ -98,7 +96,7 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<Run
     protected abstract Slot addRuneSlots();
     
     protected static Slot makeRuneSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-        return Services.MENU.makeFilteredSlot(InventoryUtils.wrapInventory(inventoryIn, null), index, xPosition, yPosition,
+        return Services.MENU.makeFilteredSlot(Services.ITEM_HANDLERS.wrap(inventoryIn, null), index, xPosition, yPosition,
                 new FilteredSlotProperties().background(RUNE_SLOT_TEXTURE).tooltip(RUNE_SLOT_TOOLTIP).typeOf(RuneItem.class));
     }
     
