@@ -12,4 +12,5 @@ public interface IMenuService {
     Slot makeWandSlot(IItemHandlerPM itemHandler, int slot, int x, int y, boolean allowStaves);
     Slot makeCalcinatorFuelSlot(CalcinatorMenu menu, IItemHandlerPM itemHandler, int slot, int x, int y);
     Slot makeCalcinatorResultSlot(Player player, IItemHandlerPM itemHandler, int slot, int x, int y);
+    Slot makeInfernalFurnaceResultSlot(Player player, IItemHandlerPM itemHandler, int slot, int x, int y);
 }

@@ -4,8 +4,6 @@ import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipe
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
-import com.verdantartifice.primalmagick.common.menus.slots.InfernalFurnaceResultSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -52,7 +50,7 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
         this.furnaceData = furnaceData;
         
         // Slot 0: chamber output
-        this.addSlot(new InfernalFurnaceResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 125, 35));
+        this.addSlot(Services.MENU.makeInfernalFurnaceResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 125, 35));
         
         // Slot 1: material input
         this.inputSlot = this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), 0, 44, 17));

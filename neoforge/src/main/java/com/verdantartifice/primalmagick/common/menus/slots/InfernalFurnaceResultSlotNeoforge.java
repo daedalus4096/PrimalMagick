@@ -5,15 +5,15 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 /**
  * Custom GUI slot for infernal furnace outputs.
  * 
  * @author Daedalus4096
  */
-public class InfernalFurnaceResultSlot extends GenericResultSlot {
-    public InfernalFurnaceResultSlot(Player pPlayer, IItemHandler itemHandler, int pSlot, int pXPosition, int pYPosition) {
+public class InfernalFurnaceResultSlotNeoforge extends GenericResultSlotNeoforge {
+    public InfernalFurnaceResultSlotNeoforge(Player pPlayer, IItemHandler itemHandler, int pSlot, int pXPosition, int pYPosition) {
         super(pPlayer, itemHandler, pSlot, pXPosition, pYPosition);
     }
 
