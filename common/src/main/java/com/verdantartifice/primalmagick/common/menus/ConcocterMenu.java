@@ -4,10 +4,6 @@ import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
-import com.verdantartifice.primalmagick.common.stats.StatsManager;
-import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -45,13 +41,7 @@ public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileE
         this.concocterData = concocterData;
         
         // Slot 0: Output slot
-        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 138, 35) {
-            @Override
-            protected void checkTakeAchievements(ItemStack stack) {
-                super.checkTakeAchievements(stack);
-                StatsManager.incrementValue(this.player, StatsPM.CRAFTED_MAGITECH, stack.getCount());
-            }
-        });
+        this.addSlot(Services.MENU.makeConcocterResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 138, 35));
         
         // Slots 1-9: Input slots
         int i, j;
