@@ -8,8 +8,18 @@ import com.verdantartifice.primalmagick.platform.services.IMenuService;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class MenuServiceForge implements IMenuService {
+    @Override
+    public Slot makeSlot(IItemHandlerPM itemHandler, int slot, int x, int y) {
+        if (itemHandler instanceof IItemHandler forgeHandler) {
+            return new SlotItemHandler(forgeHandler, slot, x, y);
+        } else {
+            throw new IllegalArgumentException("itemHandler must be an instance of IItemHandler");
+        }
+    }
+
     @Override
     public Slot makeGenericResultSlot(Player player, IItemHandlerPM itemHandler, int slot, int x, int y) {
         if (itemHandler instanceof IItemHandler forgeHandler) {

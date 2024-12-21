@@ -19,7 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * Server data container for the concocter GUI.
@@ -47,7 +46,7 @@ public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileE
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
-                this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), j + i * 3, 44 + j * 18, 17 + i * 18));
+                this.addSlot(Services.MENU.makeSlot(this.getTileInventory(Direction.UP), j + i * 3, 44 + j * 18, 17 + i * 18));
             }
         }
         

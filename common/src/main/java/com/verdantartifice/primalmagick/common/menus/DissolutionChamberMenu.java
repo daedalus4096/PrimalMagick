@@ -18,7 +18,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
-import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * Server data container for the dissolution chamber GUI.
@@ -43,7 +42,7 @@ public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<Disso
         this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 125, 35));
         
         // Slot 1: ore input
-        this.inputSlot = this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), 0, 44, 35));
+        this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(Direction.UP), 0, 44, 35));
         
         // Slot 2: wand input
         this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));

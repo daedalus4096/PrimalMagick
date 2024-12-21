@@ -24,7 +24,6 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * Server data container for the infernal furnace GUI.
@@ -53,7 +52,7 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
         this.addSlot(Services.MENU.makeInfernalFurnaceResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 125, 35));
         
         // Slot 1: material input
-        this.inputSlot = this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), 0, 44, 17));
+        this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(Direction.UP), 0, 44, 17));
         
         // Slot 2: ignyx input
         this.ignyxSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.NORTH), 0, 44, 53,
