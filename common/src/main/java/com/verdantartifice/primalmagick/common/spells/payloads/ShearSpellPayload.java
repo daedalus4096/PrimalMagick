@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
@@ -42,7 +43,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
@@ -90,8 +90,8 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
             if (target.getType() == HitResult.Type.ENTITY) {
                 EntityHitResult entityHitResult = (EntityHitResult)target;
                 Entity entity = entityHitResult.getEntity();
-                if (entity instanceof IForgeShearable shearableEntity && shearableEntity.isShearable(fakeShears, world, entity.blockPosition())) {
-                    List<ItemStack> drops = shearableEntity.onSheared(player, ItemStack.EMPTY, world, entity.blockPosition(), treasureLevel);
+                if (Services.SHEARABLE.isShearable(entity, player, fakeShears, world, entity.blockPosition())) {
+                    List<ItemStack> drops = Services.SHEARABLE.onSheared(entity, player, ItemStack.EMPTY, world, entity.blockPosition(), treasureLevel);
                     drops.forEach(d -> {
                         ItemEntity ent = entity.spawnAtLocation(d, 1F);
                         ent.setDeltaMovement(ent.getDeltaMovement().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));

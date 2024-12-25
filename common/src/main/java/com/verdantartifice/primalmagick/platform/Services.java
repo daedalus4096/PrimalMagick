@@ -11,7 +11,9 @@ import com.verdantartifice.primalmagick.platform.services.IItemHandlerService;
 import com.verdantartifice.primalmagick.platform.services.IItemPrototypeService;
 import com.verdantartifice.primalmagick.platform.services.ILevelService;
 import com.verdantartifice.primalmagick.platform.services.IMenuService;
+import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import com.verdantartifice.primalmagick.platform.services.IPlayerService;
+import com.verdantartifice.primalmagick.platform.services.IShearableService;
 import com.verdantartifice.primalmagick.platform.services.ITagService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArmorMaterialService;
@@ -26,7 +28,6 @@ import com.verdantartifice.primalmagick.platform.services.registries.IMemoryModu
 import com.verdantartifice.primalmagick.platform.services.registries.IMenuTypeService;
 import com.verdantartifice.primalmagick.platform.services.registries.IMobEffectService;
 import com.verdantartifice.primalmagick.platform.services.registries.IParticleTypeService;
-import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import com.verdantartifice.primalmagick.platform.services.registries.IProjectMaterialTypeService;
 import com.verdantartifice.primalmagick.platform.services.registries.IRecipeSerializerService;
 import com.verdantartifice.primalmagick.platform.services.registries.IRecipeTypeService;
@@ -72,6 +73,7 @@ public class Services {
     public static final IPlayerService PLAYER = load(IPlayerService.class);
     public static final ILevelService LEVEL = load(ILevelService.class);
     public static final IMenuService MENU = load(IMenuService.class);
+    public static final IShearableService SHEARABLE = load(IShearableService.class);
 
     // Registry services
     public static final IBlockService BLOCKS = load(IBlockService.class);

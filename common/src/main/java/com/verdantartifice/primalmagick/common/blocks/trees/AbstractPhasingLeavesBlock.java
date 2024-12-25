@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraftforge.common.IForgeShearable;
 
 /**
  * Base definition for leaf blocks that phase in and out over time.  Not derived from LeavesBlock because
@@ -29,7 +28,7 @@ import net.minecraftforge.common.IForgeShearable;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractPhasingLeavesBlock extends Block implements IForgeShearable {
+public abstract class AbstractPhasingLeavesBlock extends Block {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
     public static final IntegerProperty DISTANCE = BlockStateProperties.DISTANCE;
     public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
