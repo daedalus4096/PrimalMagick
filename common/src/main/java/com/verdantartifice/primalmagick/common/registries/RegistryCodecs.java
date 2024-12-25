@@ -1,11 +1,7 @@
 package com.verdantartifice.primalmagick.common.registries;
 
-import java.util.Optional;
-import java.util.function.Supplier;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.Utf8String;
@@ -13,6 +9,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public class RegistryCodecs {
     public static <T> Codec<T> codec(Supplier<IForgeRegistry<T>> registrySupplier) {

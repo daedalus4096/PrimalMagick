@@ -1,11 +1,10 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import javax.annotation.Nonnull;
-
-import org.joml.Vector2i;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
+import org.joml.Vector2i;
+
+import javax.annotation.Nonnull;
 
 public class GridNodeDefinitionBuilder {
     protected final int xPos;

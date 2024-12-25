@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.damagesource;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;

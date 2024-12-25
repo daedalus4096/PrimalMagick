@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import javax.annotation.Nonnull;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AttunementReward;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
 
 public class AttunementRewardBuilder {
     protected static final Logger LOGGER = LogManager.getLogger();

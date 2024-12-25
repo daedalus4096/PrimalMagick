@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.VoidDamageSpellPayload;
-
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;

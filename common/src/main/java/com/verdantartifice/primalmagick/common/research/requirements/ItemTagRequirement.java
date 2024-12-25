@@ -1,13 +1,10 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import java.util.stream.Stream;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -16,6 +13,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+
+import java.util.stream.Stream;
 
 /**
  * Requirement that the player possesses a stack(s) of the given tag at least as large as the

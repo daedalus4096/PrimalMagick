@@ -1,14 +1,12 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.armortrim.TrimPattern;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying armor trim pattern-related localizations in a structured way.

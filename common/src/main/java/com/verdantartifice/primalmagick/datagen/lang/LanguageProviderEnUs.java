@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
@@ -61,12 +58,14 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.Enchantments;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Language data provider for US English.

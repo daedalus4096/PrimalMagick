@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagick.common.wands.IWand;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;

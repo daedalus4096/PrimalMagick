@@ -1,19 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.atlas;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.menus.slots.IWandSlot;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import org.slf4j.Logger;
-
 import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldISTER;
@@ -27,16 +16,23 @@ import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.IWandSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SpriteSourceProvider;
+import org.slf4j.Logger;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Data provider for additions to the game's texture atlases.

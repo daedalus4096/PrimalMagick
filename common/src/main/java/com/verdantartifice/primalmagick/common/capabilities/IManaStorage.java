@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;

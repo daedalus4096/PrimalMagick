@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.research;
 
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 

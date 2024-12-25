@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IRandomizableContents;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;

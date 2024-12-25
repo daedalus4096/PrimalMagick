@@ -1,19 +1,18 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.loot.LootTableSubProvider;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.LootTable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.storage.loot.LootTable;
 
 /**
  * Base data provider for all of the mod's gameplay loot tables.

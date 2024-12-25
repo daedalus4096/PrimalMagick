@@ -1,14 +1,12 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying attunement threshold-related localizations in a structured way.

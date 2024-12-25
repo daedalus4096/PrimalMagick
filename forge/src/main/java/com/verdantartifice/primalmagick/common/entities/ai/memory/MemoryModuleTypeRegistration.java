@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.entities.ai.memory;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraftforge.registries.DeferredRegister;
 

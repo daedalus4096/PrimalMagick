@@ -1,13 +1,11 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying spell vehicle-related localizations in a structured way.

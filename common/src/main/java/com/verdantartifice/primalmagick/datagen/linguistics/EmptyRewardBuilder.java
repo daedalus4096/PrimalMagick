@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.EmptyReward;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class EmptyRewardBuilder {
     protected static final Logger LOGGER = LogManager.getLogger();

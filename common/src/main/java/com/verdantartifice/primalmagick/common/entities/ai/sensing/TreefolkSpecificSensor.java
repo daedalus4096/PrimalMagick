@@ -1,16 +1,10 @@
 package com.verdantartifice.primalmagick.common.entities.ai.sensing;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkAi;
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
@@ -18,6 +12,11 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.NearestVisibleLivingEntities;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * AI sensor specific to custom treefolk needs.

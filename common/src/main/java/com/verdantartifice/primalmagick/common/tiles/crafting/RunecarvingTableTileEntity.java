@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Definition of a runecarving table tile entity.  Holds the crafting materials for the corresponding block.

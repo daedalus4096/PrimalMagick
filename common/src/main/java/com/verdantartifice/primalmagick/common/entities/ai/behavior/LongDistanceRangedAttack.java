@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.ai.behavior;
 
 import com.google.common.collect.ImmutableMap;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;

@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -13,7 +7,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -25,6 +18,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Definition of a project material that requires a specific item stack, which may or may not be

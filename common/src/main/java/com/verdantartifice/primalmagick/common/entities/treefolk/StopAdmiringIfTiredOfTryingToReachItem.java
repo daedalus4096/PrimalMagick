@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.treefolk;
 
 import com.google.common.collect.ImmutableMap;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;

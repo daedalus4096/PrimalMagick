@@ -1,12 +1,7 @@
 package com.verdantartifice.primalmagick.common.crafting.ingredients;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -17,6 +12,10 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.ingredients.AbstractIngredient;
 import net.minecraftforge.common.crafting.ingredients.IIngredientSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class PartialComponentIngredient extends AbstractIngredient {
     private final List<Item> items;

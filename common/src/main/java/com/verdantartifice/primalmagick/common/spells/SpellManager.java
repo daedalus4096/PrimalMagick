@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;

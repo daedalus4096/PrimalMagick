@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying written book language definition localizations in a structured way.

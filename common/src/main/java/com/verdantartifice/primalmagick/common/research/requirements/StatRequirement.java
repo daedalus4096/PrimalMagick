@@ -1,19 +1,18 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import java.util.stream.Stream;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.stream.Stream;
 
 /**
  * Requirement that the player has accumulated at least the given amount of the given Primal Magick statistic.

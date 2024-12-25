@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nullable;
 
 /**
  * Interface for a research key, which can be tested for known-ness for a player.

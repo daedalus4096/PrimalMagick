@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.projectiles;
 
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;

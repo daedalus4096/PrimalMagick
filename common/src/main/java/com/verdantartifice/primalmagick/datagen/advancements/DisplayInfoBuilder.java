@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.datagen.advancements;
 
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.network.chat.Component;
@@ -11,6 +7,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.phys.Vec2;
+
+import java.util.Optional;
 
 public class DisplayInfoBuilder {
     protected final String id;

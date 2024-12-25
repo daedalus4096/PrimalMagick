@@ -1,14 +1,13 @@
 package com.verdantartifice.primalmagick.common.entities.ai.goals;
 
-import java.util.EnumSet;
-
 import com.verdantartifice.primalmagick.common.entities.companions.AbstractCompanionEntity;
-
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.EnumSet;
 
 /**
  * AI goal for a companion to target its owner's last target.

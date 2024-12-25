@@ -1,14 +1,5 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -19,12 +10,19 @@ import com.verdantartifice.primalmagick.common.books.grids.rewards.Comprehension
 import com.verdantartifice.primalmagick.common.books.grids.rewards.KnowledgeReward;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class GridDefinitionProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();

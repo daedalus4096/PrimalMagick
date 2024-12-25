@@ -1,19 +1,18 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
-import java.util.Optional;
-import java.util.Set;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
+
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Definition of a project material that requires experience levels, which may or may not be consumed as part

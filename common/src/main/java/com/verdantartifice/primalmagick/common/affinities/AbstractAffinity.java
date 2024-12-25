@@ -1,16 +1,14 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public abstract class AbstractAffinity implements IAffinity {
     protected ResourceLocation targetId;

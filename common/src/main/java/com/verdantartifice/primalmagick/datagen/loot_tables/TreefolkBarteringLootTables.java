@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
-import java.util.function.BiConsumer;
-
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
-
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -21,6 +18,8 @@ import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+
+import java.util.function.BiConsumer;
 
 /**
  * Data provider for all of the mod's treefolk bartering loot tables.

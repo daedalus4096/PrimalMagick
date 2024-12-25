@@ -1,14 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.blocks;
 
-import java.nio.file.Path;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.datagen.items.ItemModelProviderPM;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -16,6 +10,11 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.IGeneratedBlockState;
 import net.minecraftforge.common.data.ExistingFileHelper;
+
+import java.nio.file.Path;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Data provider for "special" block states, ones that don't necessarily come from a block.  Mimics

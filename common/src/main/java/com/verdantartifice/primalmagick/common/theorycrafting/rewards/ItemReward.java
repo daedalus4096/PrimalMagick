@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -18,6 +15,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+
+import javax.annotation.Nonnull;
 
 /**
  * Theorycrafting reward that grants a specific item stack.

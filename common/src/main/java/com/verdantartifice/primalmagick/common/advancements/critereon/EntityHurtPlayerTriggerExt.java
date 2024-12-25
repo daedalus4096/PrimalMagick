@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.common.advancements.critereon;
 
-import java.util.Optional;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DamagePredicate;
@@ -13,6 +10,8 @@ import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.storage.loot.LootContext;
+
+import java.util.Optional;
 
 /**
  * Advancement criterion that is trigger when the player is hurt by an entity.  Like the vanilla

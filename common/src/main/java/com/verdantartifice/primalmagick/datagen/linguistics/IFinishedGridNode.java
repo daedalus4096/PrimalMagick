@@ -1,8 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import org.joml.Vector2ic;
-
 import com.google.gson.JsonObject;
+import org.joml.Vector2ic;
 
 public interface IFinishedGridNode {
     Vector2ic getPosition();

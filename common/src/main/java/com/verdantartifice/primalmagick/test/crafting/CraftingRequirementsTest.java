@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.test.crafting;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.test.TestUtils;

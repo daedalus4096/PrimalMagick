@@ -1,20 +1,18 @@
 package com.verdantartifice.primalmagick.datagen.affinities;
 
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class EnchantmentBonusAffinityBuilder {
     protected final HolderLookup.Provider registries;

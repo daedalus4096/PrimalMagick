@@ -1,16 +1,14 @@
 package com.verdantartifice.primalmagick.common.concoctions;
 
-import java.util.function.IntFunction;
-
-import javax.annotation.Nullable;
-
 import com.mojang.serialization.Codec;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
+
+import javax.annotation.Nullable;
+import java.util.function.IntFunction;
 
 /**
  * Definition of a type of alchemical concoction.  Determines the maximum dosage of the vial.

@@ -1,11 +1,10 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
+import com.verdantartifice.primalmagick.common.sources.Source;
+import net.minecraft.resources.ResourceLocation;
+
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
-import com.verdantartifice.primalmagick.common.sources.Source;
-
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Helper for specifying magickal source-related localizations in a structured way.

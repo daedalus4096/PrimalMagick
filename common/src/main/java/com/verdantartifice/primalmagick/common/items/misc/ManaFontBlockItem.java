@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import com.verdantartifice.primalmagick.client.renderers.itemstack.ArcanometerISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaFontISTER;
 import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;

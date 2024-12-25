@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import java.util.OptionalInt;
-
 import com.google.gson.JsonElement;
-
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.OptionalInt;
 
 public interface IFinishedGridNodeReward {
     JsonElement serialize();

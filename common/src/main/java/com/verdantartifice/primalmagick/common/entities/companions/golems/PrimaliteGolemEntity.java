@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.entities.companions.golems;
 
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tags.MobEffectTagsPM;
-
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;

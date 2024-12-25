@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.wands.IStaff;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;

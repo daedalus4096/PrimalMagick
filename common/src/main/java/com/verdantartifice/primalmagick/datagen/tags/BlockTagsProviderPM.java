@@ -1,12 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
-import java.util.concurrent.CompletableFuture;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +11,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Data provider for all of the mod's block tags, both original tags and modifications to vanilla tags.

@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.ai.goals;
 
-import java.util.EnumSet;
-
 import com.verdantartifice.primalmagick.common.entities.companions.AbstractCompanionEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
@@ -16,6 +13,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+
+import java.util.EnumSet;
 
 /**
  * AI goal for a companion to follow its owner.

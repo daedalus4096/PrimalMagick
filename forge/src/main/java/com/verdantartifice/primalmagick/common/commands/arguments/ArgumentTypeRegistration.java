@@ -1,11 +1,9 @@
 package com.verdantartifice.primalmagick.common.commands.arguments;
 
-import com.mojang.brigadier.arguments.ArgumentType;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.DeferredRegister;
 
 /**

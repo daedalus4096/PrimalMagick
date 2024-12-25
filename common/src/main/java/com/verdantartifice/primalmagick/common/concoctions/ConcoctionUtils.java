@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.common.concoctions;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
-
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Helper methods for handling concoctions.

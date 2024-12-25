@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.research;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;

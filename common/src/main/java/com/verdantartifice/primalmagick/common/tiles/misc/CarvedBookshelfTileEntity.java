@@ -20,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Definition of a carved bookshelf tile entity.  Provides the storage for a carved bookshelf block.  Like

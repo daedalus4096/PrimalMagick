@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.test.crafting;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;

@@ -1,11 +1,6 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -16,6 +11,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Default implementation of the world entity swappers capability.

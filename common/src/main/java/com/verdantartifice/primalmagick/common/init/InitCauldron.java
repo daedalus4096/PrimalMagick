@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.init;
 
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.concoctions.BombCasingItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.ConcoctionItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.SkyglassFlaskItem;

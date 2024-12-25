@@ -1,18 +1,15 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.LootTableProvider;
@@ -32,6 +29,9 @@ import net.minecraft.world.level.storage.loot.functions.SetComponentsFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 /**
  * Data provider for all of the mod's ancient library loot tables.

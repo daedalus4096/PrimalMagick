@@ -1,13 +1,7 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.function.Function;
-import java.util.stream.Stream;
-
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -15,7 +9,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -29,6 +22,10 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.Tags;
+
+import javax.annotation.Nullable;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * Datapack registry for the mod's research entries, the backbone of its progression system.

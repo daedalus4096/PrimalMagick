@@ -1,13 +1,11 @@
 package com.verdantartifice.primalmagick.common.worldgen.features;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.trees.MoonwoodLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.MoonwoodLogBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodLogBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;

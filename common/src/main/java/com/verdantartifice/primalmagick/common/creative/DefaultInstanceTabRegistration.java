@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.creative;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.items.IEnchantedByDefault;
-
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+
+import java.util.function.Supplier;
 
 /**
  * Object that registers an item's default instance into a creative tab.

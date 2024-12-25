@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellTrailPacket;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

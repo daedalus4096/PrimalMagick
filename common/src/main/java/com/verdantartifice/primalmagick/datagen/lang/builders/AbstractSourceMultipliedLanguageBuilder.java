@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
+import com.google.common.base.Preconditions;
+import com.verdantartifice.primalmagick.common.sources.Source;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,9 +10,6 @@ import java.util.TreeMap;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
-import com.google.common.base.Preconditions;
-import com.verdantartifice.primalmagick.common.sources.Source;
 
 /**
  * Helper for specifying localizations for groups of objects that only differ in their

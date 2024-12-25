@@ -1,18 +1,17 @@
 package com.verdantartifice.primalmagick.common.advancements.critereon;
 
-import java.util.Optional;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+
+import java.util.Optional;
 
 /**
  * Advancement criterion that is triggered when the player reaches at least the given comprehension value.

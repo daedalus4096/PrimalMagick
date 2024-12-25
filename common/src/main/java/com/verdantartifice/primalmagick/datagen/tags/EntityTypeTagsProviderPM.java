@@ -1,11 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
-import java.util.concurrent.CompletableFuture;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
@@ -13,6 +9,8 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Data provider for all of the mod's entity type tags, both original tags and modifications to vanilla tags.

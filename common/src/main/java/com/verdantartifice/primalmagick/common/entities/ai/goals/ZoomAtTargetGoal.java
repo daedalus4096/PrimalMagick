@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.common.entities.ai.goals;
 
-import java.util.EnumSet;
-
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.EnumSet;
 
 public class ZoomAtTargetGoal extends Goal {
     protected final Mob leaper;

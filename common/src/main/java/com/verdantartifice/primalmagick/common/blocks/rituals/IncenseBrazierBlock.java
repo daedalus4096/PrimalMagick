@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.IncenseBrazierTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;

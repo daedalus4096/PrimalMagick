@@ -1,14 +1,13 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
+
+import javax.annotation.Nullable;
 
 @AutoRegisterCapability
 public interface IPlayerArcaneRecipeBook {

@@ -13,8 +13,6 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
-import java.util.stream.IntStream;
-
 /**
  * Global loot modifier that always adds an item to a generated loot set if its loot conditions are met.  An
  * optional number of rolls may be specified, defaulting to a single roll if not present.

@@ -1,11 +1,10 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
+import com.verdantartifice.primalmagick.common.stats.Stat;
+import net.minecraft.resources.ResourceLocation;
+
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
-import com.verdantartifice.primalmagick.common.stats.Stat;
-
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Helper for specifying statistics-related localizations in a structured way.

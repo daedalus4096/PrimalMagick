@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.Optional;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -9,7 +7,6 @@ import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipe
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -21,6 +18,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+
+import java.util.Optional;
 
 /**
  * Definition for a runecarving recipe.  Like a stonecutting recipe, but has two ingredients and a

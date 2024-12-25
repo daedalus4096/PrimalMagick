@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.entities.treefolk;
 
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.IntProvider;

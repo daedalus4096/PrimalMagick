@@ -1,12 +1,5 @@
 package com.verdantartifice.primalmagick.common.entities.treefolk;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
@@ -15,7 +8,6 @@ import com.verdantartifice.primalmagick.common.entities.ai.behavior.LongDistance
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -59,6 +51,12 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Collection of static methods to help with Treefolk entity AI behaviors.

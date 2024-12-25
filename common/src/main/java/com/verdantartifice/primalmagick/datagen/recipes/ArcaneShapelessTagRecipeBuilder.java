@@ -1,11 +1,5 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneTagRecipe;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
@@ -13,7 +7,6 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineK
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -23,6 +16,11 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Definition of a recipe data file builder for shapeless arcane tag recipes.

@@ -1,13 +1,5 @@
 package com.verdantartifice.primalmagick.datagen.advancements;
 
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.function.Consumer;
-
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import org.apache.logging.log4j.LogManager;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.advancements.critereon.AttunementThresholdTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.EntityHurtPlayerTriggerExt;
 import com.verdantartifice.primalmagick.common.advancements.critereon.LinguisticsComprehensionTrigger;
@@ -22,18 +14,18 @@ import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.init.InitAdvancements;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
-
 import net.minecraft.Util;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -67,6 +59,11 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenerator;
+import org.apache.logging.log4j.LogManager;
+
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * Data sub-provider for generating mod advancements.

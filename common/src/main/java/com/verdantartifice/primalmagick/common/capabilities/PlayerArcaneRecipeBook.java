@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

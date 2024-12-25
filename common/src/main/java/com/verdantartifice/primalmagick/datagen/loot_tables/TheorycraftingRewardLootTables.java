@@ -1,9 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
-import java.util.function.BiConsumer;
-
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.network.chat.Component;
@@ -24,6 +21,8 @@ import net.minecraft.world.level.storage.loot.functions.SetStewEffectFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+
+import java.util.function.BiConsumer;
 
 /**
  * Data provider for all of the mod's theorycrafting reward loot tables.

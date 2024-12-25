@@ -1,11 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.FlyingCarpetDyeRecipe;
@@ -17,7 +12,7 @@ import com.verdantartifice.primalmagick.common.crafting.WandGlamourRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandInscriptionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WardingModuleApplicationRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WritableBookCraftingRecipe;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
@@ -29,7 +24,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -57,6 +51,10 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
 import net.minecraftforge.common.crafting.conditions.TrueCondition;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Data provider for all of the mod's recipes.

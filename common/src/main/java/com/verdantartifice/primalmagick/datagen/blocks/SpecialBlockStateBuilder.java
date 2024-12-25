@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.datagen.blocks;
 
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonObject;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider.ConfiguredModelList;
 import net.minecraftforge.client.model.generators.ConfiguredModel;

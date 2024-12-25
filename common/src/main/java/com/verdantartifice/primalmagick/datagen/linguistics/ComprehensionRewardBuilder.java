@@ -1,20 +1,17 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import java.util.OptionalInt;
-
-import javax.annotation.Nonnull;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.ComprehensionReward;
-
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
+import java.util.OptionalInt;
 
 public class ComprehensionRewardBuilder {
     protected static final Logger LOGGER = LogManager.getLogger();

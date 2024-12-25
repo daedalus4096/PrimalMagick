@@ -18,7 +18,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Definition of a research table tile entity.  Holds the writing materials for the corresponding block.

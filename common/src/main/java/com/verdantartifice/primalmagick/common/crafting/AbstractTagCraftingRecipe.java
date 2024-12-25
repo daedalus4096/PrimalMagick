@@ -1,9 +1,5 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.Optional;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -12,6 +8,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
+
+import java.util.Optional;
 
 public abstract class AbstractTagCraftingRecipe<T extends RecipeInput> extends AbstractRecipe<T> {
     protected final TagKey<Item> outputTag;

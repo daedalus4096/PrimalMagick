@@ -1,15 +1,13 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import java.util.Queue;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Queue;
 
 /**
  * Capability interface for storing active entity swappers.  Attached to worlds.

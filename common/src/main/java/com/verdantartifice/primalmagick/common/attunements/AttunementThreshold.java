@@ -1,12 +1,10 @@
 package com.verdantartifice.primalmagick.common.attunements;
 
-import javax.annotation.Nonnull;
-
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
+
+import javax.annotation.Nonnull;
 
 /**
  * Definition of attunement thresholds, determining when certain bonuses are received.

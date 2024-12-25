@@ -1,14 +1,8 @@
 package com.verdantartifice.primalmagick.common.entities.ai.sensing;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
@@ -17,6 +11,11 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * AI sensor that detects nearby blocks which are valid targets for bone meal fertilization.

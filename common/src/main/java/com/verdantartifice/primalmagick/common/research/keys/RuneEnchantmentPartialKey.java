@@ -1,15 +1,11 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
-import java.util.Objects;
-
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -17,6 +13,8 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
+
+import java.util.Objects;
 
 public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantmentPartialKey> {
     public static final MapCodec<RuneEnchantmentPartialKey> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(

@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.WandTransformBlock;
 import com.verdantartifice.primalmagick.common.crafting.WandTransformBlockTag;
 import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;

@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**

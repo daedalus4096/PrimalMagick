@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.common.advancements.critereon;
 
-import java.util.Optional;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.CriterionValidator;
@@ -23,6 +20,8 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+
+import java.util.Optional;
 
 /**
  * Advancement criterion that is triggered when the player scans a given world location with a

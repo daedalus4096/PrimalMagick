@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;

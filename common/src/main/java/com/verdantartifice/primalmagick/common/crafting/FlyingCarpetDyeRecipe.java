@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;

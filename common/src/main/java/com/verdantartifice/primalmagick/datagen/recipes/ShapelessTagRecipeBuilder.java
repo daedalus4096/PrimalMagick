@@ -1,11 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-
 import com.verdantartifice.primalmagick.common.crafting.ShapelessTagRecipe;
-
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
@@ -20,6 +15,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Definition of a recipe data file builder for shapeless tag recipes.

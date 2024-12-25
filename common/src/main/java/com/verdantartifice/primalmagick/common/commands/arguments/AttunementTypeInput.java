@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.commands.arguments;
 
-import java.util.function.Predicate;
+import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 
 import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import java.util.function.Predicate;
 
 /**
  * Input predicate for an attunement type.  Determines if a given string represents a valid argument.

@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.common.advancements.critereon;
 
-import java.util.Optional;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -12,6 +9,8 @@ import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.enchantment.Enchantment;
+
+import java.util.Optional;
 
 /**
  * Advancement criterion that is triggered when the player runescribes an enchantment onto an item.

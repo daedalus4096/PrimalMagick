@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -50,7 +49,7 @@ public class WandAssemblyRecipe extends CustomRecipe {
         ItemStack capStack = getItem(inv, 2);
         
         ItemStack outputStack = (coreStack.getItem() instanceof StaffCoreItem) ? 
-                new ItemStack(ItemsPM.MODULAR_STAFF.get()) : 
+                new ItemStack(ItemsPM.MODULAR_STAFF.get()) :
                 new ItemStack(ItemsPM.MODULAR_WAND.get());
         ModularWandItem outputItem = (ModularWandItem)outputStack.getItem();
         

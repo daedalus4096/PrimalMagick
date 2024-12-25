@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredShieldItem;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.BannerItem;

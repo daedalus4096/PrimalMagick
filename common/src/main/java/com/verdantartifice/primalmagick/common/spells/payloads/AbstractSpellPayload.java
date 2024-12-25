@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;

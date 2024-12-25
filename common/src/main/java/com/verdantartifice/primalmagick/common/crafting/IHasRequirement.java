@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.Optional;
-
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+
+import java.util.Optional;
 
 /**
  * Interface for a crafting recipe that optionally requires mod research to unlock.

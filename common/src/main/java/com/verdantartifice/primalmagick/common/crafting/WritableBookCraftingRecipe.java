@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.util.RandomSource;

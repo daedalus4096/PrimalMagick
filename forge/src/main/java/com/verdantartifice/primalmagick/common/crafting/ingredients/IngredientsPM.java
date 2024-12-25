@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.common.crafting.ingredients;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraftforge.common.crafting.ingredients.AbstractIngredient;
 import net.minecraftforge.common.crafting.ingredients.IIngredientSerializer;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class IngredientsPM {
     private static final DeferredRegister<IIngredientSerializer<?>> DEFERRED_SERIALIZERS = DeferredRegister.create(ForgeRegistries.INGREDIENT_SERIALIZERS, Constants.MOD_ID);

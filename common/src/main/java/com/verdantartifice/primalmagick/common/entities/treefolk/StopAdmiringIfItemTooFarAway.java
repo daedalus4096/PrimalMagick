@@ -1,14 +1,13 @@
 package com.verdantartifice.primalmagick.common.entities.treefolk;
 
-import java.util.Optional;
-
 import com.google.common.collect.ImmutableMap;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.item.ItemEntity;
+
+import java.util.Optional;
 
 public class StopAdmiringIfItemTooFarAway<E extends TreefolkEntity> extends Behavior<E> {
     private final int maxDistanceToItem;

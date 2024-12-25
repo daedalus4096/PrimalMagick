@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.common.enchantments.effects;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.enchantment.effects.EnchantmentLocationBasedEffect;

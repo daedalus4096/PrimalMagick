@@ -1,10 +1,5 @@
 package com.verdantartifice.primalmagick.common.entities.companions.golems;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Stream;
-
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions.CompanionType;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionOwnerHurtByTargetGoal;
@@ -12,7 +7,6 @@ import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionOwnerH
 import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionStayGoal;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.FollowCompanionOwnerGoal;
 import com.verdantartifice.primalmagick.common.entities.companions.AbstractCompanionEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -55,6 +49,11 @@ import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Stream;
 
 /**
  * Base definition for an enchanted golem entity.  Like an iron golem, but follows the player as a

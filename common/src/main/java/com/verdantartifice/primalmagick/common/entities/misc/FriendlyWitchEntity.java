@@ -1,11 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
-
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -63,6 +58,10 @@ import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Definition of a friendly witch entity who will trade with players.  RIP Corspilla.

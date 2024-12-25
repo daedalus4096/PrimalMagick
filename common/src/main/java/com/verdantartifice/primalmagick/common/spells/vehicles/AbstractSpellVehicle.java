@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import com.verdantartifice.primalmagick.platform.Services;

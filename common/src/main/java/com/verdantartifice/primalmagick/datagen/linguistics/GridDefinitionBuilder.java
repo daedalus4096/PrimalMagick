@@ -1,31 +1,27 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
 import org.joml.Vector2ic;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.books.BookLanguage;
-import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
-import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
 
 public class GridDefinitionBuilder {
     protected static final Logger LOGGER = LogManager.getLogger();

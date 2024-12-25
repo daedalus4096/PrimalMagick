@@ -2,11 +2,8 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.verdantartifice.primalmagick.platform.services.IInputService;
-import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.loading.FMLLoader;
 import org.lwjgl.glfw.GLFW;
 
 /**

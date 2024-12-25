@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.commands.arguments;
 
-import java.util.function.Predicate;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 
 import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.common.research.KnowledgeType;
+import java.util.function.Predicate;
 
 /**
  * Input predicate for a knowledge type.  Determines if a given string represents a valid argument.

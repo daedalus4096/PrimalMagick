@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.common.stats;
 
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;

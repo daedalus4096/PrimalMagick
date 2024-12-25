@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Wand transformation that turns a block of a given tag into something else.

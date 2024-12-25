@@ -1,14 +1,13 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import java.util.stream.Stream;
-
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
-
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.stream.Stream;
 
 /**
  * Requirement that the player possesses a stack(s) of the given item at least as large as the

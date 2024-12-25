@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.common.attunements;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.sources.Source;
-
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Definition of an attunement-linked attribute modifier.  Used to modify entity attributes when

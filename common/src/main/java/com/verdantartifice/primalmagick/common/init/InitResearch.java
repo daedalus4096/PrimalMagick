@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ScanEntityResearchTrigger;

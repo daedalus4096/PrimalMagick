@@ -1,20 +1,18 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
-import java.util.concurrent.CompletableFuture;
-
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.tags.SpellPropertyTagsPM;
-
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 public class SpellPropertyTagsProviderPM extends IntrinsicHolderTagsProvider<SpellProperty> {
     public SpellPropertyTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {

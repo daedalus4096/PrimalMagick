@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -10,13 +7,15 @@ import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Requirement that the player has accumulated at least the required amount of expertise in the

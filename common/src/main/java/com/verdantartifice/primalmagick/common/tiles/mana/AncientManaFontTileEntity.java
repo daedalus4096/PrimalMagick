@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;

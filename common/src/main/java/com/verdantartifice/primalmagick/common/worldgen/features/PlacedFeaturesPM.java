@@ -1,10 +1,6 @@
 package com.verdantartifice.primalmagick.common.worldgen.features;
 
-import java.util.List;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
-
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -21,6 +17,8 @@ import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
+
+import java.util.List;
 
 /**
  * Registration for placed versions of configured mod features (e.g. ores, vegetation, etc).

@@ -1,12 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.loot_modifiers;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
 import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.conditions.MatchBlockTag;
 import com.verdantartifice.primalmagick.common.loot.modifiers.AddItemModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.BloodNotesModifier;
@@ -23,7 +19,6 @@ import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
-
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.FishingHookPredicate;
@@ -53,6 +48,9 @@ import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.common.loot.LootTableIdCondition;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Data provider for all of the mod's loot modifiers.

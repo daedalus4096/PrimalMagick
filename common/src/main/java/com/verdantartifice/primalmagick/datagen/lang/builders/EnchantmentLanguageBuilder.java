@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
+
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying enchantment-related localizations in a structured way.

@@ -40,7 +40,6 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Definition of an essence cask tile entity.

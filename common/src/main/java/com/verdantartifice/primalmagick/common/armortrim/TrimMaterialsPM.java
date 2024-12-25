@@ -1,13 +1,8 @@
 package com.verdantartifice.primalmagick.common.armortrim;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
@@ -17,6 +12,9 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Registry of mod armor trim materials, backed by datapack JSON.

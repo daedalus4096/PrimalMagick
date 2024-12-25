@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.SoulAnvilTileEntity;

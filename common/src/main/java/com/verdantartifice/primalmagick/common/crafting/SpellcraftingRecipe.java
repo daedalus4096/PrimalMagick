@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
-
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;

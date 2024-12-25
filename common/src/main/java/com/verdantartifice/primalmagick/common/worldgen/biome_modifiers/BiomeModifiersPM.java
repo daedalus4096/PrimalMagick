@@ -1,11 +1,9 @@
 package com.verdantartifice.primalmagick.common.worldgen.biome_modifiers;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
-
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;

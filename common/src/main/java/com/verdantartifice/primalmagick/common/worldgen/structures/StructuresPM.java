@@ -1,15 +1,11 @@
 package com.verdantartifice.primalmagick.common.worldgen.structures;
 
-import java.util.Map;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.worldgen.structures.library.LibraryStructure;
 import com.verdantartifice.primalmagick.common.worldgen.structures.library.NetherLibraryStructure;
-
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -23,6 +19,8 @@ import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
+
+import java.util.Map;
 
 /**
  * Registry of mod structures, backed by datapack JSON.

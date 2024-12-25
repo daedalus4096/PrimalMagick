@@ -1,10 +1,5 @@
 package com.verdantartifice.primalmagick.datagen;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.datagen.advancements.StoryAdvancementsPM;
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
 import com.verdantartifice.primalmagick.datagen.atlas.SpriteSourceProviderPM;
@@ -29,7 +24,6 @@ import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.SpellPropertyTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tips.TipDefinitionProvider;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -38,6 +32,10 @@ import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Handlers for events related to data file generation.

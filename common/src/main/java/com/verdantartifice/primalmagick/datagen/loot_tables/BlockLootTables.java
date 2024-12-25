@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
-import java.util.OptionalInt;
-
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
-
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -23,6 +20,8 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+
+import java.util.OptionalInt;
 
 /**
  * Data provider for all of the mod's block loot tables.

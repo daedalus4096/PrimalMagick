@@ -1,22 +1,20 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import org.apache.logging.log4j.LogManager;
-
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
 import net.minecraft.Util;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Interface for a crafting recipe that grants expertise upon being crafted.

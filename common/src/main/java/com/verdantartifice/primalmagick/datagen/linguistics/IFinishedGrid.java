@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
 import com.google.gson.JsonObject;
-
 import net.minecraft.resources.ResourceLocation;
 
 public interface IFinishedGrid {

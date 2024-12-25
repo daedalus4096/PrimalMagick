@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.datagen.blocks;
 
-import java.util.concurrent.CompletableFuture;
-
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Extension of {@link net.minecraftforge.client.model.generators.BlockModelProvider} that publicly

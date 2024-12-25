@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import javax.annotation.Nonnull;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.KnowledgeReward;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
 
 public class KnowledgeRewardBuilder {
     protected static final Logger LOGGER = LogManager.getLogger();

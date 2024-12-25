@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.common.theorycrafting;
 
-import java.util.stream.Stream;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -19,7 +16,6 @@ import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ItemReward
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
-
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.RegistryAccess;
@@ -35,6 +31,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraftforge.common.Tags;
+
+import java.util.stream.Stream;
 
 /**
  * Datapack registry for the mod's theorycrafting project templates.

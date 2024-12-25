@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.entities.companions.pixies;
 
-import java.util.EnumSet;
-
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.HealingSpellPayload;
-
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
+
+import java.util.EnumSet;
 
 /**
  * Base definition for a sun pixie.  In addition to following the player as a companion, heals them

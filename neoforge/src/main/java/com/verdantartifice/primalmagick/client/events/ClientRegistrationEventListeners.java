@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellSparkleParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellcraftingRuneParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
-import com.verdantartifice.primalmagick.client.gui.hud.AbstractManaStorageItemDecorator;
 import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecoratorNeoforge;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;

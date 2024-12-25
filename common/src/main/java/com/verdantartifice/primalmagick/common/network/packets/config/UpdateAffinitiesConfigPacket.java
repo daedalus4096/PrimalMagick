@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.affinities.IAffinitySerializer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import commonnetwork.api.Dispatcher;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

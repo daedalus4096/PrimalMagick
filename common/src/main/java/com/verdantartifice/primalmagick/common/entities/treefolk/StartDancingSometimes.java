@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.treefolk;
 
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
-
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.ai.behavior.BehaviorControl;
 import net.minecraft.world.entity.ai.behavior.SetEntityLookTargetSometimes;

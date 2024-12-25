@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.common.creative;
 
-import java.util.function.Supplier;
-
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.ItemLike;
+
+import java.util.function.Supplier;
 
 /**
  * Object that registers an item's supplier into a creative tab.

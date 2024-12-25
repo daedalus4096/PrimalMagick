@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.research.topics;
 
 import com.mojang.serialization.MapCodec;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 

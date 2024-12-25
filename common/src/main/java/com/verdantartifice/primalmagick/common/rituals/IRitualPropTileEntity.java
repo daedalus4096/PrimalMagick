@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.rituals;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
+
+import javax.annotation.Nullable;
 
 /**
  * Interface indicating whether a tile entity can serve as a prop for magickal rituals.

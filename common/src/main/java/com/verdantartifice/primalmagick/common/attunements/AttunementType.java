@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagick.common.attunements;
 
-import javax.annotation.Nonnull;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraft.util.StringRepresentable;
+
+import javax.annotation.Nonnull;
 
 /**
  * Represents a type of magickal attunement.  Permanent attunement is gained through research and

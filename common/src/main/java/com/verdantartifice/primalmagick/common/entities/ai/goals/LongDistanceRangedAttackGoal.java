@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagick.common.entities.ai.goals;
 
-import java.util.EnumSet;
-
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+
+import java.util.EnumSet;
 
 /**
  * AI goal for a creature to attack with ranged attacks if it's out of range of melee attacks.

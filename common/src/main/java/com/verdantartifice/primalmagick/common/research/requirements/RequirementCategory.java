@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
-import javax.annotation.Nullable;
-
 import com.mojang.serialization.Codec;
-
 import net.minecraft.util.StringRepresentable;
+
+import javax.annotation.Nullable;
 
 public enum RequirementCategory implements StringRepresentable {
     MUST_OBTAIN("must_obtain"),

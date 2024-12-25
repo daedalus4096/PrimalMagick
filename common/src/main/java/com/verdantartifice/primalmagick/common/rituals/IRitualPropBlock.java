@@ -1,12 +1,8 @@
 package com.verdantartifice.primalmagick.common.rituals;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PropMarkerPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.RemovePropMarkerPacket;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -14,6 +10,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Interface indicating whether a block can serve as a prop for magickal rituals.

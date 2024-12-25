@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.advancements.critereon;
 
-import java.util.Optional;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
@@ -12,7 +10,6 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
 import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
-
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -26,6 +23,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
+
+import java.util.Optional;
 
 /**
  * Advancement criterion that is triggered when the player completes a given research key.

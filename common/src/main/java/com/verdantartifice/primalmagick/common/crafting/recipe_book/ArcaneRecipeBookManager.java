@@ -1,5 +1,16 @@
 package com.verdantartifice.primalmagick.common.crafting.recipe_book;
 
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -7,19 +18,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
-import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
 
 /**
  * Primary access point for methods related to the arcane recipe book.  This book is like the vanilla

@@ -1,10 +1,5 @@
 package com.verdantartifice.primalmagick.common.entities.companions.pixies;
 
-import java.util.EnumSet;
-import java.util.UUID;
-
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions.CompanionType;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.FollowCompanionOwnerGoal;
@@ -15,7 +10,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -48,6 +42,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nonnull;
+import java.util.EnumSet;
+import java.util.UUID;
 
 /**
  * Base definition for a pixie entity.  Follows the player around as a companion.  Has other capabilities

@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
+import com.google.common.base.Preconditions;
+import net.minecraft.resources.ResourceLocation;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,10 +10,6 @@ import java.util.TreeMap;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-
-import com.google.common.base.Preconditions;
-
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Helper for specifying localizations in a structured way.

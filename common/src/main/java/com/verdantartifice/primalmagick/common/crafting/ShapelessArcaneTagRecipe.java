@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.Optional;
-import java.util.function.Predicate;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
@@ -11,7 +8,6 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineK
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -23,6 +19,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+
+import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Definition for a shapeless arcane tag recipe.  Like a normal shapeless arcane recipe, except that

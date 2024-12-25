@@ -1,13 +1,11 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
-
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Helper for specifying wand component-related localizations in a structured way.

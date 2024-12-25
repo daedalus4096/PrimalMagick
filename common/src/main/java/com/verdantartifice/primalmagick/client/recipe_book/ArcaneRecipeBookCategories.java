@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

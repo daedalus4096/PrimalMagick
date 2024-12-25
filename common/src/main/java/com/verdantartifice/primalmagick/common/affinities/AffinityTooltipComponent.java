@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 
 /**

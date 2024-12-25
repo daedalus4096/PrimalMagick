@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
@@ -10,6 +7,9 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.RecipeMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface IShapelessRecipePM<T extends RecipeInput> extends Recipe<T> {
     boolean isSimple();

@@ -1,22 +1,20 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.weights;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.mutable.MutableDouble;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
+import org.apache.commons.lang3.mutable.MutableDouble;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Weight function that returns a progressing value based on a player's completed research.

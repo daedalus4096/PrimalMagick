@@ -1,17 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
-
-import org.apache.commons.lang3.mutable.MutableInt;
-
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
@@ -60,7 +49,6 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.TrimPatternLanguag
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenLanguageLanguageBuilder;
-
 import net.minecraft.client.KeyMapping;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -76,6 +64,15 @@ import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimPattern;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import org.apache.commons.lang3.mutable.MutableInt;
+
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 /**
  * Language provider with mod-specific helper functions.

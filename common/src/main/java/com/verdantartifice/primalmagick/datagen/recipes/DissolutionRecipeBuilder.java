@@ -1,10 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.Objects;
-
 import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -12,6 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+
+import java.util.Objects;
 
 /**
  * Definition of a recipe data file builder for dissolution recipes.

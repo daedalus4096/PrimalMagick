@@ -1,14 +1,7 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -27,6 +20,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Definition of a sin crystal entity.  Created by an inner demon to heal it, similar to an ender crystal.
