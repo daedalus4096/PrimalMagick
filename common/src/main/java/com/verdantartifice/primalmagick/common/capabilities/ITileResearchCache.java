@@ -1,16 +1,13 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import java.util.List;
-import java.util.function.Predicate;
-
-import javax.annotation.Nullable;
-
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
-
+import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.capabilities.AutoRegisterCapability;
-import net.minecraftforge.common.util.INBTSerializable;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Capability interface for storing a subset of the research completed by a tile's owner.  Owned by
@@ -18,9 +15,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
-@AutoRegisterCapability
-public interface ITileResearchCache extends INBTSerializable<CompoundTag> {
+public interface ITileResearchCache extends INBTSerializablePM<CompoundTag> {
     /**
      * Remove all research from the cache.
      */
@@ -37,7 +32,7 @@ public interface ITileResearchCache extends INBTSerializable<CompoundTag> {
     /**
      * Determine if the given research has been completed, as known by the cache.
      * 
-     * @param key a key for the desired research entry
+     * @param keys a key for the desired research entry
      * @return true if the given research is complete, false otherwise
      */
     public boolean isResearchComplete(List<AbstractResearchKey<?>> keys);
