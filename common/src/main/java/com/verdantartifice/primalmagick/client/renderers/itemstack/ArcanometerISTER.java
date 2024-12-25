@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -22,7 +23,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.entity.PartEntity;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -68,8 +68,8 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
                             screenStack = EntityUtils.getEntityItemStack(entity);
                             if (!screenStack.isEmpty()) {
                                 this.renderScreenItem(itemRenderer, screenStack, matrixStack, buffer, combinedLight, combinedOverlay);
-                            } else if (entity instanceof PartEntity<?> partEntity) {
-                                this.renderScreenEntity(mc.getEntityRenderDispatcher(), partEntity.getParent(), matrixStack, buffer, combinedLight, combinedOverlay);
+                            } else if (Services.PART_ENTITIES.isPartEntity(entity)) {
+                                this.renderScreenEntity(mc.getEntityRenderDispatcher(), Services.PART_ENTITIES.getParent(entity), matrixStack, buffer, combinedLight, combinedOverlay);
                             } else {
                                 this.renderScreenEntity(mc.getEntityRenderDispatcher(), entity, matrixStack, buffer, combinedLight, combinedOverlay);
                             }
