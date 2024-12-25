@@ -18,7 +18,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.InvWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,7 +48,7 @@ public class AnalysisTableMenu extends AbstractContainerMenu {
         this.player = inv.player;
         
         // Slot 0: Item to analyze
-        this.addSlot(Services.MENU.makeFilteredSlot(new InvWrapper(this.analysisInventory), 0, 56, 35, new FilteredSlotProperties().tooltip(INPUT_SLOT_TOOLTIP)));
+        this.addSlot(Services.MENU.makeFilteredSlot(Services.ITEM_HANDLERS.wrap(this.analysisInventory, null), 0, 56, 35, new FilteredSlotProperties().tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slot 1: Last analyzed item
         this.addSlot(new AnalysisResultSlot(this.analysisInventory, 1, 103, 35));
