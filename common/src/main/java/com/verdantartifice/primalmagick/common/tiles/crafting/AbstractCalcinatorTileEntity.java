@@ -70,8 +70,6 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     protected UUID ownerUUID;
     protected ITileResearchCache researchCache;
     
-    protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
-    
     protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
     protected final Predicate<AbstractResearchKey<?>> relevantFilter = k -> this.getRelevantResearch().contains(k);
     
@@ -121,7 +119,11 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         super(tileEntityType, pos, state);
         this.researchCache = new TileResearchCache();
     }
-    
+
+    public ITileResearchCache getUncachedTileResearchCache() {
+        return this.researchCache;
+    }
+
     @Override
     protected int getInventoryCount() {
         return 3;
@@ -382,20 +384,5 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     
     protected static Set<AbstractResearchKey<?>> assembleRelevantResearch() {
         return Sources.streamSorted().map(s -> s.getDiscoverKey()).filter(o -> o.isPresent()).map(o -> o.get()).collect(Collectors.toUnmodifiableSet());
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagickCapabilities.RESEARCH_CACHE) {
-            return this.researchCacheOpt.cast();
-        } else {
-            return super.getCapability(cap, side);
-        }
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.researchCacheOpt.invalidate();
     }
 }

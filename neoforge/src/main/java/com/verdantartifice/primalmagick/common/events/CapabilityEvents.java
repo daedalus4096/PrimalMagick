@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -15,6 +16,7 @@ public class CapabilityEvents {
     public static void onRegisterCapabilities(final RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.AUTO_CHARGER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.CALCINATOR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.CALCINATOR.get(), (be, context) -> be.getUncachedTileResearchCache());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.CARVED_BOOKSHELF.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.CONCOCTER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, face) -> cast(be.getRawItemHandler(face)));

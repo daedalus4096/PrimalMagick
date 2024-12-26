@@ -1,8 +1,12 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.util.LazyOptional;
+
+import javax.annotation.Nonnull;
 
 public class CapabilitiesForge {
     public static final Capability<IPlayerKnowledge> KNOWLEDGE = CapabilityManager.get(new CapabilityToken<>(){});
@@ -12,4 +16,10 @@ public class CapabilitiesForge {
     public static final Capability<IPlayerCompanions> COMPANIONS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerWard> WARD = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerLinguistics> LINGUISTICS = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<ITileResearchCache> RESEARCH_CACHE = CapabilityManager.get(new CapabilityToken<>(){});
+
+    @Nonnull
+    public static LazyOptional<ITileResearchCache> getResearchCache(@Nonnull BlockEntity tile) {
+        return tile.getCapability(CapabilitiesForge.RESEARCH_CACHE);
+    }
 }

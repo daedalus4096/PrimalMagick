@@ -333,7 +333,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
         if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
             return this.manaStorageOpt.cast();
-        } else if (!this.remove && cap == PrimalMagickCapabilities.RESEARCH_CACHE) {
+        } else if (!this.remove && cap == CapabilitiesForge.RESEARCH_CACHE) {
             return this.researchCacheOpt.cast();
         } else {
             return super.getCapability(cap, side);

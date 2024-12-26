@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
@@ -29,4 +31,7 @@ public class CapabilitiesNeoforge {
             () -> AttachmentType.serializable(PlayerWardNeoforge::new).copyOnDeath().build());
     public static final Supplier<AttachmentType<PlayerLinguisticsNeoforge>> LINGUISTICS = CAPABILITIES.register("linguistics",
             () -> AttachmentType.serializable(PlayerLinguisticsNeoforge::new).copyOnDeath().build());
+
+    public static final BlockCapability<ITileResearchCache, Void> RESEARCH_CACHE =
+            BlockCapability.createVoid(ResourceUtils.loc("research_cache"), ITileResearchCache.class);
 }

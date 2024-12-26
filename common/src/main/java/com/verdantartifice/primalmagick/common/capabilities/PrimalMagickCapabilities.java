@@ -21,8 +21,7 @@ public class PrimalMagickCapabilities {
     public static final Capability<IPlayerArcaneRecipeBook> ARCANE_RECIPE_BOOK = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IManaStorage<?>> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
-    public static final Capability<ITileResearchCache> RESEARCH_CACHE = CapabilityManager.get(new CapabilityToken<>(){});
-    
+
     @Nonnull
     public static LazyOptional<IPlayerArcaneRecipeBook> getArcaneRecipeBook(@Nullable Player player) {
         return player == null ? LazyOptional.empty() : player.getCapability(ARCANE_RECIPE_BOOK);
@@ -36,10 +35,5 @@ public class PrimalMagickCapabilities {
     @Nullable
     public static IManaStorage<?> getManaStorage(@Nonnull BlockEntity tile) {
         return tile.getCapability(MANA_STORAGE, null).orElse(null);
-    }
-    
-    @Nonnull
-    public static LazyOptional<ITileResearchCache> getResearchCache(@Nonnull BlockEntity tile) {
-        return tile.getCapability(RESEARCH_CACHE);
     }
 }
