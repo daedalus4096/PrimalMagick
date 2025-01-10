@@ -9,13 +9,13 @@ import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeColle
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
+import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
-import net.minecraftforge.common.Tags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -94,7 +94,7 @@ public class ClientArcaneRecipeBook {
         } else if (type == RecipeTypesPM.CONCOCTING.get()) {
             return recipe.getResultItem(registryAccess).getItem() instanceof AlchemicalBombItem ? ArcaneRecipeBookCategories.CONCOCTER_BOMB : ArcaneRecipeBookCategories.CONCOCTER_DRINKABLE;
         } else if (type == RecipeTypesPM.DISSOLUTION.get()) {
-            return recipe.getResultItem(registryAccess).is(Tags.Items.DUSTS) ? ArcaneRecipeBookCategories.DISSOLUTION_ORES : ArcaneRecipeBookCategories.DISSOLUTION_MISC;
+            return recipe.getResultItem(registryAccess).is(CommonTags.Items.DUSTS) ? ArcaneRecipeBookCategories.DISSOLUTION_ORES : ArcaneRecipeBookCategories.DISSOLUTION_MISC;
         } else if (type == RecipeType.CRAFTING && recipe instanceof CraftingRecipe craftingRecipe) {
             return switch (craftingRecipe.category()) {
                 case BUILDING -> ArcaneRecipeBookCategories.CRAFTING_BUILDING_BLOCKS;

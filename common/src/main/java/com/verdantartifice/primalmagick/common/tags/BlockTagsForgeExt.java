@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tags;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -17,6 +18,6 @@ public class BlockTagsForgeExt {
     public static final TagKey<Block> MINEABLE_WITH_SHEARS = tag("mineable/shears");
 
     private static TagKey<Block> tag(String name) {
-        return BlockTags.create(ResourceLocation.fromNamespaceAndPath("forge", name));
+        return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("forge", name));
     }
 }

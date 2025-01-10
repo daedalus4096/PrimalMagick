@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModi
 import com.verdantartifice.primalmagick.common.loot.modifiers.ReplaceItemModifier;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
+import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
@@ -45,7 +46,6 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerC
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.common.loot.LootTableIdCondition;
 
@@ -85,10 +85,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                 new LootItemCondition[] {
                         MatchTool.toolMatches(ItemPredicate.Builder.item().withSubPredicate(ItemSubPredicates.ENCHANTMENTS, ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchLookup.getOrThrow(EnchantmentsPM.LUCKY_STRIKE), MinMaxBounds.Ints.atLeast(1)))))).build()
                 }, ImmutableMap.<TagKey<Block>, TagKey<Item>>builder()
-                    .put(Tags.Blocks.ORES_IRON, Tags.Items.NUGGETS_IRON)
-                    .put(Tags.Blocks.ORES_GOLD, Tags.Items.NUGGETS_GOLD)
-                    .put(Tags.Blocks.ORES_QUARTZ, ItemTagsForgeExt.NUGGETS_QUARTZ)
-                    .put(Tags.Blocks.ORES_COPPER, ItemTagsForgeExt.NUGGETS_COPPER)
+                    .put(CommonTags.Blocks.ORES_IRON, CommonTags.Items.NUGGETS_IRON)
+                    .put(CommonTags.Blocks.ORES_GOLD, CommonTags.Items.NUGGETS_GOLD)
+                    .put(CommonTags.Blocks.ORES_QUARTZ, ItemTagsForgeExt.NUGGETS_QUARTZ)
+                    .put(CommonTags.Blocks.ORES_COPPER, ItemTagsForgeExt.NUGGETS_COPPER)
                     .put(BlockTagsForgeExt.ORES_TIN, ItemTagsForgeExt.NUGGETS_TIN)
                     .put(BlockTagsForgeExt.ORES_LEAD, ItemTagsForgeExt.NUGGETS_LEAD)
                     .put(BlockTagsForgeExt.ORES_SILVER, ItemTagsForgeExt.NUGGETS_SILVER)

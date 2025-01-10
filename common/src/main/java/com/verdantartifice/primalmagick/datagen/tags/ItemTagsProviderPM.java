@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
+import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import net.minecraft.core.HolderLookup;
@@ -12,7 +14,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
@@ -61,69 +62,37 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTags.LEG_ARMOR).addTag(ItemTagsPM.ROBES_LEGGINGS).add(ItemsPM.PRIMALITE_LEGS.get(), ItemsPM.HEXIUM_LEGS.get(), ItemsPM.HALLOWSTEEL_LEGS.get());
         this.tag(ItemTags.FOOT_ARMOR).addTag(ItemTagsPM.ROBES_BOOTS).add(ItemsPM.PRIMALITE_FEET.get(), ItemsPM.HEXIUM_FEET.get(), ItemsPM.HALLOWSTEEL_FEET.get());
 
-        this.tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOWS);
-        this.tag(ItemTags.CROSSBOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_CROSSBOWS);
-        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOWS).addTag(Tags.Items.TOOLS_CROSSBOWS).addTag(Tags.Items.TOOLS_FISHING_RODS).addTag(Tags.Items.TOOLS_TRIDENTS).addTag(Tags.Items.TOOLS_SHIELDS);
-        this.tag(ItemTags.FISHING_ENCHANTABLE).addTag(Tags.Items.TOOLS_FISHING_RODS);
-        this.tag(ItemTags.TRIDENT_ENCHANTABLE).addTag(Tags.Items.TOOLS_TRIDENTS);
+        this.tag(ItemTags.BOW_ENCHANTABLE).addTag(CommonTags.Items.TOOLS_BOW);
+        this.tag(ItemTags.CROSSBOW_ENCHANTABLE).addTag(CommonTags.Items.TOOLS_CROSSBOW);
+        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(CommonTags.Items.TOOLS_BOW).addTag(CommonTags.Items.TOOLS_CROSSBOW).addTag(CommonTags.Items.TOOLS_FISHING_ROD).addTag(CommonTags.Items.TOOLS_SPEAR).addTag(CommonTags.Items.TOOLS_SHIELD);
+        this.tag(ItemTags.FISHING_ENCHANTABLE).addTag(CommonTags.Items.TOOLS_FISHING_ROD);
+        this.tag(ItemTags.TRIDENT_ENCHANTABLE).addTag(CommonTags.Items.TOOLS_SPEAR);
 
         // Add entries to Forge tags
-        this.tag(Tags.Items.ARMORS_HELMETS).addTag(ItemTagsPM.ROBES_HELMETS).add(ItemsPM.PRIMALITE_HEAD.get(), ItemsPM.HEXIUM_HEAD.get(), ItemsPM.HALLOWSTEEL_HEAD.get());
-        this.tag(Tags.Items.ARMORS_CHESTPLATES).addTag(ItemTagsPM.ROBES_CHESTPLATES).add(ItemsPM.PRIMALITE_CHEST.get(), ItemsPM.HEXIUM_CHEST.get(), ItemsPM.HALLOWSTEEL_CHEST.get());
-        this.tag(Tags.Items.ARMORS_LEGGINGS).addTag(ItemTagsPM.ROBES_LEGGINGS).add(ItemsPM.PRIMALITE_LEGS.get(), ItemsPM.HEXIUM_LEGS.get(), ItemsPM.HALLOWSTEEL_LEGS.get());
-        this.tag(Tags.Items.ARMORS_BOOTS).addTag(ItemTagsPM.ROBES_BOOTS).add(ItemsPM.PRIMALITE_FEET.get(), ItemsPM.HEXIUM_FEET.get(), ItemsPM.HALLOWSTEEL_FEET.get());
-        this.tag(Tags.Items.DUSTS).addTag(ItemTagsForgeExt.DUSTS_IRON).addTag(ItemTagsForgeExt.DUSTS_GOLD).addTag(ItemTagsForgeExt.DUSTS_COPPER).addOptionalTag(ItemTagsForgeExt.DUSTS_TIN).addOptionalTag(ItemTagsForgeExt.DUSTS_LEAD).addOptionalTag(ItemTagsForgeExt.DUSTS_SILVER).addOptionalTag(ItemTagsForgeExt.DUSTS_URANIUM);
-        this.tag(Tags.Items.INGOTS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
-        this.tag(Tags.Items.NUGGETS).addTag(ItemTagsPM.NUGGETS_PRIMALITE).addTag(ItemTagsPM.NUGGETS_HEXIUM).addTag(ItemTagsPM.NUGGETS_HALLOWSTEEL).addTag(ItemTagsForgeExt.NUGGETS_QUARTZ);
-        this.tag(Tags.Items.ORE_RATES_DENSE).add(ItemsPM.ROCK_SALT_ORE.get());
-        this.tag(Tags.Items.ORE_RATES_SINGULAR).add(ItemsPM.QUARTZ_ORE.get());
-        this.tag(Tags.Items.ORES).addTag(ItemTagsForgeExt.ORES_ROCK_SALT).addOptionalTag(ItemTagsForgeExt.ORES_TIN).addOptionalTag(ItemTagsForgeExt.ORES_LEAD).addOptionalTag(ItemTagsForgeExt.ORES_SILVER).addOptionalTag(ItemTagsForgeExt.ORES_URANIUM);
-        this.tag(Tags.Items.ORES_QUARTZ).add(ItemsPM.QUARTZ_ORE.get());
-        this.tag(Tags.Items.ORES_IN_GROUND_STONE).add(ItemsPM.QUARTZ_ORE.get(), ItemsPM.ROCK_SALT_ORE.get());
-        this.tag(Tags.Items.RAW_MATERIALS).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_TIN).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_LEAD).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_SILVER).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_URANIUM);
-        this.tag(Tags.Items.STORAGE_BLOCKS).add(ItemsPM.IGNYX_BLOCK.get()).addTag(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(ItemTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
-        this.tag(Tags.Items.TOOLS_BOWS).add(ItemsPM.PRIMALITE_BOW.get(), ItemsPM.HEXIUM_BOW.get(), ItemsPM.HALLOWSTEEL_BOW.get(), ItemsPM.FORBIDDEN_BOW.get());
-        this.tag(Tags.Items.TOOLS_FISHING_RODS).add(ItemsPM.PRIMALITE_FISHING_ROD.get(), ItemsPM.HEXIUM_FISHING_ROD.get(), ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), ItemsPM.PRIMAL_FISHING_ROD.get());
-        this.tag(Tags.Items.TOOLS_SHIELDS).add(ItemsPM.PRIMALITE_SHIELD.get(), ItemsPM.HEXIUM_SHIELD.get(), ItemsPM.HALLOWSTEEL_SHIELD.get(), ItemsPM.SACRED_SHIELD.get());
-        this.tag(Tags.Items.TOOLS_TRIDENTS).add(ItemsPM.PRIMALITE_TRIDENT.get(), ItemsPM.HEXIUM_TRIDENT.get(), ItemsPM.HALLOWSTEEL_TRIDENT.get(), ItemsPM.FORBIDDEN_TRIDENT.get());
+        this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_HELMETS).add(ItemsPM.PRIMALITE_HEAD.get(), ItemsPM.HEXIUM_HEAD.get(), ItemsPM.HALLOWSTEEL_HEAD.get());
+        this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_CHESTPLATES).add(ItemsPM.PRIMALITE_CHEST.get(), ItemsPM.HEXIUM_CHEST.get(), ItemsPM.HALLOWSTEEL_CHEST.get());
+        this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_LEGGINGS).add(ItemsPM.PRIMALITE_LEGS.get(), ItemsPM.HEXIUM_LEGS.get(), ItemsPM.HALLOWSTEEL_LEGS.get());
+        this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_BOOTS).add(ItemsPM.PRIMALITE_FEET.get(), ItemsPM.HEXIUM_FEET.get(), ItemsPM.HALLOWSTEEL_FEET.get());
+        this.tag(CommonTags.Items.DUSTS).addTag(ItemTagsForgeExt.DUSTS_IRON).addTag(ItemTagsForgeExt.DUSTS_GOLD).addTag(ItemTagsForgeExt.DUSTS_COPPER).addOptionalTag(ItemTagsForgeExt.DUSTS_TIN.location()).addOptionalTag(ItemTagsForgeExt.DUSTS_LEAD.location()).addOptionalTag(ItemTagsForgeExt.DUSTS_SILVER.location()).addOptionalTag(ItemTagsForgeExt.DUSTS_URANIUM.location());
+        this.tag(CommonTags.Items.INGOTS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
+        this.tag(CommonTags.Items.NUGGETS).addTag(ItemTagsPM.NUGGETS_PRIMALITE).addTag(ItemTagsPM.NUGGETS_HEXIUM).addTag(ItemTagsPM.NUGGETS_HALLOWSTEEL).addTag(ItemTagsForgeExt.NUGGETS_QUARTZ);
+        this.tag(CommonTags.Items.ORE_RATES_DENSE).add(ItemsPM.ROCK_SALT_ORE.get());
+        this.tag(CommonTags.Items.ORE_RATES_SINGULAR).add(ItemsPM.QUARTZ_ORE.get());
+        this.tag(CommonTags.Items.ORES).addTag(ItemTagsForgeExt.ORES_ROCK_SALT).addOptionalTag(ItemTagsForgeExt.ORES_TIN.location()).addOptionalTag(ItemTagsForgeExt.ORES_LEAD.location()).addOptionalTag(ItemTagsForgeExt.ORES_SILVER.location()).addOptionalTag(ItemTagsForgeExt.ORES_URANIUM.location());
+        this.tag(CommonTags.Items.ORES_QUARTZ).add(ItemsPM.QUARTZ_ORE.get());
+        this.tag(CommonTags.Items.ORES_IN_GROUND_STONE).add(ItemsPM.QUARTZ_ORE.get(), ItemsPM.ROCK_SALT_ORE.get());
+        this.tag(CommonTags.Items.RAW_MATERIALS).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_TIN.location()).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_LEAD.location()).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_SILVER.location()).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_URANIUM.location());
+        this.tag(CommonTags.Items.STORAGE_BLOCKS).add(ItemsPM.IGNYX_BLOCK.get()).addTag(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(ItemTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
+        this.tag(CommonTags.Items.TOOLS_BOW).add(ItemsPM.PRIMALITE_BOW.get(), ItemsPM.HEXIUM_BOW.get(), ItemsPM.HALLOWSTEEL_BOW.get(), ItemsPM.FORBIDDEN_BOW.get());
+        this.tag(CommonTags.Items.TOOLS_FISHING_ROD).add(ItemsPM.PRIMALITE_FISHING_ROD.get(), ItemsPM.HEXIUM_FISHING_ROD.get(), ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), ItemsPM.PRIMAL_FISHING_ROD.get());
+        this.tag(CommonTags.Items.TOOLS_SHIELD).add(ItemsPM.PRIMALITE_SHIELD.get(), ItemsPM.HEXIUM_SHIELD.get(), ItemsPM.HALLOWSTEEL_SHIELD.get(), ItemsPM.SACRED_SHIELD.get());
+        this.tag(CommonTags.Items.TOOLS_SPEAR).add(ItemsPM.PRIMALITE_TRIDENT.get(), ItemsPM.HEXIUM_TRIDENT.get(), ItemsPM.HALLOWSTEEL_TRIDENT.get(), ItemsPM.FORBIDDEN_TRIDENT.get());
         
-        this.tag(Tags.Items.GLASS_COLORLESS).add(ItemsPM.SKYGLASS.get());
-        this.tag(Tags.Items.GLASS_BLACK).add(ItemsPM.STAINED_SKYGLASS_BLACK.get());
-        this.tag(Tags.Items.GLASS_BLUE).add(ItemsPM.STAINED_SKYGLASS_BLUE.get());
-        this.tag(Tags.Items.GLASS_BROWN).add(ItemsPM.STAINED_SKYGLASS_BROWN.get());
-        this.tag(Tags.Items.GLASS_CYAN).add(ItemsPM.STAINED_SKYGLASS_CYAN.get());
-        this.tag(Tags.Items.GLASS_GRAY).add(ItemsPM.STAINED_SKYGLASS_GRAY.get());
-        this.tag(Tags.Items.GLASS_GREEN).add(ItemsPM.STAINED_SKYGLASS_GREEN.get());
-        this.tag(Tags.Items.GLASS_LIGHT_BLUE).add(ItemsPM.STAINED_SKYGLASS_LIGHT_BLUE.get());
-        this.tag(Tags.Items.GLASS_LIGHT_GRAY).add(ItemsPM.STAINED_SKYGLASS_LIGHT_GRAY.get());
-        this.tag(Tags.Items.GLASS_LIME).add(ItemsPM.STAINED_SKYGLASS_LIME.get());
-        this.tag(Tags.Items.GLASS_MAGENTA).add(ItemsPM.STAINED_SKYGLASS_MAGENTA.get());
-        this.tag(Tags.Items.GLASS_ORANGE).add(ItemsPM.STAINED_SKYGLASS_ORANGE.get());
-        this.tag(Tags.Items.GLASS_PINK).add(ItemsPM.STAINED_SKYGLASS_PINK.get());
-        this.tag(Tags.Items.GLASS_PURPLE).add(ItemsPM.STAINED_SKYGLASS_PURPLE.get());
-        this.tag(Tags.Items.GLASS_RED).add(ItemsPM.STAINED_SKYGLASS_RED.get());
-        this.tag(Tags.Items.GLASS_WHITE).add(ItemsPM.STAINED_SKYGLASS_WHITE.get());
-        this.tag(Tags.Items.GLASS_YELLOW).add(ItemsPM.STAINED_SKYGLASS_YELLOW.get());
-        this.tag(Tags.Items.STAINED_GLASS).addTag(ItemTagsPM.STAINED_SKYGLASS);
-        
-        this.tag(Tags.Items.GLASS_PANES_COLORLESS).add(ItemsPM.SKYGLASS_PANE.get());
-        this.tag(Tags.Items.GLASS_PANES_BLACK).add(ItemsPM.STAINED_SKYGLASS_PANE_BLACK.get());
-        this.tag(Tags.Items.GLASS_PANES_BLUE).add(ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get());
-        this.tag(Tags.Items.GLASS_PANES_BROWN).add(ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get());
-        this.tag(Tags.Items.GLASS_PANES_CYAN).add(ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get());
-        this.tag(Tags.Items.GLASS_PANES_GRAY).add(ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get());
-        this.tag(Tags.Items.GLASS_PANES_GREEN).add(ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get());
-        this.tag(Tags.Items.GLASS_PANES_LIGHT_BLUE).add(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get());
-        this.tag(Tags.Items.GLASS_PANES_LIGHT_GRAY).add(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get());
-        this.tag(Tags.Items.GLASS_PANES_LIME).add(ItemsPM.STAINED_SKYGLASS_PANE_LIME.get());
-        this.tag(Tags.Items.GLASS_PANES_MAGENTA).add(ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get());
-        this.tag(Tags.Items.GLASS_PANES_ORANGE).add(ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get());
-        this.tag(Tags.Items.GLASS_PANES_PINK).add(ItemsPM.STAINED_SKYGLASS_PANE_PINK.get());
-        this.tag(Tags.Items.GLASS_PANES_PURPLE).add(ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get());
-        this.tag(Tags.Items.GLASS_PANES_RED).add(ItemsPM.STAINED_SKYGLASS_PANE_RED.get());
-        this.tag(Tags.Items.GLASS_PANES_WHITE).add(ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get());
-        this.tag(Tags.Items.GLASS_PANES_YELLOW).add(ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get());
-        this.tag(Tags.Items.STAINED_GLASS_PANES).addTag(ItemTagsPM.STAINED_SKYGLASS_PANES);
+        this.tag(CommonTags.Items.GLASS_BLOCKS).add(ItemsPM.STAINED_SKYGLASS_BLACK.get(), ItemsPM.STAINED_SKYGLASS_BLUE.get(), ItemsPM.STAINED_SKYGLASS_BROWN.get(), ItemsPM.STAINED_SKYGLASS_CYAN.get(), ItemsPM.STAINED_SKYGLASS_GRAY.get(), ItemsPM.STAINED_SKYGLASS_GREEN.get(), ItemsPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), ItemsPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), ItemsPM.STAINED_SKYGLASS_LIME.get(), ItemsPM.STAINED_SKYGLASS_MAGENTA.get(), ItemsPM.STAINED_SKYGLASS_ORANGE.get(), ItemsPM.STAINED_SKYGLASS_PINK.get(), ItemsPM.STAINED_SKYGLASS_PURPLE.get(), ItemsPM.STAINED_SKYGLASS_RED.get(), ItemsPM.STAINED_SKYGLASS_WHITE.get(), ItemsPM.STAINED_SKYGLASS_YELLOW.get());
+        this.tag(CommonTags.Items.GLASS_BLOCKS_COLORLESS).add(ItemsPM.SKYGLASS.get());
+
+        this.tag(CommonTags.Items.GLASS_PANES).add(ItemsPM.STAINED_SKYGLASS_PANE_BLACK.get(), ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get(), ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get(), ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get(), ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get(), ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get(), ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), ItemsPM.STAINED_SKYGLASS_PANE_LIME.get(), ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get(), ItemsPM.STAINED_SKYGLASS_PANE_PINK.get(), ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get(), ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get(), ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get());
+        this.tag(CommonTags.Items.GLASS_PANES_COLORLESS).add(ItemsPM.SKYGLASS_PANE.get());
 
         // Add entries to Forge extension tags
         this.tag(ItemTagsForgeExt.DUSTS_COPPER).add(ItemsPM.COPPER_GRIT.get());
@@ -150,7 +119,7 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTagsPM.MOONWOOD_LOGS).add(ItemsPM.MOONWOOD_LOG.get(), ItemsPM.STRIPPED_MOONWOOD_LOG.get(), ItemsPM.MOONWOOD_WOOD.get(), ItemsPM.STRIPPED_MOONWOOD_WOOD.get());
         this.tag(ItemTagsPM.RITUAL_CANDLES).add(ItemsPM.RITUAL_CANDLE_BLACK.get(), ItemsPM.RITUAL_CANDLE_BLUE.get(), ItemsPM.RITUAL_CANDLE_BROWN.get(), ItemsPM.RITUAL_CANDLE_CYAN.get(), ItemsPM.RITUAL_CANDLE_GRAY.get(), ItemsPM.RITUAL_CANDLE_GREEN.get(), ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get(), ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get(), ItemsPM.RITUAL_CANDLE_LIME.get(), ItemsPM.RITUAL_CANDLE_MAGENTA.get(), ItemsPM.RITUAL_CANDLE_ORANGE.get(), ItemsPM.RITUAL_CANDLE_PINK.get(), ItemsPM.RITUAL_CANDLE_PURPLE.get(), ItemsPM.RITUAL_CANDLE_RED.get(), ItemsPM.RITUAL_CANDLE_WHITE.get(), ItemsPM.RITUAL_CANDLE_YELLOW.get());
         this.tag(ItemTagsPM.RUNE_BASES).add(Items.STONE_SLAB);
-        this.tag(ItemTagsPM.RUNE_ETCHINGS).addTag(Tags.Items.GEMS_LAPIS);
+        this.tag(ItemTagsPM.RUNE_ETCHINGS).addTag(CommonTags.Items.GEMS_LAPIS);
         this.tag(ItemTagsPM.RUNIC_TRIMMABLE_ARMOR).addTag(ItemTagsPM.ROBES);
         this.tag(ItemTagsPM.RUNIC_TRIM_MATERIALS).add(ItemsPM.RUNE_EARTH.get(), ItemsPM.RUNE_SEA.get(), ItemsPM.RUNE_SKY.get(), ItemsPM.RUNE_SUN.get(), ItemsPM.RUNE_MOON.get(), ItemsPM.RUNE_BLOOD.get(), ItemsPM.RUNE_INFERNAL.get(), ItemsPM.RUNE_VOID.get(), ItemsPM.RUNE_HALLOWED.get());
         this.tag(ItemTagsPM.SHULKER_BOXES).addTag(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.SHULKER_BOX);
@@ -201,7 +170,7 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         
         this.tag(ItemTagsPM.MELEE_ENCHANTABLE).addTag(ItemTags.WEAPON_ENCHANTABLE).addTag(ItemTags.TRIDENT_ENCHANTABLE).addTag(ItemTagsPM.STAFF_ENCHANTABLE);
         this.tag(ItemTagsPM.ARCHERY_ENCHANTABLE).addTag(ItemTags.BOW_ENCHANTABLE).addTag(ItemTags.CROSSBOW_ENCHANTABLE);
-        this.tag(ItemTagsPM.SHIELD_ENCHANTABLE).addTag(Tags.Items.TOOLS_SHIELDS);
+        this.tag(ItemTagsPM.SHIELD_ENCHANTABLE).addTag(CommonTags.Items.TOOLS_SHIELD);
         this.tag(ItemTagsPM.STAFF_ENCHANTABLE).add(ItemsPM.MODULAR_STAFF.get());
         this.tag(ItemTagsPM.WAND_ENCHANTABLE).addTag(ItemTagsPM.STAFF_ENCHANTABLE).add(ItemsPM.MUNDANE_WAND.get(), ItemsPM.MODULAR_WAND.get());
         this.tag(ItemTagsPM.HOE_ENCHANTABLE).addTag(ItemTags.HOES);

@@ -1,14 +1,15 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
+import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -33,7 +34,7 @@ public class BlockTagsProviderPM extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider lookupProvider) {
         // Add entries to vanilla tags
         this.tag(BlockTags.BEACON_BASE_BLOCKS).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
-        this.tag(BlockTags.CROPS).add(BlocksPM.HYRDOMELON_STEM.get());
+        this.tag(BlockTags.CROPS).add(BlocksPM.HYDROMELON_STEM.get());
         this.tag(BlockTags.CRYSTAL_SOUND_BLOCKS).add(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
         this.tag(BlockTags.LOGS_THAT_BURN).addTag(BlockTagsPM.MOONWOOD_LOGS).addTag(BlockTagsPM.SUNWOOD_LOGS).addTag(BlockTagsPM.HALLOWOOD_LOGS);
         this.tag(BlockTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.SUNWOOD_LEAVES.get(), BlocksPM.HALLOWOOD_LEAVES.get());
@@ -50,54 +51,22 @@ public class BlockTagsProviderPM extends BlockTagsProvider {
         this.tag(BlockTags.NEEDS_STONE_TOOL).add(BlocksPM.ROCK_SALT_ORE.get(), BlocksPM.QUARTZ_ORE.get(), BlocksPM.PRIMALITE_BLOCK.get(), BlocksPM.SALT_BLOCK.get());
         this.tag(BlockTags.NEEDS_IRON_TOOL).add(BlocksPM.HEXIUM_BLOCK.get(), BlocksPM.SANGUINE_CRUCIBLE.get());
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(BlocksPM.HALLOWSTEEL_BLOCK.get());
-        this.tag(BlockTags.MAINTAINS_FARMLAND).add(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), BlocksPM.HYRDOMELON_STEM.get());
+        this.tag(BlockTags.MAINTAINS_FARMLAND).add(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), BlocksPM.HYDROMELON_STEM.get());
         
         // Add entries to Forge tags
-        this.tag(Tags.Blocks.ORE_RATES_DENSE).add(BlocksPM.ROCK_SALT_ORE.get());
-        this.tag(Tags.Blocks.ORE_RATES_SINGULAR).add(BlocksPM.QUARTZ_ORE.get());
-        this.tag(Tags.Blocks.ORES).addTag(BlockTagsForgeExt.ORES_ROCK_SALT);
-        this.tag(Tags.Blocks.ORES_QUARTZ).add(BlocksPM.QUARTZ_ORE.get());
-        this.tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(BlocksPM.QUARTZ_ORE.get(), BlocksPM.ROCK_SALT_ORE.get());
-        this.tag(Tags.Blocks.STORAGE_BLOCKS).add(BlocksPM.IGNYX_BLOCK.get(), BlocksPM.SALT_BLOCK.get()).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
+        this.tag(CommonTags.Blocks.ORE_RATES_DENSE).add(BlocksPM.ROCK_SALT_ORE.get());
+        this.tag(CommonTags.Blocks.ORE_RATES_SINGULAR).add(BlocksPM.QUARTZ_ORE.get());
+        this.tag(CommonTags.Blocks.ORES).addTag(BlockTagsForgeExt.ORES_ROCK_SALT);
+        this.tag(CommonTags.Blocks.ORES_QUARTZ).add(BlocksPM.QUARTZ_ORE.get());
+        this.tag(CommonTags.Blocks.ORES_IN_GROUND_STONE).add(BlocksPM.QUARTZ_ORE.get(), BlocksPM.ROCK_SALT_ORE.get());
+        this.tag(CommonTags.Blocks.STORAGE_BLOCKS).add(BlocksPM.IGNYX_BLOCK.get(), BlocksPM.SALT_BLOCK.get()).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         
-        this.tag(Tags.Blocks.GLASS_COLORLESS).add(BlocksPM.SKYGLASS.get());
-        this.tag(Tags.Blocks.GLASS_BLACK).add(BlocksPM.STAINED_SKYGLASS_BLACK.get());
-        this.tag(Tags.Blocks.GLASS_BLUE).add(BlocksPM.STAINED_SKYGLASS_BLUE.get());
-        this.tag(Tags.Blocks.GLASS_BROWN).add(BlocksPM.STAINED_SKYGLASS_BROWN.get());
-        this.tag(Tags.Blocks.GLASS_CYAN).add(BlocksPM.STAINED_SKYGLASS_CYAN.get());
-        this.tag(Tags.Blocks.GLASS_GRAY).add(BlocksPM.STAINED_SKYGLASS_GRAY.get());
-        this.tag(Tags.Blocks.GLASS_GREEN).add(BlocksPM.STAINED_SKYGLASS_GREEN.get());
-        this.tag(Tags.Blocks.GLASS_LIGHT_BLUE).add(BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get());
-        this.tag(Tags.Blocks.GLASS_LIGHT_GRAY).add(BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get());
-        this.tag(Tags.Blocks.GLASS_LIME).add(BlocksPM.STAINED_SKYGLASS_LIME.get());
-        this.tag(Tags.Blocks.GLASS_MAGENTA).add(BlocksPM.STAINED_SKYGLASS_MAGENTA.get());
-        this.tag(Tags.Blocks.GLASS_ORANGE).add(BlocksPM.STAINED_SKYGLASS_ORANGE.get());
-        this.tag(Tags.Blocks.GLASS_PINK).add(BlocksPM.STAINED_SKYGLASS_PINK.get());
-        this.tag(Tags.Blocks.GLASS_PURPLE).add(BlocksPM.STAINED_SKYGLASS_PURPLE.get());
-        this.tag(Tags.Blocks.GLASS_RED).add(BlocksPM.STAINED_SKYGLASS_RED.get());
-        this.tag(Tags.Blocks.GLASS_WHITE).add(BlocksPM.STAINED_SKYGLASS_WHITE.get());
-        this.tag(Tags.Blocks.GLASS_YELLOW).add(BlocksPM.STAINED_SKYGLASS_YELLOW.get());
-        this.tag(Tags.Blocks.STAINED_GLASS).addTag(BlockTagsPM.STAINED_SKYGLASS);
-        
-        this.tag(Tags.Blocks.GLASS_PANES_COLORLESS).add(BlocksPM.SKYGLASS_PANE.get());
-        this.tag(Tags.Blocks.GLASS_PANES_BLACK).add(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get());
-        this.tag(Tags.Blocks.GLASS_PANES_BLUE).add(BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get());
-        this.tag(Tags.Blocks.GLASS_PANES_BROWN).add(BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get());
-        this.tag(Tags.Blocks.GLASS_PANES_CYAN).add(BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get());
-        this.tag(Tags.Blocks.GLASS_PANES_GRAY).add(BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get());
-        this.tag(Tags.Blocks.GLASS_PANES_GREEN).add(BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get());
-        this.tag(Tags.Blocks.GLASS_PANES_LIGHT_BLUE).add(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get());
-        this.tag(Tags.Blocks.GLASS_PANES_LIGHT_GRAY).add(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get());
-        this.tag(Tags.Blocks.GLASS_PANES_LIME).add(BlocksPM.STAINED_SKYGLASS_PANE_LIME.get());
-        this.tag(Tags.Blocks.GLASS_PANES_MAGENTA).add(BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get());
-        this.tag(Tags.Blocks.GLASS_PANES_ORANGE).add(BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get());
-        this.tag(Tags.Blocks.GLASS_PANES_PINK).add(BlocksPM.STAINED_SKYGLASS_PANE_PINK.get());
-        this.tag(Tags.Blocks.GLASS_PANES_PURPLE).add(BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get());
-        this.tag(Tags.Blocks.GLASS_PANES_RED).add(BlocksPM.STAINED_SKYGLASS_PANE_RED.get());
-        this.tag(Tags.Blocks.GLASS_PANES_WHITE).add(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get());
-        this.tag(Tags.Blocks.GLASS_PANES_YELLOW).add(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
-        this.tag(Tags.Blocks.STAINED_GLASS_PANES).addTag(BlockTagsPM.STAINED_SKYGLASS_PANES);
-        
+        this.tag(CommonTags.Blocks.GLASS_BLOCKS).add(BlocksPM.STAINED_SKYGLASS_BLACK.get(), BlocksPM.STAINED_SKYGLASS_BLUE.get(), BlocksPM.STAINED_SKYGLASS_BROWN.get(), BlocksPM.STAINED_SKYGLASS_CYAN.get(), BlocksPM.STAINED_SKYGLASS_GRAY.get(), BlocksPM.STAINED_SKYGLASS_GREEN.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_LIME.get(), BlocksPM.STAINED_SKYGLASS_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PINK.get(), BlocksPM.STAINED_SKYGLASS_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_RED.get(), BlocksPM.STAINED_SKYGLASS_WHITE.get(), BlocksPM.STAINED_SKYGLASS_YELLOW.get());
+        this.tag(CommonTags.Blocks.GLASS_BLOCKS_COLORLESS).add(BlocksPM.SKYGLASS.get());
+
+        this.tag(CommonTags.Blocks.GLASS_PANES).add(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get(), BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get(), BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIME.get(), BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PANE_PINK.get(), BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get());
+        this.tag(CommonTags.Blocks.GLASS_PANES_COLORLESS).add(BlocksPM.SKYGLASS_PANE.get());
+
         // Add entries to Forge extension tags
         this.tag(BlockTagsForgeExt.ORES_ROCK_SALT).add(BlocksPM.ROCK_SALT_ORE.get());
         this.tag(BlockTagsForgeExt.BUDDING).add(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());

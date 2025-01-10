@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.VanillaItem
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
@@ -32,7 +33,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(Constants.MOD_ID + ".research_requirements")
@@ -70,7 +70,7 @@ public class ResearchRequirementsTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public static void item_tag_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
-        var req = new ItemTagRequirement(Tags.Items.EGGS, 1);
+        var req = new ItemTagRequirement(CommonTags.Items.EGGS, 1);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
         player.getInventory().add(new ItemStack(Items.EGG));
         helper.assertTrue(req.isMetBy(player), "Requirement not met");

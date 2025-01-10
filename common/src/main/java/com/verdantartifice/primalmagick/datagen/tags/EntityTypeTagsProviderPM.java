@@ -1,13 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
@@ -34,7 +35,7 @@ public class EntityTypeTagsProviderPM extends EntityTypeTagsProvider {
                 EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), EntityTypesPM.FORBIDDEN_TRIDENT.get(), EntityTypesPM.APPLE.get());
         
         // Add entries to Forge tags
-        this.tag(Tags.EntityTypes.BOSSES).add(EntityTypesPM.INNER_DEMON.get());
+        this.tag(CommonTags.EntityTypes.BOSSES).add(EntityTypesPM.INNER_DEMON.get());
         
         // Create custom tags
         this.tag(EntityTypeTagsPM.ENCHANTED_GOLEMS).add(EntityTypesPM.PRIMALITE_GOLEM.get(), EntityTypesPM.HEXIUM_GOLEM.get(), EntityTypesPM.HALLOWSTEEL_GOLEM.get());
@@ -54,7 +55,7 @@ public class EntityTypeTagsProviderPM extends EntityTypeTagsProvider {
         this.tag(EntityTypeTagsPM.GOLEMS).addTag(EntityTypeTagsPM.ENCHANTED_GOLEMS).add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
         
         this.tag(EntityTypeTagsPM.POLYMORPH_ALLOW).add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM, EntityType.VILLAGER).addTag(EntityTypeTagsPM.ENCHANTED_GOLEMS);
-        this.tag(EntityTypeTagsPM.POLYMORPH_BAN).addTag(Tags.EntityTypes.BOSSES).add(EntityType.WARDEN, EntityType.WOLF);
+        this.tag(EntityTypeTagsPM.POLYMORPH_BAN).addTag(CommonTags.EntityTypes.BOSSES).add(EntityType.WARDEN, EntityType.WOLF);
         
         this.tag(EntityTypeTagsPM.DROPS_BLOODY_FLESH).add(EntityType.EVOKER, EntityType.ILLUSIONER, EntityType.PILLAGER, EntityType.VILLAGER, EntityType.VINDICATOR,
                 EntityType.WANDERING_TRADER, EntityType.WITCH);

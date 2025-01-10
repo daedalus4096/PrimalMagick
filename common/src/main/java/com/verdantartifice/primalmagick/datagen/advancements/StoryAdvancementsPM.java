@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
@@ -56,7 +57,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider.AdvancementGenerator;
 import org.apache.logging.log4j.LogManager;
@@ -430,7 +430,7 @@ public class StoryAdvancementsPM implements AdvancementGenerator {
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("scan_chest").icon(Items.CHEST).build())
                 .parent(craftArcanometer)
                 .addCriterion("scan_chest", ScanLocationTrigger.TriggerInstance.itemUsedOnBlock(
-                        LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(Tags.Blocks.CHESTS)), 
+                        LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(CommonTags.Blocks.CHESTS)),
                         ItemPredicate.Builder.item().of(ItemsPM.ARCANOMETER.get())))
                 .save(saver, ResourceUtils.loc("story/scan_chest"));
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_seascribe_pen").icon(ItemsPM.SEASCRIBE_PEN.get()).build())
