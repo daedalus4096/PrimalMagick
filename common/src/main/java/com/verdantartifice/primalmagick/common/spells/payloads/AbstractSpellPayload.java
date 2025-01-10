@@ -31,11 +31,11 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> implements ISpellPayload {
     public static Codec<AbstractSpellPayload<?>> dispatchCodec() {
-        return Services.SPELL_PAYLOAD_TYPES.codec().dispatch("mod_type", AbstractSpellPayload::getType, SpellPayloadType::codec);
+        return Services.SPELL_PAYLOAD_TYPES_REGISTRY.codec().dispatch("mod_type", AbstractSpellPayload::getType, SpellPayloadType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellPayload<?>> dispatchStreamCodec() {
-        return Services.SPELL_PAYLOAD_TYPES.registryFriendlyStreamCodec().dispatch(AbstractSpellPayload::getType, SpellPayloadType::streamCodec);
+        return Services.SPELL_PAYLOAD_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractSpellPayload::getType, SpellPayloadType::streamCodec);
     }
     
     protected static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("#######.##");

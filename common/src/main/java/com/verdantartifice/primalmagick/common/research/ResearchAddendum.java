@@ -104,7 +104,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         }
         
         public Builder recipe(ItemLike itemLike) {
-            return this.recipe(Services.ITEMS.getKey(itemLike.asItem()));
+            return this.recipe(Services.ITEMS_REGISTRY.getKey(itemLike.asItem()));
         }
         
         public Builder recipe(ResourceLocation recipe) {

@@ -761,7 +761,7 @@ public class ResearchManager {
         
         // Iterate over all registered items in the game
         List<CompletableFuture<Integer>> obsPointsFutures = new ArrayList<>();
-        for (Item item : Services.ITEMS.getAll()) {
+        for (Item item : Services.ITEMS_REGISTRY.getAll()) {
             // Generate a research key for the itemstack and add that research to the player
             stack = new ItemStack(item);
             if (!stack.isEmpty()) { // Skip over air

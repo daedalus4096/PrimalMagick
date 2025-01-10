@@ -13,11 +13,11 @@ import net.minecraft.world.entity.player.Player;
  */
 public abstract class AbstractWeightFunction<T extends AbstractWeightFunction<T>> {
     public static Codec<AbstractWeightFunction<?>> dispatchCodec() {
-        return Services.WEIGHT_FUNCTION_TYPES.codec().dispatch("reward_type", AbstractWeightFunction::getType, WeightFunctionType::codec);
+        return Services.WEIGHT_FUNCTION_TYPES_REGISTRY.codec().dispatch("reward_type", AbstractWeightFunction::getType, WeightFunctionType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractWeightFunction<?>> dispatchStreamCodec() {
-        return Services.WEIGHT_FUNCTION_TYPES.registryFriendlyStreamCodec().dispatch(AbstractWeightFunction::getType, WeightFunctionType::streamCodec);
+        return Services.WEIGHT_FUNCTION_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractWeightFunction::getType, WeightFunctionType::streamCodec);
     }
     
     public abstract double getWeight(Player player);

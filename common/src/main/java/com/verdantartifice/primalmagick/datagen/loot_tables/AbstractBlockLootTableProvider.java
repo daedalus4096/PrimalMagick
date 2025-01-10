@@ -80,11 +80,11 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     @Override
     protected Iterable<Block> getKnownBlocks() {
         // Limit this data provider to blocks added by the mod
-        return Services.BLOCKS.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue).toList();
+        return Services.BLOCKS_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue).toList();
     }
 
     private void registerLootTableBuilder(Block block, LootTable.Builder builder) {
-        this.registeredBlocks.add(Services.BLOCKS.getKey(block));
+        this.registeredBlocks.add(Services.BLOCKS_REGISTRY.getKey(block));
         this.add(block, builder);
     }
     
@@ -94,7 +94,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     
     protected void registerEmptyTable(Block block) {
         // Just mark that it's been registered without creating a table builder, to track expectations
-        this.registeredBlocks.add(Services.BLOCKS.getKey(block));
+        this.registeredBlocks.add(Services.BLOCKS_REGISTRY.getKey(block));
     }
     
     protected void registerBasicTable(Block block) {
@@ -175,7 +175,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> blocks = Services.BLOCKS.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
+        Set<ResourceLocation> blocks = Services.BLOCKS_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
         
         // Warn for each mod block that didn't have a loot table registered
         blocks.removeAll(this.registeredBlocks);

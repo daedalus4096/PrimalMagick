@@ -17,6 +17,6 @@ public class SensorTypesPM {
     public static final IRegistryItem<SensorType<?>, SensorType<NearestValidFertilizableBlockSensor>> NEAREST_VALID_FERTILIZABLE_BLOCKS = register("nearest_valid_fertilizable_block_sensor", () -> new SensorType<>(NearestValidFertilizableBlockSensor::new));
 
     private static <T extends Sensor<?>> IRegistryItem<SensorType<?>, SensorType<T>> register(String name, Supplier<SensorType<T>> supplier) {
-        return Services.SENSOR_TYPES.register(name, supplier);
+        return Services.SENSOR_TYPES_REGISTRY.register(name, supplier);
     }
 }

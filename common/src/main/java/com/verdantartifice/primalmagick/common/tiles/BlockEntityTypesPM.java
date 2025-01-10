@@ -79,6 +79,6 @@ public class BlockEntityTypesPM {
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<CarvedBookshelfTileEntity>> CARVED_BOOKSHELF = register("carved_bookshelf", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.carvedBookshelf(), BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get()).build(null));
 
     private static <T extends BlockEntity> IRegistryItem<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType<T>> typeSupplier) {
-        return Services.BLOCK_ENTITY_TYPES.register(name, typeSupplier);
+        return Services.BLOCK_ENTITY_TYPES_REGISTRY.register(name, typeSupplier);
     }
 }

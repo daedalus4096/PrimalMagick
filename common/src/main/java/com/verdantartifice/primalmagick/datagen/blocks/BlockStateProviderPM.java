@@ -306,11 +306,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
 
     private ResourceLocation key(Block block) {
-        return Services.BLOCKS.getKey(block);
+        return Services.BLOCKS_REGISTRY.getKey(block);
     }
     
     private ResourceLocation key(Item item) {
-        return Services.ITEMS.getKey(item);
+        return Services.ITEMS_REGISTRY.getKey(item);
     }
 
     private String name(Block block) {

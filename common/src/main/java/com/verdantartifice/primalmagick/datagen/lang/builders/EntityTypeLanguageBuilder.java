@@ -27,6 +27,6 @@ public class EntityTypeLanguageBuilder extends AbstractLanguageBuilder<EntityTyp
 
     @Override
     protected ResourceLocation getBaseRegistryKey(EntityType<?> base) {
-        return Objects.requireNonNull(Services.ENTITY_TYPES.getKey(base));
+        return Objects.requireNonNull(Services.ENTITY_TYPES_REGISTRY.getKey(base));
     }
 }

@@ -16,12 +16,12 @@ import java.util.Objects;
 
 public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
     public static final MapCodec<EntityScanKey> CODEC = ResourceLocation.CODEC.fieldOf("entityType").xmap(loc -> {
-        return new EntityScanKey(Services.ENTITY_TYPES.get(loc));
+        return new EntityScanKey(Services.ENTITY_TYPES_REGISTRY.get(loc));
     }, key -> {
         return EntityType.getKey(key.entityType);
     });
     public static final StreamCodec<ByteBuf, EntityScanKey> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(loc -> {
-        return new EntityScanKey(Services.ENTITY_TYPES.get(loc));
+        return new EntityScanKey(Services.ENTITY_TYPES_REGISTRY.get(loc));
     }, key -> {
         return EntityType.getKey(key.entityType);
     });
@@ -37,7 +37,7 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
 
     @Override
     public String toString() {
-        return PREFIX + Services.ENTITY_TYPES.getKey(this.entityType).toString();
+        return PREFIX + Services.ENTITY_TYPES_REGISTRY.getKey(this.entityType).toString();
     }
 
     @Override

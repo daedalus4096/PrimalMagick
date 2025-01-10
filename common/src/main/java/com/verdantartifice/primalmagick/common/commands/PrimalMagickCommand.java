@@ -508,9 +508,9 @@ public class PrimalMagickCommand {
         }
         // Scan the given item for the target player and grant them its research
         if (ResearchManager.setScanned(stack, target)) {
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), Services.ITEMS.getKey(item.getItem()).toString()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), Services.ITEMS_REGISTRY.getKey(item.getItem()).toString()), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), Services.ITEMS.getKey(item.getItem()).toString()));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), Services.ITEMS_REGISTRY.getKey(item.getItem()).toString()));
             }
         } else {
             source.sendFailure(Component.translatable("commands.primalmagick.scans.grant.failure", target.getName()));            
@@ -684,7 +684,7 @@ public class PrimalMagickCommand {
         target.sendSystemMessage(Component.literal("Found " + Integer.toString(sourcelessItems.size()) + " items without sources"+ excludeNote + "; check system logs for details"), false);
 
         // note: technically this could result in a list with null elements. which is noncommunicative.
-        LOGGER.info("Items with no sources: " + sourcelessItems.stream().map(Services.ITEMS::getKey).toList().toString());
+        LOGGER.info("Items with no sources: " + sourcelessItems.stream().map(Services.ITEMS_REGISTRY::getKey).toList().toString());
 
         return 0;
     }
@@ -731,8 +731,8 @@ public class PrimalMagickCommand {
         AffinityManager am = AffinityManager.getOrCreateInstance();
         Vector<EntityType<?>> retVal = new Vector<>();
 
-        Services.ENTITY_TYPES.getAll().forEach(entityType -> {
-            ResourceLocation resourceLocation = Services.ENTITY_TYPES.getKey(entityType);
+        Services.ENTITY_TYPES_REGISTRY.getAll().forEach(entityType -> {
+            ResourceLocation resourceLocation = Services.ENTITY_TYPES_REGISTRY.getKey(entityType);
             if (resourceLocation == null) {
                 // If the Item can't be resolved in registry, it's got problems I can't care about.
                 return;
@@ -760,10 +760,10 @@ public class PrimalMagickCommand {
         AffinityManager am = AffinityManager.getOrCreateInstance();
 
         Vector<Item> items = new Vector<>();
-        Services.ITEMS.getAll().forEach( (item) -> {
+        Services.ITEMS_REGISTRY.getAll().forEach( (item) -> {
                 ItemStack stack = item.getDefaultInstance();
 
-                ResourceLocation resourceLocation = Services.ITEMS.getKey(item);
+                ResourceLocation resourceLocation = Services.ITEMS_REGISTRY.getKey(item);
                 if (resourceLocation == null) {
                     // If the Item can't be resolved in registry, it's got problems I can't care about.
                     return;
@@ -997,7 +997,7 @@ public class PrimalMagickCommand {
 
     private static int explainItemAffinity(CommandSourceStack source, ItemInput item) {
         // Get the affinity data for the item
-        ResourceLocation itemId = Services.ITEMS.getKey(item.getItem());
+        ResourceLocation itemId = Services.ITEMS_REGISTRY.getKey(item.getItem());
         IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getLevel().getRecipeManager(), source.registryAccess(), new ArrayList<>()).join();
         if (affinityData instanceof ItemAffinity itemAffinity) {
             itemAffinity.getSourceRecipe().ifPresentOrElse(recipeLoc -> {

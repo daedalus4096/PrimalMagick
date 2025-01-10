@@ -85,7 +85,7 @@ public class BlockIngredient implements Predicate<Block> {
         ing.determineMatchingBlocks();
         buf.writeVarInt(ing.matchingBlocks.length);
         for (int index = 0; index < ing.matchingBlocks.length; index++) {
-            buf.writeResourceLocation(Services.BLOCKS.getKey(ing.matchingBlocks[index]));
+            buf.writeResourceLocation(Services.BLOCKS_REGISTRY.getKey(ing.matchingBlocks[index]));
         }
     }
     
@@ -120,7 +120,7 @@ public class BlockIngredient implements Predicate<Block> {
         int size = buf.readVarInt();
         return fromBlockListStream(Stream.generate(() -> {
             ResourceLocation loc = buf.readResourceLocation();
-            return new BlockIngredient.SingleBlockValue(Services.BLOCKS.get(loc));
+            return new BlockIngredient.SingleBlockValue(Services.BLOCKS_REGISTRY.get(loc));
         }).limit(size));
     }
     

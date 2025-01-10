@@ -32,7 +32,7 @@ public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item, ItemLangu
 
     @Override
     protected ResourceLocation getBaseRegistryKey(Item base) {
-        return Objects.requireNonNull(Services.ITEMS.getKey(base));
+        return Objects.requireNonNull(Services.ITEMS_REGISTRY.getKey(base));
     }
 
     public ItemLanguageBuilder tooltip(String value) {

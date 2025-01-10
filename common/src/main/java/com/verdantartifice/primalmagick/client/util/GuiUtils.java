@@ -105,7 +105,7 @@ public class GuiUtils {
                 crashreportcategory.setDetail("Item Type", () -> {
                     return String.valueOf((Object)stack.getItem());
                 });
-                crashreportcategory.setDetail("Registry Name", () -> String.valueOf(Services.ITEMS.getKey(stack.getItem())));
+                crashreportcategory.setDetail("Registry Name", () -> String.valueOf(Services.ITEMS_REGISTRY.getKey(stack.getItem())));
                 crashreportcategory.setDetail("Item Damage", () -> {
                     return String.valueOf(stack.getDamageValue());
                 });

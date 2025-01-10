@@ -452,7 +452,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
             if (block instanceof IRitualPropBlock) {
                 IRitualPropBlock propBlock = (IRitualPropBlock)block;
                 if (propBlock.isUniversal() && !propBlock.isPropActivated(propState, this.level, propPos)) {
-                    propSteps.add(new UniversalRitualStep(propPos, Services.BLOCKS.getKey(block)));
+                    propSteps.add(new UniversalRitualStep(propPos, Services.BLOCKS_REGISTRY.getKey(block)));
                 }
             }
         }
@@ -758,7 +758,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 if ( !(block instanceof IRitualPropBlock) || 
                      !requiredProp.test(block) ||
                      !((IRitualPropBlock)block).isBlockSaltPowered(altar.level, altar.awaitedPropPos) ) {
-                    altar.onPropInterrupted(block, propState, Services.BLOCKS.getKey(requiredProp.getMatchingBlocks()[0]));
+                    altar.onPropInterrupted(block, propState, Services.BLOCKS_REGISTRY.getKey(requiredProp.getMatchingBlocks()[0]));
                 }
             }
             altar.nextCheckCount = altar.activeCount + 20;
@@ -787,7 +787,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
                 
                 // If no match was found, warn the player the first time
                 if (!altar.skipWarningMessage && altar.getActivePlayer() != null) {
-                    Block stepBlock = Services.BLOCKS.get(expectedId);
+                    Block stepBlock = Services.BLOCKS_REGISTRY.get(expectedId);
                     if (stepBlock == null) {
                         altar.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_prop.empty"), false);
                     } else {
@@ -827,7 +827,7 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     protected void onPropInterrupted(Block block, BlockState propState, ResourceLocation expectedId) {
-        Block expectedProp = Services.BLOCKS.get(expectedId);
+        Block expectedProp = Services.BLOCKS_REGISTRY.get(expectedId);
         
         // If contact with the prop was lost, add an instability spike and start looking again
         if (this.getActivePlayer() != null) {

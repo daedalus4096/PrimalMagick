@@ -35,11 +35,11 @@ public class ArgumentTypesPM {
 
     private static <T extends ArgumentType<?>> IRegistryItem<ArgumentTypeInfo<?, ?>, SingletonArgumentInfo<T>> registerSingleton(
             String name, Class<T> clazz, SingletonArgumentInfo<T> info) {
-        return Services.ARGUMENT_TYPES.registerSingleton(name, clazz, info);
+        return Services.ARGUMENT_TYPES_REGISTRY.registerSingleton(name, clazz, info);
     }
 
     private static <T extends ArgumentType<?>, M extends ArgumentTypeInfo.Template<T>> IRegistryItem<ArgumentTypeInfo<?, ?>, ArgumentTypeInfo<T, M>> registerInfo(
             String name, Class<T> clazz, ArgumentTypeInfo<T, M> info) {
-        return Services.ARGUMENT_TYPES.registerInfo(name, clazz, info);
+        return Services.ARGUMENT_TYPES_REGISTRY.registerInfo(name, clazz, info);
     }
 }

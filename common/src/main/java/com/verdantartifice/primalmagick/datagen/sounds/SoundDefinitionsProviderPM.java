@@ -78,7 +78,7 @@ public class SoundDefinitionsProviderPM extends SoundDefinitionsProvider {
     }
     
     protected void verifyComplete() {
-        List<ResourceLocation> registeredSounds = new ArrayList<>(Services.SOUND_EVENTS.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).toList());
+        List<ResourceLocation> registeredSounds = new ArrayList<>(Services.SOUND_EVENTS_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).toList());
         registeredSounds.removeAll(this.generatedSounds);
         if (!registeredSounds.isEmpty()) {
             registeredSounds.forEach(loc -> LOGGER.warn("No sound definition generated for sound {}", loc.toString()));

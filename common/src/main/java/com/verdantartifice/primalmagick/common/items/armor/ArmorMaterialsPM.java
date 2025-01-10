@@ -101,6 +101,6 @@ public class ArmorMaterialsPM {
         for (ArmorItem.Type armorType : ArmorItem.Type.values()) {
             defenseMap.put(armorType, pDefense.get(armorType));
         }
-        return Services.ARMOR_MATERIALS.register(pName, () -> new ArmorMaterial(defenseMap, pEnchantmentValue, pEquipSound, pRepairIngredient, pLayers, pToughness, pKnockbackResistance));
+        return Services.ARMOR_MATERIALS_REGISTRY.register(pName, () -> new ArmorMaterial(defenseMap, pEnchantmentValue, pEquipSound, pRepairIngredient, pLayers, pToughness, pKnockbackResistance));
     }
 }

@@ -17,6 +17,6 @@ public class StructurePieceTypesPM {
     public static final IRegistryItem<StructurePieceType, StructurePieceType> LIBRARY = register("library", () -> LibraryPiece::new);
 
     private static IRegistryItem<StructurePieceType, StructurePieceType> register(String name, Supplier<StructurePieceType> supplier) {
-        return Services.STRUCTURE_PIECE_TYPES.register(name, supplier);
+        return Services.STRUCTURE_PIECE_TYPES_REGISTRY.register(name, supplier);
     }
 }

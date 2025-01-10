@@ -39,6 +39,6 @@ public class SpellPayloadsPM {
     public static final IRegistryItem<SpellPayloadType<?>, SpellPayloadType<ConsecrateSpellPayload>> CONSECRATE = register(ConsecrateSpellPayload.TYPE, 2400, ConsecrateSpellPayload::getInstance, ConsecrateSpellPayload::getRequirement, ConsecrateSpellPayload.CODEC, ConsecrateSpellPayload.STREAM_CODEC);
     
     protected static <T extends AbstractSpellPayload<T>> IRegistryItem<SpellPayloadType<?>, SpellPayloadType<T>> register(String id, int sortOrder, Supplier<T> instanceSupplier, Supplier<AbstractRequirement<?>> requirementSupplier, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return Services.SPELL_PAYLOAD_TYPES.register(id, () -> new SpellPayloadType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, codec, streamCodec));
+        return Services.SPELL_PAYLOAD_TYPES_REGISTRY.register(id, () -> new SpellPayloadType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, codec, streamCodec));
     }
 }

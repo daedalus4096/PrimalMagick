@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class SpellPropertyTagsProviderPM extends IntrinsicHolderTagsProvider<SpellProperty> {
     public SpellPropertyTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
-        super(output, RegistryKeysPM.SPELL_PROPERTIES, future, p -> Services.SPELL_PROPERTIES.getResourceKey(p).orElseThrow(), Constants.MOD_ID, helper);
+        super(output, RegistryKeysPM.SPELL_PROPERTIES, future, p -> Services.SPELL_PROPERTIES_REGISTRY.getResourceKey(p).orElseThrow(), Constants.MOD_ID, helper);
     }
 
     @Override

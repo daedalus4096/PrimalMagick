@@ -17,6 +17,6 @@ public class ResearchTopicTypesPM {
     public static final IRegistryItem<ResearchTopicType<?>, ResearchTopicType<SourceResearchTopic>> SOURCE = register("source", SourceResearchTopic.CODEC, SourceResearchTopic.STREAM_CODEC);
     
     protected static <T extends AbstractResearchTopic<T>> IRegistryItem<ResearchTopicType<?>, ResearchTopicType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return Services.RESEARCH_TOPIC_TYPES.register(id, () -> new ResearchTopicType<T>(ResourceUtils.loc(id), codec, streamCodec));
+        return Services.RESEARCH_TOPIC_TYPES_REGISTRY.register(id, () -> new ResearchTopicType<T>(ResourceUtils.loc(id), codec, streamCodec));
     }
 }

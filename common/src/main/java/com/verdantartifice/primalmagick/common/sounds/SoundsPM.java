@@ -37,7 +37,7 @@ public class SoundsPM {
     public static final IRegistryItem<SoundEvent, SoundEvent> RITUAL = register("ritual");
 
     private static IRegistryItem<SoundEvent, SoundEvent> register(String name, Supplier<SoundEvent> supplier) {
-        return Services.SOUND_EVENTS.register(name, supplier);
+        return Services.SOUND_EVENTS_REGISTRY.register(name, supplier);
     }
     
     private static IRegistryItem<SoundEvent, SoundEvent> register(String name) {

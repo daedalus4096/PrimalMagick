@@ -39,7 +39,7 @@ public class CreativeModeTabsPM {
     }
 
     private static <T extends CreativeModeTab> IRegistryItem<CreativeModeTab, T> register(String name, Supplier<T> tabSupplier) {
-        return Services.CREATIVE_MODE_TABS.register(name, tabSupplier);
+        return Services.CREATIVE_MODE_TABS_REGISTRY.register(name, tabSupplier);
     }
     
     // Register mod creative tab

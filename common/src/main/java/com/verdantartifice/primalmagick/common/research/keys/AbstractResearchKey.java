@@ -19,11 +19,11 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
     public static Codec<AbstractResearchKey<?>> dispatchCodec() {
-        return Services.RESEARCH_KEY_TYPES.codec().dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
+        return Services.RESEARCH_KEY_TYPES_REGISTRY.codec().dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractResearchKey<?>> dispatchStreamCodec() {
-        return Services.RESEARCH_KEY_TYPES.registryFriendlyStreamCodec().dispatch(AbstractResearchKey::getType, ResearchKeyType::streamCodec);
+        return Services.RESEARCH_KEY_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractResearchKey::getType, ResearchKeyType::streamCodec);
     }
     
     @Override

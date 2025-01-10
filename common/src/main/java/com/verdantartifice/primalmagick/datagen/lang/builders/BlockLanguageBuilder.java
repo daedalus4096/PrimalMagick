@@ -28,7 +28,7 @@ public class BlockLanguageBuilder extends AbstractLanguageBuilder<Block, BlockLa
 
     @Override
     protected ResourceLocation getBaseRegistryKey(Block base) {
-        return Objects.requireNonNull(Services.BLOCKS.getKey(base));
+        return Objects.requireNonNull(Services.BLOCKS_REGISTRY.getKey(base));
     }
 
     public BlockLanguageBuilder tooltip(String value) {

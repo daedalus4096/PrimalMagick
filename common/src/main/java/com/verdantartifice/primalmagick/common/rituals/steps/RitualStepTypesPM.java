@@ -18,6 +18,6 @@ public class RitualStepTypesPM {
     protected static <T extends AbstractRitualStep<T>> IRegistryItem<RitualStepType<?>, RitualStepType<T>> register(String id,
             MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec,
             BiFunction<RitualAltarTileEntity, T, Boolean> action) {
-        return Services.RITUAL_STEP_TYPES.register(id, () -> new RitualStepType<T>(ResourceUtils.loc(id), codec, streamCodec, action));
+        return Services.RITUAL_STEP_TYPES_REGISTRY.register(id, () -> new RitualStepType<T>(ResourceUtils.loc(id), codec, streamCodec, action));
     }
 }

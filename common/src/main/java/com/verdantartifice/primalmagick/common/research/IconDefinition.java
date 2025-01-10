@@ -50,7 +50,7 @@ public class IconDefinition {
     }
     
     public static IconDefinition of(ItemLike item) {
-        return new IconDefinition(true, false, Services.ITEMS.getKey(item.asItem()), Optional.empty());
+        return new IconDefinition(true, false, Services.ITEMS_REGISTRY.getKey(item.asItem()), Optional.empty());
     }
     
     public static IconDefinition of(TagKey<Item> tagKey) {
@@ -79,7 +79,7 @@ public class IconDefinition {
     
     @Nullable
     public Item asItem() {
-        return this.isItem ? Services.ITEMS.get(this.location) : null;
+        return this.isItem ? Services.ITEMS_REGISTRY.get(this.location) : null;
     }
     
     @Nullable

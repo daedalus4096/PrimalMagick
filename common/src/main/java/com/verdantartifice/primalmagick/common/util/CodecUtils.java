@@ -24,7 +24,7 @@ public class CodecUtils {
         }
     }, DataResult::success);
 
-    public static final Codec<Block> BLOCK_NONAIR_CODEC = Services.BLOCKS.codec().validate(block -> {
+    public static final Codec<Block> BLOCK_NONAIR_CODEC = Services.BLOCKS_REGISTRY.codec().validate(block -> {
         return block == Blocks.AIR ? DataResult.error(() -> "Block must not be minecraft:air") : DataResult.success(block);
     });
     

@@ -67,6 +67,6 @@ public class DataComponentsPM {
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<Long>> LAST_UPDATED = register("last_updated", builder -> builder.persistent(Codec.LONG).networkSynchronized(ByteBufCodecs.VAR_LONG));
     
     private static <T> IRegistryItem<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> operator) {
-        return Services.DATA_COMPONENT_TYPES.register(name, () -> operator.apply(DataComponentType.builder()).build());
+        return Services.DATA_COMPONENT_TYPES_REGISTRY.register(name, () -> operator.apply(DataComponentType.builder()).build());
     }
 }

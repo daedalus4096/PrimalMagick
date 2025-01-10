@@ -17,11 +17,11 @@ public abstract class AbstractReward<T extends AbstractReward<T>> implements IRe
     protected static final Logger LOGGER = LogManager.getLogger();
     
     public static Codec<AbstractReward<?>> dispatchCodec() {
-        return Services.GRID_REWARD_TYPES.codec().dispatch("reward_type", AbstractReward::getType, GridRewardType::codec);
+        return Services.GRID_REWARD_TYPES_REGISTRY.codec().dispatch("reward_type", AbstractReward::getType, GridRewardType::codec);
     }
     
     public static StreamCodec<FriendlyByteBuf, AbstractReward<?>> dispatchStreamCodec() {
-        return Services.GRID_REWARD_TYPES.friendlyStreamCodec().dispatch(AbstractReward::getType, GridRewardType::streamCodec);
+        return Services.GRID_REWARD_TYPES_REGISTRY.friendlyStreamCodec().dispatch(AbstractReward::getType, GridRewardType::streamCodec);
     }
     
     protected abstract GridRewardType<T> getType();

@@ -23,15 +23,15 @@ public class SpellPropertiesPM {
     public static final IRegistryItem<SpellProperty, SpellProperty> SILK_TOUCH = register("silk_touch", id -> new SpellProperty(id, "spells.primalmagick.property.silk_touch", 0, 1));
     
     protected static IRegistryItem<SpellProperty, SpellProperty> register(String id, Function<ResourceLocation, SpellProperty> propertySupplier) {
-        return Services.SPELL_PROPERTIES.register(id, () -> propertySupplier.apply(ResourceUtils.loc(id)));
+        return Services.SPELL_PROPERTIES_REGISTRY.register(id, () -> propertySupplier.apply(ResourceUtils.loc(id)));
     }
     
     @Nullable
     public static SpellProperty get(ResourceLocation id) {
-        return Services.SPELL_PROPERTIES.get(id);
+        return Services.SPELL_PROPERTIES_REGISTRY.get(id);
     }
     
     public static Collection<SpellProperty> getAll() {
-        return Services.SPELL_PROPERTIES.getAll();
+        return Services.SPELL_PROPERTIES_REGISTRY.getAll();
     }
 }

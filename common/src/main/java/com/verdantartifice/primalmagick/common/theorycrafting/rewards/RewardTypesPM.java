@@ -13,6 +13,6 @@ public class RewardTypesPM {
     public static final IRegistryItem<RewardType<?>, RewardType<LootTableReward>> LOOT_TABLE = register("loot_table", LootTableReward.CODEC, LootTableReward.STREAM_CODEC);
 
     protected static <T extends AbstractReward<T>> IRegistryItem<RewardType<?>, RewardType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return Services.REWARD_TYPES.register(id, () -> new RewardType<>(ResourceUtils.loc(id), codec, streamCodec));
+        return Services.REWARD_TYPES_REGISTRY.register(id, () -> new RewardType<>(ResourceUtils.loc(id), codec, streamCodec));
     }
 }

@@ -61,7 +61,7 @@ public class TheorycraftManager {
     @Nonnull
     public static Set<Block> getNearbyAidBlocks(Level level, BlockPos pos) {
         Set<ResourceLocation> allAids = getAllAidBlockIds(level.registryAccess());
-        return getSurroundingsInner(level, pos, b -> allAids.contains(Services.BLOCKS.getKey(b)));
+        return getSurroundingsInner(level, pos, b -> allAids.contains(Services.BLOCKS_REGISTRY.getKey(b)));
     }
     
     @Nonnull

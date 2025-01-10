@@ -12,11 +12,11 @@ import net.minecraft.network.codec.StreamCodec;
  */
 public abstract class AbstractResearchTopic<T extends AbstractResearchTopic<T>> {
     public static Codec<AbstractResearchTopic<?>> dispatchCodec() {
-        return Services.RESEARCH_TOPIC_TYPES.codec().dispatch("topic_type", AbstractResearchTopic::getType, ResearchTopicType::codec);
+        return Services.RESEARCH_TOPIC_TYPES_REGISTRY.codec().dispatch("topic_type", AbstractResearchTopic::getType, ResearchTopicType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractResearchTopic<?>> dispatchStreamCodec() {
-        return Services.RESEARCH_TOPIC_TYPES.registryFriendlyStreamCodec().dispatch(AbstractResearchTopic::getType, ResearchTopicType::streamCodec);
+        return Services.RESEARCH_TOPIC_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractResearchTopic::getType, ResearchTopicType::streamCodec);
     }
     
     protected final int page;

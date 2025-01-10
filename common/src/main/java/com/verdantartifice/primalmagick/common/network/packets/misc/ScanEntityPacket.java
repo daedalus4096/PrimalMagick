@@ -35,7 +35,7 @@ public class ScanEntityPacket implements IMessageToServer {
     }
     
     protected ScanEntityPacket(ResourceLocation typeLoc) {
-        this.type = Services.ENTITY_TYPES.get(typeLoc);
+        this.type = Services.ENTITY_TYPES_REGISTRY.get(typeLoc);
     }
 
     public static CustomPacketPayload.Type<CustomPacketPayload> type() {
@@ -43,7 +43,7 @@ public class ScanEntityPacket implements IMessageToServer {
     }
 
     public static void encode(ScanEntityPacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeResourceLocation(Services.ENTITY_TYPES.getKey(message.type));
+        buf.writeResourceLocation(Services.ENTITY_TYPES_REGISTRY.getKey(message.type));
     }
     
     public static ScanEntityPacket decode(RegistryFriendlyByteBuf buf) {

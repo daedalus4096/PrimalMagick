@@ -21,7 +21,7 @@ public class RecipeTypesPM {
     public static final IRegistryItem<RecipeType<?>, RecipeType<IDissolutionRecipe>> DISSOLUTION = register("dissolution", () -> simple("dissolution"));
 
     private static <T extends Recipe<?>> IRegistryItem<RecipeType<?>, RecipeType<T>> register(String name, Supplier<RecipeType<T>> supplier) {
-        return Services.RECIPE_TYPES.register(name, supplier);
+        return Services.RECIPE_TYPES_REGISTRY.register(name, supplier);
     }
 
     private static <T extends Recipe<?>> RecipeType<T> simple(String name) {

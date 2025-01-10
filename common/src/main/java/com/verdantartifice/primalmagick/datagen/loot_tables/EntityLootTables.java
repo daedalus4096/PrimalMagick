@@ -46,7 +46,7 @@ public class EntityLootTables extends EntityLootSubProvider {
 
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> entityTypes = Services.ENTITY_TYPES.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
+        Set<ResourceLocation> entityTypes = Services.ENTITY_TYPES_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
         
         // Warn for each mod entity that didn't have a loot table registered
         entityTypes.removeAll(this.registeredEntities);
@@ -55,18 +55,18 @@ public class EntityLootTables extends EntityLootSubProvider {
 
     private void registerEmptyLootTable(EntityType<?> type) {
         // Just mark that it's been registered without creating a table builder, to track expectations
-        this.registeredEntities.add(Services.ENTITY_TYPES.getKey(type));
+        this.registeredEntities.add(Services.ENTITY_TYPES_REGISTRY.getKey(type));
     }
     
     private void registerLootTable(EntityType<?> type, LootTable.Builder builder) {
         this.add(type, builder);
-        this.registeredEntities.add(Services.ENTITY_TYPES.getKey(type));
+        this.registeredEntities.add(Services.ENTITY_TYPES_REGISTRY.getKey(type));
     }
     
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
         // Limit this data provider to entity types added by the mod
-        return Services.ENTITY_TYPES.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue);
+        return Services.ENTITY_TYPES_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue);
     }
 
     @Override

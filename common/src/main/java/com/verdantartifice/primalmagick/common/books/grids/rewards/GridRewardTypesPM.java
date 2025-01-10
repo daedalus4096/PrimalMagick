@@ -14,6 +14,6 @@ public class GridRewardTypesPM {
     public static final IRegistryItem<GridRewardType<?>, GridRewardType<KnowledgeReward>> KNOWLEDGE = register("knowledge", KnowledgeReward.CODEC, KnowledgeReward.STREAM_CODEC);
     
     protected static <T extends AbstractReward<T>> IRegistryItem<GridRewardType<?>, GridRewardType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super FriendlyByteBuf, T> streamCodec) {
-        return Services.GRID_REWARD_TYPES.register(id, () -> new GridRewardType<T>(ResourceUtils.loc(id), codec, streamCodec));
+        return Services.GRID_REWARD_TYPES_REGISTRY.register(id, () -> new GridRewardType<T>(ResourceUtils.loc(id), codec, streamCodec));
     }
 }

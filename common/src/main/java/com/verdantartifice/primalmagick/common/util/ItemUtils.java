@@ -30,7 +30,7 @@ public class ItemUtils {
             return 0;
         }
         ItemStack temp = stack.copyWithCount(1);
-        return Objects.hash(Services.ITEMS.getKey(temp.getItem()), temp.getComponents());
+        return Objects.hash(Services.ITEMS_REGISTRY.getKey(temp.getItem()), temp.getComponents());
     }
     
     /**

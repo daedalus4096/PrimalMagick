@@ -106,6 +106,6 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
     
     @Nullable
     public Optional<Block> getAidBlock() {
-        return this.aidBlock.map(Services.BLOCKS::get);
+        return this.aidBlock.map(Services.BLOCKS_REGISTRY::get);
     }
 }

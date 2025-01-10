@@ -94,7 +94,7 @@ public class DataPackUtils {
 
         for (Item item : sourceItems) {
             @Nullable
-            ResourceLocation resourceLocation = Services.ITEMS.getKey(item);
+            ResourceLocation resourceLocation = Services.ITEMS_REGISTRY.getKey(item);
             if (resourceLocation != null) {
                 String target = resourceLocation.toString();
                 String filename = target.replace(":", "_")+".json";
@@ -107,7 +107,7 @@ public class DataPackUtils {
         }
         
         for (EntityType<?> entityType : sourceEntities) {
-            ResourceLocation resourceLocation = Services.ENTITY_TYPES.getKey(entityType);
+            ResourceLocation resourceLocation = Services.ENTITY_TYPES_REGISTRY.getKey(entityType);
             if (resourceLocation != null) {
                 String target = resourceLocation.toString();
                 String filename = target.replace(":", "_") + ".json";

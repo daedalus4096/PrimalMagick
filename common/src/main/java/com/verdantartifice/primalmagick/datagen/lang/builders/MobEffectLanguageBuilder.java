@@ -27,6 +27,6 @@ public class MobEffectLanguageBuilder extends AbstractLanguageBuilder<MobEffect,
 
     @Override
     protected ResourceLocation getBaseRegistryKey(MobEffect effect) {
-        return Objects.requireNonNull(Services.MOB_EFFECTS.getKey(effect));
+        return Objects.requireNonNull(Services.MOB_EFFECTS_REGISTRY.getKey(effect));
     }
 }

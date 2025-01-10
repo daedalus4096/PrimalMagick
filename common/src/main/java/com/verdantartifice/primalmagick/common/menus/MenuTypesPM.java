@@ -39,6 +39,6 @@ public class MenuTypesPM {
     public static final IRegistryItem<MenuType<?>, MenuType<ScribeTranscribeWorksMenu>> SCRIBE_TRANSCRIBE_WORKS = register("scribe_transcribe_works", (windowId, inv, data) -> new ScribeTranscribeWorksMenu(windowId, inv, data.readBlockPos()));
 
     private static <T extends AbstractContainerMenu> IRegistryItem<MenuType<?>, MenuType<T>> register(String name, IMenuFactory<T> factory) {
-        return Services.MENU_TYPES.register(name, factory);
+        return Services.MENU_TYPES_REGISTRY.register(name, factory);
     }
 }

@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractSpellVehicle<T extends AbstractSpellVehicle<T>> implements ISpellVehicle {
     public static Codec<AbstractSpellVehicle<?>> dispatchCodec() {
-        return Services.SPELL_VEHICLE_TYPES.codec().dispatch("mod_type", AbstractSpellVehicle::getType, SpellVehicleType::codec);
+        return Services.SPELL_VEHICLE_TYPES_REGISTRY.codec().dispatch("mod_type", AbstractSpellVehicle::getType, SpellVehicleType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellVehicle<?>> dispatchStreamCodec() {
-        return Services.SPELL_VEHICLE_TYPES.registryFriendlyStreamCodec().dispatch(AbstractSpellVehicle::getType, SpellVehicleType::streamCodec);
+        return Services.SPELL_VEHICLE_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractSpellVehicle::getType, SpellVehicleType::streamCodec);
     }
     
     public abstract SpellVehicleType<T> getType();

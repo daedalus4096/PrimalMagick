@@ -53,7 +53,7 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Services.ITEMS.getKey(this.stack.getItem()));
+        return Objects.hash(Services.ITEMS_REGISTRY.getKey(this.stack.getItem()));
     }
 
     @Override

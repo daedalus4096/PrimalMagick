@@ -62,7 +62,7 @@ public class ForbiddenSourceGainItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
-        String translationKey = "item." + Constants.MOD_ID + "." + Services.ITEMS.getKey(this).getPath() + ".tooltip";
+        String translationKey = "item." + Constants.MOD_ID + "." + Services.ITEMS_REGISTRY.getKey(this).getPath() + ".tooltip";
         tooltip.add(Component.translatable(translationKey).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 }

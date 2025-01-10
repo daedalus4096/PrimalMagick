@@ -20,6 +20,6 @@ public class StructureTypesPM {
     public static final IRegistryItem<StructureType<?>, StructureType<NetherLibraryStructure>> NETHER_LIBRARY = register("nether_library", () -> () -> NetherLibraryStructure.CODEC);
 
     private static <T extends Structure> IRegistryItem<StructureType<?>, StructureType<T>> register(String name, Supplier<StructureType<T>> supplier) {
-        return Services.STRUCTURE_TYPES.register(name, supplier);
+        return Services.STRUCTURE_TYPES_REGISTRY.register(name, supplier);
     }
 }

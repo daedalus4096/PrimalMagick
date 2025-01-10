@@ -13,11 +13,11 @@ import net.minecraft.network.codec.StreamCodec;
  */
 public abstract class AbstractRitualStep<T extends AbstractRitualStep<T>> {
     public static Codec<AbstractRitualStep<?>> dispatchCodec() {
-        return Services.RITUAL_STEP_TYPES.codec().dispatch("topic_type", AbstractRitualStep::getType, RitualStepType::codec);
+        return Services.RITUAL_STEP_TYPES_REGISTRY.codec().dispatch("topic_type", AbstractRitualStep::getType, RitualStepType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractRitualStep<?>> dispatchStreamCodec() {
-        return Services.RITUAL_STEP_TYPES.registryFriendlyStreamCodec().dispatch(AbstractRitualStep::getType, RitualStepType::streamCodec);
+        return Services.RITUAL_STEP_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractRitualStep::getType, RitualStepType::streamCodec);
     }
     
     public abstract boolean isValid();

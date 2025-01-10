@@ -17,7 +17,7 @@ public class EntityTypeAffinityBuilder {
     protected SourceList.Builder values = SourceList.builder();
 
     protected EntityTypeAffinityBuilder(@Nonnull EntityType<?> target) {
-        this.targetId = Services.ENTITY_TYPES.getKey(target);
+        this.targetId = Services.ENTITY_TYPES_REGISTRY.getKey(target);
     }
     
     public static EntityTypeAffinityBuilder entityAffinity(@Nonnull EntityType<?> target) {
@@ -38,7 +38,7 @@ public class EntityTypeAffinityBuilder {
         if (this.targetId == null) {
             throw new IllegalStateException("No target entity type for affinity " + id.toString());
         }
-        if (!Services.ENTITY_TYPES.containsKey(this.targetId)) {
+        if (!Services.ENTITY_TYPES_REGISTRY.containsKey(this.targetId)) {
             throw new IllegalStateException("Unknown target entity type " + this.targetId.toString() + " for affinity " + id.toString());
         }
     }

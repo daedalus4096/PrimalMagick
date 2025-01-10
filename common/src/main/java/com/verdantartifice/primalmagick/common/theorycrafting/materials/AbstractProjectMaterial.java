@@ -30,11 +30,11 @@ import java.util.Set;
  */
 public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<T>> {
     public static Codec<AbstractProjectMaterial<?>> dispatchCodec() {
-        return Services.PROJECT_MATERIAL_TYPES.codec().dispatch("material_type", AbstractProjectMaterial::getType, type -> type.codecSupplier().get());
+        return Services.PROJECT_MATERIAL_TYPES_REGISTRY.codec().dispatch("material_type", AbstractProjectMaterial::getType, type -> type.codecSupplier().get());
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractProjectMaterial<?>> dispatchStreamCodec() {
-        return Services.PROJECT_MATERIAL_TYPES.registryFriendlyStreamCodec().dispatch(AbstractProjectMaterial::getType, type -> type.streamCodecSupplier().get());
+        return Services.PROJECT_MATERIAL_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractProjectMaterial::getType, type -> type.streamCodecSupplier().get());
     }
     
     protected final double weight;

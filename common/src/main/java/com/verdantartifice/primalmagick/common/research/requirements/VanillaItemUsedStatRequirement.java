@@ -28,11 +28,11 @@ import java.util.stream.Stream;
  */
 public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaItemUsedStatRequirement> implements IVanillaStatRequirement {
     public static final MapCodec<VanillaItemUsedStatRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("item").xmap(loc -> Services.ITEMS.get(loc), item -> Services.ITEMS.getKey(item)).forGetter(req -> req.stat.getValue()),
+            ResourceLocation.CODEC.fieldOf("item").xmap(loc -> Services.ITEMS_REGISTRY.get(loc), item -> Services.ITEMS_REGISTRY.getKey(item)).forGetter(req -> req.stat.getValue()),
             Codec.INT.fieldOf("threshold").forGetter(VanillaItemUsedStatRequirement::getThreshold)
         ).apply(instance, VanillaItemUsedStatRequirement::new));
     public static final StreamCodec<ByteBuf, VanillaItemUsedStatRequirement> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC.map(loc -> Services.ITEMS.get(loc), item -> Services.ITEMS.getKey(item)),
+            ResourceLocation.STREAM_CODEC.map(loc -> Services.ITEMS_REGISTRY.get(loc), item -> Services.ITEMS_REGISTRY.getKey(item)),
             req -> req.stat.getValue(),
             ByteBufCodecs.VAR_INT,
             VanillaItemUsedStatRequirement::getThreshold,
@@ -62,7 +62,7 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
     
     @Override
     public ResourceLocation getStatValueLoc() {
-        return Services.ITEMS.getKey(this.stat.getValue());
+        return Services.ITEMS_REGISTRY.getKey(this.stat.getValue());
     }
 
     @Override

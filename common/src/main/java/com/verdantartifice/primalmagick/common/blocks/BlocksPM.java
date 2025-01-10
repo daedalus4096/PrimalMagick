@@ -116,7 +116,7 @@ import java.util.function.Supplier;
  */
 public class BlocksPM {
     private static <T extends Block> IRegistryItem<Block, T> register(String name, Supplier<T> blockSupplier) {
-        return Services.BLOCKS.register(name, blockSupplier);
+        return Services.BLOCKS_REGISTRY.register(name, blockSupplier);
     }
 
     // Register raw marble blocks

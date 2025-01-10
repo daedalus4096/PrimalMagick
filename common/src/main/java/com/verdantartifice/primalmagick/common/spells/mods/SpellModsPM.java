@@ -23,6 +23,6 @@ public class SpellModsPM {
     protected static <T extends AbstractSpellMod<T>> IRegistryItem<SpellModType<?>, SpellModType<T>> register(String id,
             int sortOrder, Supplier<T> instanceSupplier, Supplier<AbstractRequirement<?>> requirementSupplier,
             Supplier<SpellProperty> tiebreaker, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return Services.SPELL_MOD_TYPES.register(id, () -> new SpellModType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, tiebreaker, codec, streamCodec));
+        return Services.SPELL_MOD_TYPES_REGISTRY.register(id, () -> new SpellModType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, tiebreaker, codec, streamCodec));
     }
 }

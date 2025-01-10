@@ -27,7 +27,7 @@ public class PlayClientSoundPacket implements IMessageToClient {
     protected final float pitch;
     
     public PlayClientSoundPacket(SoundEvent event, float volume, float pitch) {
-        this(Services.SOUND_EVENTS.getKey(event), volume, pitch);
+        this(Services.SOUND_EVENTS_REGISTRY.getKey(event), volume, pitch);
     }
     
     protected PlayClientSoundPacket(ResourceLocation eventLoc, float volume, float pitch) {
@@ -54,7 +54,7 @@ public class PlayClientSoundPacket implements IMessageToClient {
         PlayClientSoundPacket message = ctx.message();
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
         if (message.eventLoc != null) {
-            SoundEvent soundEvent = Services.SOUND_EVENTS.get(message.eventLoc);
+            SoundEvent soundEvent = Services.SOUND_EVENTS_REGISTRY.get(message.eventLoc);
             if (soundEvent != null) {
                 player.playSound(soundEvent, message.volume, message.pitch);
             }

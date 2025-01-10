@@ -263,6 +263,6 @@ public class EntityTypesPM {
             .build(Constants.MOD_ID + ":pixie_majestic_hallowed"));
 
     private static <T extends Entity> IRegistryItem<EntityType<?>, EntityType<T>> register(String name, Supplier<EntityType<T>> typeSupplier) {
-        return Services.ENTITY_TYPES.register(name, typeSupplier);
+        return Services.ENTITY_TYPES_REGISTRY.register(name, typeSupplier);
     }
 }

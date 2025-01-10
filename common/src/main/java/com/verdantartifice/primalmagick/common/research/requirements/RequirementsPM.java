@@ -23,6 +23,6 @@ public class RequirementsPM {
     public static final IRegistryItem<RequirementType<?>, RequirementType<QuorumRequirement>> QUORUM = register("quorum", QuorumRequirement::codec, QuorumRequirement::streamCodec);
     
     protected static <T extends AbstractRequirement<T>> IRegistryItem<RequirementType<?>, RequirementType<T>> register(String id, Supplier<MapCodec<T>> codecSupplier, Supplier<StreamCodec<? super RegistryFriendlyByteBuf, T>> streamCodecSupplier) {
-        return Services.REQUIREMENT_TYPES.register(id, () -> new RequirementType<T>(ResourceUtils.loc(id), codecSupplier, streamCodecSupplier));
+        return Services.REQUIREMENT_TYPES_REGISTRY.register(id, () -> new RequirementType<T>(ResourceUtils.loc(id), codecSupplier, streamCodecSupplier));
     }
 }

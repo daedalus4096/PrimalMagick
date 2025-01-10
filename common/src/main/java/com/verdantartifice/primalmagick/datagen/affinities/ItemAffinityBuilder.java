@@ -22,7 +22,7 @@ public class ItemAffinityBuilder {
     protected SourceList.Builder removeValues = SourceList.builder();
 
     protected ItemAffinityBuilder(@Nonnull ItemLike item) {
-        this.targetId = Services.ITEMS.getKey(item.asItem());
+        this.targetId = Services.ITEMS_REGISTRY.getKey(item.asItem());
     }
     
     public static ItemAffinityBuilder itemAffinity(@Nonnull ItemLike item) {
@@ -38,7 +38,7 @@ public class ItemAffinityBuilder {
     }
     
     public ItemAffinityBuilder base(@Nonnull ItemLike baseItem) {
-        this.baseId = Services.ITEMS.getKey(baseItem.asItem());
+        this.baseId = Services.ITEMS_REGISTRY.getKey(baseItem.asItem());
         return this;
     }
     
@@ -78,13 +78,13 @@ public class ItemAffinityBuilder {
         if (this.targetId == null) {
             throw new IllegalStateException("No target item for affinity " + id.toString());
         }
-        if (!Services.ITEMS.containsKey(this.targetId)) {
+        if (!Services.ITEMS_REGISTRY.containsKey(this.targetId)) {
             throw new IllegalStateException("Unknown target item " + this.targetId.toString() + " for affinity " + id.toString());
         }
         
         if (this.baseId != null && this.hasSetValues) {
             throw new IllegalStateException("Both base and set-values defined for affinity " + id.toString());
-        } else if (this.baseId != null && !Services.ITEMS.containsKey(this.baseId)) {
+        } else if (this.baseId != null && !Services.ITEMS_REGISTRY.containsKey(this.baseId)) {
             throw new IllegalStateException("Unknown base item " + this.baseId.toString() + " for affinity " + id.toString());
         } else if (this.baseId != null && this.targetId.equals(this.baseId)) {
             throw new IllegalStateException("Target defines itself as a base for affinity " + id.toString());

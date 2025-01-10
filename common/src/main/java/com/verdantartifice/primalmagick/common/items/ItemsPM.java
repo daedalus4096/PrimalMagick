@@ -128,7 +128,7 @@ public class ItemsPM {
     }
 
     protected static <I extends Item> IRegistryItem<Item, I> registerWithoutTab(String name, Supplier<I> itemSupplier) {
-        return Services.ITEMS.register(name, itemSupplier);
+        return Services.ITEMS_REGISTRY.register(name, itemSupplier);
     }
 
     // Register grimoire items

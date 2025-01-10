@@ -221,7 +221,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        ResourceLocation id = Services.ITEMS.getKey(this.result.getItem());
+        ResourceLocation id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
         ResourceLocation saveLoc = ResourceLocation.parse(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Arcane Shaped Recipe " + save + " should remove its 'save' argument");
@@ -236,7 +236,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param output a consumer for the finished recipe
      */
     public void build(RecipeOutput output) {
-        this.build(output, Services.ITEMS.getKey(this.result.getItem()));
+        this.build(output, Services.ITEMS_REGISTRY.getKey(this.result.getItem()));
     }
 
     /**

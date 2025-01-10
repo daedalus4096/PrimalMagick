@@ -83,7 +83,7 @@ public class ItemAffinity extends AbstractAffinity {
             }
             
             ResourceLocation targetId = ResourceLocation.parse(target);
-            if (!Services.ITEMS.containsKey(targetId)) {
+            if (!Services.ITEMS_REGISTRY.containsKey(targetId)) {
                 throw new JsonSyntaxException("Unknown target item " + target + " in affinity JSON for " + affinityId.toString());
             }
             
@@ -94,7 +94,7 @@ public class ItemAffinity extends AbstractAffinity {
                 entry.setValues = JsonUtils.toSourceList(json.get("set").getAsJsonObject());
             } else if (json.has("base")) {
                 entry.baseEntryId = ResourceLocation.parse(json.getAsJsonPrimitive("base").getAsString());
-                if (!Services.ITEMS.containsKey(entry.baseEntryId)) {
+                if (!Services.ITEMS_REGISTRY.containsKey(entry.baseEntryId)) {
                     throw new JsonSyntaxException("Unknown base item " + target + " in affinity JSON for " + affinityId.toString());
                 }
                 if (json.has("add")) {

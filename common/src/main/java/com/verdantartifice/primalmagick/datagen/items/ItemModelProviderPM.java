@@ -319,11 +319,11 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
     
     private ResourceLocation key(Item item) {
-        return Objects.requireNonNull(Services.ITEMS.getKey(item));
+        return Objects.requireNonNull(Services.ITEMS_REGISTRY.getKey(item));
     }
     
     private ResourceLocation key(Block block) {
-        return Objects.requireNonNull(Services.BLOCKS.getKey(block));
+        return Objects.requireNonNull(Services.BLOCKS_REGISTRY.getKey(block));
     }
     
     private ItemModelBuilderPM builder(Item item) {

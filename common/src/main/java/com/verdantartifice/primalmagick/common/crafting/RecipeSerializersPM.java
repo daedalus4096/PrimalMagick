@@ -34,6 +34,6 @@ public class RecipeSerializersPM {
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<DissolutionTagRecipe>> DISSOLUTION_TAG = register("dissolution_tag", DissolutionTagRecipe.Serializer::new);
 
     private static <T extends Recipe<?>, S extends RecipeSerializer<T>> IRegistryItem<RecipeSerializer<?>, S> register(String name, Supplier<S> supplier) {
-        return Services.RECIPE_SERIALIZERS.register(name, supplier);
+        return Services.RECIPE_SERIALIZERS_REGISTRY.register(name, supplier);
     }
 }

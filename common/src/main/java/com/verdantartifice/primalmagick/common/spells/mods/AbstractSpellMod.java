@@ -28,11 +28,11 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements ISpellMod {
     public static Codec<AbstractSpellMod<?>> dispatchCodec() {
-        return Services.SPELL_MOD_TYPES.codec().dispatch("mod_type", AbstractSpellMod::getType, SpellModType::codec);
+        return Services.SPELL_MOD_TYPES_REGISTRY.codec().dispatch("mod_type", AbstractSpellMod::getType, SpellModType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractSpellMod<?>> dispatchStreamCodec() {
-        return Services.SPELL_MOD_TYPES.registryFriendlyStreamCodec().dispatch(AbstractSpellMod::getType, SpellModType::streamCodec);
+        return Services.SPELL_MOD_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractSpellMod::getType, SpellModType::streamCodec);
     }
     
     public abstract SpellModType<T> getType();

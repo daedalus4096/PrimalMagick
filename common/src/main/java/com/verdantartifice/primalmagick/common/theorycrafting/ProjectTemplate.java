@@ -104,7 +104,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         ResourceLocation foundAid = null;
         if (!this.aidBlocks.isEmpty()) {
             boolean found = false;
-            Set<ResourceLocation> nearbyIds = nearby.stream().map(b -> Services.BLOCKS.getKey(b)).collect(Collectors.toUnmodifiableSet());
+            Set<ResourceLocation> nearbyIds = nearby.stream().map(b -> Services.BLOCKS_REGISTRY.getKey(b)).collect(Collectors.toUnmodifiableSet());
             for (ResourceLocation aidBlock : this.aidBlocks) {
                 if (nearbyIds.contains(aidBlock)) {
                     found = true;
@@ -224,7 +224,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         }
         
         public Builder aid(Block block) {
-            this.aidBlocks.add(Services.BLOCKS.getKey(Preconditions.checkNotNull(block)));
+            this.aidBlocks.add(Services.BLOCKS_REGISTRY.getKey(Preconditions.checkNotNull(block)));
             return this;
         }
         

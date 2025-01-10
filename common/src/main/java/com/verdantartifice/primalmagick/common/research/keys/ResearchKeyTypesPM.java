@@ -19,6 +19,6 @@ public class ResearchKeyTypesPM {
     public static final IRegistryItem<ResearchKeyType<?>, ResearchKeyType<RuneEnchantmentPartialKey>> RUNE_ENCHANTMENT_PARTIAL = register("rune_enchantment_partial", RuneEnchantmentPartialKey.CODEC, RuneEnchantmentPartialKey.STREAM_CODEC);
     
     protected static <T extends AbstractResearchKey<T>> IRegistryItem<ResearchKeyType<?>, ResearchKeyType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return Services.RESEARCH_KEY_TYPES.register(id, () -> new ResearchKeyType<T>(ResourceUtils.loc(id), codec, streamCodec));
+        return Services.RESEARCH_KEY_TYPES_REGISTRY.register(id, () -> new ResearchKeyType<T>(ResourceUtils.loc(id), codec, streamCodec));
     }
 }

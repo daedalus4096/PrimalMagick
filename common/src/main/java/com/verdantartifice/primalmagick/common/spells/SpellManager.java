@@ -99,7 +99,7 @@ public class SpellManager {
     
     @Nonnull
     public static List<SpellVehicleType<?>> getVehicleTypes(@Nullable Player player) {
-        return getFilteredTypes(player, Services.SPELL_VEHICLE_TYPES.getAll());
+        return getFilteredTypes(player, Services.SPELL_VEHICLE_TYPES_REGISTRY.getAll());
     }
     
     @Nullable
@@ -118,7 +118,7 @@ public class SpellManager {
     
     @Nonnull
     public static List<SpellPayloadType<?>> getPayloadTypes(@Nullable Player player) {
-        return getFilteredTypes(player, Services.SPELL_PAYLOAD_TYPES.getAll());
+        return getFilteredTypes(player, Services.SPELL_PAYLOAD_TYPES_REGISTRY.getAll());
     }
     
     @Nullable
@@ -137,7 +137,7 @@ public class SpellManager {
     
     @Nonnull
     public static List<SpellModType<?>> getModTypes(@Nullable Player player) {
-        return getFilteredTypes(player, Services.SPELL_MOD_TYPES.getAll());
+        return getFilteredTypes(player, Services.SPELL_MOD_TYPES_REGISTRY.getAll());
     }
     
     @Nullable

@@ -14,11 +14,11 @@ import net.minecraft.server.level.ServerPlayer;
  */
 public abstract class AbstractReward<T extends AbstractReward<T>> {
     public static Codec<AbstractReward<?>> dispatchCodec() {
-        return Services.REWARD_TYPES.codec().dispatch("reward_type", AbstractReward::getType, RewardType::codec);
+        return Services.REWARD_TYPES_REGISTRY.codec().dispatch("reward_type", AbstractReward::getType, RewardType::codec);
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractReward<?>> dispatchStreamCodec() {
-        return Services.REWARD_TYPES.registryFriendlyStreamCodec().dispatch(AbstractReward::getType, RewardType::streamCodec);
+        return Services.REWARD_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractReward::getType, RewardType::streamCodec);
     }
     
     public abstract void grant(ServerPlayer player);

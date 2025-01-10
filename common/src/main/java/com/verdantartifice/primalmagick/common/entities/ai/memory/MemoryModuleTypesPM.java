@@ -27,6 +27,6 @@ public class MemoryModuleTypesPM {
     public static final IRegistryItem<MemoryModuleType<?>, MemoryModuleType<Boolean>> DISABLE_WALK_TO_FERTILIZE_BLOCK = register("disable_walk_to_fertilize_block", () -> new MemoryModuleType<>(Optional.empty()));
 
     private static <T> IRegistryItem<MemoryModuleType<?>, MemoryModuleType<T>> register(String name, Supplier<MemoryModuleType<T>> supplier) {
-        return Services.MEMORY_MODULE_TYPES.register(name, supplier);
+        return Services.MEMORY_MODULE_TYPES_REGISTRY.register(name, supplier);
     }
 }

@@ -22,11 +22,11 @@ import java.util.stream.Stream;
  */
 public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     public static Codec<AbstractRequirement<?>> dispatchCodec() {
-        return Services.REQUIREMENT_TYPES.codec().dispatch("requirement_type", AbstractRequirement::getType, type -> type.codecSupplier().get());
+        return Services.REQUIREMENT_TYPES_REGISTRY.codec().dispatch("requirement_type", AbstractRequirement::getType, type -> type.codecSupplier().get());
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, AbstractRequirement<?>> dispatchStreamCodec() {
-        return Services.REQUIREMENT_TYPES.registryFriendlyStreamCodec().dispatch(AbstractRequirement::getType, type -> type.streamCodecSupplier().get());
+        return Services.REQUIREMENT_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractRequirement::getType, type -> type.streamCodecSupplier().get());
     }
     
     public abstract boolean isMetBy(@Nullable Player player);

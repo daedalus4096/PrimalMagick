@@ -25,6 +25,6 @@ public class EffectsPM {
     public static final IRegistryItem<MobEffect, EffectPM> SOULPIERCED = register("soulpierced", () -> new EffectPM(MobEffectCategory.NEUTRAL, 0x808080));
 
     private static <T extends MobEffect> IRegistryItem<MobEffect, T> register(String name, Supplier<T> supplier) {
-        return Services.MOB_EFFECTS.register(name, supplier);
+        return Services.MOB_EFFECTS_REGISTRY.register(name, supplier);
     }
 }

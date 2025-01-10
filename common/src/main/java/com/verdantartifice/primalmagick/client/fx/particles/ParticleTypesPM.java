@@ -38,12 +38,12 @@ public class ParticleTypesPM {
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> LANDING_BLOOD_DROP = registerSimple("landing_blood_drop", false);
     
     private static IRegistryItem<ParticleType<?>, SimpleParticleType> registerSimple(String name, boolean overrideLimiter) {
-        return Services.PARTICLE_TYPES.register(name, () -> new SimpleParticleType(overrideLimiter));
+        return Services.PARTICLE_TYPES_REGISTRY.register(name, () -> new SimpleParticleType(overrideLimiter));
     }
     
     private static <T extends ParticleOptions> IRegistryItem<ParticleType<?>, ParticleType<T>> register(String name, boolean overrideLimiter, final Function<ParticleType<T>, MapCodec<T>> codecGetter,
             final Function<ParticleType<T>, StreamCodec<? super RegistryFriendlyByteBuf, T>> streamCodecGetter) {
-        return Services.PARTICLE_TYPES.register(name, () -> new ParticleType<T>(overrideLimiter) {
+        return Services.PARTICLE_TYPES_REGISTRY.register(name, () -> new ParticleType<T>(overrideLimiter) {
             @Override
             public MapCodec<T> codec() {
                 return codecGetter.apply(this);
