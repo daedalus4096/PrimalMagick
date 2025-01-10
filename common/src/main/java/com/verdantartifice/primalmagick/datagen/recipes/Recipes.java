@@ -57,7 +57,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Data provider for all of the mod's recipes.
+ * Data provider for all the mod's recipes.
  * 
  * @author Daedalus4096
  */
@@ -4544,7 +4544,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_LLAMA.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
-            .addIngredient(CommonTags.Items.LEATHER)
+            .addIngredient(CommonTags.Items.LEATHERS)
             .addIngredient(ItemTags.WOOL_CARPETS)
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)
