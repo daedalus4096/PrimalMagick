@@ -4,14 +4,12 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
 /**
  * Capability interface for storing mana.  Methods take and return values in centimana.
  * 
  * @author Daedalus4096
  */
-@AutoRegisterCapability
 public interface IManaStorage<T extends IManaStorage<T>> {
     Codec<T> codec();
     StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec();

@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
@@ -44,8 +43,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -80,9 +77,6 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     protected ManaStorage manaStorage;
     protected ITileResearchCache researchCache;
     protected Source nextOutputSource;
-    
-    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
-    protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
     protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
     protected final Predicate<AbstractResearchKey<?>> relevantFilter = k -> this.getRelevantResearch().contains(k);
@@ -128,6 +122,14 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
         super(BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), pos, state);
         this.manaStorage = new ManaStorage(10000, 100, 100, Sources.MOON);
         this.researchCache = new TileResearchCache();
+    }
+
+    public ITileResearchCache getUncachedTileResearchCache() {
+        return this.researchCache;
+    }
+
+    public IManaStorage<?> getUncachedManaStorage() {
+        return this.manaStorage;
     }
 
     @SuppressWarnings("deprecation")
@@ -285,24 +287,6 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
             this.nextOutputSource = null;
             this.setChanged();
         }
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
-            return this.manaStorageOpt.cast();
-        } else if (!this.remove && cap == CapabilitiesForge.RESEARCH_CACHE) {
-            return this.researchCacheOpt.cast();
-        } else {
-            return super.getCapability(cap, side);
-        }
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.manaStorageOpt.invalidate();
-        this.researchCacheOpt.invalidate();
     }
 
     @Override

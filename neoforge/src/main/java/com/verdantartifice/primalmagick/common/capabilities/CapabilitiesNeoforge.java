@@ -34,4 +34,6 @@ public class CapabilitiesNeoforge {
 
     public static final BlockCapability<ITileResearchCache, Void> RESEARCH_CACHE =
             BlockCapability.createVoid(ResourceUtils.loc("research_cache"), ITileResearchCache.class);
+    public static final BlockCapability<IManaStorage, Void> MANA_STORAGE =
+            BlockCapability.createVoid(ResourceUtils.loc("mana_storage"), IManaStorage.class);
 }

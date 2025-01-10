@@ -20,7 +20,6 @@ import javax.annotation.Nullable;
 public class PrimalMagickCapabilities {
     public static final Capability<IPlayerArcaneRecipeBook> ARCANE_RECIPE_BOOK = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = CapabilityManager.get(new CapabilityToken<>(){});
-    public static final Capability<IManaStorage<?>> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
 
     @Nonnull
     public static LazyOptional<IPlayerArcaneRecipeBook> getArcaneRecipeBook(@Nullable Player player) {
@@ -31,7 +30,7 @@ public class PrimalMagickCapabilities {
     public static IWorldEntitySwappers getEntitySwappers(@Nonnull Level world) {
         return world.getCapability(ENTITY_SWAPPERS, null).orElse(null);
     }
-    
+
     @Nullable
     public static IManaStorage<?> getManaStorage(@Nonnull BlockEntity tile) {
         return tile.getCapability(MANA_STORAGE, null).orElse(null);
