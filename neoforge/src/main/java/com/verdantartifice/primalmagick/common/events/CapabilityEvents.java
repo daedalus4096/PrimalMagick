@@ -22,13 +22,16 @@ public class CapabilityEvents {
         event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.CONCOCTER.get(), (be, context) -> be.getUncachedTileResearchCache());
         event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.CONCOCTER.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.ESSENCE_CASK.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.ESSENCE_FURNACE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), (be, context) -> be.getUncachedTileResearchCache());
         event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.HONEY_EXTRACTOR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.HONEY_EXTRACTOR.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.INFERNAL_FURNACE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.INFERNAL_FURNACE.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.MANA_BATTERY.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.OFFERING_PEDESTAL.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.RESEARCH_TABLE.get(), (be, face) -> cast(be.getRawItemHandler(face)));

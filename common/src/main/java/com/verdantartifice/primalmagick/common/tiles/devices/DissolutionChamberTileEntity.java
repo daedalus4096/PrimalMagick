@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
@@ -38,8 +37,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,7 +58,6 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     protected int processTime;
     protected int processTimeTotal;
     protected ManaStorage manaStorage;
-    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chamberData = new ContainerData() {
@@ -104,7 +100,11 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
         super(BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), pos, state);
         this.manaStorage = new ManaStorage(25600, 100, 100, Sources.EARTH);
     }
-    
+
+    public IManaStorage<?> getUncachedManaStorage() {
+        return this.manaStorage;
+    }
+
     @Override
     public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
@@ -229,21 +229,6 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
             this.processTime = 0;
             this.setChanged();
         }
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
-            return this.manaStorageOpt.cast();
-        } else {
-            return super.getCapability(cap, side);
-        }
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.manaStorageOpt.invalidate();
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
@@ -33,8 +32,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,8 +53,6 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     protected int spinTime;
     protected int spinTimeTotal;
     protected ManaStorage manaStorage;
-    
-    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData extractorData = new ContainerData() {
@@ -99,6 +94,10 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     public HoneyExtractorTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.HONEY_EXTRACTOR.get(), pos, state);
         this.manaStorage = new ManaStorage(10000, 100, 100, Sources.SKY);
+    }
+
+    public IManaStorage<?> getUncachedManaStorage() {
+        return this.manaStorage;
     }
 
     @Override
@@ -224,20 +223,6 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
             this.spinTime = 0;
             this.setChanged();
         }
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
-            return this.manaStorageOpt.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.manaStorageOpt.invalidate();
     }
 
     @Override

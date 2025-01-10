@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
@@ -51,8 +50,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,7 +83,6 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     protected int processTimeTotal;
     protected int litGraceTicks;
     protected ManaStorage manaStorage;
-    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
 
@@ -140,6 +136,10 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     public InfernalFurnaceTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.INFERNAL_FURNACE.get(), pos, state);
         this.manaStorage = new ManaStorage(10000, 100, 100, Sources.INFERNAL);
+    }
+
+    public IManaStorage<?> getUncachedManaStorage() {
+        return this.manaStorage;
     }
 
     @Override
@@ -363,21 +363,6 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
                 pHelper.accountStack(this.getItem(invIndex, slotIndex));
             }
         }
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
-            return this.manaStorageOpt.cast();
-        } else {
-            return super.getCapability(cap, side);
-        }
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.manaStorageOpt.invalidate();
     }
 
     @Override
