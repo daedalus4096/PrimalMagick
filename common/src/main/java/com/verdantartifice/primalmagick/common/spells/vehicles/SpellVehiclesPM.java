@@ -20,6 +20,6 @@ public class SpellVehiclesPM {
     protected static <T extends AbstractSpellVehicle<T>> IRegistryItem<SpellVehicleType<?>, SpellVehicleType<T>> register(String id,
             int sortOrder, Supplier<T> instanceSupplier, Supplier<AbstractRequirement<?>> requirementSupplier, MapCodec<T> codec,
             StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return Services.SPELL_VEHICLE_TYPES.register(id, () -> new SpellVehicleType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, codec, streamCodec));
+        return Services.SPELL_VEHICLE_TYPES_REGISTRY.register(id, () -> new SpellVehicleType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, codec, streamCodec));
     }
 }
