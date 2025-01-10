@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
@@ -37,8 +36,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,7 +49,7 @@ import java.util.Set;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock
  * @author Daedalus4096
  */
-public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
+public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int FONT_RANGE = 5;
@@ -63,7 +60,6 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     protected int chargeTimeTotal;
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
-    protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     protected final Set<BlockPos> fontLocations = new HashSet<>();
 
@@ -119,7 +115,11 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
         super(BlockEntityTypesPM.MANA_BATTERY.get(), pos, state);
         this.manaStorage = new ManaStorage(this.getBatteryCapacity(), this.getBatteryTransferCap(), Sources.getAllSorted().toArray(new Source[0]));
     }
-    
+
+    public IManaStorage<?> getUncachedManaStorage() {
+        return this.manaStorage;
+    }
+
     protected int getBatteryCapacity() {
         // Return the capacity of the battery in centimana
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
@@ -327,21 +327,6 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
-            return this.manaStorageOpt.cast();
-        } else {
-            return super.getCapability(cap, side);
-        }
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.manaStorageOpt.invalidate();
     }
 
     @Override

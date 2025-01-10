@@ -33,6 +33,7 @@ public class CapabilityEvents {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.INFERNAL_FURNACE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.INFERNAL_FURNACE.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.MANA_BATTERY.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.MANA_BATTERY.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.OFFERING_PEDESTAL.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.RESEARCH_TABLE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.RITUAL_ALTAR.get(), (be, face) -> cast(be.getRawItemHandler(face)));

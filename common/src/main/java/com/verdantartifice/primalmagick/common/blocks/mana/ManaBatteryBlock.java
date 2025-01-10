@@ -49,12 +49,12 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new ManaBatteryTileEntity(pPos, pState);
+        return Services.BLOCK_ENTITY_PROTOTYPES.manaBattery().create(pPos, pState);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.MANA_BATTERY.get(), ManaBatteryTileEntity::tick);
+        return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.MANA_BATTERY.get(), Services.BLOCK_ENTITY_TICKERS.manaBattery());
     }
 
     @Override
