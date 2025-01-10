@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.util;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -241,8 +242,8 @@ public class InventoryUtils {
     
     private static void addRefundItem(ItemStack stack, int refundCount, Player player) {
         ItemStack refundStack = ItemStack.EMPTY;
-        if (stack.hasCraftingRemainingItem()) {
-            refundStack = stack.getCraftingRemainingItem().copyWithCount(refundCount);
+        if (Services.ITEMS.hasCraftingRemainingItem(stack)) {
+            refundStack = Services.ITEMS.getCraftingRemainingItem(stack).copyWithCount(refundCount);
         } else if (stack.is(Items.POTION)) {
             // Potions don't use the standard container mechanism, so test for them directly
             refundStack = new ItemStack(Items.GLASS_BOTTLE, refundCount);

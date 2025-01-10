@@ -18,7 +18,7 @@ public class EarthshatterHammerItem extends Item {
         super(new Item.Properties().durability(255).rarity(Rarity.UNCOMMON));
     }
     
-    @Override
+    // Technically an override, but the base method exists only in loader-specific code
     public ItemStack getCraftingRemainingItem(ItemStack stack) {
         if (this.hasCraftingRemainingItem(stack)) {
             ItemStack newStack = stack.copy();
@@ -28,8 +28,8 @@ public class EarthshatterHammerItem extends Item {
             return ItemStack.EMPTY;
         }
     }
-    
-    @Override
+
+    // Technically an override, but the base method exists only in loader-specific code
     public boolean hasCraftingRemainingItem(ItemStack stack) {
         return stack.getItem() instanceof EarthshatterHammerItem && stack.getDamageValue() < stack.getMaxDamage();
     }

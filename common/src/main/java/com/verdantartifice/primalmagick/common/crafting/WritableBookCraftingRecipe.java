@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.util.RandomSource;
@@ -85,8 +86,8 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
         
         for (int index = 0; index < retVal.size(); index++) {
             ItemStack inputStack = pContainer.getItem(index);
-            if (inputStack.hasCraftingRemainingItem()) {
-                retVal.set(index, inputStack.getCraftingRemainingItem());
+            if (Services.ITEMS.hasCraftingRemainingItem(inputStack)) {
+                retVal.set(index, Services.ITEMS.getCraftingRemainingItem(inputStack));
             } else if (inputStack.getItem() instanceof IWritingImplement pen) {
                 ItemStack leftoverStack = inputStack.copyWithCount(1);
                 if (pen.isDamagedOnUse()) {
