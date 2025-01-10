@@ -7,8 +7,8 @@ import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionOwnerH
 import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionStayGoal;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.FollowCompanionOwnerGoal;
 import com.verdantartifice.primalmagick.common.entities.companions.AbstractCompanionEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -152,7 +152,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
             
             boolean isAir = blockstate.isAir();
             if (!isAir) {
-                level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate).setPos(pos), this.getX() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), this.getY() + 0.1D, this.getZ() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), 4.0D * ((double)this.random.nextFloat() - 0.5D), 0.5D, ((double)this.random.nextFloat() - 0.5D) * 4.0D);
+                level.addParticle(Services.PARTICLES.makeBlockParticleOptionWithPos(ParticleTypes.BLOCK, blockstate, pos), this.getX() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), this.getY() + 0.1D, this.getZ() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), 4.0D * ((double)this.random.nextFloat() - 0.5D), 0.5D, ((double)this.random.nextFloat() - 0.5D) * 4.0D);
             }
         }
         
@@ -239,7 +239,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     /**
-     * Handler for {@link World#setEntityState}
+     * Handler for {@link Level#broadcastEntityEvent}
      */
     @Override
     public void handleEntityEvent(byte id) {

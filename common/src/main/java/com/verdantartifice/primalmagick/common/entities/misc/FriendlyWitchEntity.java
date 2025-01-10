@@ -294,6 +294,9 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
         super.aiStep();
     }
 
+    /**
+     * Handler for {@link Level#broadcastEntityEvent}
+     */
     @Override
     public void handleEntityEvent(byte val) {
         if (val == 15) {

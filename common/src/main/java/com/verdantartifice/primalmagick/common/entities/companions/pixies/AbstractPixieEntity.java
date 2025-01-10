@@ -171,7 +171,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     /**
-     * Handler for {@link World#setEntityState}
+     * Handler for {@link Level#broadcastEntityEvent}
      */
     @Override
     public void handleEntityEvent(byte id) {
