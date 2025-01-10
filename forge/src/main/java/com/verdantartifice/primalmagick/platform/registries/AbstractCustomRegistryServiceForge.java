@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
+import com.verdantartifice.primalmagick.common.tags.ITagValue;
+import com.verdantartifice.primalmagick.common.tags.TagValueForgeCustom;
 import com.verdantartifice.primalmagick.platform.services.registries.IRegistryService;
 import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,6 +14,7 @@ import net.minecraft.network.Utf8String;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.jetbrains.annotations.Nullable;
@@ -132,5 +135,15 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
                 Utf8String.write(pBuffer, id.toString(), 32767);
             }
         };
+    }
+
+    @Override
+    public ITagValue<R> getTag(TagKey<R> key) {
+        return new TagValueForgeCustom<>(this.getRegistry().get().tags().getTag(key));
+    }
+
+    @Override
+    public boolean tagExists(TagKey<R> key) {
+        return this.getRegistry().get().tags().isKnownTagName(key);
     }
 }

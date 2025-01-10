@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagick.common.spells;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringRepresentable;
 
 /**
@@ -24,5 +26,9 @@ public record SpellProperty(ResourceLocation id, String translationKey, int min,
     @Override
     public String getSerializedName() {
         return this.id.toString();
+    }
+
+    public boolean is(TagKey<SpellProperty> tag) {
+        return Services.SPELL_PROPERTIES_REGISTRY.getTag(tag).stream().anyMatch(this::equals);
     }
 }

@@ -10,10 +10,10 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class TagValueForge<T> implements ITagValue<T> {
+public class TagValueForgeCustom<T> implements ITagValue<T> {
     private final ITag<T> value;
 
-    public TagValueForge(final ITag<T> value) {
+    public TagValueForgeCustom(final ITag<T> value) {
         this.value = value;
     }
 
@@ -35,6 +35,11 @@ public class TagValueForge<T> implements ITagValue<T> {
     @Override
     public int size() {
         return this.value.size();
+    }
+
+    @Override
+    public boolean contains(T value) {
+        return this.value.contains(value);
     }
 
     @Override

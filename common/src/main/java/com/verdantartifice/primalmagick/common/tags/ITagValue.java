@@ -42,6 +42,14 @@ public interface ITagValue<T> extends Iterable<T> {
     int size();
 
     /**
+     * Determines whether this tag contains the given object.
+     *
+     * @param value the value to be queried
+     * @return true if this tag contains the given value, false otherwise
+     */
+    boolean contains(T value);
+
+    /**
      * Determines whether this tag contains the object held by the given holder.
      *
      * @param value the holder of the value to be queried

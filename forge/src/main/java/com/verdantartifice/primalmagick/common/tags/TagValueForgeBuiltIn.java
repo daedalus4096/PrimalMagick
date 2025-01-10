@@ -10,10 +10,10 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class TagValueNeoforge<T> implements ITagValue<T> {
+public class TagValueForgeBuiltIn<T> implements ITagValue<T> {
     private final HolderSet.Named<T> value;
 
-    public TagValueNeoforge(final HolderSet.Named<T> value) {
+    public TagValueForgeBuiltIn(final HolderSet.Named<T> value) {
         this.value = value;
     }
 

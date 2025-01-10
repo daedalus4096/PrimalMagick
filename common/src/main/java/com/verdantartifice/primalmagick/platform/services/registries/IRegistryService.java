@@ -2,12 +2,14 @@ package com.verdantartifice.primalmagick.platform.services.registries;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
+import com.verdantartifice.primalmagick.common.tags.ITagValue;
 import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -112,4 +114,8 @@ public interface IRegistryService<R> {
      * @return a networking stream codec for this registry
      */
     StreamCodec<FriendlyByteBuf, R> friendlyStreamCodec();
+
+    ITagValue<R> getTag(TagKey<R> key);
+
+    boolean tagExists(TagKey<R> key);
 }
