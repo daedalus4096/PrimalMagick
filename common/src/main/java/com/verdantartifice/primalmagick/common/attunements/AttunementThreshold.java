@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.attunements;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
 

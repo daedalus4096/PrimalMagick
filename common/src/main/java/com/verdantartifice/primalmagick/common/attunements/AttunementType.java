@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.attunements;
 
+import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.util.StringRepresentable;
 
 import javax.annotation.Nonnull;
