@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
 import javax.annotation.Nonnull;
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +93,7 @@ public class ItemTagWidget extends AbstractWidget {
     @Nonnull
     protected ItemStack getDisplayStack() {
         List<Item> tagContents = new ArrayList<>();
-        Services.TAGS.item(this.tag).forEach(tagContents::add);
+        Services.ITEMS_REGISTRY.getTag(this.tag).forEach(tagContents::add);
         if (!tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());

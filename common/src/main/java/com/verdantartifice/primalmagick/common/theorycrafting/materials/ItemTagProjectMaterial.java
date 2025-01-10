@@ -12,7 +12,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
@@ -83,9 +82,9 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
             return true;
         } else if (!this.consumed && this.quantity == 1 && surroundings != null) {
             // Only allow satisfaction from surroundings if not consuming the material and only one item is required
-            TagKey<Block> blockTagKey = BlockTags.create(this.tag.location());
+            TagKey<Block> blockTagKey = TagKey.create(Registries.BLOCK, this.tag.location());
             List<Block> tagContents = new ArrayList<>();
-            Services.TAGS.block(blockTagKey).forEach(tagContents::add);
+            Services.BLOCKS_REGISTRY.getTag(blockTagKey).forEach(tagContents::add);
             Set<Block> intersection = new HashSet<>(surroundings);
             intersection.retainAll(tagContents);
             return !intersection.isEmpty();

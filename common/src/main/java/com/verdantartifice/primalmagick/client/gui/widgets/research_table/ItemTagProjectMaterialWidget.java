@@ -78,11 +78,11 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
     protected ItemStack getStackToDisplay() {
         TagKey<Item> itemTag = this.material.getTag();
         List<Item> tagContents = new ArrayList<>();
-        Services.TAGS.item(itemTag).forEach(tagContents::add);
-        if (tagContents != null && !tagContents.isEmpty()) {
+        Services.ITEMS_REGISTRY.getTag(itemTag).forEach(tagContents::add);
+        if (!tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());
-            Item[] tagContentsArray = tagContents.toArray(new Item[tagContents.size()]);
+            Item[] tagContentsArray = tagContents.toArray(Item[]::new);
             return new ItemStack(tagContentsArray[index], 1);
         } else {
             return ItemStack.EMPTY;

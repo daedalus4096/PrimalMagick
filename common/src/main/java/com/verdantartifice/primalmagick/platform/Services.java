@@ -17,7 +17,6 @@ import com.verdantartifice.primalmagick.platform.services.IParticleService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import com.verdantartifice.primalmagick.platform.services.IPlayerService;
 import com.verdantartifice.primalmagick.platform.services.IShearableService;
-import com.verdantartifice.primalmagick.platform.services.ITagService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArmorMaterialRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockEntityTypeRegistryService;
@@ -66,7 +65,6 @@ public class Services {
     public static final IInputService INPUT = load(IInputService.class);
     public static final IConfigService CONFIG = load(IConfigService.class);
     public static final ICapabilityService CAPABILITIES = load(ICapabilityService.class);
-    public static final ITagService TAGS = load(ITagService.class);
     public static final IItemAbilityService ITEM_ABILITIES = load(IItemAbilityService.class);
     public static final IEventService EVENTS = load(IEventService.class);
     public static final IItemPrototypeService ITEM_PROTOTYPES = load(IItemPrototypeService.class);

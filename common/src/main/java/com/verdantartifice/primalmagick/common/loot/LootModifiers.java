@@ -68,8 +68,8 @@ public class LootModifiers {
         int enchantmentLevel = tool == null ? 0 : tool.getEnchantments().getLevel(context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.LUCKY_STRIKE));
         if (state != null && enchantmentLevel > 0) {
             nuggetMap.forEach((blockTag, itemTag) -> {
-                if (state.is(blockTag) && Services.TAGS.itemTagExists(itemTag)) {
-                    Optional<Item> nuggetOpt = Services.TAGS.item(itemTag).stream().findFirst();
+                if (state.is(blockTag) && Services.ITEMS_REGISTRY.tagExists(itemTag)) {
+                    Optional<Item> nuggetOpt = Services.ITEMS_REGISTRY.getTag(itemTag).stream().findFirst();
                     nuggetOpt.ifPresent(nugget -> {
                         int nuggetCount = IntStream.range(0, enchantmentLevel).map(i -> context.getRandom().nextFloat() < chance ? 1 : 0).sum();
                         generatedLoot.add(new ItemStack(nugget, nuggetCount));

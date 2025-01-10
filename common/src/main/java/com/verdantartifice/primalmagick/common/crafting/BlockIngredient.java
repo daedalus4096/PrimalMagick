@@ -178,7 +178,7 @@ public class BlockIngredient implements Predicate<Block> {
         @Override
         public Collection<Block> getBlocks() {
             List<Block> retVal = new ArrayList<>();
-            Services.TAGS.block(this.tag).forEach(retVal::add);
+            Services.BLOCKS_REGISTRY.getTag(this.tag).forEach(retVal::add);
             return retVal;
         }
     }

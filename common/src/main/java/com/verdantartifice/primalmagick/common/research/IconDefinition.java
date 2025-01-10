@@ -93,7 +93,7 @@ public class IconDefinition {
         } else if (this.isItem) {
             return ImmutableList.of(this.asItem().getDescription());
         } else if (this.isTag) {
-            return Services.TAGS.item(this.asTagKey()).stream().map(Item::getDescription).toList();
+            return Services.ITEMS_REGISTRY.getTag(this.asTagKey()).stream().map(Item::getDescription).toList();
         } else {
             return ImmutableList.of();
         }
