@@ -18,37 +18,43 @@ import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.IWandSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.SpriteSourceProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.SpriteSourceProvider;
 import org.slf4j.Logger;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Data provider for additions to the game's texture atlases.
  * 
  * @author Daedalus4096
  */
-public class SpriteSourceProviderPM extends SpriteSourceProvider {
+public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
     protected static final ResourceLocation ARMOR_TRIMS_ATLAS = ResourceLocation.withDefaultNamespace("armor_trims");
     private static final Logger LOGGER = LogUtils.getLogger();
 
     protected final Set<ResourceLocation> trackedSingles = new HashSet<>();
-    
-    public SpriteSourceProviderPM(PackOutput packOutput, ExistingFileHelper helper) {
-        super(packOutput, helper, Constants.MOD_ID);
+
+    public SpriteSourceProviderPMNeoforge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
+        super(packOutput, lookupProvider, Constants.MOD_ID, helper);
     }
-    
+
+    @Override
+    protected void gather() {
+        this.addSources();
+    }
+
     protected void addSingle(SourceList atlas, ResourceLocation loc) {
         if (this.trackedSingles.add(loc)) {
             atlas.addSource(new SingleFile(loc, Optional.empty()));
@@ -57,8 +63,8 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         }
     }
 
-    @Override
     protected void addSources() {
+        // TODO Can this be extracted into a common super layer?
         SourceList blockAtlas = this.atlas(BLOCKS_ATLAS);
         SourceList armorTrimsAtlas = this.atlas(ARMOR_TRIMS_ATLAS);
         
@@ -133,5 +139,4 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
                         .put("rune_hallowed", ResourceLocation.withDefaultNamespace("trims/color_palettes/quartz"))
                         .build()));
     }
-
 }
