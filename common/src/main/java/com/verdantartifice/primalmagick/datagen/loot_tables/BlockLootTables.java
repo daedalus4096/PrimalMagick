@@ -231,7 +231,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
     
     private void registerCropLootTables() {
         this.registerSplittingTable(BlocksPM.HYDROMELON.get(), ItemsPM.HYDROMELON_SLICE.get(), UniformGenerator.between(3F, 7F), OptionalInt.of(9));
-        this.registerLootTableBuilder(BlocksPM.HYRDOMELON_STEM.get(), b -> this.createStemDrops(b, ItemsPM.HYDROMELON_SEEDS.get()));
+        this.registerLootTableBuilder(BlocksPM.HYDROMELON_STEM.get(), b -> this.createStemDrops(b, ItemsPM.HYDROMELON_SEEDS.get()));
         this.registerLootTableBuilder(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), b -> this.createAttachedStemDrops(b, ItemsPM.HYDROMELON_SEEDS.get()));
         this.registerLootTableBuilder(BlocksPM.BLOOD_ROSE.get(), b -> this.createSinglePropConditionTable(b, BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER));
         this.registerLootTableBuilder(BlocksPM.EMBERFLOWER.get(), b -> this.createSinglePropConditionTable(b, BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER));
