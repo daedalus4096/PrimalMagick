@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -85,7 +86,7 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock {
             BlockEntity blockEntity = worldIn.getBlockEntity(pos);
             if (blockEntity instanceof SpellcraftingAltarTileEntity altarTile && player instanceof ServerPlayer serverPlayer) {
                 // Open the GUI for the spellcrafting altar
-                serverPlayer.openMenu(altarTile, blockEntity.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, altarTile, blockEntity.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

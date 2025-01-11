@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -48,7 +49,7 @@ public class ChangeScribeTableModePacket implements IMessageToServer {
         if (player.containerMenu instanceof AbstractScribeTableMenu scribeMenu && scribeMenu.containerId == message.windowId) {
             // Store the new mode and open the corresponding menu
             LinguisticsManager.setScribeTableMode(player, message.newMode);
-            player.openMenu(scribeMenu.getTile(), scribeMenu.getTilePos());
+            Services.PLAYER.openMenu(player, scribeMenu.getTile(), scribeMenu.getTilePos());
         }
     }
 }

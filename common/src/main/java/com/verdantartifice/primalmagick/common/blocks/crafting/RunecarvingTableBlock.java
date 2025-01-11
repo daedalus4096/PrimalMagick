@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -71,7 +72,7 @@ public class RunecarvingTableBlock extends BaseEntityBlock {
             // Open the GUI for the research table
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RunecarvingTableTileEntity tableTile) {
-                serverPlayer.openMenu(tableTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, tableTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

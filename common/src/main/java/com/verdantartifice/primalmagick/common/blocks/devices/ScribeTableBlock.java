@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -75,7 +76,7 @@ public class ScribeTableBlock extends BaseEntityBlock {
             // Open the GUI for the scribe table
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof ScribeTableTileEntity tableTile) {
-                serverPlayer.openMenu(tableTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, tableTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

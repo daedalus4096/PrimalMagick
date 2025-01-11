@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -69,7 +70,7 @@ public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDe
             // Open the GUI for the altar
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RunescribingAltarTileEntity altarTile) {
-                serverPlayer.openMenu(altarTile, tile.getBlockPos());
+                Services.PLAYER.openMenu(serverPlayer, altarTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
