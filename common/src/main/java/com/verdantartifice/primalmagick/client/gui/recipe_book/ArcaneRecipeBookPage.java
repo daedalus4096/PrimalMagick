@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.recipe_book;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -134,7 +135,8 @@ public class ArcaneRecipeBookPage {
     
     public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.mc.screen != null && this.hoveredButton != null && !this.overlay.isVisible()) {
-            guiGraphics.renderComponentTooltip(this.mc.font, this.hoveredButton.getTooltipText(this.mc.screen), mouseX, mouseY, this.hoveredButton.getRecipe().value().getResultItem(this.mc.level.registryAccess()));
+            Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, this.mc.font, this.hoveredButton.getTooltipText(this.mc.screen),
+                    mouseX, mouseY, this.hoveredButton.getRecipe().value().getResultItem(this.mc.level.registryAccess()));
         }
     }
     

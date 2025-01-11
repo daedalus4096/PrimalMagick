@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -80,7 +81,8 @@ public class VocabularyWidget extends AbstractWidget {
 
         // Draw the tooltip if applicable
         if (this.isHoveredOrFocused()) {
-            pGuiGraphics.renderComponentTooltip(mc.font, Collections.singletonList(Component.translatable("tooltip.primalmagick.scribe_table.widget.language", this.getLanguage().value().getName(), this.getAmount())),
+            Services.GUI_GRAPHICS.renderComponentTooltip(pGuiGraphics, mc.font,
+                    Collections.singletonList(Component.translatable("tooltip.primalmagick.scribe_table.widget.language", this.getLanguage().value().getName(), this.getAmount())),
                     pMouseX, pMouseY, ItemStack.EMPTY);
         }
     }
@@ -88,5 +90,4 @@ public class VocabularyWidget extends AbstractWidget {
     @Override
     protected void updateWidgetNarration(NarrationElementOutput pNarrationElementOutput) {
     }
-
 }

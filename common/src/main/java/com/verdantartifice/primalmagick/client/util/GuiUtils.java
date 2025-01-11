@@ -134,12 +134,12 @@ public class GuiUtils {
     public static void renderItemTooltip(GuiGraphics guiGraphics, ItemStack stack, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
         List<Component> lines = stack.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
-        guiGraphics.renderComponentTooltip(mc.font, lines, x, y, stack);
+        Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, mc.font, lines, x, y, stack);
     }
     
     public static void renderCustomTooltip(GuiGraphics guiGraphics, List<Component> textList, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.renderComponentTooltip(mc.font, textList, x, y, ItemStack.EMPTY);
+        Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, mc.font, textList, x, y, ItemStack.EMPTY);
     }
     
     public static void renderSourcesForPlayer(GuiGraphics guiGraphics, @Nullable SourceList sources, @Nullable Player player, int startX, int startY) {
