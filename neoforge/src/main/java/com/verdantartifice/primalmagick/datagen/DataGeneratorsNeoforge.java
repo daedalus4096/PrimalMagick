@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.datagen;
 
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.datagen.advancements.StoryAdvancementsPM;
+import com.verdantartifice.primalmagick.datagen.advancements.StoryAdvancementsProviderNeoforge;
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
 import com.verdantartifice.primalmagick.datagen.atlas.SpriteSourceProviderPM;
 import com.verdantartifice.primalmagick.datagen.blocks.BlockStateProviderPM;
@@ -29,10 +29,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraftforge.common.data.ForgeAdvancementProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,8 +42,8 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
-public class DataGenerators {
+@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+public class DataGeneratorsNeoforge {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         // Add all of the mod's data providers to the generator for processing
@@ -69,8 +68,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper(), List.of(
-                new StoryAdvancementsPM())));
+        generator.addProvider(event.includeServer(), new StoryAdvancementsProviderNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
                 BlockLootTables.getSubProviderEntry(), 
                 EntityLootTables.getSubProviderEntry(), 
