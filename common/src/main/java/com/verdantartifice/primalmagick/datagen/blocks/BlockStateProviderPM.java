@@ -177,8 +177,8 @@ public class BlockStateProviderPM extends BlockStateProvider {
         
         // Generate crop blocks
         this.cubeColumnBlockWithItem(BlocksPM.HYDROMELON.get());
-        this.stemBlock(BlocksPM.HYRDOMELON_STEM.get());
-        this.attachedStemBlock(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), this.blockTexture(BlocksPM.HYRDOMELON_STEM.get()));
+        this.stemBlock(BlocksPM.HYDROMELON_STEM.get());
+        this.attachedStemBlock(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), this.blockTexture(BlocksPM.HYDROMELON_STEM.get()));
         this.tallCrossBlockWithItem(BlocksPM.BLOOD_ROSE.get());
         this.tallExistingBlockWithItem(BlocksPM.EMBERFLOWER.get(), this.blockTexture(BlocksPM.EMBERFLOWER.get()).withSuffix("_front"));
         
