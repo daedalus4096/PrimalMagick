@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 import net.minecraft.core.HolderLookup;

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.datagen.advancements.StoryAdvancementsPM;
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
 import com.verdantartifice.primalmagick.datagen.atlas.SpriteSourceProviderPM;
@@ -42,7 +43,7 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber(modid=Constants.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {

@@ -146,7 +146,7 @@ public class ClientBookHelper {
             if (BookHelper.SEPARATOR_ONLY.matcher(word).matches()) {
                 // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
                 words.add(Component.literal(word).withStyle(BookHelper.BASE_TEXT_STYLE));
-            } else if (lang.get().isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.get().complexity())) {
+            } else if (lang.value().isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.value().complexity())) {
                 // If the word has been translated, then add it directly
                 langStyleGuideOpt.ifPresentOrElse(styleGuide -> {
                     words.add(Component.literal(word).withStyle(styleGuide.getStyle(word, BookHelper.BASE_TEXT_STYLE)));
@@ -156,9 +156,9 @@ public class ClientBookHelper {
             } else {
                 // If the word has not been translated, then add an encoded replacement word
                 langStyleGuideOpt.ifPresentOrElse(styleGuide -> {
-                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(styleGuide.getStyle(word, lang.get().style())));
+                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(styleGuide.getStyle(word, lang.value().style())));
                 }, () -> {
-                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.get().style()));
+                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.value().style()));
                 });
             }
         });

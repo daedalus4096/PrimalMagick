@@ -722,7 +722,7 @@ public class GrimoireScreen extends Screen {
         this.pages.add(new LinguisticsScorePage(language));
         
         // Add subsequent pages with language description
-        String rawText = language.get().getDescription().getString();
+        String rawText = language.value().getDescription().getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;

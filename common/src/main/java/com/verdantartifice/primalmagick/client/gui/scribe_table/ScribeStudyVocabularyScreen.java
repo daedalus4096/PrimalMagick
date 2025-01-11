@@ -149,7 +149,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                 }
             } else {
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
-                FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.get().style()), textWidth, Style.EMPTY);
+                FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.value().style()), textWidth, Style.EMPTY);
                 if (!this.minecraft.player.getAbilities().instabuild && this.minecraft.player.experienceLevel < cost) {
                     pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
                     pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
@@ -188,7 +188,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     List<Component> tooltips = new ArrayList<>();
                     
                     // Add the vocabulary gain tooltip line to the output
-                    tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.study_count", activeLanguage.get().getName(), studyDelta).withStyle(ChatFormatting.WHITE));
+                    tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.study_count", activeLanguage.value().getName(), studyDelta).withStyle(ChatFormatting.WHITE));
                     
                     // Only process experience level costs if not in creative mode
                     if (!this.minecraft.player.getAbilities().instabuild) {

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
 import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
@@ -231,12 +232,12 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
     
     public ResearchDisciplineLanguageBuilder researchDiscipline(ResourceKey<ResearchDiscipline> discKey, HolderLookup.Provider lookupProvider) {
         Holder.Reference<ResearchDiscipline> discHolder = lookupProvider.lookupOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).getOrThrow(discKey);
-        return this.createBuilder(() -> new ResearchDisciplineLanguageBuilder(discHolder.get(), this::untrack, this::add));
+        return this.createBuilder(() -> new ResearchDisciplineLanguageBuilder(discHolder.value(), this::untrack, this::add));
     }
     
     public ResearchEntryLanguageBuilder researchEntry(ResourceKey<ResearchEntry> entryKey, HolderLookup.Provider lookupProvider) {
         Holder.Reference<ResearchEntry> entryHolder = lookupProvider.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getOrThrow(entryKey);
-        return this.createBuilder(() -> new ResearchEntryLanguageBuilder(entryHolder.get(), this::untrack, this::add));
+        return this.createBuilder(() -> new ResearchEntryLanguageBuilder(entryHolder.value(), this::untrack, this::add));
     }
     
     public ResearchProjectLanguageBuilder researchProject(String id) {

@@ -76,7 +76,7 @@ public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload>
                 // Grant the potion effect
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 int ticks = 20 * this.getDurationSeconds(spell, spellSource, world.registryAccess());
-                entity.addEffect(new MobEffectInstance(EffectsPM.FLYING.getHolder().get(), ticks));
+                entity.addEffect(new MobEffectInstance(EffectsPM.FLYING.getHolder(), ticks));
             }
         }
     }

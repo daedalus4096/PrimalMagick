@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -32,11 +33,11 @@ public abstract class AbstractTagCraftingRecipe<T extends RecipeInput> extends A
         Optional<HolderSet.Named<Item>> tagOpt = pRegistries.lookupOrThrow(Registries.ITEM).get(this.outputTag);
         Optional<Holder<Item>> modItemOpt = tagOpt.flatMap(tag -> tag.stream().filter(h -> h.is(key -> key.location().getNamespace().equals(Constants.MOD_ID))).findFirst());
         if (modItemOpt.isPresent()) {
-            return new ItemStack(modItemOpt.get().get(), this.outputAmount);
+            return new ItemStack(modItemOpt.get().value(), this.outputAmount);
         } else {
             Optional<Holder<Item>> fallbackItemOpt = tagOpt.flatMap(tag -> tag.stream().findFirst());
             if (fallbackItemOpt.isPresent()) {
-                return new ItemStack(fallbackItemOpt.get().get(), this.outputAmount);
+                return new ItemStack(fallbackItemOpt.get().value(), this.outputAmount);
             } else {
                 return ItemStack.EMPTY;
             }

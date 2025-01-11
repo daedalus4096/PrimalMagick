@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.advancements;
 
+import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.network.chat.Component;

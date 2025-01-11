@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.tags.RecipeSerializerTagsExt;
 import net.minecraft.core.HolderLookup;

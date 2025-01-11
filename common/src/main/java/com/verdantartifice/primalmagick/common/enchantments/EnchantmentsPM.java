@@ -120,7 +120,7 @@ public class EnchantmentsPM {
                         EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM,
                         new ApplyConstantMobEffect(
-                                EffectsPM.ENDERLOCK.getHolder().get(),
+                                EffectsPM.ENDERLOCK.getHolder(),
                                 LevelBasedValue.perLevel(40F),
                                 LevelBasedValue.constant(0F)
                         )
@@ -516,7 +516,7 @@ public class EnchantmentsPM {
                         EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM,
                         new ApplyStackingMobEffect(
-                                EffectsPM.BLEEDING.getHolder().get(),
+                                EffectsPM.BLEEDING.getHolder(),
                                 LevelBasedValue.constant(120F),
                                 LevelBasedValue.constant(1F),
                                 LevelBasedValue.perLevel(1F)

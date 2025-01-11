@@ -75,7 +75,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
                 // Grant the potion effect
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 int ticks = 20 * this.getDurationSeconds(spell, spellSource, world.registryAccess());
-                entity.addEffect(new MobEffectInstance(EffectsPM.DRAIN_SOUL.getHolder().get(), ticks));
+                entity.addEffect(new MobEffectInstance(EffectsPM.DRAIN_SOUL.getHolder(), ticks));
             }
         }
     }

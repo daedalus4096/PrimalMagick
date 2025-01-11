@@ -53,10 +53,10 @@ public class LinguisticsIndexPage extends AbstractPage {
         // Add a button to the screen for each discovered language
         Minecraft mc = Minecraft.getInstance();
         List<Holder.Reference<BookLanguage>> known = mc.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(lang -> LinguisticsManager.isLanguageKnown(mc.player, lang)).sorted((a, b) -> {
-            return a.get().getName().getString().compareTo(b.get().getName().getString());
+            return a.value().getName().getString().compareTo(b.value().getName().getString());
         }).toList();
         for (Holder.Reference<BookLanguage> lang : known) {
-            screen.addWidgetToScreen(new LinguisticsButton(x + 12 + (side * 140), y, lang.get().getName(), screen, lang));
+            screen.addWidgetToScreen(new LinguisticsButton(x + 12 + (side * 140), y, lang.value().getName(), screen, lang));
             y += 12;
         }
     }

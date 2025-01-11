@@ -74,7 +74,7 @@ public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
     @Override
     public Component getDescription(Player player, RegistryAccess registryAccess) {
         Component amountText = Component.translatable("label.primalmagick.comprehension_gain." + Mth.clamp(this.points, 0, 5));
-        Component langText = BookLanguagesPM.getLanguageOrDefault(this.language, registryAccess, BookLanguagesPM.DEFAULT).get().getName();
+        Component langText = BookLanguagesPM.getLanguageOrDefault(this.language, registryAccess, BookLanguagesPM.DEFAULT).value().getName();
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.comprehension", langText, amountText);
     }
 

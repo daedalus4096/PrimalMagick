@@ -308,15 +308,15 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             }
             
             // Substract discounts from temporary conditions
-            if (player.hasEffect(EffectsPM.MANAFRUIT.getHolder().get())) {
+            if (player.hasEffect(EffectsPM.MANAFRUIT.getHolder())) {
                 // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
-                modifier -= (0.01D * ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder().get()).getAmplifier()) + 1));
+                modifier -= (0.01D * ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder()).getAmplifier()) + 1));
             }
             
             // Add penalties from temporary conditions
-            if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.getHolder().get())) {
+            if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.getHolder())) {
                 // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
-                modifier += (0.05D * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder().get()).getAmplifier() + 1));
+                modifier += (0.05D * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder()).getAmplifier() + 1));
             }
         }
         

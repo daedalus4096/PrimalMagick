@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.tags.StructureTagsPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
 import net.minecraft.core.HolderLookup;

@@ -152,7 +152,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     public boolean isUpcoming(@Nonnull Player player) {
         Registry<ResearchEntry> registry = player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES);
         return !this.parents.stream().map(k -> registry.getHolder(k.getRootKey())).anyMatch(opt -> {
-            return opt.isPresent() && ((opt.get().is(ResearchEntryTagsPM.OPAQUE) && !opt.get().get().key().isKnownBy(player)) || !opt.get().get().isAvailable(player));
+            return opt.isPresent() && ((opt.get().is(ResearchEntryTagsPM.OPAQUE) && !opt.get().value().key().isKnownBy(player)) || !opt.get().value().isAvailable(player));
         });
     }
     

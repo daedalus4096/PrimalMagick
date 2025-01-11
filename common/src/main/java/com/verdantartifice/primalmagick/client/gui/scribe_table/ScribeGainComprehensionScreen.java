@@ -109,7 +109,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             this.nextCheckTime = System.currentTimeMillis() + 250L;
         }
 
-        if (lang.get().isComplex()) {
+        if (lang.value().isComplex()) {
             // Draw the parchment background for the comprehension grid
             pGuiGraphics.pose().pushPose();
             pGuiGraphics.pose().translate(this.leftPos + 31, this.topPos + 17, 0);
@@ -215,7 +215,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                         if (!this.player.getAbilities().instabuild) {
                             lines.add(CommonComponents.EMPTY);
                             Holder.Reference<BookLanguage> lang = BookLanguagesPM.getLanguageOrDefault(def.getLanguage(), this.registryAccess, BookLanguagesPM.DEFAULT);
-                            MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), lang.get().getName());
+                            MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), lang.value().getName());
                             if (LinguisticsManager.getVocabulary(this.player, lang) < node.getVocabularyCost()) {
                                 costText = costText.withStyle(ChatFormatting.RED);
                             }

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.tags;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -86,6 +87,6 @@ public class ItemTagsPM {
     public static final TagKey<Item> ESSENCE_THIEF_ENCHANTABLE = tag("enchantable/essence_thief");
 
     private static TagKey<Item> tag(String name) {
-        return ItemTags.create(ResourceUtils.loc(name));
+        return TagKey.create(Registries.ITEM, ResourceUtils.loc(name));
     }
 }

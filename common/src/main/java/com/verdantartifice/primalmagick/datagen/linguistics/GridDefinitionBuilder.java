@@ -99,7 +99,7 @@ public class GridDefinitionBuilder {
         // Validate that the sum of all the nodes' defined comprehension values equals the expected comprehension of the language
         Holder.Reference<BookLanguage> langHolder = this.lookupProvider.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getOrThrow(this.bookLanguage);
         int total = this.nodes.stream().map(IFinishedGridNode::getReward).map(r -> r.getComprehensionPoints(this.bookLanguage.location())).mapToInt(o -> o.orElse(0)).sum();
-        int expected = langHolder.get().complexity();
+        int expected = langHolder.value().complexity();
         if (total != expected) {
             throw new IllegalStateException("Comprehension mismatch for linguistics grid " + id.toString() + "; expected " + expected + ", got " + total);
         }

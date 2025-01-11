@@ -143,11 +143,11 @@ public class ResearchManager {
         }
         if (key instanceof ResearchEntryKey entryKey) {
             Optional<Holder.Reference<ResearchEntry>> entryRefOpt = player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getHolder(entryKey.getRootKey());
-            if (entryRefOpt.isEmpty() || entryRefOpt.get().get().parents().isEmpty()) {
+            if (entryRefOpt.isEmpty() || entryRefOpt.get().value().parents().isEmpty()) {
                 return true;
             } else {
                 // Perform a strict completion check on the given entry's parent research
-                return entryRefOpt.get().get().parents().stream().allMatch(k -> k.isKnownBy(player));
+                return entryRefOpt.get().value().parents().stream().allMatch(k -> k.isKnownBy(player));
             }
         } else {
             return true;

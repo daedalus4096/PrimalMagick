@@ -122,7 +122,7 @@ public class ManaArrowEntity extends AbstractArrow {
         } else if (source == Sources.MOON) {
             target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 50));
         } else if (source == Sources.BLOOD) {
-            target.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.getHolder().get(), 50));
+            target.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.getHolder(), 50));
         } else if (source == Sources.VOID) {
             target.addEffect(new MobEffectInstance(MobEffects.WITHER, 50));
         } else if (source == Sources.HALLOWED) {

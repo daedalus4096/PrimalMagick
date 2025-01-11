@@ -188,7 +188,7 @@ public class GridDefinition {
                     total += compReward.getPoints();
                 }
             }
-            int expected = this.registries.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getOrThrow(this.language).get().complexity();
+            int expected = this.registries.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getOrThrow(this.language).value().complexity();
             if (total != expected) {
                 throw new IllegalStateException("Comprehension mismatch for linguistics grid " + key.toString() + "; expected " + expected + ", got " + total);
             }

@@ -30,9 +30,4 @@ public class PrimalMagickCapabilities {
     public static IWorldEntitySwappers getEntitySwappers(@Nonnull Level world) {
         return world.getCapability(ENTITY_SWAPPERS, null).orElse(null);
     }
-
-    @Nullable
-    public static IManaStorage<?> getManaStorage(@Nonnull BlockEntity tile) {
-        return tile.getCapability(MANA_STORAGE, null).orElse(null);
-    }
 }

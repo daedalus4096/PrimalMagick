@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
+import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -21,7 +22,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,7 +41,7 @@ import java.util.UUID;
  * @see {@link com.verdantartifice.primalmagick.common.capabilities.IWorldEntitySwappers}
  */
 @SuppressWarnings("deprecation")
-public class EntitySwapper implements INBTSerializable<CompoundTag> {
+public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
     protected UUID targetId = null;
     protected EntityType<?> entityType = null;
     protected CompoundTag originalData = null;
@@ -159,7 +159,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                     // If this is a temporary swap, create a new entity swapper to swap back
                     int ticks = this.polymorphDuration.get().intValue();
                     if (newEntity instanceof LivingEntity newLivingEntity) {
-                        newLivingEntity.addEffect(new MobEffectInstance(EffectsPM.POLYMORPH.getHolder().get(), ticks));
+                        newLivingEntity.addEffect(new MobEffectInstance(EffectsPM.POLYMORPH.getHolder(), ticks));
                     }
                     return new EntitySwapper(newEntity.getUUID(), oldType, this.originalData, Optional.empty(), ticks);
                 } else {

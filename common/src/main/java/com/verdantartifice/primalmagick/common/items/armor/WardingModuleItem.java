@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.items.armor;
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -40,9 +40,9 @@ public class WardingModuleItem extends Item implements ITieredDevice {
     // FIXME Use the WARDABLE_ARMOR tag as the source of truth if/when the RegisterItemDecorationsEvent is made to fire *after* tag data loads
     @SuppressWarnings("unchecked")
     protected static final List<Supplier<? extends Item>> APPLICABLE_ITEMS = ImmutableList.<Supplier<? extends Item>>builder().add(
-            ItemRegistration.PRIMALITE_HEAD, ItemRegistration.PRIMALITE_CHEST, ItemRegistration.PRIMALITE_LEGS, ItemRegistration.PRIMALITE_FEET,
-            ItemRegistration.HEXIUM_HEAD, ItemRegistration.HEXIUM_CHEST, ItemRegistration.HEXIUM_LEGS, ItemRegistration.HEXIUM_FEET,
-            ItemRegistration.HALLOWSTEEL_HEAD, ItemRegistration.HALLOWSTEEL_CHEST, ItemRegistration.HALLOWSTEEL_LEGS, ItemRegistration.HALLOWSTEEL_FEET).build();
+            ItemsPM.PRIMALITE_HEAD, ItemsPM.PRIMALITE_CHEST, ItemsPM.PRIMALITE_LEGS, ItemsPM.PRIMALITE_FEET,
+            ItemsPM.HEXIUM_HEAD, ItemsPM.HEXIUM_CHEST, ItemsPM.HEXIUM_LEGS, ItemsPM.HEXIUM_FEET,
+            ItemsPM.HALLOWSTEEL_HEAD, ItemsPM.HALLOWSTEEL_CHEST, ItemsPM.HALLOWSTEEL_LEGS, ItemsPM.HALLOWSTEEL_FEET).build();
     
     protected final DeviceTier tier;
     

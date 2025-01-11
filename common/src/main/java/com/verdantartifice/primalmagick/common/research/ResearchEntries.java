@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -21,7 +22,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -414,7 +414,7 @@ public class ResearchEntries {
                 .stage().end()
                 .build());
         register(context, SOURCE_EARTH, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.EARTH.getImage()).parent(TERRESTRIAL_MAGICK)
-                .stage().requiredItem(Tags.Items.OBSIDIAN).requiredItem(Tags.Items.GEMS_DIAMOND).requiredObservations(1).requiredStat(StatsPM.SHRINE_FOUND_EARTH, 1)
+                .stage().requiredItem(CommonTags.Items.OBSIDIANS).requiredItem(CommonTags.Items.GEMS_DIAMOND).requiredObservations(1).requiredStat(StatsPM.SHRINE_FOUND_EARTH, 1)
                         .requiredResearch(ENV_EARTH).requiredStat(StatsPM.MANA_SPENT_EARTH, 100).end()
                 .stage().attunement(Sources.EARTH, 5).end()
                 .build());
@@ -429,12 +429,12 @@ public class ResearchEntries {
                 .stage().attunement(Sources.SKY, 5).end()
                 .build());
         register(context, SOURCE_SUN, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SUN.getImage()).parent(TERRESTRIAL_MAGICK)
-                .stage().requiredItem(ItemTagsPM.SUNWOOD_LOGS).requiredItem(Tags.Items.SANDSTONE).requiredObservations(1).requiredStat(StatsPM.SHRINE_FOUND_SUN, 1)
+                .stage().requiredItem(ItemTagsPM.SUNWOOD_LOGS).requiredItem(CommonTags.Items.SANDSTONE_BLOCKS).requiredObservations(1).requiredStat(StatsPM.SHRINE_FOUND_SUN, 1)
                         .requiredResearch(ENV_SUN).requiredStat(StatsPM.MANA_SPENT_SUN, 100).end()
                 .stage().attunement(Sources.SUN, 5).end()
                 .build());
         register(context, SOURCE_MOON, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.MOON.getImage()).parent(TERRESTRIAL_MAGICK)
-                .stage().requiredItem(ItemTagsPM.MOONWOOD_LOGS).requiredItem(Tags.Items.MUSHROOMS).requiredObservations(1).requiredStat(StatsPM.SHRINE_FOUND_MOON, 1)
+                .stage().requiredItem(ItemTagsPM.MOONWOOD_LOGS).requiredItem(CommonTags.Items.MUSHROOMS).requiredObservations(1).requiredStat(StatsPM.SHRINE_FOUND_MOON, 1)
                         .requiredResearch(ENV_MOON).requiredStat(StatsPM.MANA_SPENT_MOON, 100).end()
                 .stage().attunement(Sources.MOON, 5).end()
                 .build());
@@ -442,22 +442,22 @@ public class ResearchEntries {
                 .stage().end()
                 .build());
         register(context, SOURCE_BLOOD, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.BLOOD.getImage()).parent(FORBIDDEN_MAGICK).parent(DISCOVER_BLOOD)
-                .stage().requiredItem(Tags.Items.BONES).requiredItem(ItemsPM.BLOODY_FLESH.get()).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_BLOOD, 100).end()
+                .stage().requiredItem(CommonTags.Items.BONES).requiredItem(ItemsPM.BLOODY_FLESH.get()).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_BLOOD, 100).end()
                 .stage().attunement(Sources.BLOOD, 5).end()
                 .build());
         register(context, SOURCE_INFERNAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.INFERNAL.getImage()).parent(FORBIDDEN_MAGICK).parent(DISCOVER_INFERNAL)
-                .stage().requiredItem(Tags.Items.RODS_BLAZE).requiredItem(Items.SOUL_SAND).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_INFERNAL, 100).end()
+                .stage().requiredItem(CommonTags.Items.RODS_BLAZE).requiredItem(Items.SOUL_SAND).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_INFERNAL, 100).end()
                 .stage().attunement(Sources.INFERNAL, 5).end()
                 .build());
         register(context, SOURCE_VOID, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.VOID.getImage()).parent(FORBIDDEN_MAGICK).parent(DISCOVER_VOID)
-                .stage().requiredItem(Tags.Items.END_STONES).requiredItem(Tags.Items.ENDER_PEARLS).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_VOID, 100).end()
+                .stage().requiredItem(CommonTags.Items.END_STONES).requiredItem(CommonTags.Items.ENDER_PEARLS).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_VOID, 100).end()
                 .stage().attunement(Sources.VOID, 5).end()
                 .build());
         register(context, HEAVENLY_MAGICK, key -> ResearchEntry.builder(key).discipline(discipline).parent(FORBIDDEN_MAGICK).parent(DISCOVER_HALLOWED)
                 .stage().end()
                 .build());
         register(context, SOURCE_HALLOWED, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.HALLOWED.getImage()).parent(HEAVENLY_MAGICK)
-                .stage().requiredItem(Tags.Items.NETHER_STARS).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_HALLOWED, 100).end()
+                .stage().requiredItem(CommonTags.Items.NETHER_STARS).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_HALLOWED, 100).end()
                 .stage().attunement(Sources.HALLOWED, 5).end()
                 .build());
         register(context, SECRETS_OF_THE_UNIVERSE, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_UNKNOWN)
@@ -535,11 +535,11 @@ public class ResearchEntries {
                 .addendum().requiredResearch(STAVES).recipe(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get()).end()
                 .build());
         register(context, WAND_CAP_IRON, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.IRON_WAND_CAP_ITEM.get()).parent(ADVANCED_WANDMAKING)
-                .stage().requiredItem(Tags.Items.INGOTS_IRON).requiredObservations(1).end()
+                .stage().requiredItem(CommonTags.Items.INGOTS_IRON).requiredObservations(1).end()
                 .stage().recipe(ItemsPM.IRON_WAND_CAP_ITEM.get()).end()
                 .build());
         register(context, WAND_GEM_APPRENTICE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).parent(ADVANCED_WANDMAKING)
-                .stage().requiredItem(Tags.Items.GEMS_DIAMOND).requiredObservations(1).end()
+                .stage().requiredItem(CommonTags.Items.GEMS_DIAMOND).requiredObservations(1).end()
                 .stage().recipe(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).end()
                 .build());
         register(context, EARTHSHATTER_HAMMER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.EARTHSHATTER_HAMMER.get())
@@ -566,22 +566,22 @@ public class ResearchEntries {
                 .build());
         register(context, WAND_GEM_ADEPT, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.ADEPT_WAND_GEM_ITEM.get())
                 .parent(EXPERT_MANAWEAVING).parent(WAND_GEM_APPRENTICE).parent(SHARD_SYNTHESIS)
-                .stage().requiredItem(Tags.Items.GEMS_DIAMOND).requiredTheories(1).end()
+                .stage().requiredItem(CommonTags.Items.GEMS_DIAMOND).requiredTheories(1).end()
                 .stage().recipe(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).end()
                 .build());
         register(context, WAND_GEM_WIZARD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.WIZARD_WAND_GEM_ITEM.get())
                 .parent(MASTER_MANAWEAVING).parent(WAND_GEM_ADEPT).parent(CRYSTAL_SYNTHESIS)
-                .stage().requiredItem(Tags.Items.GEMS_DIAMOND).requiredTheories(2).end()
+                .stage().requiredItem(CommonTags.Items.GEMS_DIAMOND).requiredTheories(2).end()
                 .stage().recipe(ItemsPM.WIZARD_WAND_GEM_ITEM.get()).end()
                 .build());
         register(context, WAND_GEM_ARCHMAGE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get())
                 .parent(SUPREME_MANAWEAVING).parent(WAND_GEM_WIZARD).parent(CLUSTER_SYNTHESIS)
-                .stage().requiredItem(Tags.Items.GEMS_DIAMOND).requiredTheories(3).end()
+                .stage().requiredItem(CommonTags.Items.GEMS_DIAMOND).requiredTheories(3).end()
                 .stage().recipe(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get()).end()
                 .build());
         register(context, WAND_CAP_GOLD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.GOLD_WAND_CAP_ITEM.get())
                 .parent(EXPERT_MANAWEAVING).parent(WAND_CAP_IRON)
-                .stage().requiredItem(Tags.Items.INGOTS_GOLD).requiredTheories(1).end()
+                .stage().requiredItem(CommonTags.Items.INGOTS_GOLD).requiredTheories(1).end()
                 .stage().recipe(ItemsPM.GOLD_WAND_CAP_ITEM.get()).end()
                 .build());
         register(context, WAND_CAP_PRIMALITE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.PRIMALITE_WAND_CAP_ITEM.get())
@@ -601,7 +601,7 @@ public class ResearchEntries {
                 .build());
         register(context, WAND_CORE_OBSIDIAN, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get())
                 .parent(EXPERT_MANAWEAVING).parent(WAND_CORE_HEARTWOOD)
-                .stage().requiredItem(Tags.Items.OBSIDIAN).requiredTheories(1).end()
+                .stage().requiredItem(CommonTags.Items.OBSIDIANS).requiredTheories(1).end()
                 .stage().attunement(Sources.EARTH, 2).recipe(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get()).end()
                 .addendum().requiredResearch(STAVES).recipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get()).end()
                 .build());
@@ -637,7 +637,7 @@ public class ResearchEntries {
                 .build());
         register(context, WAND_CORE_BLAZE_ROD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get())
                 .parent(MASTER_MANAWEAVING).parent(WAND_CORE_HEARTWOOD).parent(DISCOVER_INFERNAL)
-                .stage().requiredItem(Tags.Items.RODS_BLAZE).requiredTheories(2).end()
+                .stage().requiredItem(CommonTags.Items.RODS_BLAZE).requiredTheories(2).end()
                 .stage().attunement(Sources.INFERNAL, 3).recipe(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get()).end()
                 .addendum().requiredResearch(STAVES).recipe(ItemsPM.BLAZE_ROD_STAFF_CORE_ITEM.get()).end()
                 .build());
@@ -974,7 +974,7 @@ public class ResearchEntries {
                 .build());
         register(context, SYNTHETIC_GEM_BUDS, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(Items.AMETHYST_CLUSTER)
                 .parent(MASTER_ALCHEMY).parent(SHARD_SYNTHESIS).parent(STONEMELDING)
-                .stage().requiredTheories(2).requiredItem(Tags.Items.GEMS_AMETHYST).end()
+                .stage().requiredTheories(2).requiredItem(CommonTags.Items.GEMS_AMETHYST).end()
                 .stage().attunement(SourceList.builder().withEarth(3).withSun(3).build()).recipe(ItemsPM.ENERGIZED_AMETHYST.get()).recipe(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get())
                         .recipe(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get()).recipe(ItemsPM.FLAWED_BUDDING_AMETHYST_BLOCK.get()).end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 3).recipe(ItemsPM.ENERGIZED_DIAMOND.get())
