@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.datagen.advancements.StoryAdvancementsPMForge;
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
 import com.verdantartifice.primalmagick.datagen.atlas.SpriteSourceProviderPMForge;
-import com.verdantartifice.primalmagick.datagen.blocks.BlockStateProviderPM;
+import com.verdantartifice.primalmagick.datagen.blocks.BlockStateProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.books.StyleGuideProvider;
 import com.verdantartifice.primalmagick.datagen.items.ItemModelProviderPM;
 import com.verdantartifice.primalmagick.datagen.lang.LanguageProviderEnUs;
@@ -52,7 +52,7 @@ public class DataGeneratorsForge {
         CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), intermediate, event.getExistingFileHelper());
         generator.addProvider(event.includeClient(), new SpriteSourceProviderPMForge(generator.getPackOutput(), event.getExistingFileHelper()));
-        generator.addProvider(event.includeClient(), new BlockStateProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new BlockStateProviderPMForge(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new ItemModelProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));

@@ -52,13 +52,13 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.ModelProvider;
-import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
-import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.ModelProvider;
+import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,18 +70,19 @@ import java.util.stream.Stream;
  * 
  * @author Daedalus4096
  */
-public class BlockStateProviderPM extends BlockStateProvider {
+public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     protected static final ResourceLocation SOLID = ResourceLocation.withDefaultNamespace("solid");
     protected static final ResourceLocation CUTOUT = ResourceLocation.withDefaultNamespace("cutout");
     protected static final ResourceLocation CUTOUT_MIPPED = ResourceLocation.withDefaultNamespace("cutout_mipped");
     protected static final ResourceLocation TRANSLUCENT = ResourceLocation.withDefaultNamespace("translucent");
 
-    public BlockStateProviderPM(PackOutput output, ExistingFileHelper exFileHelper) {
+    public BlockStateProviderPMNeoforge(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, Constants.MOD_ID, exFileHelper);
     }
 
     @Override
     protected void registerStatesAndModels() {
+        // TODO Can this be extracted into a common super layer?
         // Generate marble blocks
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_RAW.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get());
