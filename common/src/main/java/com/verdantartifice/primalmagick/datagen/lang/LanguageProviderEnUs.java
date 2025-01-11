@@ -323,7 +323,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlockRegistration.MANA_SINGULARITY).name("Mana Singularity").build();
         this.block(BlockRegistration.MANA_SINGULARITY_CREATIVE).name("Creative Mana Singularity").build();
         this.block(BlockRegistration.HYDROMELON).name("Hydromelon").build();
-        this.block(BlockRegistration.HYRDOMELON_STEM).name("Hydromelon Stem").build();
+        this.block(BlockRegistration.HYDROMELON_STEM).name("Hydromelon Stem").build();
         this.block(BlockRegistration.ATTACHED_HYDROMELON_STEM).name("Attached Hydromelon Stem").build();
         this.block(BlockRegistration.SYNTHETIC_AMETHYST_CLUSTER).name("Synthetic Amethyst Cluster").build();
         this.block(BlockRegistration.LARGE_SYNTHETIC_AMETHYST_BUD).name("Large Synthetic Amethyst Bud").build();
