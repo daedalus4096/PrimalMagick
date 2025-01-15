@@ -20,14 +20,14 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
-public class ItemModelBuilderPM extends ModelBuilder<ItemModelBuilderPM> {
+public class ItemModelBuilderPMForge extends ModelBuilder<ItemModelBuilderPMForge> {
     protected List<OverrideBuilder> overrides = new ArrayList<>();
 
-    public ItemModelBuilderPM(ResourceLocation outputLocation, ExistingFileHelper existingFileHelper) {
+    public ItemModelBuilderPMForge(ResourceLocation outputLocation, ExistingFileHelper existingFileHelper) {
         super(outputLocation, existingFileHelper);
     }
     
-    public ItemModelBuilderPM palattedTexture(String key, ResourceLocation baseTexture, String palatteSuffix) {
+    public ItemModelBuilderPMForge palattedTexture(String key, ResourceLocation baseTexture, String palatteSuffix) {
         Preconditions.checkNotNull(key, "Key must not be null");
         Preconditions.checkNotNull(baseTexture, "Base texture must not be null");
         // TODO Check that base texture exists if ModelProvider.TEXTURE ever becomes accessible
@@ -67,7 +67,7 @@ public class ItemModelBuilderPM extends ModelBuilder<ItemModelBuilderPM> {
             return this;
         }
 
-        public ItemModelBuilderPM end() { return ItemModelBuilderPM.this; }
+        public ItemModelBuilderPMForge end() { return ItemModelBuilderPMForge.this; }
 
         JsonObject toJson() {
             JsonObject ret = new JsonObject();
