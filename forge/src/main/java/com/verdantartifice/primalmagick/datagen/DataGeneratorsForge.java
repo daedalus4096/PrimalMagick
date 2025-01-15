@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.datagen.books.StyleGuideProvider;
 import com.verdantartifice.primalmagick.datagen.items.ItemModelProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.lang.LanguageProviderEnUs;
 import com.verdantartifice.primalmagick.datagen.linguistics.GridDefinitionProvider;
-import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProvider;
+import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProviderForge;
 import com.verdantartifice.primalmagick.datagen.loot_tables.BlockLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.EntityLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.LibraryLootTables;
@@ -67,7 +67,7 @@ public class DataGeneratorsForge {
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput(), registryLookupFuture));
+        generator.addProvider(event.includeServer(), new LootModifierProviderForge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper(), List.of(
                 new StoryAdvancementsPMForge())));

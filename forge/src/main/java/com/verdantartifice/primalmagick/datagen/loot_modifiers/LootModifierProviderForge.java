@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.loot_modifiers;
 
 import com.google.common.collect.ImmutableMap;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.conditions.MatchBlockTag;
@@ -57,8 +58,8 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class LootModifierProvider extends GlobalLootModifierProvider {
-    public LootModifierProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
+public class LootModifierProviderForge extends GlobalLootModifierProvider {
+    public LootModifierProviderForge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
         super(packOutput, Constants.MOD_ID, registries);
     }
 
