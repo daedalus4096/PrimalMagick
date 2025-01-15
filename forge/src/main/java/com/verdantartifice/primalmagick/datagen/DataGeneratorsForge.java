@@ -50,7 +50,7 @@ public class DataGeneratorsForge {
         // Add all of the mod's data providers to the generator for processing
         DataGenerator generator = event.getGenerator();
         CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
-        CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), intermediate, event.getExistingFileHelper());
+        CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGeneratorForge.addProviders(event.includeServer(), generator, generator.getPackOutput(), intermediate, event.getExistingFileHelper());
         generator.addProvider(event.includeClient(), new SpriteSourceProviderPMForge(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new BlockStateProviderPMForge(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new ItemModelProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));

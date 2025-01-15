@@ -3,13 +3,12 @@ package com.verdantartifice.primalmagick.datagen.tags;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.tags.StructureTagsPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,8 +17,8 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class StructureTagsProviderPM extends TagsProvider<Structure> {
-    public StructureTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
+public class StructureTagsProviderPMNeoforge extends TagsProvider<Structure> {
+    public StructureTagsProviderPMNeoforge(PackOutput output, CompletableFuture<Provider> future, ExistingFileHelper helper) {
         super(output, Registries.STRUCTURE, future, Constants.MOD_ID, helper);
     }
 

@@ -13,17 +13,17 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.ForgeBiomeModifiers.AddFeaturesBiomeModifier;
-import net.minecraftforge.common.world.ForgeBiomeModifiers.AddSpawnsBiomeModifier;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.BiomeModifiers.AddFeaturesBiomeModifier;
+import net.neoforged.neoforge.common.world.BiomeModifiers.AddSpawnsBiomeModifier;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 /**
  * Registration for mod biome modifier data.
  * 
  * @author Daedalus4096
  */
-public class BiomeModifiersPM {
+public class BiomeModifiersPMNeoforge {
     public static final ResourceKey<BiomeModifier> ADD_ORE_MARBLE_RAW_UPPER = registerKey("add_ore_marble_raw_upper");
     public static final ResourceKey<BiomeModifier> ADD_ORE_MARBLE_RAW_LOWER = registerKey("add_ore_marble_raw_lower");
     public static final ResourceKey<BiomeModifier> ADD_ORE_ROCK_SALT_UPPER = registerKey("add_ore_rock_salt_upper");
@@ -37,7 +37,7 @@ public class BiomeModifiersPM {
     public static final ResourceKey<BiomeModifier> ADD_SPAWN_TREEFOLK = registerKey("add_spawn_treefolk");
     
     public static ResourceKey<BiomeModifier> registerKey(String name) {
-        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, ResourceUtils.loc(name));
+        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ResourceUtils.loc(name));
     }
     
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {

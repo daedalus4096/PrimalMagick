@@ -18,8 +18,8 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class ResearchEntryTagsProviderPM extends TagsProvider<ResearchEntry> {
-    public ResearchEntryTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
+public class ResearchEntryTagsProviderPMForge extends TagsProvider<ResearchEntry> {
+    public ResearchEntryTagsProviderPMForge(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
         super(output, RegistryKeysPM.RESEARCH_ENTRIES, future, Constants.MOD_ID, helper);
     }
 

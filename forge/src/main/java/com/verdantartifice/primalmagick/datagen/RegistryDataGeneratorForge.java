@@ -13,15 +13,15 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplates;
-import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPM;
+import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPMForge;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureSetsPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
-import com.verdantartifice.primalmagick.datagen.tags.BookLanguageTagsProviderPM;
-import com.verdantartifice.primalmagick.datagen.tags.DamageTypeTagsProviderPM;
-import com.verdantartifice.primalmagick.datagen.tags.ResearchEntryTagsProviderPM;
-import com.verdantartifice.primalmagick.datagen.tags.StructureTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.BookLanguageTagsProviderPMForge;
+import com.verdantartifice.primalmagick.datagen.tags.DamageTypeTagsProviderPMForge;
+import com.verdantartifice.primalmagick.datagen.tags.ResearchEntryTagsProviderPMForge;
+import com.verdantartifice.primalmagick.datagen.tags.StructureTagsProviderPMForge;
 import net.minecraft.core.Cloner;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
@@ -43,13 +43,13 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
+public class RegistryDataGeneratorForge extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.CONFIGURED_FEATURE, context -> { ConfiguredFeaturesPM.bootstrap(context); })    // FIXME Compile error when just using ConfiguredFeaturesPM::bootstrap for some reason
             .add(Registries.PLACED_FEATURE, PlacedFeaturesPM::bootstrap)
             .add(Registries.STRUCTURE, StructuresPM::bootstrap)
             .add(Registries.STRUCTURE_SET, StructureSetsPM::bootstrap)
-            .add(ForgeRegistries.Keys.BIOME_MODIFIERS, BiomeModifiersPM::bootstrap)
+            .add(ForgeRegistries.Keys.BIOME_MODIFIERS, BiomeModifiersPMForge::bootstrap)
             .add(Registries.TRIM_MATERIAL, TrimMaterialsPM::bootstrap)
             .add(Registries.TRIM_PATTERN, TrimPatternsPM::bootstrap)
             .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap)
@@ -62,7 +62,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
             .add(RegistryKeysPM.CULTURES, CulturesPM::bootstrap);
     
     // Use addProviders() instead
-    private RegistryDataGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
+    private RegistryDataGeneratorForge(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
         super(output, provider, BUILDER, Set.of(Constants.MOD_ID));
     }
     
@@ -71,12 +71,12 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         // in datagen runs, so it must be done manually as part of the data provider.
         InitEnchantments.initEffects();
 
-        RegistryDataGenerator registryDataGenerator = generator.addProvider(isServer, new RegistryDataGenerator(output, provider));
+        RegistryDataGeneratorForge registryDataGenerator = generator.addProvider(isServer, new RegistryDataGeneratorForge(output, provider));
         // TODO Move to DataGenerators once Forge allows tagging datapack registries
-        generator.addProvider(isServer, new DamageTypeTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
-        generator.addProvider(isServer, new StructureTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
-        generator.addProvider(isServer, new BookLanguageTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
-        generator.addProvider(isServer, new ResearchEntryTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new DamageTypeTagsProviderPMForge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new StructureTagsProviderPMForge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new BookLanguageTagsProviderPMForge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new ResearchEntryTagsProviderPMForge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         return registryDataGenerator.getFullRegistries();
     }
     

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -7,7 +8,7 @@ import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,8 +17,8 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class BookLanguageTagsProviderPM extends TagsProvider<BookLanguage> {
-    public BookLanguageTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
+public class BookLanguageTagsProviderPMNeoforge extends TagsProvider<BookLanguage> {
+    public BookLanguageTagsProviderPMNeoforge(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
         super(output, RegistryKeysPM.BOOK_LANGUAGES, future, Constants.MOD_ID, helper);
     }
 

@@ -10,7 +10,7 @@ import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,8 +19,8 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class DamageTypeTagsProviderPM extends TagsProvider<DamageType> {
-    public DamageTypeTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
+public class DamageTypeTagsProviderPMNeoforge extends TagsProvider<DamageType> {
+    public DamageTypeTagsProviderPMNeoforge(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
         super(output, Registries.DAMAGE_TYPE, future, Constants.MOD_ID, helper);
     }
 
