@@ -20,8 +20,8 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class BlockTagsProviderPM extends BlockTagsProvider {
-    public BlockTagsProviderPM(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
+public class BlockTagsProviderPMForge extends BlockTagsProvider {
+    public BlockTagsProviderPMForge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
         super(packOutput, lookupProvider, Constants.MOD_ID, helper);
     }
 
