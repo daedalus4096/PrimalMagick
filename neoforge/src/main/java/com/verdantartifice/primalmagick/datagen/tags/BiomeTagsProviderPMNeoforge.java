@@ -3,14 +3,11 @@ package com.verdantartifice.primalmagick.datagen.tags;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,9 +16,9 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class BiomeTagsProviderPM extends IntrinsicHolderTagsProvider<Biome> {
-    public BiomeTagsProviderPM(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(packOutput, Registries.BIOME, lookupProvider, b -> ForgeRegistries.BIOMES.getResourceKey(b).orElseThrow(), Constants.MOD_ID, existingFileHelper);
+public class BiomeTagsProviderPMNeoforge extends BiomeTagsProvider {
+    public BiomeTagsProviderPMNeoforge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+        super(packOutput, lookupProvider, Constants.MOD_ID, existingFileHelper);
     }
 
     @Override

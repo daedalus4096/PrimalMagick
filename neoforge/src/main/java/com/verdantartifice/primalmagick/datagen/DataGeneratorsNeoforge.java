@@ -17,7 +17,7 @@ import com.verdantartifice.primalmagick.datagen.loot_tables.TheorycraftingReward
 import com.verdantartifice.primalmagick.datagen.loot_tables.TreefolkBarteringLootTables;
 import com.verdantartifice.primalmagick.datagen.recipes.Recipes;
 import com.verdantartifice.primalmagick.datagen.sounds.SoundDefinitionsProviderPMNeoforge;
-import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.EnchantmentTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPMNeoforge;
@@ -61,7 +61,7 @@ public class DataGeneratorsNeoforge {
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new ItemTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
-        generator.addProvider(event.includeServer(), new BiomeTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new BiomeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
