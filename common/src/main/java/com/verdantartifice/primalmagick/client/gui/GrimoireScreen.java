@@ -347,7 +347,7 @@ public class GrimoireScreen extends Screen {
     }
     
     protected void parseDisciplinePages(ResearchDisciplineKey disciplineKey) {
-        Minecraft mc = this.getMinecraft();
+        Minecraft mc = this.minecraft;
         RegistryAccess registryAccess = mc.level.registryAccess();
         this.currentStageIndex = 0;
         if (disciplineKey == null) {
@@ -659,7 +659,7 @@ public class GrimoireScreen extends Screen {
         int heightRemaining = 137;  // Leave enough room for the page header
         int dotWidth = this.font.width(".");
         StatisticsPage tempPage = new StatisticsPage(true);
-        Minecraft mc = this.getMinecraft();
+        Minecraft mc = this.minecraft;
         for (Stat stat : stats) {
             int statValue = StatsManager.getValue(mc.player, stat);
             if (!stat.hidden() || statValue > 0) {
@@ -981,7 +981,7 @@ public class GrimoireScreen extends Screen {
     }
     
     protected void generateIndexMap() {
-        Minecraft mc = this.getMinecraft();
+        Minecraft mc = this.minecraft;
         Comparator<RecipeHolder<?>> displayNameComparator = Comparator.comparing(r -> r.value().getResultItem(mc.level.registryAccess()).getHoverName().getString());
         Comparator<RecipeHolder<?>> recipeIdComparator = Comparator.comparing(r -> r.id());
         List<RecipeHolder<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
@@ -1012,7 +1012,7 @@ public class GrimoireScreen extends Screen {
     protected void parseRecipeIndexPages() {
         this.currentStageIndex = 0;
         
-        Minecraft mc = this.getMinecraft();
+        Minecraft mc = this.minecraft;
         int heightRemaining = 113;
         RecipeIndexPage tempPage = new RecipeIndexPage(true, this.lastRecipeSearch);
         
@@ -1189,7 +1189,7 @@ public class GrimoireScreen extends Screen {
         if (!this.knowledge.getResearchTopicHistory().isEmpty()) {
             AbstractResearchTopic<?> lastTopic = this.knowledge.getResearchTopicHistory().pop();
             this.knowledge.setLastResearchTopic(lastTopic);
-            this.getMinecraft().setScreen(new GrimoireScreen());
+            this.minecraft.setScreen(new GrimoireScreen());
             return true;
         }
         return false;
@@ -1204,7 +1204,7 @@ public class GrimoireScreen extends Screen {
             this.pushCurrentHistoryTopic();
         }
         this.setTopic(newTopic);
-        this.getMinecraft().setScreen(new GrimoireScreen());
+        this.minecraft.setScreen(new GrimoireScreen());
     }
     
     protected void updateNavButtonVisibility() {

@@ -23,7 +23,7 @@ public class BackButton extends Button {
     protected GrimoireScreen screen;
     
     public BackButton(int x, int y, GrimoireScreen screen) {
-        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 16, 8));
+        super(x, y, 16, 8, Component.empty(), new Handler(), Button.DEFAULT_NARRATION);
         this.screen = screen;
     }
     

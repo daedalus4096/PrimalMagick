@@ -24,7 +24,7 @@ public class PageButton extends Button {
     protected boolean isNext;
 
     public PageButton(int x, int y, GrimoireScreen screen, boolean isNext) {
-        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 12, 5));
+        super(x, y, 12, 5, Component.empty(), new Handler(), Button.DEFAULT_NARRATION);
         this.screen = screen;
         this.isNext = isNext;
     }

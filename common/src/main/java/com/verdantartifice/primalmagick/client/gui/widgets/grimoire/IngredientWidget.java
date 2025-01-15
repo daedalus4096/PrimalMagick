@@ -37,7 +37,7 @@ public class IngredientWidget extends Button {
     protected ItemStack currentStack = ItemStack.EMPTY;
 
     public IngredientWidget(@Nullable Ingredient ingredient, int x, int y, GrimoireScreen screen) {
-        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 16, 16));
+        super(x, y, 16, 16, Component.empty(), new Handler(), Button.DEFAULT_NARRATION);
         this.ingredient = ingredient;
         this.screen = screen;
     }

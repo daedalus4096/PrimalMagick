@@ -89,7 +89,7 @@ public class RecipeMetadataPage extends AbstractPage {
 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
-        Minecraft mc = screen.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         if (!this.isFirstPage()) {
             y += 24;
         }

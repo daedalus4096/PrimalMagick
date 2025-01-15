@@ -118,7 +118,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     }
     
     public List<Component> getTooltipText(Screen screen) {
-        Minecraft mc = screen.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         ItemStack stack = this.getRecipe().value().getResultItem(mc.level.registryAccess());
         List<Component> retVal = new ArrayList<>(Screen.getTooltipFromItem(mc, stack));
         if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {

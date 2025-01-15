@@ -23,7 +23,7 @@ public abstract class AbstractTopicButton extends Button {
     protected AbstractIndexIcon icon;
     
     public AbstractTopicButton(int x, int y, int width, int height, Component text, GrimoireScreen screen, AbstractIndexIcon icon, OnPress onPress) {
-        super(Button.builder(text, onPress).bounds(x, y, width, height));
+        super(x, y, width, height, text, onPress, Button.DEFAULT_NARRATION);
         this.screen = screen;
         this.icon = icon;
     }
@@ -34,7 +34,7 @@ public abstract class AbstractTopicButton extends Button {
     
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        Minecraft mc = this.screen.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         guiGraphics.pose().pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);

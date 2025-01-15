@@ -240,7 +240,7 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
         protected ResearchTableScreen screen;
         
         public StartProjectButton(int xIn, int yIn, Component text, ResearchTableScreen screen) {
-            super(Button.builder(text, new Handler()).bounds(xIn, yIn, 154, 20));
+            super(xIn, yIn, 154, 20, text, new Handler(), Button.DEFAULT_NARRATION);
             this.screen = screen;
         }
         
@@ -270,7 +270,7 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
         protected ResearchTableScreen screen;
         
         public CompleteProjectButton(int xIn, int yIn, Component text, ResearchTableScreen screen) {
-            super(Button.builder(text, new Handler()).bounds(xIn, yIn, 154, 20));
+            super(xIn, yIn, 154, 20, text, new Handler(), Button.DEFAULT_NARRATION);
             this.screen = screen;
         }
         

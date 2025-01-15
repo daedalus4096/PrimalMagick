@@ -20,7 +20,7 @@ public class ProjectMaterialSelectionCheckbox extends Button {
     protected int index;
 
     public ProjectMaterialSelectionCheckbox(int x, int y, ResearchTableScreen screen, boolean selected, int index) {
-        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 16, 16));
+        super(x, y, 16, 16, Component.empty(), new Handler(), Button.DEFAULT_NARRATION);
         this.screen = screen;
         this.selected = selected;
         this.index = index;

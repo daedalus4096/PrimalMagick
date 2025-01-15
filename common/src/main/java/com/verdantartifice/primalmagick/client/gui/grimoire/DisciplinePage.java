@@ -62,7 +62,7 @@ public class DisciplinePage extends AbstractPage {
     
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
-        Minecraft mc = screen.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         for (Object obj : this.getContents()) {
             if (obj instanceof ResearchEntry entry) {
                 // If the current content object is a research entry, add a button for it to the screen

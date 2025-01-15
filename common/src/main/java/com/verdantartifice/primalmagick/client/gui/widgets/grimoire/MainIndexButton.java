@@ -18,7 +18,7 @@ public class MainIndexButton extends Button {
     protected GrimoireScreen screen;
 
     public MainIndexButton(int x, int y, GrimoireScreen screen) {
-        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 10, 26));
+        super(x, y, 10, 26, Component.empty(), new Handler(), Button.DEFAULT_NARRATION);
         this.screen = screen;
     }
     
