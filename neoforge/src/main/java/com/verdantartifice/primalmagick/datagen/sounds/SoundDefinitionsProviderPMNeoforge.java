@@ -1,15 +1,15 @@
 package com.verdantartifice.primalmagick.datagen.sounds;
 
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.SoundDefinition;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.SoundDefinition;
+import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,12 +22,12 @@ import java.util.stream.IntStream;
  * 
  * @author Daedalus4096
  */
-public class SoundDefinitionsProviderPM extends SoundDefinitionsProvider {
+public class SoundDefinitionsProviderPMNeoforge extends SoundDefinitionsProvider {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private final List<ResourceLocation> generatedSounds = new ArrayList<>();
-    
-    public SoundDefinitionsProviderPM(PackOutput output, ExistingFileHelper helper) {
+
+    public SoundDefinitionsProviderPMNeoforge(PackOutput output, ExistingFileHelper helper) {
         super(output, Constants.MOD_ID, helper);
     }
     
@@ -61,11 +61,11 @@ public class SoundDefinitionsProviderPM extends SoundDefinitionsProvider {
         this.verifyComplete();
     }
 
-    private void addSingle(RegistryObject<SoundEvent> eventSupplier) {
+    private void addSingle(IRegistryItem<SoundEvent, SoundEvent> eventSupplier) {
         this.add(eventSupplier, definition().with(sound(eventSupplier.getId())));
     }
     
-    private void addMultiple(RegistryObject<SoundEvent> eventSupplier, int count) {
+    private void addMultiple(IRegistryItem<SoundEvent, SoundEvent> eventSupplier, int count) {
         SoundDefinition def = definition();
         IntStream.rangeClosed(1, count).forEach(val -> def.with(sound(eventSupplier.getId().withSuffix(Integer.toString(val)))));
         this.add(eventSupplier, def);

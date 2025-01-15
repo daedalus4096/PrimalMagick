@@ -16,7 +16,7 @@ import com.verdantartifice.primalmagick.datagen.loot_tables.LibraryLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.TheorycraftingRewardLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.TreefolkBarteringLootTables;
 import com.verdantartifice.primalmagick.datagen.recipes.Recipes;
-import com.verdantartifice.primalmagick.datagen.sounds.SoundDefinitionsProviderPM;
+import com.verdantartifice.primalmagick.datagen.sounds.SoundDefinitionsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.EnchantmentTagsProviderPM;
@@ -54,7 +54,7 @@ public class DataGeneratorsForge {
         generator.addProvider(event.includeClient(), new SpriteSourceProviderPMForge(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new BlockStateProviderPMForge(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new ItemModelProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
-        generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPMForge(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
         generator.addProvider(event.includeClient(), new TipDefinitionProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput(), registryLookupFuture));
