@@ -7,8 +7,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -18,17 +18,17 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class DualRegistryDataGenerator extends DatapackBuiltinEntriesProvider {
+public class DualRegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, RuneEnchantmentDefinitions::bootstrap);
-    
+
     // Use addProviders() instead
-    private DualRegistryDataGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
+    private DualRegistryDataGeneratorNeoforge(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
         super(output, provider, BUILDER, Set.of("minecraft", Constants.MOD_ID));
     }
     
     public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
-        return generator.addProvider(isServer, new DualRegistryDataGenerator(output, provider)).getFullRegistries();
+        return generator.addProvider(isServer, new DualRegistryDataGeneratorNeoforge(output, provider)).getRegistryProvider();
     }
 
     @Override
