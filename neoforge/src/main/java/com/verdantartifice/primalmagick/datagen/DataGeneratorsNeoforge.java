@@ -20,7 +20,7 @@ import com.verdantartifice.primalmagick.datagen.sounds.SoundDefinitionsProviderP
 import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.EnchantmentTagsProviderPM;
-import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.SpellPropertyTagsProviderPM;
@@ -60,7 +60,7 @@ public class DataGeneratorsNeoforge {
         BlockTagsProviderPMNeoforge blockTagsProvider = new BlockTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new ItemTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
-        generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new BiomeTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
