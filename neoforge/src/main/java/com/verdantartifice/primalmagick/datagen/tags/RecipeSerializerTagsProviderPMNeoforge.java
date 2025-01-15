@@ -3,13 +3,12 @@ package com.verdantartifice.primalmagick.datagen.tags;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.tags.RecipeSerializerTagsExt;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,8 +17,8 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class RecipeSerializerTagsProviderPM extends TagsProvider<RecipeSerializer<?>> {
-    public RecipeSerializerTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
+public class RecipeSerializerTagsProviderPMNeoforge extends TagsProvider<RecipeSerializer<?>> {
+    public RecipeSerializerTagsProviderPMNeoforge(PackOutput output, CompletableFuture<Provider> future, ExistingFileHelper helper) {
         super(output, Registries.RECIPE_SERIALIZER, future, Constants.MOD_ID, helper);
     }
 
