@@ -21,7 +21,7 @@ import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.EnchantmentTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPM;
-import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.SpellPropertyTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tips.TipDefinitionProvider;
@@ -60,7 +60,7 @@ public class DataGeneratorsForge {
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput(), registryLookupFuture));
         BlockTagsProviderPMForge blockTagsProvider = new BlockTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTagsProvider);
-        generator.addProvider(event.includeServer(), new ItemTagsProviderPM(generator.getPackOutput(), registryLookupFuture, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new ItemTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new BiomeTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPM(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
