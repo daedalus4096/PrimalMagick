@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.recipe_book;
 
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeCollection;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -62,7 +62,7 @@ public class ArcaneSearchRegistry {
 
     public static void populate() {
         Minecraft mc = Minecraft.getInstance();
-        ClientArcaneRecipeBook book = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
+        ClientArcaneRecipeBook book = new ClientArcaneRecipeBook(Services.CAPABILITIES.arcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
         book.setupCollections(mc.level.getRecipeManager().getRecipes(), mc.level.registryAccess());
         updateRecipes(book, mc.level.registryAccess());
     }

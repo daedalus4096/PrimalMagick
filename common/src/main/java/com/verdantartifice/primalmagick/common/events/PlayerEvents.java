@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -389,7 +388,7 @@ public class PlayerEvents {
             Services.CAPABILITIES.companions(player).ifPresent(companions -> companions.sync(player));
         }
         if (immediate || ArcaneRecipeBookManager.isSyncScheduled(player)) {
-            PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+            Services.CAPABILITIES.arcaneRecipeBook(player).ifPresent(recipeBook -> {
                 recipeBook.sync(player);
             });
         }
@@ -443,8 +442,8 @@ public class PlayerEvents {
         }
         
         try {
-            CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
-            PrimalMagickCapabilities.getArcaneRecipeBook(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtRecipeBook, newPlayer.level().getRecipeManager());
+            CompoundTag nbtRecipeBook = Services.CAPABILITIES.arcaneRecipeBook(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Services.CAPABILITIES.arcaneRecipeBook(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtRecipeBook, newPlayer.level().getRecipeManager());
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} arcane recipe book", oldPlayer.getName().getString());
         }

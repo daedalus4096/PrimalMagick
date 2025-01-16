@@ -16,7 +16,6 @@ import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.commands.arguments.AttunementTypeArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.AttunementTypeInput;
 import com.verdantartifice.primalmagick.common.commands.arguments.AttunementValueArgument;
@@ -802,7 +801,7 @@ public class PrimalMagickCommand {
     }
 
     private static int resetRecipes(CommandSourceStack source, ServerPlayer target) {
-        IPlayerArcaneRecipeBook recipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(target).orElse(null);
+        IPlayerArcaneRecipeBook recipeBook = Services.CAPABILITIES.arcaneRecipeBook(target).orElse(null);
         if (recipeBook == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
@@ -817,7 +816,7 @@ public class PrimalMagickCommand {
     }
 
     private static int listArcaneRecipes(CommandSourceStack source, ServerPlayer target) {
-        IPlayerArcaneRecipeBook recipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(target).orElse(null);
+        IPlayerArcaneRecipeBook recipeBook = Services.CAPABILITIES.arcaneRecipeBook(target).orElse(null);
         if (recipeBook == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
@@ -855,7 +854,7 @@ public class PrimalMagickCommand {
     }
 
     private static int addArcaneRecipe(CommandSourceStack source, ServerPlayer target, RecipeHolder<?> recipe) {
-        IPlayerArcaneRecipeBook recipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(target).orElse(null);
+        IPlayerArcaneRecipeBook recipeBook = Services.CAPABILITIES.arcaneRecipeBook(target).orElse(null);
         if (recipeBook == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else if (!(recipe.value() instanceof IArcaneRecipeBookItem)) {
@@ -871,7 +870,7 @@ public class PrimalMagickCommand {
     }
 
     private static int removeArcaneRecipe(CommandSourceStack source, ServerPlayer target, RecipeHolder<?> recipe) {
-        IPlayerArcaneRecipeBook recipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(target).orElse(null);
+        IPlayerArcaneRecipeBook recipeBook = Services.CAPABILITIES.arcaneRecipeBook(target).orElse(null);
         if (recipeBook == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else if (!(recipe.value() instanceof IArcaneRecipeBookItem)) {

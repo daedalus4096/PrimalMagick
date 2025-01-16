@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.common.crafting.recipe_book;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -44,7 +44,7 @@ public class ArcaneRecipeBookManager {
     }
     
     public static void addRecipes(Collection<RecipeHolder<?>> recipes, ServerPlayer serverPlayer) {
-        PrimalMagickCapabilities.getArcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
+        Services.CAPABILITIES.arcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
             for (RecipeHolder<?> recipe : recipes) {
                 if (recipe.value() instanceof IArcaneRecipeBookItem arbi && !arbi.isArcaneSpecial()) {
                     recipeBook.get().add(recipe);
@@ -56,7 +56,7 @@ public class ArcaneRecipeBookManager {
     }
     
     public static void removeRecipes(Collection<RecipeHolder<?>> recipes, ServerPlayer serverPlayer) {
-        PrimalMagickCapabilities.getArcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
+        Services.CAPABILITIES.arcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
             for (RecipeHolder<?> recipe : recipes) {
                 recipeBook.get().remove(recipe);
             }
@@ -65,12 +65,12 @@ public class ArcaneRecipeBookManager {
     }
     
     public static boolean containsRecipe(Player player, RecipeHolder<?> recipe) {
-        IPlayerArcaneRecipeBook book = PrimalMagickCapabilities.getArcaneRecipeBook(player).orElse(null);
+        IPlayerArcaneRecipeBook book = Services.CAPABILITIES.arcaneRecipeBook(player).orElse(null);
         return book != null && book.get().contains(recipe);
     }
     
     public static boolean syncRecipesWithResearch(ServerPlayer player) {
-        IPlayerArcaneRecipeBook recipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(player).orElse(null);
+        IPlayerArcaneRecipeBook recipeBook = Services.CAPABILITIES.arcaneRecipeBook(player).orElse(null);
         if (recipeBook == null) {
             return false;
         } else {

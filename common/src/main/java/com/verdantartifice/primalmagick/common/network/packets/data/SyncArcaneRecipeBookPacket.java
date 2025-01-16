@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.nbt.CompoundTag;
@@ -26,11 +26,7 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
     protected final CompoundTag data;
     
     public SyncArcaneRecipeBookPacket(Player player) {
-        if (PrimalMagickCapabilities.getArcaneRecipeBook(player).isPresent()) {
-            this.data = PrimalMagickCapabilities.getArcaneRecipeBook(player).resolve().get().serializeNBT(player.registryAccess());
-        } else {
-            this.data = null;
-        }
+        this.data = Services.CAPABILITIES.arcaneRecipeBook(player).map(book -> book.serializeNBT(player.registryAccess())).orElse(null);
     }
     
     protected SyncArcaneRecipeBookPacket(CompoundTag data) {
@@ -53,7 +49,7 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
         SyncArcaneRecipeBookPacket message = ctx.message();
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
         if (player != null) {
-            PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+            Services.CAPABILITIES.arcaneRecipeBook(player).ifPresent(recipeBook -> {
                 recipeBook.deserializeNBT(player.registryAccess(), message.data, player.level().getRecipeManager());
             });
             ArcaneSearchRegistry.populate();

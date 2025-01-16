@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.network.packets.recipe_book;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -47,7 +47,7 @@ public class SeenArcaneRecipePacket implements IMessageToServer {
         ServerPlayer player = ctx.sender();
         player.getServer().getRecipeManager().byKey(message.recipeId).ifPresent(recipe -> {
             player.getRecipeBook().removeHighlight(recipe);
-            PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+            Services.CAPABILITIES.arcaneRecipeBook(player).ifPresent(recipeBook -> {
                 recipeBook.get().removeHighlight(recipe);
             });
         });

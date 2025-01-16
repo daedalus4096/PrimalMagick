@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.StackedComponentContents;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
@@ -12,6 +11,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.SeenArcaneRecipePacket;
+import com.verdantartifice.primalmagick.platform.Services;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.minecraft.ChatFormatting;
@@ -99,7 +99,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         this.useFurnaceStyle = useFurnaceStyle;
         mc.player.containerMenu = menu instanceof AbstractContainerMenu containerMenu ? containerMenu : null;
         this.vanillaBook = mc.player.getRecipeBook();
-        this.arcaneBook = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
+        this.arcaneBook = new ClientArcaneRecipeBook(Services.CAPABILITIES.arcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
         
         this.visible = this.isVisibleAccordingToBookData();
         if (this.visible) {

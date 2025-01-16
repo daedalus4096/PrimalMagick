@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.common.network.packets.recipe_book;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -48,7 +48,7 @@ public class ChangeArcaneRecipeBookSettingsPacket implements IMessageToServer {
     public static void onMessage(PacketContext<ChangeArcaneRecipeBookSettingsPacket> ctx) {
         ChangeArcaneRecipeBookSettingsPacket message = ctx.message();
         ServerPlayer player = ctx.sender();
-        PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+        Services.CAPABILITIES.arcaneRecipeBook(player).ifPresent(recipeBook -> {
             recipeBook.get().setBookSettings(message.type, message.open, message.filtering);
         });
     }
