@@ -63,7 +63,6 @@ public enum EssenceType implements StringRepresentable {
         return this.mana;
     }
     
-    @Nullable
     public Optional<EssenceType> getUpgrade() {
         // Get the next quality up, or empty if it's already highest
         return switch (this) {
@@ -83,7 +82,6 @@ public enum EssenceType implements StringRepresentable {
         };
     }
     
-    @Nullable
     public Optional<EssenceType> getDowngrade() {
         // Get the next quality down, or empty if it's already lowest
         return switch (this) {
@@ -103,7 +101,6 @@ public enum EssenceType implements StringRepresentable {
         };
     }
     
-    @Nullable
     public Optional<Item> getUpgradeMedium() {
         // Get the type of quartz that must be used to upgrade to this essence type
         return switch (this) {

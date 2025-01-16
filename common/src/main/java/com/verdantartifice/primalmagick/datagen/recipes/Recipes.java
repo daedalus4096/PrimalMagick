@@ -39,20 +39,12 @@ import net.minecraft.data.recipes.SmithingTrimRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.crafting.ConditionalRecipe;
-import net.minecraftforge.common.crafting.conditions.AndCondition;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.NotCondition;
-import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
-import net.minecraftforge.common.crafting.conditions.TrueCondition;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -61,18 +53,12 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class Recipes extends RecipeProvider {
+public abstract class Recipes extends RecipeProvider {
     public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
         super(packOutput, registries);
     }
-    
-    private static ICondition tagsNotEmpty(List<TagKey<Item>> tags) {
-        List<ICondition> subConditions = tags.stream().<ICondition>map(t -> new NotCondition(new TagEmptyCondition(t))).toList();
-        return new AndCondition(subConditions);
-    }
 
-    @Override
-    protected void buildRecipes(RecipeOutput consumer) {
+    protected void buildRecipesInner(RecipeOutput consumer, HolderLookup.Provider lookupProvider) {
         this.registerMarbleRecipes(consumer);
         this.registerEnchantedMarbleRecipes(consumer);
         this.registerSmokedMarbleRecipes(consumer);
@@ -102,7 +88,7 @@ public class Recipes extends RecipeProvider {
         this.registerElixirRecipes(consumer);
         this.registerAlchemicalBombRecipes(consumer);
         this.registerClothRecipes(consumer);
-        this.registerPrimalToolRecipes(consumer);
+        this.registerPrimalToolRecipes(consumer, lookupProvider);
         this.registerManaFontRecipes(consumer);
         this.registerManaArrowRecipes(consumer);
         this.registerDissolutionChamberRecipes(consumer);
@@ -1337,7 +1323,7 @@ public class Recipes extends RecipeProvider {
                                 .key('Q', quartzItemOpt.get())
                                 .expertiseGroup("essence_" + upgradeType.getSerializedName())
                                 .setGroup("essence_" + upgradeType.getSerializedName());
-                        baseType.getUpgradeResearchEntry().ifPresent(baseResearch -> builder.requiredResearch(baseResearch));
+                        baseType.getUpgradeResearchEntry().ifPresent(builder::requiredResearch);
                         source.getDiscoverKey().ifPresent(key -> builder.requiredResearch(key.getRootKey()));
                         builder.build(consumer, ResourceLocation.fromNamespaceAndPath(source.getId().getNamespace(), name));
                     }
@@ -1358,7 +1344,7 @@ public class Recipes extends RecipeProvider {
                             .addIngredient(baseStack.getItem())
                             .expertiseGroup("essence_" + downgradeType.getSerializedName())
                             .setGroup("essence_" + downgradeType.getSerializedName());
-                        baseType.getDowngradeResearchEntry().ifPresent(baseResearch -> builder.requiredResearch(baseResearch));
+                        baseType.getDowngradeResearchEntry().ifPresent(builder::requiredResearch);
                         source.getDiscoverKey().ifPresent(key -> builder.requiredResearch(key.getRootKey()));
                         builder.build(consumer, ResourceLocation.fromNamespaceAndPath(source.getId().getNamespace(), name));
                     }
@@ -1931,6 +1917,8 @@ public class Recipes extends RecipeProvider {
             .build(consumer, ResourceUtils.loc("stained_skyglass_pane_yellow_from_panes"));
     }
 
+    protected abstract void registerEarthshatterHammerConditionalRecipes(RecipeOutput consumer);
+
     protected void registerEarthshatterHammerRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.EARTHSHATTER_HAMMER.get())
             .patternLine("III")
@@ -1942,147 +1930,9 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.EARTHSHATTER_HAMMER)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 20))
             .build(consumer);
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, CommonTags.Items.ORES_IRON)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_IRON, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(CommonTags.Items.ORES_IRON)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("iron_grit_from_ore")))
-            .save(consumer, ResourceUtils.loc("iron_grit_from_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, CommonTags.Items.RAW_MATERIALS_IRON)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_IRON, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(CommonTags.Items.RAW_MATERIALS_IRON)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("iron_grit_from_raw_metal")))
-            .save(consumer, ResourceUtils.loc("iron_grit_from_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, CommonTags.Items.ORES_GOLD)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_GOLD, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(CommonTags.Items.ORES_GOLD)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("gold_grit_from_ore")))
-            .save(consumer, ResourceUtils.loc("gold_grit_from_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, CommonTags.Items.RAW_MATERIALS_GOLD)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_GOLD, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(CommonTags.Items.RAW_MATERIALS_GOLD)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("gold_grit_from_raw_metal")))
-            .save(consumer, ResourceUtils.loc("gold_grit_from_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, CommonTags.Items.ORES_COPPER)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_COPPER, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(CommonTags.Items.ORES_COPPER)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("copper_grit_from_ore")))
-            .save(consumer, ResourceUtils.loc("copper_grit_from_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, CommonTags.Items.RAW_MATERIALS_COPPER)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_COPPER, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(CommonTags.Items.RAW_MATERIALS_COPPER)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("copper_grit_from_raw_metal")))
-            .save(consumer, ResourceUtils.loc("copper_grit_from_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.ORES_TIN)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_TIN, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(ItemTagsForgeExt.ORES_TIN)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("tin_dust_from_ore")))
-            .save(consumer, ResourceUtils.loc("tin_dust_from_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.RAW_MATERIALS_TIN)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_TIN, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_TIN)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("tin_dust_from_raw_metal")))
-            .save(consumer, ResourceUtils.loc("tin_dust_from_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.ORES_LEAD)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_LEAD, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(ItemTagsForgeExt.ORES_LEAD)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("lead_dust_from_ore")))
-            .save(consumer, ResourceUtils.loc("lead_dust_from_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.RAW_MATERIALS_LEAD)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_LEAD, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_LEAD)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("lead_dust_from_raw_metal")))
-            .save(consumer, ResourceUtils.loc("lead_dust_from_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.ORES_SILVER)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_SILVER, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(ItemTagsForgeExt.ORES_SILVER)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("silver_dust_from_ore")))
-            .save(consumer, ResourceUtils.loc("silver_dust_from_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.RAW_MATERIALS_SILVER)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_SILVER, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_SILVER)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("silver_dust_from_raw_metal")))
-            .save(consumer, ResourceUtils.loc("silver_dust_from_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.ORES_URANIUM)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_URANIUM, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(ItemTagsForgeExt.ORES_URANIUM)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("uranium_dust_from_ore")))
-            .save(consumer, ResourceUtils.loc("uranium_dust_from_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.RAW_MATERIALS_URANIUM)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_URANIUM, 2)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_URANIUM)
-                    .setGroup("earthshatter_hammer_grit")
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, ResourceUtils.loc("uranium_dust_from_raw_metal")))
-            .save(consumer, ResourceUtils.loc("uranium_dust_from_raw_metal"));
-        
+
+        this.registerEarthshatterHammerConditionalRecipes(consumer);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.COBBLESTONE)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemTagsPM.SURFACE_STONE)
@@ -6300,8 +6150,8 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerPrimalToolRecipes(RecipeOutput consumer) {
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_SHOVEL.get().getDefaultEnchantedInstance(consumer.registry()))
+    protected void registerPrimalToolRecipes(RecipeOutput consumer, HolderLookup.Provider lookupProvider) {
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_SHOVEL.get().getDefaultEnchantedInstance(lookupProvider))
             .addIngredient(ItemsPM.PRIMALITE_SHOVEL.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get(), 2)
             .addIngredient(ItemsPM.RUNE_EARTH.get())
@@ -6313,7 +6163,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_FISHING_ROD.get().getDefaultEnchantedInstance(consumer.registry()))
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_FISHING_ROD.get().getDefaultEnchantedInstance(lookupProvider))
             .addIngredient(ItemsPM.PRIMALITE_FISHING_ROD.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get(), 2)
             .addIngredient(ItemsPM.RUNE_SEA.get())
@@ -6325,7 +6175,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.SEA, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_AXE.get().getDefaultEnchantedInstance(consumer.registry()))
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_AXE.get().getDefaultEnchantedInstance(lookupProvider))
             .addIngredient(ItemsPM.PRIMALITE_AXE.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get(), 2)
             .addIngredient(ItemsPM.RUNE_SKY.get())
@@ -6337,7 +6187,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.SKY, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_HOE.get().getDefaultEnchantedInstance(consumer.registry()))
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_HOE.get().getDefaultEnchantedInstance(lookupProvider))
             .addIngredient(ItemsPM.PRIMALITE_HOE.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get(), 2)
             .addIngredient(ItemsPM.RUNE_SUN.get())
@@ -6349,7 +6199,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.SUN, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_PICKAXE.get().getDefaultEnchantedInstance(consumer.registry()))
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_PICKAXE.get().getDefaultEnchantedInstance(lookupProvider))
             .addIngredient(ItemsPM.PRIMALITE_PICKAXE.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get(), 2)
             .addIngredient(ItemsPM.RUNE_MOON.get())
@@ -6361,7 +6211,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_TRIDENT.get().getDefaultEnchantedInstance(consumer.registry()))
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_TRIDENT.get().getDefaultEnchantedInstance(lookupProvider))
             .addIngredient(ItemsPM.HEXIUM_TRIDENT.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get(), 2)
             .addIngredient(ItemsPM.RUNE_BLOOD.get())
@@ -6372,7 +6222,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_BOW.get().getDefaultEnchantedInstance(consumer.registry()))
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_BOW.get().getDefaultEnchantedInstance(lookupProvider))
             .addIngredient(ItemsPM.HEXIUM_BOW.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get(), 2)
             .addIngredient(ItemsPM.RUNE_INFERNAL.get())
@@ -6383,7 +6233,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_SWORD.get().getDefaultEnchantedInstance(consumer.registry()))
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.FORBIDDEN_SWORD.get().getDefaultEnchantedInstance(lookupProvider))
             .addIngredient(ItemsPM.HEXIUM_SWORD.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get(), 2)
             .addIngredient(ItemsPM.RUNE_VOID.get())
@@ -6395,7 +6245,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.VOID, 40))
             .instability(3)
             .build(consumer);
-        RitualRecipeBuilder.ritualRecipe(ItemsPM.SACRED_SHIELD.get().getDefaultEnchantedInstance(consumer.registry()))
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.SACRED_SHIELD.get().getDefaultEnchantedInstance(lookupProvider))
             .addIngredient(ItemsPM.HALLOWSTEEL_SHIELD.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_HALLOWED.get(), 2)
             .addIngredient(ItemsPM.RUNE_HALLOWED.get())
@@ -6870,6 +6720,8 @@ public class Recipes extends RecipeProvider {
             .expertiseGroup("mana_arrow")
             .build(consumer);
     }
+
+    protected abstract void registerDissolutionChamberConditionalRecipes(RecipeOutput consumer);
     
     protected void registerDissolutionChamberRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.DISSOLUTION_CHAMBER.get())
@@ -6883,133 +6735,9 @@ public class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISSOLUTION_CHAMBER)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 100))
             .build(consumer);
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, CommonTags.Items.ORES_IRON)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_IRON, 3)
-                    .ingredient(CommonTags.Items.ORES_IRON)
-                    .setGroup("iron_grit_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("iron_grit_from_dissolving_ore")))
-            .save(consumer, ResourceUtils.loc("iron_grit_from_dissolving_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, CommonTags.Items.RAW_MATERIALS_IRON)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_IRON, 3)
-                    .ingredient(CommonTags.Items.RAW_MATERIALS_IRON)
-                    .setGroup("iron_grit_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("iron_grit_from_dissolving_raw_metal")))
-            .save(consumer, ResourceUtils.loc("iron_grit_from_dissolving_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, CommonTags.Items.ORES_GOLD)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_GOLD, 3)
-                    .ingredient(CommonTags.Items.ORES_GOLD)
-                    .setGroup("gold_grit_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("gold_grit_from_dissolving_ore")))
-            .save(consumer, ResourceUtils.loc("gold_grit_from_dissolving_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, CommonTags.Items.RAW_MATERIALS_GOLD)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_GOLD, 3)
-                    .ingredient(CommonTags.Items.RAW_MATERIALS_GOLD)
-                    .setGroup("gold_grit_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("gold_grit_from_dissolving_raw_metal")))
-            .save(consumer, ResourceUtils.loc("gold_grit_from_dissolving_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, CommonTags.Items.ORES_COPPER)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_COPPER, 3)
-                    .ingredient(CommonTags.Items.ORES_COPPER)
-                    .setGroup("copper_grit_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("copper_grit_from_dissolving_ore")))
-            .save(consumer, ResourceUtils.loc("copper_grit_from_dissolving_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, CommonTags.Items.RAW_MATERIALS_COPPER)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_COPPER, 3)
-                    .ingredient(CommonTags.Items.RAW_MATERIALS_COPPER)
-                    .setGroup("copper_grit_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("copper_grit_from_dissolving_raw_metal")))
-            .save(consumer, ResourceUtils.loc("copper_grit_from_dissolving_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.ORES_TIN)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_TIN, 3)
-                    .ingredient(ItemTagsForgeExt.ORES_TIN)
-                    .setGroup("tin_dust_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("tin_dust_from_dissolving_ore")))
-            .save(consumer, ResourceUtils.loc("tin_dust_from_dissolving_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.RAW_MATERIALS_TIN)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_TIN, 3)
-                    .ingredient(ItemTagsForgeExt.RAW_MATERIALS_TIN)
-                    .setGroup("tin_dust_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("tin_dust_from_dissolving_raw_metal")))
-            .save(consumer, ResourceUtils.loc("tin_dust_from_dissolving_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.ORES_LEAD)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_LEAD, 3)
-                    .ingredient(ItemTagsForgeExt.ORES_LEAD)
-                    .setGroup("lead_dust_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("lead_dust_from_dissolving_ore")))
-            .save(consumer, ResourceUtils.loc("lead_dust_from_dissolving_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.RAW_MATERIALS_LEAD)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_LEAD, 3)
-                    .ingredient(ItemTagsForgeExt.RAW_MATERIALS_LEAD)
-                    .setGroup("lead_dust_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("lead_dust_from_dissolving_raw_metal")))
-            .save(consumer, ResourceUtils.loc("lead_dust_from_dissolving_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.ORES_SILVER)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_SILVER, 3)
-                    .ingredient(ItemTagsForgeExt.ORES_SILVER)
-                    .setGroup("silver_dust_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("silver_dust_from_dissolving_ore")))
-            .save(consumer, ResourceUtils.loc("silver_dust_from_dissolving_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.RAW_MATERIALS_SILVER)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_SILVER, 3)
-                    .ingredient(ItemTagsForgeExt.RAW_MATERIALS_SILVER)
-                    .setGroup("silver_dust_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("silver_dust_from_dissolving_raw_metal")))
-            .save(consumer, ResourceUtils.loc("silver_dust_from_dissolving_raw_metal"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.ORES_URANIUM)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_URANIUM, 3)
-                    .ingredient(ItemTagsForgeExt.ORES_URANIUM)
-                    .setGroup("uranium_dust_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("uranium_dust_from_dissolving_ore")))
-            .save(consumer, ResourceUtils.loc("uranium_dust_from_dissolving_ore"));
-        ConditionalRecipe.builder()
-            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.RAW_MATERIALS_URANIUM)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_URANIUM, 3)
-                    .ingredient(ItemTagsForgeExt.RAW_MATERIALS_URANIUM)
-                    .setGroup("uranium_dust_dissolution")
-                    .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
-                    .build(output, ResourceUtils.loc("uranium_dust_from_dissolving_raw_metal")))
-            .save(consumer, ResourceUtils.loc("uranium_dust_from_dissolving_raw_metal"));
-        
+
+        this.registerDissolutionChamberConditionalRecipes(consumer);
+
         DissolutionRecipeBuilder.dissolutionRecipe(Items.COBBLESTONE, 2)
             .ingredient(ItemTagsPM.SURFACE_STONE)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
