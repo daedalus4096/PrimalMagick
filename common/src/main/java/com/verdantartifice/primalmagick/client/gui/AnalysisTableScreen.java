@@ -81,7 +81,7 @@ public class AnalysisTableScreen extends AbstractContainerScreenPM<AnalysisTable
         // Render any generated text
         if (text.getValue() != null) {
             int width = this.font.width(text.getValue().getString());
-            int x = 1 + (this.getXSize() - width) / 2;
+            int x = 1 + (this.imageWidth - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
             guiGraphics.drawString(this.font, text.getValue(), x, y, Color.BLACK.getRGB(), false);
         }
@@ -103,7 +103,7 @@ public class AnalysisTableScreen extends AbstractContainerScreenPM<AnalysisTable
             AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world).ifPresent(sources -> {
                 if (!sources.isEmpty()) {
                     int widgetSetWidth = sources.getSourcesSorted().size() * 18;
-                    int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
+                    int x = this.leftPos + 1 + (this.imageWidth - widgetSetWidth) / 2;
                     int y = this.topPos + 10;
                     for (Source source : sources.getSourcesSorted()) {
                         this.affinityWidgets.add(this.addRenderableWidget(new AffinityWidget(source, sources.getAmount(source), x, y)));

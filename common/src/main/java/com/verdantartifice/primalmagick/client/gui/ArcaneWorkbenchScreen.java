@@ -97,7 +97,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
         if (activeArcaneRecipe == null || activeArcaneRecipe.value().getManaCosts() == null || activeArcaneRecipe.value().getManaCosts().isEmpty()) {
             Component text = Component.translatable("label.primalmagick.crafting.no_mana");
             int width = this.font.width(text.getString());
-            int x = 1 + (this.getXSize() - width) / 2;
+            int x = 1 + (this.imageWidth - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
             guiGraphics.drawString(this.font, text, x, y, Color.BLACK.getRGB(), false);
         }
@@ -106,7 +106,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
     protected void initCostWidgets() {
         this.costWidgets.clear();
         int widgetSetWidth = Sources.getAllSorted().size() * 18;
-        int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
+        int x = this.leftPos + 1 + (this.imageWidth - widgetSetWidth) / 2;
         int y = this.topPos + 10;
         for (Source source : Sources.getAllSorted()) {
             this.costWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, 0, x, y, this.menu::getWand, this.menu.getPlayer())));
@@ -125,7 +125,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
                 widget.visible = (amount > 0);
                 if (widget.visible) {
                     widget.setAmount(amount);
-                    widget.setX(this.leftPos + 1 + dx + (this.getXSize() - widgetSetWidth) / 2);
+                    widget.setX(this.leftPos + 1 + dx + (this.imageWidth - widgetSetWidth) / 2);
                     dx += 18;
                 }
             }
