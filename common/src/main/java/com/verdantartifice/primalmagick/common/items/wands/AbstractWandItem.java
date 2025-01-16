@@ -44,8 +44,6 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -456,48 +454,8 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         }
     }
     
-    @Override
-    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        // Only process on server side
-        Level world = context.getLevel();
-        if (world.isClientSide) {
-            return InteractionResult.PASS;
-        }
-        
-        // Bypass wand functionality if the player is sneaking
-        if (context.getPlayer().isShiftKeyDown()) {
-            return InteractionResult.PASS;
-        }
-        
-        context.getPlayer().startUsingItem(context.getHand());
-        
-        // If the mouseover target is a wand-sensitive block, trigger that initial interaction
-        BlockState bs = context.getLevel().getBlockState(context.getClickedPos());
-        if (bs.getBlock() instanceof IInteractWithWand wandable) {
-            return wandable.onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
-        }
-        
-        // If the mouseover target is a wand-sensitive tile entity, trigger that initial interaction
-        BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
-        if (tile != null && tile instanceof IInteractWithWand wandable) {
-            return wandable.onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
-        }
-        
-        // Otherwise, see if the mouseover target is a valid target for wand transformation
-        for (IWandTransform transform : WandTransforms.getAll()) {
-            if (transform.isValid(context.getLevel(), context.getPlayer(), context.getClickedPos())) {
-                if (!context.getPlayer().mayUseItemAt(context.getClickedPos(), context.getClickedFace(), context.getItemInHand())) {
-                    return InteractionResult.FAIL;
-                } else {
-                    // If so, save its position for future channeling
-                    this.setPositionInUse(stack, context.getClickedPos());
-                    return InteractionResult.SUCCESS;
-                }
-            }
-        }
-        return InteractionResult.PASS;
-    }
-    
+    public abstract InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context);
+
     @Override
     public void onUseTick(Level level, LivingEntity living, ItemStack stack, int count) {
         // If the player continues to hold the interact button, continue the interaction with the last wand-sensitive block/tile interacted with
@@ -544,16 +502,5 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
 
         // Once interaction ceases, clear the last-interacted coordinates
         this.clearPositionInUse(stack);
-    }
-    
-    @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return false;
-    }
-    
-    @Override
-    public boolean canContinueUsing(ItemStack oldStack, ItemStack newStack) {
-        // Don't break wand interaction just because the stack NBT changes
-        return true;
     }
 }

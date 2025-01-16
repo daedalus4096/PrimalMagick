@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.wands;
 
+import com.verdantartifice.primalmagick.common.crafting.IWandTransform;
+import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -7,8 +9,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -323,4 +330,45 @@ public interface IWand {
      * @return true if the wand has a glamour applied, false otherwise
      */
     public boolean isGlamoured(@Nullable ItemStack stack);
+
+    default InteractionResult onWandUseFirst(ItemStack stack, UseOnContext context) {
+        // Only process on server side
+        Level world = context.getLevel();
+        if (world.isClientSide) {
+            return InteractionResult.PASS;
+        }
+
+        // Bypass wand functionality if the player is sneaking
+        if (context.getPlayer().isShiftKeyDown()) {
+            return InteractionResult.PASS;
+        }
+
+        context.getPlayer().startUsingItem(context.getHand());
+
+        // If the mouseover target is a wand-sensitive block, trigger that initial interaction
+        BlockState bs = context.getLevel().getBlockState(context.getClickedPos());
+        if (bs.getBlock() instanceof IInteractWithWand wandable) {
+            return wandable.onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
+        }
+
+        // If the mouseover target is a wand-sensitive tile entity, trigger that initial interaction
+        BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
+        if (tile != null && tile instanceof IInteractWithWand wandable) {
+            return wandable.onWandRightClick(context.getItemInHand(), context.getLevel(), context.getPlayer(), context.getClickedPos(), context.getClickedFace());
+        }
+
+        // Otherwise, see if the mouseover target is a valid target for wand transformation
+        for (IWandTransform transform : WandTransforms.getAll()) {
+            if (transform.isValid(context.getLevel(), context.getPlayer(), context.getClickedPos())) {
+                if (!context.getPlayer().mayUseItemAt(context.getClickedPos(), context.getClickedFace(), context.getItemInHand())) {
+                    return InteractionResult.FAIL;
+                } else {
+                    // If so, save its position for future channeling
+                    this.setPositionInUse(stack, context.getClickedPos());
+                    return InteractionResult.SUCCESS;
+                }
+            }
+        }
+        return InteractionResult.PASS;
+    }
 }
