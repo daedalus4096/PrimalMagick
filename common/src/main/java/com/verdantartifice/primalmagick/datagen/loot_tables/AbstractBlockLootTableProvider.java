@@ -37,8 +37,6 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.common.loot.CanToolPerformAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -77,7 +75,10 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
         this.checkExpectations();
     }
 
-    @Override
+    // This method overrides the getKnownBlocks base method added in patches by loader-specific versions of
+    // BlockLootSubProvider. It *should* have the override annotation, but doesn't because those base methods aren't
+    // present in the vanilla version of the class. This should still get called correctly via polymorphism by the
+    // loader-specific version of the base class.
     protected Iterable<Block> getKnownBlocks() {
         // Limit this data provider to blocks added by the mod
         return Services.BLOCKS_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue).toList();
@@ -116,7 +117,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     protected void registerLeavesTable(Block leavesBlock, Block saplingBlock, float[] saplingFortuneChances) {
         Holder<Enchantment> fortuneHolder = this.registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE);
         float[] stickFortuneChances = new float[] { 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F };
-        LootItemCondition.Builder shearsOrSilkTouch = CanToolPerformAction.canToolPerformAction(ToolActions.SHEARS_DIG).or(hasSilkTouch());
+        LootItemCondition.Builder shearsOrSilkTouch = Services.ITEM_ABILITIES.makeShearsDigLootCondition().or(hasSilkTouch());
         LootPoolEntryContainer.Builder<?> saplingEntryBuilder = LootItem.lootTableItem(saplingBlock).when(ExplosionCondition.survivesExplosion()).when(BonusLevelTableCondition.bonusLevelFlatChance(fortuneHolder, saplingFortuneChances));
         LootPoolEntryContainer.Builder<?> leavesEntryBuilder = LootItem.lootTableItem(leavesBlock).when(shearsOrSilkTouch);
         LootPool.Builder saplingAndLeavesPool = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(leavesEntryBuilder.otherwise(saplingEntryBuilder));
