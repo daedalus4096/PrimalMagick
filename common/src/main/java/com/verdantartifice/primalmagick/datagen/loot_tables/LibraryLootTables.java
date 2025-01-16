@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
@@ -251,10 +250,10 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     
     protected static LootPoolEntryContainer.Builder<?> book(HolderLookup.Provider registries, ResourceKey<BookDefinition> bookDefKey, Rarity rarity, int weight) {
         Supplier<StaticBookItem> itemSupplier = switch (rarity) {
-            case UNCOMMON -> ItemRegistration.STATIC_BOOK_UNCOMMON;
-            case RARE -> ItemRegistration.STATIC_BOOK_RARE;
-            case EPIC -> ItemRegistration.STATIC_TABLET;
-            default -> ItemRegistration.STATIC_BOOK;
+            case UNCOMMON -> ItemsPM.STATIC_BOOK_UNCOMMON;
+            case RARE -> ItemsPM.STATIC_BOOK_RARE;
+            case EPIC -> ItemsPM.STATIC_TABLET;
+            default -> ItemsPM.STATIC_BOOK;
         };
         Holder<BookDefinition> bookHolder = registries.lookupOrThrow(RegistryKeysPM.BOOKS).getOrThrow(bookDefKey);
         return LootItem.lootTableItem(itemSupplier.get()).setWeight(weight).apply(SetComponentsFunction.setComponent(DataComponentsPM.BOOK_DEFINITION.get(), bookHolder));
