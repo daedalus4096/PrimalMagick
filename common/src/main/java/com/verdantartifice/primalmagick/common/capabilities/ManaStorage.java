@@ -5,24 +5,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.LazyOptional;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -189,50 +176,5 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
         ManaStorage other = (ManaStorage) obj;
         return Objects.equals(allowedSources, other.allowedSources) && capacity == other.capacity
                 && Objects.equals(mana, other.mana) && maxExtract == other.maxExtract && maxReceive == other.maxReceive;
-    }
-
-    /**
-     * Capability provider for the mana storage capability.  Used to attach capability data to the owner.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
-     */
-    public static class Provider implements ICapabilitySerializable<Tag> {
-        public static final ResourceLocation NAME = ResourceUtils.loc("capability_mana_storage");
-        private static final Logger LOGGER = LogManager.getLogger();
-        
-        private ManaStorage instance;
-        private LazyOptional<ManaStorage> holder;
-        
-        public Provider(int capacity, int maxReceive, int maxExtract, Source... allowedSources) {
-            this.instance = new ManaStorage(capacity, maxReceive, maxExtract, SourceList.EMPTY, allowedSources);
-            this.holder = LazyOptional.of(() -> this.instance);  // Cache a lazy optional of the capability instance
-        }
-
-        @Override
-        public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-            if (cap == PrimalMagickCapabilities.MANA_STORAGE) {
-                return this.holder.cast();
-            } else {
-                return LazyOptional.empty();
-            }
-        }
-
-        @Override
-        public Tag serializeNBT(HolderLookup.Provider registries) {
-            return this.instance.codec().encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.instance)
-                .resultOrPartial(msg -> LOGGER.error("Failed to serialize mana storage capability: {}", msg))
-                .orElseThrow();
-        }
-
-        @Override
-        public void deserializeNBT(HolderLookup.Provider registries, Tag nbt) {
-            this.instance.codec().parse(registries.createSerializationContext(NbtOps.INSTANCE), nbt)
-                .resultOrPartial(msg -> LOGGER.error("Failed to deserialize mana storage capability: {}", msg))
-                .ifPresent(decodedManaStorage -> {
-                    this.instance = decodedManaStorage;
-                    this.holder = LazyOptional.of(() -> this.instance);
-                });
-        }
     }
 }
