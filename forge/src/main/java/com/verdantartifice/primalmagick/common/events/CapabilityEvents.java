@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.capabilities.PlayerArcaneRecipeBook;
+import com.verdantartifice.primalmagick.common.capabilities.PlayerArcaneRecipeBookForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerAttunementsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanionsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldownsForge;
@@ -33,7 +33,7 @@ public class CapabilityEvents {
             event.addCapability(PlayerStatsForge.Provider.NAME, new PlayerStatsForge.Provider());
             event.addCapability(PlayerAttunementsForge.Provider.NAME, new PlayerAttunementsForge.Provider());
             event.addCapability(PlayerCompanionsForge.Provider.NAME, new PlayerCompanionsForge.Provider());
-            event.addCapability(PlayerArcaneRecipeBook.Provider.NAME, new PlayerArcaneRecipeBook.Provider(player.level().getRecipeManager()));
+            event.addCapability(PlayerArcaneRecipeBookForge.Provider.NAME, new PlayerArcaneRecipeBookForge.Provider(player.level().getRecipeManager()));
             event.addCapability(PlayerWardForge.Provider.NAME, new PlayerWardForge.Provider());
             event.addCapability(PlayerLinguisticsForge.Provider.NAME, new PlayerLinguisticsForge.Provider());
         }

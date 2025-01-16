@@ -19,6 +19,7 @@ public class CapabilitiesForge {
     public static final Capability<IPlayerLinguistics> LINGUISTICS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<ITileResearchCache> RESEARCH_CACHE = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IManaStorage<?>> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IPlayerArcaneRecipeBook> ARCANE_RECIPE_BOOK = CapabilityManager.get(new CapabilityToken<>(){});
 
     @Nonnull
     public static LazyOptional<ITileResearchCache> getResearchCache(@Nonnull BlockEntity tile) {

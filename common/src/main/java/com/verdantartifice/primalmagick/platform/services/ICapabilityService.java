@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform.services;
 
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
@@ -22,6 +23,7 @@ public interface ICapabilityService {
     Optional<IPlayerCompanions> companions(Player player);
     Optional<IPlayerWard> ward(Player player);
     Optional<IPlayerLinguistics> linguistics(Player player);
+    Optional<IPlayerArcaneRecipeBook> arcaneRecipeBook(Player player);
 
     Optional<IItemHandlerPM> itemHandler(AbstractTilePM tile, Direction face);
 }

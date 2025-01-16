@@ -48,44 +48,7 @@ public class PlayerArcaneRecipeBook implements IPlayerArcaneRecipeBook {
         if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
+        this.syncTimestamp = nbt.getLong("SyncTimestamp");
         this.book.fromNbt(nbt.getCompound("Book"), recipeManager);
-    }
-
-    
-    /**
-     * Capability provider for the player arcane recipe book capability.  Used to attach capability data to the owner.
-     * 
-     * @author Daedalus4096
-     * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
-     */
-    public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = ResourceUtils.loc("capability_arcane_recipe_book");
-        
-        private final IPlayerArcaneRecipeBook instance = new PlayerArcaneRecipeBook();
-        private final LazyOptional<IPlayerArcaneRecipeBook> holder = LazyOptional.of(() -> instance);   // Cache a lazy optional of the capability instance
-        private final RecipeManager recipeManager;
-        
-        public Provider(RecipeManager recipeManager) {
-            this.recipeManager = recipeManager;
-        }
-
-        @Override
-        public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-            if (cap == PrimalMagickCapabilities.ARCANE_RECIPE_BOOK) {
-                return holder.cast();
-            } else {
-                return LazyOptional.empty();
-            }
-        }
-
-        @Override
-        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
-            return this.instance.serializeNBT(registries);
-        }
-
-        @Override
-        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-            this.instance.deserializeNBT(registries, nbt, this.recipeManager);
-        }
     }
 }
