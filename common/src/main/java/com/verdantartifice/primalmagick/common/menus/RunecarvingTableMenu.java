@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
+import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -14,8 +16,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerListener;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
@@ -24,12 +24,9 @@ import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -37,7 +34,7 @@ import java.util.stream.Collectors;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<RunecarvingTableTileEntity> implements ContainerListener {
+public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<RunecarvingTableTileEntity> implements IItemHandlerChangeListener {
     public static final ResourceLocation BASE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_slab_slot");
     public static final ResourceLocation ETCHING_SLOT_TEXTURE = ResourceUtils.loc("item/empty_lapis_slot");
     protected static final Component BASE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runecarving_table.slot.base");
@@ -50,7 +47,6 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     protected final Slot inputLapisSlot;
     protected final Slot outputSlot;
     protected final ResultContainer outputInventory = new ResultContainer();
-    protected final Optional<RecipeWrapper> tileInvWrapper;
 
     protected List<RecipeHolder<IRunecarvingRecipe>> recipes = new ArrayList<>();
     
@@ -71,7 +67,6 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos, RunecarvingTableTileEntity table) {
         super(MenuTypesPM.RUNECARVING_TABLE.get(), windowId, RunecarvingTableTileEntity.class, inv.player.level(), pos, table);
         this.player = inv.player;
-        this.tileInvWrapper = this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable ? Optional.of(new RecipeWrapper(modifiable)) : Optional.empty();
         this.tile.addListener(Direction.UP, this);
         
         // Slot 0: input slabs
@@ -101,7 +96,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.addDataSlot(this.selectedRecipe);
         
         // Do an immediate update of the table GUI
-        this.tileInvWrapper.ifPresent(recipeWrapper -> this.containerChanged(recipeWrapper));
+        this.itemsChanged(this.getTileInventory(Direction.UP));
     }
 
     public RecipeCraftingHolder getOutputInventory() {
@@ -141,24 +136,24 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         }
         return true;
     }
-    
+
     @Override
-    public void containerChanged(Container inventoryIn) {
+    public void itemsChanged(IItemHandlerPM itemHandler) {
         ItemStack slabStack = this.inputSlabSlot.getItem();
         ItemStack lapisStack = this.inputLapisSlot.getItem();
         if (slabStack.getItem() != this.slabInput.getItem() || lapisStack.getItem() != this.lapisInput.getItem()) {
             this.slabInput = slabStack.copy();
             this.lapisInput = lapisStack.copy();
-            this.updateAvailableRecipes(inventoryIn, slabStack, lapisStack);
+            this.updateAvailableRecipes(itemHandler, slabStack, lapisStack);
         }
         this.inventoryUpdateListener.run();
-    };
-    
-    private static RunecarvingRecipeInput createRecipeInput(Container inventory) {
-        return new RunecarvingRecipeInput(inventory.getItem(0), inventory.getItem(1));
     }
     
-    protected void updateAvailableRecipes(Container inventoryIn, ItemStack slabStack, ItemStack lapisStack) {
+    private static RunecarvingRecipeInput createRecipeInput(IItemHandlerPM inventory) {
+        return new RunecarvingRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1));
+    }
+    
+    protected void updateAvailableRecipes(IItemHandlerPM inventoryIn, ItemStack slabStack, ItemStack lapisStack) {
         this.recipes.clear();
         this.selectedRecipe.set(-1);
         this.outputSlot.set(ItemStack.EMPTY);
@@ -168,9 +163,9 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     }
     
     public void updateRecipeResultSlot(RegistryAccess registryAccess) {
-        if (!this.recipes.isEmpty() && this.tileInvWrapper.isPresent()) {
+        if (!this.recipes.isEmpty() && this.getTileInventory(Direction.UP) != null) {
             IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get()).value();
-            this.outputSlot.set(recipe.assemble(createRecipeInput(this.tileInvWrapper.get()), registryAccess));
+            this.outputSlot.set(recipe.assemble(createRecipeInput(this.getTileInventory(Direction.UP)), registryAccess));
         } else {
             this.outputSlot.set(ItemStack.EMPTY);
         }
