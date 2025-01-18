@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.platform;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemForge;
+import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemForge;
@@ -45,6 +47,11 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import java.util.function.Supplier;
 
 public class ItemPrototypeServiceForge implements IItemPrototypeService {
+    @Override
+    public Supplier<BurnableBlockItem> burnable(Block block, int burnTicks, Item.Properties properties) {
+        return () -> new BurnableBlockItemForge(block, burnTicks, properties);
+    }
+
     @Override
     public Supplier<ArcanometerItem> arcanometer() {
         return ArcanometerItemForge::new;

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform.services;
 
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
+import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItem;
@@ -27,6 +28,8 @@ import net.minecraft.world.level.block.Block;
 import java.util.function.Supplier;
 
 public interface IItemPrototypeService {
+    Supplier<BurnableBlockItem> burnable(Block block, int burnTicks, Item.Properties properties);
+
     Supplier<ArcanometerItem> arcanometer();
 
     <T extends Block> Supplier<ManaFontBlockItem> manaFont(Supplier<T> blockSupplier, Item.Properties properties);

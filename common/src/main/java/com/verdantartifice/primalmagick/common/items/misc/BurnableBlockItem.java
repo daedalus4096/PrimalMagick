@@ -12,16 +12,11 @@ import javax.annotation.Nullable;
  * 
  * @author Daedalus4096
  */
-public class BurnableBlockItem extends BlockItem {
+public abstract class BurnableBlockItem extends BlockItem {
     protected final int burnTicks;
     
     public BurnableBlockItem(Block blockIn, int burnTicks, Properties builder) {
         super(blockIn, builder);
         this.burnTicks = burnTicks;
-    }
-
-    @Override
-    public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
-        return this.burnTicks;
     }
 }

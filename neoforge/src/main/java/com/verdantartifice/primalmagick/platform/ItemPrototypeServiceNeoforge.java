@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.platform;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemNeoforge;
+import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemNeoforge;
@@ -45,6 +47,11 @@ import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import java.util.function.Supplier;
 
 public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
+    @Override
+    public Supplier<BurnableBlockItem> burnable(Block block, int burnTicks, Item.Properties properties) {
+        return () -> new BurnableBlockItemNeoforge(block, burnTicks, properties);
+    }
+
     @Override
     public Supplier<ArcanometerItem> arcanometer() {
         return ArcanometerItemNeoforge::new;
