@@ -24,7 +24,7 @@ import java.util.function.Supplier;
  * 
  * @author Daedalus4096
  */
-public class ModularStaffItem extends ModularWandItem implements IStaff {
+public abstract class ModularStaffItem extends ModularWandItem implements IStaff {
     public ModularStaffItem(Item.Properties properties) {
         super(properties);
     }

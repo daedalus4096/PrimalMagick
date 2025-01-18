@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  * 
  * @author Daedalus4096
  */
-public class ModularWandItem extends AbstractWandItem {
+public abstract class ModularWandItem extends AbstractWandItem {
     public ModularWandItem(Properties properties) {
         super(properties);
     }
@@ -204,13 +204,7 @@ public class ModularWandItem extends AbstractWandItem {
     public boolean isEnchantable(ItemStack stack) {
         return true;
     }
-    
-    @Override
-    public int getEnchantmentValue(ItemStack stack) {
-        // The enchantability of a wand is determined by its components
-        return this.getComponents(stack).stream().mapToInt(IWandComponent::getEnchantability).sum();
-    }
-    
+
     public static void registerCreativeTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier) {
         Item item = itemSupplier.get().asItem();
         if (item instanceof ModularWandItem wandItem) {

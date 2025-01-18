@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * 
  * @author Daedalus4096
  */
-public class MundaneWandItem extends AbstractWandItem {
+public abstract class MundaneWandItem extends AbstractWandItem {
     public MundaneWandItem() {
         super(new Item.Properties().stacksTo(1));
     }
