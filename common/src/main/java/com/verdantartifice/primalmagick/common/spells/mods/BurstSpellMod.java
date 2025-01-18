@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -122,7 +123,9 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
                             BlockState blockState = world.getBlockState(curPos);
                             FluidState fluidState = world.getFluidState(curPos);
                             if (!blockState.isAir() || !fluidState.isEmpty()) {
-                                float resistance = Math.max(blockState.getExplosionResistance(world, curPos, explosion), fluidState.getExplosionResistance(world, curPos, explosion));
+                                float resistance = Math.max(
+                                        Services.BLOCK_STATES.getExplosionResistance(blockState, world, curPos, explosion),
+                                        Services.FLUID_STATES.getExplosionResistance(fluidState, world, curPos, explosion));
                                 remainingPower -= (resistance + 0.3F) * 0.3F;
                             }
                             

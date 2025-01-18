@@ -2,9 +2,11 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityPrototypeService;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityTickerService;
+import com.verdantartifice.primalmagick.platform.services.IBlockStateService;
 import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
 import com.verdantartifice.primalmagick.platform.services.IConfigService;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
+import com.verdantartifice.primalmagick.platform.services.IFluidStateService;
 import com.verdantartifice.primalmagick.platform.services.IGuiGraphicsService;
 import com.verdantartifice.primalmagick.platform.services.IIngredientService;
 import com.verdantartifice.primalmagick.platform.services.IInputService;
@@ -82,6 +84,8 @@ public class Services {
     public static final IParticleService PARTICLES = load(IParticleService.class);
     public static final IGuiGraphicsService GUI_GRAPHICS = load(IGuiGraphicsService.class);
     public static final IIngredientService INGREDIENTS = load(IIngredientService.class);
+    public static final IBlockStateService BLOCK_STATES = load(IBlockStateService.class);
+    public static final IFluidStateService FLUID_STATES = load(IFluidStateService.class);
 
     // Registry services
     public static final IBlockRegistryService BLOCKS_REGISTRY = load(IBlockRegistryService.class);
