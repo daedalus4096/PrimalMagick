@@ -49,7 +49,7 @@ public class BuddingGemSourceBlock extends Block {
                 newBlock = this.initialBudSupplier.get();
             } else if (targetState.getBlock() instanceof BuddingGemClusterBlock cluster && cluster.getGemBudType() == this.gemType && 
                     targetState.getValue(BuddingGemClusterBlock.FACING) == dir && cluster.getNextGemBlock().isPresent()) {
-                newBlock = BlocksPM.get(cluster.getNextGemBlock().get());
+                newBlock = cluster.getNextGemBlock().get().get();
             }
             
             if (newBlock instanceof BuddingGemClusterBlock newCluster) {

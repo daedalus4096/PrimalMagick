@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.blocks.minerals;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -20,15 +19,14 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootParams.Builder;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Definition of a gem cluster grown from a {@link BuddingGemSourceBlock}.
@@ -40,7 +38,7 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     protected final GemBudType gemType;
-    protected final Optional<ResourceLocation> nextGemSupplierOpt;
+    protected final Optional<Supplier<BuddingGemClusterBlock>> nextGemSupplierOpt;
     protected final VoxelShape northAabb;
     protected final VoxelShape southAabb;
     protected final VoxelShape eastAabb;
@@ -48,7 +46,7 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
     protected final VoxelShape upAabb;
     protected final VoxelShape downAabb;
 
-    public BuddingGemClusterBlock(int pSize, int pOffset, GemBudType gemType, Optional<ResourceLocation> nextGemSupplierOpt, Block.Properties properties) {
+    public BuddingGemClusterBlock(int pSize, int pOffset, GemBudType gemType, Optional<Supplier<BuddingGemClusterBlock>> nextGemSupplierOpt, Block.Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.FALSE).setValue(FACING, Direction.UP));
         this.gemType = gemType;
@@ -65,7 +63,7 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
         return this.gemType;
     }
     
-    public Optional<ResourceLocation> getNextGemBlock() {
+    public Optional<Supplier<BuddingGemClusterBlock>> getNextGemBlock() {
         return this.nextGemSupplierOpt;
     }
 
@@ -134,10 +132,5 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
         pBuilder.add(FACING, WATERLOGGED);
-    }
-
-    @Override
-    public @Nullable PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.DESTROY;
     }
 }
