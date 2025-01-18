@@ -16,8 +16,6 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
 
 /**
  * Definition of a fishing rod made of a magickal metal.
@@ -68,10 +66,5 @@ public class TieredFishingRodItem extends FishingRodItem {
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
         return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
-    }
-
-    @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-        return ToolActions.DEFAULT_FISHING_ROD_ACTIONS.contains(toolAction);
     }
 }
