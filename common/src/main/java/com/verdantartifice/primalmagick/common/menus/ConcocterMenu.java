@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
@@ -18,7 +19,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraftforge.items.IItemHandler;
 
 /**
  * Server data container for the concocter GUI.
@@ -146,7 +146,7 @@ public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileE
         }
     }
     
-    private static CraftingInput createRecipeInput(IItemHandler container) {
+    private static CraftingInput createRecipeInput(IItemHandlerPM container) {
         NonNullList<ItemStack> items = NonNullList.withSize(container.getSlots(), ItemStack.EMPTY);
         for (int index = 0; index < container.getSlots(); index++) {
             items.set(index, container.getStackInSlot(index));

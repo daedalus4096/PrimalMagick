@@ -23,7 +23,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
-import net.minecraftforge.items.IItemHandlerModifiable;
 
 /**
  * Server data container for the infernal furnace GUI.
@@ -115,8 +114,8 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
 
     @Override
     public boolean recipeMatches(RecipeHolder<AbstractCookingRecipe> recipe) {
-        if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
-            return recipe.value().matches(new SingleRecipeInput(modifiable.getStackInSlot(0)), this.level);
+        if (this.getTileInventory(Direction.UP) != null) {
+            return recipe.value().matches(new SingleRecipeInput(this.getTileInventory(Direction.UP).getStackInSlot(0)), this.level);
         } else {
             return false;
         }

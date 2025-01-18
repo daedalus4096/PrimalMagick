@@ -22,7 +22,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -171,7 +170,7 @@ public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTa
             }
 
             // Consume paper
-            this.tile.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).ifPresent(inv -> inv.extractItem(1, 1, false));
+            Services.CAPABILITIES.itemHandler(this.tile, Direction.UP).ifPresent(inv -> inv.extractItem(1, 1, false));
         }
     }
     
