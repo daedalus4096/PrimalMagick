@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.capabilities.EntitySwappersForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerArcaneRecipeBookForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerAttunementsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanionsForge;
@@ -9,10 +10,9 @@ import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledgeForge
 import com.verdantartifice.primalmagick.common.capabilities.PlayerLinguisticsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerStatsForge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerWardForge;
-import com.verdantartifice.primalmagick.common.capabilities.WorldEntitySwappers;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -36,11 +36,9 @@ public class CapabilityEvents {
             event.addCapability(PlayerArcaneRecipeBookForge.Provider.NAME, new PlayerArcaneRecipeBookForge.Provider(player.level().getRecipeManager()));
             event.addCapability(PlayerWardForge.Provider.NAME, new PlayerWardForge.Provider());
             event.addCapability(PlayerLinguisticsForge.Provider.NAME, new PlayerLinguisticsForge.Provider());
+        } else if (event.getObject() instanceof LivingEntity) {
+            // Only attach these capabilities to non-player living entities
+            event.addCapability(EntitySwappersForge.Provider.NAME, new EntitySwappersForge.Provider());
         }
-    }
-    
-    @SubscribeEvent
-    public static void attachWorldCapability(AttachCapabilitiesEvent<Level> event) {
-        event.addCapability(WorldEntitySwappers.Provider.NAME, new WorldEntitySwappers.Provider());
     }
 }

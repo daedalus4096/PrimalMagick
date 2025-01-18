@@ -54,6 +54,8 @@ public class CapabilitiesNeoforge {
                     return arcaneRecipeBook.serializeNBT(provider);
                 }
             }).copyOnDeath().build());
+    public static final Supplier<AttachmentType<EntitySwappersNeoforge>> ENTITY_SWAPPERS = CAPABILITIES.register("entity_swappers",
+            () -> AttachmentType.serializable(EntitySwappersNeoforge::new).build());    // Do not copy swappers on death
 
     public static final BlockCapability<ITileResearchCache, Void> RESEARCH_CACHE =
             BlockCapability.createVoid(ResourceUtils.loc("research_cache"), ITileResearchCache.class);

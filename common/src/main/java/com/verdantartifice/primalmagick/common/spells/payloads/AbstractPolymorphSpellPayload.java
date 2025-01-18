@@ -57,7 +57,7 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
                 UUID entityId = entityTarget.getEntity().getUUID();
                 CompoundTag originalData = entityTarget.getEntity().saveWithoutId(new CompoundTag());
                 int ticks = 20 * this.getDurationSeconds(spell, spellSource, world.registryAccess());
-                EntitySwapper.enqueue(world, new EntitySwapper(entityId, this.getNewEntityType(), originalData, Optional.of(Integer.valueOf(ticks)), 0));
+                EntitySwapper.enqueue(entityTarget.getEntity(), new EntitySwapper(this.getNewEntityType(), originalData, Optional.of(ticks), 0));
             }
         }
     }

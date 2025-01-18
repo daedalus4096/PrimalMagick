@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.platform.services;
 
+import com.verdantartifice.primalmagick.common.capabilities.IEntitySwappers;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
@@ -11,6 +12,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerWard;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Optional;
@@ -24,6 +26,8 @@ public interface ICapabilityService {
     Optional<IPlayerWard> ward(Player player);
     Optional<IPlayerLinguistics> linguistics(Player player);
     Optional<IPlayerArcaneRecipeBook> arcaneRecipeBook(Player player);
+
+    Optional<IEntitySwappers> swappers(Entity entity);
 
     Optional<IItemHandlerPM> itemHandler(AbstractTilePM tile, Direction face);
 }

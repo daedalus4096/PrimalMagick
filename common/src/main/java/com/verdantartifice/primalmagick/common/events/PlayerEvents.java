@@ -90,8 +90,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 
 /**
@@ -150,6 +152,10 @@ public class PlayerEvents {
         if (level.isClientSide && (entity instanceof Player player)) {
             // If this is a client-side player, handle any double jumps from attunement bonuses
             handleDoubleJump(player);
+        }
+        if (!level.isClientSide) {
+            // If on the server side, handle any entity swappers attached to the entity
+            tickEntitySwappers(entity);
         }
     }
     
@@ -363,7 +369,32 @@ public class PlayerEvents {
             }
         });
     }
-    
+
+    protected static void tickEntitySwappers(Entity entity) {
+        Queue<EntitySwapper> swapperQueue = EntitySwapper.getSwapperQueue(entity);
+        if (swapperQueue != null) {
+            // Execute each pending entity swapper in turn
+            Queue<EntitySwapper> newQueue = new LinkedBlockingQueue<>();
+            while (!swapperQueue.isEmpty()) {
+                EntitySwapper swapper = swapperQueue.poll();
+                if (swapper != null) {
+                    if (swapper.isReady()) {
+                        EntitySwapper newSwapper = swapper.execute(entity);
+                        if (newSwapper != null) {
+                            // If a return swap is triggered by this swap, queue up the new swapper
+                            newQueue.offer(newSwapper);
+                        }
+                    } else {
+                        // If the swapper isn't ready yet, re-queue it with a shorter delay
+                        swapper.decrementDelay();
+                        newQueue.offer(swapper);
+                    }
+                }
+            }
+            EntitySwapper.setSwapperQueue(entity, newQueue);
+        }
+    }
+
     public static void playerJoinEvent(Entity entity, Level level) {
         if (!level.isClientSide && (entity instanceof ServerPlayer player)) {
             // When a player first joins a world, sync that player's capabilities to their client
@@ -608,7 +639,7 @@ public class PlayerEvents {
              stack.getItem() instanceof NameTagItem && 
              stack.getHoverName().getString().equals(FriendlyWitchEntity.HONORED_NAME)) {
             CompoundTag originalData = target.saveWithoutId(new CompoundTag());
-            EntitySwapper.enqueue(level, new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
+            EntitySwapper.enqueue(target, new EntitySwapper(EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
             List<Player> nearby = EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D);
             for (Player nearbyPlayer : nearby) {
                 nearbyPlayer.sendSystemMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME));

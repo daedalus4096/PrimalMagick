@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
+import com.verdantartifice.primalmagick.common.capabilities.IEntitySwappers;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
@@ -14,6 +15,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPMNe
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.capabilities.Capabilities;
 
@@ -58,6 +60,11 @@ public class CapabilityServiceNeoforge implements ICapabilityService {
     @Override
     public Optional<IPlayerArcaneRecipeBook> arcaneRecipeBook(Player player) {
         return player == null ? Optional.empty() : Optional.of(player.getData(CapabilitiesNeoforge.ARCANE_RECIPE_BOOK));
+    }
+
+    @Override
+    public Optional<IEntitySwappers> swappers(Entity entity) {
+        return entity == null ? Optional.empty() : Optional.of(entity.getData(CapabilitiesNeoforge.ENTITY_SWAPPERS));
     }
 
     @Override

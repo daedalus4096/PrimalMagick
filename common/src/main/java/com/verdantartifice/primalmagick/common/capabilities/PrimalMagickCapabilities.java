@@ -15,10 +15,10 @@ import javax.annotation.Nullable;
  * @author Daedalus4096
  */
 public class PrimalMagickCapabilities {
-    public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IEntitySwappers> ENTITY_SWAPPERS = CapabilityManager.get(new CapabilityToken<>(){});
 
     @Nullable
-    public static IWorldEntitySwappers getEntitySwappers(@Nonnull Level world) {
+    public static IEntitySwappers getEntitySwappers(@Nonnull Level world) {
         return world.getCapability(ENTITY_SWAPPERS, null).orElse(null);
     }
 }
