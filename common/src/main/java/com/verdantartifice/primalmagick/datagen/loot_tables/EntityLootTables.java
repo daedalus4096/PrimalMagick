@@ -62,8 +62,11 @@ public class EntityLootTables extends EntityLootSubProvider {
         this.add(type, builder);
         this.registeredEntities.add(Services.ENTITY_TYPES_REGISTRY.getKey(type));
     }
-    
-    @Override
+
+    // This method overrides the getKnownEntityTypes base method added in patches by loader-specific versions of
+    // EntityLootSubProvider. It *should* have the override annotation, but doesn't because those base methods aren't
+    // present in the vanilla version of the class. This should still get called correctly via polymorphism by the
+    // loader-specific version of the base class.
     protected Stream<EntityType<?>> getKnownEntityTypes() {
         // Limit this data provider to entity types added by the mod
         return Services.ENTITY_TYPES_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue);
