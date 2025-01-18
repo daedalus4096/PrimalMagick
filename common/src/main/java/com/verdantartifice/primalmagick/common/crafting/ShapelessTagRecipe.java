@@ -5,6 +5,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -24,7 +25,6 @@ import java.util.function.Predicate;
  * it outputs a tag rather than a specific item stack.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
  */
 public class ShapelessTagRecipe extends AbstractTagCraftingRecipe<CraftingInput> implements IShapelessRecipePM<CraftingInput>, CraftingRecipe {
     protected final CraftingBookCategory category;
@@ -35,7 +35,7 @@ public class ShapelessTagRecipe extends AbstractTagCraftingRecipe<CraftingInput>
         super(group, outputTag, outputAmount);
         this.category = category;
         this.recipeItems = items;
-        this.isSimple = items.stream().allMatch(Ingredient::isSimple);
+        this.isSimple = items.stream().allMatch(Services.INGREDIENTS::isSimple);
     }
 
     @Override

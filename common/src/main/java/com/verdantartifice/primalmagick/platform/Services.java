@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
 import com.verdantartifice.primalmagick.platform.services.IConfigService;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
 import com.verdantartifice.primalmagick.platform.services.IGuiGraphicsService;
+import com.verdantartifice.primalmagick.platform.services.IIngredientService;
 import com.verdantartifice.primalmagick.platform.services.IInputService;
 import com.verdantartifice.primalmagick.platform.services.IItemAbilityService;
 import com.verdantartifice.primalmagick.platform.services.IItemHandlerService;
@@ -80,6 +81,7 @@ public class Services {
     public static final IItemService ITEMS = load(IItemService.class);
     public static final IParticleService PARTICLES = load(IParticleService.class);
     public static final IGuiGraphicsService GUI_GRAPHICS = load(IGuiGraphicsService.class);
+    public static final IIngredientService INGREDIENTS = load(IIngredientService.class);
 
     // Registry services
     public static final IBlockRegistryService BLOCKS_REGISTRY = load(IBlockRegistryService.class);

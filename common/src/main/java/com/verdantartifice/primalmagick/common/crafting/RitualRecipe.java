@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -49,7 +50,7 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<CraftingInput> imp
         this.instability = instability;
         this.recipeItems = items;
         this.recipeProps = props;
-        this.isSimple = items.stream().allMatch(Ingredient::isSimple);
+        this.isSimple = items.stream().allMatch(Services.INGREDIENTS::isSimple);
         this.baseExpertiseOverride = baseExpertiseOverride;
         this.bonusExpertiseOverride = bonusExpertiseOverride;
         this.expertiseGroup = expertiseGroup;

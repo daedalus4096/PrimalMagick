@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineK
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -46,7 +47,7 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
         this.requirement = requirement;
         this.manaCosts = manaCosts;
         this.recipeItems = items;
-        this.isSimple = items.stream().allMatch(Ingredient::isSimple);
+        this.isSimple = items.stream().allMatch(Services.INGREDIENTS::isSimple);
         this.baseExpertiseOverride = baseExpertiseOverride;
         this.bonusExpertiseOverride = bonusExpertiseOverride;
         this.expertiseGroup = expertiseGroup;

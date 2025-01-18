@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -34,7 +35,7 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<CraftingInput>
         this.requirement = requirement;
         this.manaCosts = manaCosts;
         this.recipeItems = items;
-        this.isSimple = items.stream().allMatch(Ingredient::isSimple);
+        this.isSimple = items.stream().allMatch(Services.INGREDIENTS::isSimple);
     }
 
     @Override
