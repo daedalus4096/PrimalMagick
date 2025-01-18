@@ -8,6 +8,8 @@ import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemForge
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItemForge;
+import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItem;
+import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelShieldItem;
@@ -22,6 +24,8 @@ import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItemForge;
+import com.verdantartifice.primalmagick.common.items.tools.TieredBowItem;
+import com.verdantartifice.primalmagick.common.items.tools.TieredBowItemForge;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItemForge;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
@@ -34,6 +38,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 
@@ -88,6 +93,16 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     @Override
     public Supplier<ForbiddenTridentItem> forbiddenTrident(Item.Properties properties) {
         return () -> new ForbiddenTridentItemForge(properties);
+    }
+
+    @Override
+    public Supplier<TieredBowItem> tieredBow(Tier tier, Item.Properties properties) {
+        return () -> new TieredBowItemForge(tier, properties);
+    }
+
+    @Override
+    public Supplier<ForbiddenBowItem> forbiddenBow(Item.Properties properties) {
+        return () -> new ForbiddenBowItemForge(properties);
     }
 
     @Override

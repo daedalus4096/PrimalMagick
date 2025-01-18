@@ -6,12 +6,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 
+import javax.annotation.Nonnull;
+
 /**
  * Definition of a repairable bow item made of a magickal metal.
  * 
  * @author Daedalus4096
  */
-public class TieredBowItem extends BowItem {
+public abstract class TieredBowItem extends BowItem {
     protected final Tier tier;
     
     public TieredBowItem(Tier tier, Item.Properties properties) {
@@ -19,19 +21,15 @@ public class TieredBowItem extends BowItem {
         this.tier = tier;
     }
 
-    @Override
-    public AbstractArrow customArrow(AbstractArrow arrow) {
-        AbstractArrow newArrow = super.customArrow(arrow);
-        double damageBonus = 0.0D;
-        if (this.tier == ItemTierPM.PRIMALITE) {
-            damageBonus = 0.5D;
-        } else if (this.tier == ItemTierPM.HEXIUM) {
-            damageBonus = 1.0D;
-        } else if (this.tier == ItemTierPM.HALLOWSTEEL) {
-            damageBonus = 1.5D;
-        }
-        newArrow.setBaseDamage(newArrow.getBaseDamage() + damageBonus);
-        return newArrow;
+    protected AbstractArrow boostArrowDamage(@Nonnull AbstractArrow arrow) {
+        double damageBonus = switch (this.tier) {
+            case ItemTierPM.PRIMALITE -> 0.5D;
+            case ItemTierPM.HEXIUM -> 1.0D;
+            case ItemTierPM.HALLOWSTEEL -> 1.5D;
+            default -> 0.0D;
+        };
+        arrow.setBaseDamage(arrow.getBaseDamage() + damageBonus);
+        return arrow;
     }
     
     public Tier getTier() {

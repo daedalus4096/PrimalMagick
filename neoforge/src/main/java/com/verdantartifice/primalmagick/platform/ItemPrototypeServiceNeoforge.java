@@ -8,6 +8,8 @@ import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemNeofo
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItemNeoforge;
+import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItem;
+import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelShieldItem;
@@ -22,6 +24,8 @@ import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItemNeoforge;
+import com.verdantartifice.primalmagick.common.items.tools.TieredBowItem;
+import com.verdantartifice.primalmagick.common.items.tools.TieredBowItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
@@ -34,6 +38,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 
@@ -88,6 +93,16 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     @Override
     public Supplier<ForbiddenTridentItem> forbiddenTrident(Item.Properties properties) {
         return () -> new ForbiddenTridentItemNeoforge(properties);
+    }
+
+    @Override
+    public Supplier<TieredBowItem> tieredBow(Tier tier, Item.Properties properties) {
+        return () -> new TieredBowItemNeoforge(tier, properties);
+    }
+
+    @Override
+    public Supplier<ForbiddenBowItem> forbiddenBow(Item.Properties properties) {
+        return () -> new ForbiddenBowItemNeoforge(properties);
     }
 
     @Override

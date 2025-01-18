@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.entities.companions.pixies.Abstra
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
+import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelTridentItem;
@@ -11,6 +12,7 @@ import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
+import com.verdantartifice.primalmagick.common.items.tools.TieredBowItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem;
@@ -19,6 +21,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
@@ -37,6 +40,9 @@ public interface IItemPrototypeService {
     Supplier<HexiumTridentItem> hexiumTrident(Item.Properties properties);
     Supplier<HallowsteelTridentItem> hallowsteelTrident(Item.Properties properties);
     Supplier<ForbiddenTridentItem> forbiddenTrident(Item.Properties properties);
+
+    Supplier<TieredBowItem> tieredBow(Tier tier, Item.Properties properties);
+    Supplier<ForbiddenBowItem> forbiddenBow(Item.Properties properties);
 
     Supplier<MundaneWandItem> mundaneWand();
     Supplier<ModularWandItem> modularWand(Item.Properties properties);
