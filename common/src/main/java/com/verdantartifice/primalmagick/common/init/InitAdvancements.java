@@ -4,6 +4,8 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 /**
  * Point of registration for advancement related data.
@@ -24,6 +26,6 @@ public class InitAdvancements {
     }
     
     private static void registerCriterion(String name, CriterionTrigger<?> trigger) {
-        CriteriaTriggers.register(String.join(":", Constants.MOD_ID, name), trigger);
+        Registry.register(BuiltInRegistries.TRIGGER_TYPES, String.join(":", Constants.MOD_ID, name), trigger);
     }
 }
