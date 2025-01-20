@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.platform.services.IPartEntityService;
 import com.verdantartifice.primalmagick.platform.services.IParticleService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import com.verdantartifice.primalmagick.platform.services.IPlayerService;
+import com.verdantartifice.primalmagick.platform.services.IRecipeService;
 import com.verdantartifice.primalmagick.platform.services.IShearableService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArmorMaterialRegistryService;
@@ -90,6 +91,7 @@ public class Services {
     public static final IFluidStateService FLUID_STATES = load(IFluidStateService.class);
     public static final IItemStackService ITEM_STACKS = load(IItemStackService.class);
     public static final IAttributeService ATTRIBUTES = load(IAttributeService.class);
+    public static final IRecipeService RECIPES = load(IRecipeService.class);
 
     // Registry services
     public static final IBlockRegistryService BLOCKS_REGISTRY = load(IBlockRegistryService.class);
