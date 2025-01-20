@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
+import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
+import com.verdantartifice.primalmagick.common.crafting.ingredients.PartialComponentIngredient;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -7,11 +10,16 @@ import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.AndCondition;
 import net.minecraftforge.common.crafting.conditions.ICondition;
@@ -179,6 +187,24 @@ public class RecipesForge extends Recipes {
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("uranium_dust_from_raw_metal")))
                 .save(consumer, ResourceUtils.loc("uranium_dust_from_raw_metal"));
+    }
+
+    @Override
+    protected Ingredient makeWaterFlaskIngredient() {
+        return this.makeWaterIngredientInner(ItemsPM.CONCOCTION.get());
+    }
+
+    @Override
+    protected Ingredient makeWaterBombIngredient() {
+        return this.makeWaterIngredientInner(ItemsPM.ALCHEMICAL_BOMB.get());
+    }
+
+    private Ingredient makeWaterIngredientInner(ItemLike baseItem) {
+        return PartialComponentIngredient.builder()
+                .item(baseItem)
+                .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
+                .data(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
+                .build();
     }
 
     @Override

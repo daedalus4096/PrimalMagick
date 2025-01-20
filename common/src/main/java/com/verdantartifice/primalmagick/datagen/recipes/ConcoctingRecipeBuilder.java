@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.ConcoctingRecipe;
-import com.verdantartifice.primalmagick.common.crafting.ingredients.PartialComponentIngredient;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
@@ -24,7 +21,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
@@ -75,22 +71,6 @@ public class ConcoctingRecipeBuilder {
     
     public ConcoctingRecipeBuilder addIngredient(TagKey<Item> tag) {
         return this.addIngredient(Ingredient.of(tag));
-    }
-    
-    public ConcoctingRecipeBuilder addWaterFlaskIngredient() {
-        return this.addIngredient(PartialComponentIngredient.builder()
-                .item(ItemsPM.CONCOCTION.get())
-                .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
-                .data(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
-                .build());
-    }
-    
-    public ConcoctingRecipeBuilder addWaterBombIngredient() {
-        return this.addIngredient(PartialComponentIngredient.builder()
-                .item(ItemsPM.ALCHEMICAL_BOMB.get())
-                .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
-                .data(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
-                .build());
     }
     
     public ConcoctingRecipeBuilder setGroup(String group) {

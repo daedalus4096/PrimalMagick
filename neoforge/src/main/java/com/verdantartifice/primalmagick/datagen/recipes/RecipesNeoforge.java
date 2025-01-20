@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
+import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -7,15 +9,22 @@ import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPredicate;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.conditions.AndCondition;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -121,6 +130,26 @@ public class RecipesNeoforge extends Recipes {
                 .setGroup("earthshatter_hammer_grit")
                 .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.RAW_MATERIALS_URANIUM))), ResourceUtils.loc("uranium_dust_from_raw_metal"));
+    }
+
+    @Override
+    protected Ingredient makeWaterFlaskIngredient() {
+        return this.makeWaterIngredientInner(ItemsPM.CONCOCTION.get());
+    }
+
+    @Override
+    protected Ingredient makeWaterBombIngredient() {
+        return this.makeWaterIngredientInner(ItemsPM.ALCHEMICAL_BOMB.get());
+    }
+
+    private Ingredient makeWaterIngredientInner(ItemLike baseItem) {
+        return DataComponentIngredient.of(
+                false,
+                DataComponentPredicate.builder()
+                        .expect(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
+                        .expect(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
+                        .build(),
+                baseItem);
     }
 
     @Override
