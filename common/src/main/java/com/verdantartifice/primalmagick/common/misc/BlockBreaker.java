@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.misc;
 
-import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -166,7 +166,7 @@ public class BlockBreaker {
      * 
      * @param world the world to break in
      * @return true if the block was successfully harvested, false otherwise
-     * @see {@link net.minecraft.server.management.PlayerInteractionManager#tryHarvestBlock(BlockPos)}
+     * @see net.minecraft.server.level.ServerPlayerGameMode#destroyBlock(BlockPos)
      */
     protected boolean doHarvest(@Nonnull Level world) {
         if (!world.isClientSide && this.player instanceof ServerPlayer serverPlayer && world instanceof ServerLevel serverWorld) {
@@ -180,7 +180,7 @@ public class BlockBreaker {
                 
                 // If the experience for the block was zero because the player is using a Break spell and thus the wrong tool type, recalculate
                 if (exp == 0 && !ForgeHooks.isCorrectToolForDrops(state, this.player)) {
-                    exp = state.getExpDrop(world, world.random, this.pos, this.getFortuneLevel(this.player.registryAccess()), this.getSilkTouchLevel(this.player.registryAccess()));
+                    exp = Services.BLOCK_STATES.getExpDrop(state, world, this.pos, this.player, this.getHarvestTool(this.player));
                 }
                 
                 if ((block instanceof CommandBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !serverPlayer.canUseGameMasterBlocks()) {
@@ -196,7 +196,7 @@ public class BlockBreaker {
                         this.removeBlock(world, false);
                         return true;
                     } else {
-                        boolean canHarvest = (this.alwaysDrop || state.canHarvestBlock(world, this.pos, serverPlayer));
+                        boolean canHarvest = (this.alwaysDrop || Services.BLOCK_STATES.canHarvestBlock(state, world, this.pos, serverPlayer));
                         boolean success = this.removeBlock(world, canHarvest);
                         if (success && canHarvest) {
                             block.playerDestroy(world, serverPlayer, this.pos, state, tile, this.getHarvestTool(serverPlayer));
@@ -210,30 +210,6 @@ public class BlockBreaker {
             }
         } else {
             return false;
-        }
-    }
-    
-    protected int getFortuneLevel(HolderLookup.Provider registries) {
-        if (this.fortuneOverride.isPresent()) {
-            return this.fortuneOverride.get();
-        } else if (!this.tool.isEmpty()) {
-            if (this.tool.getItem() instanceof IWand) {
-                return EnchantmentHelperPM.getEnchantmentLevel(this.tool, EnchantmentsPM.TREASURE, registries);
-            } else {
-                return EnchantmentHelperPM.getEnchantmentLevel(this.tool, Enchantments.FORTUNE, registries);
-            }
-        } else {
-            return 0;
-        }
-    }
-    
-    protected int getSilkTouchLevel(HolderLookup.Provider registries) {
-        if (this.silkTouchOverride.isPresent()) {
-            return this.silkTouchOverride.get() ? 1 : 0;
-        } else if (!this.tool.isEmpty()) {
-            return EnchantmentHelperPM.getEnchantmentLevel(this.tool, Enchantments.SILK_TOUCH, registries);
-        } else {
-            return 0;
         }
     }
     
@@ -254,9 +230,15 @@ public class BlockBreaker {
             enchHolderLookup.get(Enchantments.SILK_TOUCH).ifPresent(silkTouchHolder -> {
                 this.silkTouchOverride.filter(silk -> silk).ifPresent($ -> enchantments.upgrade(silkTouchHolder, 1));
             });
-            enchHolderLookup.get(Enchantments.FORTUNE).ifPresent(fortuneHolder -> {
-                this.fortuneOverride.filter(fortune -> fortune > 0).ifPresent(fortune -> enchantments.upgrade(fortuneHolder, fortune));
-            });
+            if (stack.getItem() instanceof IWand) {
+                enchHolderLookup.get(EnchantmentsPM.TREASURE).ifPresent(treasureHolder -> {
+                    this.fortuneOverride.filter(fortune -> fortune > 0).ifPresent(fortune -> enchantments.upgrade(treasureHolder, fortune));
+                });
+            } else {
+                enchHolderLookup.get(Enchantments.FORTUNE).ifPresent(fortuneHolder -> {
+                    this.fortuneOverride.filter(fortune -> fortune > 0).ifPresent(fortune -> enchantments.upgrade(fortuneHolder, fortune));
+                });
+            }
             EnchantmentHelper.setEnchantments(stack, enchantments.toImmutable());
         }
         return stack;
@@ -268,11 +250,10 @@ public class BlockBreaker {
      * @param world the world to break in
      * @param canHarvest whether the player is able to harvest this block for drops
      * @return true if the block is successfully removed, false otherwise
-     * @see {@link net.minecraft.server.management.PlayerInteractionManager#removeBlock}
      */
     protected boolean removeBlock(@Nonnull Level world, boolean canHarvest) {
         BlockState state = world.getBlockState(this.pos);
-        boolean removed = state.onDestroyedByPlayer(world, this.pos, this.player, canHarvest, world.getFluidState(this.pos));
+        boolean removed = Services.BLOCK_STATES.onDestroyedByPlayer(state, world, this.pos, this.player, canHarvest, world.getFluidState(this.pos));
         if (removed) {
             state.getBlock().destroy(world, this.pos, state);
         }
