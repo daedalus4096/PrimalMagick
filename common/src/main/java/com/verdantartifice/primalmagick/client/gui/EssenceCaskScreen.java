@@ -92,7 +92,7 @@ public class EssenceCaskScreen extends AbstractContainerScreenPM<EssenceCaskMenu
         
         for (EssenceCaskWidget widget : this.caskWidgets) {
             if (widget.isHovered()) {
-                renderSlotHighlight(guiGraphics, widget.getX(), widget.getY(), 0, this.slotColor);
+                renderSlotHighlight(guiGraphics, widget.getX(), widget.getY(), 0);
             }
         }
     }
