@@ -8,7 +8,8 @@ import com.verdantartifice.primalmagick.common.init.InitRecipes;
 import com.verdantartifice.primalmagick.common.init.InitResearch;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionTypesPM;
-import com.verdantartifice.primalmagick.common.network.PacketRegistration;
+import com.verdantartifice.primalmagick.common.network.PlayPacketRegistration;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.world.level.block.DispenserBlock;
 
 import java.util.function.Consumer;
@@ -20,7 +21,8 @@ import java.util.function.Consumer;
  */
 public class ModLifecycleEvents {
     public static void commonSetup(Consumer<Runnable> workConsumer) {
-        PacketRegistration.registerMessages();
+        PlayPacketRegistration.registerMessages();
+        Services.NETWORK.registerConfigMessages();
         
         InitRecipes.initWandTransforms();
         InitRecipes.initCompostables();

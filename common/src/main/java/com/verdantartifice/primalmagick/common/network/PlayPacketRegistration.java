@@ -58,7 +58,7 @@ import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.Se
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.StartProjectPacket;
 import commonnetwork.api.Network;
 
-public class PacketRegistration {
+public class PlayPacketRegistration {
     public static void registerMessages() {
         Network
                 // Client-bound configuration channel packets

@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.platform.services.IItemService;
 import com.verdantartifice.primalmagick.platform.services.IItemStackService;
 import com.verdantartifice.primalmagick.platform.services.ILevelService;
 import com.verdantartifice.primalmagick.platform.services.IMenuService;
+import com.verdantartifice.primalmagick.platform.services.INetworkService;
 import com.verdantartifice.primalmagick.platform.services.IPartEntityService;
 import com.verdantartifice.primalmagick.platform.services.IParticleService;
 import com.verdantartifice.primalmagick.platform.services.IPlatformService;
@@ -92,6 +93,7 @@ public class Services {
     public static final IItemStackService ITEM_STACKS = load(IItemStackService.class);
     public static final IAttributeService ATTRIBUTES = load(IAttributeService.class);
     public static final IRecipeService RECIPES = load(IRecipeService.class);
+    public static final INetworkService NETWORK = load(INetworkService.class);
 
     // Registry services
     public static final IBlockRegistryService BLOCKS_REGISTRY = load(IBlockRegistryService.class);
