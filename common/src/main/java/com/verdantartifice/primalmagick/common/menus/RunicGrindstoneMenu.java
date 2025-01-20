@@ -141,7 +141,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
     
     protected static Slot makeInputSlot(Container pContainer, int pSlot, int pX, int pY) {
         return Services.MENU.makeFilteredSlot(Services.ITEM_HANDLERS.wrap(pContainer, null), pSlot, pX, pY,
-                new FilteredSlotProperties().filter(stack -> stack.isDamageableItem() || stack.is(Items.ENCHANTED_BOOK) || stack.isEnchanted() || stack.canGrindstoneRepair() || RuneManager.hasRunes(stack)));
+                new FilteredSlotProperties().filter(stack -> stack.isDamageableItem() || stack.is(Items.ENCHANTED_BOOK) || stack.isEnchanted() || Services.ITEM_STACKS.canGrindstoneRepair(stack) || RuneManager.hasRunes(stack)));
     }
     
     @Override

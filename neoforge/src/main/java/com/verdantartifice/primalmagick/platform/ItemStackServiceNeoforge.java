@@ -11,4 +11,9 @@ public class ItemStackServiceNeoforge implements IItemStackService {
         // This method does not exist in the NeoForge item stack extension interface, so always return false.
         return false;
     }
+
+    @Override
+    public boolean canGrindstoneRepair(ItemStack stack) {
+        return stack.canGrindstoneRepair();
+    }
 }

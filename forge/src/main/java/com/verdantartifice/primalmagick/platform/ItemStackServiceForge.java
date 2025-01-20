@@ -10,4 +10,9 @@ public class ItemStackServiceForge implements IItemStackService {
     public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
         return stack.onBlockStartBreak(pos, player);
     }
+
+    @Override
+    public boolean canGrindstoneRepair(ItemStack stack) {
+        return stack.canGrindstoneRepair();
+    }
 }
