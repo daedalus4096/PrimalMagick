@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.GameMasterBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -168,7 +167,7 @@ public class BlockBreaker {
      */
     protected boolean doHarvest(@Nonnull Level world) {
         if (!world.isClientSide && this.player instanceof ServerPlayer serverPlayer && world instanceof ServerLevel serverWorld) {
-            int exp = this.skipEvent ? 0 : ForgeHooks.onBlockBreakEvent(world, serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer, this.pos);
+            int exp = this.skipEvent ? 0 : Services.EVENTS.fireBlockBreakEvent(world, serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer, this.pos);
             if (exp == -1) {
                 return false;
             } else {
@@ -177,7 +176,7 @@ public class BlockBreaker {
                 Block block = state.getBlock();
                 
                 // If the experience for the block was zero because the player is using a Break spell and thus the wrong tool type, recalculate
-                if (exp == 0 && !ForgeHooks.isCorrectToolForDrops(state, this.player)) {
+                if (exp == 0 && !Services.EVENTS.isCorrectToolForDrops(this.player, state, world, this.pos)) {
                     exp = Services.BLOCK_STATES.getExpDrop(state, world, this.pos, this.player, this.getHarvestTool(this.player));
                 }
                 

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.platform;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
@@ -13,14 +14,17 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -76,5 +80,19 @@ public class EventServiceNeoforge implements IEventService {
     @Override
     public int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType) {
         return stack.getBurnTime(recipeType);
+    }
+
+    @Override
+    public int fireBlockBreakEvent(Level level, GameType gameType, ServerPlayer entityPlayer, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        BlockEvent.BreakEvent event = CommonHooks.fireBlockBreak(level, gameType, entityPlayer, pos, state);
+        return event.isCanceled() ? -1 : state.getExpDrop(level, pos, level.getBlockEntity(pos), entityPlayer, entityPlayer.getMainHandItem());
+    }
+
+    @Override
+    public boolean isCorrectToolForDrops(Player player, BlockState state, Level level, BlockPos pos) {
+        return !state.requiresCorrectToolForDrops() ?
+                EventHooks.doPlayerHarvestCheck(player, state, level, pos) :
+                player.hasCorrectToolForDrops(state, level, pos);
     }
 }

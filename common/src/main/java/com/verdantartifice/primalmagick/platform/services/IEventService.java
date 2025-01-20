@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform.services;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
@@ -12,8 +13,11 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,4 +43,7 @@ public interface IEventService {
     Optional<Vec3> attemptEnderEntityTeleport(LivingEntity entity, Vec3 target);
 
     int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType);
+
+    int fireBlockBreakEvent(Level level, GameType gameType, ServerPlayer entityPlayer, BlockPos pos);
+    boolean isCorrectToolForDrops(Player player, BlockState state, Level level, BlockPos pos);
 }

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.platform;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
@@ -13,8 +14,10 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
@@ -75,5 +78,15 @@ public class EventServiceForge implements IEventService {
     @Override
     public int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType) {
         return ForgeHooks.getBurnTime(stack, recipeType);
+    }
+
+    @Override
+    public int fireBlockBreakEvent(Level level, GameType gameType, ServerPlayer entityPlayer, BlockPos pos) {
+        return ForgeHooks.onBlockBreakEvent(level, gameType, entityPlayer, pos);
+    }
+
+    @Override
+    public boolean isCorrectToolForDrops(Player player, BlockState state, Level level, BlockPos pos) {
+        return ForgeHooks.isCorrectToolForDrops(state, player);
     }
 }
