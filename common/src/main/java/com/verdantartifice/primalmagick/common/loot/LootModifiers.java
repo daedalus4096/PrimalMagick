@@ -147,10 +147,9 @@ public class LootModifiers {
     }
 
     public static ObjectArrayList<ItemStack> relicFragments(ObjectArrayList<ItemStack> generatedLoot, LootContext context, TagKey<EntityType<?>> targetTag,
-                                                            int minCount, int maxCount, int lootingBonus) {
+                                                            int minCount, int maxCount) {
         Entity targetEntity = context.getParam(LootContextParams.THIS_ENTITY);
-        int lootingLevel = context.getLootingModifier();
-        int count = context.getRandom().nextInt((maxCount - minCount + 1) + (lootingBonus * lootingLevel)) + minCount;
+        int count = context.getRandom().nextInt(maxCount - minCount + 1) + minCount;
         if (targetEntity.getType().is(targetTag) && count > 0) {
             generatedLoot.add(new ItemStack(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), count));
         }

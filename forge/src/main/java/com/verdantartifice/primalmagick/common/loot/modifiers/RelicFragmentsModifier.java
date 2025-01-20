@@ -23,26 +23,23 @@ public class RelicFragmentsModifier extends LootModifier {
     public static final MapCodec<RelicFragmentsModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(inst.group(
             TagKey.codec(Registries.ENTITY_TYPE).fieldOf("targetTag").forGetter(m -> m.targetTag),
             Codec.INT.fieldOf("minCount").forGetter(m -> m.minCount),
-            Codec.INT.fieldOf("maxCount").forGetter(m -> m.maxCount),
-            Codec.INT.fieldOf("lootingBonus").forGetter(m -> m.lootingBonus)
+            Codec.INT.fieldOf("maxCount").forGetter(m -> m.maxCount)
         )).apply(inst, RelicFragmentsModifier::new));
 
     protected final TagKey<EntityType<?>> targetTag;
     protected final int minCount;
     protected final int maxCount;
-    protected final int lootingBonus;
-    
-    public RelicFragmentsModifier(LootItemCondition[] conditionsIn, TagKey<EntityType<?>> targetTag, int minCount, int maxCount, int lootingBonus) {
+
+    public RelicFragmentsModifier(LootItemCondition[] conditionsIn, TagKey<EntityType<?>> targetTag, int minCount, int maxCount) {
         super(conditionsIn);
         this.targetTag = targetTag;
         this.minCount = minCount;
         this.maxCount = maxCount;
-        this.lootingBonus = lootingBonus;
     }
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        return LootModifiers.relicFragments(generatedLoot, context, this.targetTag, this.minCount, this.maxCount, this.lootingBonus);
+        return LootModifiers.relicFragments(generatedLoot, context, this.targetTag, this.minCount, this.maxCount);
     }
 
     @Override

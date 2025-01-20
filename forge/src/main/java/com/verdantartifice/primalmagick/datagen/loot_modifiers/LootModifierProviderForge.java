@@ -111,13 +111,13 @@ public class LootModifierProviderForge extends GlobalLootModifierProvider {
                 new LootItemCondition[] {
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_HIGH, 3, 5, 1));
+                }, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_HIGH, 3, 5));
         this.add("relic_fragments_low", new RelicFragmentsModifier(
                 new LootItemCondition[] {
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.1F, 0.05F).build()
-                }, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW, 1, 1, 0));
+                }, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW, 1, 1));
         this.add("four_leaf_clover_short_grass", new FourLeafCloverModifier(
                 new LootItemCondition[] {
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.SHORT_GRASS).build(),
