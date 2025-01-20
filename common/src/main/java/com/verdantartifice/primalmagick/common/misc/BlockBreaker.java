@@ -17,9 +17,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CommandBlock;
-import net.minecraft.world.level.block.JigsawBlock;
-import net.minecraft.world.level.block.StructureBlock;
+import net.minecraft.world.level.block.GameMasterBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
@@ -183,10 +181,10 @@ public class BlockBreaker {
                     exp = Services.BLOCK_STATES.getExpDrop(state, world, this.pos, this.player, this.getHarvestTool(this.player));
                 }
                 
-                if ((block instanceof CommandBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !serverPlayer.canUseGameMasterBlocks()) {
+                if (block instanceof GameMasterBlock && !serverPlayer.canUseGameMasterBlocks()) {
                     world.sendBlockUpdated(this.pos, state, state, Block.UPDATE_ALL);
                     return false;
-                } else if (serverPlayer.getMainHandItem().onBlockStartBreak(this.pos, serverPlayer)) {
+                } else if (Services.ITEM_STACKS.onBlockStartBreak(serverPlayer.getMainHandItem(), this.pos, serverPlayer)) {
                     return false;
                 } else if (serverPlayer.blockActionRestricted(world, this.pos, serverPlayer.gameMode.getGameModeForPlayer())) {
                     return false;
