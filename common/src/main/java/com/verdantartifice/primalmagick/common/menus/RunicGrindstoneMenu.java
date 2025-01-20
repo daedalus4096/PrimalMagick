@@ -185,13 +185,13 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
     }
     
     private ItemStack computeResult(ItemStack pInputItem, ItemStack pAdditionalItem) {
-        var event = net.minecraftforge.event.ForgeEventFactory.onGrindstoneChange(pInputItem, pAdditionalItem, this.resultSlots, -1);
-        if (event.isCanceled()) {
+        var change = Services.EVENTS.onGrindstoneChange(pInputItem, pAdditionalItem, this.resultSlots, -1);
+        if (change.canceled()) {
             this.xp = -1;
             return ItemStack.EMPTY;
-        } else if (!event.getOutput().isEmpty()) {
-            this.xp = event.getXp();
-            return event.getOutput();
+        } else if (!change.output().isEmpty()) {
+            this.xp = change.xp();
+            return change.output();
         } else {
             this.xp = Integer.MIN_VALUE;
         }

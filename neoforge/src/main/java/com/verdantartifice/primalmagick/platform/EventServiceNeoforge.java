@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.platform;
 
+import com.verdantartifice.primalmagick.common.misc.GrindstoneChangeRecord;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -94,5 +95,11 @@ public class EventServiceNeoforge implements IEventService {
         return !state.requiresCorrectToolForDrops() ?
                 EventHooks.doPlayerHarvestCheck(player, state, level, pos) :
                 player.hasCorrectToolForDrops(state, level, pos);
+    }
+
+    @Override
+    public GrindstoneChangeRecord onGrindstoneChange(ItemStack top, ItemStack bottom, Container outputSlot, int xp) {
+        var finalXp = CommonHooks.onGrindstoneChange(top, bottom, outputSlot, xp);
+        return new GrindstoneChangeRecord(top, bottom, outputSlot.getItem(0), finalXp, finalXp == -1);
     }
 }

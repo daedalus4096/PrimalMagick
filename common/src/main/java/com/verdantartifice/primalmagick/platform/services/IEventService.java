@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.platform.services;
 
+import com.verdantartifice.primalmagick.common.misc.GrindstoneChangeRecord;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,7 +14,6 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -46,4 +46,5 @@ public interface IEventService {
 
     int fireBlockBreakEvent(Level level, GameType gameType, ServerPlayer entityPlayer, BlockPos pos);
     boolean isCorrectToolForDrops(Player player, BlockState state, Level level, BlockPos pos);
+    GrindstoneChangeRecord onGrindstoneChange(ItemStack top, ItemStack bottom, Container outputSlot, int xp);
 }

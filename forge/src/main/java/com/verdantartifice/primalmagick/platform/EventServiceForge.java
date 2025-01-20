@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.platform;
 
+import com.verdantartifice.primalmagick.common.misc.GrindstoneChangeRecord;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -88,5 +89,11 @@ public class EventServiceForge implements IEventService {
     @Override
     public boolean isCorrectToolForDrops(Player player, BlockState state, Level level, BlockPos pos) {
         return ForgeHooks.isCorrectToolForDrops(state, player);
+    }
+
+    @Override
+    public GrindstoneChangeRecord onGrindstoneChange(ItemStack top, ItemStack bottom, Container outputSlot, int xp) {
+        var event = ForgeEventFactory.onGrindstoneChange(top, bottom, outputSlot, xp);
+        return new GrindstoneChangeRecord(top, bottom, event.getOutput(), event.getXp(), event.isCanceled());
     }
 }
