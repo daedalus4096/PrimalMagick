@@ -563,7 +563,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, Item> MAGITECH_PARTS_HEAVENLY = registerSupplier("magitech_parts_heavenly", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, FlyingCarpetItem> FLYING_CARPET = registerSupplier("flying_carpet", () -> new FlyingCarpetItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, DreamVisionTalismanItem> DREAM_VISION_TALISMAN = registerSupplier("dream_vision_talisman", DreamVisionTalismanItem::new);
-    public static final IRegistryItem<Item, IgnyxItem> IGNYX = registerSupplier("ignyx", () -> new IgnyxItem(new Item.Properties()));
+    public static final IRegistryItem<Item, IgnyxItem> IGNYX = registerSupplier("ignyx", Services.ITEM_PROTOTYPES.ignyx(new Item.Properties()));
     public static final IRegistryItem<Item, DowsingRodItem> DOWSING_ROD = registerSupplier("dowsing_rod", () -> new DowsingRodItem(new Item.Properties().stacksTo(1).durability(63)));
     public static final IRegistryItem<Item, Item> FOUR_LEAF_CLOVER = registerSupplier("four_leaf_clover", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, RecallStoneItem> RECALL_STONE = registerSupplier("recall_stone", () -> new RecallStoneItem(new Item.Properties()));

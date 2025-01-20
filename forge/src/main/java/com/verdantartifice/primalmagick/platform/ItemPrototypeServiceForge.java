@@ -5,6 +5,8 @@ import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItemForge;
+import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
+import com.verdantartifice.primalmagick.common.items.misc.IgnyxItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemForge;
@@ -55,6 +57,11 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     @Override
     public Supplier<ArcanometerItem> arcanometer() {
         return ArcanometerItemForge::new;
+    }
+
+    @Override
+    public Supplier<IgnyxItem> ignyx(Item.Properties properties) {
+        return () -> new IgnyxItemForge(properties);
     }
 
     @Override

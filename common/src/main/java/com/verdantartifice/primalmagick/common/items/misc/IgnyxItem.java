@@ -14,7 +14,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileItem;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 /**
@@ -22,14 +21,11 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class IgnyxItem extends Item implements ProjectileItem {
+public abstract class IgnyxItem extends Item implements ProjectileItem {
+    protected static final int BURN_TICKS = 12800;
+
     public IgnyxItem(Item.Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public int getBurnTime(ItemStack itemStack, RecipeType<?> recipeType) {
-        return 12800;
     }
 
     @Override
