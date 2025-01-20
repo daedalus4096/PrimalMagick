@@ -152,17 +152,6 @@ public class RitualRecipeBuilder {
     }
     
     /**
-     * Add an ingredient to the recipe that requires a partial NBT match on one or more item types.
-     * 
-     * @param nbt the NBT data which must be satisfied for an ingredient match
-     * @param items the types of allowed items for the ingredient to be added
-     * @return the modified builder
-     */
-    public RitualRecipeBuilder addIngredientNbtPartial(CompoundTag nbt, ItemLike... items) {
-        return this.addIngredient(PartialNBTIngredient.of(nbt, items));
-    }
-    
-    /**
      * Add a prop ingredient to the recipe multiple times.
      * 
      * @param ingredient the prop ingredient to be added
