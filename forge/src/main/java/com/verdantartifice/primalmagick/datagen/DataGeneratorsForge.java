@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.EnchantmentTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPMForge;
+import com.verdantartifice.primalmagick.datagen.tags.MobEffectTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.SpellPropertyTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tips.TipDefinitionProvider;
@@ -65,6 +66,7 @@ public class DataGeneratorsForge {
         generator.addProvider(event.includeServer(), new BiomeTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new MobEffectTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new LootModifierProviderForge(generator.getPackOutput(), registryLookupFuture));

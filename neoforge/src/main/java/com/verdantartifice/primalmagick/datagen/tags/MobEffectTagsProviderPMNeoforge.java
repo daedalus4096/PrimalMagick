@@ -9,12 +9,12 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
-public class MobEffectTagsProviderPM extends TagsProvider<MobEffect> {
-    public MobEffectTagsProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
+public class MobEffectTagsProviderPMNeoforge extends TagsProvider<MobEffect> {
+    public MobEffectTagsProviderPMNeoforge(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
         super(output, Registries.MOB_EFFECT, future, Constants.MOD_ID, helper);
     }
 
