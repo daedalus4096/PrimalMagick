@@ -1231,17 +1231,17 @@ public class GrimoireScreen extends Screen {
             }
         }
         
-        if (keyCode == KeyBindings.GRIMOIRE_PREV_TOPIC.getKey().getValue()) {
+        if (keyCode == Services.INPUT.getKey(KeyBindings.GRIMOIRE_PREV_TOPIC).getValue()) {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
                 return true;
             }
-        } else if (keyCode == KeyBindings.GRIMOIRE_PREV_PAGE.getKey().getValue()) {
+        } else if (keyCode == Services.INPUT.getKey(KeyBindings.GRIMOIRE_PREV_PAGE).getValue()) {
             if (this.prevPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
                 return true;
             }
-        } else if (keyCode == KeyBindings.GRIMOIRE_NEXT_PAGE.getKey().getValue()) {
+        } else if (keyCode == Services.INPUT.getKey(KeyBindings.GRIMOIRE_NEXT_PAGE).getValue()) {
             if (this.nextPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
                 return true;

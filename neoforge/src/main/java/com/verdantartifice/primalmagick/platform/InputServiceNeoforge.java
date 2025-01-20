@@ -26,4 +26,9 @@ public class InputServiceNeoforge implements IInputService {
             return isDown && keybind.getKeyConflictContext().isActive() && keybind.getKeyModifier().isActive(keybind.getKeyConflictContext());
         }
     }
+
+    @Override
+    public InputConstants.Key getKey(KeyMapping keybind) {
+        return keybind.getKey();
+    }
 }
