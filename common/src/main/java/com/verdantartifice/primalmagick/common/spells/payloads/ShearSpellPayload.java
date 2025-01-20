@@ -43,8 +43,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
 
 import java.util.List;
 
@@ -102,15 +100,15 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
                 BlockPos pos = blockTarget.getBlockPos();
                 BlockState state = world.getBlockState(pos);
                 UseOnContext fakeContext = new UseOnContext(world, player, InteractionHand.MAIN_HAND, fakeShears, blockTarget);
-                for (ToolAction action : ToolActions.DEFAULT_SHEARS_ACTIONS) {
+
+                BlockState modifiedState = Services.BLOCK_STATES.getShearsModifiedState(state, fakeContext, true);
+                if (modifiedState != null) {
                     // If the block state responds to a right-click from shears, then do that
-                    BlockState modifiedState = state.getToolModifiedState(fakeContext, action, true);
-                    if (modifiedState != null) {
-                        world.setBlock(pos, modifiedState, Block.UPDATE_ALL_IMMEDIATE);
-                        world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, modifiedState));
-                        return;
-                    }
+                    world.setBlock(pos, modifiedState, Block.UPDATE_ALL_IMMEDIATE);
+                    world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, modifiedState));
+                    return;
                 }
+
                 if (state.getBlock() instanceof TripWireBlock tripwire) {
                     // Handle special tripwire case
                     FluidState fluid = world.getFluidState(pos);
@@ -120,6 +118,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
                         tripwire.destroy(world, pos, state);
                     }
                 }
+
                 if (state.getBlock() instanceof BeehiveBlock beehive && state.getValue(BeehiveBlock.HONEY_LEVEL) >= BeehiveBlock.MAX_HONEY_LEVELS) {
                     // Handle special beehive case
                     world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BEEHIVE_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);

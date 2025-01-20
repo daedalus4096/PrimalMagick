@@ -9,12 +9,15 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.Nullable;
 
 public class BlockStateServiceForge implements IBlockStateService {
@@ -36,6 +39,17 @@ public class BlockStateServiceForge implements IBlockStateService {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         return state.onDestroyedByPlayer(level, pos, player, willHarvest, fluid);
+    }
+
+    @Override
+    public @Nullable BlockState getShearsModifiedState(BlockState state, UseOnContext context, boolean simulate) {
+        for (ToolAction action : ToolActions.DEFAULT_SHEARS_ACTIONS) {
+            BlockState modifiedState = state.getToolModifiedState(context, action, simulate);
+            if (modifiedState != null) {
+                return modifiedState;
+            }
+        }
+        return null;
     }
 
     private static int getFortuneLevel(ItemStack tool, HolderLookup.Provider registries) {
