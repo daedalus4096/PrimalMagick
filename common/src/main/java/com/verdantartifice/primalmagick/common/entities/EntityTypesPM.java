@@ -63,6 +63,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class EntityTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.ENTITY_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<EntityType<?>, EntityType<SpellProjectileEntity>> SPELL_PROJECTILE = register("spell_projectile", () -> EntityType.Builder.<SpellProjectileEntity>of(SpellProjectileEntity::new, MobCategory.MISC)
             .sized(0.25F, 0.25F)
             .build(Constants.MOD_ID + ":spell_projectile"));

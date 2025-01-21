@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
 import com.verdantartifice.primalmagick.common.effects.MobEffectRegistration;
-import com.verdantartifice.primalmagick.common.entities.EntityTypeRegistration;
+import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypeRegistration;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypeRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemRegistration;
@@ -46,7 +46,7 @@ public class InitRegistries {
         CreativeModeTabRegistration.init();
         ArmorMaterialRegistration.init();
         DataComponentTypeRegistration.init();
-        EntityTypeRegistration.init();
+        EntityTypesPM.init();   // FIXME Change rest of class to use this pattern
         BlockEntityTypeRegistration.init();
         MenuTypeRegistration.init();
         MobEffectRegistration.init();
