@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
-import com.verdantartifice.primalmagick.common.effects.MobEffectRegistration;
+import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypeRegistration;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypeRegistration;
@@ -49,7 +49,7 @@ public class InitRegistries {
         EntityTypesPM.init();   // FIXME Change rest of class to use this pattern
         BlockEntityTypesPM.init();
         MenuTypesPM.init();
-        MobEffectRegistration.init();
+        EffectsPM.init();
         RecipeTypeRegistration.init();
         RecipeSerializerRegistration.init();
         SoundEventRegistration.init();

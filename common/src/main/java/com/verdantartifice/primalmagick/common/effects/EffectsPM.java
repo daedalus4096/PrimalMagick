@@ -14,6 +14,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class EffectsPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.MOB_EFFECTS_REGISTRY.init();
+    }
+
     public static final IRegistryItem<MobEffect, FlyingEffect> FLYING = register("flying", () -> new FlyingEffect(MobEffectCategory.BENEFICIAL, Sources.SKY.getColor()));
     public static final IRegistryItem<MobEffect, EffectPM> POLYMORPH = register("polymorph", () -> new EffectPM(MobEffectCategory.HARMFUL, Sources.MOON.getColor()));
     public static final IRegistryItem<MobEffect, BleedingEffect> BLEEDING = register("bleeding", () -> new BleedingEffect(MobEffectCategory.HARMFUL, Sources.BLOOD.getColor()));
