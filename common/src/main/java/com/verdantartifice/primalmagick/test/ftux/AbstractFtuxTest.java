@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.test.ftux;
 
 import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
@@ -11,6 +10,8 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
+import com.verdantartifice.primalmagick.platform.Services;
+import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,27 +28,22 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.crafting.SimpleCraftingContainer;
-import net.minecraftforge.gametest.GameTestHolder;
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
-@GameTestHolder(Constants.MOD_ID + ".ftux")
-public class FtuxTest {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
+public abstract class AbstractFtuxTest extends AbstractBaseTest {
     @GameTestGenerator
-    public static Collection<TestFunction> font_discovery_tests() {
+    public Collection<TestFunction> font_discovery_tests() {
         Map<String, Block> testParams = ImmutableMap.<String, Block>builder()
                 .put("earth", BlocksPM.ANCIENT_FONT_EARTH.get())
                 .put("sea", BlocksPM.ANCIENT_FONT_SEA.get())
@@ -78,7 +74,7 @@ public class FtuxTest {
     }
     
     @GameTest(template = "primalmagick:test/floor5x5x5", timeoutTicks = 150)
-    public static void sleeping_after_shrine_grants_dream(GameTestHelper helper) {
+    public void sleeping_after_shrine_grants_dream(GameTestHelper helper) {
         // Create a player who's found a shrine and is primed for the dream, but hasn't had it yet
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE), "Failed to grant prerequisite research");
@@ -106,7 +102,7 @@ public class FtuxTest {
     }
     
     @GameTestGenerator
-    public static Collection<TestFunction> mundane_wand_crafting_tests() {
+    public Collection<TestFunction> mundane_wand_crafting_tests() {
         Map<String, Item> testParams = ImmutableMap.<String, Item>builder()
                 .put("earth", ItemsPM.ESSENCE_DUST_EARTH.get())
                 .put("sea", ItemsPM.ESSENCE_DUST_SEA.get())
@@ -115,11 +111,7 @@ public class FtuxTest {
                 .put("moon", ItemsPM.ESSENCE_DUST_MOON.get())
                 .build();
         return TestUtils.createParameterizedTestFunctions("mundane_wand_crafting_tests", testParams, (helper, dust) -> {
-            var container = SimpleCraftingContainer.builder()
-                    .pattern("SD ")
-                    .define('S', Items.STICK)
-                    .define('D', dust)
-                    .build();
+            var container = CraftingInput.of(2, 1, List.of(new ItemStack(Items.STICK), new ItemStack(dust)));
             var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, container, helper.getLevel());
             helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
             helper.assertTrue(recipe.get().value().getResultItem(helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
@@ -128,7 +120,7 @@ public class FtuxTest {
     }
     
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void transform_abort_gives_hint(GameTestHelper helper) {
+    public void transform_abort_gives_hint(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
@@ -149,7 +141,7 @@ public class FtuxTest {
         BlockPos posAbs = helper.absolutePos(pos);
         BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
         UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
-        helper.assertTrue(wandItem.onItemUseFirst(wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        helper.assertTrue(Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
         
         // Immediately stop transforming and check for hint flag research
         int remainingTicks = wandItem.getUseDuration(wandStack, player);
@@ -159,7 +151,7 @@ public class FtuxTest {
     }
     
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void transform_grimoire(GameTestHelper helper) {
+    public void transform_grimoire(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
@@ -179,7 +171,7 @@ public class FtuxTest {
         BlockPos posAbs = helper.absolutePos(pos);
         BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
         UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
-        helper.assertTrue(wandItem.onItemUseFirst(wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        helper.assertTrue(Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
         
         // Continue channeling the wand until the transformation succeeds or the test times out and fails
         MutableInt remainingTicks = new MutableInt(wandItem.getUseDuration(wandStack, player));
