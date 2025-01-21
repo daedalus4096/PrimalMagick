@@ -13,6 +13,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class SoundsPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.SOUND_EVENTS_REGISTRY.init();
+    }
+
     public static final IRegistryItem<SoundEvent, SoundEvent> PAGE = register("page");
     public static final IRegistryItem<SoundEvent, SoundEvent> POOF = register("poof");
     public static final IRegistryItem<SoundEvent, SoundEvent> SCAN = register("scan");

@@ -21,7 +21,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegi
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypeRegistration;
 import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypeRegistration;
-import com.verdantartifice.primalmagick.common.sounds.SoundEventRegistration;
+import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyRegistration;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadTypeRegistration;
@@ -52,7 +52,7 @@ public class InitRegistries {
         EffectsPM.init();
         RecipeTypesPM.init();
         RecipeSerializersPM.init();
-        SoundEventRegistration.init();
+        SoundsPM.init();
         StructurePieceTypeRegistration.init();
         StructureTypeRegistration.init();
         ParticleTypeRegistration.init();
