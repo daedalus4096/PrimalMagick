@@ -47,7 +47,7 @@ import java.util.function.Supplier;
 public class BlockEntityTypesPM {
     public static void init() {
         // Pass the service initialization through this class so it gets class loaded and fields registered
-        Services.ENTITY_TYPES_REGISTRY.init();
+        Services.BLOCK_ENTITY_TYPES_REGISTRY.init();
     }
 
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<AncientManaFontTileEntity>> ANCIENT_MANA_FONT = register("ancient_mana_font", () -> BlockEntityType.Builder.of(AncientManaFontTileEntity::new, BlocksPM.ANCIENT_FONT_EARTH.get(), BlocksPM.ANCIENT_FONT_SEA.get(), BlocksPM.ANCIENT_FONT_SKY.get(), BlocksPM.ANCIENT_FONT_SUN.get(), BlocksPM.ANCIENT_FONT_MOON.get()).build(null));
