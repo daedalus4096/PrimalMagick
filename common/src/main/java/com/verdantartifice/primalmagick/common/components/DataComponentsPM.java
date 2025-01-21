@@ -28,6 +28,11 @@ import java.util.function.UnaryOperator;
  * @author Daedalus4096
  */
 public class DataComponentsPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.DATA_COMPONENT_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<Holder<BookDefinition>>> BOOK_DEFINITION = register("book_definition", builder -> builder.persistent(BookDefinition.HOLDER_CODEC).networkSynchronized(BookDefinition.STREAM_CODEC));
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<Holder<BookLanguage>>> BOOK_LANGUAGE = register("book_language", builder -> builder.persistent(BookLanguage.HOLDER_CODEC).networkSynchronized(BookLanguage.STREAM_CODEC));
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<String>> AUTHOR_OVERRIDE = register("author_override", builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));

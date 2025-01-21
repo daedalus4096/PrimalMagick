@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRegistration;
-import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
@@ -45,7 +45,7 @@ public class InitRegistries {
         ItemsPM.init();
         CreativeModeTabsPM.init();
         ArmorMaterialsPM.init();
-        DataComponentTypeRegistration.init();
+        DataComponentsPM.init();
         EntityTypesPM.init();   // FIXME Change rest of class to use this pattern
         BlockEntityTypeRegistration.init();
         MenuTypeRegistration.init();

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
-import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.platform.services.registries.IDataComponentTypeRegistryService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -15,9 +15,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class DataComponentTypeRegistryServiceNeoforge extends AbstractRegistryServiceNeoforge<DataComponentType<?>> implements IDataComponentTypeRegistryService {
+    private static final DeferredRegister<DataComponentType<?>> TYPES = DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
+
     @Override
     protected Supplier<DeferredRegister<DataComponentType<?>>> getDeferredRegisterSupplier() {
-        return DataComponentTypeRegistration::getDeferredRegister;
+        return () -> TYPES;
     }
 
     @Override
