@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.test;
 
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.StructureUtils;
@@ -8,7 +9,6 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
-import net.minecraftforge.gametest.GameTestHolder;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -28,10 +28,7 @@ public class TestUtils {
         if (callerClassName != null) {
             try {
                 Class<?> callerClass = Class.forName(callerClassName);
-                GameTestHolder holder = callerClass.getAnnotation(GameTestHolder.class);
-                if (holder != null && !holder.value().isEmpty()) {
-                    return holder.value();
-                }
+                return Services.TEST.getTestNamespace(callerClass);
             } catch (ClassNotFoundException e) {
                 return null;
             }

@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.platform.services.IPlatformService;
 import com.verdantartifice.primalmagick.platform.services.IPlayerService;
 import com.verdantartifice.primalmagick.platform.services.IRecipeService;
 import com.verdantartifice.primalmagick.platform.services.IShearableService;
+import com.verdantartifice.primalmagick.platform.services.ITestService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArmorMaterialRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockEntityTypeRegistryService;
@@ -94,6 +95,7 @@ public class Services {
     public static final IAttributeService ATTRIBUTES = load(IAttributeService.class);
     public static final IRecipeService RECIPES = load(IRecipeService.class);
     public static final INetworkService NETWORK = load(INetworkService.class);
+    public static final ITestService TEST = load(ITestService.class);
 
     // Registry services
     public static final IBlockRegistryService BLOCKS_REGISTRY = load(IBlockRegistryService.class);
