@@ -6,7 +6,7 @@ import org.apache.commons.lang3.NotImplementedException;
 public class NetworkServiceNeoforge implements INetworkService {
     @Override
     public void registerConfigMessages() {
-        // FIXME Implement
-        throw new NotImplementedException();
+        // Neoforge network payload registration is done in response to a dedicated event, rather than during common
+        // setup, so nothing needs to be done here.
     }
 }
