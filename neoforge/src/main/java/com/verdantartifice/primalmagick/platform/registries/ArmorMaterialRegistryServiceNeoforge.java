@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
-import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.platform.services.registries.IArmorMaterialRegistryService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,9 +15,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class ArmorMaterialRegistryServiceNeoforge extends AbstractRegistryServiceNeoforge<ArmorMaterial> implements IArmorMaterialRegistryService {
+    private static final DeferredRegister<ArmorMaterial> MATERIALS = DeferredRegister.create(BuiltInRegistries.ARMOR_MATERIAL, Constants.MOD_ID);
+
     @Override
     protected Supplier<DeferredRegister<ArmorMaterial>> getDeferredRegisterSupplier() {
-        return ArmorMaterialRegistration::getDeferredRegister;
+        return () -> MATERIALS;
     }
 
     @Override

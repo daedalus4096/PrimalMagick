@@ -24,6 +24,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class ArmorMaterialsPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.ARMOR_MATERIALS_REGISTRY.init();
+    }
+
     public static final IRegistryItem<ArmorMaterial, ArmorMaterial> IMBUED_WOOL = register("imbued_wool", Util.make(new EnumMap<>(ArmorItem.Type.class), defMap -> {
         defMap.put(ArmorItem.Type.BOOTS, 1);
         defMap.put(ArmorItem.Type.LEGGINGS, 3);

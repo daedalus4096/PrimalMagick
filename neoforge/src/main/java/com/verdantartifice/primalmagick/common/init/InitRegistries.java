@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypeRegistration;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypeRegistration;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
+import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
@@ -44,7 +44,7 @@ public class InitRegistries {
         BlocksPM.init();
         ItemsPM.init();
         CreativeModeTabsPM.init();
-        ArmorMaterialRegistration.init();
+        ArmorMaterialsPM.init();
         DataComponentTypeRegistration.init();
         EntityTypesPM.init();   // FIXME Change rest of class to use this pattern
         BlockEntityTypeRegistration.init();
