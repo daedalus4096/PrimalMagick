@@ -63,7 +63,7 @@ public class UpdateAffinitiesConfigPacketNeoforge implements CustomPacketPayload
             AffinityManager.getOrCreateInstance().replaceAffinities(message.affinities);
         }).exceptionally(e -> {
             LOGGER.error("Config task failed to replace affinity data");
-            context.disconnect(Component.literal("Config task failed to replace affinity data"));
+            context.disconnect(Component.literal("Config task failed to replace affinity data"));   // TODO Localize
             return null;
         }).thenAccept($ -> {
             // Reply with acknowledgement
