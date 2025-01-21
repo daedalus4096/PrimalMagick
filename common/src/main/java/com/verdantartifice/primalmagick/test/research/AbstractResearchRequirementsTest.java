@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.test.research;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -23,6 +22,7 @@ import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
+import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
@@ -33,12 +33,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder(Constants.MOD_ID + ".research_requirements")
-public class ResearchRequirementsTest {
+public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void research_requirement(GameTestHelper helper) {
+    public void research_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS));
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
@@ -48,7 +46,7 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void knowledge_requirement(GameTestHelper helper) {
+    public void knowledge_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
@@ -58,7 +56,7 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void item_stack_requirement(GameTestHelper helper) {
+    public void item_stack_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new ItemStackRequirement(new ItemStack(Items.IRON_INGOT));
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
@@ -68,7 +66,7 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void item_tag_requirement(GameTestHelper helper) {
+    public void item_tag_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new ItemTagRequirement(CommonTags.Items.EGGS, 1);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
@@ -78,8 +76,8 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void stat_requirement(GameTestHelper helper) {
-        var player = helper.makeMockServerPlayer(); // Stats are only recorded on the server side
+    public void stat_requirement(GameTestHelper helper) {
+        var player = this.makeMockServerPlayer(helper); // Stats are only recorded on the server side
         var req = new StatRequirement(StatsPM.MANA_SIPHONED, 2);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
         StatsManager.setValue(player, StatsPM.MANA_SIPHONED, 2);
@@ -88,8 +86,8 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void expertise_requirement(GameTestHelper helper) {
-        var player = helper.makeMockServerPlayer(); // Stats are only recorded on the server side
+    public void expertise_requirement(GameTestHelper helper) {
+        var player = this.makeMockServerPlayer(helper); // Stats are only recorded on the server side
         var req = new ExpertiseRequirement(ResearchDisciplines.MANAWEAVING, ResearchTier.EXPERT, 12);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.UNLOCK_MANAWEAVING);
@@ -99,7 +97,7 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = "primalmagick:test/floor5x5x5")
-    public static void vanilla_item_used_stat_requirement(GameTestHelper helper) {
+    public void vanilla_item_used_stat_requirement(GameTestHelper helper) {
         @SuppressWarnings("removal")
         var player = helper.makeMockServerPlayerInLevel(); // Vanilla stats require an explicit client or server player
         var req = new VanillaItemUsedStatRequirement(Items.SNOWBALL, 1);
@@ -113,8 +111,8 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = "primalmagick:test/floor5x5x5")
-    public static void vanilla_custom_stat_requirement(GameTestHelper helper) {
-        var player = helper.makeMockServerPlayer(); // Vanilla stats require an explicit client or server player
+    public void vanilla_custom_stat_requirement(GameTestHelper helper) {
+        var player = this.makeMockServerPlayer(helper); // Vanilla stats require an explicit client or server player
         var req = new VanillaCustomStatRequirement(Stats.JUMP, 1, null);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
         player.jumpFromGround();
@@ -123,7 +121,7 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void and_requirement(GameTestHelper helper) {
+    public void and_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new AndRequirement(
                 new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS)),
@@ -147,7 +145,7 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void or_requirement(GameTestHelper helper) {
+    public void or_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new OrRequirement(
                 new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS)),
@@ -173,7 +171,7 @@ public class ResearchRequirementsTest {
     }
 
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void quorum_requirement(GameTestHelper helper) {
+    public void quorum_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new QuorumRequirement(2,
                 new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS)),
