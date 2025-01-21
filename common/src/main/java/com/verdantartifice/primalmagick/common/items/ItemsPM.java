@@ -109,6 +109,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class ItemsPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.ITEMS_REGISTRY.init();
+    }
+
     protected static <I extends Item> IRegistryItem<Item, I> registerSupplier(String name, Supplier<I> itemSupplier) {
         IRegistryItem<Item, I> obj = registerWithoutTab(name, itemSupplier);
         CreativeModeTabsPM.registerSupplier(obj);

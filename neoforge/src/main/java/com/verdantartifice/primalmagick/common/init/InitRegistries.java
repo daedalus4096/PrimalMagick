@@ -13,7 +13,7 @@ import com.verdantartifice.primalmagick.common.effects.MobEffectRegistration;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypeRegistration;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypeRegistration;
-import com.verdantartifice.primalmagick.common.items.ItemRegistration;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialRegistration;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
@@ -42,7 +42,7 @@ public class InitRegistries {
     public static void initDeferredRegistries() {
         // Platform implementations of cross-platform registries
         BlocksPM.init();
-        ItemRegistration.init();
+        ItemsPM.init();
         CreativeModeTabRegistration.init();
         ArmorMaterialRegistration.init();
         DataComponentTypeRegistration.init();
