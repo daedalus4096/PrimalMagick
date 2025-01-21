@@ -20,6 +20,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class CreativeModeTabsPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.CREATIVE_MODE_TABS_REGISTRY.init();
+    }
+
     private static final List<ICreativeTabRegistration> TAB_REGISTRATIONS = new ArrayList<>();
     
     public static void registerSupplier(Supplier<? extends ItemLike> itemSupplier) {

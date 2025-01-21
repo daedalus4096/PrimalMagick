@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRe
 import com.verdantartifice.primalmagick.common.components.DataComponentTypeRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
-import com.verdantartifice.primalmagick.common.creative.CreativeModeTabRegistration;
+import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.effects.MobEffectRegistration;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypeRegistration;
@@ -43,7 +43,7 @@ public class InitRegistries {
         // Platform implementations of cross-platform registries
         BlocksPM.init();
         ItemsPM.init();
-        CreativeModeTabRegistration.init();
+        CreativeModeTabsPM.init();
         ArmorMaterialRegistration.init();
         DataComponentTypeRegistration.init();
         EntityTypesPM.init();   // FIXME Change rest of class to use this pattern
