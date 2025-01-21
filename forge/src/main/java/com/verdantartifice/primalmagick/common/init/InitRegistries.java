@@ -30,8 +30,8 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectM
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
-import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypeRegistration;
-import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypeRegistration;
+import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
+import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypesPM;
 
 /**
  * Point of initialization for mod deferred registries.
@@ -53,8 +53,8 @@ public class InitRegistries {
         RecipeTypesPM.init();
         RecipeSerializersPM.init();
         SoundsPM.init();
-        StructurePieceTypeRegistration.init();
-        StructureTypeRegistration.init();
+        StructurePieceTypesPM.init();
+        StructureTypesPM.init();
         ParticleTypeRegistration.init();
         ArgumentTypeRegistration.init();
         SensorTypeRegistration.init();

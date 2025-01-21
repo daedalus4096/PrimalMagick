@@ -15,6 +15,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class StructureTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.STRUCTURE_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<StructureType<?>, StructureType<ShrineStructure>> SHRINE = register("shrine", () -> () -> ShrineStructure.CODEC);
     public static final IRegistryItem<StructureType<?>, StructureType<LibraryStructure>> LIBRARY = register("library", () -> () -> LibraryStructure.CODEC);
     public static final IRegistryItem<StructureType<?>, StructureType<NetherLibraryStructure>> NETHER_LIBRARY = register("nether_library", () -> () -> NetherLibraryStructure.CODEC);

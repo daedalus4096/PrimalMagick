@@ -1,9 +1,10 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
-import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypeRegistration;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.platform.services.registries.IStructureTypeRegistryService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraftforge.registries.DeferredRegister;
 
@@ -15,9 +16,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class StructureTypeRegistryServiceForge extends AbstractBuiltInRegistryServiceForge<StructureType<?>> implements IStructureTypeRegistryService {
+    private static final DeferredRegister<StructureType<?>> TYPES = DeferredRegister.create(Registries.STRUCTURE_TYPE, Constants.MOD_ID);
+
     @Override
     protected Supplier<DeferredRegister<StructureType<?>>> getDeferredRegisterSupplier() {
-        return StructureTypeRegistration::getDeferredRegister;
+        return () -> TYPES;
     }
 
     @Override

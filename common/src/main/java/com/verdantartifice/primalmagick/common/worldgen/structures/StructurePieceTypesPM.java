@@ -13,6 +13,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class StructurePieceTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.STRUCTURE_PIECE_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<StructurePieceType, StructurePieceType> SHRINE = register("shrine", () -> ShrinePiece::new);
     public static final IRegistryItem<StructurePieceType, StructurePieceType> LIBRARY = register("library", () -> LibraryPiece::new);
 
