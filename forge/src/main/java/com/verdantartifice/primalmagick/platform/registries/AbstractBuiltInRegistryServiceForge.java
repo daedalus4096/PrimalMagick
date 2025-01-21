@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
 import com.verdantartifice.primalmagick.common.tags.ITagValue;
@@ -35,6 +36,11 @@ import java.util.function.Supplier;
 abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryService<R> {
     protected abstract Supplier<DeferredRegister<R>> getDeferredRegisterSupplier();
     protected abstract Registry<R> getRegistry();
+
+    @Override
+    public void init() {
+        this.getDeferredRegisterSupplier().get().register(PrimalMagick.getModLoadingContext().getModEventBus());
+    }
 
     @Override
     public <T extends R> IRegistryItem<R, T> register(String name, Supplier<T> supplier) {

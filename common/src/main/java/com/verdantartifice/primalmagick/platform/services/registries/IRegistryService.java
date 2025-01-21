@@ -27,6 +27,11 @@ import java.util.function.Supplier;
  */
 public interface IRegistryService<R> {
     /**
+     * Initialize this service's deferred register.
+     */
+    void init();
+
+    /**
      * Register the supplied value with this registry under the given name.
      *
      * @param name the name under which to register the value
