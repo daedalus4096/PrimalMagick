@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.ingredients.PartialComponentIngredient;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
@@ -13,15 +14,11 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.gametest.GameTestHolder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-@GameTestHolder(Constants.MOD_ID + ".partial_component_ingredient")
-public class PartialComponentIngredientTest {
-    protected static final Logger LOGGER = LogManager.getLogger();
-
+@GameTestHolder(Constants.MOD_ID + ".forge.partial_component_ingredient")
+public class PartialComponentIngredientTest extends AbstractBaseTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void predicate_works(GameTestHelper helper) {
+    public void predicate_works(GameTestHelper helper) {
         var ingredient = PartialComponentIngredient.builder()
                 .item(ItemsPM.CONCOCTION.get())
                 .data(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
