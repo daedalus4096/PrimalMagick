@@ -14,6 +14,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class RecipeTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.RECIPE_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<RecipeType<?>, RecipeType<IArcaneRecipe>> ARCANE_CRAFTING = register("arcane_crafting", () -> simple("arcane_crafting"));
     public static final IRegistryItem<RecipeType<?>, RecipeType<IRitualRecipe>> RITUAL = register("ritual", () -> simple("ritual"));
     public static final IRegistryItem<RecipeType<?>, RecipeType<IRunecarvingRecipe>> RUNECARVING = register("runecarving", () -> simple("runecarving"));

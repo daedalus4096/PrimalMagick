@@ -14,6 +14,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class RecipeSerializersPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.RECIPE_SERIALIZERS_REGISTRY.init();
+    }
+
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapelessArcaneRecipe>> ARCANE_CRAFTING_SHAPELESS = register("arcane_crafting_shapeless", ShapelessArcaneRecipe.Serializer::new);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapedArcaneRecipe>> ARCANE_CRAFTING_SHAPED = register("arcane_crafting_shaped", ShapedArcaneRecipe.Serializer::new);
     public static final IRegistryItem<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<FlyingCarpetDyeRecipe>> FLYING_CARPET_DYE = register("flying_carpet_dye_special", () -> new SimpleCraftingRecipeSerializer<>(FlyingCarpetDyeRecipe::new));

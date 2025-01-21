@@ -6,8 +6,8 @@ import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTyp
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRegistration;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializerRegistration;
-import com.verdantartifice.primalmagick.common.crafting.RecipeTypeRegistration;
+import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
@@ -50,8 +50,8 @@ public class InitRegistries {
         BlockEntityTypesPM.init();
         MenuTypesPM.init();
         EffectsPM.init();
-        RecipeTypeRegistration.init();
-        RecipeSerializerRegistration.init();
+        RecipeTypesPM.init();
+        RecipeSerializersPM.init();
         SoundEventRegistration.init();
         StructurePieceTypeRegistration.init();
         StructureTypeRegistration.init();
