@@ -1,12 +1,13 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
-import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.menus.base.IMenuFactory;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
 import com.verdantartifice.primalmagick.platform.services.registries.IMenuTypeRegistryService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -20,9 +21,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class MenuTypeRegistryServiceForge extends AbstractBuiltInRegistryServiceForge<MenuType<?>> implements IMenuTypeRegistryService {
+    private static final DeferredRegister<MenuType<?>> TYPES = DeferredRegister.create(Registries.MENU, Constants.MOD_ID);
+
     @Override
     protected Supplier<DeferredRegister<MenuType<?>>> getDeferredRegisterSupplier() {
-        return MenuTypeRegistration::getDeferredRegister;
+        return () -> TYPES;
     }
 
     @Override

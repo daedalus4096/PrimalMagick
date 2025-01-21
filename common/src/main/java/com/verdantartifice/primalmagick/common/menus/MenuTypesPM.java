@@ -12,6 +12,11 @@ import net.minecraft.world.inventory.MenuType;
  * @author Daedalus4096
  */
 public class MenuTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.MENU_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<MenuType<?>, MenuType<ArcaneWorkbenchMenu>> ARCANE_WORKBENCH = register("arcane_workbench", (windowId, inv, data) -> new ArcaneWorkbenchMenu(windowId, inv));
     public static final IRegistryItem<MenuType<?>, MenuType<WandAssemblyTableMenu>> WAND_ASSEMBLY_TABLE = register("wand_assembly_table", (windowId, inv, data) -> new WandAssemblyTableMenu(windowId, inv));
     public static final IRegistryItem<MenuType<?>, MenuType<AnalysisTableMenu>> ANALYSIS_TABLE = register("analysis_table", (windowId, inv, data) -> new AnalysisTableMenu(windowId, inv));

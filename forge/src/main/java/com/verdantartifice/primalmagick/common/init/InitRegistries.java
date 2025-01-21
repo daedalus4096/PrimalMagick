@@ -16,7 +16,7 @@ import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypeReg
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
-import com.verdantartifice.primalmagick.common.menus.MenuTypeRegistration;
+import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypeRegistration;
@@ -48,7 +48,7 @@ public class InitRegistries {
         DataComponentsPM.init();
         EntityTypesPM.init();   // FIXME Change rest of class to use this pattern
         BlockEntityTypesPM.init();
-        MenuTypeRegistration.init();
+        MenuTypesPM.init();
         MobEffectRegistration.init();
         RecipeTypeRegistration.init();
         RecipeSerializerRegistration.init();
