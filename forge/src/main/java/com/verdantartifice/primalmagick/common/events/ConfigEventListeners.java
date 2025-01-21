@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.network.tasks.SyncDatapackDataTaskForge;
+import com.verdantartifice.primalmagick.common.network.tasks.SyncAffinityDataTaskForge;
+import com.verdantartifice.primalmagick.common.network.tasks.SyncLinguisticsGridDataTaskForge;
 import net.minecraftforge.event.network.GatherLoginConfigurationTasksEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ConfigEventListeners {
     @SubscribeEvent
     public static void gatherConfigTasks(GatherLoginConfigurationTasksEvent event) {
-        event.addTask(new SyncDatapackDataTaskForge());
+        event.addTask(new SyncAffinityDataTaskForge());
+        event.addTask(new SyncLinguisticsGridDataTaskForge());
     }
 }

@@ -4,10 +4,14 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.affinities.IAffinity;
 import com.verdantartifice.primalmagick.common.affinities.IAffinitySerializer;
+import com.verdantartifice.primalmagick.common.network.ConfigPacketHandlerForge;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraftforge.event.network.CustomPayloadEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +19,7 @@ import java.util.List;
 
 public class UpdateAffinitiesConfigPacketForge implements IMessageToClient {
     public static final StreamCodec<FriendlyByteBuf, UpdateAffinitiesConfigPacketForge> STREAM_CODEC = StreamCodec.ofMember(UpdateAffinitiesConfigPacketForge::encode, UpdateAffinitiesConfigPacketForge::decode);
+    private static final Logger LOGGER = LogManager.getLogger();
 
     protected final List<IAffinity> affinities;
 
@@ -48,7 +53,15 @@ public class UpdateAffinitiesConfigPacketForge implements IMessageToClient {
     }
 
     public static void onMessage(UpdateAffinitiesConfigPacketForge message, CustomPayloadEvent.Context ctx) {
-        AffinityManager.getOrCreateInstance().replaceAffinities(message.affinities);
-        ctx.getConnection().send();
+        ctx.enqueueWork(() -> {
+            AffinityManager.getOrCreateInstance().replaceAffinities(message.affinities);
+        }).exceptionally(e -> {
+            LOGGER.error("Config task failed to replace affinity data");
+            ctx.getConnection().disconnect(Component.literal("Config task failed to replace affinity data"));   // TODO Localize
+            return null;
+        }).thenAccept($ -> {
+            ConfigPacketHandlerForge.sendOverConnection(new AcknowledgeAffinitiesConfigPacketForge(), ctx.getConnection());
+        });
+        ctx.setPacketHandled(true);
     }
 }

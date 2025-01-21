@@ -1,22 +1,24 @@
 package com.verdantartifice.primalmagick.common.network.packets.config;
 
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
-public record AcknowledgeAffinitiesConfigPacketForge() implements CustomPacketPayload, IMessageToServer {
-    public static final StreamCodec<FriendlyByteBuf, AcknowledgeAffinitiesConfigPacketForge> STREAM_CODEC = StreamCodec.unit(new AcknowledgeAffinitiesConfigPacketForge());
-    private static final CustomPacketPayload.Type<AcknowledgeAffinitiesConfigPacketForge> TYPE = new CustomPacketPayload.Type<>(ResourceUtils.loc("acknowledge_affinities"));
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.BiConsumer;
 
-    @Override
-    public Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+public record AcknowledgeAffinitiesConfigPacketForge() implements IMessageToServer {
+    public static final StreamCodec<FriendlyByteBuf, AcknowledgeAffinitiesConfigPacketForge> STREAM_CODEC = StreamCodec.unit(new AcknowledgeAffinitiesConfigPacketForge());
+    private static final List<BiConsumer<AcknowledgeAffinitiesConfigPacketForge, CustomPayloadEvent.Context>> CALLBACKS = new ArrayList<>();
+
+    public static void expect(BiConsumer<AcknowledgeAffinitiesConfigPacketForge, CustomPayloadEvent.Context> callback) {
+        CALLBACKS.add(callback);
     }
 
     public static void onMessage(AcknowledgeAffinitiesConfigPacketForge message, CustomPayloadEvent.Context ctx) {
-        // FIXME ???
+        CALLBACKS.stream().filter(Objects::nonNull).forEach(callback -> callback.accept(message, ctx));
     }
 }
