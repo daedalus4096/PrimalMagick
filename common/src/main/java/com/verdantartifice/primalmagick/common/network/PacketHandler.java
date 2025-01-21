@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import commonnetwork.api.Dispatcher;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.Connection;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -27,10 +26,5 @@ public class PacketHandler {
     public static void sendToAllAround(IMessageToClient message, ServerLevel level, BlockPos center, double radius) {
         // Send a message to the clients of all players within a given distance of the given world position
         Dispatcher.sendToClientsInRange(message, level, center, radius);
-    }
-    
-    public static void sendOverConnection(Object message, Connection conn) {
-        // Send a message over the given connection
-        CHANNEL.send(message, conn);
     }
 }
