@@ -1,35 +1,27 @@
 package com.verdantartifice.primalmagick.test.crafting;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.level.GameType;
-import net.minecraftforge.common.crafting.SimpleCraftingContainer;
-import net.minecraftforge.gametest.GameTestHolder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-@GameTestHolder(Constants.MOD_ID + ".crafting_requirements")
-public class CraftingRequirementsTest {
-    protected static final Logger LOGGER = LogManager.getLogger();
+import java.util.List;
 
+public abstract class AbstractCraftingRequirementsTest extends AbstractBaseTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void arcane_recipe(GameTestHelper helper) {
+    public void arcane_recipe(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         
         // Get the Mana Salt recipe from the recipe manager
-        var container = SimpleCraftingContainer.builder()
-                .pattern("RSE")
-                .define('R', Items.REDSTONE)
-                .define('S', ItemsPM.REFINED_SALT.get())
-                .define('E', ItemsPM.ESSENCE_DUST_EARTH.get())
-                .build();
+        var container = CraftingInput.of(3, 1, List.of(new ItemStack(Items.REDSTONE), new ItemStack(ItemsPM.REFINED_SALT.get()), new ItemStack(ItemsPM.ESSENCE_DUST_EARTH.get())));
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), container, helper.getLevel());
         helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
         
@@ -45,16 +37,11 @@ public class CraftingRequirementsTest {
     }
     
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void ritual_recipe(GameTestHelper helper) {
+    public void ritual_recipe(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         
         // Get the Manafruit recipe from the recipe manager
-        var container = SimpleCraftingContainer.builder()
-                .pattern("AHM")
-                .define('A', Items.APPLE)
-                .define('H', Items.HONEY_BOTTLE)
-                .define('M', ItemsPM.MANA_SALTS.get())
-                .build();
+        var container = CraftingInput.of(3, 1, List.of(new ItemStack(Items.APPLE), new ItemStack(Items.HONEY_BOTTLE), new ItemStack(ItemsPM.MANA_SALTS.get())));
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), container, helper.getLevel());
         helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
         

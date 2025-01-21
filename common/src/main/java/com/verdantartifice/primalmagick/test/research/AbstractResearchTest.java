@@ -1,23 +1,17 @@
 package com.verdantartifice.primalmagick.test.research;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
-import net.minecraftforge.gametest.GameTestHolder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-@GameTestHolder(Constants.MOD_ID + ".research")
-public class ResearchTest {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
+public abstract class AbstractResearchTest extends AbstractBaseTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void research_grant_works(GameTestHelper helper) {
+    public void research_grant_works(GameTestHelper helper) {
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         
         helper.assertFalse(ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research already started on new player");
