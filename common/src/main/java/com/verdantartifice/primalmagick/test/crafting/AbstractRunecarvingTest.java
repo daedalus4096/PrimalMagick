@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.test.crafting;
 
-import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
@@ -9,6 +8,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.BlockPos;
@@ -16,14 +16,12 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder(Constants.MOD_ID + ".runecarving")
-public class RunecarvingTest extends AbstractBaseTest {
+public abstract class AbstractRunecarvingTest extends AbstractBaseTest {
     @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
-    public static void craft_works(GameTestHelper helper) {
+    public void craft_works(GameTestHelper helper) {
         // Create a test player with the research needed for basic runecarving
-        var player = helper.makeMockServerPlayer();
+        var player = this.makeMockServerPlayer(helper);
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.BASIC_RUNEWORKING);
         helper.assertTrue(ExpertiseManager.getValue(player, ResearchDisciplines.RUNEWORKING).orElse(-1) == 0, "Expected starting expertise is not zero for test player");
         
@@ -41,7 +39,7 @@ public class RunecarvingTest extends AbstractBaseTest {
         helper.assertTrue(tile.getItem(0, 1).is(Items.LAPIS_LAZULI), "Lapis lazuli material not properly set");
         
         // Open the block entity menu and select the first (and only) recipe
-        player.openMenu(tile, tablePos);
+        Services.PLAYER.openMenu(player, tile, tablePos);
         var menu = assertInstanceOf(helper, player.containerMenu, RunecarvingTableMenu.class, "Menu not of expected type");
         helper.assertTrue(menu.getRecipeListSize() == 1, "Recipe list not as expected in runecarving menu");
         helper.assertTrue(menu.clickMenuButton(player, 0), "Recipe selection failed");
