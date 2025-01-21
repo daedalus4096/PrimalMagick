@@ -29,7 +29,7 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleTypeR
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
-import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypeRegistration;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypeRegistration;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypeRegistration;
 
@@ -47,7 +47,7 @@ public class InitRegistries {
         ArmorMaterialsPM.init();
         DataComponentsPM.init();
         EntityTypesPM.init();   // FIXME Change rest of class to use this pattern
-        BlockEntityTypeRegistration.init();
+        BlockEntityTypesPM.init();
         MenuTypeRegistration.init();
         MobEffectRegistration.init();
         RecipeTypeRegistration.init();
