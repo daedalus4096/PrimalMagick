@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypeRegistration;
-import com.verdantartifice.primalmagick.common.blocks.BlockRegistration;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRegistration;
@@ -41,7 +41,7 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.StructureType
 public class InitRegistries {
     public static void initDeferredRegistries() {
         // Platform implementations of cross-platform registries
-        BlockRegistration.init();
+        BlocksPM.init();
         ItemRegistration.init();
         CreativeModeTabRegistration.init();
         ArmorMaterialRegistration.init();

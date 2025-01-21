@@ -115,6 +115,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class BlocksPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.BLOCKS_REGISTRY.init();
+    }
+
     private static <T extends Block> IRegistryItem<Block, T> register(String name, Supplier<T> blockSupplier) {
         return Services.BLOCKS_REGISTRY.register(name, blockSupplier);
     }
