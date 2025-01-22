@@ -18,7 +18,7 @@ import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
-import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypeRegistration;
 import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypeRegistration;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -60,7 +60,7 @@ public class InitRegistries {
         SensorTypesPM.init();
         MemoryModuleTypesPM.init();
         ResearchKeyTypesPM.init();
-        RequirementTypeRegistration.init();
+        RequirementsPM.init();
         ProjectMaterialTypeRegistration.init();
         RewardTypeRegistration.init();
         WeightFunctionTypeRegistration.init();

@@ -10,6 +10,11 @@ import net.minecraft.network.codec.StreamCodec;
 import java.util.function.Supplier;
 
 public class RequirementsPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.REQUIREMENT_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<RequirementType<?>, RequirementType<ResearchRequirement>> RESEARCH = register("research", ResearchRequirement::codec, ResearchRequirement::streamCodec);
     public static final IRegistryItem<RequirementType<?>, RequirementType<KnowledgeRequirement>> KNOWLEDGE = register("knowledge", () -> KnowledgeRequirement.CODEC, () -> KnowledgeRequirement.STREAM_CODEC);
     public static final IRegistryItem<RequirementType<?>, RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", () -> ItemStackRequirement.CODEC, () -> ItemStackRequirement.STREAM_CODEC);
