@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypeRegistration;
-import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypeRegistration;
+import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
@@ -57,7 +57,7 @@ public class InitRegistries {
         StructureTypesPM.init();
         ParticleTypesPM.init();
         ArgumentTypesPM.init();
-        SensorTypeRegistration.init();
+        SensorTypesPM.init();
         MemoryModuleTypeRegistration.init();
         ResearchKeyTypeRegistration.init();
         RequirementTypeRegistration.init();
