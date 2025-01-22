@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.crafting.ingredients.IngredientsP
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypeRegistration;
+import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialsPM;
@@ -58,7 +58,7 @@ public class InitRegistries {
         ParticleTypesPM.init();
         ArgumentTypesPM.init();
         SensorTypesPM.init();
-        MemoryModuleTypeRegistration.init();
+        MemoryModuleTypesPM.init();
         ResearchKeyTypeRegistration.init();
         RequirementTypeRegistration.init();
         ProjectMaterialTypeRegistration.init();

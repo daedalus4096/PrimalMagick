@@ -16,6 +16,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class MemoryModuleTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.MEMORY_MODULE_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<MemoryModuleType<?>, MemoryModuleType<List<TreefolkEntity>>> NEARBY_TREEFOLK = register("nearby_treefolk", () -> new MemoryModuleType<>(Optional.empty()));
     public static final IRegistryItem<MemoryModuleType<?>, MemoryModuleType<List<TreefolkEntity>>> NEARBY_ADULT_TREEFOLK = register("nearby_adult_treefolk", () -> new MemoryModuleType<>(Optional.empty()));
     public static final IRegistryItem<MemoryModuleType<?>, MemoryModuleType<List<TreefolkEntity>>> NEAREST_VISIBLE_ADULT_TREEFOLK = register("nearest_visible_adult_treefolk", () -> new MemoryModuleType<>(Optional.empty()));

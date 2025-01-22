@@ -1,9 +1,10 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
-import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypeRegistration;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.platform.services.registries.IMemoryModuleTypeRegistryService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraftforge.registries.DeferredRegister;
 
@@ -15,9 +16,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class MemoryModuleTypeRegistryServiceForge extends AbstractBuiltInRegistryServiceForge<MemoryModuleType<?>> implements IMemoryModuleTypeRegistryService {
+    private static final DeferredRegister<MemoryModuleType<?>> TYPES = DeferredRegister.create(Registries.MEMORY_MODULE_TYPE, Constants.MOD_ID);
+
     @Override
     protected Supplier<DeferredRegister<MemoryModuleType<?>>> getDeferredRegisterSupplier() {
-        return MemoryModuleTypeRegistration::getDeferredRegister;
+        return () -> TYPES;
     }
 
     @Override
