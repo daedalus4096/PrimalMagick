@@ -8,6 +8,11 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
 public class ResearchKeyTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.RESEARCH_KEY_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<ResearchKeyType<?>, ResearchKeyType<ResearchDisciplineKey>> RESEARCH_DISCIPLINE = register("research_discipline", ResearchDisciplineKey.CODEC, ResearchDisciplineKey.STREAM_CODEC);
     public static final IRegistryItem<ResearchKeyType<?>, ResearchKeyType<ResearchEntryKey>> RESEARCH_ENTRY = register("research_entry", ResearchEntryKey.CODEC, ResearchEntryKey.STREAM_CODEC);
     public static final IRegistryItem<ResearchKeyType<?>, ResearchKeyType<ResearchStageKey>> RESEARCH_STAGE = register("research_stage", ResearchStageKey.CODEC, ResearchStageKey.STREAM_CODEC);

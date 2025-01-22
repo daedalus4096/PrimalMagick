@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypeRegistration;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypeRegistration;
 import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypeRegistration;
@@ -13,6 +12,7 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleTypeR
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
+import com.verdantartifice.primalmagick.platform.registries.ResearchKeyTypeRegistryServiceNeoforge;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
@@ -27,7 +27,7 @@ import net.neoforged.neoforge.registries.NewRegistryEvent;
 public class RegistryEventListeners {
     @SubscribeEvent
     public static void onNewRegistry(NewRegistryEvent event) {
-        event.register(ResearchKeyTypeRegistration.TYPES);
+        event.register(ResearchKeyTypeRegistryServiceNeoforge.TYPES);   // TODO Is there a better way to do this than direct static service invocation?
         event.register(RequirementTypeRegistration.TYPES);
         event.register(ProjectMaterialTypeRegistration.TYPES);
         event.register(RewardTypeRegistration.TYPES);
