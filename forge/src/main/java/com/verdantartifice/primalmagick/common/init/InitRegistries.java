@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.init;
 
-import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypeRegistration;
+import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRegistration;
@@ -55,7 +55,7 @@ public class InitRegistries {
         SoundsPM.init();
         StructurePieceTypesPM.init();
         StructureTypesPM.init();
-        ParticleTypeRegistration.init();
+        ParticleTypesPM.init();
         ArgumentTypeRegistration.init();
         SensorTypeRegistration.init();
         MemoryModuleTypeRegistration.init();

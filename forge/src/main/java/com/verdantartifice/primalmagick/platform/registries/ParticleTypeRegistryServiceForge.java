@@ -1,10 +1,11 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
-import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypeRegistration;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.platform.services.registries.IParticleTypeRegistryService;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -15,9 +16,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class ParticleTypeRegistryServiceForge extends AbstractBuiltInRegistryServiceForge<ParticleType<?>> implements IParticleTypeRegistryService {
+    private static final DeferredRegister<ParticleType<?>> TYPES = DeferredRegister.create(Registries.PARTICLE_TYPE, Constants.MOD_ID);
+
     @Override
     protected Supplier<DeferredRegister<ParticleType<?>>> getDeferredRegisterSupplier() {
-        return ParticleTypeRegistration::getDeferredRegister;
+        return () -> TYPES;
     }
 
     @Override

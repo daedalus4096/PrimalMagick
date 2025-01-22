@@ -18,6 +18,11 @@ import java.util.function.Function;
  * @author Daedalus4096
  */
 public class ParticleTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.PARTICLE_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> WAND_POOF = registerSimple("wand_poof", true);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> MANA_SPARKLE = registerSimple("mana_sparkle", true);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> SPELL_SPARKLE = registerSimple("spell_sparkle", true);
