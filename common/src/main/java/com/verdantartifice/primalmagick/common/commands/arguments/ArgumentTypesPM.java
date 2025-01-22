@@ -14,7 +14,8 @@ import net.minecraft.resources.ResourceKey;
  */
 public class ArgumentTypesPM {
     public static void init() {
-        // Nothing to do, other than be called for class loading
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.PARTICLE_TYPES_REGISTRY.init();
     }
 
     public static final IRegistryItem<ArgumentTypeInfo<?, ?>, SingletonArgumentInfo<KnowledgeTypeArgument>> KNOWLEDGE_TYPE = registerSingleton(

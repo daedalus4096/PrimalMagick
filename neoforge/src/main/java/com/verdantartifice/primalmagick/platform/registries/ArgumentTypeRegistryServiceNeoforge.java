@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.platform.registries;
 
 import com.mojang.brigadier.arguments.ArgumentType;
-import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypeRegistration;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeRegistryService;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
@@ -9,6 +9,7 @@ import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -19,9 +20,11 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class ArgumentTypeRegistryServiceNeoforge extends AbstractRegistryServiceNeoforge<ArgumentTypeInfo<?, ?>> implements IArgumentTypeRegistryService {
+    private static final DeferredRegister<ArgumentTypeInfo<?, ?>> TYPES = DeferredRegister.create(Registries.COMMAND_ARGUMENT_TYPE, Constants.MOD_ID);
+
     @Override
     protected Supplier<DeferredRegister<ArgumentTypeInfo<?, ?>>> getDeferredRegisterSupplier() {
-        return ArgumentTypeRegistration::getDeferredRegister;
+        return () -> TYPES;
     }
 
     @Override
