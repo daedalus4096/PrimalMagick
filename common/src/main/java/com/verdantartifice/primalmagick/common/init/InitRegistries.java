@@ -10,6 +10,8 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
+import com.verdantartifice.primalmagick.common.enchantments.effects.EnchantmentEntityEffectsPM;
+import com.verdantartifice.primalmagick.common.enchantments.effects.EnchantmentLocationBasedEffectsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
@@ -53,6 +55,8 @@ public class InitRegistries {
         SensorTypesPM.init();
         MemoryModuleTypesPM.init();
         CriteriaTriggersPM.init();
+        EnchantmentEntityEffectsPM.init();
+        EnchantmentLocationBasedEffectsPM.init();
         ResearchKeyTypesPM.init();
         RequirementsPM.init();
         ProjectMaterialTypesPM.init();

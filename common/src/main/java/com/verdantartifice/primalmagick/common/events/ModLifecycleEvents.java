@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.common.init.InitAttunements;
 import com.verdantartifice.primalmagick.common.init.InitCauldron;
-import com.verdantartifice.primalmagick.common.init.InitEnchantments;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;
 import com.verdantartifice.primalmagick.common.init.InitResearch;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -28,8 +27,7 @@ public class ModLifecycleEvents {
         InitAttunements.initAttunementAttributeModifiers();
         InitResearch.initResearch();
         InitCauldron.initCauldronInteractions();
-        InitEnchantments.initEffects();
-        
+
         LootConditionTypesPM.register();
 
         registerDispenserBehaviors(workConsumer);

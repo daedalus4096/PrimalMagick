@@ -33,6 +33,8 @@ import com.verdantartifice.primalmagick.platform.services.registries.IBlockRegis
 import com.verdantartifice.primalmagick.platform.services.registries.ICreativeModeTabRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.ICriterionTriggerRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IDataComponentTypeRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.IEnchantmentEntityEffectTypeRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.IEnchantmentLocationBasedEffectTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IEntityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IGridRewardTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IItemRegistryService;
@@ -118,6 +120,8 @@ public class Services {
     public static final ISensorTypeRegistryService SENSOR_TYPES_REGISTRY = load(ISensorTypeRegistryService.class);
     public static final IMemoryModuleTypeRegistryService MEMORY_MODULE_TYPES_REGISTRY = load(IMemoryModuleTypeRegistryService.class);
     public static final ICriterionTriggerRegistryService CRITERION_TRIGGERS_REGISTRY = load(ICriterionTriggerRegistryService.class);
+    public static final IEnchantmentEntityEffectTypeRegistryService ENCHANTMENT_ENTITY_EFFECTS_REGISTRY = load(IEnchantmentEntityEffectTypeRegistryService.class);
+    public static final IEnchantmentLocationBasedEffectTypeRegistryService ENCHANTMENT_LOCATION_BASED_EFFECTS_REGISTRY = load(IEnchantmentLocationBasedEffectTypeRegistryService.class);
     public static final IResearchKeyTypeRegistryService RESEARCH_KEY_TYPES_REGISTRY = load(IResearchKeyTypeRegistryService.class);
     public static final IRequirementTypeRegistryService REQUIREMENT_TYPES_REGISTRY = load(IRequirementTypeRegistryService.class);
     public static final IProjectMaterialTypeRegistryService PROJECT_MATERIAL_TYPES_REGISTRY = load(IProjectMaterialTypeRegistryService.class);
