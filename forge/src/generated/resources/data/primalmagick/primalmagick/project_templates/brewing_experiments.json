@@ -18,7 +18,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:crops/nether_wart",
+      "tag": "c:crops/nether_wart",
       "weight": 3.0
     },
     {
@@ -38,7 +38,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:dusts/glowstone",
+      "tag": "c:dusts/glowstone",
       "weight": 1.0
     },
     {
@@ -46,7 +46,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:dusts/redstone",
+      "tag": "c:dusts/redstone",
       "weight": 1.0
     },
     {

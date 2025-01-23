@@ -27,12 +27,12 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:end_stones"
+            "tag": "c:end_stones"
           },
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:ender_pearls"
+            "tag": "c:ender_pearls"
           },
           {
             "amount": 1,

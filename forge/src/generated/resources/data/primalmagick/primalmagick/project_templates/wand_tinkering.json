@@ -37,7 +37,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:obsidian",
+      "tag": "c:obsidians",
       "weight": 1.0
     },
     {
@@ -81,7 +81,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:ingots/iron",
+      "tag": "c:ingots/iron",
       "weight": 1.0
     },
     {
@@ -89,7 +89,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:ingots/gold",
+      "tag": "c:ingots/gold",
       "weight": 1.0
     },
     {
@@ -97,7 +97,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:gems/diamond",
+      "tag": "c:gems/diamond",
       "weight": 1.0
     },
     {

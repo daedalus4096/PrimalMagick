@@ -6,7 +6,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 2,
-      "tag": "forge:gems/emerald",
+      "tag": "c:gems/emerald",
       "weight": 2.0
     },
     {
@@ -26,7 +26,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:gems/diamond",
+      "tag": "c:gems/diamond",
       "weight": 3.0
     },
     {
@@ -82,7 +82,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:ingots/gold",
+      "tag": "c:ingots/gold",
       "weight": 1.0
     },
     {
@@ -162,7 +162,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 3,
-      "tag": "forge:feathers",
+      "tag": "c:feathers",
       "weight": 1.0
     },
     {

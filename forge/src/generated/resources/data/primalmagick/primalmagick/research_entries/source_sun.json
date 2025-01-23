@@ -29,7 +29,7 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:sandstone"
+            "tag": "c:sandstone/blocks"
           },
           {
             "amount": 1,

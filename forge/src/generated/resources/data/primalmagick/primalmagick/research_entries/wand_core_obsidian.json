@@ -46,7 +46,7 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:obsidian"
+            "tag": "c:obsidians"
           },
           {
             "amount": 1,

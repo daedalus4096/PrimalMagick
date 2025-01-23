@@ -6,7 +6,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:gems/emerald",
+      "tag": "c:gems/emerald",
       "weight": 2.0
     },
     {
@@ -26,7 +26,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:ingots/iron",
+      "tag": "c:ingots/iron",
       "weight": 3.0
     },
     {
@@ -70,7 +70,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 2,
-      "tag": "forge:glass_panes",
+      "tag": "c:glass_panes",
       "weight": 1.0
     },
     {
@@ -90,7 +90,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 3,
-      "tag": "forge:crops/wheat",
+      "tag": "c:crops/wheat",
       "weight": 1.0
     },
     {
@@ -98,7 +98,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 3,
-      "tag": "forge:crops/potato",
+      "tag": "c:crops/potato",
       "weight": 1.0
     },
     {
@@ -106,7 +106,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 3,
-      "tag": "forge:crops/carrot",
+      "tag": "c:crops/carrot",
       "weight": 1.0
     },
     {
@@ -114,7 +114,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 3,
-      "tag": "forge:crops/beetroot",
+      "tag": "c:crops/beetroot",
       "weight": 1.0
     },
     {
@@ -122,7 +122,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 3,
-      "tag": "forge:string",
+      "tag": "c:strings",
       "weight": 2.0
     },
     {
@@ -142,7 +142,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 4,
-      "tag": "forge:rods/wooden",
+      "tag": "c:rods/wooden",
       "weight": 1.0
     },
     {
@@ -150,7 +150,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:leather",
+      "tag": "c:leathers",
       "weight": 1.0
     },
     {
@@ -202,7 +202,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 2,
-      "tag": "forge:dyes",
+      "tag": "c:dyes",
       "weight": 1.0
     }
   ],

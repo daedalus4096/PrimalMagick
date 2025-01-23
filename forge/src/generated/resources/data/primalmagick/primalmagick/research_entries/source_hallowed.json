@@ -24,7 +24,7 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:nether_stars"
+            "tag": "c:nether_stars"
           },
           {
             "amount": 1,

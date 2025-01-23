@@ -119,7 +119,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 4,
-      "tag": "forge:ender_pearls",
+      "tag": "c:ender_pearls",
       "weight": 3.0
     },
     {

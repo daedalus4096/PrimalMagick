@@ -127,7 +127,7 @@
       "consumed": false,
       "material_type": "primalmagick:item_tag",
       "quantity": 10,
-      "tag": "forge:obsidian",
+      "tag": "c:obsidians",
       "weight": 1.0
     },
     {

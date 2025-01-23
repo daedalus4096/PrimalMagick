@@ -56,7 +56,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:bones",
+      "tag": "c:bones",
       "weight": 1.0
     },
     {
@@ -64,7 +64,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:rods/blaze",
+      "tag": "c:rods/blaze",
       "weight": 1.0
     },
     {

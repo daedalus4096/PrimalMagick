@@ -49,7 +49,7 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:rods/blaze"
+            "tag": "c:rods/blaze"
           },
           {
             "amount": 2,

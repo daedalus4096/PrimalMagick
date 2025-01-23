@@ -28,7 +28,7 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:ingots/gold"
+            "tag": "c:ingots/gold"
           },
           {
             "amount": 1,

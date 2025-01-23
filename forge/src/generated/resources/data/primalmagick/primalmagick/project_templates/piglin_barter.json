@@ -18,7 +18,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:storage_blocks/gold",
+      "tag": "c:storage_blocks/gold",
       "weight": 0.5
     },
     {
@@ -86,7 +86,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:ingots/gold",
+      "tag": "c:ingots/gold",
       "weight": 5.0
     },
     {

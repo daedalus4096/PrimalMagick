@@ -31,7 +31,7 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:gems/diamond"
+            "tag": "c:gems/diamond"
           },
           {
             "amount": 3,

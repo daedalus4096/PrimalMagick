@@ -14,7 +14,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 2,
-      "tag": "forge:gems/lapis",
+      "tag": "c:gems/lapis",
       "weight": 5.0
     },
     {

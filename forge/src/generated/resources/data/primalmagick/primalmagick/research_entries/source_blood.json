@@ -27,7 +27,7 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:bones"
+            "tag": "c:bones"
           },
           {
             "requirement_type": "primalmagick:item_stack",
