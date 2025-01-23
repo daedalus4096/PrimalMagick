@@ -11,6 +11,11 @@ import net.minecraft.network.codec.StreamCodec;
 import java.util.function.Supplier;
 
 public class SpellPayloadsPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.SPELL_PAYLOAD_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<SpellPayloadType<?>, SpellPayloadType<EmptySpellPayload>> EMPTY = register(EmptySpellPayload.TYPE, 100, EmptySpellPayload::getInstance, EmptySpellPayload::getRequirement, EmptySpellPayload.CODEC, EmptySpellPayload.STREAM_CODEC);
     
     public static final IRegistryItem<SpellPayloadType<?>, SpellPayloadType<EarthDamageSpellPayload>> EARTH_DAMAGE = register(EarthDamageSpellPayload.TYPE, 200, EarthDamageSpellPayload::getInstance, EarthDamageSpellPayload::getRequirement, EarthDamageSpellPayload.CODEC, EarthDamageSpellPayload.STREAM_CODEC);

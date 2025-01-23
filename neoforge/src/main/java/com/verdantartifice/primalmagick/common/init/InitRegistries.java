@@ -24,7 +24,7 @@ import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypeRegis
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
-import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadTypeRegistration;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehiclesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypesPM;
@@ -46,7 +46,7 @@ public class InitRegistries {
         CreativeModeTabsPM.init();
         ArmorMaterialsPM.init();
         DataComponentsPM.init();
-        EntityTypesPM.init();   // FIXME Change rest of class to use this pattern
+        EntityTypesPM.init();
         BlockEntityTypesPM.init();
         MenuTypesPM.init();
         EffectsPM.init();
@@ -67,7 +67,7 @@ public class InitRegistries {
         SpellPropertiesPM.init();
         SpellModsPM.init();
         SpellVehiclesPM.init();
-        SpellPayloadTypeRegistration.init();
+        SpellPayloadsPM.init();
         GridRewardTypeRegistration.init();
         ResearchTopicTypeRegistration.init();
         RitualStepTypeRegistration.init();
