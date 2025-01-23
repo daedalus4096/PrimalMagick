@@ -16,7 +16,6 @@ import java.nio.file.Path;
  * 
  * @author Daedalus4096
  */
-@Mod.EventBusSubscriber
 public class ConfigForge {
     protected static final String CATEGORY_MISC = "misc";
     protected static final String CATEGORY_RADIAL = "radial";

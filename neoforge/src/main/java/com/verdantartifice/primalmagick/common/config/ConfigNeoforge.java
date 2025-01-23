@@ -11,7 +11,6 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * 
  * @author Daedalus4096
  */
-@EventBusSubscriber
 public class ConfigNeoforge {
     protected static final String CATEGORY_MISC = "misc";
     protected static final String CATEGORY_RADIAL = "radial";
