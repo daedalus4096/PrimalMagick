@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick;
 
 import com.verdantartifice.primalmagick.common.config.ConfigForge;
-import com.verdantartifice.primalmagick.common.init.InitRegistries;
+import com.verdantartifice.primalmagick.common.init.InitRegistriesForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -24,7 +24,7 @@ public class PrimalMagick {
     public PrimalMagick(FMLJavaModLoadingContext context) {
         PrimalMagick.context = context;
         ConfigForge.register();
-        InitRegistries.initDeferredRegistries();
+        InitRegistriesForge.initDeferredRegistries();
     }
 
     @Nullable

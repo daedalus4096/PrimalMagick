@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick;
 
 import com.verdantartifice.primalmagick.common.config.ConfigNeoforge;
-import com.verdantartifice.primalmagick.common.init.InitRegistries;
+import com.verdantartifice.primalmagick.common.init.InitRegistriesNeoforge;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -25,7 +25,7 @@ public class PrimalMagick {
     public PrimalMagick(IEventBus eventBus, ModContainer container) {
         PrimalMagick.eventBus = eventBus;
         ConfigNeoforge.register(container);
-        InitRegistries.initDeferredRegistries();    // FIXME Refactor to pass in event bus rather than static lookup
+        InitRegistriesNeoforge.initDeferredRegistries();
     }
 
     @Nullable
