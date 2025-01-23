@@ -27,7 +27,7 @@ import com.verdantartifice.primalmagick.common.spells.mods.SpellModTypeRegistrat
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypesPM;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypesPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
@@ -62,7 +62,7 @@ public class InitRegistries {
         ResearchKeyTypesPM.init();
         RequirementsPM.init();
         ProjectMaterialTypesPM.init();
-        RewardTypeRegistration.init();
+        RewardTypesPM.init();
         WeightFunctionTypeRegistration.init();
         SpellPropertyRegistration.init();
         SpellModTypeRegistration.init();
