@@ -38,6 +38,7 @@ import com.verdantartifice.primalmagick.platform.services.registries.IEnchantmen
 import com.verdantartifice.primalmagick.platform.services.registries.IEntityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IGridRewardTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IItemRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.ILootItemConditionTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IMemoryModuleTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IMenuTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IMobEffectRegistryService;
@@ -122,6 +123,7 @@ public class Services {
     public static final ICriterionTriggerRegistryService CRITERION_TRIGGERS_REGISTRY = load(ICriterionTriggerRegistryService.class);
     public static final IEnchantmentEntityEffectTypeRegistryService ENCHANTMENT_ENTITY_EFFECTS_REGISTRY = load(IEnchantmentEntityEffectTypeRegistryService.class);
     public static final IEnchantmentLocationBasedEffectTypeRegistryService ENCHANTMENT_LOCATION_BASED_EFFECTS_REGISTRY = load(IEnchantmentLocationBasedEffectTypeRegistryService.class);
+    public static final ILootItemConditionTypeRegistryService LOOT_ITEM_CONDITION_TYPES_REGISTRY = load(ILootItemConditionTypeRegistryService.class);
     public static final IResearchKeyTypeRegistryService RESEARCH_KEY_TYPES_REGISTRY = load(IResearchKeyTypeRegistryService.class);
     public static final IRequirementTypeRegistryService REQUIREMENT_TYPES_REGISTRY = load(IRequirementTypeRegistryService.class);
     public static final IProjectMaterialTypeRegistryService PROJECT_MATERIAL_TYPES_REGISTRY = load(IProjectMaterialTypeRegistryService.class);

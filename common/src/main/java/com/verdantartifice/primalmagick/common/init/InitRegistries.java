@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTy
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialsPM;
+import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionTypesPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
@@ -57,6 +58,7 @@ public class InitRegistries {
         CriteriaTriggersPM.init();
         EnchantmentEntityEffectsPM.init();
         EnchantmentLocationBasedEffectsPM.init();
+        LootConditionTypesPM.init();
         ResearchKeyTypesPM.init();
         RequirementsPM.init();
         ProjectMaterialTypesPM.init();

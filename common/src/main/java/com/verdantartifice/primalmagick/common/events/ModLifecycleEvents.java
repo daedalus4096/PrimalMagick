@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.init.InitCauldron;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;
 import com.verdantartifice.primalmagick.common.init.InitResearch;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionTypesPM;
 import com.verdantartifice.primalmagick.common.network.PlayPacketRegistration;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -27,8 +26,6 @@ public class ModLifecycleEvents {
         InitAttunements.initAttunementAttributeModifiers();
         InitResearch.initResearch();
         InitCauldron.initCauldronInteractions();
-
-        LootConditionTypesPM.register();
 
         registerDispenserBehaviors(workConsumer);
     }
