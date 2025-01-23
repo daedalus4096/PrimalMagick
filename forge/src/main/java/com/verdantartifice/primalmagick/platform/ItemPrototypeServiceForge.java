@@ -50,8 +50,8 @@ import java.util.function.Supplier;
 
 public class ItemPrototypeServiceForge implements IItemPrototypeService {
     @Override
-    public Supplier<BurnableBlockItem> burnable(Block block, int burnTicks, Item.Properties properties) {
-        return () -> new BurnableBlockItemForge(block, burnTicks, properties);
+    public <T extends Block> Supplier<BurnableBlockItem> burnable(Supplier<T> blockSupplier, int burnTicks, Item.Properties properties) {
+        return () -> new BurnableBlockItemForge(blockSupplier.get(), burnTicks, properties);
     }
 
     @Override

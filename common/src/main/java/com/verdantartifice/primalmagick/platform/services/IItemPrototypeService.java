@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.function.Supplier;
 
 public interface IItemPrototypeService {
-    Supplier<BurnableBlockItem> burnable(Block block, int burnTicks, Item.Properties properties);
+    <T extends Block> Supplier<BurnableBlockItem> burnable(Supplier<T> block, int burnTicks, Item.Properties properties);
 
     Supplier<ArcanometerItem> arcanometer();
     Supplier<IgnyxItem> ignyx(Item.Properties properties);
