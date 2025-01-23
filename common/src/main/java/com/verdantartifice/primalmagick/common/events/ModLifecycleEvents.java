@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.network.PlayPacketRegistration;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.world.level.block.DispenserBlock;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 /**
@@ -17,17 +18,21 @@ import java.util.function.Consumer;
  * @author Daedalus4096
  */
 public class ModLifecycleEvents {
-    public static void commonSetup(Consumer<Runnable> workConsumer) {
-        PlayPacketRegistration.registerMessages();
-        Services.NETWORK.registerConfigMessages();
-        
-        InitRecipes.initWandTransforms();
-        InitRecipes.initCompostables();
-        InitAttunements.initAttunementAttributeModifiers();
-        InitResearch.initResearch();
-        InitCauldron.initCauldronInteractions();
+    private static final AtomicBoolean INITIALIZED = new AtomicBoolean(false);
 
-        registerDispenserBehaviors(workConsumer);
+    public static void commonSetup(Consumer<Runnable> workConsumer) {
+        if (INITIALIZED.compareAndSet(false, true)) {
+            PlayPacketRegistration.registerMessages();
+            Services.NETWORK.registerConfigMessages();
+
+            InitRecipes.initWandTransforms();
+            InitRecipes.initCompostables();
+            InitAttunements.initAttunementAttributeModifiers();
+            InitResearch.initResearch();
+            InitCauldron.initCauldronInteractions();
+
+            registerDispenserBehaviors(workConsumer);
+        }
     }
     
     private static void registerDispenserBehaviors(Consumer<Runnable> workConsumer) {
