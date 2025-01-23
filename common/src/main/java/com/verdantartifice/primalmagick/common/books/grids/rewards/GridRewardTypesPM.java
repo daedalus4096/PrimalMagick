@@ -8,6 +8,11 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
 public class GridRewardTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.GRID_REWARD_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<GridRewardType<?>, GridRewardType<AttunementReward>> ATTUNEMENT = register("attunement", AttunementReward.CODEC, AttunementReward.STREAM_CODEC);
     public static final IRegistryItem<GridRewardType<?>, GridRewardType<ComprehensionReward>> COMPREHENSION = register("comprehension", ComprehensionReward.CODEC, ComprehensionReward.STREAM_CODEC);
     public static final IRegistryItem<GridRewardType<?>, GridRewardType<EmptyReward>> EMPTY = register("empty", EmptyReward.CODEC, EmptyReward.STREAM_CODEC);

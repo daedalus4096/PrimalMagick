@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypeRegistration;
 import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypeRegistration;
+import com.verdantartifice.primalmagick.platform.registries.GridRewardTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.ProjectMaterialTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.RequirementTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.ResearchKeyTypeRegistryServiceNeoforge;
@@ -36,7 +36,7 @@ public class RegistryEventListeners {
         event.register(SpellModTypeRegistryServiceNeoforge.TYPES);
         event.register(SpellVehicleTypeRegistryServiceNeoforge.TYPES);
         event.register(SpellPayloadTypeRegistryServiceNeoforge.TYPES);
-        event.register(GridRewardTypeRegistration.TYPES);
+        event.register(GridRewardTypeRegistryServiceNeoforge.TYPES);
         event.register(ResearchTopicTypeRegistration.TYPES);
         event.register(RitualStepTypeRegistration.TYPES);
     }
