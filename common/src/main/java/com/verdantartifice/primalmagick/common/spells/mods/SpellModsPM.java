@@ -13,6 +13,11 @@ import net.minecraft.network.codec.StreamCodec;
 import java.util.function.Supplier;
 
 public class SpellModsPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.SPELL_MOD_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<SpellModType<?>, SpellModType<EmptySpellMod>> EMPTY = register(EmptySpellMod.TYPE, 100, EmptySpellMod::getInstance, EmptySpellMod::getRequirement, SpellPropertiesPM.POWER, EmptySpellMod.CODEC, EmptySpellMod.STREAM_CODEC);
     public static final IRegistryItem<SpellModType<?>, SpellModType<AmplifySpellMod>> AMPLIFY = register(AmplifySpellMod.TYPE, 200, AmplifySpellMod::getInstance, AmplifySpellMod::getRequirement, SpellPropertiesPM.AMPLIFY_POWER, AmplifySpellMod.CODEC, AmplifySpellMod.STREAM_CODEC);
     public static final IRegistryItem<SpellModType<?>, SpellModType<BurstSpellMod>> BURST = register(BurstSpellMod.TYPE, 300, BurstSpellMod::getInstance, BurstSpellMod::getRequirement, SpellPropertiesPM.RADIUS, BurstSpellMod.CODEC, BurstSpellMod.STREAM_CODEC);
