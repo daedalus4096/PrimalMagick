@@ -10,6 +10,11 @@ import java.util.Collection;
 import java.util.function.Function;
 
 public class SpellPropertiesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.SPELL_PROPERTIES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<SpellProperty, SpellProperty> POWER = register("power", id -> new SpellProperty(id, "spells.primalmagick.property.power", 1, 5));
     public static final IRegistryItem<SpellProperty, SpellProperty> AMPLIFY_POWER = register("amplify_power", id -> new SpellProperty(id, "spells.primalmagick.property.power", 1, 5));
     public static final IRegistryItem<SpellProperty, SpellProperty> BURST_POWER = register("burst_power", id -> new SpellProperty(id, "spells.primalmagick.property.power", 0, 5));
