@@ -23,7 +23,7 @@ import net.neoforged.neoforge.registries.NewRegistryEvent;
  *
  * @author Daedalus4096
  */
-@EventBusSubscriber(modid = Constants.MOD_ID)
+@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class RegistryEventListeners {
     @SubscribeEvent
     public static void onNewRegistry(NewRegistryEvent event) {

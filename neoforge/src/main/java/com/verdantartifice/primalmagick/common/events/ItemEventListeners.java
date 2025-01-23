@@ -31,37 +31,4 @@ public class ItemEventListeners {
             event.setCancellationResult(result);
         }
     }
-
-    // TODO Does this need to subscribe to the mod event bus?
-    @SubscribeEvent
-    public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
-        registerCustomRenderer(event::registerItem, ItemsPM.ARCANOMETER.get());
-        ManaFontBlockItem.getAllFonts().forEach(font -> registerCustomRenderer(event::registerItem, font));
-        registerCustomRenderer(event::registerItem, ItemsPM.SPELLCRAFTING_ALTAR.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.PRIMALITE_SHIELD.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_SHIELD.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_SHIELD.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.PRIMALITE_TRIDENT.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_TRIDENT.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_TRIDENT.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.FORBIDDEN_TRIDENT.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.MUNDANE_WAND.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.MODULAR_WAND.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.MODULAR_STAFF.get());
-    }
-
-    protected static <T extends Item & IHasCustomRenderer> void registerCustomRenderer(BiConsumer<IClientItemExtensions, T> registrar, T item) {
-        registrar.accept(makeCustomRendererExtension(item.getCustomRendererSupplier()), item);
-    }
-
-    protected static IClientItemExtensions makeCustomRendererExtension(Supplier<BlockEntityWithoutLevelRenderer> supplier) {
-        return new IClientItemExtensions() {
-            final BlockEntityWithoutLevelRenderer renderer = supplier.get();
-
-            @Override
-            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return renderer;
-            }
-        };
-    }
 }

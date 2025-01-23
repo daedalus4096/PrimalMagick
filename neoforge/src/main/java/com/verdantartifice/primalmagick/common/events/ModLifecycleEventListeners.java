@@ -10,7 +10,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
  * 
  * @author Daedalus4096
  */
-@EventBusSubscriber(modid= Constants.MOD_ID, bus=EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModLifecycleEventListeners {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
