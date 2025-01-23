@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -70,10 +69,6 @@ import java.util.function.Consumer;
  */
 public abstract class StoryAdvancementsPM {
     protected void generateInner(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver) {
-        // Custom advancement criteria are normally registered as part of FMLCommonSetup. However, that event never gets fired
-        // in datagen runs, so it must be done manually as part of the data provider.
-        InitAdvancements.initCriteria();
-        
         // Define advancements
         AdvancementHolder root = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("root").icon(ItemsPM.GRIMOIRE.get()).background(ResourceUtils.loc("textures/block/marble_raw.png")).build())
                 .requirements(AdvancementRequirements.Strategy.OR)

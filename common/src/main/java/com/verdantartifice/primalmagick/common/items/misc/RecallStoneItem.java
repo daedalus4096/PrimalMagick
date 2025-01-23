@@ -36,7 +36,7 @@ public class RecallStoneItem extends Item {
                 if (!player.hasInfiniteMaterials()) {
                     player.getItemInHand(hand).shrink(1);
                 }
-                CriteriaTriggersPM.RECALL_STONE.trigger(serverPlayer, serverLevel.dimension());
+                CriteriaTriggersPM.RECALL_STONE.get().trigger(serverPlayer, serverLevel.dimension());
             } else {
                 player.displayClientMessage(Component.translatable("event.primalmagick.recall_stone.cannot_cross_dimensions").withStyle(ChatFormatting.RED), true);
             }

@@ -37,7 +37,7 @@ public class LinguisticsComprehensionTrigger extends SimpleCriterionTrigger<Ling
         }
         
         public static Criterion<LinguisticsComprehensionTrigger.TriggerInstance> atLeast(ResourceKey<BookLanguage> language, int threshold) {
-            return CriteriaTriggersPM.LINGUISTICS_COMPREHENSION.createCriterion(new LinguisticsComprehensionTrigger.TriggerInstance(Optional.empty(), language, threshold));
+            return CriteriaTriggersPM.LINGUISTICS_COMPREHENSION.get().createCriterion(new LinguisticsComprehensionTrigger.TriggerInstance(Optional.empty(), language, threshold));
         }
         
         public boolean matches(ResourceKey<BookLanguage> language, int value) {

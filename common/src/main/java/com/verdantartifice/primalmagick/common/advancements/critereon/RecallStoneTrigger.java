@@ -35,11 +35,11 @@ public class RecallStoneTrigger extends SimpleCriterionTrigger<RecallStoneTrigge
             ).apply(instance, RecallStoneTrigger.TriggerInstance::new));
         
         public static Criterion<RecallStoneTrigger.TriggerInstance> anywhere() {
-            return CriteriaTriggersPM.RECALL_STONE.createCriterion(new RecallStoneTrigger.TriggerInstance(Optional.empty(), Optional.empty()));
+            return CriteriaTriggersPM.RECALL_STONE.get().createCriterion(new RecallStoneTrigger.TriggerInstance(Optional.empty(), Optional.empty()));
         }
         
         public static Criterion<RecallStoneTrigger.TriggerInstance> inDimension(ResourceKey<Level> dimension) {
-            return CriteriaTriggersPM.RECALL_STONE.createCriterion(new RecallStoneTrigger.TriggerInstance(Optional.empty(), Optional.ofNullable(dimension)));
+            return CriteriaTriggersPM.RECALL_STONE.get().createCriterion(new RecallStoneTrigger.TriggerInstance(Optional.empty(), Optional.ofNullable(dimension)));
         }
         
         public boolean matches(ResourceKey<Level> dim) {

@@ -33,11 +33,11 @@ public class RuneUseCountTrigger extends SimpleCriterionTrigger<RuneUseCountTrig
             ).apply(instance, RuneUseCountTrigger.TriggerInstance::new));
         
         public static Criterion<RuneUseCountTrigger.TriggerInstance> atLeast(int threshold) {
-            return CriteriaTriggersPM.RUNE_USE_COUNT.createCriterion(new RuneUseCountTrigger.TriggerInstance(Optional.empty(), Optional.empty(), threshold));
+            return CriteriaTriggersPM.RUNE_USE_COUNT.get().createCriterion(new RuneUseCountTrigger.TriggerInstance(Optional.empty(), Optional.empty(), threshold));
         }
         
         public static Criterion<RuneUseCountTrigger.TriggerInstance> atLeast(Rune rune, int threshold) {
-            return CriteriaTriggersPM.RUNE_USE_COUNT.createCriterion(new RuneUseCountTrigger.TriggerInstance(Optional.empty(), Optional.of(rune), threshold));
+            return CriteriaTriggersPM.RUNE_USE_COUNT.get().createCriterion(new RuneUseCountTrigger.TriggerInstance(Optional.empty(), Optional.of(rune), threshold));
         }
         
         public boolean matches(Rune rune, int value) {

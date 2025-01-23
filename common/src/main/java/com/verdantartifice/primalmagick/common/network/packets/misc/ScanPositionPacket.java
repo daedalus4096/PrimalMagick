@@ -113,7 +113,7 @@ public class ScanPositionPacket implements IMessageToServer {
                 });
                 
                 // Trigger any relevant advancement criteria
-                CriteriaTriggersPM.SCAN_LOCATION.trigger(player, message.pos, message.toolStack);
+                CriteriaTriggersPM.SCAN_LOCATION.get().trigger(player, message.pos, message.toolStack);
             });
         }
     }

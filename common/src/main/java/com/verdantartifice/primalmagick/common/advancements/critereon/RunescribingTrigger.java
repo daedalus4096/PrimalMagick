@@ -35,7 +35,7 @@ public class RunescribingTrigger extends SimpleCriterionTrigger<RunescribingTrig
         }
         
         public static Criterion<RunescribingTrigger.TriggerInstance> enchantment(Holder<Enchantment> ench) {
-            return CriteriaTriggersPM.RUNESCRIBING.createCriterion(new RunescribingTrigger.TriggerInstance(Optional.empty(), Optional.of(ench)));
+            return CriteriaTriggersPM.RUNESCRIBING.get().createCriterion(new RunescribingTrigger.TriggerInstance(Optional.empty(), Optional.of(ench)));
         }
         
         public boolean matches(Holder<Enchantment> other) {

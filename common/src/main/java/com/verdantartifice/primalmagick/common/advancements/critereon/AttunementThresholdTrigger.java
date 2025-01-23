@@ -36,19 +36,19 @@ public class AttunementThresholdTrigger extends SimpleCriterionTrigger<Attunemen
             ).apply(instance, AttunementThresholdTrigger.TriggerInstance::new));
         
         public static Criterion<AttunementThresholdTrigger.TriggerInstance> anyLasting(AttunementThreshold threshold) {
-            return CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.createCriterion(new AttunementThresholdTrigger.TriggerInstance(Optional.empty(), Optional.empty(), Optional.of(threshold), Optional.empty()));
+            return CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.get().createCriterion(new AttunementThresholdTrigger.TriggerInstance(Optional.empty(), Optional.empty(), Optional.of(threshold), Optional.empty()));
         }
         
         public static Criterion<AttunementThresholdTrigger.TriggerInstance> anyEphemeral(AttunementThreshold threshold) {
-            return CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.createCriterion(new AttunementThresholdTrigger.TriggerInstance(Optional.empty(), Optional.empty(), Optional.empty(), Optional.of(threshold)));
+            return CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.get().createCriterion(new AttunementThresholdTrigger.TriggerInstance(Optional.empty(), Optional.empty(), Optional.empty(), Optional.of(threshold)));
         }
         
         public static Criterion<AttunementThresholdTrigger.TriggerInstance> lasting(Source source, AttunementThreshold threshold) {
-            return CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.createCriterion(new AttunementThresholdTrigger.TriggerInstance(Optional.empty(), Optional.of(source), Optional.of(threshold), Optional.empty()));
+            return CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.get().createCriterion(new AttunementThresholdTrigger.TriggerInstance(Optional.empty(), Optional.of(source), Optional.of(threshold), Optional.empty()));
         }
         
         public static Criterion<AttunementThresholdTrigger.TriggerInstance> ephemeral(Source source, AttunementThreshold threshold) {
-            return CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.createCriterion(new AttunementThresholdTrigger.TriggerInstance(Optional.empty(), Optional.of(source), Optional.empty(), Optional.of(threshold)));
+            return CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.get().createCriterion(new AttunementThresholdTrigger.TriggerInstance(Optional.empty(), Optional.of(source), Optional.empty(), Optional.of(threshold)));
         }
         
         public boolean matches(Source source, int permanent, int induced, int temporary) {

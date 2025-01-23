@@ -56,7 +56,7 @@ public class ScanLocationTrigger extends SimpleCriterionTrigger<ScanLocationTrig
         }
 
         public static Criterion<ScanLocationTrigger.TriggerInstance> itemUsedOnBlock(LocationPredicate.Builder pLocation, ItemPredicate.Builder pTool) {
-            return CriteriaTriggersPM.SCAN_LOCATION.createCriterion(itemUsedOnLocation(pLocation, pTool));
+            return CriteriaTriggersPM.SCAN_LOCATION.get().createCriterion(itemUsedOnLocation(pLocation, pTool));
         }
 
         public boolean matches(LootContext pContext) {

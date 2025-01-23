@@ -37,7 +37,7 @@ public class StatValueTrigger extends SimpleCriterionTrigger<StatValueTrigger.Tr
         }
         
         public static Criterion<StatValueTrigger.TriggerInstance> atLeast(Stat stat, int threshold) {
-            return CriteriaTriggersPM.STAT_VALUE.createCriterion(new StatValueTrigger.TriggerInstance(Optional.empty(), stat, threshold));
+            return CriteriaTriggersPM.STAT_VALUE.get().createCriterion(new StatValueTrigger.TriggerInstance(Optional.empty(), stat, threshold));
         }
         
         public boolean matches(Stat stat, int value) {

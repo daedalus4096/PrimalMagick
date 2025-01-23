@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.events;
 
-import com.verdantartifice.primalmagick.common.init.InitAdvancements;
 import com.verdantartifice.primalmagick.common.init.InitAttunements;
 import com.verdantartifice.primalmagick.common.init.InitCauldron;
 import com.verdantartifice.primalmagick.common.init.InitEnchantments;
@@ -29,7 +28,6 @@ public class ModLifecycleEvents {
         InitAttunements.initAttunementAttributeModifiers();
         InitResearch.initResearch();
         InitCauldron.initCauldronInteractions();
-        InitAdvancements.initCriteria();
         InitEnchantments.initEffects();
         
         LootConditionTypesPM.register();

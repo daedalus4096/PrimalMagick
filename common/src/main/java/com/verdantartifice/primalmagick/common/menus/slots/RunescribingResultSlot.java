@@ -57,7 +57,7 @@ public class RunescribingResultSlot extends Slot {
                 
                 // Award appropriate expertise and advancements for each enchant
                 enchants.keySet().forEach(enchant -> {
-                    CriteriaTriggersPM.RUNESCRIBING.trigger(serverPlayer, enchant);
+                    CriteriaTriggersPM.RUNESCRIBING.get().trigger(serverPlayer, enchant);
                 });
                 
                 // Assemble a frequency map of runes that go into the found enchants to determine which runes were used more than once
@@ -69,7 +69,7 @@ public class RunescribingResultSlot extends Slot {
                         .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(element -> 1)));
                 inputFrequencyMap.entrySet().stream()
                         .map(entry -> Map.entry(entry.getKey(), Math.max(0, 1 + outputFrequencyMap.getOrDefault(entry.getKey(), 0) - inputFrequencyMap.get(entry.getKey()))))
-                        .forEach(entry -> CriteriaTriggersPM.RUNE_USE_COUNT.trigger(serverPlayer, entry.getKey(), entry.getValue()));
+                        .forEach(entry -> CriteriaTriggersPM.RUNE_USE_COUNT.get().trigger(serverPlayer, entry.getKey(), entry.getValue()));
             }
 
             // Grant the player rune enchantment research for each rune enchantment imbued

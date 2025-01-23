@@ -49,35 +49,35 @@ public class ResearchCompletedTrigger extends SimpleCriterionTrigger<ResearchCom
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> entityScanned(EntityType<?> entityType) {
-            return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new EntityScanKey(entityType)));
+            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new EntityScanKey(entityType)));
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> itemScanned(ItemLike itemLike) {
-            return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new ItemScanKey(itemLike)));
+            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new ItemScanKey(itemLike)));
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> itemScanned(ItemStack stack) {
-            return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new ItemScanKey(stack)));
+            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new ItemScanKey(stack)));
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> researchEntry(ResourceKey<ResearchEntry> rawKey) {
-            return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new ResearchEntryKey(rawKey)));
+            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new ResearchEntryKey(rawKey)));
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> runescribed(Holder<Enchantment> ench) {
-            return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new RuneEnchantmentKey(ench)));
+            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new RuneEnchantmentKey(ench)));
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> stackCrafted(ItemLike itemLike) {
-            return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new StackCraftedKey(itemLike)));
+            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new StackCraftedKey(itemLike)));
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> stackCrafted(ItemStack stack) {
-            return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new StackCraftedKey(stack)));
+            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new StackCraftedKey(stack)));
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> tagCrafted(TagKey<Item> tagKey) {
-            return CriteriaTriggersPM.RESEARCH_COMPLETED.createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new TagCraftedKey(tagKey)));
+            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new TagCraftedKey(tagKey)));
         }
         
         public boolean matches(AbstractResearchKey<?> completedKey) {

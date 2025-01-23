@@ -220,7 +220,7 @@ public class AttunementManager {
                 int permanent = getAttunement(player, source, AttunementType.PERMANENT);
                 int induced = getAttunement(player, source, AttunementType.INDUCED);
                 int temporary = getAttunement(player, source, AttunementType.TEMPORARY);
-                CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.trigger(serverPlayer, source, permanent, induced, temporary);
+                CriteriaTriggersPM.ATTUNEMENT_THRESHOLD.get().trigger(serverPlayer, source, permanent, induced, temporary);
             });
         }
     }

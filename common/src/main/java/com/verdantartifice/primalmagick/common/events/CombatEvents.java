@@ -173,7 +173,7 @@ public class CombatEvents {
     public static void onEntityHurtLowest(LivingEntity targetEntity, DamageSource damageSource, float amount) {
         // Trigger the appropriate advancement criteria with more data than vanilla provides, namely player data
         if (targetEntity instanceof ServerPlayer serverPlayer) {
-            CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT.trigger(serverPlayer, damageSource, amount);
+            CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT.get().trigger(serverPlayer, damageSource, amount);
         }
     }
     

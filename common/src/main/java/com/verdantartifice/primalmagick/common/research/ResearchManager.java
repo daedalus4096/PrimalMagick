@@ -348,7 +348,7 @@ public class ResearchManager {
         if (knowledge.isResearchComplete(registryAccess, key)) {
             // If the research is already complete, trigger advancement criteria if on server side, then abort
             if (player instanceof ServerPlayer serverPlayer) {
-                CriteriaTriggersPM.RESEARCH_COMPLETED.trigger(serverPlayer, key);
+                CriteriaTriggersPM.RESEARCH_COMPLETED.get().trigger(serverPlayer, key);
             }
             return false;
         } else if (!hasPrerequisites(player, key)) {
@@ -519,7 +519,7 @@ public class ResearchManager {
             
             // Trigger any relevant advancements
             if (player instanceof ServerPlayer serverPlayer) {
-                CriteriaTriggersPM.RESEARCH_COMPLETED.trigger(serverPlayer, key);
+                CriteriaTriggersPM.RESEARCH_COMPLETED.get().trigger(serverPlayer, key);
             }
         }
         

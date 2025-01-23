@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagick.platform.services.registries.IArmorMater
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockEntityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.ICreativeModeTabRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.ICriterionTriggerRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IDataComponentTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IEntityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IGridRewardTypeRegistryService;
@@ -116,6 +117,7 @@ public class Services {
     public static final IArgumentTypeRegistryService ARGUMENT_TYPES_REGISTRY = load(IArgumentTypeRegistryService.class);
     public static final ISensorTypeRegistryService SENSOR_TYPES_REGISTRY = load(ISensorTypeRegistryService.class);
     public static final IMemoryModuleTypeRegistryService MEMORY_MODULE_TYPES_REGISTRY = load(IMemoryModuleTypeRegistryService.class);
+    public static final ICriterionTriggerRegistryService CRITERION_TRIGGERS_REGISTRY = load(ICriterionTriggerRegistryService.class);
     public static final IResearchKeyTypeRegistryService RESEARCH_KEY_TYPES_REGISTRY = load(IResearchKeyTypeRegistryService.class);
     public static final IRequirementTypeRegistryService REQUIREMENT_TYPES_REGISTRY = load(IRequirementTypeRegistryService.class);
     public static final IProjectMaterialTypeRegistryService PROJECT_MATERIAL_TYPES_REGISTRY = load(IProjectMaterialTypeRegistryService.class);

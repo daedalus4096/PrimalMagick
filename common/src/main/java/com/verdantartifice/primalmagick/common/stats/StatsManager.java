@@ -103,7 +103,7 @@ public class StatsManager {
                 // Set the new value into the player capability
                 stats.setValue(stat, value);
                 scheduleSync(spe);
-                CriteriaTriggersPM.STAT_VALUE.trigger(spe, stat, value);
+                CriteriaTriggersPM.STAT_VALUE.get().trigger(spe, stat, value);
             });
         }
     }
@@ -135,7 +135,7 @@ public class StatsManager {
                     stats.setLocationDiscovered(shrinePos);
                     stats.setValue(stat, value);
                     scheduleSync(spe);
-                    CriteriaTriggersPM.STAT_VALUE.trigger(spe, stat, value);
+                    CriteriaTriggersPM.STAT_VALUE.get().trigger(spe, stat, value);
                 }
             });
         }

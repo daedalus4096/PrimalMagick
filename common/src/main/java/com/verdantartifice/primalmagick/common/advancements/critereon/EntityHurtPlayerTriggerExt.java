@@ -39,11 +39,11 @@ public class EntityHurtPlayerTriggerExt extends SimpleCriterionTrigger<EntityHur
             ).apply(instance, EntityHurtPlayerTriggerExt.TriggerInstance::new));
 
         public static Criterion<EntityHurtPlayerTriggerExt.TriggerInstance> playerHurtEntity(Optional<EntityPredicate> pPlayer, Optional<DamagePredicate> pDamage) {
-            return CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT.createCriterion(new EntityHurtPlayerTriggerExt.TriggerInstance(EntityPredicate.wrap(pPlayer), pDamage));
+            return CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT.get().createCriterion(new EntityHurtPlayerTriggerExt.TriggerInstance(EntityPredicate.wrap(pPlayer), pDamage));
         }
 
         public static Criterion<EntityHurtPlayerTriggerExt.TriggerInstance> playerHurtEntity(Optional<EntityPredicate> pPlayer, DamagePredicate.Builder pDamage) {
-            return CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT.createCriterion(new EntityHurtPlayerTriggerExt.TriggerInstance(EntityPredicate.wrap(pPlayer), Optional.of(pDamage.build())));
+            return CriteriaTriggersPM.ENTITY_HURT_PLAYER_EXT.get().createCriterion(new EntityHurtPlayerTriggerExt.TriggerInstance(EntityPredicate.wrap(pPlayer), Optional.of(pDamage.build())));
         }
 
         public boolean matches(ServerPlayer pPlayer, LootContext pPlayerContext, DamageSource pDamage, float pDealt, float pTaken, boolean pBlocked) {

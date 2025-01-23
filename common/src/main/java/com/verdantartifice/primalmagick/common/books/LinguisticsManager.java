@@ -92,7 +92,7 @@ public class LinguisticsManager {
                 linguistics.setComprehension(language.value().languageId(), finalValue);
                 scheduleSync(player);
                 if (player instanceof ServerPlayer serverPlayer && language.unwrapKey().isPresent()) {
-                    CriteriaTriggersPM.LINGUISTICS_COMPREHENSION.trigger(serverPlayer, language.unwrapKey().get(), finalValue);
+                    CriteriaTriggersPM.LINGUISTICS_COMPREHENSION.get().trigger(serverPlayer, language.unwrapKey().get(), finalValue);
                 }
             });
         }
@@ -109,7 +109,7 @@ public class LinguisticsManager {
                 linguistics.setComprehension(language.value().languageId(), finalValue);
                 scheduleSync(player);
                 if (player instanceof ServerPlayer serverPlayer && language.unwrapKey().isPresent()) {
-                    CriteriaTriggersPM.LINGUISTICS_COMPREHENSION.trigger(serverPlayer, language.unwrapKey().get(), finalValue);
+                    CriteriaTriggersPM.LINGUISTICS_COMPREHENSION.get().trigger(serverPlayer, language.unwrapKey().get(), finalValue);
                 }
             });
         }
