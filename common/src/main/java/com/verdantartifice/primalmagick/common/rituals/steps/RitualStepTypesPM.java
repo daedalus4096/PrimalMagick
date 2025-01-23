@@ -11,6 +11,11 @@ import net.minecraft.network.codec.StreamCodec;
 import java.util.function.BiFunction;
 
 public class RitualStepTypesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.RITUAL_STEP_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<RitualStepType<?>, RitualStepType<OfferingRitualStep>> OFFERING = register("offering", OfferingRitualStep.CODEC, OfferingRitualStep.STREAM_CODEC, RitualAltarTileEntity::doOfferingStep);
     public static final IRegistryItem<RitualStepType<?>, RitualStepType<PropRitualStep>> PROP = register("prop", PropRitualStep.CODEC, PropRitualStep.STREAM_CODEC, RitualAltarTileEntity::doPropStep);
     public static final IRegistryItem<RitualStepType<?>, RitualStepType<UniversalRitualStep>> UNIVERSAL = register("universal", UniversalRitualStep.CODEC, UniversalRitualStep.STREAM_CODEC, RitualAltarTileEntity::doUniversalPropStep);
