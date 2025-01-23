@@ -78,6 +78,10 @@ minecraft {
 }
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
+processResources {
+    from(project(":common").sourceSets.main.resources)
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
