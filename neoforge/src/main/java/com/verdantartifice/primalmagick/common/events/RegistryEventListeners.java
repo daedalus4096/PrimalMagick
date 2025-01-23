@@ -8,9 +8,9 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyRegistration;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleTypeRegistration;
-import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardTypeRegistration;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypeRegistration;
+import com.verdantartifice.primalmagick.platform.registries.ProjectMaterialTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.RequirementTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.ResearchKeyTypeRegistryServiceNeoforge;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -29,7 +29,7 @@ public class RegistryEventListeners {
     public static void onNewRegistry(NewRegistryEvent event) {
         event.register(ResearchKeyTypeRegistryServiceNeoforge.TYPES);   // TODO Is there a better way to do this than direct static service invocation?
         event.register(RequirementTypeRegistryServiceNeoforge.TYPES);
-        event.register(ProjectMaterialTypeRegistration.TYPES);
+        event.register(ProjectMaterialTypeRegistryServiceNeoforge.TYPES);
         event.register(RewardTypeRegistration.TYPES);
         event.register(WeightFunctionTypeRegistration.TYPES);
         event.register(SpellPropertyRegistration.PROPERTIES);
