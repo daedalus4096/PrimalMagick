@@ -58,6 +58,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 /**
@@ -65,13 +66,16 @@ import java.util.function.Consumer;
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
 public class ClientModLifecycleEvents {
+    private static final AtomicBoolean INITIALIZED = new AtomicBoolean(false);
+
     public static void clientSetup(Consumer<Runnable> workConsumer) {
-        registerScreens();
-        registerTERs();
-        registerItemProperties(workConsumer);
-        registerHudOverlays();
+        if (INITIALIZED.compareAndSet(false, true)) {
+            registerScreens();
+            registerTERs();
+            registerItemProperties(workConsumer);
+            registerHudOverlays();
+        }
     }
 
     private static void registerScreens() {
