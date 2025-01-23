@@ -5,13 +5,13 @@ import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTyp
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicTypeRegistration;
 import com.verdantartifice.primalmagick.common.rituals.steps.RitualStepTypeRegistration;
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadTypeRegistration;
-import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleTypeRegistration;
 import com.verdantartifice.primalmagick.platform.registries.ProjectMaterialTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.RequirementTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.ResearchKeyTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.RewardTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.SpellModTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.SpellPropertyRegistryServiceNeoforge;
+import com.verdantartifice.primalmagick.platform.registries.SpellVehicleTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.WeightFunctionTypeRegistryServiceNeoforge;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -34,7 +34,7 @@ public class RegistryEventListeners {
         event.register(WeightFunctionTypeRegistryServiceNeoforge.TYPES);
         event.register(SpellPropertyRegistryServiceNeoforge.PROPERTIES);
         event.register(SpellModTypeRegistryServiceNeoforge.TYPES);
-        event.register(SpellVehicleTypeRegistration.TYPES);
+        event.register(SpellVehicleTypeRegistryServiceNeoforge.TYPES);
         event.register(SpellPayloadTypeRegistration.TYPES);
         event.register(GridRewardTypeRegistration.TYPES);
         event.register(ResearchTopicTypeRegistration.TYPES);

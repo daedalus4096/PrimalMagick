@@ -11,6 +11,11 @@ import net.minecraft.network.codec.StreamCodec;
 import java.util.function.Supplier;
 
 public class SpellVehiclesPM {
+    public static void init() {
+        // Pass the service initialization through this class so it gets class loaded and fields registered
+        Services.SPELL_VEHICLE_TYPES_REGISTRY.init();
+    }
+
     public static final IRegistryItem<SpellVehicleType<?>, SpellVehicleType<EmptySpellVehicle>> EMPTY = register(EmptySpellVehicle.TYPE, 100, EmptySpellVehicle::getInstance, EmptySpellVehicle::getRequirement, EmptySpellVehicle.CODEC, EmptySpellVehicle.STREAM_CODEC);
     public static final IRegistryItem<SpellVehicleType<?>, SpellVehicleType<TouchSpellVehicle>> TOUCH = register(TouchSpellVehicle.TYPE, 200, TouchSpellVehicle::getInstance, TouchSpellVehicle::getRequirement, TouchSpellVehicle.CODEC, TouchSpellVehicle.STREAM_CODEC);
     public static final IRegistryItem<SpellVehicleType<?>, SpellVehicleType<ProjectileSpellVehicle>> PROJECTILE = register(ProjectileSpellVehicle.TYPE, 300, ProjectileSpellVehicle::getInstance, ProjectileSpellVehicle::getRequirement, ProjectileSpellVehicle.CODEC, ProjectileSpellVehicle.STREAM_CODEC);
