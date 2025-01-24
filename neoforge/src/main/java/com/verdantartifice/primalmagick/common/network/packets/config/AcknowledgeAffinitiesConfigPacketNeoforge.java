@@ -8,8 +8,9 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record AcknowledgeAffinitiesConfigPacketNeoforge() implements CustomPacketPayload {
+    public static final AcknowledgeAffinitiesConfigPacketNeoforge INSTANCE = new AcknowledgeAffinitiesConfigPacketNeoforge();
     public static final CustomPacketPayload.Type<AcknowledgeAffinitiesConfigPacketNeoforge> TYPE = new CustomPacketPayload.Type<>(ResourceUtils.loc("acknowledge_affinities_neoforge"));
-    public static final StreamCodec<FriendlyByteBuf, AcknowledgeAffinitiesConfigPacketNeoforge> STREAM_CODEC = StreamCodec.unit(new AcknowledgeAffinitiesConfigPacketNeoforge());
+    public static final StreamCodec<FriendlyByteBuf, AcknowledgeAffinitiesConfigPacketNeoforge> STREAM_CODEC = StreamCodec.unit(INSTANCE);
 
     @Override
     public Type<? extends CustomPacketPayload> type() {

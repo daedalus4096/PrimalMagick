@@ -62,7 +62,7 @@ public class UpdateLinguisticsGridConfigPacketNeoforge implements CustomPacketPa
             return null;
         }).thenAccept($ -> {
             // Reply with acknowledgement
-            context.reply(new AcknowledgeLinguisticsGridConfigPacketNeoforge());
+            context.reply(AcknowledgeLinguisticsGridConfigPacketNeoforge.INSTANCE);
         });
     }
 }

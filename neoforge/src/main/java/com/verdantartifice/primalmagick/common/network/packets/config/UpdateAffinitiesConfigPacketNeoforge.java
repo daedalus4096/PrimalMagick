@@ -67,7 +67,7 @@ public class UpdateAffinitiesConfigPacketNeoforge implements CustomPacketPayload
             return null;
         }).thenAccept($ -> {
             // Reply with acknowledgement
-            context.reply(new AcknowledgeAffinitiesConfigPacketNeoforge());
+            context.reply(AcknowledgeAffinitiesConfigPacketNeoforge.INSTANCE);
         });
     }
 }
