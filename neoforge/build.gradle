@@ -23,6 +23,13 @@ neoForge {
             client()
         }
         data {
+            programArgument('--mod')
+            programArgument("${mod_id}")
+            programArgument('--all')
+            programArgument('--output')
+            programArgument("${rootProject.file('neoforge/src/generated/resources/')}")
+            programArgument('--existing')
+            programArgument("${rootProject.file('common/src/main/resources/')}")
             data()
         }
         server {
