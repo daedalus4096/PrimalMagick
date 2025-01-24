@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:moon": 5,
+    "primalmagick:sea": 5,
+    "primalmagick:sky": 5,
+    "primalmagick:sun": 5
+  },
+  "target": "primalmagick:mana_salts"
+}

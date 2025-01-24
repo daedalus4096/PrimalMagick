@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 20,
+    "primalmagick:void": 20
+  },
+  "target": "minecraft:dragon_egg"
+}

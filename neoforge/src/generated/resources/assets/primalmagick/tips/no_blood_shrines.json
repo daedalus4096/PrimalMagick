@@ -1,0 +1,10 @@
+{
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:discover_blood"
+    }
+  },
+  "translationKey": "tip.primalmagick.no_blood_shrines"
+}

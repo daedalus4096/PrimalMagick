@@ -1,0 +1,80 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
+  "key": {
+    "rootKey": "primalmagick:cleansing_rite"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_ritual"
+    },
+    {
+      "rootKey": "primalmagick:sanguine_crucible"
+    },
+    {
+      "rootKey": "primalmagick:rune_summon"
+    },
+    {
+      "rootKey": "primalmagick:rune_self"
+    },
+    {
+      "rootKey": "primalmagick:rune_power"
+    },
+    {
+      "rootKey": "primalmagick:ritual_candles"
+    },
+    {
+      "rootKey": "primalmagick:ritual_bell"
+    },
+    {
+      "rootKey": "primalmagick:ritual_lectern"
+    },
+    {
+      "rootKey": "primalmagick:bloodletter"
+    },
+    {
+      "rootKey": "primalmagick:soul_anvil"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:cleansing_rite"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.cleansing_rite.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:cleansing_rite"
+      },
+      "recipes": [
+        "primalmagick:sanguine_core_inner_demon"
+      ],
+      "revelations": [],
+      "siblings": [
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:sotu_research_cleansing_rite"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.cleansing_rite.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "primalmagick:block/marble_hallowed_bricks"
+  }
+}

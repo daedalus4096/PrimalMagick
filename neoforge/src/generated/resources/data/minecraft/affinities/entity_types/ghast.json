@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:ghast",
+  "values": {
+    "primalmagick:blood": 10,
+    "primalmagick:infernal": 10,
+    "primalmagick:sky": 10
+  }
+}

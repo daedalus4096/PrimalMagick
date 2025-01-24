@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:dark_oak_log",
+  "target": "minecraft:stripped_dark_oak_log"
+}

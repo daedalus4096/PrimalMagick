@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:zombie_villager",
+  "values": {
+    "primalmagick:blood": 10,
+    "primalmagick:moon": 10
+  }
+}

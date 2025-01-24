@@ -1,0 +1,25 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "key": {
+    "M": {
+      "item": "primalmagick:marble_smoked_slab"
+    }
+  },
+  "pattern": [
+    "M",
+    "M"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:master_manaweaving"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:marble_smoked_chiseled"
+  }
+}

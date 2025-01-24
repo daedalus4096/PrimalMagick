@@ -1,0 +1,46 @@
+{
+  "noun": "primalmagick:creature",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:master_runeworking"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_hoe"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_summon"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_creature"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_sun"
+        }
+      }
+    ]
+  },
+  "result": "primalmagick:verdant",
+  "source": "primalmagick:sun",
+  "verb": "primalmagick:summon"
+}

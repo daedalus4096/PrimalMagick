@@ -1,0 +1,63 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:arcanometer"
+  },
+  "key": {
+    "rootKey": "primalmagick:arcanometer"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_magitech"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requiredValue": 25,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:items_analyzed"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:arcanometer"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.arcanometer.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:arcanometer"
+      },
+      "recipes": [
+        "primalmagick:arcanometer"
+      ],
+      "revelations": [],
+      "siblings": [
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:sotu_research_arcanometer"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.arcanometer.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

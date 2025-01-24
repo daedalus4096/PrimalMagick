@@ -1,0 +1,66 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:recall_stone"
+  },
+  "key": {
+    "rootKey": "primalmagick:recall_stone"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:rune_summon"
+    },
+    {
+      "rootKey": "primalmagick:rune_self"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:tag_crafted",
+              "tagKey": "minecraft:beds"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:recall_stone"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.recall_stone.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:recall_stone"
+      },
+      "recipes": [
+        "primalmagick:recall_stone"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.recall_stone.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

@@ -1,0 +1,8 @@
+{
+  "values": [
+    "primalmagick:power",
+    "primalmagick:duration",
+    "primalmagick:burst_power",
+    "primalmagick:non_zero_duration"
+  ]
+}

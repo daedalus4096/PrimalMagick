@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 1,
+    "primalmagick:moon": 1,
+    "primalmagick:sea": 1,
+    "primalmagick:sky": 1,
+    "primalmagick:sun": 1
+  },
+  "target": "primalmagick:mana_prism"
+}

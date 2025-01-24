@@ -1,0 +1,51 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_insight"
+  },
+  "key": {
+    "rootKey": "primalmagick:rune_insight"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_insight"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_insight.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:rune_insight"
+      },
+      "recipes": [
+        "primalmagick:rune_insight"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_insight.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

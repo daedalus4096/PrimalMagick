@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:sea": 20,
+    "primalmagick:sun": 10
+  },
+  "target": "minecraft:sea_pickle"
+}

@@ -1,0 +1,150 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_blood_from_dust"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_synthesis.text.addenda.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_infernal_from_dust"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_synthesis.text.addenda.2"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_void_from_dust"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_synthesis.text.addenda.3"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:hallowed": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_hallowed_from_dust"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_synthesis.text.addenda.4"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_shard_earth"
+  },
+  "key": {
+    "rootKey": "primalmagick:shard_synthesis"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_alchemy"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_synthesis"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_synthesis.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 1,
+          "primalmagick:moon": 1,
+          "primalmagick:sea": 1,
+          "primalmagick:sky": 1,
+          "primalmagick:sun": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_earth_from_dust",
+        "primalmagick:essence_shard_sea_from_dust",
+        "primalmagick:essence_shard_sky_from_dust",
+        "primalmagick:essence_shard_sun_from_dust",
+        "primalmagick:essence_shard_moon_from_dust"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_synthesis.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

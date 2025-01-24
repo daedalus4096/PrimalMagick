@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 11,
+    "primalmagick:earth": 4,
+    "primalmagick:sun": 4
+  },
+  "target": "minecraft:white_bed"
+}

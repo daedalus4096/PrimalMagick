@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:quartz_block",
+  "target": "primalmagick:chipped_budding_quartz_block"
+}

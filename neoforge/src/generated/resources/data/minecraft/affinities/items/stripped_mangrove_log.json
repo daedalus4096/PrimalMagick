@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:mangrove_log",
+  "target": "minecraft:stripped_mangrove_log"
+}

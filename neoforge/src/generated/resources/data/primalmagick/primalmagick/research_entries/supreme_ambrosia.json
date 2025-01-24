@@ -1,0 +1,171 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 4
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_ambrosia"
+      },
+      "recipes": [
+        "primalmagick:ambrosia_supreme_blood"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_ambrosia.text.addenda.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 4
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_ambrosia"
+      },
+      "recipes": [
+        "primalmagick:ambrosia_supreme_infernal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_ambrosia.text.addenda.2"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 4
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_ambrosia"
+      },
+      "recipes": [
+        "primalmagick:ambrosia_supreme_void"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_ambrosia.text.addenda.3"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:hallowed": 4
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_ambrosia"
+      },
+      "recipes": [
+        "primalmagick:ambrosia_supreme_hallowed"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_ambrosia.text.addenda.4"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ambrosia_supreme_earth"
+  },
+  "key": {
+    "rootKey": "primalmagick:supreme_ambrosia"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_ritual"
+    },
+    {
+      "rootKey": "primalmagick:greater_ambrosia"
+    },
+    {
+      "rootKey": "primalmagick:cluster_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:celestial_harp"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:rune_power"
+            }
+          },
+          {
+            "amount": 3,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_ambrosia"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_ambrosia.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 4,
+          "primalmagick:moon": 4,
+          "primalmagick:sea": 4,
+          "primalmagick:sky": 4,
+          "primalmagick:sun": 4
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_ambrosia"
+      },
+      "recipes": [
+        "primalmagick:ambrosia_supreme_earth",
+        "primalmagick:ambrosia_supreme_sea",
+        "primalmagick:ambrosia_supreme_sky",
+        "primalmagick:ambrosia_supreme_sun",
+        "primalmagick:ambrosia_supreme_moon"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_ambrosia.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

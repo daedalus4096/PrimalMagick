@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "primalmagick:block/wand_glamour_table",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "primalmagick:block/wand_glamour_table"
+    },
+    "facing=south": {
+      "model": "primalmagick:block/wand_glamour_table",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "primalmagick:block/wand_glamour_table",
+      "y": 270
+    }
+  }
+}

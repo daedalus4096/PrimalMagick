@@ -1,0 +1,127 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:attunement_shackles"
+      },
+      "recipes": [
+        "primalmagick:attunement_shackles_blood"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.attunement_shackles.text.addenda.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:attunement_shackles"
+      },
+      "recipes": [
+        "primalmagick:attunement_shackles_infernal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.attunement_shackles.text.addenda.2"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:attunement_shackles"
+      },
+      "recipes": [
+        "primalmagick:attunement_shackles_void"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.attunement_shackles.text.addenda.3"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:attunement_shackles"
+      },
+      "recipes": [
+        "primalmagick:attunement_shackles_hallowed"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.attunement_shackles.text.addenda.4"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:attunement_shackles_earth"
+  },
+  "key": {
+    "rootKey": "primalmagick:attunement_shackles"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:attunements"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:attunement_shackles"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.attunement_shackles.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:attunement_shackles"
+      },
+      "recipes": [
+        "primalmagick:attunement_shackles_earth",
+        "primalmagick:attunement_shackles_sea",
+        "primalmagick:attunement_shackles_sky",
+        "primalmagick:attunement_shackles_sun",
+        "primalmagick:attunement_shackles_moon"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.attunement_shackles.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

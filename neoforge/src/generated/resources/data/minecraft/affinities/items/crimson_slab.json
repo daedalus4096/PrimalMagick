@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:infernal": 1,
+    "primalmagick:moon": 1
+  },
+  "base": "minecraft:oak_slab",
+  "remove": {
+    "primalmagick:sun": 1
+  },
+  "target": "minecraft:crimson_slab"
+}

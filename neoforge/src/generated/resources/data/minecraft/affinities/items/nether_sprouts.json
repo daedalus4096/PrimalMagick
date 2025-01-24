@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:crimson_roots",
+  "target": "minecraft:nether_sprouts"
+}

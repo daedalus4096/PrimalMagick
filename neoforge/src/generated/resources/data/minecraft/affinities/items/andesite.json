@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:stone",
+  "target": "minecraft:andesite"
+}

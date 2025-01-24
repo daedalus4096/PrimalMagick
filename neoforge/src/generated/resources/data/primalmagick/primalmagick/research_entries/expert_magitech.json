@@ -1,0 +1,64 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_magitech.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:expert_magitech"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:honey_extractor"
+    },
+    {
+      "rootKey": "primalmagick:seascribe_pen"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "discipline": {
+              "rootKey": "primalmagick:magitech"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "expert"
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:scan_primalite"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:expert_magitech"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_magitech.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:expert_magitech"
+      },
+      "recipes": [
+        "primalmagick:magitech_parts_enchanted"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_magitech.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

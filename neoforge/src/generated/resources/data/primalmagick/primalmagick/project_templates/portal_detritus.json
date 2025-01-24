@@ -1,0 +1,27 @@
+{
+  "aidBlocks": [
+    "minecraft:nether_portal"
+  ],
+  "baseSuccessChanceOverride": 0.5,
+  "materialOptions": [
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:magnifying_glass"
+      },
+      "weight": 1.0
+    }
+  ],
+  "otherRewards": [],
+  "requiredMaterialCountOverride": 1,
+  "rewardMultiplier": 0.5,
+  "weightFunction": {
+    "reward_type": "primalmagick:constant",
+    "weight": 5.0
+  }
+}

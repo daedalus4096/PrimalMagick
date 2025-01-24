@@ -1,0 +1,117 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:master_runeworking"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_protect"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_self"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_hallowed"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sacred_shield"
+      },
+      "recipes": [],
+      "siblings": [
+        {
+          "enchant": "primalmagick:bulwark",
+          "key_type": "primalmagick:rune_enchantment"
+        },
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:unlock_rune_enchantments"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.sacred_shield.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sacred_shield"
+  },
+  "key": {
+    "rootKey": "primalmagick:sacred_shield"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:discover_hallowed"
+    },
+    {
+      "rootKey": "primalmagick:supreme_ritual"
+    },
+    {
+      "rootKey": "primalmagick:hallowsteel"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:mana_salts"
+    },
+    {
+      "rootKey": "primalmagick:rune_hallowed"
+    },
+    {
+      "rootKey": "primalmagick:celestial_harp"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sacred_shield"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sacred_shield.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:sacred_shield"
+      },
+      "recipes": [
+        "primalmagick:sacred_shield"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sacred_shield.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

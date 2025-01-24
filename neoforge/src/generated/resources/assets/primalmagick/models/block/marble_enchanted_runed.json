@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "primalmagick:block/marble_enchanted",
+    "side": "primalmagick:block/marble_enchanted_runed"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:hallowed": 20
+  },
+  "target": "minecraft:trial_key"
+}

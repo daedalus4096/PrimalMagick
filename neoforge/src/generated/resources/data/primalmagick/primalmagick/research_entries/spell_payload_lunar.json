@@ -1,0 +1,49 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/moon.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_lunar"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:spell_payload_frost"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_lunar"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_lunar.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:moon": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_lunar"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_lunar.text.stage.2"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_hallowed"
+  },
+  "key": {
+    "rootKey": "primalmagick:rune_hallowed"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:discover_hallowed"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_hallowed"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_hallowed.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:rune_hallowed"
+      },
+      "recipes": [
+        "primalmagick:rune_hallowed"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_hallowed.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

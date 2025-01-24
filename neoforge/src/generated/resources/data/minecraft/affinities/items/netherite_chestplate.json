@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 123,
+    "primalmagick:infernal": 22
+  },
+  "target": "minecraft:netherite_chestplate"
+}

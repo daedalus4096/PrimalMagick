@@ -1,0 +1,59 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:soul_anvil"
+  },
+  "key": {
+    "rootKey": "primalmagick:soul_anvil"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_ritual"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    },
+    {
+      "rootKey": "primalmagick:spell_payload_drain_soul"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:soul_anvil"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.soul_anvil.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:soul_anvil"
+      },
+      "recipes": [
+        "primalmagick:soul_anvil"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.soul_anvil.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

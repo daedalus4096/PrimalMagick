@@ -1,0 +1,58 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:saintswool_head"
+  },
+  "key": {
+    "rootKey": "primalmagick:saintswool"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:hexweave"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:saintswool"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.saintswool.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:saintswool"
+      },
+      "recipes": [
+        "primalmagick:saintswool",
+        "primalmagick:saintswool_head",
+        "primalmagick:saintswool_chest",
+        "primalmagick:saintswool_legs",
+        "primalmagick:saintswool_feet"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.saintswool.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

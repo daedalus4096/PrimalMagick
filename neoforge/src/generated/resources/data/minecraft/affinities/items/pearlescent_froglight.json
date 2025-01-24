@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:ochre_froglight",
+  "target": "minecraft:pearlescent_froglight"
+}

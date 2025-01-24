@@ -1,0 +1,117 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:master_runeworking"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_summon"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_area"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_sea"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:primal_fishing_rod"
+      },
+      "recipes": [],
+      "siblings": [
+        {
+          "enchant": "primalmagick:bounty",
+          "key_type": "primalmagick:rune_enchantment"
+        },
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:unlock_rune_enchantments"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.primal_fishing_rod.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primal_fishing_rod"
+  },
+  "key": {
+    "rootKey": "primalmagick:primal_fishing_rod"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_ritual"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:mana_salts"
+    },
+    {
+      "rootKey": "primalmagick:rune_sea"
+    },
+    {
+      "rootKey": "primalmagick:ritual_bell"
+    },
+    {
+      "rootKey": "primalmagick:ritual_lectern"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:primal_fishing_rod"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primal_fishing_rod.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:primal_fishing_rod"
+      },
+      "recipes": [
+        "primalmagick:primal_fishing_rod"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primal_fishing_rod.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

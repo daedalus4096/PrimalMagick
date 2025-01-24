@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:item",
+  "result": "minecraft:silk_touch",
+  "source": "primalmagick:sea",
+  "verb": "primalmagick:project"
+}

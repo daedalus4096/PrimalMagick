@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "primalmagick:ritual_candle_white",
+  "target": "primalmagick:ritual_candle_red"
+}

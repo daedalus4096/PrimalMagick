@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:add_item",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/desert_pyramid"
+    },
+    {
+      "chance": 0.6,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "primalmagick:humming_artifact_unattuned"
+}

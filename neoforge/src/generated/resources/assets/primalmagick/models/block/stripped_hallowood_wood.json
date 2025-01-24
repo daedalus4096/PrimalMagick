@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "primalmagick:block/stripped_hallowood_log",
+    "side": "primalmagick:block/stripped_hallowood_log"
+  }
+}

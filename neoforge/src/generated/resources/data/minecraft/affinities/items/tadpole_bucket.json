@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:blood": 5,
+    "primalmagick:sea": 5
+  },
+  "base": "minecraft:bucket",
+  "target": "minecraft:tadpole_bucket"
+}

@@ -1,0 +1,79 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_manaweaving.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:supreme_manaweaving"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:wand_cap_hexium"
+    },
+    {
+      "rootKey": "primalmagick:wand_gem_wizard"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_hallowed"
+            }
+          },
+          {
+            "discipline": {
+              "rootKey": "primalmagick:manaweaving"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "supreme"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_manaweaving"
+      },
+      "recipes": [],
+      "revelations": [
+        {
+          "rootKey": "primalmagick:secrets_of_the_universe"
+        }
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_manaweaving.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_manaweaving"
+      },
+      "recipes": [
+        "primalmagick:marble_hallowed",
+        "primalmagick:marble_hallowed_brick_slab",
+        "primalmagick:marble_hallowed_brick_stairs",
+        "primalmagick:marble_hallowed_brick_wall",
+        "primalmagick:marble_hallowed_bricks",
+        "primalmagick:marble_hallowed_chiseled",
+        "primalmagick:marble_hallowed_pillar",
+        "primalmagick:marble_hallowed_runed",
+        "primalmagick:marble_hallowed_slab",
+        "primalmagick:marble_hallowed_stairs",
+        "primalmagick:marble_hallowed_wall",
+        "primalmagick:marble_hallowed_bookshelf"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_manaweaving.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

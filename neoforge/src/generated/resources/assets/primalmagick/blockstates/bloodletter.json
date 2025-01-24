@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=false": {
+      "model": "primalmagick:block/bloodletter"
+    },
+    "filled=true": {
+      "model": "primalmagick:block/bloodletter_full"
+    }
+  }
+}

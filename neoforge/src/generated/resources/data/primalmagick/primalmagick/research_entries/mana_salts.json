@@ -1,0 +1,88 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_salts"
+  },
+  "key": {
+    "rootKey": "primalmagick:mana_salts"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:wand_charger"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_earth"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_sea"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_sky"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_sun"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_moon"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:mana_salts"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_salts.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:mana_salts"
+      },
+      "recipes": [
+        "primalmagick:mana_salts"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_salts.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

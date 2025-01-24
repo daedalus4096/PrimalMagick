@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "forge:dusts/tin"
+          }
+        },
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "forge:raw_materials/tin"
+          }
+        }
+      ]
+    }
+  ],
+  "type": "primalmagick:dissolution_tag",
+  "group": "tin_dust_dissolution",
+  "ingredient": {
+    "tag": "forge:raw_materials/tin"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1
+    }
+  },
+  "outputAmount": 3,
+  "outputTag": "forge:dusts/tin"
+}

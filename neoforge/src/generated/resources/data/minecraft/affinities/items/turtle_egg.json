@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 5,
+    "primalmagick:sea": 5
+  },
+  "target": "minecraft:turtle_egg"
+}

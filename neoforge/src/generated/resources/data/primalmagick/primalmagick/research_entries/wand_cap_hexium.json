@@ -1,0 +1,64 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hexium_wand_cap_item"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_cap_hexium"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_cap_primalite"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "primalmagick:ingots/hexium"
+          },
+          {
+            "amount": 2,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_cap_hexium"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_cap_hexium.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:wand_cap_hexium"
+      },
+      "recipes": [
+        "primalmagick:hexium_wand_cap_item"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_cap_hexium.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:hallowed": 20,
+    "primalmagick:moon": 20,
+    "primalmagick:sky": 20
+  },
+  "target": "minecraft:music_disc_11"
+}

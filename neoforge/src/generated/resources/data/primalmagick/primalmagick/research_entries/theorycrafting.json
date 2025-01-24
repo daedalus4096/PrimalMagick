@@ -1,0 +1,104 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/knowledge_theory.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:theorycrafting"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:first_steps"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:theorycrafting"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "primalmagick:research_table"
+              }
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "primalmagick:enchanted_ink_and_quill"
+              }
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:theorycrafting"
+      },
+      "recipes": [
+        "primalmagick:research_table",
+        "primalmagick:enchanted_ink",
+        "primalmagick:enchanted_ink_and_quill"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.2"
+    },
+    {
+      "completionRequirementOpt": {
+        "requiredValue": 1,
+        "requirement_type": "primalmagick:stat",
+        "stat": "primalmagick:theories_formed"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:theorycrafting"
+      },
+      "recipes": [
+        "primalmagick:research_table",
+        "primalmagick:enchanted_ink",
+        "primalmagick:enchanted_ink_and_quill"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.3"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:theorycrafting"
+      },
+      "recipes": [
+        "primalmagick:research_table",
+        "primalmagick:enchanted_ink",
+        "primalmagick:enchanted_ink_and_quill"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.4"
+    }
+  ]
+}

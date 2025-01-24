@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:weeping_vines",
+  "target": "minecraft:twisting_vines"
+}

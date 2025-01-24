@@ -1,0 +1,81 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/earth.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:source_earth"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:terrestrial_magick"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "c:obsidians"
+          },
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "c:gems/diamond"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requiredValue": 1,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:shrine_found_earth"
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:env_earth"
+            }
+          },
+          {
+            "requiredValue": 100,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:mana_spent_earth"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:source_earth"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.source_earth.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 5
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:source_earth"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.source_earth.text.stage.2"
+    }
+  ]
+}

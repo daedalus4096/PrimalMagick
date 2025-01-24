@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:shulker_box",
+  "target": "minecraft:yellow_shulker_box"
+}

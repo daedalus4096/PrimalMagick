@@ -1,0 +1,66 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_ritual.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:supreme_ritual"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:bloodletter"
+    },
+    {
+      "rootKey": "primalmagick:soul_anvil"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_hallowed"
+            }
+          },
+          {
+            "discipline": {
+              "rootKey": "primalmagick:ritual"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "supreme"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_ritual"
+      },
+      "recipes": [],
+      "revelations": [
+        {
+          "rootKey": "primalmagick:secrets_of_the_universe"
+        }
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_ritual.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_ritual"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_ritual.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

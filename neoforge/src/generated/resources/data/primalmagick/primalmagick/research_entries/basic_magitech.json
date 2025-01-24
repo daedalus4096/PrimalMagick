@@ -1,0 +1,33 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_magitech.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:basic_magitech"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_magitech"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:basic_magitech"
+      },
+      "recipes": [
+        "primalmagick:magitech_parts_basic"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.basic_magitech.text.stage.1"
+    }
+  ],
+  "tier": "basic"
+}

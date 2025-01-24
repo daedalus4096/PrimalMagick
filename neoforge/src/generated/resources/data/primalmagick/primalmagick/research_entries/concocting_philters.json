@@ -1,0 +1,114 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_philters"
+      },
+      "recipes": [
+        "primalmagick:healing_philter",
+        "primalmagick:strong_healing_philter",
+        "primalmagick:regeneration_philter",
+        "primalmagick:long_regeneration_philter",
+        "primalmagick:strong_regeneration_philter"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_philters.text.addenda.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_philters"
+      },
+      "recipes": [
+        "primalmagick:fire_resistance_philter",
+        "primalmagick:long_fire_resistance_philter"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_philters.text.addenda.2"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:concocter"
+  },
+  "key": {
+    "rootKey": "primalmagick:concocting_philters"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_magitech"
+    },
+    {
+      "rootKey": "primalmagick:concocting_tinctures"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_philters"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_philters.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_philters"
+      },
+      "recipes": [
+        "primalmagick:night_vision_philter",
+        "primalmagick:long_night_vision_philter",
+        "primalmagick:invisibility_philter",
+        "primalmagick:long_invisibility_philter",
+        "primalmagick:leaping_philter",
+        "primalmagick:long_leaping_philter",
+        "primalmagick:strong_leaping_philter",
+        "primalmagick:swiftness_philter",
+        "primalmagick:long_swiftness_philter",
+        "primalmagick:strong_swiftness_philter",
+        "primalmagick:turtle_master_philter",
+        "primalmagick:long_turtle_master_philter",
+        "primalmagick:strong_turtle_master_philter",
+        "primalmagick:water_breathing_philter",
+        "primalmagick:long_water_breathing_philter",
+        "primalmagick:strength_philter",
+        "primalmagick:long_strength_philter",
+        "primalmagick:strong_strength_philter",
+        "primalmagick:slow_falling_philter",
+        "primalmagick:long_slow_falling_philter",
+        "primalmagick:luck_philter"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_philters.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

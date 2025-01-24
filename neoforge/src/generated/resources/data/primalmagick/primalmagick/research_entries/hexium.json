@@ -1,0 +1,128 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hexium_ingot"
+  },
+  "key": {
+    "rootKey": "primalmagick:hexium"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_alchemy"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:discover_blood"
+    },
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    },
+    {
+      "rootKey": "primalmagick:discover_void"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_shard_blood"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_shard_infernal"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_shard_void"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "primalmagick:primalite_ingot"
+              }
+            }
+          },
+          {
+            "amount": 2,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:hexium"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hexium.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 2,
+          "primalmagick:infernal": 2,
+          "primalmagick:void": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:hexium"
+      },
+      "recipes": [
+        "primalmagick:hexium_ingot",
+        "primalmagick:hexium_nugget",
+        "primalmagick:hexium_ingot_from_nuggets",
+        "primalmagick:hexium_block",
+        "primalmagick:hexium_ingots_from_block",
+        "primalmagick:hexium_sword",
+        "primalmagick:hexium_trident",
+        "primalmagick:hexium_bow",
+        "primalmagick:hexium_shovel",
+        "primalmagick:hexium_pickaxe",
+        "primalmagick:hexium_axe",
+        "primalmagick:hexium_hoe",
+        "primalmagick:hexium_fishing_rod",
+        "primalmagick:hexium_head",
+        "primalmagick:hexium_chest",
+        "primalmagick:hexium_legs",
+        "primalmagick:hexium_feet",
+        "primalmagick:hexium_shield"
+      ],
+      "revelations": [],
+      "siblings": [
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:sotu_research_hexium"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.hexium.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:hallowed": 5
+  },
+  "target": "primalmagick:essence_dust_hallowed"
+}

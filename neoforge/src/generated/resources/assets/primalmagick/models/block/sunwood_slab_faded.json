@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/slab",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "bottom": "primalmagick:block/sunwood_planks_faded",
+    "side": "primalmagick:block/sunwood_planks_faded",
+    "top": "primalmagick:block/sunwood_planks_faded"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 2,
+    "primalmagick:sea": 20
+  },
+  "target": "minecraft:nautilus_shell"
+}

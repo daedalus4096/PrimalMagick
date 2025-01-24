@@ -1,0 +1,56 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_blood"
+  },
+  "key": {
+    "rootKey": "primalmagick:rune_blood"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:discover_blood"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_blood"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_blood.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_blood"
+      },
+      "recipes": [
+        "primalmagick:rune_blood"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_blood.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

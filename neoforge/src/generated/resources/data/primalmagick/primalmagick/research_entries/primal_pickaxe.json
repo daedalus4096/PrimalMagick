@@ -1,0 +1,117 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:master_runeworking"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_summon"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_item"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_moon"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:primal_pickaxe"
+      },
+      "recipes": [],
+      "siblings": [
+        {
+          "enchant": "primalmagick:lucky_strike",
+          "key_type": "primalmagick:rune_enchantment"
+        },
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:unlock_rune_enchantments"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.primal_pickaxe.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primal_pickaxe"
+  },
+  "key": {
+    "rootKey": "primalmagick:primal_pickaxe"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_ritual"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:mana_salts"
+    },
+    {
+      "rootKey": "primalmagick:rune_moon"
+    },
+    {
+      "rootKey": "primalmagick:ritual_lectern"
+    },
+    {
+      "rootKey": "primalmagick:incense_brazier"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:primal_pickaxe"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primal_pickaxe.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:primal_pickaxe"
+      },
+      "recipes": [
+        "primalmagick:primal_pickaxe"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primal_pickaxe.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 5,
+    "primalmagick:earth": 5
+  },
+  "target": "minecraft:sniffer_egg"
+}

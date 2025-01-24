@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "primalmagick:marble_smoked"
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:marble_smoked_bricks"
+  }
+}

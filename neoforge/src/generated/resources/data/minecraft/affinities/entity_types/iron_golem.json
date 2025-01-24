@@ -1,0 +1,7 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:iron_golem",
+  "values": {
+    "primalmagick:earth": 20
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/sky.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_flight"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:spell_payload_lightning"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "iconDefinition": {
+              "isItem": true,
+              "location": "minecraft:elytra"
+            },
+            "requirement_type": "primalmagick:vanilla_custom_stat",
+            "statValue": "minecraft:aviate_one_cm",
+            "threshold": 100000
+          },
+          {
+            "amount": 3,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_flight"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_flight.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sky": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_flight"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_flight.text.stage.2"
+    }
+  ]
+}

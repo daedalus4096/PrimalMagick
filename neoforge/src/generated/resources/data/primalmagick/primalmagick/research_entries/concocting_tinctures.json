@@ -1,0 +1,116 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_tinctures"
+      },
+      "recipes": [
+        "primalmagick:healing_tincture",
+        "primalmagick:strong_healing_tincture",
+        "primalmagick:regeneration_tincture",
+        "primalmagick:long_regeneration_tincture",
+        "primalmagick:strong_regeneration_tincture"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_tinctures.text.addenda.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_tinctures"
+      },
+      "recipes": [
+        "primalmagick:fire_resistance_tincture",
+        "primalmagick:long_fire_resistance_tincture"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_tinctures.text.addenda.2"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:concocter"
+  },
+  "key": {
+    "rootKey": "primalmagick:concocting_tinctures"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_magitech"
+    },
+    {
+      "rootKey": "primalmagick:skyglass"
+    },
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_tinctures"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_tinctures.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_tinctures"
+      },
+      "recipes": [
+        "primalmagick:skyglass_flask",
+        "primalmagick:concocter",
+        "primalmagick:night_vision_tincture",
+        "primalmagick:long_night_vision_tincture",
+        "primalmagick:invisibility_tincture",
+        "primalmagick:long_invisibility_tincture",
+        "primalmagick:leaping_tincture",
+        "primalmagick:long_leaping_tincture",
+        "primalmagick:strong_leaping_tincture",
+        "primalmagick:swiftness_tincture",
+        "primalmagick:long_swiftness_tincture",
+        "primalmagick:strong_swiftness_tincture",
+        "primalmagick:turtle_master_tincture",
+        "primalmagick:long_turtle_master_tincture",
+        "primalmagick:strong_turtle_master_tincture",
+        "primalmagick:water_breathing_tincture",
+        "primalmagick:long_water_breathing_tincture",
+        "primalmagick:strength_tincture",
+        "primalmagick:long_strength_tincture",
+        "primalmagick:strong_strength_tincture",
+        "primalmagick:slow_falling_tincture",
+        "primalmagick:long_slow_falling_tincture",
+        "primalmagick:luck_tincture"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_tinctures.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/stairs",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "bottom": "primalmagick:block/moonwood_planks_waxing",
+    "side": "primalmagick:block/moonwood_planks_waxing",
+    "top": "primalmagick:block/moonwood_planks_waxing"
+  }
+}

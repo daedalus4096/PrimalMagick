@@ -1,0 +1,79 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_heartwood"
+      },
+      "recipes": [
+        "primalmagick:heartwood_staff_core_item"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_heartwood.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:heartwood_wand_core_item"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_core_heartwood"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:advanced_wandmaking"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:heartwood"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_heartwood"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_heartwood.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_heartwood"
+      },
+      "recipes": [
+        "primalmagick:heartwood_wand_core_item",
+        "primalmagick:charcoal_from_smelting_heartwood"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_heartwood.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

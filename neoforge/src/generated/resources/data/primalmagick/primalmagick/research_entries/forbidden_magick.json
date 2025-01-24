@@ -1,0 +1,30 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "key": {
+    "rootKey": "primalmagick:forbidden_magick"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:terrestrial_magick"
+    },
+    {
+      "rootKey": "primalmagick:discover_forbidden"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:forbidden_magick"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.forbidden_magick.text.stage.1"
+    }
+  ]
+}

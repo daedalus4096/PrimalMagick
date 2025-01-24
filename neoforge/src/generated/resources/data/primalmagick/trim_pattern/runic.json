@@ -1,0 +1,8 @@
+{
+  "asset_id": "primalmagick:runic",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.primalmagick.runic"
+  },
+  "template_item": "primalmagick:runic_armor_trim_smithing_template"
+}

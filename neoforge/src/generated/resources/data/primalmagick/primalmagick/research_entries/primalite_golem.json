@@ -1,0 +1,63 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primalite_golem_controller"
+  },
+  "key": {
+    "rootKey": "primalmagick:primalite_golem"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_magitech"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:scan_golem"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:primalite_golem"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primalite_golem.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:primalite_golem"
+      },
+      "recipes": [
+        "primalmagick:primalite_golem_controller"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primalite_golem.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

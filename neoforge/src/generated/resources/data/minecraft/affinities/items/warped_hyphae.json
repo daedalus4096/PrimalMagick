@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:warped_stem",
+  "target": "minecraft:warped_hyphae"
+}

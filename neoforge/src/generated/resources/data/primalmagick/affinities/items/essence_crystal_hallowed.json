@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:hallowed": 50
+  },
+  "target": "primalmagick:essence_crystal_hallowed"
+}

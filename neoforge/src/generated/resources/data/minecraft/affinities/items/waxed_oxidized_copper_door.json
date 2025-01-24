@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:waxed_copper_door",
+  "target": "minecraft:waxed_oxidized_copper_door"
+}

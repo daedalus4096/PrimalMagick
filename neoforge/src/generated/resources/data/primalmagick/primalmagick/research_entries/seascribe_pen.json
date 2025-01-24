@@ -1,0 +1,68 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:seascribe_pen"
+  },
+  "key": {
+    "rootKey": "primalmagick:seascribe_pen"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_magitech"
+    },
+    {
+      "rootKey": "primalmagick:theorycrafting"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:enchanted_ink"
+            }
+          },
+          {
+            "requiredValue": 10,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:research_projects_completed"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:seascribe_pen"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.seascribe_pen.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:seascribe_pen"
+      },
+      "recipes": [
+        "primalmagick:seascribe_pen"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.seascribe_pen.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

@@ -1,0 +1,91 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 2
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:hexium"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sunlamp"
+      },
+      "recipes": [
+        "primalmagick:spirit_lantern"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sunlamp.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sunlamp"
+  },
+  "key": {
+    "rootKey": "primalmagick:sunlamp"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:lantern"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sunlamp"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sunlamp.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sun": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sunlamp"
+      },
+      "recipes": [
+        "primalmagick:sunlamp"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sunlamp.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

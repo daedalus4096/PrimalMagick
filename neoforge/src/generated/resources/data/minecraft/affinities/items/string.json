@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 2,
+    "primalmagick:sky": 5
+  },
+  "target": "minecraft:string"
+}

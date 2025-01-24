@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 2,
+    "primalmagick:sun": 2
+  },
+  "target": "minecraft:pumpkin_seeds"
+}

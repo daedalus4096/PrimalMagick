@@ -1,0 +1,10 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 20,
+    "primalmagick:infernal": 5,
+    "primalmagick:sea": 50,
+    "primalmagick:sun": 15
+  },
+  "target": "minecraft:ochre_froglight"
+}

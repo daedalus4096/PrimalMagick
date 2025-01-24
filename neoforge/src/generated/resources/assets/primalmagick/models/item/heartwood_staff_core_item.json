@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/heartwood_staff_core_item"
+  }
+}

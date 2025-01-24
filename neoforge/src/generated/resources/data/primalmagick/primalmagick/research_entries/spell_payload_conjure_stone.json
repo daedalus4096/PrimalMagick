@@ -1,0 +1,59 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/earth.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_conjure_stone"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_sorcery"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "item": "minecraft:cobblestone",
+            "requirement_type": "primalmagick:vanilla_item_used_stat",
+            "threshold": 100
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_conjure_stone"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_conjure_stone.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_conjure_stone"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_conjure_stone.text.stage.2"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hexweave_head"
+  },
+  "key": {
+    "rootKey": "primalmagick:hexweave"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:spellcloth"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:discover_blood"
+    },
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    },
+    {
+      "rootKey": "primalmagick:discover_void"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:hexweave"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hexweave.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:hexweave"
+      },
+      "recipes": [
+        "primalmagick:hexweave",
+        "primalmagick:hexweave_head",
+        "primalmagick:hexweave_chest",
+        "primalmagick:hexweave_legs",
+        "primalmagick:hexweave_feet"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hexweave.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:paper",
+  "target": "minecraft:guster_banner_pattern"
+}

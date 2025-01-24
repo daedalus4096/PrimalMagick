@@ -1,0 +1,60 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [
+    {
+      "rootKey": "primalmagick:basics"
+    }
+  ],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:grimoire"
+  },
+  "key": {
+    "rootKey": "primalmagick:complete_basics"
+  },
+  "parents": [],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:complete_basics"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.complete_basics.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 1,
+          "primalmagick:earth": 1,
+          "primalmagick:hallowed": 1,
+          "primalmagick:infernal": 1,
+          "primalmagick:moon": 1,
+          "primalmagick:sea": 1,
+          "primalmagick:sky": 1,
+          "primalmagick:sun": 1,
+          "primalmagick:void": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:complete_basics"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.complete_basics.text.stage.2"
+    }
+  ]
+}

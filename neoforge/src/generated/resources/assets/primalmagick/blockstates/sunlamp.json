@@ -1,0 +1,79 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "primalmagick:block/sunlamp_ground_base"
+      },
+      "when": {
+        "attachment": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/sunlamp_ground_chain_stub"
+      },
+      "when": {
+        "attachment": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/sunlamp_hanging_base"
+      },
+      "when": {
+        "attachment": "north|south|west|east|up"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/sunlamp_hanging_chain_stub"
+      },
+      "when": {
+        "attachment": "north|south|west|east"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/sunlamp_hanging_chain_full"
+      },
+      "when": {
+        "attachment": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/sunlamp_hanging_arm"
+      },
+      "when": {
+        "attachment": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/sunlamp_hanging_arm",
+        "y": 90
+      },
+      "when": {
+        "attachment": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/sunlamp_hanging_arm",
+        "y": 180
+      },
+      "when": {
+        "attachment": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/sunlamp_hanging_arm",
+        "y": 270
+      },
+      "when": {
+        "attachment": "west"
+      }
+    }
+  ]
+}

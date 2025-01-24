@@ -1,0 +1,51 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "key": {
+    "rootKey": "primalmagick:staves"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_gem_adept"
+    },
+    {
+      "rootKey": "primalmagick:wand_inscription"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:staves"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.staves.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:staves"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.staves.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

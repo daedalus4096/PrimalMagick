@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hammer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:earthshatter_hammer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primalmagick:refined_salt_from_earthshatter_hammer"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hammer"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primalmagick:refined_salt_from_earthshatter_hammer"
+    ]
+  }
+}

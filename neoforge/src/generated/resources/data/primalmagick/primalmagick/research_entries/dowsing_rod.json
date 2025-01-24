@@ -1,0 +1,48 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:dowsing_rod"
+  },
+  "key": {
+    "rootKey": "primalmagick:dowsing_rod"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_ritual"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:dowsing_rod"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.dowsing_rod.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:dowsing_rod"
+      },
+      "recipes": [
+        "primalmagick:dowsing_rod"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.dowsing_rod.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

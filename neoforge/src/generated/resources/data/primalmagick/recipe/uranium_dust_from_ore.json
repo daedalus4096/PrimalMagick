@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "forge:dusts/uranium"
+          }
+        },
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "forge:ores/uranium"
+          }
+        }
+      ]
+    }
+  ],
+  "type": "primalmagick:crafting_shapeless_tag",
+  "category": "misc",
+  "group": "earthshatter_hammer_grit",
+  "ingredients": [
+    {
+      "item": "primalmagick:earthshatter_hammer"
+    },
+    {
+      "tag": "forge:ores/uranium"
+    }
+  ],
+  "outputAmount": 2,
+  "outputTag": "forge:dusts/uranium"
+}

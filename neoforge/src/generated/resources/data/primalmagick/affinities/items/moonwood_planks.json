@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:moon": 4
+  },
+  "base": "minecraft:oak_planks",
+  "remove": {
+    "primalmagick:sun": 2
+  },
+  "target": "primalmagick:moonwood_planks"
+}

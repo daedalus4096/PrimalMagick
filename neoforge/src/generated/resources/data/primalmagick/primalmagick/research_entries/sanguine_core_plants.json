@@ -1,0 +1,55 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
+  "key": {
+    "rootKey": "primalmagick:sanguine_core_plants"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:sanguine_crucible"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_plants"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_plants.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sun": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_plants"
+      },
+      "recipes": [
+        "primalmagick:sanguine_core_creeper",
+        "primalmagick:sanguine_core_mooshroom",
+        "primalmagick:sanguine_core_treefolk"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_plants.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

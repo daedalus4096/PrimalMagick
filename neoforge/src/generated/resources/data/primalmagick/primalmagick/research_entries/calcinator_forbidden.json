@@ -1,0 +1,66 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:calcinator_forbidden"
+  },
+  "key": {
+    "rootKey": "primalmagick:calcinator_forbidden"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_alchemy"
+    },
+    {
+      "rootKey": "primalmagick:master_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:calcinator_enchanted"
+    },
+    {
+      "rootKey": "primalmagick:discover_blood"
+    },
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    },
+    {
+      "rootKey": "primalmagick:discover_void"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:calcinator_forbidden"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.calcinator_forbidden.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:calcinator_forbidden"
+      },
+      "recipes": [
+        "primalmagick:calcinator_forbidden"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.calcinator_forbidden.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

@@ -1,0 +1,59 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [
+    {
+      "rootKey": "primalmagick:sorcery"
+    }
+  ],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_sorcery.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:complete_sorcery"
+  },
+  "parents": [],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:complete_sorcery"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.complete_sorcery.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 1,
+          "primalmagick:earth": 1,
+          "primalmagick:hallowed": 1,
+          "primalmagick:infernal": 1,
+          "primalmagick:moon": 1,
+          "primalmagick:sea": 1,
+          "primalmagick:sky": 1,
+          "primalmagick:sun": 1,
+          "primalmagick:void": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:complete_sorcery"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.complete_sorcery.text.stage.2"
+    }
+  ]
+}

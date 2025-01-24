@@ -1,0 +1,40 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:moonwood_sapling"
+  },
+  "key": {
+    "rootKey": "primalmagick:moonwood_trees"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:moonwood_trees"
+      },
+      "recipes": [
+        "primalmagick:moonwood_wood",
+        "primalmagick:stripped_moonwood_wood",
+        "primalmagick:moonwood_planks",
+        "primalmagick:moonwood_slab",
+        "primalmagick:moonwood_stairs",
+        "primalmagick:moonwood_pillar"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.moonwood_trees.text.stage.1"
+    }
+  ]
+}

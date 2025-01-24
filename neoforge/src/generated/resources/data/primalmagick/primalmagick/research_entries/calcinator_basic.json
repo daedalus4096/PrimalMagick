@@ -1,0 +1,103 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:calcinator_basic"
+  },
+  "key": {
+    "rootKey": "primalmagick:calcinator_basic"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_alchemy"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "primalmagick:essence_dust_earth"
+              }
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "primalmagick:essence_dust_sea"
+              }
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "primalmagick:essence_dust_sky"
+              }
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "primalmagick:essence_dust_sun"
+              }
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "primalmagick:essence_dust_moon"
+              }
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:calcinator_basic"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.calcinator_basic.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:calcinator_basic"
+      },
+      "recipes": [
+        "primalmagick:calcinator_basic"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.calcinator_basic.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

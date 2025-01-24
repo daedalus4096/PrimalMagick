@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stem_fruit",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "stem": "primalmagick:block/hydromelon_stem",
+    "upperstem": "primalmagick:block/attached_hydromelon_stem"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_summon"
+  },
+  "key": {
+    "rootKey": "primalmagick:rune_summon"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:rune_absorb"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_summon"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_summon.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:rune_summon"
+      },
+      "recipes": [
+        "primalmagick:rune_summon"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_summon.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "potion_bonus",
+  "bonus": {
+    "primalmagick:moon": 2
+  },
+  "target": "minecraft:night_vision"
+}

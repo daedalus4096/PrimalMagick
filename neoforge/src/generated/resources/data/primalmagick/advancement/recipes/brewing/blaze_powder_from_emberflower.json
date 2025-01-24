@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_emberflower": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:emberflower"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primalmagick:blaze_powder_from_emberflower"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_emberflower"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primalmagick:blaze_powder_from_emberflower"
+    ]
+  }
+}

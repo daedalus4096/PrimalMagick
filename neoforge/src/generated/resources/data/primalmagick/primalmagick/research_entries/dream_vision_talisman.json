@@ -1,0 +1,67 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:dream_vision_talisman"
+  },
+  "key": {
+    "rootKey": "primalmagick:dream_vision_talisman"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_ritual"
+    },
+    {
+      "rootKey": "primalmagick:ritual_candles"
+    },
+    {
+      "rootKey": "primalmagick:incense_brazier"
+    },
+    {
+      "rootKey": "primalmagick:ritual_lectern"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requiredValue": 25,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:observations_made"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:dream_vision_talisman"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.dream_vision_talisman.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:dream_vision_talisman"
+      },
+      "recipes": [
+        "primalmagick:dream_vision_talisman"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.dream_vision_talisman.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

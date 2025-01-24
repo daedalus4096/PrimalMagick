@@ -1,0 +1,62 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_ritual.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:master_ritual"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:ritual_lectern"
+    },
+    {
+      "rootKey": "primalmagick:ritual_bell"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_forbidden"
+            }
+          },
+          {
+            "discipline": {
+              "rootKey": "primalmagick:ritual"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "master"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:master_ritual"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.master_ritual.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:master_ritual"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.master_ritual.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

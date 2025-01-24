@@ -1,0 +1,25 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "expertiseGroup": "primalmagick:skyglass_pane",
+  "group": "stained_skyglass_pane",
+  "key": {
+    "G": {
+      "item": "primalmagick:stained_skyglass_gray"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GGG"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:skyglass"
+    }
+  },
+  "result": {
+    "count": 16,
+    "id": "primalmagick:stained_skyglass_pane_gray"
+  }
+}

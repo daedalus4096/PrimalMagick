@@ -1,0 +1,71 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:zephyr_engine"
+  },
+  "key": {
+    "rootKey": "primalmagick:zephyr_engine"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_magitech"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:piston"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:zephyr_engine"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.zephyr_engine.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sky": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:zephyr_engine"
+      },
+      "recipes": [
+        "primalmagick:zephyr_engine"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.zephyr_engine.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

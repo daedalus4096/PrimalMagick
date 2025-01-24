@@ -1,0 +1,57 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_grace"
+  },
+  "key": {
+    "rootKey": "primalmagick:rune_grace"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:cluster_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:discover_hallowed"
+    },
+    {
+      "rootKey": "primalmagick:rune_power"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_grace"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_grace.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:rune_grace"
+      },
+      "recipes": [
+        "primalmagick:rune_grace"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_grace.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

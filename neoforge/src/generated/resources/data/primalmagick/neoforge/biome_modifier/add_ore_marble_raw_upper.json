@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#primalmagick:has_feature/ore_marble_raw",
+  "features": "primalmagick:ore_marble_raw_upper",
+  "step": "underground_ores"
+}

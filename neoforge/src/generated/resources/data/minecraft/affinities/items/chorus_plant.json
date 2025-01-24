@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:moon": 5,
+    "primalmagick:void": 5
+  },
+  "target": "minecraft:chorus_plant"
+}

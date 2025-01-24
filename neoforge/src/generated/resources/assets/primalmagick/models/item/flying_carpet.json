@@ -1,0 +1,104 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "primalmagick:item/flying_carpet_white",
+      "predicate": {
+        "primalmagick:color": 0.0
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_orange",
+      "predicate": {
+        "primalmagick:color": 0.0625
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_magenta",
+      "predicate": {
+        "primalmagick:color": 0.125
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_light_blue",
+      "predicate": {
+        "primalmagick:color": 0.1875
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_yellow",
+      "predicate": {
+        "primalmagick:color": 0.25
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_lime",
+      "predicate": {
+        "primalmagick:color": 0.3125
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_pink",
+      "predicate": {
+        "primalmagick:color": 0.375
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_gray",
+      "predicate": {
+        "primalmagick:color": 0.4375
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_light_gray",
+      "predicate": {
+        "primalmagick:color": 0.5
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_cyan",
+      "predicate": {
+        "primalmagick:color": 0.5625
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_purple",
+      "predicate": {
+        "primalmagick:color": 0.625
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_blue",
+      "predicate": {
+        "primalmagick:color": 0.6875
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_brown",
+      "predicate": {
+        "primalmagick:color": 0.75
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_green",
+      "predicate": {
+        "primalmagick:color": 0.8125
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_red",
+      "predicate": {
+        "primalmagick:color": 0.875
+      }
+    },
+    {
+      "model": "primalmagick:item/flying_carpet_black",
+      "predicate": {
+        "primalmagick:color": 0.9375
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "primalmagick:item/flying_carpet_white"
+  }
+}

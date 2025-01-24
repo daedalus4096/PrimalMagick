@@ -1,0 +1,53 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ritual_bell"
+  },
+  "key": {
+    "rootKey": "primalmagick:ritual_bell"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_ritual"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:ritual_bell"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.ritual_bell.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sea": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:ritual_bell"
+      },
+      "recipes": [
+        "primalmagick:ritual_bell"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.ritual_bell.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

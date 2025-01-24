@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "primalmagick:block/marble_brick_slab"
+    },
+    "type=double": {
+      "model": "primalmagick:block/marble_bricks"
+    },
+    "type=top": {
+      "model": "primalmagick:block/marble_brick_slab_top"
+    }
+  }
+}

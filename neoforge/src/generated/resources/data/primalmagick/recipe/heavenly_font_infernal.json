@@ -1,0 +1,52 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "expertiseGroup": "primalmagick:mana_font_heavenly",
+  "group": "heavenly_mana_fonts",
+  "key": {
+    "E": {
+      "item": "primalmagick:essence_cluster_infernal"
+    },
+    "F": {
+      "item": "primalmagick:forbidden_font_infernal"
+    },
+    "I": {
+      "tag": "primalmagick:ingots/hallowsteel"
+    },
+    "M": {
+      "item": "primalmagick:marble_hallowed_slab"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 2500
+    }
+  },
+  "pattern": [
+    "IMI",
+    "EFE",
+    "IMI"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:heavenly_mana_fonts"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:heavenly_font_infernal"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "values": [
+    "primalmagick:pixie_basic_earth",
+    "primalmagick:pixie_grand_earth",
+    "primalmagick:pixie_majestic_earth",
+    "primalmagick:pixie_basic_sea",
+    "primalmagick:pixie_grand_sea",
+    "primalmagick:pixie_majestic_sea",
+    "primalmagick:pixie_basic_sky",
+    "primalmagick:pixie_grand_sky",
+    "primalmagick:pixie_majestic_sky",
+    "primalmagick:pixie_basic_sun",
+    "primalmagick:pixie_grand_sun",
+    "primalmagick:pixie_majestic_sun",
+    "primalmagick:pixie_basic_moon",
+    "primalmagick:pixie_grand_moon",
+    "primalmagick:pixie_majestic_moon",
+    "primalmagick:pixie_basic_blood",
+    "primalmagick:pixie_grand_blood",
+    "primalmagick:pixie_majestic_blood",
+    "primalmagick:pixie_basic_infernal",
+    "primalmagick:pixie_grand_infernal",
+    "primalmagick:pixie_majestic_infernal",
+    "primalmagick:pixie_basic_void",
+    "primalmagick:pixie_grand_void",
+    "primalmagick:pixie_majestic_void",
+    "primalmagick:pixie_basic_hallowed",
+    "primalmagick:pixie_grand_hallowed",
+    "primalmagick:pixie_majestic_hallowed"
+  ]
+}

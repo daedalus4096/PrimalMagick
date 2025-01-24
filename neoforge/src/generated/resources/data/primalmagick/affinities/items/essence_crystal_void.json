@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:void": 50
+  },
+  "target": "primalmagick:essence_crystal_void"
+}

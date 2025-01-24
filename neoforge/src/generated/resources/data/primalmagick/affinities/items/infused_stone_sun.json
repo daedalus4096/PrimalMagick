@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:sun": 1
+  },
+  "base": "minecraft:stone",
+  "target": "primalmagick:infused_stone_sun"
+}

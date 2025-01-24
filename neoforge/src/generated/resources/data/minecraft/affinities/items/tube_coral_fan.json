@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:tube_coral",
+  "target": "minecraft:tube_coral_fan"
+}

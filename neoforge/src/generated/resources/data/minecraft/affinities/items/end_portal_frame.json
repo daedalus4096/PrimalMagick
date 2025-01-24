@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:void": 20
+  },
+  "target": "minecraft:end_portal_frame"
+}

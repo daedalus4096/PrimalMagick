@@ -1,0 +1,117 @@
+{
+  "aidBlocks": [],
+  "materialOptions": [
+    {
+      "bonusReward": 0.0,
+      "consumed": false,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 1,
+      "tag": "minecraft:beds",
+      "weight": 2.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:jukebox"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:book"
+      },
+      "weight": 2.0
+    },
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 1,
+      "tag": "primalmagick:food/cooked_beef",
+      "weight": 1.0
+    },
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 1,
+      "tag": "primalmagick:food/baked_potato",
+      "weight": 1.0
+    },
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 1,
+      "tag": "forge:milk",
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:cake"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:rose_bush"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:tnt"
+      },
+      "weight": 0.5
+    }
+  ],
+  "otherRewards": [],
+  "rewardMultiplier": 0.25,
+  "weightFunction": {
+    "modifiers": [
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:discover_infernal"
+        },
+        "weightModifier": -2.0
+      },
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:discover_void"
+        },
+        "weightModifier": -2.0
+      }
+    ],
+    "reward_type": "primalmagick:progressive",
+    "startingWeight": 5.0
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "primalmagick:block/pillar_top",
+  "render_type": "minecraft:solid",
+  "textures": {
+    "inner": "primalmagick:block/sunwood_pillar_inner_full",
+    "side": "primalmagick:block/sunwood_pillar_top_full",
+    "top": "primalmagick:block/sunwood_pillar_base_full"
+  }
+}

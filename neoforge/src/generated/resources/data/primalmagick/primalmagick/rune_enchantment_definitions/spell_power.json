@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:item",
+  "result": "primalmagick:spell_power",
+  "source": "primalmagick:void",
+  "verb": "primalmagick:project"
+}

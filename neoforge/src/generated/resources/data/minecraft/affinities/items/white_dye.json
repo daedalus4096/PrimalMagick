@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:sea": 1,
+    "primalmagick:sun": 1
+  },
+  "target": "minecraft:white_dye"
+}

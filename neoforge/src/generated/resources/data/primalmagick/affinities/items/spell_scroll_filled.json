@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "primalmagick:spell_scroll_blank",
+  "target": "primalmagick:spell_scroll_filled"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:earth": 5,
+    "primalmagick:infernal": 5
+  },
+  "base": "minecraft:deepslate",
+  "target": "minecraft:deepslate_coal_ore"
+}

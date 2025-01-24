@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:andesite",
+  "target": "minecraft:polished_andesite"
+}

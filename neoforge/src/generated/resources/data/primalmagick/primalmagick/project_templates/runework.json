@@ -1,0 +1,315 @@
+{
+  "aidBlocks": [],
+  "materialOptions": [
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:runecarving_table"
+      },
+      "weight": 5.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:stone_slab"
+      },
+      "weight": 3.0
+    },
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 1,
+      "tag": "c:gems/lapis",
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:diamond_sword"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_earth"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:rune_earth"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_sea"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:rune_sea"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_sky"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:rune_sky"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_sun"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:rune_sun"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_moon"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:rune_moon"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_project"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:rune_project"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_protect"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:rune_protect"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_item"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:rune_item"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_self"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:rune_self"
+      },
+      "weight": 1.0
+    }
+  ],
+  "otherRewards": [],
+  "requirement": {
+    "requiredCount": 3,
+    "requirement_type": "primalmagick:quorum",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_earth"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_sea"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_sky"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_sun"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_moon"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_project"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_protect"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_item"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:rune_self"
+        }
+      }
+    ]
+  },
+  "rewardMultiplier": 0.25,
+  "weightFunction": {
+    "modifiers": [
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:expert_runeworking"
+        },
+        "weightModifier": -1.0
+      },
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:master_runeworking"
+        },
+        "weightModifier": -1.0
+      },
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:supreme_runeworking"
+        },
+        "weightModifier": -2.0
+      }
+    ],
+    "reward_type": "primalmagick:progressive",
+    "startingWeight": 5.0
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:blood": 2
+  },
+  "base": "minecraft:deepslate",
+  "target": "minecraft:infested_deepslate"
+}

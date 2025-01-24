@@ -1,0 +1,49 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "expertiseGroup": "primalmagick:coral_core",
+  "key": {
+    "#": {
+      "tag": "primalmagick:coral_blocks"
+    },
+    "D": {
+      "item": "primalmagick:essence_shard_sea"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 5,
+      "primalmagick:moon": 5,
+      "primalmagick:sea": 15,
+      "primalmagick:sky": 5,
+      "primalmagick:sun": 5
+    }
+  },
+  "pattern": [
+    " D#",
+    "D#D",
+    "#D "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:wand_core_coral"
+        }
+      }
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:coral_staff_core_item"
+  }
+}

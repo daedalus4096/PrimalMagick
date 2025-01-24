@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:goat",
+  "values": {
+    "primalmagick:blood": 10,
+    "primalmagick:sky": 5
+  }
+}

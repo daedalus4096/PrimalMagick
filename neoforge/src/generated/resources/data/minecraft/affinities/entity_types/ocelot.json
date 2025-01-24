@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:ocelot",
+  "values": {
+    "primalmagick:blood": 5,
+    "primalmagick:moon": 5
+  }
+}

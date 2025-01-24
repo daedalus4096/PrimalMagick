@@ -1,0 +1,114 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primalite_ingot"
+  },
+  "key": {
+    "rootKey": "primalmagick:primalite"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_alchemy"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_earth"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_sea"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_sky"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_sun"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_moon"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:primalite"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primalite.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 1,
+          "primalmagick:moon": 1,
+          "primalmagick:sea": 1,
+          "primalmagick:sky": 1,
+          "primalmagick:sun": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:primalite"
+      },
+      "recipes": [
+        "primalmagick:primalite_ingot",
+        "primalmagick:primalite_nugget",
+        "primalmagick:primalite_ingot_from_nuggets",
+        "primalmagick:primalite_block",
+        "primalmagick:primalite_ingots_from_block",
+        "primalmagick:primalite_sword",
+        "primalmagick:primalite_trident",
+        "primalmagick:primalite_bow",
+        "primalmagick:primalite_shovel",
+        "primalmagick:primalite_pickaxe",
+        "primalmagick:primalite_axe",
+        "primalmagick:primalite_hoe",
+        "primalmagick:primalite_fishing_rod",
+        "primalmagick:primalite_head",
+        "primalmagick:primalite_chest",
+        "primalmagick:primalite_legs",
+        "primalmagick:primalite_feet",
+        "primalmagick:primalite_shield"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primalite.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

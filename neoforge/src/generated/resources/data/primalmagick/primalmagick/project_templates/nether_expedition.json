@@ -1,0 +1,167 @@
+{
+  "aidBlocks": [],
+  "materialOptions": [
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:diamond_sword"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:crossbow"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 16,
+        "id": "minecraft:arrow"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:diamond_chestplate"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:map"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:cartography_table"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 16,
+        "id": "minecraft:torch"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 4,
+        "id": "minecraft:bread"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": true,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "components": {
+          "minecraft:potion_contents": {
+            "potion": "minecraft:fire_resistance"
+          }
+        },
+        "count": 1,
+        "id": "minecraft:potion"
+      },
+      "weight": 4.0
+    },
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 1,
+      "tag": "forge:milk",
+      "weight": 1.0
+    },
+    {
+      "bonusReward": 0.0,
+      "consumed": false,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 10,
+      "tag": "c:obsidians",
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:flint_and_steel"
+      },
+      "weight": 1.0
+    }
+  ],
+  "otherRewards": [],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:discover_infernal"
+    }
+  },
+  "rewardMultiplier": 0.5,
+  "weightFunction": {
+    "modifiers": [
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:discover_void"
+        },
+        "weightModifier": -2.0
+      }
+    ],
+    "reward_type": "primalmagick:progressive",
+    "startingWeight": 5.0
+  }
+}

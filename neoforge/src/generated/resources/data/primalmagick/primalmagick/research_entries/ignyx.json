@@ -1,0 +1,75 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ignyx"
+  },
+  "key": {
+    "rootKey": "primalmagick:ignyx"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_alchemy"
+    },
+    {
+      "rootKey": "primalmagick:calcinator_basic"
+    },
+    {
+      "rootKey": "primalmagick:stonemelding"
+    },
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "minecraft:coals"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:ignyx"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.ignyx.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:ignyx"
+      },
+      "recipes": [
+        "primalmagick:ignyx",
+        "primalmagick:ignyx_block",
+        "primalmagick:ignyx_from_storage_block",
+        "primalmagick:torch_from_ignyx"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.ignyx.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

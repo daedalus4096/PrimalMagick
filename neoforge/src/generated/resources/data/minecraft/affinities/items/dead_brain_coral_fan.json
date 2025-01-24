@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:dead_brain_coral",
+  "target": "minecraft:dead_brain_coral_fan"
+}

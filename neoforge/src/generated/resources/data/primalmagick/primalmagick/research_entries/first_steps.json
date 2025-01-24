@@ -1,0 +1,88 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:grimoire"
+  },
+  "key": {
+    "rootKey": "primalmagick:first_steps"
+  },
+  "parents": [],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:stack_crafted",
+          "stack": {
+            "count": 1,
+            "id": "primalmagick:arcane_workbench"
+          }
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:first_steps"
+      },
+      "recipes": [
+        "primalmagick:mundane_wand"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.first_steps.text.stage.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requiredValue": 10,
+        "requirement_type": "primalmagick:stat",
+        "stat": "primalmagick:mana_siphoned"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:first_steps"
+      },
+      "recipes": [
+        "primalmagick:mundane_wand"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.first_steps.text.stage.2"
+    },
+    {
+      "completionRequirementOpt": {
+        "requiredValue": 1,
+        "requirement_type": "primalmagick:stat",
+        "stat": "primalmagick:observations_made"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:first_steps"
+      },
+      "recipes": [
+        "primalmagick:mundane_wand",
+        "primalmagick:wood_table",
+        "primalmagick:magnifying_glass",
+        "primalmagick:analysis_table"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.first_steps.text.stage.3"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:first_steps"
+      },
+      "recipes": [
+        "primalmagick:mundane_wand",
+        "primalmagick:wood_table",
+        "primalmagick:magnifying_glass",
+        "primalmagick:analysis_table"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.first_steps.text.stage.4"
+    }
+  ]
+}

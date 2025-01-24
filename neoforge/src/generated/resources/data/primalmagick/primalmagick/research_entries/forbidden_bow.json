@@ -1,0 +1,117 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:master_runeworking"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_absorb"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_creature"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_infernal"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:forbidden_bow"
+      },
+      "recipes": [],
+      "siblings": [
+        {
+          "enchant": "primalmagick:soulpiercing",
+          "key_type": "primalmagick:rune_enchantment"
+        },
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:unlock_rune_enchantments"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.forbidden_bow.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:forbidden_bow"
+  },
+  "key": {
+    "rootKey": "primalmagick:forbidden_bow"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    },
+    {
+      "rootKey": "primalmagick:master_ritual"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:mana_salts"
+    },
+    {
+      "rootKey": "primalmagick:rune_infernal"
+    },
+    {
+      "rootKey": "primalmagick:soul_anvil"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:forbidden_bow"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.forbidden_bow.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:forbidden_bow"
+      },
+      "recipes": [
+        "primalmagick:forbidden_bow"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.forbidden_bow.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

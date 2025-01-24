@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 20,
+    "primalmagick:hallowed": 20,
+    "primalmagick:sun": 20
+  },
+  "target": "primalmagick:treefolk_seed"
+}

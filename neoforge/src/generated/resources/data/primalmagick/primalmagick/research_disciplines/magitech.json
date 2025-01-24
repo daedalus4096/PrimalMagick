@@ -1,0 +1,16 @@
+{
+  "craftingStat": "primalmagick:crafted_magitech",
+  "expertiseStat": "primalmagick:expertise_magitech",
+  "iconLocation": "primalmagick:textures/research/discipline_magitech.png",
+  "indexSortOrder": 700,
+  "key": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "unlockRequirementOpt": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:unlock_magitech"
+    }
+  }
+}

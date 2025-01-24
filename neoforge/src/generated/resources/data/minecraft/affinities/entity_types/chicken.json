@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:chicken",
+  "values": {
+    "primalmagick:blood": 5,
+    "primalmagick:sky": 5
+  }
+}

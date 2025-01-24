@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:oak_leaves",
+  "target": "minecraft:azalea_leaves"
+}

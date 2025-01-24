@@ -1,0 +1,78 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:emberflower"
+  },
+  "key": {
+    "rootKey": "primalmagick:emberflower"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    },
+    {
+      "rootKey": "primalmagick:expert_ritual"
+    },
+    {
+      "rootKey": "primalmagick:hydromelon"
+    },
+    {
+      "rootKey": "primalmagick:bloodletter"
+    },
+    {
+      "rootKey": "primalmagick:rune_infernal"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:sunflower"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:emberflower"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.emberflower.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:emberflower"
+      },
+      "recipes": [
+        "primalmagick:emberflower",
+        "primalmagick:blaze_powder_from_emberflower"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.emberflower.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

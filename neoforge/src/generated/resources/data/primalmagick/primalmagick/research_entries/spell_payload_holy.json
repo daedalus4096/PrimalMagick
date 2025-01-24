@@ -1,0 +1,52 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/hallowed.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_holy"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:discover_hallowed"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_holy"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_holy.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:hallowed": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_holy"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_holy.text.stage.2"
+    }
+  ]
+}

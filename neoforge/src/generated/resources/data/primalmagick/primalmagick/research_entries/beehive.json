@@ -1,0 +1,33 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:beehive"
+  },
+  "key": {
+    "rootKey": "primalmagick:beehive"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:beehive"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.beehive.text.stage.1"
+    }
+  ]
+}

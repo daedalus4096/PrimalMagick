@@ -1,0 +1,56 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:bloodletter"
+  },
+  "key": {
+    "rootKey": "primalmagick:bloodletter"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_ritual"
+    },
+    {
+      "rootKey": "primalmagick:discover_blood"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:bloodletter"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.bloodletter.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:bloodletter"
+      },
+      "recipes": [
+        "primalmagick:bloodletter"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.bloodletter.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

@@ -1,0 +1,394 @@
+{
+  "aidBlocks": [],
+  "materialOptions": [
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "count": 1,
+      "material_type": "primalmagick:observation",
+      "weight": 5.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_dust_earth"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_dust_sea"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_dust_sky"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_dust_sun"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_dust_moon"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_dust_blood"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_dust_infernal"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_dust_void"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_dust_hallowed"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:shard_synthesis"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_earth"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:shard_synthesis"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_sea"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:shard_synthesis"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_sky"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:shard_synthesis"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_sun"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:shard_synthesis"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_moon"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:shard_synthesis"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_blood"
+            }
+          }
+        ]
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_blood"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:shard_synthesis"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_infernal"
+            }
+          }
+        ]
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_infernal"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:shard_synthesis"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_void"
+            }
+          }
+        ]
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_void"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 5,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:shard_synthesis"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_hallowed"
+            }
+          }
+        ]
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_hallowed"
+      },
+      "weight": 1.0
+    }
+  ],
+  "otherRewards": [],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_alchemy"
+    }
+  },
+  "rewardMultiplier": 0.25,
+  "weightFunction": {
+    "modifiers": [
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:crystal_synthesis"
+        },
+        "weightModifier": -2.0
+      },
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:cluster_synthesis"
+        },
+        "weightModifier": -2.0
+      }
+    ],
+    "reward_type": "primalmagick:progressive",
+    "startingWeight": 5.0
+  }
+}

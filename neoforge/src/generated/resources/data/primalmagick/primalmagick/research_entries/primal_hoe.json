@@ -1,0 +1,117 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:master_runeworking"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_summon"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_creature"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_sun"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:primal_hoe"
+      },
+      "recipes": [],
+      "siblings": [
+        {
+          "enchant": "primalmagick:verdant",
+          "key_type": "primalmagick:rune_enchantment"
+        },
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:unlock_rune_enchantments"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.primal_hoe.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primal_hoe"
+  },
+  "key": {
+    "rootKey": "primalmagick:primal_hoe"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_ritual"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:mana_salts"
+    },
+    {
+      "rootKey": "primalmagick:rune_sun"
+    },
+    {
+      "rootKey": "primalmagick:ritual_candles"
+    },
+    {
+      "rootKey": "primalmagick:incense_brazier"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:primal_hoe"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primal_hoe.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:primal_hoe"
+      },
+      "recipes": [
+        "primalmagick:primal_hoe"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.primal_hoe.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "primalmagick:wood_table"
+    },
+    {
+      "item": "minecraft:quartz_block"
+    },
+    {
+      "item": "primalmagick:heartwood_wand_core_item"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:moon": 40
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_glamour_table"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:wand_glamour_table"
+  }
+}

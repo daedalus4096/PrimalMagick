@@ -1,0 +1,59 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/earth.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_break"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_sorcery"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requiredValue": 50,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:blocks_broken_barehanded"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_break"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_break.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_break"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_break.text.stage.2"
+    }
+  ]
+}

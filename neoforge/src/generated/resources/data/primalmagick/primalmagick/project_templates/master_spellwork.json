@@ -1,0 +1,216 @@
+{
+  "aidBlocks": [],
+  "materialOptions": [
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:spellcrafting_altar"
+      },
+      "weight": 5.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:wand_inscription"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:wand_inscription_table"
+      },
+      "weight": 2.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:mana_nexus"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:mana_nexus"
+      },
+      "weight": 2.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 4,
+        "id": "primalmagick:spell_scroll_blank"
+      },
+      "weight": 5.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_crystal_earth"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_crystal_sea"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_crystal_sky"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_crystal_sun"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_crystal_moon"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_crystal_blood"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_crystal_infernal"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_crystal_void"
+      },
+      "weight": 1.0
+    },
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "count": 1,
+      "material_type": "primalmagick:observation",
+      "weight": 5.0
+    }
+  ],
+  "otherRewards": [],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:master_sorcery"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:crystal_synthesis"
+        }
+      }
+    ]
+  },
+  "rewardMultiplier": 1.0,
+  "weightFunction": {
+    "reward_type": "primalmagick:constant",
+    "weight": 5.0
+  }
+}

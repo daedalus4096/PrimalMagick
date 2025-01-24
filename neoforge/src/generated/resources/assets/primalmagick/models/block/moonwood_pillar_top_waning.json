@@ -1,0 +1,9 @@
+{
+  "parent": "primalmagick:block/pillar_top",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "inner": "primalmagick:block/moonwood_pillar_inner_waning",
+    "side": "primalmagick:block/moonwood_pillar_top_waning",
+    "top": "primalmagick:block/moonwood_pillar_base_waning"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:auto_charger"
+  },
+  "key": {
+    "rootKey": "primalmagick:auto_charger"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_magitech"
+    },
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_charger"
+    },
+    {
+      "rootKey": "primalmagick:artificial_mana_fonts"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:auto_charger"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.auto_charger.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:auto_charger"
+      },
+      "recipes": [
+        "primalmagick:auto_charger"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.auto_charger.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

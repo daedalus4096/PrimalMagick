@@ -1,0 +1,10 @@
+{
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_charger"
+    }
+  },
+  "translationKey": "tip.primalmagick.mana_charger"
+}

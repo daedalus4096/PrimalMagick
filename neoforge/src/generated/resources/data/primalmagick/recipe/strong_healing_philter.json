@@ -1,0 +1,66 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "strong_healing",
+  "ingredients": [
+    {
+      "type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": "primalmagick:concoction"
+    },
+    {
+      "item": "primalmagick:essence_shard_sun"
+    },
+    {
+      "item": "primalmagick:essence_shard_blood"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:glistering_melon_slice"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 3
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_philters"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:strong_healing"
+      },
+      "primalmagick:concoction_doses": 6,
+      "primalmagick:concoction_type": "philter"
+    },
+    "count": 1,
+    "id": "primalmagick:concoction"
+  }
+}

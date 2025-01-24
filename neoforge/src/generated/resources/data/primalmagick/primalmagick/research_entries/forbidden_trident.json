@@ -1,0 +1,117 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:master_runeworking"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_project"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_creature"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:rune_blood"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:forbidden_trident"
+      },
+      "recipes": [],
+      "siblings": [
+        {
+          "enchant": "primalmagick:rending",
+          "key_type": "primalmagick:rune_enchantment"
+        },
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:unlock_rune_enchantments"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.forbidden_trident.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:forbidden_trident"
+  },
+  "key": {
+    "rootKey": "primalmagick:forbidden_trident"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:discover_blood"
+    },
+    {
+      "rootKey": "primalmagick:master_ritual"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:mana_salts"
+    },
+    {
+      "rootKey": "primalmagick:rune_blood"
+    },
+    {
+      "rootKey": "primalmagick:bloodletter"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:forbidden_trident"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.forbidden_trident.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:forbidden_trident"
+      },
+      "recipes": [
+        "primalmagick:forbidden_trident"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.forbidden_trident.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

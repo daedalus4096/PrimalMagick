@@ -1,0 +1,44 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_runeworking.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:unlock_runeworking"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:calcinator_basic"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:unlock_runeworking"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.unlock_runeworking.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:unlock_runeworking"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.unlock_runeworking.text.stage.2"
+    }
+  ]
+}

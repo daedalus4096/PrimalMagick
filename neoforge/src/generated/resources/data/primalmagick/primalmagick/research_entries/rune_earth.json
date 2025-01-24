@@ -1,0 +1,53 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_earth"
+  },
+  "key": {
+    "rootKey": "primalmagick:rune_earth"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_runeworking"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_earth"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_earth.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_earth"
+      },
+      "recipes": [
+        "primalmagick:rune_earth"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_earth.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

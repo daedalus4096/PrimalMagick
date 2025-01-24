@@ -1,0 +1,37 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "expertiseGroup": "primalmagick:mana_font_artificial",
+  "group": "artificial_mana_fonts",
+  "key": {
+    "E": {
+      "item": "primalmagick:essence_shard_earth"
+    },
+    "I": {
+      "tag": "primalmagick:ingots/primalite"
+    },
+    "M": {
+      "item": "primalmagick:marble_enchanted_slab"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 250
+    }
+  },
+  "pattern": [
+    "IMI",
+    " E ",
+    "IMI"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:artificial_mana_fonts"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:artificial_font_earth"
+  }
+}

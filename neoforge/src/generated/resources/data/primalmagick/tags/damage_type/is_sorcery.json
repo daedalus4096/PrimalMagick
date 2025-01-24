@@ -1,0 +1,13 @@
+{
+  "values": [
+    "#primalmagick:is_sorcery/earth",
+    "#primalmagick:is_sorcery/sea",
+    "#primalmagick:is_sorcery/sky",
+    "#primalmagick:is_sorcery/sun",
+    "#primalmagick:is_sorcery/moon",
+    "#primalmagick:is_sorcery/blood",
+    "#primalmagick:is_sorcery/infernal",
+    "#primalmagick:is_sorcery/void",
+    "#primalmagick:is_sorcery/hallowed"
+  ]
+}

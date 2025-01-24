@@ -1,0 +1,20 @@
+{
+  "type": "primalmagick:runecarving",
+  "ingredient1": {
+    "item": "minecraft:stone_slab"
+  },
+  "ingredient2": {
+    "tag": "c:gems/lapis"
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:rune_item"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:rune_item"
+  }
+}

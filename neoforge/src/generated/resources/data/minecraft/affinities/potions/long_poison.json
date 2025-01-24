@@ -1,0 +1,8 @@
+{
+  "type": "potion_bonus",
+  "bonus": {
+    "primalmagick:blood": 2,
+    "primalmagick:earth": 2
+  },
+  "target": "minecraft:long_poison"
+}

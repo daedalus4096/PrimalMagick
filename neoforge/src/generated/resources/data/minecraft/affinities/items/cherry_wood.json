@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:cherry_log",
+  "target": "minecraft:cherry_wood"
+}

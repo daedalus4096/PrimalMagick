@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:copper_trapdoor",
+  "target": "minecraft:weathered_copper_trapdoor"
+}

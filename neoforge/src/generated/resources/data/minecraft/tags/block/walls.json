@@ -1,0 +1,12 @@
+{
+  "values": [
+    "primalmagick:marble_wall",
+    "primalmagick:marble_brick_wall",
+    "primalmagick:marble_enchanted_wall",
+    "primalmagick:marble_enchanted_brick_wall",
+    "primalmagick:marble_smoked_wall",
+    "primalmagick:marble_smoked_brick_wall",
+    "primalmagick:marble_hallowed_wall",
+    "primalmagick:marble_hallowed_brick_wall"
+  ]
+}

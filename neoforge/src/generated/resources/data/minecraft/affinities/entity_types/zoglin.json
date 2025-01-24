@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:zoglin",
+  "values": {
+    "primalmagick:blood": 10,
+    "primalmagick:infernal": 5,
+    "primalmagick:moon": 10
+  }
+}

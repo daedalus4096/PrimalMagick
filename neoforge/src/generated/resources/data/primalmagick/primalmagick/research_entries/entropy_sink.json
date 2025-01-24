@@ -1,0 +1,64 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:entropy_sink"
+  },
+  "key": {
+    "rootKey": "primalmagick:entropy_sink"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_magitech"
+    },
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:manafruit"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requiredValue": 1,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:ritual_mishaps"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:entropy_sink"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.entropy_sink.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:entropy_sink"
+      },
+      "recipes": [
+        "primalmagick:entropy_sink"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.entropy_sink.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

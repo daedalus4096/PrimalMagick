@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:wither_skeleton",
+  "values": {
+    "primalmagick:blood": 10,
+    "primalmagick:infernal": 10,
+    "primalmagick:void": 10
+  }
+}

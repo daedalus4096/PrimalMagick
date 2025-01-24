@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 10,
+    "primalmagick:infernal": 10,
+    "primalmagick:moon": 10
+  },
+  "target": "minecraft:name_tag"
+}

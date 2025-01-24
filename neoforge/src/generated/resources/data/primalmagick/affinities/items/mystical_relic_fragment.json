@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 3,
+    "primalmagick:hallowed": 3,
+    "primalmagick:moon": 3,
+    "primalmagick:sea": 3,
+    "primalmagick:sky": 3,
+    "primalmagick:sun": 3
+  },
+  "target": "primalmagick:mystical_relic_fragment"
+}

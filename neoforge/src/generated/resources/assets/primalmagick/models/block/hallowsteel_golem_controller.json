@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "primalmagick:block/hallowsteel_golem_controller_front",
+    "side": "primalmagick:block/hallowsteel_golem_controller_side",
+    "top": "primalmagick:block/hallowsteel_block"
+  }
+}

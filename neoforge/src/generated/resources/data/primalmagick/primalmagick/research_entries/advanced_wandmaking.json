@@ -1,0 +1,54 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "key": {
+    "rootKey": "primalmagick:advanced_wandmaking"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:wand_charger"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requiredValue": 20,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:mana_spent_total"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:advanced_wandmaking"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.advanced_wandmaking.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:advanced_wandmaking"
+      },
+      "recipes": [
+        "primalmagick:wand_assembly_table"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.advanced_wandmaking.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

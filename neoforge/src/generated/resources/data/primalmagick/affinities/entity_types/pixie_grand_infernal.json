@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "primalmagick:pixie_grand_infernal",
+  "values": {
+    "primalmagick:blood": 5,
+    "primalmagick:infernal": 10,
+    "primalmagick:sky": 10
+  }
+}

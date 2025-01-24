@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:infernal": 10
+  },
+  "base": "minecraft:skeleton_skull",
+  "remove": {
+    "primalmagick:moon": 5
+  },
+  "target": "minecraft:wither_skeleton_skull"
+}

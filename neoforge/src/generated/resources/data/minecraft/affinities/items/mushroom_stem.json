@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:moon": 10
+  },
+  "target": "minecraft:mushroom_stem"
+}

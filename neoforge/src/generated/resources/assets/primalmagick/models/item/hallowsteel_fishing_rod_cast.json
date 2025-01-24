@@ -1,0 +1,6 @@
+{
+  "parent": "primalmagick:item/hallowsteel_fishing_rod",
+  "textures": {
+    "layer0": "primalmagick:item/hallowsteel_fishing_rod_cast"
+  }
+}

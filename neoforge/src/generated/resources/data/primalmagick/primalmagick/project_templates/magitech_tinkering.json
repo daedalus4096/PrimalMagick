@@ -1,0 +1,276 @@
+{
+  "aidBlocks": [],
+  "materialOptions": [
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.125,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:magitech_parts_basic"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:expert_magitech"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:magitech_parts_enchanted"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.5,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:master_magitech"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:magitech_parts_forbidden"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:honey_extractor"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:honey_extractor"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:arcanometer"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:arcanometer"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_tinctures"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:concocter"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:entropy_sink"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:entropy_sink"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:auto_charger"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:auto_charger"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:essence_transmuter"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_transmuter"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:dissolution_chamber"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:dissolution_chamber"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:infernal_furnace"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:infernal_furnace"
+      },
+      "weight": 1.0
+    }
+  ],
+  "otherRewards": [],
+  "requirement": {
+    "requiredCount": 3,
+    "requirement_type": "primalmagick:quorum",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:arcanometer"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_tinctures"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:entropy_sink"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:auto_charger"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:essence_transmuter"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:dissolution_chamber"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:infernal_furnace"
+        }
+      }
+    ]
+  },
+  "rewardMultiplier": 0.5,
+  "weightFunction": {
+    "modifiers": [
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:master_magitech"
+        },
+        "weightModifier": 2.0
+      }
+    ],
+    "reward_type": "primalmagick:progressive",
+    "startingWeight": 3.0
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:silverfish",
+  "values": {
+    "primalmagick:blood": 5,
+    "primalmagick:earth": 5
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:paletted_permutations",
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "rune_blood": "minecraft:trims/color_palettes/redstone",
+        "rune_earth": "minecraft:trims/color_palettes/emerald",
+        "rune_hallowed": "minecraft:trims/color_palettes/quartz",
+        "rune_infernal": "minecraft:trims/color_palettes/copper",
+        "rune_moon": "minecraft:trims/color_palettes/iron",
+        "rune_sea": "minecraft:trims/color_palettes/lapis",
+        "rune_sky": "minecraft:trims/color_palettes/diamond",
+        "rune_sun": "minecraft:trims/color_palettes/gold",
+        "rune_void": "minecraft:trims/color_palettes/amethyst"
+      },
+      "textures": [
+        "primalmagick:trims/models/armor/runic",
+        "primalmagick:trims/models/armor/runic_leggings"
+      ]
+    }
+  ]
+}

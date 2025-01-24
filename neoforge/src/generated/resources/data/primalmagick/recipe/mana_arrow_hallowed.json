@@ -1,0 +1,46 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "expertiseGroup": "primalmagick:mana_arrow",
+  "group": "mana_arrows",
+  "key": {
+    "A": {
+      "item": "minecraft:arrow"
+    },
+    "D": {
+      "item": "primalmagick:essence_dust_hallowed"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 5
+    }
+  },
+  "pattern": [
+    " A ",
+    "ADA",
+    " A "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:mana_arrows"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      }
+    ]
+  },
+  "result": {
+    "count": 4,
+    "id": "primalmagick:mana_arrow_hallowed"
+  }
+}

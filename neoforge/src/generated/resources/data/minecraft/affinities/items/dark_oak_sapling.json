@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:oak_sapling",
+  "target": "minecraft:dark_oak_sapling"
+}

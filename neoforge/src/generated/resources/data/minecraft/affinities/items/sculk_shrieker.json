@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:infernal": 20,
+    "primalmagick:void": 20
+  },
+  "target": "minecraft:sculk_shrieker"
+}

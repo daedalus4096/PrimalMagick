@@ -1,0 +1,15 @@
+{
+  "addenda": [],
+  "finales": [],
+  "flags": {
+    "internal": true
+  },
+  "icon": {
+    "location": "primalmagick:textures/research/research_map.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:found_shrine"
+  },
+  "parents": [],
+  "stages": []
+}

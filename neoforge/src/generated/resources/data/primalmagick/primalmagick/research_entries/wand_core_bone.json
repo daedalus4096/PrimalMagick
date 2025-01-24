@@ -1,0 +1,89 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_bone"
+      },
+      "recipes": [
+        "primalmagick:bone_staff_core_item"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_bone.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:bone_wand_core_item"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_core_bone"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_heartwood"
+    },
+    {
+      "rootKey": "primalmagick:discover_blood"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:bone"
+            }
+          },
+          {
+            "amount": 2,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_bone"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_bone.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_bone"
+      },
+      "recipes": [
+        "primalmagick:bone_wand_core_item"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_bone.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 1,
+    "primalmagick:sun": 1
+  },
+  "target": "minecraft:oak_slab"
+}

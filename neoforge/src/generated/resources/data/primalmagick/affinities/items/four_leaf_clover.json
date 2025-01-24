@@ -1,0 +1,10 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:hallowed": 20,
+    "primalmagick:moon": 20,
+    "primalmagick:sun": 5
+  },
+  "target": "primalmagick:four_leaf_clover"
+}
