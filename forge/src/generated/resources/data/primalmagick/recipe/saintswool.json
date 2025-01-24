@@ -8,7 +8,7 @@
       "item": "primalmagick:essence_crystal_hallowed"
     },
     "S": {
-      "tag": "forge:string"
+      "tag": "c:strings"
     }
   },
   "mana": {

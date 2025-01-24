@@ -3,7 +3,7 @@
   "group": "runescribing_altar",
   "key": {
     "D": {
-      "tag": "forge:gems/diamond"
+      "tag": "c:gems/diamond"
     },
     "M": {
       "item": "primalmagick:marble_raw"

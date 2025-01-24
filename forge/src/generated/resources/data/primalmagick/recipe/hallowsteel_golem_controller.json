@@ -8,7 +8,7 @@
       "item": "primalmagick:magitech_parts_heavenly"
     },
     "R": {
-      "tag": "forge:storage_blocks/redstone"
+      "tag": "c:storage_blocks/redstone"
     }
   },
   "mana": {

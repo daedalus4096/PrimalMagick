@@ -1,7 +1,7 @@
 {
   "type": "primalmagick:dissolution",
   "ingredient": {
-    "tag": "forge:cobblestone"
+    "tag": "c:cobblestones"
   },
   "mana": {
     "sources": {

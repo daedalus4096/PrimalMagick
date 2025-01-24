@@ -5,7 +5,7 @@
       "tag": "minecraft:small_flowers"
     },
     "S": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     }
   },
   "mana": {

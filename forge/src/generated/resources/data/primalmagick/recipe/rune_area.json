@@ -4,7 +4,7 @@
     "item": "minecraft:stone_slab"
   },
   "ingredient2": {
-    "tag": "forge:gems/lapis"
+    "tag": "c:gems/lapis"
   },
   "requirement": {
     "requirement_type": "primalmagick:research",

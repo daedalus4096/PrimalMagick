@@ -5,7 +5,7 @@
       "item": "minecraft:brewing_stand"
     },
     "C": {
-      "tag": "forge:ingots/copper"
+      "tag": "c:ingots/copper"
     },
     "M": {
       "item": "primalmagick:marble_enchanted"

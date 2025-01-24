@@ -10,7 +10,7 @@
       "item": "minecraft:rotten_flesh"
     },
     {
-      "tag": "forge:gems/emerald"
+      "tag": "c:gems/emerald"
     }
   ],
   "requirement": {

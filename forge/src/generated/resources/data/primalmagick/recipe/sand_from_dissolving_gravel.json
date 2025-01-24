@@ -1,7 +1,7 @@
 {
   "type": "primalmagick:dissolution",
   "ingredient": {
-    "tag": "forge:gravel"
+    "tag": "c:gravels"
   },
   "mana": {
     "sources": {

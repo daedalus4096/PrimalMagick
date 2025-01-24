@@ -1,9 +1,9 @@
 {
   "values": [
-    "#forge:tools/bows",
-    "#forge:tools/crossbows",
-    "#forge:tools/fishing_rods",
-    "#forge:tools/tridents",
-    "#forge:tools/shields"
+    "#c:tools/bow",
+    "#c:tools/crossbow",
+    "#c:tools/fishing_rod",
+    "#c:tools/spear",
+    "#c:tools/shield"
   ]
 }

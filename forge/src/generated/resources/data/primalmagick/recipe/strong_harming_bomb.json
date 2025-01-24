@@ -17,7 +17,7 @@
       "item": "primalmagick:essence_shard_blood"
     },
     {
-      "tag": "forge:crops/nether_wart"
+      "tag": "c:crops/nether_wart"
     },
     {
       "item": "minecraft:glistering_melon_slice"
@@ -26,7 +26,7 @@
       "item": "minecraft:fermented_spider_eye"
     },
     {
-      "tag": "forge:dusts/glowstone"
+      "tag": "c:dusts/glowstone"
     }
   ],
   "mana": {

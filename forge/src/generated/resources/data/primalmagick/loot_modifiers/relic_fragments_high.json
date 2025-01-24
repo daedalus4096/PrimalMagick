@@ -5,7 +5,6 @@
       "condition": "minecraft:killed_by_player"
     }
   ],
-  "lootingBonus": 1,
   "maxCount": 5,
   "minCount": 3,
   "targetTag": "primalmagick:drops_relic_fragments_high"

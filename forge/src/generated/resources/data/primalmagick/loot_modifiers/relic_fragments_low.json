@@ -15,7 +15,6 @@
       "unenchanted_chance": 0.1
     }
   ],
-  "lootingBonus": 0,
   "maxCount": 1,
   "minCount": 1,
   "targetTag": "primalmagick:drops_relic_fragments_low"

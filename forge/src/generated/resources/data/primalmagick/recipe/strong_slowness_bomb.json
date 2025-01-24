@@ -20,7 +20,7 @@
       "item": "primalmagick:essence_shard_void"
     },
     {
-      "tag": "forge:crops/nether_wart"
+      "tag": "c:crops/nether_wart"
     },
     {
       "item": "minecraft:sugar"
@@ -29,7 +29,7 @@
       "item": "minecraft:fermented_spider_eye"
     },
     {
-      "tag": "forge:dusts/glowstone"
+      "tag": "c:dusts/glowstone"
     }
   ],
   "mana": {

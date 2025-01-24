@@ -5,13 +5,13 @@
       "item": "minecraft:amethyst_shard"
     },
     {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     },
     {
-      "tag": "forge:ingots/copper"
+      "tag": "c:ingots/copper"
     },
     {
-      "tag": "forge:string"
+      "tag": "c:strings"
     },
     {
       "tag": "minecraft:sand"

@@ -4,7 +4,7 @@
   "group": "stained_skyglass",
   "key": {
     "D": {
-      "tag": "forge:dyes/cyan"
+      "tag": "c:dyes/cyan"
     },
     "G": {
       "tag": "primalmagick:skyglass"

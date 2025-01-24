@@ -14,7 +14,7 @@
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "forge:ores/gold"
+          "tag": "c:ores/gold"
         }
       }
     ]
@@ -33,7 +33,7 @@
             "item": "primalmagick:earthshatter_hammer"
           },
           {
-            "tag": "forge:ores/gold"
+            "tag": "c:ores/gold"
           }
         ],
         "outputAmount": 2,

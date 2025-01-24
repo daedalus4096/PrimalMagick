@@ -3,7 +3,7 @@
   "group": "primalite_ingot",
   "ingredients": [
     {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     {
       "item": "primalmagick:essence_dust_earth"

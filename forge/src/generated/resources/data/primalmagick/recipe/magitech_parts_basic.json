@@ -3,10 +3,10 @@
   "group": "magitech_parts",
   "key": {
     "I": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "R": {
-      "tag": "forge:dusts/redstone"
+      "tag": "c:dusts/redstone"
     },
     "S": {
       "item": "primalmagick:mana_salts"

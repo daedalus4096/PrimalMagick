@@ -3,7 +3,7 @@
   "expertiseGroup": "primalmagick:blaze_rod_core",
   "key": {
     "#": {
-      "tag": "forge:rods/blaze"
+      "tag": "c:rods/blaze"
     },
     "D": {
       "item": "primalmagick:essence_shard_infernal"

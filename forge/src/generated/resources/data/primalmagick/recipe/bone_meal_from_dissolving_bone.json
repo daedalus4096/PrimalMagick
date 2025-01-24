@@ -1,7 +1,7 @@
 {
   "type": "primalmagick:dissolution",
   "ingredient": {
-    "tag": "forge:bones"
+    "tag": "c:bones"
   },
   "mana": {
     "sources": {

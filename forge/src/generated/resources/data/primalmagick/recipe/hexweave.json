@@ -8,7 +8,7 @@
       "tag": "primalmagick:essences/forbidden_shards"
     },
     "S": {
-      "tag": "forge:string"
+      "tag": "c:strings"
     }
   },
   "mana": {

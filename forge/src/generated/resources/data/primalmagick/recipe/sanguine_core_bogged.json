@@ -7,10 +7,10 @@
       "item": "primalmagick:sanguine_core_blank"
     },
     {
-      "tag": "forge:bones"
+      "tag": "c:bones"
     },
     {
-      "tag": "forge:mushrooms"
+      "tag": "c:mushrooms"
     }
   ],
   "requirement": {

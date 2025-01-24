@@ -4,7 +4,7 @@
   "group": "stained_skyglass_pane",
   "key": {
     "D": {
-      "tag": "forge:dyes/purple"
+      "tag": "c:dyes/purple"
     },
     "G": {
       "tag": "primalmagick:skyglass_panes"

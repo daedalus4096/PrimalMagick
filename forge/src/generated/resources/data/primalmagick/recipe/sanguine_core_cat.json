@@ -10,7 +10,7 @@
       "tag": "minecraft:fishes"
     },
     {
-      "tag": "forge:string"
+      "tag": "c:strings"
     }
   ],
   "requirement": {

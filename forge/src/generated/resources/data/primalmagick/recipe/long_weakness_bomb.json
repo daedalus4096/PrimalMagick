@@ -23,7 +23,7 @@
       "item": "minecraft:fermented_spider_eye"
     },
     {
-      "tag": "forge:dusts/redstone"
+      "tag": "c:dusts/redstone"
     }
   ],
   "mana": {

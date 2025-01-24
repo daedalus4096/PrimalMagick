@@ -14,7 +14,7 @@
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "forge:raw_materials/copper"
+          "tag": "c:raw_materials/copper"
         }
       }
     ]
@@ -33,7 +33,7 @@
             "item": "primalmagick:earthshatter_hammer"
           },
           {
-            "tag": "forge:raw_materials/copper"
+            "tag": "c:raw_materials/copper"
           }
         ],
         "outputAmount": 2,

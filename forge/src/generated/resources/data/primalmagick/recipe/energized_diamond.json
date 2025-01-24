@@ -2,7 +2,7 @@
   "type": "primalmagick:arcane_crafting_shapeless",
   "ingredients": [
     {
-      "tag": "forge:gems/diamond"
+      "tag": "c:gems/diamond"
     },
     {
       "item": "primalmagick:essence_shard_earth"

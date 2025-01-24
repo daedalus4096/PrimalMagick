@@ -11,7 +11,7 @@
       "item": "primalmagick:magitech_parts_forbidden"
     },
     "R": {
-      "tag": "forge:dusts/redstone"
+      "tag": "c:dusts/redstone"
     },
     "S": {
       "item": "primalmagick:essence_shard_void"

@@ -14,7 +14,7 @@
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "forge:raw_materials/copper"
+          "tag": "c:raw_materials/copper"
         }
       }
     ]
@@ -28,7 +28,7 @@
         "type": "primalmagick:dissolution_tag",
         "group": "copper_grit_dissolution",
         "ingredient": {
-          "tag": "forge:raw_materials/copper"
+          "tag": "c:raw_materials/copper"
         },
         "mana": {
           "sources": {

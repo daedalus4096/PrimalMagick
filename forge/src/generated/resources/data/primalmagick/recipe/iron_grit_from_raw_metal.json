@@ -14,7 +14,7 @@
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "forge:raw_materials/iron"
+          "tag": "c:raw_materials/iron"
         }
       }
     ]
@@ -33,7 +33,7 @@
             "item": "primalmagick:earthshatter_hammer"
           },
           {
-            "tag": "forge:raw_materials/iron"
+            "tag": "c:raw_materials/iron"
           }
         ],
         "outputAmount": 2,

@@ -10,7 +10,7 @@
       "item": "minecraft:saddle"
     },
     {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
     }
   ],
   "requirement": {

@@ -14,7 +14,7 @@
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "forge:ores/iron"
+          "tag": "c:ores/iron"
         }
       }
     ]
@@ -28,7 +28,7 @@
         "type": "primalmagick:dissolution_tag",
         "group": "iron_grit_dissolution",
         "ingredient": {
-          "tag": "forge:ores/iron"
+          "tag": "c:ores/iron"
         },
         "mana": {
           "sources": {

@@ -5,7 +5,7 @@
       "item": "primalmagick:wood_table"
     },
     {
-      "tag": "forge:storage_blocks/quartz"
+      "item": "minecraft:quartz_block"
     },
     {
       "item": "primalmagick:heartwood_wand_core_item"

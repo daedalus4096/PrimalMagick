@@ -10,7 +10,7 @@
       "item": "minecraft:beef"
     },
     {
-      "tag": "forge:leather"
+      "tag": "c:leathers"
     }
   ],
   "requirement": {
