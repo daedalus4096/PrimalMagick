@@ -22,3 +22,7 @@ build
 eclipse
 run
 runs
+
+# Generated resource caches
+forge/src/generated/resources/.cache/*
+neoforge/src/generated/resources/.cache/*
