@@ -29,14 +29,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.RegistryDataLoader;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DataPackRegistriesHooks;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 /**
  * Generates datapack JSON for the Primal Magick mod.
@@ -75,11 +74,10 @@ public class RegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesProvide
         generator.addProvider(isServer, new ResearchEntryTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         return registryDataGenerator.getRegistryProvider();
     }
-    
+
     private static HolderLookup.Provider append(HolderLookup.Provider original, RegistrySetBuilder builder) {
         Cloner.Factory clonerFactory = new Cloner.Factory();
-        Stream<RegistryDataLoader.RegistryData<?>> worldgenAndDimensionStream = Stream.concat(RegistryDataLoader.WORLDGEN_REGISTRIES.stream(), RegistryDataLoader.DIMENSION_REGISTRIES.stream());
-        worldgenAndDimensionStream.forEach(registryData -> registryData.runWithArguments(clonerFactory::addCodec));
+        DataPackRegistriesHooks.getDataPackRegistriesWithDimensions().forEach(registryData -> registryData.runWithArguments(clonerFactory::addCodec));
         return builder.buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), original, clonerFactory).full();
     }
 
