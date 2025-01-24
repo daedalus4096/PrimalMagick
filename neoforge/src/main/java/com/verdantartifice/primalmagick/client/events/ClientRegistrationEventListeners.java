@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
 import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecoratorNeoforge;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -53,7 +54,7 @@ public class ClientRegistrationEventListeners {
     
     @SubscribeEvent
     public static void onModelRegister(ModelEvent.RegisterAdditional event) {
-        ClientRegistrationEvents.onModelRegister(event::register);
+        ClientRegistrationEvents.onModelRegister(event::register, ModelResourceLocation.STANDALONE_VARIANT);
     }
     
     @SubscribeEvent

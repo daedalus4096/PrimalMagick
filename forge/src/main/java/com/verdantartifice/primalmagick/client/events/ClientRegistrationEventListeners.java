@@ -53,7 +53,7 @@ public class ClientRegistrationEventListeners {
     
     @SubscribeEvent
     public static void onModelRegister(ModelEvent.RegisterAdditional event) {
-        ClientRegistrationEvents.onModelRegister(event::register);
+        ClientRegistrationEvents.onModelRegister(event::register, "");
     }
     
     @SubscribeEvent

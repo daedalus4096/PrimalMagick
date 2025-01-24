@@ -51,21 +51,21 @@ public class ClientRegistrationEvents {
     /**
      * Register special model resource locations that must be loaded even if not tied to a block state.
      */
-    public static void onModelRegister(Consumer<ModelResourceLocation> modelConsumer) {
-        modelConsumer.accept(new ModelResourceLocation(ResourceUtils.loc("mundane_wand_core"), ""));
+    public static void onModelRegister(Consumer<ModelResourceLocation> modelConsumer, String variant) {
+        modelConsumer.accept(new ModelResourceLocation(ResourceUtils.loc("mundane_wand_core"), variant));
         for (WandCore core : WandCore.getAllWandCores()) {
-            modelConsumer.accept(new ModelResourceLocation(core.getWandModelResourceLocationNamespace(), ""));
-            modelConsumer.accept(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), ""));
+            modelConsumer.accept(new ModelResourceLocation(core.getWandModelResourceLocationNamespace(), variant));
+            modelConsumer.accept(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), variant));
         }
         for (WandCap cap : WandCap.getAllWandCaps()) {
-            modelConsumer.accept(new ModelResourceLocation(cap.getWandModelResourceLocationNamespace(), ""));
-            modelConsumer.accept(new ModelResourceLocation(cap.getStaffModelResourceLocationNamespace(), ""));
+            modelConsumer.accept(new ModelResourceLocation(cap.getWandModelResourceLocationNamespace(), variant));
+            modelConsumer.accept(new ModelResourceLocation(cap.getStaffModelResourceLocationNamespace(), variant));
         }
         for (WandGem gem : WandGem.getAllWandGems()) {
-            modelConsumer.accept(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), ""));
+            modelConsumer.accept(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), variant));
         }
         for (int index = 0; index <= 4; index++) {
-            modelConsumer.accept(new ModelResourceLocation(ResourceUtils.loc("arcanometer_" + index), ""));
+            modelConsumer.accept(new ModelResourceLocation(ResourceUtils.loc("arcanometer_" + index), variant));
         }
     }
     
