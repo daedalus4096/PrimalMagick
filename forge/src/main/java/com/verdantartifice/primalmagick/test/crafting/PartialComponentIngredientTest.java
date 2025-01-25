@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.crafting.ingredients.PartialCompo
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
+import com.verdantartifice.primalmagick.test.TestUtilsForge;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -17,7 +18,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(Constants.MOD_ID + ".forge.partial_component_ingredient")
 public class PartialComponentIngredientTest extends AbstractBaseTest {
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
     public void predicate_works(GameTestHelper helper) {
         var ingredient = PartialComponentIngredient.builder()
                 .item(ItemsPM.CONCOCTION.get())

@@ -5,8 +5,6 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
-import com.verdantartifice.primalmagick.test.TestUtils;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -16,7 +14,6 @@ import net.minecraft.world.level.GameType;
 import java.util.List;
 
 public abstract class AbstractCraftingRequirementsTest extends AbstractBaseTest {
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void arcane_recipe(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         
@@ -36,7 +33,6 @@ public abstract class AbstractCraftingRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void ritual_recipe(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         

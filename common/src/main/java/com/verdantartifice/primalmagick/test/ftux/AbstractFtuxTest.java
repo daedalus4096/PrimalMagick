@@ -16,8 +16,6 @@ import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.gametest.framework.GameTest;
-import net.minecraft.gametest.framework.GameTestGenerator;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,8 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractFtuxTest extends AbstractBaseTest {
-    @GameTestGenerator
-    public Collection<TestFunction> font_discovery_tests() {
+    public Collection<TestFunction> font_discovery_tests(String templateName) {
         Map<String, Block> testParams = ImmutableMap.<String, Block>builder()
                 .put("earth", BlocksPM.ANCIENT_FONT_EARTH.get())
                 .put("sea", BlocksPM.ANCIENT_FONT_SEA.get())
@@ -51,7 +48,7 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
                 .put("sun", BlocksPM.ANCIENT_FONT_SUN.get())
                 .put("moon", BlocksPM.ANCIENT_FONT_MOON.get())
                 .build();
-        return TestUtils.createParameterizedTestFunctions("font_discovery_tests", testParams, (helper, block) -> {
+        return TestUtils.createParameterizedTestFunctions("font_discovery_tests", templateName, testParams, (helper, block) -> {
             // Create a player in the level and confirm that they start out not having found a shrine
             @SuppressWarnings("removal")
             ServerPlayer player = helper.makeMockServerPlayerInLevel();
@@ -73,7 +70,6 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         });
     }
     
-    @GameTest(template = "primalmagick:test/floor5x5x5", timeoutTicks = 150)
     public void sleeping_after_shrine_grants_dream(GameTestHelper helper) {
         // Create a player who's found a shrine and is primed for the dream, but hasn't had it yet
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
@@ -101,8 +97,7 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         });
     }
     
-    @GameTestGenerator
-    public Collection<TestFunction> mundane_wand_crafting_tests() {
+    public Collection<TestFunction> mundane_wand_crafting_tests(String templateName) {
         Map<String, Item> testParams = ImmutableMap.<String, Item>builder()
                 .put("earth", ItemsPM.ESSENCE_DUST_EARTH.get())
                 .put("sea", ItemsPM.ESSENCE_DUST_SEA.get())
@@ -110,7 +105,7 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
                 .put("sun", ItemsPM.ESSENCE_DUST_SUN.get())
                 .put("moon", ItemsPM.ESSENCE_DUST_MOON.get())
                 .build();
-        return TestUtils.createParameterizedTestFunctions("mundane_wand_crafting_tests", testParams, (helper, dust) -> {
+        return TestUtils.createParameterizedTestFunctions("mundane_wand_crafting_tests", templateName, testParams, (helper, dust) -> {
             var container = CraftingInput.of(2, 1, List.of(new ItemStack(Items.STICK), new ItemStack(dust)));
             var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, container, helper.getLevel());
             helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
@@ -119,7 +114,6 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         });
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void transform_abort_gives_hint(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
@@ -150,7 +144,6 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void transform_grimoire(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);

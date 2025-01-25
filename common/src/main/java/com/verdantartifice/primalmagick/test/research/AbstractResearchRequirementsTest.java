@@ -23,9 +23,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
-import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -35,7 +33,6 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest {
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void research_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS));
@@ -45,7 +42,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void knowledge_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5);
@@ -55,7 +51,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void item_stack_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new ItemStackRequirement(new ItemStack(Items.IRON_INGOT));
@@ -65,7 +60,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void item_tag_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new ItemTagRequirement(CommonTags.Items.EGGS, 1);
@@ -75,7 +69,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void stat_requirement(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper); // Stats are only recorded on the server side
         var req = new StatRequirement(StatsPM.MANA_SIPHONED, 2);
@@ -85,7 +78,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void expertise_requirement(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper); // Stats are only recorded on the server side
         var req = new ExpertiseRequirement(ResearchDisciplines.MANAWEAVING, ResearchTier.EXPERT, 12);
@@ -96,7 +88,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = "primalmagick:test/floor5x5x5")
     public void vanilla_item_used_stat_requirement(GameTestHelper helper) {
         @SuppressWarnings("removal")
         var player = helper.makeMockServerPlayerInLevel(); // Vanilla stats require an explicit client or server player
@@ -110,7 +101,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = "primalmagick:test/floor5x5x5")
     public void vanilla_custom_stat_requirement(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper); // Vanilla stats require an explicit client or server player
         var req = new VanillaCustomStatRequirement(Stats.JUMP, 1, null);
@@ -120,7 +110,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void and_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new AndRequirement(
@@ -144,7 +133,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void or_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new OrRequirement(
@@ -170,7 +158,6 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
         helper.succeed();
     }
 
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void quorum_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new QuorumRequirement(2,

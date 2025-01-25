@@ -1,23 +1,25 @@
 package com.verdantartifice.primalmagick.test;
 
 public record TestOptions(int timeoutTicks, String batch, boolean skyAccess, int rotationSteps, boolean required, boolean manualOnly, String template, long setupTicks, int attempts, int requiredSuccesses) {
-    public static final TestOptions DEFAULT = new TestOptions(100, TestUtils.DEFAULT_BATCH, false, 0, true, false, TestUtils.DEFAULT_TEMPLATE, 0L, 1, 1);
-    
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(String template) {
+        return new Builder(template);
     }
     
     public static class Builder {
-        private int timeoutTicks = DEFAULT.timeoutTicks();
-        private String batch = DEFAULT.batch();
-        private boolean skyAccess = DEFAULT.skyAccess();
-        private int rotationSteps = DEFAULT.rotationSteps();
-        private boolean required = DEFAULT.required();
-        private boolean manualOnly = DEFAULT.manualOnly();
-        private String template = DEFAULT.template();
-        private long setupTicks = DEFAULT.setupTicks();
-        private int attempts = DEFAULT.attempts();
-        private int requiredSuccesses = DEFAULT.requiredSuccesses();
+        private int timeoutTicks = 100;
+        private String batch = TestUtils.DEFAULT_BATCH;
+        private boolean skyAccess = false;
+        private int rotationSteps = 0;
+        private boolean required = true;
+        private boolean manualOnly = false;
+        private String template;
+        private long setupTicks = 0L;
+        private int attempts = 1;
+        private int requiredSuccesses = 1;
+
+        public Builder(String template) {
+            this.template = template;
+        }
         
         public Builder timeoutTicks(int ticks) {
             this.timeoutTicks = ticks;

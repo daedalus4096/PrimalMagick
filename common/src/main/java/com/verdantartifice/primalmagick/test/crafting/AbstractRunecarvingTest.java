@@ -10,15 +10,12 @@ import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
-import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public abstract class AbstractRunecarvingTest extends AbstractBaseTest {
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void craft_works(GameTestHelper helper) {
         // Create a test player with the research needed for basic runecarving
         var player = this.makeMockServerPlayer(helper);

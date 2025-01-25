@@ -16,9 +16,7 @@ import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
-import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +25,6 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameType;
 
 public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void research_discipline(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var key = new ResearchDisciplineKey(ResearchDisciplines.MANAWEAVING);
@@ -37,7 +34,6 @@ public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void research_entry(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var key = new ResearchEntryKey(ResearchEntries.FIRST_STEPS);
@@ -47,7 +43,6 @@ public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void research_stage(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var key = new ResearchStageKey(ResearchEntries.FIRST_STEPS, 2);
@@ -59,7 +54,6 @@ public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void item_scan(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper);
         var key = new ItemScanKey(Items.IRON_INGOT);
@@ -69,7 +63,6 @@ public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void entity_scan(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper);
         var key = new EntityScanKey(EntityType.BAT);
@@ -79,7 +72,6 @@ public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void stack_crafted(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper);
         var item = ItemsPM.PRIMALITE_INGOT.get();
@@ -90,7 +82,6 @@ public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void tag_crafted(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper);
         var tag = ItemTagsPM.INGOTS_PRIMALITE;
@@ -101,7 +92,6 @@ public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void rune_enchantment(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper);
         var enchKey = Enchantments.AQUA_AFFINITY;
@@ -113,7 +103,6 @@ public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
         helper.succeed();
     }
     
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void rune_enchantment_partial(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper);
         var enchKey = Enchantments.AQUA_AFFINITY;

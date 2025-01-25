@@ -20,8 +20,7 @@ import java.util.function.Consumer;
 
 public class TestUtils {
     public static final String DEFAULT_BATCH = "defaultBatch";
-    public static final String DEFAULT_TEMPLATE = "primalmagick:test/empty3x3x3";
-    
+
     @Nullable
     private static String findPrefix(int stackDepth) {
         String callerClassName = StackWalker.getInstance().walk(s -> s.skip(stackDepth).findFirst()).map(f -> f.getClassName()).orElse(null);
@@ -55,11 +54,12 @@ public class TestUtils {
      * 
      * @param generatedGroupName the method name of the calling test generator; used to compose the generated test name
      * @param nameSuffix the unique suffix to be appended to the name of the generated test
+     * @param templateName the name of the structure template to use for the generated test
      * @param consumer the consumer to be transformed into a test function
      * @return the final TestFunction to be run in the Minecraft game test framework
      */
-    public static TestFunction createTestFunction(String generatedGroupName, String nameSuffix, Consumer<GameTestHelper> consumer) {
-        return createTestFunctionInner(findPrefix(2), generatedGroupName, nameSuffix, TestOptions.DEFAULT, consumer);
+    public static TestFunction createTestFunction(String generatedGroupName, String nameSuffix, String templateName, Consumer<GameTestHelper> consumer) {
+        return createTestFunctionInner(findPrefix(2), generatedGroupName, nameSuffix, TestOptions.builder(templateName).build(), consumer);
     }
     
     /**
@@ -105,12 +105,13 @@ public class TestUtils {
      * 
      * @param <T> the type of parameter to be accepted by the given test bi-consumer
      * @param generatedGroupName the method name of the calling test generator; used to compose the generated test name
+     * @param templateName the name of the structure template to use for the generated test
      * @param params a map of test name suffixes to test parameter values
      * @param consumer the bi-consumer to be transformed into a test function collection
      * @return the final collection of TestFunction objects, to be run in the Minecraft game test framework
      */
-    public static <T> Collection<TestFunction> createParameterizedTestFunctions(String generatedGroupName, Map<String, T> params, BiConsumer<GameTestHelper, T> consumer) {
-        return createParameterizedTestFunctionsInner(findPrefix(2), generatedGroupName, TestOptions.DEFAULT, params, consumer);
+    public static <T> Collection<TestFunction> createParameterizedTestFunctions(String generatedGroupName, String templateName, Map<String, T> params, BiConsumer<GameTestHelper, T> consumer) {
+        return createParameterizedTestFunctionsInner(findPrefix(2), generatedGroupName, TestOptions.builder(templateName).build(), params, consumer);
     }
     
     /**

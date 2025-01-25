@@ -3,14 +3,11 @@ package com.verdantartifice.primalmagick.test.research;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
-import com.verdantartifice.primalmagick.test.TestUtils;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 
 public abstract class AbstractResearchTest extends AbstractBaseTest {
-    @GameTest(template = TestUtils.DEFAULT_TEMPLATE)
     public void research_grant_works(GameTestHelper helper) {
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         
