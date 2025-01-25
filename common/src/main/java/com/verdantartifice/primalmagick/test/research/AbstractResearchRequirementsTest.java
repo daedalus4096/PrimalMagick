@@ -62,9 +62,9 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
 
     public void item_tag_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
-        var req = new ItemTagRequirement(CommonTags.Items.EGGS, 1);
+        var req = new ItemTagRequirement(CommonTags.Items.INGOTS_IRON, 1);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
-        player.getInventory().add(new ItemStack(Items.EGG));
+        player.getInventory().add(new ItemStack(Items.IRON_INGOT));
         helper.assertTrue(req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
