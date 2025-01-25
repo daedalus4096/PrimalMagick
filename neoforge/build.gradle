@@ -23,13 +23,7 @@ neoForge {
             client()
         }
         data {
-            programArgument('--mod')
-            programArgument("${mod_id}")
-            programArgument('--all')
-            programArgument('--output')
-            programArgument("${rootProject.file('neoforge/src/generated/resources/')}")
-            programArgument('--existing')
-            programArgument("${rootProject.file('common/src/main/resources/')}")
+            programArguments = ['--mod', mod_id, '--all', '--output', rootProject.file('neoforge/src/generated/resources/').getAbsolutePath(), '--existing', rootProject.file('common/src/main/resources/').getAbsolutePath()]
             data()
         }
         server {
