@@ -6,14 +6,16 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import java.util.function.Consumer;
 
 public interface IHasCustomRendererForge extends IHasCustomRenderer {
-    default void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
+    default IClientItemExtensions getRenderPropertiesUncached() {
+        return new IClientItemExtensions() {
             final BlockEntityWithoutLevelRenderer renderer = getCustomRendererSupplier().get();
 
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 return renderer;
             }
-        });
+        };
     }
+
+    IClientItemExtensions getRenderProperties();
 }
