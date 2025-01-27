@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class MundaneWandItem extends AbstractWandItem {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public MundaneWandItem() {
         super(new Item.Properties().stacksTo(1));

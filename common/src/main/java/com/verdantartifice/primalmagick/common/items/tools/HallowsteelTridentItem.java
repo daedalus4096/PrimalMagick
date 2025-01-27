@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class HallowsteelTridentItem extends AbstractTieredTridentItem {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public HallowsteelTridentItem(Item.Properties properties) {
         super(ItemTierPM.HALLOWSTEEL, properties);

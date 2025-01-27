@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class SpellcraftingAltarBlockItem extends BlockItem implements IHasCustomRenderer {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public SpellcraftingAltarBlockItem(Block block, Item.Properties properties) {
         super(block, properties);

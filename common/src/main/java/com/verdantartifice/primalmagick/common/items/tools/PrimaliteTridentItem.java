@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class PrimaliteTridentItem extends AbstractTieredTridentItem {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public PrimaliteTridentItem(Item.Properties properties) {
         super(ItemTierPM.PRIMALITE, properties);

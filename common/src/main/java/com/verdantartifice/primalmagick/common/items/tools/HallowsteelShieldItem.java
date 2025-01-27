@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class HallowsteelShieldItem extends AbstractTieredShieldItem implements IHasCustomRenderer {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public HallowsteelShieldItem(Item.Properties properties) {
         super(ItemTierPM.HALLOWSTEEL, properties);

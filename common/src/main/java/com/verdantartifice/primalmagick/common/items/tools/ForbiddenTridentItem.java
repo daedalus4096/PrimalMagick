@@ -23,7 +23,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class ForbiddenTridentItem extends AbstractTieredTridentItem implements IEnchantedByDefault {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ForbiddenTridentItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);

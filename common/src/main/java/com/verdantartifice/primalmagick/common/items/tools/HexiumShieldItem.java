@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class HexiumShieldItem extends AbstractTieredShieldItem implements IHasCustomRenderer {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public HexiumShieldItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);

@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public abstract class ModularWandItem extends AbstractWandItem {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ModularWandItem(Properties properties) {
         super(properties);

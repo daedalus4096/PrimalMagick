@@ -25,7 +25,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class ModularStaffItem extends ModularWandItem implements IStaff {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ModularStaffItem(Item.Properties properties) {
         super(properties);

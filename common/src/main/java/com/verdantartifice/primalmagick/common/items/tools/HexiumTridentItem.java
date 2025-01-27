@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class HexiumTridentItem extends AbstractTieredTridentItem {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public HexiumTridentItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);

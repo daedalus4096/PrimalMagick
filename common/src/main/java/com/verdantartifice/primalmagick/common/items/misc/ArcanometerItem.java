@@ -39,7 +39,7 @@ import java.util.function.Supplier;
 public abstract class ArcanometerItem extends Item implements IHasCustomRenderer {
     public static final ResourceLocation SCAN_STATE_PROPERTY = ResourceUtils.loc("scan_state");
 
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ArcanometerItem() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));

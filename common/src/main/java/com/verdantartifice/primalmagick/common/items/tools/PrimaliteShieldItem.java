@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class PrimaliteShieldItem extends AbstractTieredShieldItem implements IHasCustomRenderer {
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public PrimaliteShieldItem(Item.Properties properties) {
         super(ItemTierPM.PRIMALITE, properties);

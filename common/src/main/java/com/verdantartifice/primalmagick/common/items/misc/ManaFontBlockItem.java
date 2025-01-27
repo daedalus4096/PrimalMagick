@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public abstract class ManaFontBlockItem extends BlockItem implements IHasCustomRenderer {
     protected static final List<ManaFontBlockItem> FONTS = new ArrayList<>();
 
-    private BlockEntityWithoutLevelRenderer customRenderer = null;
+    private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ManaFontBlockItem(Block block, Item.Properties properties) {
         super(block, properties);
