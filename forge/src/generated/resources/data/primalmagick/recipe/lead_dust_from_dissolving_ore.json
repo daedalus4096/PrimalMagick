@@ -7,14 +7,14 @@
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "forge:dusts/lead"
+          "tag": "c:dusts/lead"
         }
       },
       {
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "forge:ores/lead"
+          "tag": "c:ores/lead"
         }
       }
     ]
@@ -28,7 +28,7 @@
         "type": "primalmagick:dissolution_tag",
         "group": "lead_dust_dissolution",
         "ingredient": {
-          "tag": "forge:ores/lead"
+          "tag": "c:ores/lead"
         },
         "mana": {
           "sources": {
@@ -36,7 +36,7 @@
           }
         },
         "outputAmount": 3,
-        "outputTag": "forge:dusts/lead"
+        "outputTag": "c:dusts/lead"
       }
     }
   ]

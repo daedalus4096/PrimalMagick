@@ -1,19 +1,19 @@
 {
   "values": [
     {
-      "id": "#forge:raw_materials/tin",
+      "id": "#c:raw_materials/tin",
       "required": false
     },
     {
-      "id": "#forge:raw_materials/lead",
+      "id": "#c:raw_materials/lead",
       "required": false
     },
     {
-      "id": "#forge:raw_materials/silver",
+      "id": "#c:raw_materials/silver",
       "required": false
     },
     {
-      "id": "#forge:raw_materials/uranium",
+      "id": "#c:raw_materials/uranium",
       "required": false
     }
   ]

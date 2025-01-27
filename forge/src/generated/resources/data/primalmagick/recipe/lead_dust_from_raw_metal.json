@@ -7,14 +7,14 @@
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "forge:dusts/lead"
+          "tag": "c:dusts/lead"
         }
       },
       {
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "forge:raw_materials/lead"
+          "tag": "c:raw_materials/lead"
         }
       }
     ]
@@ -33,11 +33,11 @@
             "item": "primalmagick:earthshatter_hammer"
           },
           {
-            "tag": "forge:raw_materials/lead"
+            "tag": "c:raw_materials/lead"
           }
         ],
         "outputAmount": 2,
-        "outputTag": "forge:dusts/lead"
+        "outputTag": "c:dusts/lead"
       }
     }
   ]

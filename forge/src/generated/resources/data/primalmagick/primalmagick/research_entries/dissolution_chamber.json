@@ -31,17 +31,17 @@
           {
             "amount": 20,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:dusts/iron"
+            "tag": "c:dusts/iron"
           },
           {
             "amount": 20,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:dusts/copper"
+            "tag": "c:dusts/copper"
           },
           {
             "amount": 10,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "forge:dusts/gold"
+            "tag": "c:dusts/gold"
           },
           {
             "amount": 2,

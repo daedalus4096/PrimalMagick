@@ -119,7 +119,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 1,
-      "tag": "forge:milk",
+      "tag": "c:milk",
       "weight": 1.0
     },
     {
