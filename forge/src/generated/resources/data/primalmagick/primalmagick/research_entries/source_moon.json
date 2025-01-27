@@ -29,7 +29,7 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "c:mushrooms"
+            "tag": "forge:mushrooms"
           },
           {
             "amount": 1,

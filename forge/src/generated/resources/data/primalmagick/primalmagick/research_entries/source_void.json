@@ -27,7 +27,7 @@
           {
             "amount": 1,
             "requirement_type": "primalmagick:item_tag",
-            "tag": "c:end_stones"
+            "tag": "forge:end_stones"
           },
           {
             "amount": 1,

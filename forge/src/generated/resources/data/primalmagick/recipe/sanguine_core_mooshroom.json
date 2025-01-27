@@ -10,7 +10,7 @@
       "item": "minecraft:beef"
     },
     {
-      "tag": "c:mushrooms"
+      "tag": "forge:mushrooms"
     }
   ],
   "requirement": {

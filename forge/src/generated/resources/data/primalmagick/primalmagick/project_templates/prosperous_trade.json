@@ -162,7 +162,7 @@
       "consumed": true,
       "material_type": "primalmagick:item_tag",
       "quantity": 3,
-      "tag": "c:feathers",
+      "tag": "forge:feathers",
       "weight": 1.0
     },
     {

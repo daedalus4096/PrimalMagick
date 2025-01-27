@@ -14,7 +14,7 @@
         "type": "forge:not",
         "value": {
           "type": "forge:tag_empty",
-          "tag": "c:ores/gold"
+          "tag": "forge:ores/gold"
         }
       }
     ]
@@ -28,7 +28,7 @@
         "type": "primalmagick:dissolution_tag",
         "group": "gold_grit_dissolution",
         "ingredient": {
-          "tag": "c:ores/gold"
+          "tag": "forge:ores/gold"
         },
         "mana": {
           "sources": {

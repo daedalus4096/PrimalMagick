@@ -7,10 +7,10 @@
       "item": "primalmagick:sanguine_core_blank"
     },
     {
-      "tag": "c:feathers"
+      "tag": "forge:feathers"
     },
     {
-      "tag": "c:eggs"
+      "tag": "forge:eggs"
     }
   ],
   "requirement": {

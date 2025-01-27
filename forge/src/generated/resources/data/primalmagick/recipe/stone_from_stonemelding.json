@@ -5,7 +5,7 @@
       "item": "primalmagick:essence_dust_earth"
     },
     "S": {
-      "tag": "c:cobblestones/normal"
+      "tag": "forge:cobblestone/normal"
     }
   },
   "pattern": [
