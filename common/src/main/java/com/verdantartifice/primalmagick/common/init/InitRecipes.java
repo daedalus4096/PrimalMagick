@@ -25,7 +25,7 @@ public class InitRecipes {
     public static void initWandTransforms() {
         WandTransforms.register(new WandTransformBlockTag(CommonTags.Blocks.BOOKSHELVES, new ItemStack(ItemsPM.GRIMOIRE.get()), new OrRequirement(new ResearchRequirement(new ResearchEntryKey(ResearchEntries.GOT_DREAM)), new ResearchRequirement(new ResearchStageKey(ResearchEntries.FIRST_STEPS, 1)))));
         WandTransforms.register(new WandTransformBlock(Blocks.CRAFTING_TABLE, new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.FIRST_STEPS, 1))));
-        WandTransforms.register(new WandTransformBlockTag(BlockExtensionTags.FURNACES, new ItemStack(BlocksPM.ESSENCE_FURNACE.get()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.BASIC_ALCHEMY, 1))));
+        WandTransforms.register(new WandTransformBlockTag(CommonTags.Blocks.PLAYER_WORKSTATIONS_FURNACES, new ItemStack(BlocksPM.ESSENCE_FURNACE.get()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.BASIC_ALCHEMY, 1))));
     }
     
     public static void initCompostables() {

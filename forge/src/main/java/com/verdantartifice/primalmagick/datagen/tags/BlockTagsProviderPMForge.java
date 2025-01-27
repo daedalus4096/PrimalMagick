@@ -70,7 +70,6 @@ public class BlockTagsProviderPMForge extends BlockTagsProvider {
 
         // Add entries to Forge extension tags
         this.tag(BlockExtensionTags.ORES_ROCK_SALT).add(BlocksPM.ROCK_SALT_ORE.get());
-        this.tag(BlockExtensionTags.FURNACES).add(Blocks.FURNACE);
         this.tag(BlockExtensionTags.MINEABLE_WITH_SHEARS).addTag(BlockTags.LEAVES).addTag(BlockTags.WOOL).add(Blocks.COBWEB, Blocks.SHORT_GRASS, Blocks.FERN, Blocks.DEAD_BUSH, Blocks.HANGING_ROOTS, Blocks.VINE, Blocks.TRIPWIRE);
         
         // Create custom tags
