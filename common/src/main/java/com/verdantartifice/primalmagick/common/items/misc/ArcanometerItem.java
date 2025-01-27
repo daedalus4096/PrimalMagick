@@ -39,6 +39,8 @@ import java.util.function.Supplier;
 public abstract class ArcanometerItem extends Item implements IHasCustomRenderer {
     public static final ResourceLocation SCAN_STATE_PROPERTY = ResourceUtils.loc("scan_state");
 
+    private BlockEntityWithoutLevelRenderer customRenderer = null;
+
     public ArcanometerItem() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
     }
@@ -91,6 +93,14 @@ public abstract class ArcanometerItem extends Item implements IHasCustomRenderer
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        if (this.customRenderer == null) {
+            this.customRenderer = this.getCustomRendererSupplierUncached().get();
+        }
+        return () -> this.customRenderer;
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
         return ArcanometerISTER::new;
     }
 }

@@ -38,6 +38,8 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public abstract class ModularWandItem extends AbstractWandItem {
+    private BlockEntityWithoutLevelRenderer customRenderer = null;
+
     public ModularWandItem(Properties properties) {
         super(properties);
     }
@@ -364,6 +366,14 @@ public abstract class ModularWandItem extends AbstractWandItem {
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        if (this.customRenderer == null) {
+            this.customRenderer = this.getCustomRendererSupplierUncached().get();
+        }
+        return () -> this.customRenderer;
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
         return ModularWandISTER::new;
     }
 }

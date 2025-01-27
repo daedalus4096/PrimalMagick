@@ -5,13 +5,11 @@ import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
@@ -23,7 +21,6 @@ import java.util.function.Supplier;
  */
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ItemModBusEventListeners {
-    // TODO Does this need to subscribe to the mod event bus?
     @SubscribeEvent
     public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
         registerCustomRenderer(event::registerItem, ItemsPM.ARCANOMETER.get());

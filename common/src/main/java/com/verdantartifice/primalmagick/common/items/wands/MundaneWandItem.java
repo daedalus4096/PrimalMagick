@@ -18,6 +18,8 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class MundaneWandItem extends AbstractWandItem {
+    private BlockEntityWithoutLevelRenderer customRenderer = null;
+
     public MundaneWandItem() {
         super(new Item.Properties().stacksTo(1));
     }
@@ -101,6 +103,14 @@ public abstract class MundaneWandItem extends AbstractWandItem {
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        if (this.customRenderer == null) {
+            this.customRenderer = this.getCustomRendererSupplierUncached().get();
+        }
+        return () -> this.customRenderer;
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
         return MundaneWandISTER::new;
     }
 }

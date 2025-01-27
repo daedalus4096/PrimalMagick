@@ -25,6 +25,8 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class ModularStaffItem extends ModularWandItem implements IStaff {
+    private BlockEntityWithoutLevelRenderer customRenderer = null;
+
     public ModularStaffItem(Item.Properties properties) {
         super(properties);
     }
@@ -60,6 +62,14 @@ public abstract class ModularStaffItem extends ModularWandItem implements IStaff
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        if (this.customRenderer == null) {
+            this.customRenderer = this.getCustomRendererSupplierUncached().get();
+        }
+        return () -> this.customRenderer;
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
         return ModularStaffISTER::new;
     }
 }

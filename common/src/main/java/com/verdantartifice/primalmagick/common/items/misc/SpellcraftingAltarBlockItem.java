@@ -15,12 +15,22 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class SpellcraftingAltarBlockItem extends BlockItem implements IHasCustomRenderer {
+    private BlockEntityWithoutLevelRenderer customRenderer = null;
+
     public SpellcraftingAltarBlockItem(Block block, Item.Properties properties) {
         super(block, properties);
     }
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        if (this.customRenderer == null) {
+            this.customRenderer = this.getCustomRendererSupplierUncached().get();
+        }
+        return () -> this.customRenderer;
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
         return SpellcraftingAltarISTER::new;
     }
 }

@@ -17,6 +17,8 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class HexiumTridentItem extends AbstractTieredTridentItem {
+    private BlockEntityWithoutLevelRenderer customRenderer = null;
+
     public HexiumTridentItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);
     }
@@ -28,6 +30,14 @@ public class HexiumTridentItem extends AbstractTieredTridentItem {
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        if (this.customRenderer == null) {
+            this.customRenderer = this.getCustomRendererSupplierUncached().get();
+        }
+        return () -> this.customRenderer;
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
         return HexiumTridentISTER::new;
     }
 }

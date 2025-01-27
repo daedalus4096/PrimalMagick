@@ -6,4 +6,5 @@ import java.util.function.Supplier;
 
 public interface IHasCustomRenderer {
     Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier();
+    Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached();
 }

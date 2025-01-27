@@ -17,6 +17,8 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class PrimaliteTridentItem extends AbstractTieredTridentItem {
+    private BlockEntityWithoutLevelRenderer customRenderer = null;
+
     public PrimaliteTridentItem(Item.Properties properties) {
         super(ItemTierPM.PRIMALITE, properties);
     }
@@ -28,6 +30,14 @@ public class PrimaliteTridentItem extends AbstractTieredTridentItem {
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        if (this.customRenderer == null) {
+            this.customRenderer = this.getCustomRendererSupplierUncached().get();
+        }
+        return () -> this.customRenderer;
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
         return PrimaliteTridentISTER::new;
     }
 }

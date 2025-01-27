@@ -21,6 +21,8 @@ import java.util.function.Supplier;
 public abstract class ManaFontBlockItem extends BlockItem implements IHasCustomRenderer {
     protected static final List<ManaFontBlockItem> FONTS = new ArrayList<>();
 
+    private BlockEntityWithoutLevelRenderer customRenderer = null;
+
     public ManaFontBlockItem(Block block, Item.Properties properties) {
         super(block, properties);
         FONTS.add(this);
@@ -32,6 +34,14 @@ public abstract class ManaFontBlockItem extends BlockItem implements IHasCustomR
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        if (this.customRenderer == null) {
+            this.customRenderer = this.getCustomRendererSupplierUncached().get();
+        }
+        return () -> this.customRenderer;
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
         return ManaFontISTER::new;
     }
 }
