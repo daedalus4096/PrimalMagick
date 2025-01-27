@@ -12,12 +12,14 @@ import net.minecraft.world.item.Rarity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Definition of a wand core data structure.  Wand cores determine the number of spells that may be
@@ -28,6 +30,7 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
+@Immutable
 public class WandCore implements IWandComponent {
     protected static final Map<String, WandCore> REGISTRY = new HashMap<>();
     
@@ -120,5 +123,16 @@ public class WandCore implements IWandComponent {
     @Nullable
     public static WandCore getWandCore(@Nullable String tag) {
         return REGISTRY.get(tag);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof WandCore wandCore)) return false;
+        return spellSlots == wandCore.spellSlots && Objects.equals(tag, wandCore.tag) && rarity == wandCore.rarity && Objects.equals(bonusSlot, wandCore.bonusSlot) && Objects.equals(aligned, wandCore.aligned) && Objects.equals(wandMrlNamespace, wandCore.wandMrlNamespace) && Objects.equals(staffMrlNamespace, wandCore.staffMrlNamespace);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tag, rarity, spellSlots, bonusSlot, aligned, wandMrlNamespace, staffMrlNamespace);
     }
 }

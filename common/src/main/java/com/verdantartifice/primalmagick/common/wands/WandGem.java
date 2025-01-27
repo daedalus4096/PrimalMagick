@@ -10,10 +10,12 @@ import net.minecraft.world.item.Rarity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Definition of a wand gem data structure.  Wand gems determine the maximum amount of mana that can be
@@ -21,6 +23,7 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
+@Immutable
 public class WandGem implements IWandComponent {
     protected static final Map<String, WandGem> REGISTRY = new HashMap<>();
     
@@ -86,5 +89,16 @@ public class WandGem implements IWandComponent {
     @Nullable
     public static WandGem getWandGem(@Nullable String tag) {
         return REGISTRY.get(tag);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof WandGem wandGem)) return false;
+        return capacity == wandGem.capacity && Objects.equals(tag, wandGem.tag) && rarity == wandGem.rarity && Objects.equals(mrlNamespace, wandGem.mrlNamespace);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tag, capacity, rarity, mrlNamespace);
     }
 }

@@ -10,10 +10,12 @@ import net.minecraft.world.item.Rarity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Definition of a wand cap data structure.  Wand caps determine the discount or penalty applied to a
@@ -22,6 +24,7 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
+@Immutable
 public class WandCap implements IWandComponent {
     protected static final Map<String, WandCap> REGISTRY = new HashMap<>();
     
@@ -100,5 +103,16 @@ public class WandCap implements IWandComponent {
     @Nullable
     public static WandCap getWandCap(@Nullable String tag) {
         return REGISTRY.get(tag);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof WandCap wandCap)) return false;
+        return Double.compare(baseCostModifier, wandCap.baseCostModifier) == 0 && siphonAmount == wandCap.siphonAmount && Objects.equals(tag, wandCap.tag) && rarity == wandCap.rarity && Objects.equals(wandMrlNamespace, wandCap.wandMrlNamespace) && Objects.equals(staffMrlNamespace, wandCap.staffMrlNamespace);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tag, rarity, baseCostModifier, siphonAmount, wandMrlNamespace, staffMrlNamespace);
     }
 }
