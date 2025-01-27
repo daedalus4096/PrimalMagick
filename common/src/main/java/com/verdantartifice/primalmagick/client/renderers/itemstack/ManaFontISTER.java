@@ -28,13 +28,13 @@ import java.awt.Color;
  * Custom item stack renderer for ancient mana fonts.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock
  */
 public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL_BASIC = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("ancient_font_earth"));
-    private static final ModelResourceLocation MRL_ENCHANTED = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("artificial_font_earth"));
-    private static final ModelResourceLocation MRL_FORBIDDEN = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("forbidden_font_earth"));
-    private static final ModelResourceLocation MRL_HEAVENLY = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("heavenly_font_earth"));
+    private static final ModelResourceLocation MRL_BASIC = Services.MODEL_RESOURCE_LOCATIONS.create(ResourceUtils.loc("ancient_font_earth"), "");
+    private static final ModelResourceLocation MRL_ENCHANTED = Services.MODEL_RESOURCE_LOCATIONS.create(ResourceUtils.loc("artificial_font_earth"), "");
+    private static final ModelResourceLocation MRL_FORBIDDEN = Services.MODEL_RESOURCE_LOCATIONS.create(ResourceUtils.loc("forbidden_font_earth"), "");
+    private static final ModelResourceLocation MRL_HEAVENLY = Services.MODEL_RESOURCE_LOCATIONS.create(ResourceUtils.loc("heavenly_font_earth"), "");
     
     public ManaFontISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 
