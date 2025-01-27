@@ -41,9 +41,9 @@ import java.util.Optional;
  * components.  For more information on spell components, see their respective interfaces.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle}
- * @see {@link com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload}
- * @see {@link com.verdantartifice.primalmagick.common.spells.mods.ISpellMod}
+ * @see com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle
+ * @see com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload
+ * @see com.verdantartifice.primalmagick.common.spells.mods.ISpellMod
  */
 public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, ConfiguredSpellPayload<?> payload, Optional<ConfiguredSpellMod<?>> primaryMod, Optional<ConfiguredSpellMod<?>> secondaryMod) {
     private static final int BASE_COOLDOWN_TICKS = 30;
