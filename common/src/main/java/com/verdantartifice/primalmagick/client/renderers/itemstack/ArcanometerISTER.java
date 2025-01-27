@@ -34,11 +34,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 @SuppressWarnings("deprecation")
 public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL0 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_0"), "");
-    private static final ModelResourceLocation MRL1 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_1"), "");
-    private static final ModelResourceLocation MRL2 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_2"), "");
-    private static final ModelResourceLocation MRL3 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_3"), "");
-    private static final ModelResourceLocation MRL4 = new ModelResourceLocation(ResourceUtils.loc("arcanometer_4"), "");
+    private static final ModelResourceLocation MRL0 = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("arcanometer_0"));
+    private static final ModelResourceLocation MRL1 = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("arcanometer_1"));
+    private static final ModelResourceLocation MRL2 = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("arcanometer_2"));
+    private static final ModelResourceLocation MRL3 = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("arcanometer_3"));
+    private static final ModelResourceLocation MRL4 = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("arcanometer_4"));
     private static AtomicBoolean isRenderingScreen = new AtomicBoolean(false);
     
     public ArcanometerISTER() {

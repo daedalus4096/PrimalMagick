@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 
@@ -10,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class HallowsteelTridentISTER extends AbstractTieredTridentISTER {
-    protected static final ModelResourceLocation MRL = new ModelResourceLocation(ResourceUtils.loc("hallowsteel_trident"), "inventory");
+    protected static final ModelResourceLocation MRL = Services.MODEL_RESOURCE_LOCATIONS.createInventory(ResourceUtils.loc("hallowsteel_trident"));
     protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/trident/hallowsteel_trident.png");
 
     @Override

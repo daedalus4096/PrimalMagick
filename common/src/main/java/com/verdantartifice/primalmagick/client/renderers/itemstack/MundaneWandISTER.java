@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -21,7 +22,7 @@ import net.minecraft.world.item.ItemStack;
  * @see {@link com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem}
  */
 public class MundaneWandISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation CORE_MRL = new ModelResourceLocation(ResourceUtils.loc("mundane_wand_core"), "");
+    private static final ModelResourceLocation CORE_MRL = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("mundane_wand_core"));
     
     public MundaneWandISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 

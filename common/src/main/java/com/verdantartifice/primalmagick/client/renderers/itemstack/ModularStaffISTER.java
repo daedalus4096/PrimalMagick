@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -42,17 +43,17 @@ public class ModularStaffISTER extends BlockEntityWithoutLevelRenderer {
             VertexConsumer builder = ItemRenderer.getFoilBufferDirect(buffer, RenderType.solid(), false, itemStack.hasFoil());
             if (core != null) {
                 // Render the staff core
-                BakedModel model = mc.getModelManager().getModel(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), ""));
+                BakedModel model = mc.getModelManager().getModel(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(core.getStaffModelResourceLocationNamespace()));
                 itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             }
             if (cap != null) {
                 // Render the staff cap
-                BakedModel model = mc.getModelManager().getModel(new ModelResourceLocation(cap.getStaffModelResourceLocationNamespace(), ""));
+                BakedModel model = mc.getModelManager().getModel(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(cap.getStaffModelResourceLocationNamespace()));
                 itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             }
             if (gem != null) {
                 // Render the staff gem
-                BakedModel model = mc.getModelManager().getModel(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), ""));
+                BakedModel model = mc.getModelManager().getModel(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(gem.getModelResourceLocationNamespace()));
                 itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             }
         }

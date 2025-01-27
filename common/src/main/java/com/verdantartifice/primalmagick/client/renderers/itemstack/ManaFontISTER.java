@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -30,10 +31,10 @@ import java.awt.Color;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock}
  */
 public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL_BASIC = new ModelResourceLocation(ResourceUtils.loc("ancient_font_earth"), "");
-    private static final ModelResourceLocation MRL_ENCHANTED = new ModelResourceLocation(ResourceUtils.loc("artificial_font_earth"), "");
-    private static final ModelResourceLocation MRL_FORBIDDEN = new ModelResourceLocation(ResourceUtils.loc("forbidden_font_earth"), "");
-    private static final ModelResourceLocation MRL_HEAVENLY = new ModelResourceLocation(ResourceUtils.loc("heavenly_font_earth"), "");
+    private static final ModelResourceLocation MRL_BASIC = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("ancient_font_earth"));
+    private static final ModelResourceLocation MRL_ENCHANTED = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("artificial_font_earth"));
+    private static final ModelResourceLocation MRL_FORBIDDEN = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("forbidden_font_earth"));
+    private static final ModelResourceLocation MRL_HEAVENLY = Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("heavenly_font_earth"));
     
     public ManaFontISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 

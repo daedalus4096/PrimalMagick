@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -51,21 +52,21 @@ public class ClientRegistrationEvents {
     /**
      * Register special model resource locations that must be loaded even if not tied to a block state.
      */
-    public static void onModelRegister(Consumer<ModelResourceLocation> modelConsumer, String variant) {
-        modelConsumer.accept(new ModelResourceLocation(ResourceUtils.loc("mundane_wand_core"), variant));
+    public static void onModelRegister(Consumer<ModelResourceLocation> modelConsumer) {
+        modelConsumer.accept(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("mundane_wand_core")));
         for (WandCore core : WandCore.getAllWandCores()) {
-            modelConsumer.accept(new ModelResourceLocation(core.getWandModelResourceLocationNamespace(), variant));
-            modelConsumer.accept(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), variant));
+            modelConsumer.accept(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(core.getWandModelResourceLocationNamespace()));
+            modelConsumer.accept(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(core.getStaffModelResourceLocationNamespace()));
         }
         for (WandCap cap : WandCap.getAllWandCaps()) {
-            modelConsumer.accept(new ModelResourceLocation(cap.getWandModelResourceLocationNamespace(), variant));
-            modelConsumer.accept(new ModelResourceLocation(cap.getStaffModelResourceLocationNamespace(), variant));
+            modelConsumer.accept(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(cap.getWandModelResourceLocationNamespace()));
+            modelConsumer.accept(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(cap.getStaffModelResourceLocationNamespace()));
         }
         for (WandGem gem : WandGem.getAllWandGems()) {
-            modelConsumer.accept(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), variant));
+            modelConsumer.accept(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(gem.getModelResourceLocationNamespace()));
         }
         for (int index = 0; index <= 4; index++) {
-            modelConsumer.accept(new ModelResourceLocation(ResourceUtils.loc("arcanometer_" + index), variant));
+            modelConsumer.accept(Services.MODEL_RESOURCE_LOCATIONS.createStandalone(ResourceUtils.loc("arcanometer_" + index)));
         }
     }
     
