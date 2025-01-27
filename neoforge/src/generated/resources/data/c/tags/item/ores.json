@@ -1,20 +1,20 @@
 {
   "values": [
-    "#forge:ores/rock_salt",
+    "#c:ores/rock_salt",
     {
-      "id": "#forge:ores/tin",
+      "id": "#c:ores/tin",
       "required": false
     },
     {
-      "id": "#forge:ores/lead",
+      "id": "#c:ores/lead",
       "required": false
     },
     {
-      "id": "#forge:ores/silver",
+      "id": "#c:ores/silver",
       "required": false
     },
     {
-      "id": "#forge:ores/uranium",
+      "id": "#c:ores/uranium",
       "required": false
     }
   ]

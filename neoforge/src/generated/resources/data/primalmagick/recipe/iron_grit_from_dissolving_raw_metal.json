@@ -7,7 +7,7 @@
           "type": "neoforge:not",
           "value": {
             "type": "neoforge:tag_empty",
-            "tag": "forge:dusts/iron"
+            "tag": "c:dusts/iron"
           }
         },
         {
@@ -31,5 +31,5 @@
     }
   },
   "outputAmount": 3,
-  "outputTag": "forge:dusts/iron"
+  "outputTag": "c:dusts/iron"
 }

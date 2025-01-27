@@ -7,14 +7,14 @@
           "type": "neoforge:not",
           "value": {
             "type": "neoforge:tag_empty",
-            "tag": "forge:dusts/tin"
+            "tag": "c:dusts/tin"
           }
         },
         {
           "type": "neoforge:not",
           "value": {
             "type": "neoforge:tag_empty",
-            "tag": "forge:raw_materials/tin"
+            "tag": "c:raw_materials/tin"
           }
         }
       ]
@@ -28,9 +28,9 @@
       "item": "primalmagick:earthshatter_hammer"
     },
     {
-      "tag": "forge:raw_materials/tin"
+      "tag": "c:raw_materials/tin"
     }
   ],
   "outputAmount": 2,
-  "outputTag": "forge:dusts/tin"
+  "outputTag": "c:dusts/tin"
 }

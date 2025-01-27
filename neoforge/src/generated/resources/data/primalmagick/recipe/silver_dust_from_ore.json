@@ -7,14 +7,14 @@
           "type": "neoforge:not",
           "value": {
             "type": "neoforge:tag_empty",
-            "tag": "forge:dusts/silver"
+            "tag": "c:dusts/silver"
           }
         },
         {
           "type": "neoforge:not",
           "value": {
             "type": "neoforge:tag_empty",
-            "tag": "forge:ores/silver"
+            "tag": "c:ores/silver"
           }
         }
       ]
@@ -28,9 +28,9 @@
       "item": "primalmagick:earthshatter_hammer"
     },
     {
-      "tag": "forge:ores/silver"
+      "tag": "c:ores/silver"
     }
   ],
   "outputAmount": 2,
-  "outputTag": "forge:dusts/silver"
+  "outputTag": "c:dusts/silver"
 }

@@ -7,7 +7,7 @@
           "type": "neoforge:not",
           "value": {
             "type": "neoforge:tag_empty",
-            "tag": "forge:dusts/gold"
+            "tag": "c:dusts/gold"
           }
         },
         {

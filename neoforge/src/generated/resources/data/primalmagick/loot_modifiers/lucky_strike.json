@@ -19,13 +19,13 @@
     }
   ],
   "nuggetMap": {
-    "c:ores/copper": "forge:nuggets/copper",
+    "c:ores/copper": "c:nuggets/copper",
     "c:ores/gold": "c:nuggets/gold",
     "c:ores/iron": "c:nuggets/iron",
-    "c:ores/quartz": "forge:nuggets/quartz",
-    "forge:ores/lead": "forge:nuggets/lead",
-    "forge:ores/silver": "forge:nuggets/silver",
-    "forge:ores/tin": "forge:nuggets/tin",
-    "forge:ores/uranium": "forge:nuggets/uranium"
+    "c:ores/lead": "c:nuggets/lead",
+    "c:ores/quartz": "c:nuggets/quartz",
+    "c:ores/silver": "c:nuggets/silver",
+    "c:ores/tin": "c:nuggets/tin",
+    "c:ores/uranium": "c:nuggets/uranium"
   }
 }

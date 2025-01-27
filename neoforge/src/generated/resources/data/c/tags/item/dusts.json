@@ -1,22 +1,22 @@
 {
   "values": [
-    "#forge:dusts/iron",
-    "#forge:dusts/gold",
-    "#forge:dusts/copper",
+    "#c:dusts/iron",
+    "#c:dusts/gold",
+    "#c:dusts/copper",
     {
-      "id": "#forge:dusts/tin",
+      "id": "#c:dusts/tin",
       "required": false
     },
     {
-      "id": "#forge:dusts/lead",
+      "id": "#c:dusts/lead",
       "required": false
     },
     {
-      "id": "#forge:dusts/silver",
+      "id": "#c:dusts/silver",
       "required": false
     },
     {
-      "id": "#forge:dusts/uranium",
+      "id": "#c:dusts/uranium",
       "required": false
     }
   ]
