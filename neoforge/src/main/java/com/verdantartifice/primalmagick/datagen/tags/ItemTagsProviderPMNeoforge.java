@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -72,15 +72,15 @@ public class ItemTagsProviderPMNeoforge extends ItemTagsProvider {
         this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_CHESTPLATES).add(ItemsPM.PRIMALITE_CHEST.get(), ItemsPM.HEXIUM_CHEST.get(), ItemsPM.HALLOWSTEEL_CHEST.get());
         this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_LEGGINGS).add(ItemsPM.PRIMALITE_LEGS.get(), ItemsPM.HEXIUM_LEGS.get(), ItemsPM.HALLOWSTEEL_LEGS.get());
         this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_BOOTS).add(ItemsPM.PRIMALITE_FEET.get(), ItemsPM.HEXIUM_FEET.get(), ItemsPM.HALLOWSTEEL_FEET.get());
-        this.tag(CommonTags.Items.DUSTS).addTag(ItemTagsForgeExt.DUSTS_IRON).addTag(ItemTagsForgeExt.DUSTS_GOLD).addTag(ItemTagsForgeExt.DUSTS_COPPER).addOptionalTag(ItemTagsForgeExt.DUSTS_TIN.location()).addOptionalTag(ItemTagsForgeExt.DUSTS_LEAD.location()).addOptionalTag(ItemTagsForgeExt.DUSTS_SILVER.location()).addOptionalTag(ItemTagsForgeExt.DUSTS_URANIUM.location());
+        this.tag(CommonTags.Items.DUSTS).addTag(ItemExtensionTags.DUSTS_IRON).addTag(ItemExtensionTags.DUSTS_GOLD).addTag(ItemExtensionTags.DUSTS_COPPER).addOptionalTag(ItemExtensionTags.DUSTS_TIN.location()).addOptionalTag(ItemExtensionTags.DUSTS_LEAD.location()).addOptionalTag(ItemExtensionTags.DUSTS_SILVER.location()).addOptionalTag(ItemExtensionTags.DUSTS_URANIUM.location());
         this.tag(CommonTags.Items.INGOTS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
-        this.tag(CommonTags.Items.NUGGETS).addTag(ItemTagsPM.NUGGETS_PRIMALITE).addTag(ItemTagsPM.NUGGETS_HEXIUM).addTag(ItemTagsPM.NUGGETS_HALLOWSTEEL).addTag(ItemTagsForgeExt.NUGGETS_QUARTZ);
+        this.tag(CommonTags.Items.NUGGETS).addTag(ItemTagsPM.NUGGETS_PRIMALITE).addTag(ItemTagsPM.NUGGETS_HEXIUM).addTag(ItemTagsPM.NUGGETS_HALLOWSTEEL).addTag(ItemExtensionTags.NUGGETS_QUARTZ);
         this.tag(CommonTags.Items.ORE_RATES_DENSE).add(ItemsPM.ROCK_SALT_ORE.get());
         this.tag(CommonTags.Items.ORE_RATES_SINGULAR).add(ItemsPM.QUARTZ_ORE.get());
-        this.tag(CommonTags.Items.ORES).addTag(ItemTagsForgeExt.ORES_ROCK_SALT).addOptionalTag(ItemTagsForgeExt.ORES_TIN.location()).addOptionalTag(ItemTagsForgeExt.ORES_LEAD.location()).addOptionalTag(ItemTagsForgeExt.ORES_SILVER.location()).addOptionalTag(ItemTagsForgeExt.ORES_URANIUM.location());
+        this.tag(CommonTags.Items.ORES).addTag(ItemExtensionTags.ORES_ROCK_SALT).addOptionalTag(ItemExtensionTags.ORES_TIN.location()).addOptionalTag(ItemExtensionTags.ORES_LEAD.location()).addOptionalTag(ItemExtensionTags.ORES_SILVER.location()).addOptionalTag(ItemExtensionTags.ORES_URANIUM.location());
         this.tag(CommonTags.Items.ORES_QUARTZ).add(ItemsPM.QUARTZ_ORE.get());
         this.tag(CommonTags.Items.ORES_IN_GROUND_STONE).add(ItemsPM.QUARTZ_ORE.get(), ItemsPM.ROCK_SALT_ORE.get());
-        this.tag(CommonTags.Items.RAW_MATERIALS).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_TIN.location()).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_LEAD.location()).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_SILVER.location()).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_URANIUM.location());
+        this.tag(CommonTags.Items.RAW_MATERIALS).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_TIN.location()).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_LEAD.location()).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_SILVER.location()).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_URANIUM.location());
         this.tag(CommonTags.Items.STORAGE_BLOCKS).add(ItemsPM.IGNYX_BLOCK.get()).addTag(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(ItemTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         this.tag(CommonTags.Items.TOOLS_BOW).add(ItemsPM.PRIMALITE_BOW.get(), ItemsPM.HEXIUM_BOW.get(), ItemsPM.HALLOWSTEEL_BOW.get(), ItemsPM.FORBIDDEN_BOW.get());
         this.tag(CommonTags.Items.TOOLS_FISHING_ROD).add(ItemsPM.PRIMALITE_FISHING_ROD.get(), ItemsPM.HEXIUM_FISHING_ROD.get(), ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), ItemsPM.PRIMAL_FISHING_ROD.get());
@@ -94,12 +94,12 @@ public class ItemTagsProviderPMNeoforge extends ItemTagsProvider {
         this.tag(CommonTags.Items.GLASS_PANES_COLORLESS).add(ItemsPM.SKYGLASS_PANE.get());
 
         // Add entries to Forge extension tags
-        this.tag(ItemTagsForgeExt.DUSTS_COPPER).add(ItemsPM.COPPER_GRIT.get());
-        this.tag(ItemTagsForgeExt.DUSTS_GOLD).add(ItemsPM.GOLD_GRIT.get());
-        this.tag(ItemTagsForgeExt.DUSTS_IRON).add(ItemsPM.IRON_GRIT.get());
-        this.tag(ItemTagsForgeExt.MILK).add(Items.MILK_BUCKET);
-        this.tag(ItemTagsForgeExt.NUGGETS_QUARTZ).add(ItemsPM.QUARTZ_NUGGET.get());
-        this.tag(ItemTagsForgeExt.ORES_ROCK_SALT).add(ItemsPM.ROCK_SALT_ORE.get());
+        this.tag(ItemExtensionTags.DUSTS_COPPER).add(ItemsPM.COPPER_GRIT.get());
+        this.tag(ItemExtensionTags.DUSTS_GOLD).add(ItemsPM.GOLD_GRIT.get());
+        this.tag(ItemExtensionTags.DUSTS_IRON).add(ItemsPM.IRON_GRIT.get());
+        this.tag(ItemExtensionTags.MILK).add(Items.MILK_BUCKET);
+        this.tag(ItemExtensionTags.NUGGETS_QUARTZ).add(ItemsPM.QUARTZ_NUGGET.get());
+        this.tag(ItemExtensionTags.ORES_ROCK_SALT).add(ItemsPM.ROCK_SALT_ORE.get());
 
         // Create custom tags
         this.tag(ItemTagsPM.ANALYSIS_TABLE_FORBIDDEN).add(Items.DRAGON_EGG, ItemsPM.HALLOWED_ORB.get());

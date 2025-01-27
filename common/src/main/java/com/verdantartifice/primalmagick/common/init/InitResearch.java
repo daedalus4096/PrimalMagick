@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.common.research.ScanSourceUnlockTrigger;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import net.minecraft.world.item.Items;
 
@@ -71,7 +71,7 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(CommonTags.Items.GEMS_QUARTZ, ResearchEntries.QUARTZ));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(CommonTags.Items.ORES_QUARTZ, ResearchEntries.QUARTZ));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.QUARTZ_BLOCK, ResearchEntries.QUARTZ));
-        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsForgeExt.NUGGETS_QUARTZ, ResearchEntries.QUARTZ));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemExtensionTags.NUGGETS_QUARTZ, ResearchEntries.QUARTZ));
         ResearchManager.registerScanTrigger(new ScanEntityResearchTrigger(EntityTypesPM.INNER_DEMON.get(), ResearchEntries.INNER_DEMON));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(CommonTags.Items.BOOKSHELVES, ResearchEntries.BOOKSHELF));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.BEEHIVE, ResearchEntries.BEEHIVE));

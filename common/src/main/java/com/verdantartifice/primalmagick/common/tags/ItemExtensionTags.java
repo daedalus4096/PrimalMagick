@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tags;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -12,7 +11,7 @@ import net.minecraft.world.item.Item;
  * 
  * @author Daedalus4096
  */
-public class ItemTagsForgeExt {
+public class ItemExtensionTags {
     public static final TagKey<Item> DUSTS_IRON = tag("dusts/iron");
     public static final TagKey<Item> DUSTS_GOLD = tag("dusts/gold");
     public static final TagKey<Item> DUSTS_COPPER = tag("dusts/copper");
@@ -38,6 +37,6 @@ public class ItemTagsForgeExt {
     public static final TagKey<Item> RAW_MATERIALS_URANIUM = tag("raw_materials/uranium");
 
     private static TagKey<Item> tag(String name) {
-        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("forge", name));
+        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", name));
     }
 }

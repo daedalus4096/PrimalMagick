@@ -23,7 +23,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderLookup;
@@ -194,7 +194,7 @@ public abstract class Recipes extends RecipeProvider {
             .patternLine("QDQ")
             .patternLine(" N ")
             .key('N', CommonTags.Items.NUGGETS_IRON)
-            .key('Q', ItemTagsForgeExt.NUGGETS_QUARTZ)
+            .key('Q', ItemExtensionTags.NUGGETS_QUARTZ)
             .key('D', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
             .requiredResearch(ResearchEntries.BASIC_MANAWEAVING)
             .build(consumer);
@@ -2009,8 +2009,8 @@ public abstract class Recipes extends RecipeProvider {
             .pattern("NNN")
             .pattern("NNN")
             .pattern("NNN")
-            .define('N', ItemTagsForgeExt.NUGGETS_QUARTZ)
-            .unlockedBy("has_nugget", has(ItemTagsForgeExt.NUGGETS_QUARTZ))
+            .define('N', ItemExtensionTags.NUGGETS_QUARTZ)
+            .unlockedBy("has_nugget", has(ItemExtensionTags.NUGGETS_QUARTZ))
             .save(consumer, ResourceUtils.loc("quartz_from_nuggets"));
     }
     

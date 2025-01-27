@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
-import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.BlockExtensionTags;
 import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
@@ -135,7 +135,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
                 }
                 
                 // Re-fetch block state in case it was changed by this function
-                if (world.getBlockState(pos).is(BlockTagsForgeExt.MINEABLE_WITH_SHEARS)) {
+                if (world.getBlockState(pos).is(BlockExtensionTags.MINEABLE_WITH_SHEARS)) {
                     // If no applicable right-click action is found, but the block is mineable with shears, then break it quickly
                     BlockBreaker breaker = new BlockBreaker.Builder().power(5).target(pos, state).durability(1F).player(player).tool(fakeShears).fortune(treasureLevel).alwaysDrop().build();
                     BlockBreaker.schedule(world, 1, breaker);

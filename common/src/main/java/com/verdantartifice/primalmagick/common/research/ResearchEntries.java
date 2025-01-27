@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Holder;
@@ -1677,7 +1677,7 @@ public class ResearchEntries {
                 .build());
         register(context, DISSOLUTION_CHAMBER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.DISSOLUTION_CHAMBER.get())
                 .parent(MASTER_MAGITECH).parent(MASTER_MANAWEAVING).parent(EARTHSHATTER_HAMMER)
-                .stage().requiredItem(ItemTagsForgeExt.DUSTS_IRON, 20).requiredItem(ItemTagsForgeExt.DUSTS_COPPER, 20).requiredItem(ItemTagsForgeExt.DUSTS_GOLD, 10)
+                .stage().requiredItem(ItemExtensionTags.DUSTS_IRON, 20).requiredItem(ItemExtensionTags.DUSTS_COPPER, 20).requiredItem(ItemExtensionTags.DUSTS_GOLD, 10)
                         .requiredTheories(2).end()
                 .stage().attunement(Sources.EARTH, 3).recipe(ItemsPM.DISSOLUTION_CHAMBER.get()).recipe("iron_grit_from_dissolving_ore")
                         .recipe("iron_grit_from_dissolving_raw_metal").recipe("gold_grit_from_dissolving_ore")

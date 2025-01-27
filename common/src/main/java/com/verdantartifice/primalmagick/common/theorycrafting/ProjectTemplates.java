@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ExperienceProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
@@ -443,7 +443,7 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(Items.TORCH, 16).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.BREAD, 4).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(PotionContents.createItemStack(Items.POTION, Potions.FIRE_RESISTANCE)).consumed().bonusReward(0.25D).weight(4).matchNbt().build())
-                .material(ItemTagProjectMaterial.builder(ItemTagsForgeExt.MILK).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemExtensionTags.MILK).consumed().weight(1).build())
                 .material(ItemTagProjectMaterial.builder(CommonTags.Items.OBSIDIANS).quantity(10).weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.FLINT_AND_STEEL).weight(1).build())
                 .build());
@@ -527,7 +527,7 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(Items.BOOK).weight(2).build())
                 .material(ItemTagProjectMaterial.builder(ItemTagsPM.FOOD_COOKED_BEEF).consumed().weight(1).build())
                 .material(ItemTagProjectMaterial.builder(ItemTagsPM.FOOD_BAKED_POTATO).consumed().weight(1).build())
-                .material(ItemTagProjectMaterial.builder(ItemTagsForgeExt.MILK).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemExtensionTags.MILK).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.CAKE).consumed().bonusReward(0.125D).weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.ROSE_BUSH).weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.TNT).consumed().bonusReward(0.125D).weight(0.5D).build())

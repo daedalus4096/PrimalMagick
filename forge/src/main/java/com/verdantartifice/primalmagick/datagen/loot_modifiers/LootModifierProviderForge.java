@@ -16,11 +16,11 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModi
 import com.verdantartifice.primalmagick.common.loot.modifiers.GuillotineModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.ReplaceItemModifier;
-import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.BlockExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.FishingHookPredicate;
@@ -88,12 +88,12 @@ public class LootModifierProviderForge extends GlobalLootModifierProvider {
                 }, ImmutableMap.<TagKey<Block>, TagKey<Item>>builder()
                     .put(CommonTags.Blocks.ORES_IRON, CommonTags.Items.NUGGETS_IRON)
                     .put(CommonTags.Blocks.ORES_GOLD, CommonTags.Items.NUGGETS_GOLD)
-                    .put(CommonTags.Blocks.ORES_QUARTZ, ItemTagsForgeExt.NUGGETS_QUARTZ)
-                    .put(CommonTags.Blocks.ORES_COPPER, ItemTagsForgeExt.NUGGETS_COPPER)
-                    .put(BlockTagsForgeExt.ORES_TIN, ItemTagsForgeExt.NUGGETS_TIN)
-                    .put(BlockTagsForgeExt.ORES_LEAD, ItemTagsForgeExt.NUGGETS_LEAD)
-                    .put(BlockTagsForgeExt.ORES_SILVER, ItemTagsForgeExt.NUGGETS_SILVER)
-                    .put(BlockTagsForgeExt.ORES_URANIUM, ItemTagsForgeExt.NUGGETS_URANIUM)
+                    .put(CommonTags.Blocks.ORES_QUARTZ, ItemExtensionTags.NUGGETS_QUARTZ)
+                    .put(CommonTags.Blocks.ORES_COPPER, ItemExtensionTags.NUGGETS_COPPER)
+                    .put(BlockExtensionTags.ORES_TIN, ItemExtensionTags.NUGGETS_TIN)
+                    .put(BlockExtensionTags.ORES_LEAD, ItemExtensionTags.NUGGETS_LEAD)
+                    .put(BlockExtensionTags.ORES_SILVER, ItemExtensionTags.NUGGETS_SILVER)
+                    .put(BlockExtensionTags.ORES_URANIUM, ItemExtensionTags.NUGGETS_URANIUM)
                     .build()
                 , 0.5F));
         this.add("blood_notes_high", new BloodNotesModifier(

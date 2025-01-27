@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.OrRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
-import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.BlockExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -25,7 +25,7 @@ public class InitRecipes {
     public static void initWandTransforms() {
         WandTransforms.register(new WandTransformBlockTag(CommonTags.Blocks.BOOKSHELVES, new ItemStack(ItemsPM.GRIMOIRE.get()), new OrRequirement(new ResearchRequirement(new ResearchEntryKey(ResearchEntries.GOT_DREAM)), new ResearchRequirement(new ResearchStageKey(ResearchEntries.FIRST_STEPS, 1)))));
         WandTransforms.register(new WandTransformBlock(Blocks.CRAFTING_TABLE, new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.FIRST_STEPS, 1))));
-        WandTransforms.register(new WandTransformBlockTag(BlockTagsForgeExt.FURNACES, new ItemStack(BlocksPM.ESSENCE_FURNACE.get()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.BASIC_ALCHEMY, 1))));
+        WandTransforms.register(new WandTransformBlockTag(BlockExtensionTags.FURNACES, new ItemStack(BlocksPM.ESSENCE_FURNACE.get()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.BASIC_ALCHEMY, 1))));
     }
     
     public static void initCompostables() {

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.datagen.tags;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
+import com.verdantartifice.primalmagick.common.tags.BlockExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import net.minecraft.core.HolderLookup;
@@ -54,9 +54,10 @@ public class BlockTagsProviderPMNeoforge extends BlockTagsProvider {
         this.tag(BlockTags.MAINTAINS_FARMLAND).add(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), BlocksPM.HYDROMELON_STEM.get());
         
         // Add entries to Forge tags
+        this.tag(CommonTags.Blocks.BUDDING_BLOCKS).add(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
         this.tag(CommonTags.Blocks.ORE_RATES_DENSE).add(BlocksPM.ROCK_SALT_ORE.get());
         this.tag(CommonTags.Blocks.ORE_RATES_SINGULAR).add(BlocksPM.QUARTZ_ORE.get());
-        this.tag(CommonTags.Blocks.ORES).addTag(BlockTagsForgeExt.ORES_ROCK_SALT);
+        this.tag(CommonTags.Blocks.ORES).addTag(BlockExtensionTags.ORES_ROCK_SALT);
         this.tag(CommonTags.Blocks.ORES_QUARTZ).add(BlocksPM.QUARTZ_ORE.get());
         this.tag(CommonTags.Blocks.ORES_IN_GROUND_STONE).add(BlocksPM.QUARTZ_ORE.get(), BlocksPM.ROCK_SALT_ORE.get());
         this.tag(CommonTags.Blocks.STORAGE_BLOCKS).add(BlocksPM.IGNYX_BLOCK.get(), BlocksPM.SALT_BLOCK.get()).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
@@ -68,10 +69,9 @@ public class BlockTagsProviderPMNeoforge extends BlockTagsProvider {
         this.tag(CommonTags.Blocks.GLASS_PANES_COLORLESS).add(BlocksPM.SKYGLASS_PANE.get());
 
         // Add entries to Forge extension tags
-        this.tag(BlockTagsForgeExt.ORES_ROCK_SALT).add(BlocksPM.ROCK_SALT_ORE.get());
-        this.tag(BlockTagsForgeExt.BUDDING).add(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
-        this.tag(BlockTagsForgeExt.FURNACES).add(Blocks.FURNACE);
-        this.tag(BlockTagsForgeExt.MINEABLE_WITH_SHEARS).addTag(BlockTags.LEAVES).addTag(BlockTags.WOOL).add(Blocks.COBWEB, Blocks.SHORT_GRASS, Blocks.FERN, Blocks.DEAD_BUSH, Blocks.HANGING_ROOTS, Blocks.VINE, Blocks.TRIPWIRE);
+        this.tag(BlockExtensionTags.ORES_ROCK_SALT).add(BlocksPM.ROCK_SALT_ORE.get());
+        this.tag(BlockExtensionTags.FURNACES).add(Blocks.FURNACE);
+        this.tag(BlockExtensionTags.MINEABLE_WITH_SHEARS).addTag(BlockTags.LEAVES).addTag(BlockTags.WOOL).add(Blocks.COBWEB, Blocks.SHORT_GRASS, Blocks.FERN, Blocks.DEAD_BUSH, Blocks.HANGING_ROOTS, Blocks.VINE, Blocks.TRIPWIRE);
         
         // Create custom tags
         this.tag(BlockTagsPM.BOUNTY_CROPS).addTag(BlockTags.CROPS).add(Blocks.NETHER_WART);
