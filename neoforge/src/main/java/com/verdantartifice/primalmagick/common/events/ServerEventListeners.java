@@ -14,6 +14,8 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 public class ServerEventListeners {
     @SubscribeEvent
     public static void serverWorldTick(LevelTickEvent.Post event) {
-        ServerEvents.serverLevelTick(event.getLevel());
+        if (!event.getLevel().isClientSide()) {
+            ServerEvents.serverLevelTick(event.getLevel());
+        }
     }
 }
