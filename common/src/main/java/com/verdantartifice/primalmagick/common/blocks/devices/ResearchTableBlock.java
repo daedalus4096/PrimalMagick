@@ -89,7 +89,7 @@ public class ResearchTableBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ResearchTableTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.researchTable().create(pos, state);
     }
     
     @Override

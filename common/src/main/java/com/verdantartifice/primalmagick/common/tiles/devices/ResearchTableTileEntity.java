@@ -25,7 +25,7 @@ import java.util.Optional;
  * @see com.verdantartifice.primalmagick.common.blocks.devices.ResearchTableBlock
  * @author Daedalus4096
  */
-public class ResearchTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
+public abstract class ResearchTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     protected static final int INPUT_INV_INDEX = 0;
     
     public ResearchTableTileEntity(BlockPos pos, BlockState state) {
