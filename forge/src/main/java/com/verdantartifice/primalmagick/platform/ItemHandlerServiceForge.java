@@ -50,22 +50,4 @@ public class ItemHandlerServiceForge implements IItemHandlerService {
             return new InvWrapperPMForge(container);
         }
     }
-
-    @Override
-    public IItemHandlerPM get(@NotNull Level level, @NotNull BlockPos pos, @Nullable Direction side) {
-        Optional<Pair<IItemHandler, Object>> optional = VanillaInventoryCodeHooks.getItemHandler(level, pos.getX(), pos.getY(), pos.getZ(), side);
-        Pair<IItemHandler, Object> pair = optional.orElse(null);
-        if (pair != null && pair.getLeft() != null) {
-            // If the tile entity directly provides an item handler capability, return that
-            return new ItemStackHandlerPMForge(pair.getLeft(), null);
-        } else {
-            if (level.getBlockEntity(pos) instanceof Container container) {
-                // If the tile entity does not provide an item handler but does have an inventory, return a wrapper around that
-                return this.wrap(container, side);
-            } else {
-                // If the tile entity does not have an inventory at all, return null
-                return null;
-            }
-        }
-    }
 }

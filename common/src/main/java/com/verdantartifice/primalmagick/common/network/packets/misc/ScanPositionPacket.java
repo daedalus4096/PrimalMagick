@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -78,8 +79,7 @@ public class ScanPositionPacket implements IMessageToServer {
                 }));
                 
                 // If the given block has an inventory, scan its contents too
-                IItemHandlerPM handler = Services.ITEM_HANDLERS.get(world, message.pos, Direction.UP);
-                if (handler != null) {
+                Services.CAPABILITIES.itemHandler(world, message.pos, Direction.UP).ifPresent(handler -> {
                     int scanCount = 0;
                     ItemStack chestStack;
                     for (int slot = 0; slot < handler.getSlots(); slot++) {
@@ -97,8 +97,8 @@ public class ScanPositionPacket implements IMessageToServer {
                             }
                         }
                     }
-                }
-                
+                });
+
                 // If at least one unscanned item was processed, send a success message
                 Util.sequence(foundFutures).thenAccept(foundList -> {
                     if (foundList.stream().mapToInt(found -> found ? 1 : 0).sum() > 0) {
