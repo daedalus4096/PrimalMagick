@@ -32,6 +32,7 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -104,7 +105,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     
     protected abstract int getInventorySize(int inventoryIndex);
     
-    protected abstract Optional<Integer> getInventoryIndexForFace(@Nonnull Direction face);
+    public abstract Optional<Integer> getInventoryIndexForFace(@NotNull Direction face);
     
     protected abstract NonNullList<IItemHandlerPM> createHandlers();
 

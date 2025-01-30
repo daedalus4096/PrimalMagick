@@ -240,7 +240,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
+    public Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
             case UP, DOWN -> Optional.empty();
             default -> Optional.of(INPUT_INV_INDEX);

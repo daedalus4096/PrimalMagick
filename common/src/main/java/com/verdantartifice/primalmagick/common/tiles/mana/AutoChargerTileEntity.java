@@ -136,7 +136,7 @@ public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
+    public Optional<Integer> getInventoryIndexForFace(Direction face) {
         return Optional.of(INPUT_INV_INDEX);
     }
 

@@ -284,7 +284,7 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected Optional<Integer> getInventoryIndexForFace(Direction face) {
+    public Optional<Integer> getInventoryIndexForFace(Direction face) {
         return switch (face) {
             case UP -> Optional.of(INPUT_INV_INDEX);
             default -> Optional.empty();
