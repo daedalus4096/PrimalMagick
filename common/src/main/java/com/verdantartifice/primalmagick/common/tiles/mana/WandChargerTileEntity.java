@@ -36,7 +36,7 @@ import java.util.Set;
  * @author Daedalus4096
  * @see com.verdantartifice.primalmagick.common.blocks.mana.WandChargerBlock
  */
-public class WandChargerTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
+public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     public static final int INPUT_INV_INDEX = 0;
     public static final int CHARGE_INV_INDEX = 1;
     

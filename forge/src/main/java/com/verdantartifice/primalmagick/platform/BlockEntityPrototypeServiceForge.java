@@ -27,6 +27,8 @@ import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
@@ -103,6 +105,11 @@ public class BlockEntityPrototypeServiceForge implements IBlockEntityPrototypeSe
     @Override
     public BlockEntityType.BlockEntitySupplier<ManaBatteryTileEntity> manaBattery() {
         return ManaBatteryTileEntityForge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<WandChargerTileEntity> wandCharger() {
+        return WandChargerTileEntityForge::new;
     }
 
     @Override

@@ -39,12 +39,12 @@ public class WandChargerBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new WandChargerTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.wandCharger().create(pos, state);
     }
     
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.WAND_CHARGER.get(), WandChargerTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.WAND_CHARGER.get(), Services.BLOCK_ENTITY_TICKERS.wandCharger());
     }
 
     @Override

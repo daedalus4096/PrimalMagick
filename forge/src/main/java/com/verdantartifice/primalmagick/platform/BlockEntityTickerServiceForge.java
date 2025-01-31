@@ -21,6 +21,8 @@ import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntityForge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityTickerService;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 
@@ -78,5 +80,10 @@ public class BlockEntityTickerServiceForge implements IBlockEntityTickerService 
     @Override
     public BlockEntityTicker<ManaBatteryTileEntity> manaBattery() {
         return ManaBatteryTileEntityForge::tick;
+    }
+
+    @Override
+    public BlockEntityTicker<WandChargerTileEntity> wandCharger() {
+        return WandChargerTileEntityForge::tick;
     }
 }

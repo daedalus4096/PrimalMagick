@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTile
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 
 public interface IBlockEntityTickerService {
@@ -29,4 +30,5 @@ public interface IBlockEntityTickerService {
     // Mana tiles
     BlockEntityTicker<AutoChargerTileEntity> autoCharger();
     BlockEntityTicker<ManaBatteryTileEntity> manaBattery();
+    BlockEntityTicker<WandChargerTileEntity> wandCharger();
 }
