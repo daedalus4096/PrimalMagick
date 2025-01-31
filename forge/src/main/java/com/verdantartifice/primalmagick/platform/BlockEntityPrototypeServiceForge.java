@@ -19,6 +19,8 @@ import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTile
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
@@ -77,6 +79,11 @@ public class BlockEntityPrototypeServiceForge implements IBlockEntityPrototypeSe
     @Override
     public BlockEntityType.BlockEntitySupplier<ResearchTableTileEntity> researchTable() {
         return ResearchTableTileEntityForge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<SanguineCrucibleTileEntity> sanguineCrucible() {
+        return SanguineCrucibleTileEntityForge::new;
     }
 
     @Override

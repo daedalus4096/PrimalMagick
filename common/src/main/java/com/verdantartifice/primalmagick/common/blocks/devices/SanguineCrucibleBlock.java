@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -97,7 +98,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new SanguineCrucibleTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.sanguineCrucible().create(pos, state);
     }
 
     @Override

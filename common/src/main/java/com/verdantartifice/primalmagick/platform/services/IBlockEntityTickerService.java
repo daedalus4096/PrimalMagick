@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEnti
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 
@@ -22,6 +23,7 @@ public interface IBlockEntityTickerService {
     BlockEntityTicker<EssenceTransmuterTileEntity> essenceTransmuter();
     BlockEntityTicker<HoneyExtractorTileEntity> honeyExtractor();
     BlockEntityTicker<InfernalFurnaceTileEntity> infernalFurnace();
+    BlockEntityTicker<SanguineCrucibleTileEntity> sanguineCrucible();
 
     // Mana tiles
     BlockEntityTicker<ManaBatteryTileEntity> manaBattery();

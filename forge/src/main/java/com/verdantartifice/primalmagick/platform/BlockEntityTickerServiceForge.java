@@ -15,6 +15,8 @@ import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileE
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntityForge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityTickerService;
@@ -59,6 +61,11 @@ public class BlockEntityTickerServiceForge implements IBlockEntityTickerService 
     @Override
     public BlockEntityTicker<InfernalFurnaceTileEntity> infernalFurnace() {
         return InfernalFurnaceTileEntityForge::tick;
+    }
+
+    @Override
+    public BlockEntityTicker<SanguineCrucibleTileEntity> sanguineCrucible() {
+        return SanguineCrucibleTileEntityForge::tick;
     }
 
     @Override

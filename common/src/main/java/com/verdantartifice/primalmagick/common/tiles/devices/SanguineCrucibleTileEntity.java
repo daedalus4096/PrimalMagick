@@ -38,7 +38,7 @@ import java.util.Set;
  * 
  * @author Daedalus4096
  */
-public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
+public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int FLUID_CAPACITY = 1000;
     protected static final int FLUID_DRAIN = 200;
