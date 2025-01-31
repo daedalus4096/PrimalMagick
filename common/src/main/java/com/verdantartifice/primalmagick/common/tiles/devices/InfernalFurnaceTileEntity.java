@@ -204,10 +204,6 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
         return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), level);
     }
 
-    protected abstract boolean hasFuelCraftRemaining(ItemStack stack);
-
-    protected abstract ItemStack getFuelCraftRemaining(ItemStack stack);
-
     public static void tick(Level level, BlockPos pos, BlockState state, InfernalFurnaceTileEntity entity) {
         boolean shouldMarkDirty = false;
         boolean startedLit = entity.isLit();
@@ -244,8 +240,8 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
                 entity.superchargeTime = entity.superchargeTimeTotal;
                 if (entity.isSupercharged()) {
                     shouldMarkDirty = true;
-                    if (entity.hasFuelCraftRemaining(fuelStack)) {
-                        entity.setItem(FUEL_INV_INDEX, 0, entity.getFuelCraftRemaining(fuelStack));
+                    if (Services.ITEMS.hasCraftingRemainingItem(fuelStack)) {
+                        entity.setItem(FUEL_INV_INDEX, 0, Services.ITEMS.getCraftingRemainingItem(fuelStack));
                     } else {
                         fuelStack.shrink(1);
                         if (fuelStack.isEmpty()) {
