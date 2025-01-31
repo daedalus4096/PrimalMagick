@@ -98,7 +98,7 @@ import java.util.function.Predicate;
  * @author Daedalus4096
  * @see com.verdantartifice.primalmagick.common.blocks.rituals.RitualAltarBlock
  */
-public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implements IInteractWithWand {
+public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implements IInteractWithWand {
     protected static final int OUTPUT_INV_INDEX = 0;
     protected static final float MIN_STABILITY = -100.0F;
     protected static final float MAX_STABILITY = 25.0F;

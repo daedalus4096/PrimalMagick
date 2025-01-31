@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -79,12 +80,12 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
     
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new RitualAltarTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.ritualAltar().create(pos, state);
     }
     
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.RITUAL_ALTAR.get(), RitualAltarTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.RITUAL_ALTAR.get(), Services.BLOCK_ENTITY_TICKERS.ritualAltar());
     }
 
     @Override

@@ -33,6 +33,8 @@ import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEnt
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntityNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntityNeoforge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityPrototypeService;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -120,5 +122,10 @@ public class BlockEntityPrototypeServiceNeoforge implements IBlockEntityPrototyp
     @Override
     public BlockEntityType.BlockEntitySupplier<OfferingPedestalTileEntity> offeringPedestal() {
         return OfferingPedestalTileEntityNeoforge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<RitualAltarTileEntity> ritualAltar() {
+        return RitualAltarTileEntityNeoforge::new;
     }
 }

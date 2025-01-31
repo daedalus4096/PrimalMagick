@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTil
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 
 public interface IBlockEntityTickerService {
@@ -31,4 +32,7 @@ public interface IBlockEntityTickerService {
     BlockEntityTicker<AutoChargerTileEntity> autoCharger();
     BlockEntityTicker<ManaBatteryTileEntity> manaBattery();
     BlockEntityTicker<WandChargerTileEntity> wandCharger();
+
+    // Ritual tiles
+    BlockEntityTicker<RitualAltarTileEntity> ritualAltar();
 }

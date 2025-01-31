@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public interface IBlockEntityPrototypeService {
@@ -45,4 +46,5 @@ public interface IBlockEntityPrototypeService {
 
     // Ritual tiles
     BlockEntityType.BlockEntitySupplier<OfferingPedestalTileEntity> offeringPedestal();
+    BlockEntityType.BlockEntitySupplier<RitualAltarTileEntity> ritualAltar();
 }
