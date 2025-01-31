@@ -103,7 +103,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.SANGUINE_CRUCIBLE.get(), SanguineCrucibleTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.SANGUINE_CRUCIBLE.get(), Services.BLOCK_ENTITY_TICKERS.sanguineCrucible());
     }
 
     @Override
