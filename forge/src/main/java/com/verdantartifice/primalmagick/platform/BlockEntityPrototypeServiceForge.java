@@ -35,6 +35,8 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTil
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEntityForge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityPrototypeService;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -127,5 +129,10 @@ public class BlockEntityPrototypeServiceForge implements IBlockEntityPrototypeSe
     @Override
     public BlockEntityType.BlockEntitySupplier<RitualAltarTileEntity> ritualAltar() {
         return RitualAltarTileEntityForge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<RitualLecternTileEntity> ritualLectern() {
+        return RitualLecternTileEntityForge::new;
     }
 }

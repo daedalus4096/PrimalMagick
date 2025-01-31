@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.OpenEnchante
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEntity;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -258,7 +259,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new RitualLecternTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.ritualLectern().create(pos, state);
     }
 
     @Override

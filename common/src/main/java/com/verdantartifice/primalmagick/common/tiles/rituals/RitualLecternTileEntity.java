@@ -22,7 +22,7 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public class RitualLecternTileEntity extends AbstractTileSidedInventoryPM implements IRitualPropTileEntity {
+public abstract class RitualLecternTileEntity extends AbstractTileSidedInventoryPM implements IRitualPropTileEntity {
     protected static final int INPUT_INV_INDEX = 0;
     
     protected BlockPos altarPos = null;
