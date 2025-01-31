@@ -17,6 +17,8 @@ import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTile
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntityNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntityNeoforge;
 import com.verdantartifice.primalmagick.platform.services.IBlockEntityTickerService;
@@ -66,6 +68,11 @@ public class BlockEntityTickerServiceNeoforge implements IBlockEntityTickerServi
     @Override
     public BlockEntityTicker<SanguineCrucibleTileEntity> sanguineCrucible() {
         return SanguineCrucibleTileEntityNeoforge::tick;
+    }
+
+    @Override
+    public BlockEntityTicker<AutoChargerTileEntity> autoCharger() {
+        return AutoChargerTileEntityNeoforge::tick;
     }
 
     @Override

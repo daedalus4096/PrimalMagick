@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -42,12 +43,12 @@ public class AutoChargerBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new AutoChargerTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.autoCharger().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.AUTO_CHARGER.get(), AutoChargerTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.AUTO_CHARGER.get(), Services.BLOCK_ENTITY_TICKERS.autoCharger());
     }
 
     @Override

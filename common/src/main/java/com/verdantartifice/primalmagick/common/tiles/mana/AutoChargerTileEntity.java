@@ -30,7 +30,7 @@ import java.util.Set;
  * @author Daedalus4096
  * @see com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock
  */
-public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
+public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
     protected static final int INPUT_INV_INDEX = 0;
     
     protected final Set<BlockPos> fontLocations = new HashSet<>();

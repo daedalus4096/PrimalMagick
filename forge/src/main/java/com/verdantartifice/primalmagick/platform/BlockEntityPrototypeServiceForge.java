@@ -23,6 +23,8 @@ import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTil
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
@@ -91,6 +93,11 @@ public class BlockEntityPrototypeServiceForge implements IBlockEntityPrototypeSe
     @Override
     public BlockEntityType.BlockEntitySupplier<ScribeTableTileEntity> scribeTable() {
         return ScribeTableTileEntityForge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<AutoChargerTileEntity> autoCharger() {
+        return AutoChargerTileEntityForge::new;
     }
 
     @Override
