@@ -89,7 +89,7 @@ public class ScribeTableBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new ScribeTableTileEntity(pPos, pState);
+        return Services.BLOCK_ENTITY_PROTOTYPES.scribeTable().create(pPos, pState);
     }
 
     @Override

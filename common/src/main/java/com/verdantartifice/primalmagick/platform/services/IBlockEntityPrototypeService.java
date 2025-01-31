@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileE
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
@@ -30,6 +31,7 @@ public interface IBlockEntityPrototypeService {
     BlockEntityType.BlockEntitySupplier<InfernalFurnaceTileEntity> infernalFurnace();
     BlockEntityType.BlockEntitySupplier<ResearchTableTileEntity> researchTable();
     BlockEntityType.BlockEntitySupplier<SanguineCrucibleTileEntity> sanguineCrucible();
+    BlockEntityType.BlockEntitySupplier<ScribeTableTileEntity> scribeTable();
 
     // Mana tiles
     BlockEntityType.BlockEntitySupplier<ManaBatteryTileEntity> manaBattery();

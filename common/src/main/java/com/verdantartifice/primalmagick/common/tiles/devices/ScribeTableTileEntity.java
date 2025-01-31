@@ -36,7 +36,7 @@ import java.util.Optional;
  * @see com.verdantartifice.primalmagick.common.blocks.devices.ScribeTableBlock
  * @author Daedalus4096
  */
-public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
+public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int OUTPUT_INV_INDEX = 1;
     
