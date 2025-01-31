@@ -80,7 +80,7 @@ public class RunecarvingTableBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new RunecarvingTableTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.runecarvingTable().create(pos, state);
     }
     
     @Override

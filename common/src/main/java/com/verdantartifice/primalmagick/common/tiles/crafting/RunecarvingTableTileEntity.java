@@ -25,7 +25,7 @@ import java.util.Optional;
  * @see com.verdantartifice.primalmagick.common.blocks.crafting.RunecarvingTableBlock
  * @author Daedalus4096
  */
-public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
+public abstract class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     protected static final int INPUT_INV_INDEX = 0;
     
     public RunecarvingTableTileEntity(BlockPos pos, BlockState state) {
