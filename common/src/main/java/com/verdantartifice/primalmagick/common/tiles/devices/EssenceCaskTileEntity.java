@@ -46,7 +46,7 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
+public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     public static final int NUM_ROWS = EssenceType.values().length;
     public static final int NUM_COLS = Sources.getAllSorted().size();
     public static final int NUM_SLOTS = NUM_ROWS * NUM_COLS;

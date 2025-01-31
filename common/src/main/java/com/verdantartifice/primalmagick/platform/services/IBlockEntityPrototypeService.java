@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinator
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
@@ -22,6 +23,7 @@ public interface IBlockEntityPrototypeService {
 
     // Device tiles
     BlockEntityType.BlockEntitySupplier<DissolutionChamberTileEntity> dissolutionChamber();
+    BlockEntityType.BlockEntitySupplier<EssenceCaskTileEntity> essenceCask();
     BlockEntityType.BlockEntitySupplier<EssenceTransmuterTileEntity> essenceTransmuter();
     BlockEntityType.BlockEntitySupplier<HoneyExtractorTileEntity> honeyExtractor();
     BlockEntityType.BlockEntitySupplier<InfernalFurnaceTileEntity> infernalFurnace();

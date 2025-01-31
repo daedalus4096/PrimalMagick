@@ -9,6 +9,8 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTi
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntityNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
@@ -50,6 +52,11 @@ public class BlockEntityPrototypeServiceNeoforge implements IBlockEntityPrototyp
     @Override
     public BlockEntityType.BlockEntitySupplier<DissolutionChamberTileEntity> dissolutionChamber() {
         return DissolutionChamberTileEntityNeoforge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<EssenceCaskTileEntity> essenceCask() {
+        return EssenceCaskTileEntityNeoforge::new;
     }
 
     @Override

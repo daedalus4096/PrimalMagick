@@ -77,12 +77,12 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
     
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new EssenceCaskTileEntity(pos, state);
+        return Services.BLOCK_ENTITY_PROTOTYPES.essenceCask().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BlockEntityTypesPM.ESSENCE_CASK.get(), EssenceCaskTileEntity::tick);
+        return createTickerHelper(type, BlockEntityTypesPM.ESSENCE_CASK.get(), Services.BLOCK_ENTITY_TICKERS.essenceCask());
     }
     
     @Override

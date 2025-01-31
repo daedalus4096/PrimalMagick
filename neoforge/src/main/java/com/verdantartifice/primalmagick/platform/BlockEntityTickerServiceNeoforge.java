@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntit
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntityNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
@@ -37,6 +39,11 @@ public class BlockEntityTickerServiceNeoforge implements IBlockEntityTickerServi
     @Override
     public BlockEntityTicker<DissolutionChamberTileEntity> dissolutionChamber() {
         return DissolutionChamberTileEntityNeoforge::tick;
+    }
+
+    @Override
+    public BlockEntityTicker<EssenceCaskTileEntity> essenceCask() {
+        return EssenceCaskTileEntityNeoforge::tick;
     }
 
     @Override
