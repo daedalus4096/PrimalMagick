@@ -8,4 +8,9 @@ public class InvWrapperPMNeoforge extends InvWrapper implements IItemHandlerPM {
     public InvWrapperPMNeoforge(Container container) {
         super(container);
     }
+
+    @Override
+    public Container asContainer() {
+        return this.getInv();
+    }
 }

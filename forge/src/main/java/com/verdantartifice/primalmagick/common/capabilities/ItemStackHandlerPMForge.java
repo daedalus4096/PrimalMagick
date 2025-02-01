@@ -3,9 +3,11 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -78,6 +80,11 @@ public class ItemStackHandlerPMForge extends ItemStackHandler implements IItemHa
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
         return this.validityFuncOverride.map(f -> f.test(slot, stack)).orElseGet(() -> super.isItemValid(slot, stack));
+    }
+
+    @Override
+    public Container asContainer() {
+        return new RecipeWrapper(this);
     }
 
     @Override

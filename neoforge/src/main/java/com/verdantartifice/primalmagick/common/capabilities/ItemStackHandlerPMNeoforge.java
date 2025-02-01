@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
+import com.verdantartifice.primalmagick.common.util.RecipeContainerWrapper;
 import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -78,6 +80,11 @@ public class ItemStackHandlerPMNeoforge extends ItemStackHandler implements IIte
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
         return this.validityFuncOverride.map(f -> f.test(slot, stack)).orElseGet(() -> super.isItemValid(slot, stack));
+    }
+
+    @Override
+    public Container asContainer() {
+        return new RecipeContainerWrapper(this);
     }
 
     @Override

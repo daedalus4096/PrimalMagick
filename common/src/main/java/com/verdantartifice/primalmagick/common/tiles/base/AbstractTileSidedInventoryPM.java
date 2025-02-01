@@ -294,7 +294,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
                 paramsBuilder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
             }
             this.getTargetRandomizedInventory().ifPresentOrElse(inv -> {
-                loot.fill(Services.ITEM_HANDLERS.wrapAsContainer(inv), paramsBuilder.create(LootContextParamSets.CHEST), this.lootTableSeed);
+                loot.fill(inv.asContainer(), paramsBuilder.create(LootContextParamSets.CHEST), this.lootTableSeed);
             }, () -> {
                 LOGGER.error("Attempting to unpack loot table into undefined destination!");
             });

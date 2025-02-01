@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.function.BiPredicate;
@@ -24,6 +25,8 @@ public interface IItemHandlerPM {
     boolean isItemValid(int slot, ItemStack stack);
 
     void setStackInSlot(int slot, ItemStack stack);
+
+    Container asContainer();
 
     interface Builder {
         Builder slotLimitFunction(Function<Integer, Integer> limitFunction);
