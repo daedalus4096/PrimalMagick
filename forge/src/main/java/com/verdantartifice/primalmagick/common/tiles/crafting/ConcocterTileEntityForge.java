@@ -31,6 +31,7 @@ public class ConcocterTileEntityForge extends ConcocterTileEntity implements IHa
     @Override
     public void onLoad() {
         super.onLoad();
+        this.doInventorySync();
         if (!this.level.isClientSide) {
             this.relevantResearch = assembleRelevantResearch(this.level.getRecipeManager());
         }

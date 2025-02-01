@@ -29,6 +29,7 @@ public class DissolutionChamberTileEntityForge extends DissolutionChamberTileEnt
     @Override
     public void onLoad() {
         super.onLoad();
+        this.doInventorySync();
         this.processTimeTotal = this.getProcessTimeTotal();
     }
 

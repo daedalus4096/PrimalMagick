@@ -27,6 +27,12 @@ public class ManaBatteryTileEntityForge extends ManaBatteryTileEntity implements
     }
 
     @Override
+    public void onLoad() {
+        super.onLoad();
+        this.doInventorySync();
+    }
+
+    @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
         if (this.remove) {
             return super.getCapability(cap, side);

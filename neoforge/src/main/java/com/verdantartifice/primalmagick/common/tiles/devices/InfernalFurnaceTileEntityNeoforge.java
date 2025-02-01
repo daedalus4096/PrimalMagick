@@ -11,6 +11,7 @@ public class InfernalFurnaceTileEntityNeoforge extends InfernalFurnaceTileEntity
     @Override
     public void onLoad() {
         super.onLoad();
+        this.doInventorySync();
         this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
     }
 }

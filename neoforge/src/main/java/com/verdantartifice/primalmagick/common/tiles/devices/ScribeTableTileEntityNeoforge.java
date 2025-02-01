@@ -7,4 +7,10 @@ public class ScribeTableTileEntityNeoforge extends ScribeTableTileEntity {
     public ScribeTableTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(pos, state);
     }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        this.doInventorySync();
+    }
 }

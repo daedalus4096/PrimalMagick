@@ -11,6 +11,7 @@ public class HoneyExtractorTileEntityNeoforge extends HoneyExtractorTileEntity {
     @Override
     public void onLoad() {
         super.onLoad();
+        this.doInventorySync();
         this.spinTimeTotal = this.getSpinTimeTotal();
     }
 }

@@ -29,6 +29,7 @@ public class HoneyExtractorTileEntityForge extends HoneyExtractorTileEntity impl
     @Override
     public void onLoad() {
         super.onLoad();
+        this.doInventorySync();
         this.spinTimeTotal = this.getSpinTimeTotal();
     }
 

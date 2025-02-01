@@ -7,4 +7,10 @@ public class RitualAltarTileEntityNeoforge extends RitualAltarTileEntity {
     public RitualAltarTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(pos, state);
     }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        this.doInventorySync();
+    }
 }

@@ -31,6 +31,7 @@ public class EssenceTransmuterTileEntityForge extends EssenceTransmuterTileEntit
     @Override
     public void onLoad() {
         super.onLoad();
+        this.doInventorySync();
         if (!this.level.isClientSide) {
             this.relevantResearch = assembleRelevantResearch();
         }

@@ -11,6 +11,7 @@ public class ConcocterTileEntityNeoforge extends ConcocterTileEntity {
     @Override
     public void onLoad() {
         super.onLoad();
+        this.doInventorySync();
         if (!this.level.isClientSide) {
             this.relevantResearch = assembleRelevantResearch(this.level.getRecipeManager());
         }

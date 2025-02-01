@@ -7,4 +7,10 @@ public class AutoChargerTileEntityNeoforge extends AutoChargerTileEntity{
     public AutoChargerTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(pos, state);
     }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        this.doInventorySync();
+    }
 }
