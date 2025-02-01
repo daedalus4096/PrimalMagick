@@ -27,6 +27,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -161,26 +162,33 @@ public class JeiHelper implements IModPlugin {
         List<Component> tooltip = new ArrayList<>();
         tooltip.add(Component.translatable("label.primalmagick.crafting.research_header"));
         requirement.streamKeys().forEach(key -> {
+            Component fallback = Component.literal(key.toString());
+            // TODO Refactor this into a getDisplayString method in AbstractResearchKey with abstracted localization
             if (key instanceof ResearchEntryKey entryKey) {
-                ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
-                if (entry != null) {
-                    MutableComponent comp = Component.translatable(entry.getNameTranslationKey());
-                    entry.disciplineKeyOpt().ifPresent(discKey -> {
-                        ResearchDiscipline disc = ResearchDisciplines.getDiscipline(registryAccess, discKey);
-                        if (disc != null) {
-                            comp.append(Component.literal(" ("));
-                            comp.append(Component.translatable(disc.getNameTranslationKey()));
-                            comp.append(Component.literal(")"));
-                        }
-                    });
-                    tooltip.add(comp);
-                } else {
-                    tooltip.add(Component.literal(key.toString()));
-                }
+                tooltip.add(getResearchEntryTooltipString(registryAccess, ResearchEntries.getEntry(registryAccess, entryKey), fallback));
+            } else if (key instanceof ResearchStageKey stageKey) {
+                tooltip.add(getResearchEntryTooltipString(registryAccess, ResearchEntries.getEntry(registryAccess, stageKey.getRootKey()), fallback));
             } else {
-                tooltip.add(Component.literal(key.toString()));
+                tooltip.add(fallback);
             }
         });
         return tooltip;
+    }
+
+    private static Component getResearchEntryTooltipString(RegistryAccess registryAccess, @Nullable ResearchEntry entry, Component fallback) {
+        if (entry != null) {
+            MutableComponent comp = Component.translatable(entry.getNameTranslationKey());
+            entry.disciplineKeyOpt().ifPresent(discKey -> {
+                ResearchDiscipline disc = ResearchDisciplines.getDiscipline(registryAccess, discKey);
+                if (disc != null) {
+                    comp.append(Component.literal(" ("));
+                    comp.append(Component.translatable(disc.getNameTranslationKey()));
+                    comp.append(Component.literal(")"));
+                }
+            });
+            return comp;
+        } else {
+            return fallback;
+        }
     }
 }
