@@ -22,8 +22,6 @@ import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagick.client.gui.WandGlamourTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandInscriptionTableScreen;
-import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
-import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeGainComprehensionScreen;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeStudyVocabularyScreen;
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeTranscribeWorksScreen;
@@ -44,8 +42,6 @@ import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -74,7 +70,6 @@ public class ClientModLifecycleEvents {
             registerScreens();
             registerTERs();
             registerItemProperties(workConsumer);
-            registerHudOverlays();
         }
     }
 
@@ -210,21 +205,5 @@ public class ClientModLifecycleEvents {
             ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), pullProperty);
             ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), handActiveProperty);
         });
-    }
-    
-    private static void registerHudOverlays() {
-        Minecraft mc = Minecraft.getInstance();
-        
-        // Register the wand HUD overlay
-        // FIXME Register above hotbar layer instead of at the top
-        LayeredDraw wandLayer = new LayeredDraw();
-        wandLayer.add(WandHudOverlay::render);
-        mc.gui.layers.add(wandLayer, WandHudOverlay::shouldRender);
-        
-        // Register the ward health bar overlay
-        // FIXME Register above player health layer instead of at the top
-        LayeredDraw wardLayer = new LayeredDraw();
-        wardLayer.add(WardingHudOverlay::render);
-        mc.gui.layers.add(wardLayer, WardingHudOverlay::shouldRender);
     }
 }

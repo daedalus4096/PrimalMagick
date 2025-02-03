@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import java.util.Optional;
 
 public class WardingHudOverlay {
+    public static final ResourceLocation ID = ResourceUtils.loc("warding_hud_overlay");
     protected static final ResourceLocation GUI_ICONS_LOCATION = ResourceUtils.loc("textures/gui/hud.png");
     
     public static boolean shouldRender() {
@@ -22,6 +23,10 @@ public class WardingHudOverlay {
     }
     
     public static void render(GuiGraphics pGuiGraphics, DeltaTracker pDeltaTracker) {
+        if (!shouldRender()) {
+            return;
+        }
+
         Minecraft mc = Minecraft.getInstance();
         
         mc.getProfiler().push("warding");

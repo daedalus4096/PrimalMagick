@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public class WandHudOverlay {
+    public static final ResourceLocation ID = ResourceUtils.loc("wand_hud_overlay");
     private static final ResourceLocation HUD_TEXTURE = ResourceUtils.loc("textures/gui/hud.png");
     
     public static boolean shouldRender() {
@@ -34,11 +35,13 @@ public class WandHudOverlay {
     }
     
     public static void render(GuiGraphics pGuiGraphics, DeltaTracker pDeltaTracker) {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.player.getMainHandItem().getItem() instanceof IWand wand) {
-            renderHud(mc, pGuiGraphics, mc.player.getMainHandItem(), wand, pDeltaTracker.getGameTimeDeltaPartialTick(true));
-        } else if (mc.player.getOffhandItem().getItem() instanceof IWand wand) {
-            renderHud(mc, pGuiGraphics, mc.player.getOffhandItem(), wand, pDeltaTracker.getGameTimeDeltaPartialTick(true));
+        if (shouldRender()) {
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.player.getMainHandItem().getItem() instanceof IWand wand) {
+                renderHud(mc, pGuiGraphics, mc.player.getMainHandItem(), wand, pDeltaTracker.getGameTimeDeltaPartialTick(true));
+            } else if (mc.player.getOffhandItem().getItem() instanceof IWand wand) {
+                renderHud(mc, pGuiGraphics, mc.player.getOffhandItem(), wand, pDeltaTracker.getGameTimeDeltaPartialTick(true));
+            }
         }
     }
     

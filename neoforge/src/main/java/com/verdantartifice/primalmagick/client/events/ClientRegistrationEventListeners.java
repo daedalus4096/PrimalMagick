@@ -12,6 +12,8 @@ import com.verdantartifice.primalmagick.client.fx.particles.SpellSparkleParticle
 import com.verdantartifice.primalmagick.client.fx.particles.SpellcraftingRuneParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
 import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecoratorNeoforge;
+import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
+import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.neoforged.api.distmarker.Dist;
@@ -21,8 +23,10 @@ import net.neoforged.neoforge.client.IItemDecorator;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 /**
  * Neoforge listeners for client-only Forge registration events.
@@ -71,5 +75,11 @@ public class ClientRegistrationEventListeners {
         // FIXME Use the WARDABLE_ARMOR tag as the source of truth if/when the RegisterItemDecorationsEvent is made to fire *after* tag data loads
         IItemDecorator wardDecorator = new ManaStorageItemDecoratorNeoforge(Sources.EARTH);
         WardingModuleItem.getApplicableItems().forEach(itemSupplier -> event.register(itemSupplier.get(), wardDecorator));
+    }
+
+    @SubscribeEvent
+    public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
+        event.registerAbove(VanillaGuiLayers.HOTBAR, WandHudOverlay.ID, WandHudOverlay::render);
+        event.registerAbove(VanillaGuiLayers.HOTBAR, WardingHudOverlay.ID, WardingHudOverlay::render);
     }
 }
