@@ -144,7 +144,8 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
         return SourceList.EMPTY.add(source, (baseManaCost + baseModifier) * multiplier);
     }
     
-    public void cast(Level world, LivingEntity caster, ItemStack spellSource) {
+    public void cast(@Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource) {
+        final ItemStack sourceStack = spellSource == null ? ItemStack.EMPTY : spellSource.copy();
         if (this.payload != null) {
             this.payload.getComponent().playSounds(world, caster.blockPosition());
         }
@@ -153,7 +154,7 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
                 ExpertiseManager.awardExpertise(player, this);
                 StatsManager.incrementValue(player, StatsPM.SPELLS_CAST);
             }
-            this.vehicle.getComponent().execute(this, world, caster, spellSource.copy());
+            this.vehicle.getComponent().execute(this, world, caster, sourceStack);
         }
     }
     

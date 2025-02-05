@@ -28,7 +28,7 @@ public interface ISpellVehicle extends ISpellComponent {
      * @param caster the entity that originally casted the spell
      * @param spellSource the wand or scroll that originally contained the spell
      */
-    public void execute(@Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource);
+    public void execute(@Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nonnull ItemStack spellSource);
 
     /**
      * Get the additive modifier to be applied to the spell vehicle's package's base cost.
