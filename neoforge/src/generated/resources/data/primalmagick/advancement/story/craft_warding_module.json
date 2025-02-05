@@ -1,0 +1,55 @@
+{
+  "parent": "primalmagick:story/craft_arcanometer",
+  "criteria": {
+    "has_basic_module": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:warding_module_basic"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_greater_module": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:warding_module_greater"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_supreme_module": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:warding_module_supreme"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_warding_module.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:warding_module_basic"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_warding_module.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_basic_module",
+      "has_greater_module",
+      "has_supreme_module"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

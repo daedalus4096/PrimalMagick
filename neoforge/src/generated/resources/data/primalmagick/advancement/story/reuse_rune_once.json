@@ -1,0 +1,29 @@
+{
+  "parent": "primalmagick:story/craft_runecarving_table",
+  "criteria": {
+    "reuse_once": {
+      "conditions": {
+        "threshold": 2
+      },
+      "trigger": "primalmagick:rune_use_count"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.reuse_rune_once.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:runescribing_altar_enchanted"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.reuse_rune_once.title"
+    }
+  },
+  "requirements": [
+    [
+      "reuse_once"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

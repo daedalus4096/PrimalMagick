@@ -1,0 +1,35 @@
+{
+  "parent": "primalmagick:story/craft_grimoire",
+  "criteria": {
+    "made_workbench": {
+      "conditions": {
+        "researchKey": {
+          "key_type": "primalmagick:stack_crafted",
+          "stack": {
+            "count": 1,
+            "id": "primalmagick:arcane_workbench"
+          }
+        }
+      },
+      "trigger": "primalmagick:research_completed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_arcane_workbench.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:arcane_workbench"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_arcane_workbench.title"
+    }
+  },
+  "requirements": [
+    [
+      "made_workbench"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

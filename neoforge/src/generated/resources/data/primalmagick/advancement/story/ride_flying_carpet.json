@@ -1,0 +1,39 @@
+{
+  "parent": "primalmagick:story/craft_ritual_altar",
+  "criteria": {
+    "ride_carpet": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "vehicle": {
+                "type": "primalmagick:flying_carpet"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:started_riding"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.ride_flying_carpet.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:flying_carpet"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.ride_flying_carpet.title"
+    }
+  },
+  "requirements": [
+    [
+      "ride_carpet"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

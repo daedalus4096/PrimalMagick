@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/craft_grimoire",
+  "criteria": {
+    "has_artifact": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:humming_artifact_unattuned"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.find_humming_artifact.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:humming_artifact_unattuned"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.find_humming_artifact.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_artifact"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

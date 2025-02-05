@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 public class StoryAdvancementsProviderNeoforge extends AdvancementProvider {
     public StoryAdvancementsProviderNeoforge(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper existingFileHelper) {
-        super(output, registries, existingFileHelper, List.of());
+        super(output, registries, existingFileHelper, List.of(new StoryAdvancementsPMNeoforge()));
     }
 
     private static final class StoryAdvancementsPMNeoforge extends StoryAdvancementsPM implements AdvancementProvider.AdvancementGenerator {

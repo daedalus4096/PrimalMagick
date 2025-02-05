@@ -1,0 +1,87 @@
+{
+  "parent": "primalmagick:story/gain_some_comprehension",
+  "criteria": {
+    "earth_language": {
+      "conditions": {
+        "language": "primalmagick:earth",
+        "threshold": 60
+      },
+      "trigger": "primalmagick:linguistics_comprehension"
+    },
+    "forbidden_language": {
+      "conditions": {
+        "language": "primalmagick:forbidden",
+        "threshold": 60
+      },
+      "trigger": "primalmagick:linguistics_comprehension"
+    },
+    "hallowed_language": {
+      "conditions": {
+        "language": "primalmagick:hallowed",
+        "threshold": 60
+      },
+      "trigger": "primalmagick:linguistics_comprehension"
+    },
+    "moon_language": {
+      "conditions": {
+        "language": "primalmagick:moon",
+        "threshold": 60
+      },
+      "trigger": "primalmagick:linguistics_comprehension"
+    },
+    "sea_language": {
+      "conditions": {
+        "language": "primalmagick:sea",
+        "threshold": 60
+      },
+      "trigger": "primalmagick:linguistics_comprehension"
+    },
+    "sky_language": {
+      "conditions": {
+        "language": "primalmagick:sky",
+        "threshold": 60
+      },
+      "trigger": "primalmagick:linguistics_comprehension"
+    },
+    "sun_language": {
+      "conditions": {
+        "language": "primalmagick:sun",
+        "threshold": 60
+      },
+      "trigger": "primalmagick:linguistics_comprehension"
+    },
+    "trade_language": {
+      "conditions": {
+        "language": "primalmagick:trade",
+        "threshold": 60
+      },
+      "trigger": "primalmagick:linguistics_comprehension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.fully_comprehend_language.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:static_book_uncommon"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.fully_comprehend_language.title"
+    }
+  },
+  "requirements": [
+    [
+      "earth_language",
+      "sea_language",
+      "sky_language",
+      "sun_language",
+      "moon_language",
+      "trade_language",
+      "forbidden_language",
+      "hallowed_language"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

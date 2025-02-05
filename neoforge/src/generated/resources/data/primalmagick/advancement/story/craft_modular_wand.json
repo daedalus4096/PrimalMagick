@@ -1,0 +1,38 @@
+{
+  "parent": "primalmagick:story/craft_arcane_workbench",
+  "criteria": {
+    "has_wand": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:modular_wand"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_modular_wand.description"
+    },
+    "icon": {
+      "components": {
+        "primalmagick:wand_cap": "iron",
+        "primalmagick:wand_core": "heartwood",
+        "primalmagick:wand_gem": "apprentice"
+      },
+      "count": 1,
+      "id": "primalmagick:modular_wand"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_modular_wand.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_wand"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

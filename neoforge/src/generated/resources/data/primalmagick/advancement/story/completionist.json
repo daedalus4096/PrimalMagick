@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/discover_hallowed",
+  "criteria": {
+    "discovered_forbidden": {
+      "conditions": {
+        "researchKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:theory_of_everything"
+        }
+      },
+      "trigger": "primalmagick:research_completed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.completionist.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:grimoire"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.completionist.title"
+    }
+  },
+  "requirements": [
+    [
+      "discovered_forbidden"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "primalmagick:story/first_theorycraft",
+  "criteria": {
+    "completed_many_projects": {
+      "conditions": {
+        "stat": "primalmagick:research_projects_completed",
+        "threshold": 250
+      },
+      "trigger": "primalmagick:stat_value"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.many_theorycrafts.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:research_table"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.many_theorycrafts.title"
+    }
+  },
+  "requirements": [
+    [
+      "completed_many_projects"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}
