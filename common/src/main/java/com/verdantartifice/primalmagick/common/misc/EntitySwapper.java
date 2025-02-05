@@ -80,8 +80,7 @@ public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
         return Services.CAPABILITIES.swappers(entity).map(swappers -> swappers.setQueue(swapperQueue)).orElse(false);
     }
     
-    @Nullable
-    public EntitySwapper execute(@Nonnull Entity entity) {
+    public void execute(@Nonnull Entity entity) {
         Level world = entity.level();
         if (!world.isClientSide && world instanceof ServerLevel serverWorld) {
             // Only proceed if this is a valid swapper and the target is allowed to be swapped
@@ -141,14 +140,11 @@ public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
                     int ticks = this.polymorphDuration.get();
                     if (newEntity instanceof LivingEntity newLivingEntity) {
                         newLivingEntity.addEffect(new MobEffectInstance(EffectsPM.POLYMORPH.getHolder(), ticks));
+                        enqueue(newLivingEntity, new EntitySwapper(oldType, this.originalData, Optional.empty(), ticks));
                     }
-                    return new EntitySwapper(oldType, this.originalData, Optional.empty(), ticks);
-                } else {
-                    return null;
                 }
             }
         }
-        return null;
     }
     
     protected boolean isValidTarget(Entity entity) {

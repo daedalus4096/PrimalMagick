@@ -375,15 +375,11 @@ public class PlayerEvents {
         if (swapperQueue != null) {
             // Execute each pending entity swapper in turn
             Queue<EntitySwapper> newQueue = new LinkedBlockingQueue<>();
-            while (!swapperQueue.isEmpty()) {
+            while (!entity.isRemoved() && !swapperQueue.isEmpty()) {
                 EntitySwapper swapper = swapperQueue.poll();
                 if (swapper != null) {
                     if (swapper.isReady()) {
-                        EntitySwapper newSwapper = swapper.execute(entity);
-                        if (newSwapper != null) {
-                            // If a return swap is triggered by this swap, queue up the new swapper
-                            newQueue.offer(newSwapper);
-                        }
+                        swapper.execute(entity);
                     } else {
                         // If the swapper isn't ready yet, re-queue it with a shorter delay
                         swapper.decrementDelay();
