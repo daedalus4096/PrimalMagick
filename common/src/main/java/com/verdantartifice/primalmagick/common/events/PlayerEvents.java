@@ -299,11 +299,10 @@ public class PlayerEvents {
         Level level = player.level();
 
         boolean jumpPressed = mc.options.keyJump.consumeClick();
-        if (jumpPressed && !DOUBLE_JUMP_ALLOWED.containsKey(player.getUUID())) {
+        if ((jumpPressed || !player.onGround()) && !DOUBLE_JUMP_ALLOWED.containsKey(player.getUUID())) {
             DOUBLE_JUMP_ALLOWED.put(player.getUUID(), Boolean.TRUE);
-        }
-        if (jumpPressed && !player.onGround() && !player.isInWater() && 
-                DOUBLE_JUMP_ALLOWED.getOrDefault(player.getUUID(), Boolean.FALSE).booleanValue() && 
+        } else if (jumpPressed && !player.onGround() && !player.isInWater() &&
+                DOUBLE_JUMP_ALLOWED.getOrDefault(player.getUUID(), Boolean.FALSE) &&
                 AttunementManager.meetsThreshold(player, Sources.SKY, AttunementThreshold.GREATER)) {
             // If the conditions are right, execute the second jump
             level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, 
