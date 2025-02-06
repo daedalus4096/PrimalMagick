@@ -57,6 +57,15 @@ public class CombatEvents {
                 return true;
             }
 
+            // Determine if the damage should be cancelled due to sky attunement fall damage reduction
+            if (damageSource == target.damageSources().fall() && AttunementManager.meetsThreshold(target, Sources.SKY, AttunementThreshold.LESSER)) {
+                float newDamage = Math.max(0.0F, amount / 3.0F - 2.0F);
+                if (newDamage < 1.0F) {
+                    // If the fall damage was reduced to less than one, cancel it
+                    return true;
+                }
+            }
+
             // Attuned players have a chance to turn invisible upon taking damage, if they aren't already
             Level targetLevel = target.level();
             if (targetLevel.random.nextDouble() < 0.5D &&
@@ -92,7 +101,7 @@ public class CombatEvents {
         return false;
     }
     
-    public static boolean onEntityHurt(LivingEntity targetEntity, DamageSource damageSource, Supplier<Float> damageGetter, Consumer<Float> damageSetter) {
+    public static void onEntityHurt(LivingEntity targetEntity, DamageSource damageSource, Supplier<Float> damageGetter, Consumer<Float> damageSetter) {
         // Handle effects triggered by damage target
         if (targetEntity instanceof Player target) {
             // Gain appropriate research for damage sources, if applicable
@@ -110,11 +119,6 @@ public class CombatEvents {
                 float newDamage = Math.max(0.0F, damageGetter.get() / 3.0F - 2.0F);
                 if (newDamage < damageGetter.get()) {
                     damageSetter.accept(newDamage);
-                }
-                if (damageGetter.get() < 1.0F) {
-                    // If the fall damage was reduced to less than one, cancel it
-                    damageSetter.accept(0.0F);
-                    return true;
                 }
             }
             
@@ -165,9 +169,6 @@ public class CombatEvents {
                 attacker.heal(1.0F);
             }
         }
-
-        // Do not cancel the event
-        return false;
     }
     
     public static void onEntityHurtLowest(LivingEntity targetEntity, DamageSource damageSource, float amount) {

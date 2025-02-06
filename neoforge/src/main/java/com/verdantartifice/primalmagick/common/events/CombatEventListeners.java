@@ -26,13 +26,11 @@ public class CombatEventListeners {
     
     @SubscribeEvent
     public static void onEntityHurt(LivingDamageEvent.Pre event) {
-        // The Neoforge version of this event cannot be cancelled, so ignore the return value
         CombatEvents.onEntityHurt(event.getEntity(), event.getSource(), event::getNewDamage, event::setNewDamage);
     }
     
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onEntityHurtLowest(LivingDamageEvent.Post event) {
-        // The Neoforge version of this event cannot be cancelled, so don't check
         CombatEvents.onEntityHurtLowest(event.getEntity(), event.getSource(), event.getNewDamage());
     }
     

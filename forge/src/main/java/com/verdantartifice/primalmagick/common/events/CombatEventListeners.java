@@ -28,9 +28,7 @@ public class CombatEventListeners {
     
     @SubscribeEvent
     public static void onEntityHurt(LivingDamageEvent event) {
-        if (CombatEvents.onEntityHurt(event.getEntity(), event.getSource(), event::getAmount, event::setAmount)) {
-            event.setCanceled(true);
-        }
+        CombatEvents.onEntityHurt(event.getEntity(), event.getSource(), event::getAmount, event::setAmount);
     }
     
     @SubscribeEvent(priority = EventPriority.LOWEST)
