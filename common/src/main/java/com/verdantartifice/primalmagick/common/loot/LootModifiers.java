@@ -91,7 +91,8 @@ public class LootModifiers {
     }
 
     private static ObjectArrayList<ItemStack> bountyInner(ObjectArrayList<ItemStack> generatedLoot, LootContext context, float chance, LootTable table) {
-        int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.BOUNTY), context.getParamOrNull(LootContextParams.TOOL));
+        ItemStack tool = context.hasParam(LootContextParams.TOOL) ? context.getParam(LootContextParams.TOOL) : ItemStack.EMPTY;
+        int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.BOUNTY), tool);
         for (int index = 0; index < enchantmentLevel; index++) {
             if (context.getRandom().nextFloat() < chance) {
                 List<ItemStack> bonusList = new ArrayList<>();
