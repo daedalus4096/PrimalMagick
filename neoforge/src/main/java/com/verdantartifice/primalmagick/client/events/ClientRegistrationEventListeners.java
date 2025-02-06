@@ -80,6 +80,6 @@ public class ClientRegistrationEventListeners {
     @SubscribeEvent
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.HOTBAR, WandHudOverlay.ID, WandHudOverlay::render);
-        event.registerAbove(VanillaGuiLayers.HOTBAR, WardingHudOverlay.ID, WardingHudOverlay::render);
+        event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, WardingHudOverlay.ID, WardingHudOverlay::render);
     }
 }
