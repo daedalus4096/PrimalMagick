@@ -1,3 +1,7 @@
+v5.0.2-beta
+-----------
+* Fixed a crash that would occur when pixies or the Inner Demon would attempt to cast a spell
+
 v5.0.1-beta
 -----------
 * Updated to Forge 52.0.15

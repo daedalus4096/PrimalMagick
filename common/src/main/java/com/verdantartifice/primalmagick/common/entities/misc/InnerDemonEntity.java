@@ -38,6 +38,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -107,7 +108,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
 
     @Override
     public void performRangedAttack(LivingEntity target, float distanceFactor) {
-        this.getSpellPackage().cast(this.level(), this, null);
+        this.getSpellPackage().cast(this.level(), this, ItemStack.EMPTY);
     }
 
     @Override
