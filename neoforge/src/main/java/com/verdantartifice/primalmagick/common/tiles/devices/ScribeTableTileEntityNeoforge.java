@@ -13,4 +13,10 @@ public class ScribeTableTileEntityNeoforge extends ScribeTableTileEntity {
         super.onLoad();
         this.doInventorySync();
     }
+
+    @Override
+    public boolean shouldTriggerClientSideContainerClosingOnOpen() {
+        // Prevent the mouse cursor from re-centering when switching table modes
+        return false;
+    }
 }
