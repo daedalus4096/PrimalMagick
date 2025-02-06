@@ -122,13 +122,13 @@ public class ClientModLifecycleEvents {
         // Register properties for items on the main thread in a thread-safe fashion
         workConsumer.accept(() -> {
             ItemProperties.register(ItemsPM.ARCANOMETER.get(), ArcanometerItem.SCAN_STATE_PROPERTY, new ClampedItemPropertyFunction() {
-                protected float scanState = 0;
+                private float scanState = 0;
 
                 @Override
                 public float unclampedCall(ItemStack stack, ClientLevel world, LivingEntity entity, int seed) {
                     if (entity instanceof Player player) {
                         // If the currently moused-over block/item has not yet been scanned, raise the antennae
-                        if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(world, player), world, (Player)entity)) {
+                        if (ArcanometerItem.isMouseOverScannable(RayTraceUtils.getMouseOver(world, player), world, player)) {
                             this.incrementScanState();
                         } else {
                             this.decrementScanState();
@@ -139,16 +139,16 @@ public class ClientModLifecycleEvents {
                     }
                 }
                 
-                protected void incrementScanState() {
-                    this.scanState = Math.min(4.0F, this.scanState + 0.25F);
+                private void incrementScanState() {
+                    this.scanState = Math.min(1.0F, this.scanState + 0.0625F);
                 }
                 
-                protected void decrementScanState() {
-                    this.scanState = Math.max(0.0F, this.scanState - 0.25F);
+                private void decrementScanState() {
+                    this.scanState = Math.max(0.0F, this.scanState - 0.0625F);
                 }
             });
             
-            ItemProperties.register(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, (ItemStack stack, ClientLevel world, LivingEntity entity, int unknown) -> {
+            ItemProperties.register(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 DyeColor color = null;
                 if (stack != null && stack.getItem() instanceof FlyingCarpetItem) {
                     color = ((FlyingCarpetItem)stack.getItem()).getDyeColor(stack);

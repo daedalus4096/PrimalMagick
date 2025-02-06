@@ -117,11 +117,11 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
             float value = propGetter.call(stack, mc.level, mc.player, 0);
             if (value <= 0.0F) {
                 return MRL0;
-            } else if (value <= 1.0F) {
+            } else if (value <= 0.25F) {
                 return MRL1;
-            } else if (value <= 2.0F) {
+            } else if (value <= 0.5F) {
                 return MRL2;
-            } else if (value <= 3.0F) {
+            } else if (value <= 0.75F) {
                 return MRL3;
             } else {
                 return MRL4;
