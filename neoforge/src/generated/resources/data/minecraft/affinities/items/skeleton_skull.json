@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 20,
+    "primalmagick:moon": 5
+  },
+  "target": "minecraft:skeleton_skull"
+}

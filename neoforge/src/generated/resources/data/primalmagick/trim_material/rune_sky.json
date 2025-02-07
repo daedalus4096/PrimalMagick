@@ -1,0 +1,9 @@
+{
+  "asset_name": "rune_sky",
+  "description": {
+    "color": "#87CEEB",
+    "translate": "trim_material.primalmagick.rune_sky"
+  },
+  "ingredient": "primalmagick:rune_sky",
+  "item_model_index": 0.8
+}

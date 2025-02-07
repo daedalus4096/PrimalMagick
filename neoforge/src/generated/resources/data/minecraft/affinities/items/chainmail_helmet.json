@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 24,
+    "primalmagick:sky": 24
+  },
+  "target": "minecraft:chainmail_helmet"
+}

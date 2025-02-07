@@ -1,0 +1,88 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:honey_extractor"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:ritual_candles"
+      },
+      "recipes": [
+        "primalmagick:ritual_candle_white_from_beeswax"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.ritual_candles.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ritual_candle_white"
+  },
+  "key": {
+    "rootKey": "primalmagick:ritual_candles"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_ritual"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:ritual_candles"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.ritual_candles.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sun": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:ritual_candles"
+      },
+      "recipes": [
+        "primalmagick:tallow",
+        "primalmagick:ritual_candle_white_from_tallow",
+        "primalmagick:ritual_candle_black",
+        "primalmagick:ritual_candle_blue",
+        "primalmagick:ritual_candle_brown",
+        "primalmagick:ritual_candle_cyan",
+        "primalmagick:ritual_candle_gray",
+        "primalmagick:ritual_candle_green",
+        "primalmagick:ritual_candle_light_blue",
+        "primalmagick:ritual_candle_light_gray",
+        "primalmagick:ritual_candle_lime",
+        "primalmagick:ritual_candle_magenta",
+        "primalmagick:ritual_candle_orange",
+        "primalmagick:ritual_candle_pink",
+        "primalmagick:ritual_candle_purple",
+        "primalmagick:ritual_candle_red",
+        "primalmagick:ritual_candle_white",
+        "primalmagick:ritual_candle_yellow"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.ritual_candles.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

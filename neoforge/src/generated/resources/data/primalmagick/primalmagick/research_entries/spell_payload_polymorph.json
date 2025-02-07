@@ -1,0 +1,64 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/moon.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_polymorph"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:spell_payload_lunar"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:furry_friend"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_polymorph"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_polymorph.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:moon": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_polymorph"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_polymorph.text.stage.2"
+    }
+  ]
+}

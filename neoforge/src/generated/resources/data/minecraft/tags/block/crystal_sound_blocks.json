@@ -1,0 +1,16 @@
+{
+  "values": [
+    "primalmagick:damaged_budding_amethyst_block",
+    "primalmagick:chipped_budding_amethyst_block",
+    "primalmagick:flawed_budding_amethyst_block",
+    "primalmagick:damaged_budding_diamond_block",
+    "primalmagick:chipped_budding_diamond_block",
+    "primalmagick:flawed_budding_diamond_block",
+    "primalmagick:damaged_budding_emerald_block",
+    "primalmagick:chipped_budding_emerald_block",
+    "primalmagick:flawed_budding_emerald_block",
+    "primalmagick:damaged_budding_quartz_block",
+    "primalmagick:chipped_budding_quartz_block",
+    "primalmagick:flawed_budding_quartz_block"
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "aidBlocks": [],
+  "materialOptions": [
+    {
+      "bonusReward": 0.0,
+      "consumed": false,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 1,
+      "tag": "primalmagick:enchanting_tables",
+      "weight": 5.0
+    },
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 1,
+      "tag": "c:gems/lapis",
+      "weight": 5.0
+    },
+    {
+      "bonusReward": 0.125,
+      "consumed": true,
+      "levels": 1,
+      "material_type": "primalmagick:experience",
+      "weight": 5.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:book"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:golden_sword"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:golden_pickaxe"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:golden_shovel"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:golden_axe"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:golden_hoe"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:golden_helmet"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:golden_chestplate"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:golden_leggings"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:golden_boots"
+      },
+      "weight": 1.0
+    },
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "count": 1,
+      "material_type": "primalmagick:observation",
+      "weight": 5.0
+    }
+  ],
+  "otherRewards": [],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_manaweaving"
+    }
+  },
+  "rewardMultiplier": 0.25,
+  "weightFunction": {
+    "modifiers": [
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:expert_manaweaving"
+        },
+        "weightModifier": -1.0
+      },
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:master_manaweaving"
+        },
+        "weightModifier": -1.0
+      },
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:supreme_manaweaving"
+        },
+        "weightModifier": -2.0
+      }
+    ],
+    "reward_type": "primalmagick:progressive",
+    "startingWeight": 5.0
+  }
+}

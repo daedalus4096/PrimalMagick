@@ -1,0 +1,63 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "healing",
+  "ingredients": [
+    {
+      "type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": "primalmagick:concoction"
+    },
+    {
+      "item": "primalmagick:essence_dust_sun"
+    },
+    {
+      "item": "primalmagick:essence_dust_blood"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:glistering_melon_slice"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 1
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_tinctures"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:healing"
+      },
+      "primalmagick:concoction_doses": 3,
+      "primalmagick:concoction_type": "tincture"
+    },
+    "count": 1,
+    "id": "primalmagick:concoction"
+  }
+}

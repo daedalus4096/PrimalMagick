@@ -1,0 +1,35 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mystical_relic"
+  },
+  "key": {
+    "rootKey": "primalmagick:mystical_relic"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:mystical_relic"
+      },
+      "recipes": [
+        "primalmagick:mystical_relic"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mystical_relic.text.stage.1"
+    }
+  ]
+}

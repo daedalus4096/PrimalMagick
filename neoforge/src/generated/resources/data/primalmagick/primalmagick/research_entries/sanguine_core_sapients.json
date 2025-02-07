@@ -1,0 +1,57 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
+  "key": {
+    "rootKey": "primalmagick:sanguine_core_sapients"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:sanguine_crucible"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_sapients"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_sapients.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_sapients"
+      },
+      "recipes": [
+        "primalmagick:sanguine_core_evoker",
+        "primalmagick:sanguine_core_pillager",
+        "primalmagick:sanguine_core_villager",
+        "primalmagick:sanguine_core_vindicator",
+        "primalmagick:sanguine_core_witch"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_sapients.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

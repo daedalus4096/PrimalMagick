@@ -1,0 +1,121 @@
+{
+  "parent": "primalmagick:story/craft_forbidden_mana_font",
+  "criteria": {
+    "has_blood_font": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:heavenly_font_blood"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_earth_font": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:heavenly_font_earth"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_hallowed_font": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:heavenly_font_hallowed"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_infernal_font": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:heavenly_font_infernal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_moon_font": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:heavenly_font_moon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_sea_font": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:heavenly_font_sea"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_sky_font": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:heavenly_font_sky"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_sun_font": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:heavenly_font_sun"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_void_font": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:heavenly_font_void"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_heavenly_mana_font.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:heavenly_font_hallowed"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_heavenly_mana_font.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_earth_font",
+      "has_sea_font",
+      "has_sky_font",
+      "has_sun_font",
+      "has_moon_font",
+      "has_blood_font",
+      "has_infernal_font",
+      "has_void_font",
+      "has_hallowed_font"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

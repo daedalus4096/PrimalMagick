@@ -1,0 +1,514 @@
+{
+  "key": "primalmagick:sun",
+  "language": "primalmagick:sun",
+  "nodes": [
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        4,
+        3
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        6,
+        5
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        2,
+        2
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        4,
+        4
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        6,
+        6
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        0,
+        1
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        2,
+        3
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        4,
+        5
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        2,
+        4
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        4,
+        6
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        2,
+        5
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        4,
+        7
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        0,
+        4
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        2,
+        6
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        5,
+        1
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        7,
+        3
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 4,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        3,
+        0
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        5,
+        2
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        3,
+        1
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        5,
+        3
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        3,
+        2
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 2,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        5,
+        4
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        7,
+        6
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        1,
+        1
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        3,
+        3
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        5,
+        5
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 3,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        1,
+        2
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "observation",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        3,
+        4
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        3,
+        5
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "points": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        1,
+        4
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        1,
+        6
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        1,
+        7
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 5,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        6,
+        0
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        6,
+        1
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "knowledgeType": "theory",
+          "levels": 1,
+          "reward_type": "primalmagick:knowledge"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        6,
+        3
+      ]
+    },
+    {
+      "definition": {
+        "reward": {
+          "language": "primalmagick:sun",
+          "points": 1,
+          "reward_type": "primalmagick:comprehension"
+        },
+        "vocabularyCost": 1
+      },
+      "pos": [
+        4,
+        2
+      ]
+    }
+  ],
+  "startPos": [
+    3,
+    3
+  ]
+}

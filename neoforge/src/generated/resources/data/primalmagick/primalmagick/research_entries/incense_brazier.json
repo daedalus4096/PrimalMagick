@@ -1,0 +1,54 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:incense_brazier"
+  },
+  "key": {
+    "rootKey": "primalmagick:incense_brazier"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_ritual"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:incense_brazier"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.incense_brazier.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sky": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:incense_brazier"
+      },
+      "recipes": [
+        "primalmagick:incense_brazier",
+        "primalmagick:incense_stick"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.incense_brazier.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

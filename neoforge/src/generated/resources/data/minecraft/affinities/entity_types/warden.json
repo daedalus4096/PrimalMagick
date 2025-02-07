@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:warden",
+  "values": {
+    "primalmagick:earth": 50,
+    "primalmagick:infernal": 20,
+    "primalmagick:void": 20
+  }
+}

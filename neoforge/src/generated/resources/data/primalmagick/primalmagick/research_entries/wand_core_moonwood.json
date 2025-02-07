@@ -1,0 +1,86 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_moonwood"
+      },
+      "recipes": [
+        "primalmagick:moonwood_staff_core_item"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:moonwood_wand_core_item"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_core_moonwood"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_obsidian"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:moonwood_log"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_moonwood"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:moon": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_moonwood"
+      },
+      "recipes": [
+        "primalmagick:moonwood_wand_core_item"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

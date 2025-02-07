@@ -1,0 +1,22 @@
+{
+  "values": [
+    "minecraft:creeper",
+    "minecraft:drowned",
+    "minecraft:enderman",
+    "minecraft:ghast",
+    "minecraft:guardian",
+    "minecraft:husk",
+    "minecraft:phantom",
+    "minecraft:piglin",
+    "minecraft:piglin_brute",
+    "minecraft:pillager",
+    "minecraft:skeleton",
+    "minecraft:stray",
+    "minecraft:vindicator",
+    "minecraft:wither_skeleton",
+    "minecraft:zombie",
+    "minecraft:zombie_villager",
+    "minecraft:zombified_piglin",
+    "primalmagick:treefolk"
+  ]
+}

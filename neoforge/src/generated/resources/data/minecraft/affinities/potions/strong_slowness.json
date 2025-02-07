@@ -1,0 +1,8 @@
+{
+  "type": "potion_bonus",
+  "bonus": {
+    "primalmagick:sky": 2,
+    "primalmagick:void": 2
+  },
+  "target": "minecraft:strong_slowness"
+}

@@ -1,0 +1,56 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:wand_glamour_table"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_glamour_table"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_heartwood"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_glamour_table"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_glamour_table.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:moon": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_glamour_table"
+      },
+      "recipes": [
+        "primalmagick:wand_glamour_table"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_glamour_table.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

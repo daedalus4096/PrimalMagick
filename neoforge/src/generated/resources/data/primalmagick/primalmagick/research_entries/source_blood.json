@@ -1,0 +1,74 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/blood.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:source_blood"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:forbidden_magick"
+    },
+    {
+      "rootKey": "primalmagick:discover_blood"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "c:bones"
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:bloody_flesh"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requiredValue": 100,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:mana_spent_blood"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:source_blood"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.source_blood.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 5
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:source_blood"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.source_blood.text.stage.2"
+    }
+  ]
+}

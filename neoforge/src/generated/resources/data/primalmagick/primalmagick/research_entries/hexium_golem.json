@@ -1,0 +1,54 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hexium_golem_controller"
+  },
+  "key": {
+    "rootKey": "primalmagick:hexium_golem"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_magitech"
+    },
+    {
+      "rootKey": "primalmagick:primalite_golem"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:hexium_golem"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hexium_golem.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:hexium_golem"
+      },
+      "recipes": [
+        "primalmagick:hexium_golem_controller"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hexium_golem.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

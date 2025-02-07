@@ -1,0 +1,51 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_transmuter"
+  },
+  "key": {
+    "rootKey": "primalmagick:essence_transmuter"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_magitech"
+    },
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:essence_transmuter"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.essence_transmuter.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:essence_transmuter"
+      },
+      "recipes": [
+        "primalmagick:essence_transmuter"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.essence_transmuter.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

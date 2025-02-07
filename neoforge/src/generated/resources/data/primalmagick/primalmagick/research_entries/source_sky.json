@@ -1,0 +1,83 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/sky.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:source_sky"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:terrestrial_magick"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:bamboo"
+            }
+          },
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "minecraft:leaves"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requiredValue": 1,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:shrine_found_sky"
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:env_sky"
+            }
+          },
+          {
+            "requiredValue": 100,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:mana_spent_sky"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:source_sky"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.source_sky.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sky": 5
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:source_sky"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.source_sky.text.stage.2"
+    }
+  ]
+}

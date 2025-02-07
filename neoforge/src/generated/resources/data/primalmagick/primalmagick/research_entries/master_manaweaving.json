@@ -1,0 +1,75 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_manaweaving.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:master_manaweaving"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:wand_cap_gold"
+    },
+    {
+      "rootKey": "primalmagick:wand_gem_adept"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_forbidden"
+            }
+          },
+          {
+            "discipline": {
+              "rootKey": "primalmagick:manaweaving"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "master"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:master_manaweaving"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.master_manaweaving.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:master_manaweaving"
+      },
+      "recipes": [
+        "primalmagick:marble_smoked",
+        "primalmagick:marble_smoked_brick_slab",
+        "primalmagick:marble_smoked_brick_stairs",
+        "primalmagick:marble_smoked_brick_wall",
+        "primalmagick:marble_smoked_bricks",
+        "primalmagick:marble_smoked_chiseled",
+        "primalmagick:marble_smoked_pillar",
+        "primalmagick:marble_smoked_runed",
+        "primalmagick:marble_smoked_slab",
+        "primalmagick:marble_smoked_stairs",
+        "primalmagick:marble_smoked_wall",
+        "primalmagick:marble_smoked_bookshelf"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.master_manaweaving.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

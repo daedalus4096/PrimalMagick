@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 3,
+    "primalmagick:sun": 3
+  },
+  "target": "primalmagick:dowsing_rod"
+}

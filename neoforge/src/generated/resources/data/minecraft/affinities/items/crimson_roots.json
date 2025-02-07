@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 2,
+    "primalmagick:infernal": 2,
+    "primalmagick:moon": 2
+  },
+  "target": "minecraft:crimson_roots"
+}

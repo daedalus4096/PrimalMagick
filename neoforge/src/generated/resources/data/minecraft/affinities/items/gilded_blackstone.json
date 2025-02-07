@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:earth": 10
+  },
+  "base": "minecraft:blackstone",
+  "target": "minecraft:gilded_blackstone"
+}

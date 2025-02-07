@@ -1,0 +1,78 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:stone"
+  },
+  "key": {
+    "rootKey": "primalmagick:stonemelding"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_alchemy"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_earth"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "minecraft:stone"
+              }
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:stonemelding"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.stonemelding.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:stonemelding"
+      },
+      "recipes": [
+        "primalmagick:stone_from_stonemelding",
+        "primalmagick:deepslate_from_stonemelding",
+        "primalmagick:cobblestone_from_stonemelding",
+        "primalmagick:gravel_from_stonemelding"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.stonemelding.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "phase=faded": {
+      "model": "primalmagick:block/moonwood_planks_faded"
+    },
+    "phase=full": {
+      "model": "primalmagick:block/moonwood_planks_full"
+    },
+    "phase=waning": {
+      "model": "primalmagick:block/moonwood_planks_waning"
+    },
+    "phase=waxing": {
+      "model": "primalmagick:block/moonwood_planks_waxing"
+    }
+  }
+}

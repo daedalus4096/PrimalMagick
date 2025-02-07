@@ -1,0 +1,106 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:earthshatter_hammer"
+  },
+  "key": {
+    "rootKey": "primalmagick:earthshatter_hammer"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:raw_iron"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:raw_gold"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:raw_copper"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:earthshatter_hammer"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.earthshatter_hammer.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:earthshatter_hammer"
+      },
+      "recipes": [
+        "primalmagick:earthshatter_hammer",
+        "primalmagick:iron_grit_from_ore",
+        "primalmagick:iron_grit_from_raw_metal",
+        "primalmagick:gold_grit_from_ore",
+        "primalmagick:gold_grit_from_raw_metal",
+        "primalmagick:copper_grit_from_ore",
+        "primalmagick:copper_grit_from_raw_metal",
+        "primalmagick:tin_dust_from_ore",
+        "primalmagick:tin_dust_from_raw_metal",
+        "primalmagick:lead_dust_from_ore",
+        "primalmagick:lead_dust_from_raw_metal",
+        "primalmagick:silver_dust_from_ore",
+        "primalmagick:silver_dust_from_raw_metal",
+        "primalmagick:uranium_dust_from_ore",
+        "primalmagick:uranium_dust_from_raw_metal",
+        "primalmagick:iron_ingot_from_grit_smelting",
+        "primalmagick:gold_ingot_from_grit_smelting",
+        "primalmagick:copper_ingot_from_grit_smelting",
+        "primalmagick:cobblestone_from_earthshatter_hammer",
+        "primalmagick:cobbled_deepslate_from_earthshatter_hammer",
+        "primalmagick:gravel_from_earthshatter_hammer",
+        "primalmagick:sand_from_earthshatter_hammer",
+        "primalmagick:rock_salt_from_earthshatter_hammer",
+        "primalmagick:refined_salt_from_earthshatter_hammer",
+        "primalmagick:netherite_scrap_from_earthshatter_hammer"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.earthshatter_hammer.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

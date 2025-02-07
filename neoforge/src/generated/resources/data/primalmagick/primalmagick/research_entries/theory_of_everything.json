@@ -1,0 +1,78 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [
+    {
+      "rootKey": "primalmagick:basics"
+    },
+    {
+      "rootKey": "primalmagick:alchemy"
+    },
+    {
+      "rootKey": "primalmagick:magitech"
+    },
+    {
+      "rootKey": "primalmagick:manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:ritual"
+    },
+    {
+      "rootKey": "primalmagick:runeworking"
+    },
+    {
+      "rootKey": "primalmagick:sorcery"
+    }
+  ],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:grimoire"
+  },
+  "key": {
+    "rootKey": "primalmagick:theory_of_everything"
+  },
+  "parents": [],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:theory_of_everything"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.theory_of_everything.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 2,
+          "primalmagick:earth": 2,
+          "primalmagick:hallowed": 2,
+          "primalmagick:infernal": 2,
+          "primalmagick:moon": 2,
+          "primalmagick:sea": 2,
+          "primalmagick:sky": 2,
+          "primalmagick:sun": 2,
+          "primalmagick:void": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:theory_of_everything"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.theory_of_everything.text.stage.2"
+    }
+  ]
+}

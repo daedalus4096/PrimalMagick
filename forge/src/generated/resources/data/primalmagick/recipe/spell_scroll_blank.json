@@ -1,0 +1,27 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    "  S",
+    "PPP",
+    "S  "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_sorcery"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:spell_scroll_blank"
+  }
+}

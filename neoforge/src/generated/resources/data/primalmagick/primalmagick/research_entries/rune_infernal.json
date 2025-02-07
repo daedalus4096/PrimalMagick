@@ -1,0 +1,56 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_infernal"
+  },
+  "key": {
+    "rootKey": "primalmagick:rune_infernal"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_infernal"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_infernal.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_infernal"
+      },
+      "recipes": [
+        "primalmagick:rune_infernal"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_infernal.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

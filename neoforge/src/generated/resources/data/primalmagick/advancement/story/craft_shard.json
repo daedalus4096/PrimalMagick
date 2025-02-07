@@ -1,0 +1,121 @@
+{
+  "parent": "primalmagick:story/craft_essence_furnace",
+  "criteria": {
+    "blood": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:essence_shard_blood"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "earth": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:essence_shard_earth"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hallowed": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:essence_shard_hallowed"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "infernal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:essence_shard_infernal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "moon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:essence_shard_moon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sea": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:essence_shard_sea"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sky": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:essence_shard_sky"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sun": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:essence_shard_sun"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "void": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:essence_shard_void"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_shard.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:essence_shard_earth"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_shard.title"
+    }
+  },
+  "requirements": [
+    [
+      "earth",
+      "sea",
+      "sky",
+      "sun",
+      "moon",
+      "blood",
+      "infernal",
+      "void",
+      "hallowed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

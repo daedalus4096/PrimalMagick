@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "primalmagick:block/marble_enchanted",
+    "side": "primalmagick:block/marble_enchanted",
+    "top": "primalmagick:block/marble_enchanted"
+  }
+}

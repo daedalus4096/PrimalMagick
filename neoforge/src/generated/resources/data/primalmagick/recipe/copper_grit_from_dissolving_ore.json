@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/copper"
+          }
+        },
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ores/copper"
+          }
+        }
+      ]
+    }
+  ],
+  "type": "primalmagick:dissolution_tag",
+  "group": "copper_grit_dissolution",
+  "ingredient": {
+    "tag": "c:ores/copper"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1
+    }
+  },
+  "outputAmount": 3,
+  "outputTag": "c:dusts/copper"
+}

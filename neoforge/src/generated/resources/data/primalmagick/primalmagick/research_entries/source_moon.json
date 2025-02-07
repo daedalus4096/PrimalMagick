@@ -1,0 +1,81 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/moon.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:source_moon"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:terrestrial_magick"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "primalmagick:moonwood_logs"
+          },
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "c:mushrooms"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requiredValue": 1,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:shrine_found_moon"
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:env_moon"
+            }
+          },
+          {
+            "requiredValue": 100,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:mana_spent_moon"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:source_moon"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.source_moon.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:moon": 5
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:source_moon"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.source_moon.text.stage.2"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "night_vision",
+  "ingredients": [
+    {
+      "type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": "primalmagick:concoction"
+    },
+    {
+      "item": "primalmagick:essence_crystal_moon"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 9
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_elixirs"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:night_vision"
+      },
+      "primalmagick:concoction_doses": 9,
+      "primalmagick:concoction_type": "elixir"
+    },
+    "count": 1,
+    "id": "primalmagick:concoction"
+  }
+}

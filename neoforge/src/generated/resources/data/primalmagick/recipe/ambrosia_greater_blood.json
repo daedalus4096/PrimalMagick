@@ -1,0 +1,67 @@
+{
+  "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:ambrosia_greater",
+  "ingredients": [
+    {
+      "item": "primalmagick:manafruit"
+    },
+    {
+      "item": "primalmagick:mana_prism"
+    },
+    {
+      "item": "primalmagick:essence_crystal_blood"
+    },
+    {
+      "item": "primalmagick:rune_absorb"
+    },
+    {
+      "item": "primalmagick:rune_self"
+    },
+    {
+      "item": "primalmagick:rune_insight"
+    }
+  ],
+  "instability": 6,
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 100
+    }
+  },
+  "props": [
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "block": "primalmagick:ritual_lectern"
+    },
+    {
+      "block": "primalmagick:bloodletter"
+    }
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:greater_ambrosia"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:ambrosia_greater_blood"
+  }
+}

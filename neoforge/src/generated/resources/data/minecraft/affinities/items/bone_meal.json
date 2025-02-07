@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 2,
+    "primalmagick:moon": 1
+  },
+  "target": "minecraft:bone_meal"
+}

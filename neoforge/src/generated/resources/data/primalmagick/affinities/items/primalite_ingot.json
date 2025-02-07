@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 11,
+    "primalmagick:moon": 3,
+    "primalmagick:sea": 3,
+    "primalmagick:sky": 3,
+    "primalmagick:sun": 3
+  },
+  "target": "primalmagick:primalite_ingot"
+}

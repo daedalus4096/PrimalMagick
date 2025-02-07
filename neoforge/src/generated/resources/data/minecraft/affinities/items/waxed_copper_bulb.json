@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:copper_bulb",
+  "target": "minecraft:waxed_copper_bulb"
+}

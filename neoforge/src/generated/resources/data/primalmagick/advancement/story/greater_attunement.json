@@ -1,0 +1,30 @@
+{
+  "parent": "primalmagick:story/all_minor_attunements",
+  "criteria": {
+    "any_greater": {
+      "conditions": {
+        "lasting": "greater"
+      },
+      "trigger": "primalmagick:attunement_threshold"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.greater_attunement.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:ambrosia_supreme_hallowed"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.greater_attunement.title"
+    }
+  },
+  "requirements": [
+    [
+      "any_greater"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

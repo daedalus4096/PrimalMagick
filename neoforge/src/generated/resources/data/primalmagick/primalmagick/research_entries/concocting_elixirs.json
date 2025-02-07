@@ -1,0 +1,114 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_elixirs"
+      },
+      "recipes": [
+        "primalmagick:healing_elixir",
+        "primalmagick:strong_healing_elixir",
+        "primalmagick:regeneration_elixir",
+        "primalmagick:long_regeneration_elixir",
+        "primalmagick:strong_regeneration_elixir"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_elixirs.text.addenda.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_elixirs"
+      },
+      "recipes": [
+        "primalmagick:fire_resistance_elixir",
+        "primalmagick:long_fire_resistance_elixir"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_elixirs.text.addenda.2"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:concocter"
+  },
+  "key": {
+    "rootKey": "primalmagick:concocting_elixirs"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_magitech"
+    },
+    {
+      "rootKey": "primalmagick:concocting_philters"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_elixirs"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_elixirs.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_elixirs"
+      },
+      "recipes": [
+        "primalmagick:night_vision_elixir",
+        "primalmagick:long_night_vision_elixir",
+        "primalmagick:invisibility_elixir",
+        "primalmagick:long_invisibility_elixir",
+        "primalmagick:leaping_elixir",
+        "primalmagick:long_leaping_elixir",
+        "primalmagick:strong_leaping_elixir",
+        "primalmagick:swiftness_elixir",
+        "primalmagick:long_swiftness_elixir",
+        "primalmagick:strong_swiftness_elixir",
+        "primalmagick:turtle_master_elixir",
+        "primalmagick:long_turtle_master_elixir",
+        "primalmagick:strong_turtle_master_elixir",
+        "primalmagick:water_breathing_elixir",
+        "primalmagick:long_water_breathing_elixir",
+        "primalmagick:strength_elixir",
+        "primalmagick:long_strength_elixir",
+        "primalmagick:strong_strength_elixir",
+        "primalmagick:slow_falling_elixir",
+        "primalmagick:long_slow_falling_elixir",
+        "primalmagick:luck_elixir"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_elixirs.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

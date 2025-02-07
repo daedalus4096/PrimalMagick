@@ -1,0 +1,16 @@
+{
+  "craftingStat": "primalmagick:crafted_alchemy",
+  "expertiseStat": "primalmagick:expertise_alchemy",
+  "iconLocation": "primalmagick:textures/research/discipline_alchemy.png",
+  "indexSortOrder": 300,
+  "key": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "unlockRequirementOpt": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:unlock_alchemy"
+    }
+  }
+}

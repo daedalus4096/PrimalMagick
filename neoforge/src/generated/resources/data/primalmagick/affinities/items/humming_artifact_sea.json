@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "primalmagick:humming_artifact_unattuned",
+  "target": "primalmagick:humming_artifact_sea"
+}

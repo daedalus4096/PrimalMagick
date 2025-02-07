@@ -1,0 +1,53 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "long_strength",
+  "ingredients": [
+    {
+      "type": "primalmagick:partial_component",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": [
+        "primalmagick:concoction"
+      ]
+    },
+    {
+      "item": "primalmagick:essence_crystal_earth"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 9
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_elixirs"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:long_strength"
+      },
+      "primalmagick:concoction_doses": 9,
+      "primalmagick:concoction_type": "elixir"
+    },
+    "count": 1,
+    "id": "primalmagick:concoction"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 20
+  },
+  "target": "minecraft:player_head"
+}

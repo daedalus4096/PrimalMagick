@@ -1,0 +1,50 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "night_vision",
+  "ingredients": [
+    {
+      "type": "primalmagick:partial_component",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": [
+        "primalmagick:concoction"
+      ]
+    },
+    {
+      "item": "primalmagick:essence_dust_moon"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 1
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_tinctures"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:night_vision"
+      },
+      "primalmagick:concoction_doses": 3,
+      "primalmagick:concoction_type": "tincture"
+    },
+    "count": 1,
+    "id": "primalmagick:concoction"
+  }
+}

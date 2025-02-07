@@ -1,0 +1,63 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_manaweaving.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:expert_manaweaving"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:mana_arrows"
+    },
+    {
+      "rootKey": "primalmagick:wand_charger"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "discipline": {
+          "rootKey": "primalmagick:manaweaving"
+        },
+        "requirement_type": "primalmagick:expertise",
+        "tier": "expert"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:expert_manaweaving"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_manaweaving.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:expert_manaweaving"
+      },
+      "recipes": [
+        "primalmagick:marble_enchanted",
+        "primalmagick:marble_enchanted_brick_slab",
+        "primalmagick:marble_enchanted_brick_stairs",
+        "primalmagick:marble_enchanted_brick_wall",
+        "primalmagick:marble_enchanted_bricks",
+        "primalmagick:marble_enchanted_chiseled",
+        "primalmagick:marble_enchanted_pillar",
+        "primalmagick:marble_enchanted_runed",
+        "primalmagick:marble_enchanted_slab",
+        "primalmagick:marble_enchanted_stairs",
+        "primalmagick:marble_enchanted_wall",
+        "primalmagick:marble_enchanted_bookshelf"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_manaweaving.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

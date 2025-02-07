@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/craft_magitech_parts",
+  "criteria": {
+    "has_arcanometer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:arcanometer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_arcanometer.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:arcanometer"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_arcanometer.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_arcanometer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

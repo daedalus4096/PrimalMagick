@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:earth": 1,
+    "primalmagick:moon": 1,
+    "primalmagick:sea": 1,
+    "primalmagick:sky": 1,
+    "primalmagick:sun": 1
+  },
+  "base": "primalmagick:marble_pillar",
+  "target": "primalmagick:marble_enchanted_pillar"
+}

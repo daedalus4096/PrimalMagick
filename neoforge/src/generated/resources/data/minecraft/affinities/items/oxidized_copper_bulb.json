@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 38,
+    "primalmagick:infernal": 3,
+    "primalmagick:sun": 4
+  },
+  "target": "minecraft:oxidized_copper_bulb"
+}

@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "primalmagick:hallowood_log",
+  "target": "primalmagick:stripped_hallowood_log"
+}

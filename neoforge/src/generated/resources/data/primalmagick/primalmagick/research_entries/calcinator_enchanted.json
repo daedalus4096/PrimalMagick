@@ -1,0 +1,57 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:calcinator_enchanted"
+  },
+  "key": {
+    "rootKey": "primalmagick:calcinator_enchanted"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_alchemy"
+    },
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:calcinator_basic"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:calcinator_enchanted"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.calcinator_enchanted.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:calcinator_enchanted"
+      },
+      "recipes": [
+        "primalmagick:calcinator_enchanted"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.calcinator_enchanted.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

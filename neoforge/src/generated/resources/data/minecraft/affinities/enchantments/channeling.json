@@ -1,0 +1,7 @@
+{
+  "type": "enchantment_bonus",
+  "multiplier": {
+    "primalmagick:sky": 1
+  },
+  "target": "minecraft:channeling"
+}

@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "expertiseGroup": "primalmagick:skyglass_block",
+  "group": "stained_skyglass",
+  "key": {
+    "D": {
+      "tag": "c:dyes/orange"
+    },
+    "G": {
+      "tag": "primalmagick:skyglass"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GDG",
+    "GGG"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:skyglass"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "primalmagick:stained_skyglass_orange"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "baseExpertiseOverride": 1,
+  "bonusExpertiseOverride": 4,
+  "expertiseGroup": "primalmagick:heartwood_core",
+  "key": {
+    "H": {
+      "item": "primalmagick:heartwood"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 5,
+      "primalmagick:moon": 5,
+      "primalmagick:sea": 5,
+      "primalmagick:sky": 5,
+      "primalmagick:sun": 5
+    }
+  },
+  "pattern": [
+    "  H",
+    " H ",
+    "H  "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:wand_core_heartwood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:heartwood_staff_core_item"
+  }
+}

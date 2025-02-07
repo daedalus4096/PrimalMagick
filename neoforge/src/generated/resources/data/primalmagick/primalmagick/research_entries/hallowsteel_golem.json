@@ -1,0 +1,54 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowsteel_golem_controller"
+  },
+  "key": {
+    "rootKey": "primalmagick:hallowsteel_golem"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_magitech"
+    },
+    {
+      "rootKey": "primalmagick:hexium_golem"
+    },
+    {
+      "rootKey": "primalmagick:hallowsteel"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:hallowsteel_golem"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hallowsteel_golem.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:hallowsteel_golem"
+      },
+      "recipes": [
+        "primalmagick:hallowsteel_golem_controller"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hallowsteel_golem.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

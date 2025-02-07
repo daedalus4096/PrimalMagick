@@ -1,0 +1,375 @@
+{
+  "aidBlocks": [],
+  "materialOptions": [
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:ritual_altar"
+      },
+      "weight": 10.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:offering_pedestal"
+      },
+      "weight": 5.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "stack": {
+        "count": 2,
+        "id": "primalmagick:refined_salt"
+      },
+      "weight": 3.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:ritual_lectern"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:ritual_lectern"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:ritual_lectern"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "minecraft:enchanted_book"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:ritual_bell"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:ritual_bell"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_shovel"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:primalite_shovel"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_shovel"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_earth"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_fishing_rod"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:primalite_fishing_rod"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_fishing_rod"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_sea"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_axe"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:primalite_axe"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_axe"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_sky"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_hoe"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:primalite_hoe"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_hoe"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_sun"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_pickaxe"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:primalite_pickaxe"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.25,
+      "consumed": true,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_pickaxe"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:essence_shard_moon"
+      },
+      "weight": 1.0
+    }
+  ],
+  "otherRewards": [],
+  "requirement": {
+    "requiredCount": 2,
+    "requirement_type": "primalmagick:quorum",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:ritual_lectern"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:ritual_bell"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_shovel"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_fishing_rod"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_axe"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_hoe"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:primal_pickaxe"
+        }
+      }
+    ]
+  },
+  "rewardMultiplier": 0.5,
+  "weightFunction": {
+    "modifiers": [
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:basic_ritual"
+        },
+        "weightModifier": 1.0
+      },
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:expert_ritual"
+        },
+        "weightModifier": 1.0
+      },
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:master_ritual"
+        },
+        "weightModifier": -1.0
+      },
+      {
+        "researchKey": {
+          "rootKey": "primalmagick:supreme_ritual"
+        },
+        "weightModifier": -1.0
+      }
+    ],
+    "reward_type": "primalmagick:progressive",
+    "startingWeight": 3.0
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:ender_dragon",
+  "values": {
+    "primalmagick:blood": 50,
+    "primalmagick:sky": 20,
+    "primalmagick:void": 50
+  }
+}

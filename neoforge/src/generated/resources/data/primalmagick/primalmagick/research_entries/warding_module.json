@@ -1,0 +1,63 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:warding_module_basic"
+  },
+  "key": {
+    "rootKey": "primalmagick:warding_module"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_magitech"
+    },
+    {
+      "rootKey": "primalmagick:rune_protect"
+    },
+    {
+      "rootKey": "primalmagick:rune_self"
+    },
+    {
+      "rootKey": "primalmagick:rune_insight"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    },
+    {
+      "rootKey": "primalmagick:wand_charger"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:warding_module"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.warding_module.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:warding_module"
+      },
+      "recipes": [
+        "primalmagick:warding_module_basic"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.warding_module.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

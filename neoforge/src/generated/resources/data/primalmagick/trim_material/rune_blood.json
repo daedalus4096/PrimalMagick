@@ -1,0 +1,9 @@
+{
+  "asset_name": "rune_blood",
+  "description": {
+    "color": "#8A0303",
+    "translate": "trim_material.primalmagick.rune_blood"
+  },
+  "ingredient": "primalmagick:rune_blood",
+  "item_model_index": 0.4
+}

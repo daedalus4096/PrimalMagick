@@ -1,0 +1,150 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:crystal_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_blood_from_crystal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.crystal_desynthesis.text.addenda.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:crystal_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_infernal_from_crystal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.crystal_desynthesis.text.addenda.2"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:crystal_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_void_from_crystal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.crystal_desynthesis.text.addenda.3"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:hallowed": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:crystal_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_hallowed_from_crystal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.crystal_desynthesis.text.addenda.4"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_crystal_earth"
+  },
+  "key": {
+    "rootKey": "primalmagick:crystal_desynthesis"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:crystal_desynthesis"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.crystal_desynthesis.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 1,
+          "primalmagick:moon": 1,
+          "primalmagick:sea": 1,
+          "primalmagick:sky": 1,
+          "primalmagick:sun": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:crystal_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_shard_earth_from_crystal",
+        "primalmagick:essence_shard_sea_from_crystal",
+        "primalmagick:essence_shard_sky_from_crystal",
+        "primalmagick:essence_shard_sun_from_crystal",
+        "primalmagick:essence_shard_moon_from_crystal"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.crystal_desynthesis.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

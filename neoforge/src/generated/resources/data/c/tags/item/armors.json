@@ -1,0 +1,20 @@
+{
+  "values": [
+    "#primalmagick:robes/helmets",
+    "primalmagick:primalite_head",
+    "primalmagick:hexium_head",
+    "primalmagick:hallowsteel_head",
+    "#primalmagick:robes/chestplates",
+    "primalmagick:primalite_chest",
+    "primalmagick:hexium_chest",
+    "primalmagick:hallowsteel_chest",
+    "#primalmagick:robes/leggings",
+    "primalmagick:primalite_legs",
+    "primalmagick:hexium_legs",
+    "primalmagick:hallowsteel_legs",
+    "#primalmagick:robes/boots",
+    "primalmagick:primalite_feet",
+    "primalmagick:hexium_feet",
+    "primalmagick:hallowsteel_feet"
+  ]
+}

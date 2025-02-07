@@ -1,0 +1,38 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_sorcery.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:basic_sorcery"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_sorcery"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:basic_sorcery"
+      },
+      "recipes": [
+        "primalmagick:spell_scroll_blank",
+        "primalmagick:spellcrafting_altar"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.basic_sorcery.text.stage.1"
+    }
+  ]
+}

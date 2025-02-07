@@ -1,0 +1,65 @@
+{
+  "type": "primalmagick:concocting",
+  "ingredients": [
+    {
+      "type": "primalmagick:partial_component",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": [
+        "primalmagick:alchemical_bomb"
+      ]
+    },
+    {
+      "item": "primalmagick:essence_shard_earth"
+    },
+    {
+      "item": "primalmagick:essence_shard_blood"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 3
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_bombs"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:poison"
+      },
+      "primalmagick:concoction_doses": 6,
+      "primalmagick:concoction_type": "bomb",
+      "primalmagick:fuse_type": "medium"
+    },
+    "count": 1,
+    "id": "primalmagick:alchemical_bomb"
+  }
+}

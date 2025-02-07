@@ -1,0 +1,49 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/sky.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_lightning"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_sorcery"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_lightning"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_lightning.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sky": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_lightning"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_lightning.text.stage.2"
+    }
+  ]
+}

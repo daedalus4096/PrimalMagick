@@ -1,0 +1,9 @@
+{
+  "asset_name": "rune_earth",
+  "description": {
+    "color": "#20702B",
+    "translate": "trim_material.primalmagick.rune_earth"
+  },
+  "ingredient": "primalmagick:rune_earth",
+  "item_model_index": 0.7
+}

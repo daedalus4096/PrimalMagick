@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:moon": 10
+  },
+  "base": "minecraft:oak_leaves",
+  "remove": {
+    "primalmagick:sun": 5
+  },
+  "target": "primalmagick:moonwood_leaves"
+}

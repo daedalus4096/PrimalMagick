@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "primalmagick:block/marble_smoked",
+    "side": "primalmagick:block/marble_smoked",
+    "top": "primalmagick:block/marble_smoked"
+  }
+}

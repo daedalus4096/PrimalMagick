@@ -1,0 +1,124 @@
+{
+  "parent": "primalmagick:story/craft_grimoire",
+  "criteria": {
+    "earth_library": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "primalmagick:earth_library"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "forbidden_library": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "primalmagick:forbidden_library"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "moon_library": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "primalmagick:moon_library"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "sea_library": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "primalmagick:sea_library"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "sky_library": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "primalmagick:sky_library"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "sun_library": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "primalmagick:sun_library"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.discover_library.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:static_book"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.discover_library.title"
+    }
+  },
+  "requirements": [
+    [
+      "earth_library",
+      "sea_library",
+      "sky_library",
+      "sun_library",
+      "moon_library",
+      "forbidden_library"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

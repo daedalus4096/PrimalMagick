@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:void": 5
+  },
+  "target": "minecraft:purpur_block"
+}

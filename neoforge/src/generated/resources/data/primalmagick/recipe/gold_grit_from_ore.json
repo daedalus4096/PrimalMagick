@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/gold"
+          }
+        },
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ores/gold"
+          }
+        }
+      ]
+    }
+  ],
+  "type": "primalmagick:crafting_shapeless_tag",
+  "category": "misc",
+  "group": "earthshatter_hammer_grit",
+  "ingredients": [
+    {
+      "item": "primalmagick:earthshatter_hammer"
+    },
+    {
+      "tag": "c:ores/gold"
+    }
+  ],
+  "outputAmount": 2,
+  "outputTag": "c:dusts/gold"
+}

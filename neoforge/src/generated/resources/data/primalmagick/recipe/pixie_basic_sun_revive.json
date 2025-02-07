@@ -1,0 +1,24 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "ingredients": [
+    {
+      "item": "primalmagick:drained_pixie_basic_sun"
+    },
+    {
+      "item": "primalmagick:essence_dust_sun"
+    }
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:pixies"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:pixie_basic_sun"
+  }
+}

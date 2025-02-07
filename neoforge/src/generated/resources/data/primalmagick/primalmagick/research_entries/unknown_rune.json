@@ -1,0 +1,15 @@
+{
+  "addenda": [],
+  "finales": [],
+  "flags": {
+    "internal": true
+  },
+  "icon": {
+    "location": "primalmagick:textures/research/research_unknown.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:unknown_rune"
+  },
+  "parents": [],
+  "stages": []
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "primalmagick:block/essence_cask_enchanted_bottom",
+    "side": "primalmagick:block/essence_cask_enchanted_side",
+    "top": "primalmagick:block/essence_cask_enchanted_top_open"
+  }
+}

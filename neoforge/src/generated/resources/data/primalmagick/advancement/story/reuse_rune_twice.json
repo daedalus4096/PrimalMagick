@@ -1,0 +1,30 @@
+{
+  "parent": "primalmagick:story/reuse_rune_once",
+  "criteria": {
+    "reuse_twice": {
+      "conditions": {
+        "threshold": 3
+      },
+      "trigger": "primalmagick:rune_use_count"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.reuse_rune_twice.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:runescribing_altar_forbidden"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.reuse_rune_twice.title"
+    }
+  },
+  "requirements": [
+    [
+      "reuse_twice"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

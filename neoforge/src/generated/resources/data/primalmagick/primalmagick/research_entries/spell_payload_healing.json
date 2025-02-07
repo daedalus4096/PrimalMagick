@@ -1,0 +1,64 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/sun.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_healing"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:spell_payload_solar"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:near_death_experience"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_healing"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_healing.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sun": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_healing"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_healing.text.stage.2"
+    }
+  ]
+}

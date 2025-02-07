@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:shrine",
+  "biomes": "#primalmagick:has_structure/sun_shrine",
+  "shrine_type": "sun",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin"
+}

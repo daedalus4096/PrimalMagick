@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 9,
+    "primalmagick:earth": 4,
+    "primalmagick:moon": 4,
+    "primalmagick:sea": 4,
+    "primalmagick:sky": 19,
+    "primalmagick:sun": 4
+  },
+  "target": "primalmagick:spellcloth"
+}

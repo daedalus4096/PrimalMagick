@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 5,
+    "primalmagick:infernal": 10,
+    "primalmagick:sky": 20
+  },
+  "target": "minecraft:ghast_tear"
+}

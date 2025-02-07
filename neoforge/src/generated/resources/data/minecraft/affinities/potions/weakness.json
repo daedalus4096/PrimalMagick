@@ -1,0 +1,8 @@
+{
+  "type": "potion_bonus",
+  "bonus": {
+    "primalmagick:earth": 1,
+    "primalmagick:void": 1
+  },
+  "target": "minecraft:weakness"
+}

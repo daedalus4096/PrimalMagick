@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/craft_arcanometer",
+  "criteria": {
+    "has_engine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:zephyr_engine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_zephyr_engine.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:zephyr_engine"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_zephyr_engine.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_engine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

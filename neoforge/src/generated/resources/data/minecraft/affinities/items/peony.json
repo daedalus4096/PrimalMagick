@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:sunflower",
+  "target": "minecraft:peony"
+}

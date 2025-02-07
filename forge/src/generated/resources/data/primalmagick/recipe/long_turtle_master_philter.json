@@ -1,0 +1,53 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "long_turtle_master",
+  "ingredients": [
+    {
+      "type": "primalmagick:partial_component",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": [
+        "primalmagick:concoction"
+      ]
+    },
+    {
+      "item": "primalmagick:essence_shard_sea"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:turtle_helmet"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 3
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_philters"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:long_turtle_master"
+      },
+      "primalmagick:concoction_doses": 6,
+      "primalmagick:concoction_type": "philter"
+    },
+    "count": 1,
+    "id": "primalmagick:concoction"
+  }
+}

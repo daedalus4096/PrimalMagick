@@ -1,0 +1,43 @@
+{
+  "type": "forge:conditional",
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:dusts/tin"
+        }
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:raw_materials/tin"
+        }
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "forge:condition": {
+        "type": "forge:true"
+      },
+      "recipe": {
+        "type": "primalmagick:dissolution_tag",
+        "group": "tin_dust_dissolution",
+        "ingredient": {
+          "tag": "c:raw_materials/tin"
+        },
+        "mana": {
+          "sources": {
+            "primalmagick:earth": 1
+          }
+        },
+        "outputAmount": 3,
+        "outputTag": "c:dusts/tin"
+      }
+    }
+  ]
+}

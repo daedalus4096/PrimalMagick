@@ -1,0 +1,7 @@
+{
+  "type": "enchantment_bonus",
+  "multiplier": {
+    "primalmagick:blood": 1
+  },
+  "target": "minecraft:sharpness"
+}

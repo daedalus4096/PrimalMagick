@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:creeper",
+  "values": {
+    "primalmagick:earth": 5,
+    "primalmagick:infernal": 10,
+    "primalmagick:sun": 5
+  }
+}

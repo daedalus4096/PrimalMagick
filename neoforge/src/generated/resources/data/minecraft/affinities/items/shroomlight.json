@@ -1,0 +1,10 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:infernal": 5,
+    "primalmagick:moon": 10,
+    "primalmagick:sun": 15
+  },
+  "target": "minecraft:shroomlight"
+}

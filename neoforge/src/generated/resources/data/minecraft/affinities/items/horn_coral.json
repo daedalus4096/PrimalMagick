@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:sun": 5
+  },
+  "base": "minecraft:dead_horn_coral",
+  "target": "minecraft:horn_coral"
+}

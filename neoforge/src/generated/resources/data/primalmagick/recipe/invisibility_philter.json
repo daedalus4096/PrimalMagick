@@ -1,0 +1,51 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "invisibility",
+  "ingredients": [
+    {
+      "type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": "primalmagick:concoction"
+    },
+    {
+      "item": "primalmagick:essence_shard_moon"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "item": "minecraft:fermented_spider_eye"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 3
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_philters"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:invisibility"
+      },
+      "primalmagick:concoction_doses": 6,
+      "primalmagick:concoction_type": "philter"
+    },
+    "count": 1,
+    "id": "primalmagick:concoction"
+  }
+}

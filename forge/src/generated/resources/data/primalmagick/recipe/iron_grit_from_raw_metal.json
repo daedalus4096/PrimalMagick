@@ -1,0 +1,44 @@
+{
+  "type": "forge:conditional",
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:dusts/iron"
+        }
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:raw_materials/iron"
+        }
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "forge:condition": {
+        "type": "forge:true"
+      },
+      "recipe": {
+        "type": "primalmagick:crafting_shapeless_tag",
+        "category": "misc",
+        "group": "earthshatter_hammer_grit",
+        "ingredients": [
+          {
+            "item": "primalmagick:earthshatter_hammer"
+          },
+          {
+            "tag": "c:raw_materials/iron"
+          }
+        ],
+        "outputAmount": 2,
+        "outputTag": "c:dusts/iron"
+      }
+    }
+  ]
+}

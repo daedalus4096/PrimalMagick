@@ -1,0 +1,70 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_sorcery.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:supreme_sorcery"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:spell_vehicle_bolt"
+    },
+    {
+      "rootKey": "primalmagick:spell_mod_quicken"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_hallowed"
+            }
+          },
+          {
+            "discipline": {
+              "rootKey": "primalmagick:sorcery"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "supreme"
+          },
+          {
+            "requiredValue": 250,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:spells_crafted_max_cost"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_sorcery"
+      },
+      "recipes": [],
+      "revelations": [
+        {
+          "rootKey": "primalmagick:secrets_of_the_universe"
+        }
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_sorcery.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_sorcery"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_sorcery.text.stage.2"
+    }
+  ]
+}

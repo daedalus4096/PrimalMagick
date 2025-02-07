@@ -1,0 +1,55 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
+  "key": {
+    "rootKey": "primalmagick:sanguine_core_aliens"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:sanguine_crucible"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_aliens"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_aliens.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_aliens"
+      },
+      "recipes": [
+        "primalmagick:sanguine_core_enderman",
+        "primalmagick:sanguine_core_endermite",
+        "primalmagick:sanguine_core_shulker"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_aliens.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

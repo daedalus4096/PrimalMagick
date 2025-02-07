@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:sky": 100
+  },
+  "target": "primalmagick:essence_cluster_sky"
+}

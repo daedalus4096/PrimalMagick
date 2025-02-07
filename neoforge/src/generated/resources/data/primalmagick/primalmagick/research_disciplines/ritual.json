@@ -1,0 +1,16 @@
+{
+  "craftingStat": "primalmagick:crafted_ritual",
+  "expertiseStat": "primalmagick:expertise_ritual",
+  "iconLocation": "primalmagick:textures/research/discipline_ritual.png",
+  "indexSortOrder": 600,
+  "key": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "unlockRequirementOpt": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:unlock_ritual"
+    }
+  }
+}

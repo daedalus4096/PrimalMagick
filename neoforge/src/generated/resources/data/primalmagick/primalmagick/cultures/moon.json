@@ -1,0 +1,9 @@
+{
+  "accentBlockState": {
+    "Name": "minecraft:iron_block"
+  },
+  "hiddenLootTable": "primalmagick:gameplay/library/hidden",
+  "languageId": "primalmagick:moon",
+  "shelfLootTable": "primalmagick:gameplay/library/moon",
+  "welcomeLootTable": "primalmagick:gameplay/library/welcome"
+}

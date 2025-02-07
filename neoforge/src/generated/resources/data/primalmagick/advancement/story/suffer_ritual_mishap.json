@@ -1,0 +1,30 @@
+{
+  "parent": "primalmagick:story/craft_ritual_altar",
+  "criteria": {
+    "has_mishap": {
+      "conditions": {
+        "stat": "primalmagick:ritual_mishaps",
+        "threshold": 1
+      },
+      "trigger": "primalmagick:stat_value"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.suffer_ritual_mishap.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:dowsing_rod"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.suffer_ritual_mishap.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_mishap"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

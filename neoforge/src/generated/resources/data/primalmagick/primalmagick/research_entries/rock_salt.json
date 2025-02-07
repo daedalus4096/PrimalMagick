@@ -1,0 +1,49 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:refined_salt"
+  },
+  "key": {
+    "rootKey": "primalmagick:rock_salt"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:rock_salt"
+      },
+      "recipes": [
+        "primalmagick:refined_salt",
+        "primalmagick:rock_salt_from_smelting",
+        "primalmagick:salt_block",
+        "primalmagick:refined_salt_from_salt_block",
+        "primalmagick:salted_baked_potato",
+        "primalmagick:salted_beetroot_soup",
+        "primalmagick:salted_cooked_beef",
+        "primalmagick:salted_cooked_chicken",
+        "primalmagick:salted_cooked_cod",
+        "primalmagick:salted_cooked_mutton",
+        "primalmagick:salted_cooked_porkchop",
+        "primalmagick:salted_cooked_rabbit",
+        "primalmagick:salted_cooked_salmon",
+        "primalmagick:salted_mushroom_stew",
+        "primalmagick:salted_rabbit_stew"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rock_salt.text.stage.1"
+    }
+  ]
+}

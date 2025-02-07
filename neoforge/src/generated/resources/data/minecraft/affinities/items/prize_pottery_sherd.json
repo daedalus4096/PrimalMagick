@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:angler_pottery_sherd",
+  "target": "minecraft:prize_pottery_sherd"
+}

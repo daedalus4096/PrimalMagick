@@ -1,0 +1,38 @@
+{
+  "parent": "primalmagick:story/craft_sanguine_crucible",
+  "criteria": {
+    "kill_inner_demon": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "primalmagick:inner_demon"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.kill_inner_demon.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:sanguine_core_inner_demon"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.kill_inner_demon.title"
+    }
+  },
+  "requirements": [
+    [
+      "kill_inner_demon"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

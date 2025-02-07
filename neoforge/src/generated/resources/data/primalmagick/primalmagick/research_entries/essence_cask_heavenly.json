@@ -1,0 +1,57 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_cask_heavenly"
+  },
+  "key": {
+    "rootKey": "primalmagick:essence_cask_heavenly"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:essence_cask_forbidden"
+    },
+    {
+      "rootKey": "primalmagick:cluster_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:hallowsteel"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:essence_cask_heavenly"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.essence_cask_heavenly.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:essence_cask_heavenly"
+      },
+      "recipes": [
+        "primalmagick:essence_cask_heavenly"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.essence_cask_heavenly.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

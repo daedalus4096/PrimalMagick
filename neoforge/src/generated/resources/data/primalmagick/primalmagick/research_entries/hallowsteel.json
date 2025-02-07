@@ -1,0 +1,101 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowsteel_ingot"
+  },
+  "key": {
+    "rootKey": "primalmagick:hallowsteel"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_alchemy"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:discover_hallowed"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_crystal_hallowed"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "primalmagick:hexium_ingot"
+              }
+            }
+          },
+          {
+            "amount": 3,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:hallowsteel"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hallowsteel.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:hallowed": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:hallowsteel"
+      },
+      "recipes": [
+        "primalmagick:hallowsteel_ingot",
+        "primalmagick:hallowsteel_nugget",
+        "primalmagick:hallowsteel_ingot_from_nuggets",
+        "primalmagick:hallowsteel_block",
+        "primalmagick:hallowsteel_ingots_from_block",
+        "primalmagick:hallowsteel_sword",
+        "primalmagick:hallowsteel_trident",
+        "primalmagick:hallowsteel_bow",
+        "primalmagick:hallowsteel_shovel",
+        "primalmagick:hallowsteel_pickaxe",
+        "primalmagick:hallowsteel_axe",
+        "primalmagick:hallowsteel_hoe",
+        "primalmagick:hallowsteel_fishing_rod",
+        "primalmagick:hallowsteel_head",
+        "primalmagick:hallowsteel_chest",
+        "primalmagick:hallowsteel_legs",
+        "primalmagick:hallowsteel_feet",
+        "primalmagick:hallowsteel_shield"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hallowsteel.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

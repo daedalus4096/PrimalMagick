@@ -1,0 +1,9 @@
+{
+  "accentBlockState": {
+    "Name": "minecraft:gold_block"
+  },
+  "hiddenLootTable": "primalmagick:gameplay/library/hidden",
+  "languageId": "primalmagick:sun",
+  "shelfLootTable": "primalmagick:gameplay/library/sun",
+  "welcomeLootTable": "primalmagick:gameplay/library/welcome"
+}

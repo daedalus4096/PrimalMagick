@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:sea": 20
+  },
+  "target": "primalmagick:essence_shard_sea"
+}

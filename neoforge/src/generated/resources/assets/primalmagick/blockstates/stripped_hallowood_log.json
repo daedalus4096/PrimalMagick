@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "primalmagick:block/stripped_hallowood_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "primalmagick:block/stripped_hallowood_log"
+    },
+    "axis=z": {
+      "model": "primalmagick:block/stripped_hallowood_log",
+      "x": 90
+    }
+  }
+}

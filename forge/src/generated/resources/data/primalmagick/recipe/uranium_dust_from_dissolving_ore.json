@@ -1,0 +1,43 @@
+{
+  "type": "forge:conditional",
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:dusts/uranium"
+        }
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:ores/uranium"
+        }
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "forge:condition": {
+        "type": "forge:true"
+      },
+      "recipe": {
+        "type": "primalmagick:dissolution_tag",
+        "group": "uranium_dust_dissolution",
+        "ingredient": {
+          "tag": "c:ores/uranium"
+        },
+        "mana": {
+          "sources": {
+            "primalmagick:earth": 1
+          }
+        },
+        "outputAmount": 3,
+        "outputTag": "c:dusts/uranium"
+      }
+    }
+  ]
+}

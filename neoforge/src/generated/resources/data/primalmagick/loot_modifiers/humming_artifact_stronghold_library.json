@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:add_item",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/stronghold_library"
+    },
+    {
+      "chance": 0.8,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "primalmagick:humming_artifact_unattuned"
+}

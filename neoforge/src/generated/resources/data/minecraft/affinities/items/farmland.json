@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:sea": 2,
+    "primalmagick:sun": 5
+  },
+  "base": "minecraft:dirt",
+  "target": "minecraft:farmland"
+}

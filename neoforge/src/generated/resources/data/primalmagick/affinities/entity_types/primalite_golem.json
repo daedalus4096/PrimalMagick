@@ -1,0 +1,11 @@
+{
+  "type": "entity_type",
+  "target": "primalmagick:primalite_golem",
+  "values": {
+    "primalmagick:earth": 30,
+    "primalmagick:moon": 10,
+    "primalmagick:sea": 10,
+    "primalmagick:sky": 10,
+    "primalmagick:sun": 10
+  }
+}

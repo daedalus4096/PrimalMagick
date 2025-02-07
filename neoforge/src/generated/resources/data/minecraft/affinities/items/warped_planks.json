@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:crimson_planks",
+  "target": "minecraft:warped_planks"
+}

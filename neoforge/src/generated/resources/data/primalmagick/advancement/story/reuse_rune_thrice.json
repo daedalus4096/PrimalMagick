@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/reuse_rune_twice",
+  "criteria": {
+    "reuse_thrice": {
+      "conditions": {
+        "threshold": 4
+      },
+      "trigger": "primalmagick:rune_use_count"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.reuse_rune_thrice.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:runescribing_altar_heavenly"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.reuse_rune_thrice.title"
+    }
+  },
+  "requirements": [
+    [
+      "reuse_thrice"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

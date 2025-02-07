@@ -1,0 +1,43 @@
+{
+  "type": "forge:conditional",
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:dusts/lead"
+        }
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:ores/lead"
+        }
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "forge:condition": {
+        "type": "forge:true"
+      },
+      "recipe": {
+        "type": "primalmagick:dissolution_tag",
+        "group": "lead_dust_dissolution",
+        "ingredient": {
+          "tag": "c:ores/lead"
+        },
+        "mana": {
+          "sources": {
+            "primalmagick:earth": 1
+          }
+        },
+        "outputAmount": 3,
+        "outputTag": "c:dusts/lead"
+      }
+    }
+  ]
+}

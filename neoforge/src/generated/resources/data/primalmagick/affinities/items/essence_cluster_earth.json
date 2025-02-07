@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 100
+  },
+  "target": "primalmagick:essence_cluster_earth"
+}

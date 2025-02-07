@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:earth": 2,
+    "primalmagick:moon": 2,
+    "primalmagick:sea": 2,
+    "primalmagick:sky": 2,
+    "primalmagick:sun": 2
+  },
+  "base": "primalmagick:adept_wand_gem_item",
+  "target": "primalmagick:wizard_wand_gem_item"
+}

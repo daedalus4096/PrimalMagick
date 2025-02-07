@@ -1,0 +1,141 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_bombs"
+      },
+      "recipes": [
+        "primalmagick:healing_bomb",
+        "primalmagick:strong_healing_bomb",
+        "primalmagick:regeneration_bomb",
+        "primalmagick:long_regeneration_bomb",
+        "primalmagick:strong_regeneration_bomb",
+        "primalmagick:harming_bomb",
+        "primalmagick:strong_harming_bomb",
+        "primalmagick:poison_bomb",
+        "primalmagick:long_poison_bomb",
+        "primalmagick:strong_poison_bomb"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_bombs.text.addenda.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_bombs"
+      },
+      "recipes": [
+        "primalmagick:fire_resistance_bomb",
+        "primalmagick:long_fire_resistance_bomb"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_bombs.text.addenda.2"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_bombs"
+      },
+      "recipes": [
+        "primalmagick:slowness_bomb",
+        "primalmagick:long_slowness_bomb",
+        "primalmagick:strong_slowness_bomb",
+        "primalmagick:weakness_bomb",
+        "primalmagick:long_weakness_bomb"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_bombs.text.addenda.3"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:concocter"
+  },
+  "key": {
+    "rootKey": "primalmagick:concocting_bombs"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_magitech"
+    },
+    {
+      "rootKey": "primalmagick:concocting_tinctures"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_bombs"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_bombs.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:concocting_bombs"
+      },
+      "recipes": [
+        "primalmagick:bomb_casing",
+        "primalmagick:night_vision_bomb",
+        "primalmagick:long_night_vision_bomb",
+        "primalmagick:invisibility_bomb",
+        "primalmagick:long_invisibility_bomb",
+        "primalmagick:leaping_bomb",
+        "primalmagick:long_leaping_bomb",
+        "primalmagick:strong_leaping_bomb",
+        "primalmagick:swiftness_bomb",
+        "primalmagick:long_swiftness_bomb",
+        "primalmagick:strong_swiftness_bomb",
+        "primalmagick:turtle_master_bomb",
+        "primalmagick:long_turtle_master_bomb",
+        "primalmagick:strong_turtle_master_bomb",
+        "primalmagick:water_breathing_bomb",
+        "primalmagick:long_water_breathing_bomb",
+        "primalmagick:strength_bomb",
+        "primalmagick:long_strength_bomb",
+        "primalmagick:strong_strength_bomb",
+        "primalmagick:slow_falling_bomb",
+        "primalmagick:long_slow_falling_bomb",
+        "primalmagick:luck_bomb"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.concocting_bombs.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

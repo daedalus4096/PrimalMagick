@@ -1,0 +1,140 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:artificial_mana_fonts"
+      },
+      "recipes": [
+        "primalmagick:artificial_font_blood"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.artificial_mana_fonts.text.addenda.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:artificial_mana_fonts"
+      },
+      "recipes": [
+        "primalmagick:artificial_font_infernal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.artificial_mana_fonts.text.addenda.2"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:artificial_mana_fonts"
+      },
+      "recipes": [
+        "primalmagick:artificial_font_void"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.artificial_mana_fonts.text.addenda.3"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:artificial_mana_fonts"
+      },
+      "recipes": [
+        "primalmagick:artificial_font_hallowed"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.artificial_mana_fonts.text.addenda.4"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:artificial_font_earth"
+  },
+  "key": {
+    "rootKey": "primalmagick:artificial_mana_fonts"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    },
+    {
+      "rootKey": "primalmagick:sunlamp"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requiredValue": 1000,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:mana_siphoned"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:artificial_mana_fonts"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.artificial_mana_fonts.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:artificial_mana_fonts"
+      },
+      "recipes": [
+        "primalmagick:artificial_font_earth",
+        "primalmagick:artificial_font_sea",
+        "primalmagick:artificial_font_sky",
+        "primalmagick:artificial_font_sun",
+        "primalmagick:artificial_font_moon"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.artificial_mana_fonts.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

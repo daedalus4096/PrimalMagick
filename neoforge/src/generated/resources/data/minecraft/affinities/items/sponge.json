@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:sea": 20,
+    "primalmagick:void": 10
+  },
+  "target": "minecraft:sponge"
+}

@@ -1,0 +1,47 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_ritual.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:unlock_ritual"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:wand_inscription"
+    },
+    {
+      "rootKey": "primalmagick:rune_project"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:unlock_ritual"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.unlock_ritual.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:unlock_ritual"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.unlock_ritual.text.stage.2"
+    }
+  ]
+}

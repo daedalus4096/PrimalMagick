@@ -1,0 +1,72 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_crucible"
+  },
+  "key": {
+    "rootKey": "primalmagick:sanguine_crucible"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_alchemy"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:spell_payload_conjure_animal"
+    },
+    {
+      "rootKey": "primalmagick:spell_payload_drain_soul"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_crucible"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_crucible.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 3,
+          "primalmagick:infernal": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_crucible"
+      },
+      "recipes": [
+        "primalmagick:sanguine_crucible",
+        "primalmagick:sanguine_core_blank"
+      ],
+      "revelations": [],
+      "siblings": [
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:sotu_research_sanguine_crucible"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.sanguine_crucible.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

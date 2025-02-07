@@ -1,0 +1,136 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:mana_arrows"
+      },
+      "recipes": [
+        "primalmagick:mana_arrow_blood"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:mana_arrows"
+      },
+      "recipes": [
+        "primalmagick:mana_arrow_infernal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.2"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:mana_arrows"
+      },
+      "recipes": [
+        "primalmagick:mana_arrow_void"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.3"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:mana_arrows"
+      },
+      "recipes": [
+        "primalmagick:mana_arrow_hallowed"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.4"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_arrow_earth"
+  },
+  "key": {
+    "rootKey": "primalmagick:mana_arrows"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_manaweaving"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:stack_crafted",
+              "stack": {
+                "count": 1,
+                "id": "minecraft:arrow"
+              }
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:mana_arrows"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:mana_arrows"
+      },
+      "recipes": [
+        "primalmagick:mana_arrow_earth",
+        "primalmagick:mana_arrow_sea",
+        "primalmagick:mana_arrow_sky",
+        "primalmagick:mana_arrow_sun",
+        "primalmagick:mana_arrow_moon"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

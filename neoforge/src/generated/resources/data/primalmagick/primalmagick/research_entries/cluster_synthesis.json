@@ -1,0 +1,153 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 3
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:cluster_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_cluster_blood_from_crystal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.cluster_synthesis.text.addenda.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 3
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:cluster_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_cluster_infernal_from_crystal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.cluster_synthesis.text.addenda.2"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 3
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:cluster_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_cluster_void_from_crystal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.cluster_synthesis.text.addenda.3"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:hallowed": 3
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:cluster_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_cluster_hallowed_from_crystal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.cluster_synthesis.text.addenda.4"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_cluster_earth"
+  },
+  "key": {
+    "rootKey": "primalmagick:cluster_synthesis"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_alchemy"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:cluster_synthesis"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.cluster_synthesis.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 3,
+          "primalmagick:moon": 3,
+          "primalmagick:sea": 3,
+          "primalmagick:sky": 3,
+          "primalmagick:sun": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:cluster_synthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_cluster_earth_from_crystal",
+        "primalmagick:essence_cluster_sea_from_crystal",
+        "primalmagick:essence_cluster_sky_from_crystal",
+        "primalmagick:essence_cluster_sun_from_crystal",
+        "primalmagick:essence_cluster_moon_from_crystal"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.cluster_synthesis.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

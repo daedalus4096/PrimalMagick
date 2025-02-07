@@ -1,0 +1,11 @@
+{
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_stage",
+      "rootKey": "primalmagick:secrets_of_the_universe",
+      "stage": 0
+    }
+  },
+  "translationKey": "tip.primalmagick.sotu"
+}

@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:paper",
+  "target": "minecraft:globe_banner_pattern"
+}

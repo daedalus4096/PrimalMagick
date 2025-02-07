@@ -1,0 +1,114 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_primal"
+      },
+      "recipes": [
+        "primalmagick:primal_staff_core_item"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_primal.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primal_wand_core_item"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_core_primal"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_ritual"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_obsidian"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_coral"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_bamboo"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_sunwood"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_moonwood"
+    },
+    {
+      "rootKey": "primalmagick:mana_salts"
+    },
+    {
+      "rootKey": "primalmagick:ritual_candles"
+    },
+    {
+      "rootKey": "primalmagick:ritual_lectern"
+    },
+    {
+      "rootKey": "primalmagick:ritual_bell"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:heartwood_wand_core_item"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_primal"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_primal.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 3,
+          "primalmagick:moon": 3,
+          "primalmagick:sea": 3,
+          "primalmagick:sky": 3,
+          "primalmagick:sun": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_primal"
+      },
+      "recipes": [
+        "primalmagick:primal_wand_core_item"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_primal.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

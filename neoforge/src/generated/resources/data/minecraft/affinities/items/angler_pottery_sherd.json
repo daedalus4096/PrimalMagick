@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 20,
+    "primalmagick:hallowed": 20
+  },
+  "target": "minecraft:angler_pottery_sherd"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 2
+  },
+  "target": "minecraft:rabbit_hide"
+}

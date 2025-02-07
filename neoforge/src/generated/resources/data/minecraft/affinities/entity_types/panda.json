@@ -1,0 +1,7 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:panda",
+  "values": {
+    "primalmagick:blood": 10
+  }
+}

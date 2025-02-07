@@ -1,0 +1,53 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ritual_lectern"
+  },
+  "key": {
+    "rootKey": "primalmagick:ritual_lectern"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_ritual"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:ritual_lectern"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.ritual_lectern.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:moon": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:ritual_lectern"
+      },
+      "recipes": [
+        "primalmagick:ritual_lectern"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.ritual_lectern.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

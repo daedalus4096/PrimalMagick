@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 2,
+    "primalmagick:sea": 5,
+    "primalmagick:sun": 5
+  },
+  "target": "minecraft:lily_pad"
+}

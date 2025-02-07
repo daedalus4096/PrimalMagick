@@ -1,0 +1,65 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
+  "key": {
+    "rootKey": "primalmagick:sanguine_core_sea_creatures"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:sanguine_crucible"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_sea_creatures"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_sea_creatures.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sea": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_sea_creatures"
+      },
+      "recipes": [
+        "primalmagick:sanguine_core_axolotl",
+        "primalmagick:sanguine_core_cod",
+        "primalmagick:sanguine_core_dolphin",
+        "primalmagick:sanguine_core_elder_guardian",
+        "primalmagick:sanguine_core_glow_squid",
+        "primalmagick:sanguine_core_guardian",
+        "primalmagick:sanguine_core_polar_bear",
+        "primalmagick:sanguine_core_pufferfish",
+        "primalmagick:sanguine_core_salmon",
+        "primalmagick:sanguine_core_squid",
+        "primalmagick:sanguine_core_tropical_fish",
+        "primalmagick:sanguine_core_turtle",
+        "primalmagick:sanguine_core_frog"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_sea_creatures.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

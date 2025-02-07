@@ -1,0 +1,62 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/sources/void.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_teleport"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:spell_payload_void"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requiredValue": 10000,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:distance_teleported_cm"
+          },
+          {
+            "amount": 2,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_teleport"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_teleport.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_teleport"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_teleport.text.stage.2"
+    }
+  ]
+}

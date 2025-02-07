@@ -1,0 +1,89 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:flying_carpet"
+  },
+  "key": {
+    "rootKey": "primalmagick:flying_carpet"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_ritual"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:mana_salts"
+    },
+    {
+      "rootKey": "primalmagick:rune_project"
+    },
+    {
+      "rootKey": "primalmagick:rune_item"
+    },
+    {
+      "rootKey": "primalmagick:rune_power"
+    },
+    {
+      "rootKey": "primalmagick:incense_brazier"
+    },
+    {
+      "rootKey": "primalmagick:ritual_lectern"
+    },
+    {
+      "rootKey": "primalmagick:ritual_bell"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:scan_flying_creature"
+            }
+          },
+          {
+            "amount": 2,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:flying_carpet"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.flying_carpet.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sky": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:flying_carpet"
+      },
+      "recipes": [
+        "primalmagick:flying_carpet"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.flying_carpet.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

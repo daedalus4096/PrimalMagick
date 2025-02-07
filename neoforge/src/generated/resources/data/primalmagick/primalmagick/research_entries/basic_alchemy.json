@@ -1,0 +1,50 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_alchemy.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:basic_alchemy"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_alchemy"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:stack_crafted",
+          "stack": {
+            "count": 1,
+            "id": "primalmagick:essence_furnace"
+          }
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:basic_alchemy"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.basic_alchemy.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:basic_alchemy"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.basic_alchemy.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

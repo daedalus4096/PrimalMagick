@@ -1,0 +1,61 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:imbued_wool_head"
+  },
+  "key": {
+    "rootKey": "primalmagick:imbued_wool"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:mana_arrows"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "minecraft:wool"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:imbued_wool"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.imbued_wool.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:imbued_wool"
+      },
+      "recipes": [
+        "primalmagick:imbued_wool_head",
+        "primalmagick:imbued_wool_chest",
+        "primalmagick:imbued_wool_legs",
+        "primalmagick:imbued_wool_feet"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.imbued_wool.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

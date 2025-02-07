@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5
+  },
+  "target": "minecraft:flower_pot"
+}

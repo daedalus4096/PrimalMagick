@@ -1,0 +1,50 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_alchemy.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:expert_alchemy"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:calcinator_basic"
+    },
+    {
+      "rootKey": "primalmagick:stonemelding"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "discipline": {
+          "rootKey": "primalmagick:alchemy"
+        },
+        "requirement_type": "primalmagick:expertise",
+        "tier": "expert"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:expert_alchemy"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_alchemy.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:expert_alchemy"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_alchemy.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

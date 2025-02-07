@@ -1,0 +1,10 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:infernal": 5,
+    "primalmagick:sky": 20,
+    "primalmagick:sun": 15
+  },
+  "target": "minecraft:firework_rocket"
+}

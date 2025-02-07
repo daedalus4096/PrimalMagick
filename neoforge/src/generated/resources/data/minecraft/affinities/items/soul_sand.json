@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:infernal": 5
+  },
+  "base": "minecraft:netherrack",
+  "target": "minecraft:soul_sand"
+}

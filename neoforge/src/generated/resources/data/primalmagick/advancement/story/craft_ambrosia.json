@@ -1,0 +1,121 @@
+{
+  "parent": "primalmagick:story/craft_ritual_altar",
+  "criteria": {
+    "blood": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ambrosia_basic_blood"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "earth": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ambrosia_basic_earth"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hallowed": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ambrosia_basic_hallowed"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "infernal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ambrosia_basic_infernal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "moon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ambrosia_basic_moon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sea": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ambrosia_basic_sea"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sky": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ambrosia_basic_sky"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sun": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ambrosia_basic_sun"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "void": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:ambrosia_basic_void"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_ambrosia.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:ambrosia_basic_earth"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_ambrosia.title"
+    }
+  },
+  "requirements": [
+    [
+      "earth",
+      "sea",
+      "sky",
+      "sun",
+      "moon",
+      "blood",
+      "infernal",
+      "void",
+      "hallowed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

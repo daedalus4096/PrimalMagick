@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:azalea_leaves",
+  "target": "minecraft:flowering_azalea_leaves"
+}

@@ -1,0 +1,75 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:ignyx"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:infernal_furnace"
+      },
+      "recipes": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.infernal_furnace.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:infernal_furnace"
+  },
+  "key": {
+    "rootKey": "primalmagick:infernal_furnace"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_magitech"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:infernal_furnace"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.infernal_furnace.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:infernal_furnace"
+      },
+      "recipes": [
+        "primalmagick:infernal_furnace"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.infernal_furnace.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

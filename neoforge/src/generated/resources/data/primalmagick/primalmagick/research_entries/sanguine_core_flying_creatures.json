@@ -1,0 +1,59 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
+  "key": {
+    "rootKey": "primalmagick:sanguine_core_flying_creatures"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:sanguine_crucible"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_flying_creatures"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_flying_creatures.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sky": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:sanguine_core_flying_creatures"
+      },
+      "recipes": [
+        "primalmagick:sanguine_core_bat",
+        "primalmagick:sanguine_core_bee",
+        "primalmagick:sanguine_core_breeze",
+        "primalmagick:sanguine_core_chicken",
+        "primalmagick:sanguine_core_parrot",
+        "primalmagick:sanguine_core_vex",
+        "primalmagick:sanguine_core_allay"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sanguine_core_flying_creatures.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

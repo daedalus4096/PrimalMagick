@@ -1,0 +1,40 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sunwood_sapling"
+  },
+  "key": {
+    "rootKey": "primalmagick:sunwood_trees"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:sunwood_trees"
+      },
+      "recipes": [
+        "primalmagick:sunwood_wood",
+        "primalmagick:stripped_sunwood_wood",
+        "primalmagick:sunwood_planks",
+        "primalmagick:sunwood_slab",
+        "primalmagick:sunwood_stairs",
+        "primalmagick:sunwood_pillar"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.sunwood_trees.text.stage.1"
+    }
+  ]
+}

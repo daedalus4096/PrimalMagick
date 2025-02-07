@@ -1,0 +1,57 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_singularity"
+  },
+  "key": {
+    "rootKey": "primalmagick:mana_singularity"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_magitech"
+    },
+    {
+      "rootKey": "primalmagick:mana_nexus"
+    },
+    {
+      "rootKey": "primalmagick:hallowsteel"
+    },
+    {
+      "rootKey": "primalmagick:wand_gem_archmage"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:mana_singularity"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_singularity.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:mana_singularity"
+      },
+      "recipes": [
+        "primalmagick:mana_singularity"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_singularity.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

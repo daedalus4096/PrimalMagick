@@ -1,0 +1,58 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:spellcloth_head"
+  },
+  "key": {
+    "rootKey": "primalmagick:spellcloth"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:imbued_wool"
+    },
+    {
+      "rootKey": "primalmagick:earthshatter_hammer"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spellcloth"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spellcloth.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:spellcloth"
+      },
+      "recipes": [
+        "primalmagick:spellcloth",
+        "primalmagick:spellcloth_head",
+        "primalmagick:spellcloth_chest",
+        "primalmagick:spellcloth_legs",
+        "primalmagick:spellcloth_feet"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spellcloth.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

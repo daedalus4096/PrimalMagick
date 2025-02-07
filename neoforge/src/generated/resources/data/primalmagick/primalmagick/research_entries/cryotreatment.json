@@ -1,0 +1,67 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:ice"
+  },
+  "key": {
+    "rootKey": "primalmagick:cryotreatment"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:stonemelding"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:essence_dust_sea"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:cryotreatment"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.cryotreatment.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sea": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:cryotreatment"
+      },
+      "recipes": [
+        "primalmagick:ice_from_cryotreatment",
+        "primalmagick:obsidian_from_cryotreatment",
+        "primalmagick:slime_ball_from_cryotreatment"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.cryotreatment.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

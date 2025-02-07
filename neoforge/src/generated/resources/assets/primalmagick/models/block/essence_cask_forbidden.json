@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "primalmagick:block/essence_cask_forbidden_bottom",
+    "side": "primalmagick:block/essence_cask_forbidden_side",
+    "top": "primalmagick:block/essence_cask_forbidden_top"
+  }
+}

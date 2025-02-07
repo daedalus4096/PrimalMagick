@@ -1,0 +1,106 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:runic_armor_trim_smithing_template"
+  },
+  "key": {
+    "rootKey": "primalmagick:runic_trim"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:imbued_wool"
+    },
+    {
+      "rootKey": "primalmagick:rune_earth"
+    },
+    {
+      "rootKey": "primalmagick:rune_sea"
+    },
+    {
+      "rootKey": "primalmagick:rune_sky"
+    },
+    {
+      "rootKey": "primalmagick:rune_sun"
+    },
+    {
+      "rootKey": "primalmagick:rune_moon"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:rune_earth"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:rune_sea"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:rune_sky"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:rune_sun"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "primalmagick:rune_moon"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:runic_trim"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.runic_trim.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:runic_trim"
+      },
+      "recipes": [
+        "primalmagick:runic_armor_trim_smithing_template"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.runic_trim.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

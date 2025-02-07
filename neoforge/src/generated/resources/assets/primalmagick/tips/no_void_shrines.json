@@ -1,0 +1,10 @@
+{
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:discover_void"
+    }
+  },
+  "translationKey": "tip.primalmagick.no_void_shrines"
+}

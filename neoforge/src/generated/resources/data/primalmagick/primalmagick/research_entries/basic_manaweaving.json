@@ -1,0 +1,33 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_manaweaving.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:basic_manaweaving"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_manaweaving"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:basic_manaweaving"
+      },
+      "recipes": [
+        "primalmagick:mana_prism"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.basic_manaweaving.text.stage.1"
+    }
+  ],
+  "tier": "basic"
+}

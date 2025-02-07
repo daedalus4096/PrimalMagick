@@ -1,0 +1,72 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_magitech.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:supreme_magitech"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:hexium_golem"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_hallowed"
+            }
+          },
+          {
+            "discipline": {
+              "rootKey": "primalmagick:magitech"
+            },
+            "requirement_type": "primalmagick:expertise",
+            "tier": "supreme"
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:scan_hallowsteel"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_magitech"
+      },
+      "recipes": [],
+      "revelations": [
+        {
+          "rootKey": "primalmagick:secrets_of_the_universe"
+        }
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_magitech.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:supreme_magitech"
+      },
+      "recipes": [
+        "primalmagick:magitech_parts_heavenly"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.supreme_magitech.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

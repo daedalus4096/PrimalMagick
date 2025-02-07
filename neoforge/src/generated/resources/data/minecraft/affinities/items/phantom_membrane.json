@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 5,
+    "primalmagick:moon": 20,
+    "primalmagick:sky": 20
+  },
+  "target": "minecraft:phantom_membrane"
+}

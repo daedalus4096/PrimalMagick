@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "primalmagick:blood": 20,
+    "primalmagick:infernal": 5
+  },
+  "target": "minecraft:creeper_head"
+}

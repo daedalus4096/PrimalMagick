@@ -1,0 +1,43 @@
+{
+  "type": "forge:conditional",
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:dusts/gold"
+        }
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "c:raw_materials/gold"
+        }
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "forge:condition": {
+        "type": "forge:true"
+      },
+      "recipe": {
+        "type": "primalmagick:dissolution_tag",
+        "group": "gold_grit_dissolution",
+        "ingredient": {
+          "tag": "c:raw_materials/gold"
+        },
+        "mana": {
+          "sources": {
+            "primalmagick:earth": 1
+          }
+        },
+        "outputAmount": 3,
+        "outputTag": "c:dusts/gold"
+      }
+    }
+  ]
+}

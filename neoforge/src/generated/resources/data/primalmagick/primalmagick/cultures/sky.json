@@ -1,0 +1,9 @@
+{
+  "accentBlockState": {
+    "Name": "minecraft:diamond_block"
+  },
+  "hiddenLootTable": "primalmagick:gameplay/library/hidden",
+  "languageId": "primalmagick:sky",
+  "shelfLootTable": "primalmagick:gameplay/library/sky",
+  "welcomeLootTable": "primalmagick:gameplay/library/welcome"
+}

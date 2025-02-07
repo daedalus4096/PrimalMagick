@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:dead_horn_coral",
+  "target": "minecraft:dead_horn_coral_fan"
+}

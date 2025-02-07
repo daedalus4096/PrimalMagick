@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "add": {
+    "primalmagick:infernal": 5
+  },
+  "base": "minecraft:dandelion",
+  "remove": {
+    "primalmagick:sun": 5
+  },
+  "target": "minecraft:wither_rose"
+}

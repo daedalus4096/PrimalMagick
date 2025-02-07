@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:coal",
+  "target": "minecraft:charcoal"
+}

@@ -1,0 +1,46 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/moon",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/sun",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/sea",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/trade",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/forbidden",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/hallowed",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 40
+        }
+      ],
+      "rolls": 6.0
+    }
+  ],
+  "random_sequence": "primalmagick:gameplay/library/moon"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "enchantment_bonus",
+  "multiplier": {
+    "primalmagick:infernal": 1
+  },
+  "target": "minecraft:fire_aspect"
+}

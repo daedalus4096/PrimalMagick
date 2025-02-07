@@ -1,0 +1,64 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowsteel_wand_cap_item"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_cap_hallowsteel"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_cap_hexium"
+    },
+    {
+      "rootKey": "primalmagick:hallowsteel"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "requirement_type": "primalmagick:item_tag",
+            "tag": "primalmagick:ingots/hallowsteel"
+          },
+          {
+            "amount": 3,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_cap_hallowsteel"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_cap_hallowsteel.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:wand_cap_hallowsteel"
+      },
+      "recipes": [
+        "primalmagick:hallowsteel_wand_cap_item"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_cap_hallowsteel.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

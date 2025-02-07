@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:salmon",
+  "values": {
+    "primalmagick:blood": 5,
+    "primalmagick:sea": 10
+  }
+}

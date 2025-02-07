@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "expertiseGroup": "primalmagick:ritual_candle",
+  "group": "ritual_candles",
+  "key": {
+    "S": {
+      "tag": "c:strings"
+    },
+    "T": {
+      "item": "primalmagick:tallow"
+    }
+  },
+  "pattern": [
+    "S",
+    "T",
+    "T"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ritual_candles"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:ritual_candle_white"
+  }
+}

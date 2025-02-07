@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "primalmagick:pixie_basic_hallowed",
+  "values": {
+    "primalmagick:blood": 5,
+    "primalmagick:hallowed": 5,
+    "primalmagick:sky": 10
+  }
+}

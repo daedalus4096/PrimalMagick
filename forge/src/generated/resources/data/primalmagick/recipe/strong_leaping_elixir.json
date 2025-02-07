@@ -1,0 +1,53 @@
+{
+  "type": "primalmagick:concocting",
+  "group": "strong_leaping",
+  "ingredients": [
+    {
+      "type": "primalmagick:partial_component",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": [
+        "primalmagick:concoction"
+      ]
+    },
+    {
+      "item": "primalmagick:essence_crystal_sky"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:rabbit_foot"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 9
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_elixirs"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:strong_leaping"
+      },
+      "primalmagick:concoction_doses": 9,
+      "primalmagick:concoction_type": "elixir"
+    },
+    "count": 1,
+    "id": "primalmagick:concoction"
+  }
+}

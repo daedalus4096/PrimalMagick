@@ -1,0 +1,46 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:marble_raw"
+  },
+  "key": {
+    "rootKey": "primalmagick:raw_marble"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:raw_marble"
+      },
+      "recipes": [
+        "primalmagick:marble_slab",
+        "primalmagick:marble_stairs",
+        "primalmagick:marble_wall",
+        "primalmagick:marble_bricks",
+        "primalmagick:marble_brick_slab",
+        "primalmagick:marble_brick_stairs",
+        "primalmagick:marble_brick_wall",
+        "primalmagick:marble_pillar",
+        "primalmagick:marble_chiseled",
+        "primalmagick:marble_tiles",
+        "primalmagick:marble_runed",
+        "primalmagick:marble_bookshelf"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.raw_marble.text.stage.1"
+    }
+  ]
+}

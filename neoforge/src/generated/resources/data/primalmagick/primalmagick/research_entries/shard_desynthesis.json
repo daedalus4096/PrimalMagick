@@ -1,0 +1,150 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:blood": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_dust_blood_from_shard"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_desynthesis.text.addenda.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:infernal": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_dust_infernal_from_shard"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_desynthesis.text.addenda.2"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_dust_void_from_shard"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_desynthesis.text.addenda.3"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:hallowed": 1
+        }
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_dust_hallowed_from_shard"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_desynthesis.text.addenda.4"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:alchemy"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_shard_earth"
+  },
+  "key": {
+    "rootKey": "primalmagick:shard_desynthesis"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_desynthesis"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_desynthesis.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 1,
+          "primalmagick:moon": 1,
+          "primalmagick:sea": 1,
+          "primalmagick:sky": 1,
+          "primalmagick:sun": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:shard_desynthesis"
+      },
+      "recipes": [
+        "primalmagick:essence_dust_earth_from_shard",
+        "primalmagick:essence_dust_sea_from_shard",
+        "primalmagick:essence_dust_sky_from_shard",
+        "primalmagick:essence_dust_sun_from_shard",
+        "primalmagick:essence_dust_moon_from_shard"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.shard_desynthesis.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

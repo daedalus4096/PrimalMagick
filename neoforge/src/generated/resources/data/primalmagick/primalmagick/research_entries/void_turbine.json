@@ -1,0 +1,71 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:void_turbine"
+  },
+  "key": {
+    "rootKey": "primalmagick:void_turbine"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_magitech"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 2,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:sticky_piston"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:void_turbine"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.void_turbine.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:void_turbine"
+      },
+      "recipes": [
+        "primalmagick:void_turbine"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.void_turbine.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

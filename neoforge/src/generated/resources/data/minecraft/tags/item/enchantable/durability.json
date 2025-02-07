@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#c:tools/bow",
+    "#c:tools/crossbow",
+    "#c:tools/fishing_rod",
+    "#c:tools/spear",
+    "#c:tools/shield"
+  ]
+}

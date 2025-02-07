@@ -1,0 +1,44 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "location": "primalmagick:textures/research/discipline_alchemy.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:unlock_alchemy"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:mana_arrows"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "observation",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:unlock_alchemy"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.unlock_alchemy.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:unlock_alchemy"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.unlock_alchemy.text.stage.2"
+    }
+  ]
+}

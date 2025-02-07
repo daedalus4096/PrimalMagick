@@ -1,0 +1,8 @@
+{
+  "parent": "primalmagick:block/pillar_bottom",
+  "textures": {
+    "bottom": "primalmagick:block/marble_enchanted_pillar_base",
+    "inner": "primalmagick:block/marble_enchanted_pillar_inner",
+    "side": "primalmagick:block/marble_enchanted_pillar_bottom"
+  }
+}

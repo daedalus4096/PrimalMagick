@@ -1,0 +1,68 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_power"
+  },
+  "key": {
+    "rootKey": "primalmagick:rune_power"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:discover_blood"
+    },
+    {
+      "rootKey": "primalmagick:discover_infernal"
+    },
+    {
+      "rootKey": "primalmagick:discover_void"
+    },
+    {
+      "rootKey": "primalmagick:rune_insight"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_power"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_power.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:rune_power"
+      },
+      "recipes": [
+        "primalmagick:rune_power"
+      ],
+      "revelations": [],
+      "siblings": [
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:sotu_research_power_rune"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.rune_power.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}

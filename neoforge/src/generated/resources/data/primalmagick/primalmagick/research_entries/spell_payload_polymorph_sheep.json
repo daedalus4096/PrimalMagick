@@ -1,0 +1,29 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {
+    "finaleExempt": true,
+    "hidden": true
+  },
+  "icon": {
+    "location": "primalmagick:textures/sources/moon.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:spell_payload_polymorph_sheep"
+  },
+  "parents": [],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:spell_payload_polymorph_sheep"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_payload_polymorph_sheep.text.stage.1"
+    }
+  ]
+}

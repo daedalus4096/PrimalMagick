@@ -1,0 +1,7 @@
+{
+  "type": "potion_bonus",
+  "bonus": {
+    "primalmagick:sky": 2
+  },
+  "target": "minecraft:swiftness"
+}

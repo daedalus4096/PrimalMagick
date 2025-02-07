@@ -1,0 +1,54 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:warding_module_greater"
+  },
+  "key": {
+    "rootKey": "primalmagick:greater_warding_module"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_magitech"
+    },
+    {
+      "rootKey": "primalmagick:rune_power"
+    },
+    {
+      "rootKey": "primalmagick:warding_module"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:greater_warding_module"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.greater_warding_module.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:greater_warding_module"
+      },
+      "recipes": [
+        "primalmagick:warding_module_greater"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.greater_warding_module.text.stage.2"
+    }
+  ],
+  "tier": "master"
+}
