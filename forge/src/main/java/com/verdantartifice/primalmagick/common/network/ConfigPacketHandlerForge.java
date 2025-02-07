@@ -20,9 +20,9 @@ public class ConfigPacketHandlerForge {
 
     private static final SimpleChannel CHANNEL = ChannelBuilder
             .named(CHANNEL_NAME)
+            .networkProtocolVersion(PROTOCOL_VERSION)
             .clientAcceptedVersions(Channel.VersionTest.exact(PROTOCOL_VERSION))
             .serverAcceptedVersions(Channel.VersionTest.exact(PROTOCOL_VERSION))
-            .networkProtocolVersion(PROTOCOL_VERSION)
             .simpleChannel()
                 .configuration()
                     .clientbound()
