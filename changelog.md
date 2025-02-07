@@ -1,6 +1,7 @@
 v6.0.0-beta
 -----------
 * Added NeoForge support to Primal Magick
+* Updated to Forge 52.0.40
 
 v5.0.2-beta
 -----------
