@@ -60,7 +60,7 @@ public class UpdateAffinitiesConfigPacketForge implements IMessageToClient {
             ctx.getConnection().disconnect(Component.literal("Config task failed to replace affinity data"));   // TODO Localize
             return null;
         }).thenAccept($ -> {
-            ConfigPacketHandlerForge.sendOverConnection(new AcknowledgeAffinitiesConfigPacketForge(), ctx.getConnection());
+            ConfigPacketHandlerForge.sendOverConnection(AcknowledgeAffinitiesConfigPacketForge.INSTANCE, ctx.getConnection());
         });
         ctx.setPacketHandled(true);
     }

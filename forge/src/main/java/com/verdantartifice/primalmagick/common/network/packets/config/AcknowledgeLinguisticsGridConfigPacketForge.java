@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
-public class AcknowledgeLinguisticsGridConfigPacketForge implements IMessageToServer {
-    public static final StreamCodec<FriendlyByteBuf, AcknowledgeLinguisticsGridConfigPacketForge> STREAM_CODEC = StreamCodec.unit(new AcknowledgeLinguisticsGridConfigPacketForge());
+public record AcknowledgeLinguisticsGridConfigPacketForge() implements IMessageToServer {
+    public static final AcknowledgeLinguisticsGridConfigPacketForge INSTANCE = new AcknowledgeLinguisticsGridConfigPacketForge();
+    public static final StreamCodec<FriendlyByteBuf, AcknowledgeLinguisticsGridConfigPacketForge> STREAM_CODEC = StreamCodec.unit(INSTANCE);
     private static final List<BiConsumer<AcknowledgeLinguisticsGridConfigPacketForge, CustomPayloadEvent.Context>> CALLBACKS = new ArrayList<>();
 
     public static void expect(BiConsumer<AcknowledgeLinguisticsGridConfigPacketForge, CustomPayloadEvent.Context> callback) {

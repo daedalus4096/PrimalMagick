@@ -55,7 +55,7 @@ public class UpdateLinguisticsGridConfigPacketForge implements IMessageToClient 
             ctx.getConnection().disconnect(Component.literal("Config task failed to replace linguistics grid data"));   // TODO Localize
             return null;
         }).thenAccept($ -> {
-            ConfigPacketHandlerForge.sendOverConnection(new AcknowledgeLinguisticsGridConfigPacketForge(), ctx.getConnection());
+            ConfigPacketHandlerForge.sendOverConnection(AcknowledgeLinguisticsGridConfigPacketForge.INSTANCE, ctx.getConnection());
         });
         ctx.setPacketHandled(true);
     }

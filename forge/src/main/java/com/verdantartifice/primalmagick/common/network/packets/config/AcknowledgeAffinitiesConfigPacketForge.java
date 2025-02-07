@@ -11,7 +11,8 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 
 public record AcknowledgeAffinitiesConfigPacketForge() implements IMessageToServer {
-    public static final StreamCodec<FriendlyByteBuf, AcknowledgeAffinitiesConfigPacketForge> STREAM_CODEC = StreamCodec.unit(new AcknowledgeAffinitiesConfigPacketForge());
+    public static final AcknowledgeAffinitiesConfigPacketForge INSTANCE = new AcknowledgeAffinitiesConfigPacketForge();
+    public static final StreamCodec<FriendlyByteBuf, AcknowledgeAffinitiesConfigPacketForge> STREAM_CODEC = StreamCodec.unit(INSTANCE);
     private static final List<BiConsumer<AcknowledgeAffinitiesConfigPacketForge, CustomPayloadEvent.Context>> CALLBACKS = new ArrayList<>();
 
     public static void expect(BiConsumer<AcknowledgeAffinitiesConfigPacketForge, CustomPayloadEvent.Context> callback) {
