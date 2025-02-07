@@ -1,3 +1,7 @@
+v6.0.0-beta
+-----------
+* Added NeoForge support to Primal Magick
+
 v5.0.2-beta
 -----------
 * Fixed a crash that would occur when pixies or the Inner Demon would attempt to cast a spell
