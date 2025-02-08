@@ -17,9 +17,15 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Build the artifacts
         run: ./gradlew build
-      - name: Upload the artifacts
+      - name: Upload the Forge artifacts
         uses: skx/github-action-publish-binaries@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: build/libs/primalmagic*.jar
+          args: forge/build/libs/primalmagick*.jar
+      - name: Upload the NeoForge artifacts
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: neoforge/build/libs/primalmagick*.jar
