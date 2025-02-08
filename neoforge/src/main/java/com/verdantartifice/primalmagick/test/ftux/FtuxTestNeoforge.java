@@ -40,6 +40,13 @@ public class FtuxTestNeoforge extends AbstractFtuxTest {
     @PrefixGameTestTemplate(false)
     @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
     @Override
+    public void transform_without_dream_does_nothing(GameTestHelper helper) {
+        super.transform_without_dream_does_nothing(helper);
+    }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
+    @Override
     public void transform_grimoire(GameTestHelper helper) {
         super.transform_grimoire(helper);
     }

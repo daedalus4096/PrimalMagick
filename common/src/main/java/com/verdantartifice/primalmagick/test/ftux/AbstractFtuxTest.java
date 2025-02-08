@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -143,7 +144,39 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Sought research not found");
         helper.succeed();
     }
-    
+
+    public void transform_without_dream_does_nothing(GameTestHelper helper) {
+        // Create a player who has gotten the dream
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+
+        // Put a mundane wand in that player's main hand
+        ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
+        Item wandItem = wandStack.getItem();
+        player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
+
+        // Place a crafting table
+        BlockPos pos = new BlockPos(1, 1, 1);
+        helper.setBlock(pos, Blocks.BOOKSHELF);
+        helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
+        helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+
+        // Start transforming the table
+        BlockPos posAbs = helper.absolutePos(pos);
+        BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
+        UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
+        helper.assertTrue(Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.PASS), "Failed to start using wand on block");
+
+        // Continue channeling for the expected transform duration, then confirm that nothing has changed
+        MutableInt remainingTicks = new MutableInt(WandTransforms.CHANNEL_DURATION + 1);
+        helper.onEachTick(() -> {
+            wandItem.onUseTick(helper.getLevel(), player, wandStack, remainingTicks.decrementAndGet());
+        });
+        helper.succeedWhen(() -> {
+            helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
+            helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+        });
+    }
+
     public void transform_grimoire(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
