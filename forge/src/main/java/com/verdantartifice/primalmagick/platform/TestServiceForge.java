@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.platform.services.ITestService;
+import net.minecraft.network.Connection;
 import net.minecraftforge.gametest.GameTestHolder;
 
 public class TestServiceForge implements ITestService {
@@ -12,5 +13,10 @@ public class TestServiceForge implements ITestService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void configureMockConnection(Connection connection) {
+        // Nothing to do
     }
 }

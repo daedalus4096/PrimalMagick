@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.test;
 
 import com.mojang.authlib.GameProfile;
+import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.embedded.EmbeddedChannel;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -37,6 +38,7 @@ public abstract class AbstractBaseTest {
         ServerGamePacketListenerImpl listener = new ServerGamePacketListenerImpl(server, connection, player, cookie);
         ProtocolInfo<ServerGamePacketListener> info = GameProtocols.SERVERBOUND_TEMPLATE.bind(RegistryFriendlyByteBuf.decorator(server.registryAccess()));
         connection.setupInboundProtocol(info, listener);
+        Services.TEST.configureMockConnection(connection);
         return player;
     }
 
