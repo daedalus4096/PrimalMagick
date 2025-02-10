@@ -333,6 +333,7 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> GOT_DREAM = create("got_dream");
     public static final ResourceKey<ResearchEntry> SIPHON_PROMPT = create("siphon_prompt");
     public static final ResourceKey<ResearchEntry> UNKNOWN_RUNE = create("unknown_rune");
+    public static final ResourceKey<ResearchEntry> UNKNOWN_RESEARCH = create("unknown_research");
     
     // Commonly used research icons
     private static final ResourceLocation ICON_MANAWEAVING = ResourceUtils.loc("textures/research/discipline_manaweaving.png");
@@ -1850,6 +1851,7 @@ public class ResearchEntries {
         register(context, GOT_DREAM, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
         register(context, SIPHON_PROMPT, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_MAP).build());
         register(context, UNKNOWN_RUNE, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_UNKNOWN).build());
+        register(context, UNKNOWN_RESEARCH, key -> ResearchEntry.builder(key).flags(ResearchEntry.Flags.builder().internal()).icon(ICON_UNKNOWN).build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstrapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
