@@ -6869,6 +6869,60 @@ public abstract class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 40))
             .noExpertise()
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_EARTH.get())
+            .setGroup("humming_artifact_unattuned")
+            .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
+            .noExpertise()
+            .build(consumer, "humming_artifact_deattune_earth");
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_SEA.get())
+            .setGroup("humming_artifact_unattuned")
+            .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
+            .noExpertise()
+            .build(consumer, "humming_artifact_deattune_sea");
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_SKY.get())
+            .setGroup("humming_artifact_unattuned")
+            .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
+            .noExpertise()
+            .build(consumer, "humming_artifact_deattune_sky");
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_SUN.get())
+            .setGroup("humming_artifact_unattuned")
+            .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
+            .noExpertise()
+            .build(consumer, "humming_artifact_deattune_sun");
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_MOON.get())
+            .setGroup("humming_artifact_unattuned")
+            .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
+            .noExpertise()
+            .build(consumer, "humming_artifact_deattune_moon");
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_BLOOD.get())
+            .setGroup("humming_artifact_unattuned")
+            .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
+            .noExpertise()
+            .build(consumer, "humming_artifact_deattune_blood");
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get())
+            .setGroup("humming_artifact_unattuned")
+            .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
+            .noExpertise()
+            .build(consumer, "humming_artifact_deattune_infernal");
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_VOID.get())
+            .setGroup("humming_artifact_unattuned")
+            .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
+            .noExpertise()
+            .build(consumer, "humming_artifact_deattune_void");
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get())
+            .setGroup("humming_artifact_unattuned")
+            .requiredResearch(ResearchEntries.HUMMING_ARTIFACT)
+            .noExpertise()
+            .build(consumer, "humming_artifact_deattune_hallowed");
     }
     
     protected void registerEssenceCaskRecipes(RecipeOutput consumer) {

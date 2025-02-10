@@ -81,6 +81,15 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC.get(), ResearchEntries.MYSTICAL_RELIC));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), ResearchEntries.MYSTICAL_RELIC));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get(), ResearchEntries.HUMMING_ARTIFACT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_EARTH.get(), ResearchEntries.HUMMING_ARTIFACT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_SEA.get(), ResearchEntries.HUMMING_ARTIFACT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_SKY.get(), ResearchEntries.HUMMING_ARTIFACT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_SUN.get(), ResearchEntries.HUMMING_ARTIFACT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_MOON.get(), ResearchEntries.HUMMING_ARTIFACT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_BLOOD.get(), ResearchEntries.HUMMING_ARTIFACT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get(), ResearchEntries.HUMMING_ARTIFACT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_VOID.get(), ResearchEntries.HUMMING_ARTIFACT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get(), ResearchEntries.HUMMING_ARTIFACT));
         ResearchManager.registerScanTrigger(new ScanEntityResearchTrigger(EntityTypesPM.TREEFOLK.get(), ResearchEntries.TREEFOLK));
     }
 }

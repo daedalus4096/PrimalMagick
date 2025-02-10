@@ -1,0 +1,22 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "group": "humming_artifact_unattuned",
+  "ingredients": [
+    {
+      "item": "primalmagick:humming_artifact_infernal"
+    }
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:humming_artifact"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:humming_artifact_unattuned"
+  }
+}
