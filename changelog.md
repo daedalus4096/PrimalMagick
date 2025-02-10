@@ -1,6 +1,7 @@
 v6.0.1-beta
 -----------
 * Fixed a bug causing calcinators to output only Alchemical Waste when their owner is logged out
+* Fixed missing Alchemical Bomb localizations for new 1.21 potion effects
 
 v6.0.0-beta
 -----------

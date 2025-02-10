@@ -845,6 +845,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .concoctionName(ConcoctionType.BOMB, Potions.LUCK, "Luck Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.TURTLE_MASTER, "Turtle Master Bomb")
             .concoctionName(ConcoctionType.BOMB, Potions.SLOW_FALLING, "Slow Falling Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.INFESTED, "Infested Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.OOZING, "Oozing Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.WEAVING, "Weaving Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.WIND_CHARGED, "Wind Charged Bomb")
             .build();
         this.item(ItemsPM.PRIMAL_SHOVEL).name("Shovel of the Quaking Earth").build();
         this.item(ItemsPM.PRIMAL_FISHING_ROD).name("Fishing Rod of the Bountiful Sea").build();
