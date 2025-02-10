@@ -1,3 +1,7 @@
+v6.0.1-beta
+-----------
+* Fixed a bug causing calcinators to output only Alchemical Waste when their owner is logged out
+
 v6.0.0-beta
 -----------
 * Added NeoForge support to Primal Magick
