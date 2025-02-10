@@ -1257,6 +1257,14 @@ public class GrimoireScreen extends Screen {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
+        } else if (keyCode == GLFW.GLFW_MOUSE_BUTTON_4) {
+            if (this.prevPage()) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+            }
+        } else if (keyCode == GLFW.GLFW_MOUSE_BUTTON_5) {
+            if (this.nextPage()) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+            }
         } else {
             for (AbstractPage page : this.pages) {
                 if (page.mouseClicked(xPos, yPos, keyCode)) {
@@ -1267,6 +1275,21 @@ public class GrimoireScreen extends Screen {
             this.setFocused(null);
         }
         return retVal;
+    }
+
+    @Override
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double pScrollX, double pScrollY) {
+        if (pScrollY > 0) {
+            if (this.prevPage()) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+            }
+        } else if (pScrollY < 0) {
+            if (this.nextPage()) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+            }
+        }
+
+        return true;
     }
 
     public void pushCurrentHistoryTopic() {
