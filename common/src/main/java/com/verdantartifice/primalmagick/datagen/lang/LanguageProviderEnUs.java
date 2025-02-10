@@ -2545,7 +2545,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.PRIMALITE, lookupProvider).name("Primalite")
             .stages()
                 .add("Each of the primal sources has wondrous effects on their own, but how might they work when combined?  I suspect that they would produce a highly magickal material, but I'll need to do some research to figure out how to make the process work.")
-                .add("Success!  By combining an ingot of iron with a handful of dust from each terrestrial source, I've created a strong, stable metal with a lovely teal hue that positively thrums with magickal potential.  I've taken to called it Primalite.<BR>I can use this metal to make traditional arms and armor, stronger and far more durable than their iron counterparts, and much more readily accepting of enchantments.  But I suspect that much more exotic uses for this material will present themselves with further study.  So exciting!")
+                .add("Success!  By combining an ingot of iron with a handful of dust from each terrestrial source, I've created a strong, stable metal with a lovely teal hue that positively thrums with magickal potential.  I've taken to calling it Primalite.<BR>I can use this metal to make traditional arms and armor, stronger and far more durable than their iron counterparts, and much more readily accepting of enchantments.  But I suspect that much more exotic uses for this material will present themselves with further study.  So exciting!")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.CRYSTAL_SYNTHESIS, lookupProvider).name("Crystal Synthesis")
