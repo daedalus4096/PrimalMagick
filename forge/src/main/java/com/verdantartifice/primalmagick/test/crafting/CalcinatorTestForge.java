@@ -13,4 +13,10 @@ public class CalcinatorTestForge extends AbstractCalcinatorTest {
     public void calcinator_works(GameTestHelper helper) {
         super.calcinator_works(helper);
     }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void calcinator_works_without_player_present(GameTestHelper helper) {
+        super.calcinator_works_without_player_present(helper);
+    }
 }

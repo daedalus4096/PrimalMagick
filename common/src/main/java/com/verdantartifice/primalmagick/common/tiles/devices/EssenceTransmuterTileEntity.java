@@ -351,7 +351,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     }
     
     protected boolean isSourceKnown(@Nullable Source source) {
-        if (source == null || source.getDiscoverKey() == null) {
+        if (source == null || source.getDiscoverKey().isEmpty()) {
             return true;
         } else {
             Player owner = this.getTileOwner();
@@ -360,7 +360,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
                 return source.isDiscovered(owner);
             } else {
                 // Check the research cache if the owner is unavailable
-                return this.researchCache.isResearchComplete(source.getDiscoverKey().orElse(null));
+                return this.researchCache.isResearchComplete(source.getDiscoverKey().get());
             }
         }
     }
@@ -370,7 +370,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     }
     
     protected static Set<AbstractResearchKey<?>> assembleRelevantResearch() {
-        return Sources.streamSorted().map(s -> s.getDiscoverKey()).filter(o -> o.isPresent()).map(o -> o.get()).collect(Collectors.toUnmodifiableSet());
+        return Sources.streamSorted().map(Source::getDiscoverKey).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toUnmodifiableSet());
     }
 
     @Override

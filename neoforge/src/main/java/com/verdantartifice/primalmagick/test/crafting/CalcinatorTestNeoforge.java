@@ -15,4 +15,11 @@ public class CalcinatorTestNeoforge extends AbstractCalcinatorTest {
     public void calcinator_works(GameTestHelper helper) {
         super.calcinator_works(helper);
     }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
+    @Override
+    public void calcinator_works_without_player_present(GameTestHelper helper) {
+        super.calcinator_works_without_player_present(helper);
+    }
 }
