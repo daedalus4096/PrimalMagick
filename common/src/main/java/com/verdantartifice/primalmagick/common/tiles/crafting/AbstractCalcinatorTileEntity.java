@@ -35,6 +35,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.mutable.MutableBoolean;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -266,7 +267,8 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         }
     }
 
-    protected void doCalcination() {
+    @VisibleForTesting
+    public void doCalcination() {
         ItemStack inputStack = this.getItem(INPUT_INV_INDEX, 0);
         if (!inputStack.isEmpty() && this.canCalcinate(inputStack)) {
             // Merge the items already in the output inventory with the new output items from the melting

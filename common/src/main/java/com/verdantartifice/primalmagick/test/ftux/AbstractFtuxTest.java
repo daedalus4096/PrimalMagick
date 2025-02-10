@@ -51,8 +51,7 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
                 .build();
         return TestUtils.createParameterizedTestFunctions("font_discovery_tests", templateName, testParams, (helper, block) -> {
             // Create a player in the level and confirm that they start out not having found a shrine
-            @SuppressWarnings("removal")
-            ServerPlayer player = helper.makeMockServerPlayerInLevel();
+            var player = this.makeMockServerPlayer(helper, true);
             player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO)));
             helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research already present on new player");
 

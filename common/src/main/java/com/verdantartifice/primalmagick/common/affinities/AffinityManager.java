@@ -39,6 +39,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -199,8 +200,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
             return this.resultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).get(Services.ITEMS_REGISTRY.getKey(stack.getItem()));
         }
     }
-    
-    private void setCachedItemResult(ItemStack stack, @Nullable CompletableFuture<SourceList> result) {
+
+    @VisibleForTesting
+    public void setCachedItemResult(ItemStack stack, @Nullable CompletableFuture<SourceList> result) {
         if (result != null) {
             synchronized (this.resultCacheLock) {
                 this.resultCache.computeIfAbsent(AffinityType.ITEM, $ -> new ConcurrentHashMap<>()).put(Services.ITEMS_REGISTRY.getKey(stack.getItem()), result);

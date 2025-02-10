@@ -89,8 +89,7 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
     }
 
     public void vanilla_item_used_stat_requirement(GameTestHelper helper) {
-        @SuppressWarnings("removal")
-        var player = helper.makeMockServerPlayerInLevel(); // Vanilla stats require an explicit client or server player
+        var player = this.makeMockServerPlayer(helper, true); // Vanilla stats require an explicit client or server player
         var req = new VanillaItemUsedStatRequirement(Items.SNOWBALL, 1);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
         var pos = new BlockPos(2, 2, 2);

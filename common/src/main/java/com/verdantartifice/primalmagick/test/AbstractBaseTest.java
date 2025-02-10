@@ -21,6 +21,10 @@ import java.util.UUID;
 
 public abstract class AbstractBaseTest {
     protected ServerPlayer makeMockServerPlayer(GameTestHelper helper) {
+        return this.makeMockServerPlayer(helper, false);
+    }
+
+    protected ServerPlayer makeMockServerPlayer(GameTestHelper helper, boolean joinLevel) {
         ServerLevel level = helper.getLevel();
         CommonListenerCookie cookie = CommonListenerCookie.createInitial(new GameProfile(UUID.randomUUID(), "test-mock-player"), false);
         ServerPlayer player = new ServerPlayer(level.getServer(), level, cookie.gameProfile(), cookie.clientInformation()) {
@@ -39,6 +43,9 @@ public abstract class AbstractBaseTest {
         ProtocolInfo<ServerGamePacketListener> info = GameProtocols.SERVERBOUND_TEMPLATE.bind(RegistryFriendlyByteBuf.decorator(server.registryAccess()));
         connection.setupInboundProtocol(info, listener);
         Services.TEST.configureMockConnection(connection);
+        if (joinLevel) {
+            helper.getLevel().getServer().getPlayerList().placeNewPlayer(connection, player, cookie);
+        }
         return player;
     }
 
