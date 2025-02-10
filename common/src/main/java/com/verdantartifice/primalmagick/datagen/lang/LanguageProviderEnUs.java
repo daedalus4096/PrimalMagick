@@ -2097,6 +2097,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("section_header").sub("unavailable").output("Unavailable").end().build();
         this.grimoire("missing_block").name("Missing block!").build();
         this.grimoire("upcoming_tooltip_header").name("Missing requirements:").build();
+        this.grimoire("unknown_upcoming").name("Try investigating other disciplines or exploring the world to find out more!").build();
         this.grimoire("recipe_metadata").sub("discipline").output("Discipline:").end().build();
         this.grimoire("recipe_metadata").sub("entry").output("Research entry:").end().build();
         this.grimoire("attunement_meter").sub("tooltip").sub("header").output("%1$s attunement:").end().build();
@@ -3992,5 +3993,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.ENV_SKY, lookupProvider).name("Travel to the peak of the world").build();
         this.researchEntry(ResearchEntries.ENV_SUN, lookupProvider).name("Feel the scorching rays of the desert sun").build();
         this.researchEntry(ResearchEntries.ENV_MOON, lookupProvider).name("Witness the moonlight filtered through the forest trees").build();
+        this.researchEntry(ResearchEntries.UNKNOWN_RESEARCH, lookupProvider).name("Unknown").build();
     }
 }

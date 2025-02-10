@@ -34,23 +34,28 @@ public class UpcomingEntryWidget extends AbstractWidget {
         
         Minecraft mc = Minecraft.getInstance();
         MutableComponent tooltip = Component.empty();
-        tooltip.append(Component.translatable("grimoire.primalmagick.upcoming_tooltip_header"));
-        
-        for (ResearchEntryKey parent : this.entry.parents()) {
-            ResearchEntry parentEntry = ResearchEntries.getEntry(mc.level.registryAccess(), parent);
-            if (parentEntry == null && !parent.isKnownBy(mc.player)) {
-                tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("research.primalmagick." + parent.getRootKey() + ".text"));
-            } else if (parentEntry != null && !parentEntry.key().isKnownBy(mc.player)) {
-                MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
-                if (!this.entry.disciplineKeyOpt().equals(parentEntry.disciplineKeyOpt()) && parentEntry.disciplineKeyOpt().isPresent()) {
-                    ResearchDiscipline disc = ResearchDisciplines.getDiscipline(mc.level.registryAccess(), parentEntry.disciplineKeyOpt().get());
-                    if (disc != null) {
-                        comp.append(Component.literal(" ("));
-                        comp.append(Component.translatable(disc.getNameTranslationKey()));
-                        comp.append(Component.literal(")"));
+        if (this.entry.key().getRootKey().equals(ResearchEntries.UNKNOWN_RESEARCH)) {
+            // If the upcoming research entry is the unknown research placeholder, render a special message
+            tooltip.append(Component.translatable("grimoire.primalmagick.unknown_upcoming"));
+        } else {
+            // Otherwise, list the prerequisites for the upcoming research entry
+            tooltip.append(Component.translatable("grimoire.primalmagick.upcoming_tooltip_header"));
+            for (ResearchEntryKey parent : this.entry.parents()) {
+                ResearchEntry parentEntry = ResearchEntries.getEntry(mc.level.registryAccess(), parent);
+                if (parentEntry == null && !parent.isKnownBy(mc.player)) {
+                    tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("research.primalmagick." + parent.getRootKey() + ".text"));
+                } else if (parentEntry != null && !parentEntry.key().isKnownBy(mc.player)) {
+                    MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
+                    if (!this.entry.disciplineKeyOpt().equals(parentEntry.disciplineKeyOpt()) && parentEntry.disciplineKeyOpt().isPresent()) {
+                        ResearchDiscipline disc = ResearchDisciplines.getDiscipline(mc.level.registryAccess(), parentEntry.disciplineKeyOpt().get());
+                        if (disc != null) {
+                            comp.append(Component.literal(" ("));
+                            comp.append(Component.translatable(disc.getNameTranslationKey()));
+                            comp.append(Component.literal(")"));
+                        }
                     }
+                    tooltip.append(CommonComponents.NEW_LINE).append(comp);
                 }
-                tooltip.append(CommonComponents.NEW_LINE).append(comp);
             }
         }
         this.setTooltip(Tooltip.create(tooltip));

@@ -155,6 +155,10 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
             return opt.isPresent() && ((opt.get().is(ResearchEntryTagsPM.OPAQUE) && !opt.get().value().key().isKnownBy(player)) || !opt.get().value().isAvailable(player));
         });
     }
+
+    public boolean isVisible(@Nonnull Player player) {
+        return this.isAvailable(player) || this.isUpcoming(player);
+    }
     
     @Nonnull
     public Set<ResourceLocation> getAllRecipeIds() {

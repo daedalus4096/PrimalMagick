@@ -384,6 +384,17 @@ public class GrimoireScreen extends Screen {
                 upcomingList.add(entry);
             }
         }
+
+        // If no upcoming entries are visible, but the player isn't done with the discipline, add a placeholder
+        if (upcomingList.isEmpty()) {
+            final List<ResearchEntry> discFinales = new ArrayList<>(discipline.getFinaleEntries(registryAccess));
+            if (!entries.stream().filter(e -> !discFinales.contains(e)).allMatch(e -> e.isVisible(mc.player))) {
+                final ResearchEntry unknownEntry = ResearchEntries.getEntry(registryAccess, ResearchEntries.UNKNOWN_RESEARCH);
+                if (unknownEntry != null) {
+                    upcomingList.add(unknownEntry);
+                }
+            }
+        }
         
         // Divide the sections out into pages
         DisciplinePageProperties properties = new DisciplinePageProperties();
