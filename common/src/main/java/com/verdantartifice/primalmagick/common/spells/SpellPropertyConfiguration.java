@@ -37,7 +37,8 @@ public class SpellPropertyConfiguration {
     }
     
     public int get(SpellProperty property) {
-        return this.getOrDefault(property, 0);
+        // If the property is not yet present, default to its minimum possible value, which will not always be zero
+        return this.getOrDefault(property, property.min());
     }
     
     public int getOrDefault(SpellProperty property, int defaultValue) {

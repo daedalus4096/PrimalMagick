@@ -6,6 +6,7 @@ v6.0.1-beta
 * Fixed a bug causing calcinators to output only Alchemical Waste when their owner is logged out
 * Fixed a bug preventing staves and mundane wands from being enchanted at an Enchanting Table
 * Fixed missing Alchemical Bomb localizations for new 1.21 potion effects
+* Fixed a bug allowing some low-level Break spells to be cast for free
 
 v6.0.0-beta
 -----------
