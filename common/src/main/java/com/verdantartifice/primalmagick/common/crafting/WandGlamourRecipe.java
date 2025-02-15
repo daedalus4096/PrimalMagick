@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import com.verdantartifice.primalmagick.common.items.wands.IHasWandComponents;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
@@ -51,7 +52,7 @@ public class WandGlamourRecipe extends CustomRecipe {
         ItemStack gemStack = getItem(inv, 3);
         
         ItemStack retVal = wandStack.copy();
-        ModularWandItem wandItem = (ModularWandItem)retVal.getItem();
+        IHasWandComponents wandItem = (IHasWandComponents)retVal.getItem();
         
         if (coreStack.getItem() instanceof WandCoreItem wandCoreItem) {
             wandItem.setWandCoreAppearance(retVal, wandCoreItem.getWandCore());

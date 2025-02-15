@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
+import com.verdantartifice.primalmagick.common.items.wands.IHasWandComponents;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -104,7 +104,7 @@ public abstract class StoryAdvancementsPM {
                 .addCriterion("completed_many_projects", StatValueTrigger.TriggerInstance.atLeast(StatsPM.RESEARCH_PROJECTS_COMPLETED, 250))
                 .save(saver, ResourceUtils.loc("story/many_theorycrafts").toString());
         ItemStack apprenticeWand = Util.make(new ItemStack(ItemsPM.MODULAR_WAND.get()), stack -> {
-            ModularWandItem wandItem = (ModularWandItem)stack.getItem();
+            IHasWandComponents wandItem = (IHasWandComponents)stack.getItem();
             wandItem.setWandCore(stack, WandCore.HEARTWOOD);
             wandItem.setWandCap(stack, WandCap.IRON);
             wandItem.setWandGem(stack, WandGem.APPRENTICE);

@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  * 
  * @author Daedalus4096
  */
-public abstract class ModularWandItem extends AbstractWandItem {
+public abstract class ModularWandItem extends AbstractWandItem implements IHasWandComponents {
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ModularWandItem(Properties properties) {
@@ -99,20 +99,24 @@ public abstract class ModularWandItem extends AbstractWandItem {
     }
 
     @Nullable
+    @Override
     public WandCore getWandCore(@Nonnull ItemStack stack) {
         return stack.get(DataComponentsPM.WAND_CORE.get());
     }
     
+    @Override
     public void setWandCore(@Nonnull ItemStack stack, @Nonnull WandCore core) {
         stack.set(DataComponentsPM.WAND_CORE.get(), core);
         stack.set(DataComponents.RARITY, this.calculateRarity(stack));
     }
     
     @Nullable
+    @Override
     public WandCore getWandCoreAppearance(@Nonnull ItemStack stack) {
         return stack.getOrDefault(DataComponentsPM.WAND_CORE_APPEARANCE.get(), this.getWandCore(stack));
     }
     
+    @Override
     public void setWandCoreAppearance(@Nonnull ItemStack stack, @Nullable WandCore core) {
         if (core == null) {
             stack.remove(DataComponentsPM.WAND_CORE_APPEARANCE.get());
@@ -121,21 +125,25 @@ public abstract class ModularWandItem extends AbstractWandItem {
         }
     }
     
-    @Nullable 
+    @Nullable
+    @Override
     public WandCap getWandCap(@Nonnull ItemStack stack) {
         return stack.get(DataComponentsPM.WAND_CAP.get());
     }
     
+    @Override
     public void setWandCap(@Nonnull ItemStack stack, @Nonnull WandCap cap) {
         stack.set(DataComponentsPM.WAND_CAP.get(), cap);
         stack.set(DataComponents.RARITY, this.calculateRarity(stack));
     }
     
-    @Nullable 
+    @Nullable
+    @Override
     public WandCap getWandCapAppearance(@Nonnull ItemStack stack) {
         return stack.getOrDefault(DataComponentsPM.WAND_CAP_APPEARANCE.get(), this.getWandCap(stack));
     }
     
+    @Override
     public void setWandCapAppearance(@Nonnull ItemStack stack, @Nullable WandCap cap) {
         if (cap == null) {
             stack.remove(DataComponentsPM.WAND_CAP_APPEARANCE.get());
@@ -145,20 +153,24 @@ public abstract class ModularWandItem extends AbstractWandItem {
     }
     
     @Nullable
+    @Override
     public WandGem getWandGem(@Nonnull ItemStack stack) {
         return stack.get(DataComponentsPM.WAND_GEM.get());
     }
     
+    @Override
     public void setWandGem(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
         stack.set(DataComponentsPM.WAND_GEM.get(), gem);
         stack.set(DataComponents.RARITY, this.calculateRarity(stack));
     }
     
     @Nullable
+    @Override
     public WandGem getWandGemAppearance(@Nonnull ItemStack stack) {
         return stack.getOrDefault(DataComponentsPM.WAND_GEM_APPEARANCE.get(), this.getWandGem(stack));
     }
     
+    @Override
     public void setWandGemAppearance(@Nonnull ItemStack stack, @Nullable WandGem gem) {
         if (gem == null) {
             stack.remove(DataComponentsPM.WAND_GEM_APPEARANCE.get());
