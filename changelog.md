@@ -4,6 +4,7 @@ v6.0.1-beta
 * Improved mouse navigation options for the Grimoire
 * Added a hint to the Upcoming section of discipline pages in the Grimoire for when available leads have been exhausted
 * Fixed a bug causing calcinators to output only Alchemical Waste when their owner is logged out
+* Fixed a bug preventing staves and mundane wands from being enchanted at an Enchanting Table
 * Fixed missing Alchemical Bomb localizations for new 1.21 potion effects
 
 v6.0.0-beta

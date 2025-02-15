@@ -102,6 +102,11 @@ public abstract class MundaneWandItem extends AbstractWandItem {
     }
 
     @Override
+    public int getEnchantmentValue() {
+        return 1;
+    }
+
+    @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
         if (this.customRenderer == null) {
             this.customRenderer = this.getCustomRendererSupplierUncached().get();
