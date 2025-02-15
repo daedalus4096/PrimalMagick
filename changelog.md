@@ -7,6 +7,7 @@ v6.0.1-beta
 * Fixed a bug preventing staves and mundane wands from being enchanted at an Enchanting Table
 * Fixed missing Alchemical Bomb localizations for new 1.21 potion effects
 * Fixed a bug allowing some low-level Break spells to be cast for free
+* Fixed a bug allowing Concocter recipes to sometimes overwrite existing output items
 
 v6.0.0-beta
 -----------

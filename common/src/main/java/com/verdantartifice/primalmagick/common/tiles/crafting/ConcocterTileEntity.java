@@ -279,17 +279,9 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
             } else if (!this.isResearchKnown(recipe.getRequirement())) {
                 return false;
             } else {
-                ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
-                if (currentOutput.isEmpty()) {
-                    return true;
-                } else if (!ItemStack.isSameItem(currentOutput, output)) {
-                    return false;
-                } else if (currentOutput.getCount() + output.getCount() <= this.itemHandlers.get(OUTPUT_INV_INDEX).getSlotLimit(0) && 
-                        currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
-                    return true;
-                } else {
-                    return currentOutput.getCount() + output.getCount() <= output.getMaxStackSize();
-                }
+                // Concoctions and bombs never stack, so there's no need to test if the current output is compatible
+                // with the recipe's output.
+                return this.getItem(OUTPUT_INV_INDEX, 0).isEmpty();
             }
         } else {
             return false;
