@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.platform.services;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.EarthshatterHammerItem;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
@@ -32,6 +33,7 @@ public interface IItemPrototypeService {
     <T extends Block> Supplier<BurnableBlockItem> burnable(Supplier<T> block, int burnTicks, Item.Properties properties);
 
     Supplier<ArcanometerItem> arcanometer();
+    Supplier<EarthshatterHammerItem> earthshatterHammer();
     Supplier<IgnyxItem> ignyx(Item.Properties properties);
 
     <T extends Block> Supplier<ManaFontBlockItem> manaFont(Supplier<T> blockSupplier, Item.Properties properties);
