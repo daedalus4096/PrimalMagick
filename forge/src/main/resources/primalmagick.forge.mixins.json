@@ -3,7 +3,9 @@
   "minVersion": "0.8",
   "package": "com.verdantartifice.primalmagick.mixin",
   "compatibilityLevel": "JAVA_18",
-  "mixins": [],
+  "mixins": [
+    "RepairItemRecipeMixin"
+  ],
   "client": [
   ],
   "server": [],
