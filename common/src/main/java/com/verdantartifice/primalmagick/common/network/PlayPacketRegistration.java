@@ -14,8 +14,6 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPac
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -76,7 +74,6 @@ public class PlayPacketRegistration {
                 .registerPacket(RemovePropMarkerPacket.type(), RemovePropMarkerPacket.class, RemovePropMarkerPacket.STREAM_CODEC, RemovePropMarkerPacket::onMessage)
                 .registerPacket(SyncCompanionsPacket.type(), SyncCompanionsPacket.class, SyncCompanionsPacket.STREAM_CODEC, SyncCompanionsPacket::onMessage)
                 .registerPacket(PotionExplosionPacket.type(), PotionExplosionPacket.class, PotionExplosionPacket.STREAM_CODEC, PotionExplosionPacket::onMessage)
-                .registerPacket(UpdateAffinitiesPacket.type(), UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.STREAM_CODEC, UpdateAffinitiesPacket::onMessage)
                 .registerPacket(SyncArcaneRecipeBookPacket.type(), SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket.STREAM_CODEC, SyncArcaneRecipeBookPacket::onMessage)
                 .registerPacket(PlaceGhostArcaneRecipePacket.type(), PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.STREAM_CODEC, PlaceGhostArcaneRecipePacket::onMessage)
                 .registerPacket(SpellcraftingRunePacket.type(), SpellcraftingRunePacket.class, SpellcraftingRunePacket.STREAM_CODEC, SpellcraftingRunePacket::onMessage)
@@ -86,7 +83,6 @@ public class PlayPacketRegistration {
                 .registerPacket(OpenEnchantedBookScreenPacket.type(), OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket.STREAM_CODEC, OpenEnchantedBookScreenPacket::onMessage)
                 .registerPacket(SyncLinguisticsPacket.type(), SyncLinguisticsPacket.class, SyncLinguisticsPacket.STREAM_CODEC, SyncLinguisticsPacket::onMessage)
                 .registerPacket(ContainerSetVarintDataPacket.type(), ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.STREAM_CODEC, ContainerSetVarintDataPacket::onMessage)
-                .registerPacket(UpdateLinguisticsGridsPacket.type(), UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.STREAM_CODEC, UpdateLinguisticsGridsPacket::onMessage)
                 // Server-bound play channel packets
                 .registerPacket(SyncProgressPacket.type(), SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                 .registerPacket(SyncResearchFlagsPacket.type(), SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)
