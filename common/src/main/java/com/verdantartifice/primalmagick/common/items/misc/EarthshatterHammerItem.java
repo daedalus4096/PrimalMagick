@@ -11,11 +11,9 @@ import net.minecraft.world.item.Rarity;
  * 
  * @author Daedalus4096
  */
-public class EarthshatterHammerItem extends Item {
-    protected static final RandomSource RNG = RandomSource.create();
-    
-    public EarthshatterHammerItem() {
-        super(new Item.Properties().durability(255).rarity(Rarity.UNCOMMON));
+public abstract class EarthshatterHammerItem extends Item {
+    protected EarthshatterHammerItem(Item.Properties properties) {
+        super(properties);
     }
     
     // Technically an override, but the base method exists only in loader-specific code
