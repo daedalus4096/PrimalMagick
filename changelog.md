@@ -9,6 +9,7 @@ v6.0.1-beta
 * Fixed missing Alchemical Bomb localizations for new 1.21 potion effects
 * Fixed a bug allowing some low-level Break spells to be cast for free
 * Fixed a bug allowing Concocter recipes to sometimes overwrite existing output items
+* Fixed a bug that in some heavy mod packs would prevent Primal Magick from loading
 
 v6.0.0-beta
 -----------

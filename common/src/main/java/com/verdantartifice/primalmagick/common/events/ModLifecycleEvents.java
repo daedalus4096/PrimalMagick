@@ -18,19 +18,21 @@ import java.util.function.Consumer;
  */
 public class ModLifecycleEvents {
     public static void commonSetup(Consumer<Runnable> workConsumer) {
-        PlayPacketRegistration.registerMessages();
-        Services.NETWORK.registerConfigMessages();
+        workConsumer.accept(() -> {
+            PlayPacketRegistration.registerMessages();
+            Services.NETWORK.registerConfigMessages();
 
-        InitRecipes.initWandTransforms();
-        InitRecipes.initCompostables();
-        InitAttunements.initAttunementAttributeModifiers();
-        InitResearch.initResearch();
-        InitCauldron.initCauldronInteractions();
+            InitRecipes.initWandTransforms();
+            InitRecipes.initCompostables();
+            InitAttunements.initAttunementAttributeModifiers();
+            InitResearch.initResearch();
+            InitCauldron.initCauldronInteractions();
 
-        registerDispenserBehaviors(workConsumer);
+            registerDispenserBehaviors();
+        });
     }
     
-    private static void registerDispenserBehaviors(Consumer<Runnable> workConsumer) {
-        workConsumer.accept(() -> DispenserBlock.registerProjectileBehavior(ItemsPM.IGNYX.get()));
+    private static void registerDispenserBehaviors() {
+        DispenserBlock.registerProjectileBehavior(ItemsPM.IGNYX.get());
     }
 }
