@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@master
-      - uses: actions/cache@v1
+      - uses: actions/cache@v4
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
