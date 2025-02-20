@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagick.test.attunements;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.test.TestUtilsForge;
+import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestGenerator;
+import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraftforge.gametest.GameTestHolder;
 
@@ -13,5 +15,17 @@ public class AttunementTestForge extends AbstractAttunementTest {
     @GameTestGenerator
     public Collection<TestFunction> minor_attunement_gives_mana_discount() {
         return super.minor_attunement_gives_mana_discount(TestUtilsForge.DEFAULT_TEMPLATE);
+    }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void lesser_earth_attunement_gives_haste_modifier(GameTestHelper helper) {
+        super.lesser_earth_attunement_gives_haste_modifier(helper);
+    }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void greater_earth_attunement_gives_step_height_modifier(GameTestHelper helper) {
+        super.greater_earth_attunement_gives_step_height_modifier(helper);
     }
 }

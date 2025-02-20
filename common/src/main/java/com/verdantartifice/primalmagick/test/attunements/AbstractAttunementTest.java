@@ -1,8 +1,11 @@
 package com.verdantartifice.primalmagick.test.attunements;
 
+import com.mojang.logging.LogUtils;
+import com.verdantartifice.primalmagick.common.attunements.AttunementAttributeModifiers;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.events.PlayerEvents;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -12,7 +15,9 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
+import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Collection;
@@ -51,5 +56,37 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
             helper.succeed();
         });
+    }
+
+    public void lesser_earth_attunement_gives_haste_modifier(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Confirm that the player doesn't have the relevant attribute modifier to start
+        helper.assertFalse(player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player has unexpected attribute modifier");
+
+        // Grant the test player lesser attunement to the Earth
+        AttunementManager.setAttunement(player, Sources.EARTH, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+
+        // Confirm that the player has the relevant attribute modifier with attunement
+        helper.assertTrue(player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player does not have expected attribute modifier");
+
+        helper.succeed();
+    }
+
+    public void greater_earth_attunement_gives_step_height_modifier(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper, true);
+
+        // Confirm that the player doesn't have the relevant attribute modifier to start
+        helper.assertFalse(player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player has unexpected attribute modifier");
+
+        // Grant the test player greater attunement to the Earth and force processing of attunement buffs
+        AttunementManager.setAttunement(player, Sources.EARTH, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+        PlayerEvents.applyAttunementBuffs(player);
+
+        // Confirm that the player has the relevant attribute modifier with attunement
+        helper.assertTrue(player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player does not have expected attribute modifier");
+        helper.succeed();
     }
 }

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.mojang.datafixers.util.Pair;
+import com.verdantartifice.primalmagick.common.attunements.AttunementAttributeModifiers;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -83,6 +84,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -106,8 +108,7 @@ public class PlayerEvents {
     
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
-    private static final ResourceLocation STEP_MODIFIER_EARTH_ID = ResourceUtils.loc("step_modifier");
-    private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_ID, 0.4D, AttributeModifier.Operation.ADD_VALUE);
+    private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(AttunementAttributeModifiers.EARTH_GREATER_ID, 0.4D, AttributeModifier.Operation.ADD_VALUE);
     private static final ResearchStageKey SOURCE_EARTH_START = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 1);
     private static final ResearchStageKey SOURCE_EARTH_END = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 2);
     private static final ResearchStageKey SOURCE_SEA_START = new ResearchStageKey(ResearchEntries.SOURCE_SEA, 1);
@@ -178,7 +179,8 @@ public class PlayerEvents {
         }
     }
 
-    protected static void applyAttunementBuffs(ServerPlayer player) {
+    @VisibleForTesting
+    public static void applyAttunementBuffs(ServerPlayer player) {
         if (AttunementManager.meetsThreshold(player, Sources.SEA, AttunementThreshold.GREATER)) {
             // Apply Water Breathing for 30.5s if the player has greater sea attunement
             player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 610, 0, true, false, true));
