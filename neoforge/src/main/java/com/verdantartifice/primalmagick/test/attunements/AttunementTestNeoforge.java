@@ -31,4 +31,18 @@ public class AttunementTestNeoforge extends AbstractAttunementTest {
     public void greater_earth_attunement_gives_step_height_modifier(GameTestHelper helper) {
         super.greater_earth_attunement_gives_step_height_modifier(helper);
     }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
+    @Override
+    public void lesser_sea_attunement_gives_increased_swim_speed(GameTestHelper helper) {
+        super.lesser_sea_attunement_gives_increased_swim_speed(helper);
+    }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
+    @Override
+    public void greater_sea_attunement_gives_water_breathing(GameTestHelper helper) {
+        super.greater_sea_attunement_gives_water_breathing(helper);
+    }
 }
