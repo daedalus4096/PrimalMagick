@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementAttributeMo
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.events.PlayerEvents;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
@@ -15,20 +16,32 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
+import com.verdantartifice.primalmagick.test.TestRandomSource;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
-import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.LightLayer;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class AbstractAttunementTest extends AbstractBaseTest {
+    public void beforeDayBatch(ServerLevel level) {
+        level.setDayTime(6000);
+        level.tick(() -> true);
+    }
+
+    public void beforeNightBatch(ServerLevel level) {
+        level.setDayTime(18000);
+        level.tick(() -> true);
+    }
+
     public Collection<TestFunction> minor_attunement_gives_mana_discount(String templateName) {
         Map<String, Source> testParams = Sources.streamSorted().collect(Collectors.toMap(source -> source.getId().getPath(), source -> source));
         return TestUtils.createParameterizedTestFunctions("minor_attunement_gives_mana_discount", templateName, testParams, (helper, source) -> {
@@ -191,4 +204,100 @@ public class AbstractAttunementTest extends AbstractBaseTest {
     }
 
     // TODO Add a double jump test for greater sky attunement
+
+    public void lesser_sun_attunement_regenerates_food_during_day(GameTestHelper helper) {
+        final int startFood = 6;
+        final int endFood = startFood + 1;
+
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Set starting test conditions
+        helper.setDayTime(0);
+        helper.getLevel().tick(() -> true);
+        player.getFoodData().setFoodLevel(startFood);
+        helper.assertTrue(player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
+
+        // Grant the player lesser attunement to the Sun and tick photosynthesis
+        AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+        PlayerEvents.handlePhotosynthesis(player);
+
+        // Confirm that their food level has regenerated
+        var actualFood = player.getFoodData().getFoodLevel();
+        helper.assertTrue(actualFood == endFood, "Player does not have expected food with attunement: " + actualFood);
+
+        helper.succeed();
+    }
+
+    public void lesser_sun_attunement_does_not_regenerate_food_during_night(GameTestHelper helper) {
+        final int startFood = 6;
+
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Set starting test conditions
+        helper.setNight();
+        helper.getLevel().tick(() -> true);
+        player.getFoodData().setFoodLevel(startFood);
+        helper.assertTrue(player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
+
+        // Grant the player lesser attunement to the Sun and tick photosynthesis
+        AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+        PlayerEvents.handlePhotosynthesis(player);
+
+        // Confirm that their food level has regenerated
+        helper.assertTrue(player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food with attunement");
+
+        helper.succeed();
+    }
+
+    // FIXME Highly intermittent; world time doesn't seem consistent with explicitly set values
+    public void greater_sun_attunement_does_not_drop_glow_fields_during_day(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper, true);
+        var playerPos = player.blockPosition();
+
+        // Create a random source that will always trigger a light drop
+        var rng = TestRandomSource.builder().setDouble(0D).build();
+
+        // Confirm that there's no glow field present to start
+        LogUtils.getLogger().warn("Block light level before attunement during day: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
+        helper.assertFalse(helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
+
+        // Grant the player greater attunement to the Sun and trigger light drop
+        AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+        LogUtils.getLogger().warn("Block light level after attunement during day: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
+        PlayerEvents.handleLightDrop(player, rng);
+
+        // Confirm that the glow field is still not present
+        LogUtils.getLogger().warn("Block light level after light drop during day: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
+        helper.assertFalse(helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be after attunement");
+
+        helper.succeed();
+    }
+
+    // FIXME Highly intermittent; world time doesn't seem consistent with explicitly set values
+    public void greater_sun_attunement_drops_glow_fields_during_night(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper, true);
+        var playerPos = player.blockPosition();
+
+        // Create a random source that will always trigger a light drop
+        var rng = TestRandomSource.builder().setDouble(0D).build();
+
+        // Confirm that there's no glow field present to start
+        LogUtils.getLogger().warn("Block light level before attunement during night: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
+        helper.assertFalse(helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
+
+        // Grant the player greater attunement to the Sun and trigger light drop
+        AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+        LogUtils.getLogger().warn("Block light level after attunement during night: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
+        PlayerEvents.handleLightDrop(player, rng);
+
+        // Confirm that there's still no glow field (because it's day time)
+        LogUtils.getLogger().warn("Block light level after light drop during night: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
+        helper.assertTrue(helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field missing after attunement");
+
+        helper.succeed();
+    }
 }

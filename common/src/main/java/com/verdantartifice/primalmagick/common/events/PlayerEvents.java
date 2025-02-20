@@ -40,7 +40,6 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -52,13 +51,13 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -136,7 +135,7 @@ public class PlayerEvents {
             }
             if (player.tickCount % 20 == 0) {
                 // Periodically check to see if attuned players should drop a light source or if regrowing equipment should mend
-                handleLightDrop(player);
+                handleLightDrop(player, level.random);
                 handleRegrowth(player);
                 handleWardRegeneration(player);
             }
@@ -273,7 +272,8 @@ public class PlayerEvents {
     }
     
     @SuppressWarnings("deprecation")
-    protected static void handlePhotosynthesis(ServerPlayer player) {
+    @VisibleForTesting
+    public static void handlePhotosynthesis(ServerPlayer player) {
         Level level = player.level();
         if (AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.LESSER) && level.isDay() &&
                 player.getLightLevelDependentMagicValue() > 0.5F && level.canSeeSky(player.blockPosition())) {
@@ -282,14 +282,15 @@ public class PlayerEvents {
         }
     }
 
-    protected static void handleLightDrop(ServerPlayer player) {
+    @VisibleForTesting
+    public static void handleLightDrop(ServerPlayer player, RandomSource randomSource) {
         BlockPos pos = player.blockPosition();
         Level world = player.level();
-        if (world.random.nextDouble() < 0.1D && 
+        if (randomSource.nextDouble() < 0.1D &&
                 AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.GREATER) && 
                 !player.isShiftKeyDown() && 
                 world.isEmptyBlock(pos) && 
-                world.getBlockState(pos) != BlocksPM.GLOW_FIELD.get().defaultBlockState() &&
+                !world.getBlockState(pos).is(BlocksPM.GLOW_FIELD.get()) &&
                 world.getBrightness(LightLayer.BLOCK, pos) < 11) {
             // If an attuned, non-sneaking player is in a dark area, they have a chance to drop a sparkling glow field
             world.setBlock(pos, BlocksPM.GLOW_FIELD.get().defaultBlockState().setValue(GlowFieldBlock.SPARKLING, Boolean.TRUE), Block.UPDATE_ALL);
