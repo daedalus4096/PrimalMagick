@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.test.enchantments;
+package com.verdantartifice.primalmagick.test.attunements;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.test.TestUtilsNeoforge;
@@ -9,9 +9,9 @@ import net.neoforged.neoforge.gametest.GameTestHolder;
 import java.util.Collection;
 
 @GameTestHolder(Constants.MOD_ID)
-public class CasterEnchantingTestNeoforge extends AbstractCasterEnchantingTest {
+public class AttunementTestNeoforge extends AbstractAttunementTest {
     @GameTestGenerator
-    public Collection<TestFunction> caster_enchanting_tests() {
-        return super.caster_enchanting_tests(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    public Collection<TestFunction> minor_attunement_gives_mana_discount() {
+        return super.minor_attunement_gives_mana_discount(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
 }

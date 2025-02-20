@@ -15,7 +15,7 @@ import java.util.Collection;
 public class FtuxTestNeoforge extends AbstractFtuxTest {
     @GameTestGenerator
     public Collection<TestFunction> font_discovery_tests() {
-        return super.font_discovery_tests(String.join(":", Constants.MOD_ID, TestUtilsNeoforge.DEFAULT_TEMPLATE));
+        return super.font_discovery_tests(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
 
     @PrefixGameTestTemplate(false)
@@ -27,7 +27,7 @@ public class FtuxTestNeoforge extends AbstractFtuxTest {
 
     @GameTestGenerator
     public Collection<TestFunction> mundane_wand_crafting_tests() {
-        return super.mundane_wand_crafting_tests(String.join(":", Constants.MOD_ID, TestUtilsNeoforge.DEFAULT_TEMPLATE));
+        return super.mundane_wand_crafting_tests(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
 
     @PrefixGameTestTemplate(false)
