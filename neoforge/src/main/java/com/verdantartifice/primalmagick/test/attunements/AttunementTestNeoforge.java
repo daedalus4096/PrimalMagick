@@ -45,4 +45,25 @@ public class AttunementTestNeoforge extends AbstractAttunementTest {
     public void greater_sea_attunement_gives_water_breathing(GameTestHelper helper) {
         super.greater_sea_attunement_gives_water_breathing(helper);
     }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
+    @Override
+    public void lesser_sky_attunement_gives_movement_speed_modifier(GameTestHelper helper) {
+        super.lesser_sky_attunement_gives_movement_speed_modifier(helper);
+    }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
+    @Override
+    public void lesser_sky_attunement_reduces_fall_damage_taken(GameTestHelper helper) {
+        super.lesser_sky_attunement_reduces_fall_damage_taken(helper);
+    }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
+    @Override
+    public void greater_sky_attunement_increases_jump_strength(GameTestHelper helper) {
+        super.greater_sky_attunement_increases_jump_strength(helper);
+    }
 }

@@ -18,9 +18,11 @@ import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
 
 import java.util.Collection;
 import java.util.Map;
@@ -125,4 +127,68 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         helper.succeed();
     }
+
+    public void lesser_sky_attunement_gives_movement_speed_modifier(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Confirm that the player doesn't have the relevant attribute modifier to start
+        helper.assertFalse(player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player has unexpected attribute modifier");
+
+        // Grant the test player lesser attunement to the Sky
+        AttunementManager.setAttunement(player, Sources.SKY, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+
+        // Confirm that the player has the relevant attribute modifier with attunement
+        helper.assertTrue(player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player does not have expected attribute modifier");
+
+        helper.succeed();
+    }
+
+    public void lesser_sky_attunement_reduces_fall_damage_taken(GameTestHelper helper) {
+        final float expectedDamage = 8F;
+
+        // Create a test player
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+
+        // Confirm that the player takes normal falling damage to start
+        player.hurt(player.damageSources().fall(), expectedDamage);
+        var actualDamage = player.getMaxHealth() - player.getHealth();
+        helper.assertTrue(actualDamage == expectedDamage, "Player did not take expected damage without attunement: " + actualDamage);
+
+        // Reset the player's health and grant them lesser attunement to the Sky
+        player.setHealth(player.getMaxHealth());
+        AttunementManager.setAttunement(player, Sources.SKY, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+
+        // Confirm that the player takes reduced falling damage with attunement
+        player.hurt(player.damageSources().fall(), expectedDamage);
+        actualDamage = player.getMaxHealth() - player.getHealth();
+        helper.assertTrue(actualDamage < expectedDamage, "Player did not take reduced damage with attunement: " + actualDamage);
+
+        helper.succeed();
+    }
+
+    public void greater_sky_attunement_increases_jump_strength(GameTestHelper helper) {
+        // Create a test player
+        var player1 = this.makeMockServerPlayer(helper);
+        var expectedJumpStrength = player1.getAttributeValue(Attributes.JUMP_STRENGTH);
+
+        // Have the player jump and measure its unmodified jump strength
+        player1.jumpFromGround();
+        helper.assertTrue(player1.getDeltaMovement().y() == expectedJumpStrength, "Player did not have expected starting jump strength");
+
+        // Discard that player and create another one
+        player1.discard();
+        var player2 = this.makeMockServerPlayer(helper);
+
+        // Grant the new player greater attunement to the Sky
+        AttunementManager.setAttunement(player2, Sources.SKY, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+
+        // Have the new player jump and confirm that their jump strength is greater
+        player2.jumpFromGround();
+        helper.assertTrue(player2.getDeltaMovement().y() > expectedJumpStrength, "Player did not have boosted jump strength as expected");
+
+        helper.succeed();
+    }
+
+    // TODO Add a double jump test for greater sky attunement
 }

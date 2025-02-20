@@ -559,6 +559,7 @@ public class PlayerEvents {
         if (livingEntity instanceof Player player) {
             if (AttunementManager.meetsThreshold(player, Sources.SKY, AttunementThreshold.GREATER)) {
                 // Boost the player's vertical motion on jump if they have greater sky attunement
+                // TODO Change this to a modifier on the jump strength attribute
                 Vec3 motion = player.getDeltaMovement();
                 motion = motion.add(0.0D, 0.275D, 0.0D);
                 player.setDeltaMovement(motion);
