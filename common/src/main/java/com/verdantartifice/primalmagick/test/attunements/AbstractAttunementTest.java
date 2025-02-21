@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.events.CombatEvents;
 import com.verdantartifice.primalmagick.common.events.PlayerEvents;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
@@ -297,6 +298,44 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that there's still no glow field (because it's day time)
         LogUtils.getLogger().warn("Block light level after light drop during night: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
         helper.assertTrue(helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field missing after attunement");
+
+        helper.succeed();
+    }
+
+    public void lesser_moon_attunement_grants_invisibility_chance_on_hurt(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Create a random source that will always trigger
+        var rng = TestRandomSource.builder().setDouble(0D).setGaussian(1D).build();
+
+        // Confirm that the player is not granted invisibility without attunement
+        CombatEvents.grantInvisibilityOnHurt(player, helper.getLevel(), rng);
+        helper.assertFalse(player.hasEffect(MobEffects.INVISIBILITY), "Player has invisibility when they shouldn't");
+
+        // Grant the player lesser attunement to the Moon
+        AttunementManager.setAttunement(player, Sources.MOON, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+
+        // Confirm that the player is granted invisibility with attunement
+        CombatEvents.grantInvisibilityOnHurt(player, helper.getLevel(), rng);
+        helper.assertTrue(player.hasEffect(MobEffects.INVISIBILITY), "Player does not have invisibility with attunement");
+
+        helper.succeed();
+    }
+
+    public void greater_moon_attunement_grants_night_vision(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Confirm that the player has the relevant effect with attunement
+        helper.assertFalse(player.hasEffect(MobEffects.NIGHT_VISION), "Player has unexpected effect");
+
+        // Grant the test player greater attunement to the Moon and force processing of attunement buffs
+        AttunementManager.setAttunement(player, Sources.MOON, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+        PlayerEvents.applyAttunementBuffs(player);
+
+        // Confirm that the player has the relevant effect with attunement
+        helper.assertTrue(player.hasEffect(MobEffects.NIGHT_VISION), "Player does not have expected effect");
 
         helper.succeed();
     }

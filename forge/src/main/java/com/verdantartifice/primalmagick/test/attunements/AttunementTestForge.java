@@ -84,4 +84,16 @@ public class AttunementTestForge extends AbstractAttunementTest {
     public void lesser_sun_attunement_does_not_regenerate_food_during_night(GameTestHelper helper) {
         super.lesser_sun_attunement_does_not_regenerate_food_during_night(helper);
     }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void lesser_moon_attunement_grants_invisibility_chance_on_hurt(GameTestHelper helper) {
+        super.lesser_moon_attunement_grants_invisibility_chance_on_hurt(helper);
+    }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void greater_moon_attunement_grants_night_vision(GameTestHelper helper) {
+        super.greater_moon_attunement_grants_night_vision(helper);
+    }
 }

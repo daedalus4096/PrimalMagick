@@ -25,6 +25,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -37,6 +38,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,13 +70,7 @@ public class CombatEvents {
 
             // Attuned players have a chance to turn invisible upon taking damage, if they aren't already
             Level targetLevel = target.level();
-            if (targetLevel.random.nextDouble() < 0.5D &&
-                    !target.hasEffect(MobEffects.INVISIBILITY) && 
-                    AttunementManager.meetsThreshold(target, Sources.MOON, AttunementThreshold.LESSER)) {
-                targetLevel.playSound(target, target.blockPosition(), SoundsPM.SHIMMER.get(), 
-                        SoundSource.PLAYERS, 1.0F, 1.0F + (0.05F * (float)targetLevel.random.nextGaussian()));
-                target.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 200));
-            }
+            grantInvisibilityOnHurt(target, targetLevel, targetLevel.random);
         }
         
         // Handle effects caused by damage source
@@ -99,6 +95,17 @@ public class CombatEvents {
 
         // Do not cancel the event
         return false;
+    }
+
+    @VisibleForTesting
+    public static void grantInvisibilityOnHurt(Player player, Level level, RandomSource random) {
+        if (random.nextDouble() < 0.5D &&
+                !player.hasEffect(MobEffects.INVISIBILITY) &&
+                AttunementManager.meetsThreshold(player, Sources.MOON, AttunementThreshold.LESSER)) {
+            level.playSound(player, player.blockPosition(), SoundsPM.SHIMMER.get(),
+                    SoundSource.PLAYERS, 1.0F, 1.0F + (0.05F * (float)random.nextGaussian()));
+            player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 200));
+        }
     }
     
     public static void onEntityHurt(LivingEntity targetEntity, DamageSource damageSource, Supplier<Float> damageGetter, Consumer<Float> damageSetter) {
