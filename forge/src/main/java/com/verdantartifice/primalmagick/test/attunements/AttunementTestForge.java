@@ -119,4 +119,16 @@ public class AttunementTestForge extends AbstractAttunementTest {
     public Collection<TestFunction> greater_infernal_attunement_prevents_fire_damage() {
         return super.greater_infernal_attunement_prevents_fire_damage(TestUtilsForge.DEFAULT_TEMPLATE);
     }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void lesser_void_attunement_reduces_damage_taken(GameTestHelper helper) {
+        super.lesser_void_attunement_reduces_damage_taken(helper);
+    }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void greater_void_attunement_increases_damage_dealt(GameTestHelper helper) {
+        super.greater_void_attunement_increases_damage_dealt(helper);
+    }
 }

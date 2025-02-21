@@ -408,8 +408,8 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         var player = this.makeMockServerPlayer(helper, true);
 
         // Create a pair of test targets
-        var target1 = helper.spawnWithNoFreeWill(EntityType.COW, player.position());
-        var target2 = helper.spawnWithNoFreeWill(EntityType.COW, player.position());
+        var target1 = helper.spawnWithNoFreeWill(EntityType.COW, player.blockPosition().north());
+        var target2 = helper.spawnWithNoFreeWill(EntityType.COW, player.blockPosition().west());
 
         // Confirm that the secondary target is not harmed when striking the primary target without attunement
         CombatEvents.onAttack(target1, player.damageSources().playerAttack(player), damage);
@@ -453,5 +453,59 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
             helper.succeed();
         });
+    }
+
+    public void lesser_void_attunement_reduces_damage_taken(GameTestHelper helper) {
+        final float startingDamage = 5F;
+
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Create a test mob to simulate attacking
+        var attacker = helper.spawnWithNoFreeWill(EntityType.WOLF, player.position());
+
+        // Confirm that the player takes normal damage without attunement
+        MutableFloat damage1 = new MutableFloat(startingDamage);
+        CombatEvents.onEntityHurt(player, player.damageSources().mobAttack(attacker), damage1::getValue, damage1::setValue);
+        helper.assertTrue(damage1.getValue() == startingDamage, "Damage modified without attunement");
+
+        // Grant the test player lesser attunement to the Void
+        AttunementManager.setAttunement(player, Sources.VOID, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+
+        // Confirm that the player takes reduced damage with attunement
+        MutableFloat damage2 = new MutableFloat(startingDamage);
+        CombatEvents.onEntityHurt(player, player.damageSources().mobAttack(attacker), damage2::getValue, damage2::setValue);
+        final float actual = damage2.getValue();
+        final float expected = 0.9F * startingDamage;
+        helper.assertTrue(expected == actual, "Damage not modified as expected after attunement");
+
+        helper.succeed();
+    }
+
+    public void greater_void_attunement_increases_damage_dealt(GameTestHelper helper) {
+        final float startingDamage = 5F;
+
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Create a test target
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, player.position());
+
+        // Confirm that the target takes normal damage without attunement
+        MutableFloat damage1 = new MutableFloat(startingDamage);
+        CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
+        helper.assertTrue(damage1.getValue() == startingDamage, "Damage modified without attunement");
+
+        // Grant the test player greater attunement to the Void
+        AttunementManager.setAttunement(player, Sources.VOID, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+
+        // Confirm that the target takes increased damage with attunement
+        MutableFloat damage2 = new MutableFloat(startingDamage);
+        CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
+        final float actual = damage2.getValue();
+        final float expected = 1.25F * startingDamage;
+        helper.assertTrue(expected == actual, "Damage not modified as expected after attunement");
+
+        helper.succeed();
     }
 }
