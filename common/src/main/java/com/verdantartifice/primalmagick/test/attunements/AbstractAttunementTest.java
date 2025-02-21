@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.events.CombatEvents;
 import com.verdantartifice.primalmagick.common.events.PlayerEvents;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -23,13 +24,16 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.LightLayer;
+import org.apache.commons.lang3.mutable.MutableFloat;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AbstractAttunementTest extends AbstractBaseTest {
@@ -336,6 +340,57 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that the player has the relevant effect with attunement
         helper.assertTrue(player.hasEffect(MobEffects.NIGHT_VISION), "Player does not have expected effect");
+
+        helper.succeed();
+    }
+
+    public void lesser_blood_attunement_inflicts_bleeding(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper, true);
+
+        // Create a test target
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, player.position());
+
+        // Confirm that bleeding is not inflicted upon the target without player attunement
+        MutableFloat damage1 = new MutableFloat(2F);
+        CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
+        helper.assertFalse(target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target has effect before attunement");
+
+        // Grant the test player lesser attunement to the Blood
+        AttunementManager.setAttunement(player, Sources.BLOOD, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+
+        // Confirm that bleeding is inflicted upon the target with player attunement
+        MutableFloat damage2 = new MutableFloat(2F);
+        CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
+        helper.assertTrue(target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target does not have effect after attunement");
+
+        helper.succeed();
+    }
+
+    public void greater_blood_attunement_grants_chance_at_self_healing(GameTestHelper helper) {
+        final float startHealth = 5F;
+
+        // Create a test player and start them damaged
+        var player = this.makeMockServerPlayer(helper);
+        player.setHealth(startHealth);
+
+        // Create a test target
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, player.position());
+
+        // Confirm that the player is not healed without attunement
+        MutableFloat damage1 = new MutableFloat(12F);   // Do enough damage to force the RNG
+        CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
+        helper.assertTrue(player.getHealth() == startHealth, "Player does not have expected health before attunement");
+
+        // Grant the test player greater attunement to the Blood
+        AttunementManager.setAttunement(player, Sources.BLOOD, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+
+        // Confirm that the player is healed by one point after striking with attunement
+        MutableFloat damage2 = new MutableFloat(12F);   // Do enough damage to force the RNG
+        CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
+        final float expected = startHealth + 1;
+        final float actual = player.getHealth();
+        helper.assertTrue(actual == expected, "Player does not have expected health after attunement: " + actual);
 
         helper.succeed();
     }

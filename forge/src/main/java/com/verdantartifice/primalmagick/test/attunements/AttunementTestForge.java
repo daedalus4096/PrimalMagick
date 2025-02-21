@@ -96,4 +96,16 @@ public class AttunementTestForge extends AbstractAttunementTest {
     public void greater_moon_attunement_grants_night_vision(GameTestHelper helper) {
         super.greater_moon_attunement_grants_night_vision(helper);
     }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void lesser_blood_attunement_inflicts_bleeding(GameTestHelper helper) {
+        super.lesser_blood_attunement_inflicts_bleeding(helper);
+    }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void greater_blood_attunement_grants_chance_at_self_healing(GameTestHelper helper) {
+        super.greater_blood_attunement_grants_chance_at_self_healing(helper);
+    }
 }
