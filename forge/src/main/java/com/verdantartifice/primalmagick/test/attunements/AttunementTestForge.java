@@ -108,4 +108,15 @@ public class AttunementTestForge extends AbstractAttunementTest {
     public void greater_blood_attunement_grants_chance_at_self_healing(GameTestHelper helper) {
         super.greater_blood_attunement_grants_chance_at_self_healing(helper);
     }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void lesser_infernal_attunement_fires_hellish_chain_on_attack(GameTestHelper helper) {
+        super.lesser_infernal_attunement_fires_hellish_chain_on_attack(helper);
+    }
+
+    @GameTestGenerator
+    public Collection<TestFunction> greater_infernal_attunement_prevents_fire_damage() {
+        return super.greater_infernal_attunement_prevents_fire_damage(TestUtilsForge.DEFAULT_TEMPLATE);
+    }
 }

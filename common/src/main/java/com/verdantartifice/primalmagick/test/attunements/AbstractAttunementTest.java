@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.test.attunements;
 
+import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementAttributeModifiers;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.events.CombatEvents;
 import com.verdantartifice.primalmagick.common.events.PlayerEvents;
@@ -20,9 +22,12 @@ import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestRandomSource;
 import com.verdantartifice.primalmagick.test.TestUtils;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -34,6 +39,7 @@ import org.apache.commons.lang3.mutable.MutableFloat;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AbstractAttunementTest extends AbstractBaseTest {
@@ -393,5 +399,59 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         helper.assertTrue(actual == expected, "Player does not have expected health after attunement: " + actual);
 
         helper.succeed();
+    }
+
+    public void lesser_infernal_attunement_fires_hellish_chain_on_attack(GameTestHelper helper) {
+        final float damage = 4F;
+
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper, true);
+
+        // Create a pair of test targets
+        var target1 = helper.spawnWithNoFreeWill(EntityType.COW, player.position());
+        var target2 = helper.spawnWithNoFreeWill(EntityType.COW, player.position());
+
+        // Confirm that the secondary target is not harmed when striking the primary target without attunement
+        CombatEvents.onAttack(target1, player.damageSources().playerAttack(player), damage);
+        helper.assertTrue(target2.getHealth() == target2.getMaxHealth(), "Secondary target hurt before attunement");
+
+        // Grant the test player lesser attunement to the Infernal
+        AttunementManager.setAttunement(player, Sources.INFERNAL, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+
+        // Confirm that the secondary target is harmed for half the damage to the primary target with attunement
+        CombatEvents.onAttack(target1, player.damageSources().playerAttack(player), damage);
+        final float expected = target2.getMaxHealth() - (0.5F * damage);
+        final float actual = target2.getHealth();
+        helper.assertTrue(expected == actual, "Secondary target not at expected health after attunement: " + actual);
+
+        helper.succeed();
+    }
+
+    public Collection<TestFunction> greater_infernal_attunement_prevents_fire_damage(String templateName) {
+        Map<String, Function<RegistryAccess, DamageSource>> testParams = ImmutableMap.<String, Function<RegistryAccess, DamageSource>>builder()
+                .put("inFire", registryAccess -> new DamageSources(registryAccess).inFire())
+                .put("onFire", registryAccess -> new DamageSources(registryAccess).onFire())
+                .put("lava", registryAccess -> new DamageSources(registryAccess).lava())
+                .put("hotFloor", registryAccess -> new DamageSources(registryAccess).hotFloor())
+                .put("infernalSorcery", registryAccess -> DamageSourcesPM.sorcery(registryAccess, Sources.INFERNAL, null))
+                .build();
+        return TestUtils.createParameterizedTestFunctions("greater_infernal_attunement_prevents_fire_damage", templateName, testParams, (helper, func) -> {
+            // Create a test player
+            var player = this.makeMockServerPlayer(helper);
+
+            // Initialize the test damage source
+            var damageSource = func.apply(helper.getLevel().registryAccess());
+
+            // Confirm that the attack event is not supposed to be cancelled without attunement
+            helper.assertFalse(CombatEvents.onAttack(player, damageSource, 5F), "Damage being cancelled before attunement");
+
+            // Grant the test player greater attunement to the Infernal
+            AttunementManager.setAttunement(player, Sources.INFERNAL, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+
+            // Confirm that the attack event is supposed to be cancelled with attunement
+            helper.assertTrue(CombatEvents.onAttack(player, damageSource, 5F), "Damage not being cancelled after attunement");
+
+            helper.succeed();
+        });
     }
 }

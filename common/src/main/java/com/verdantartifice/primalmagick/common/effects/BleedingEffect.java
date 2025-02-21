@@ -18,7 +18,7 @@ public class BleedingEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
-        entityLivingBaseIn.hurt(DamageSourcesPM.bleeding(entityLivingBaseIn.level()), (float)(1 << Math.max(0, amplifier)));
+        entityLivingBaseIn.hurt(DamageSourcesPM.bleeding(entityLivingBaseIn.level().registryAccess()), (float)(1 << Math.max(0, amplifier)));
         return true;
     }
     

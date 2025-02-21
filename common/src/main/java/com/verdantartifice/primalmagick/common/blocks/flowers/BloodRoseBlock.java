@@ -38,7 +38,7 @@ public class BloodRoseBlock extends TallFlowerBlock {
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
         // Don't destroy items and don't harm anything in the immunity tag
         if (pEntity.getType() != EntityType.ITEM && !pEntity.getType().is(EntityTypeTagsPM.BLOOD_ROSE_IMMUNE)) {
-            pEntity.hurt(DamageSourcesPM.bloodRose(pLevel), 1F);
+            pEntity.hurt(DamageSourcesPM.bloodRose(pLevel.registryAccess()), 1F);
         }
     }
 }

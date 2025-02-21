@@ -85,7 +85,7 @@ public class CombatEvents {
                         Arrays.asList(targetEntity, attacker), LivingEntity.class, 4.0D, EntitySelectorsPM.validHellishChainTarget(attacker));
                 if (!targets.isEmpty()) {
                     LivingEntity target = targets.getFirst();
-                    target.hurt(DamageSourcesPM.hellishChain(attackerLevel, attacker), amount / 2.0F);
+                    target.hurt(DamageSourcesPM.hellishChain(attackerLevel.registryAccess(), attacker), amount / 2.0F);
                     PacketHandler.sendToAllAround(new SpellBoltPacket(targetEntity.getEyePosition(1.0F), target.getEyePosition(1.0F), Sources.INFERNAL.getColor()),
                             serverLevel, targetEntity.blockPosition(), 64.0D);
                     attackerLevel.playSound(null, targetEntity.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attackerLevel.random.nextGaussian() * 0.05D));

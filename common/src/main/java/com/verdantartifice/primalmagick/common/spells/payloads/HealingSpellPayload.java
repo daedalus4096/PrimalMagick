@@ -70,15 +70,16 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
     }
 
     protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
+        Level level = source.level();
         if (projectileEntity != null) {
             // If the spell was a projectile or a mine, then it's indirect now matter how it was deployed
-            return DamageSourcesPM.sorcery(source.level(), this.getSource(), projectileEntity, source);
+            return DamageSourcesPM.sorcery(level.registryAccess(), this.getSource(), projectileEntity, source);
         } else if (spell.vehicle().getComponent().isIndirect()) {
             // If the spell vehicle is indirect but no projectile was given, then it's still indirect
-            return DamageSourcesPM.sorcery(source.level(), this.getSource(), null, source);
+            return DamageSourcesPM.sorcery(level.registryAccess(), this.getSource(), null, source);
         } else {
             // Otherwise, do direct damage
-            return DamageSourcesPM.sorcery(source.level(), this.getSource(), source);
+            return DamageSourcesPM.sorcery(level.registryAccess(), this.getSource(), source);
         }
     }
 

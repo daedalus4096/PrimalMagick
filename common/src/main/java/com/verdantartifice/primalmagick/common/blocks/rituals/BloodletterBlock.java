@@ -86,7 +86,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
         if (pPlayer != null && !pState.getValue(FILLED)) {
             // If using an empty hand on an unfilled bloodletter, cut the player
             if (!pLevel.isClientSide) {
-                pPlayer.hurt(DamageSourcesPM.bleeding(pLevel), 2.0F);
+                pPlayer.hurt(DamageSourcesPM.bleeding(pLevel.registryAccess()), 2.0F);
                 pLevel.setBlock(pPos, pState.setValue(FILLED, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 
                 // If this block is awaiting activation for an altar, notify it
