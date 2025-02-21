@@ -109,12 +109,6 @@ public class AttunementTestForge extends AbstractAttunementTest {
         super.greater_blood_attunement_grants_chance_at_self_healing(helper);
     }
 
-    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
-    @Override
-    public void lesser_infernal_attunement_fires_hellish_chain_on_attack(GameTestHelper helper) {
-        super.lesser_infernal_attunement_fires_hellish_chain_on_attack(helper);
-    }
-
     @GameTestGenerator
     public Collection<TestFunction> greater_infernal_attunement_prevents_fire_damage() {
         return super.greater_infernal_attunement_prevents_fire_damage(TestUtilsForge.DEFAULT_TEMPLATE);
@@ -130,5 +124,17 @@ public class AttunementTestForge extends AbstractAttunementTest {
     @Override
     public void greater_void_attunement_increases_damage_dealt(GameTestHelper helper) {
         super.greater_void_attunement_increases_damage_dealt(helper);
+    }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void lesser_hallowed_attunement_doubles_damage_dealt_to_undead(GameTestHelper helper) {
+        super.lesser_hallowed_attunement_doubles_damage_dealt_to_undead(helper);
+    }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void greater_hallowed_attunement_prevents_death(GameTestHelper helper) {
+        super.greater_hallowed_attunement_prevents_death(helper);
     }
 }

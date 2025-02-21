@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.events.CombatEvents;
@@ -401,6 +402,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         helper.succeed();
     }
 
+    // FIXME Intermittent; secondary target sometimes just not taking damage from the chain
     public void lesser_infernal_attunement_fires_hellish_chain_on_attack(GameTestHelper helper) {
         final float damage = 4F;
 
@@ -505,6 +507,57 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         final float actual = damage2.getValue();
         final float expected = 1.25F * startingDamage;
         helper.assertTrue(expected == actual, "Damage not modified as expected after attunement");
+
+        helper.succeed();
+    }
+
+    public void lesser_hallowed_attunement_doubles_damage_dealt_to_undead(GameTestHelper helper) {
+        final float startingDamage = 5F;
+
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Create a test undead target
+        var target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, player.position());
+
+        // Confirm that the target takes normal damage without attunement
+        MutableFloat damage1 = new MutableFloat(startingDamage);
+        CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
+        helper.assertTrue(damage1.getValue() == startingDamage, "Damage modified without attunement");
+
+        // Grant the player lesser attunement to the Hallowed
+        AttunementManager.setAttunement(player, Sources.HALLOWED, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
+
+        // Confirm that the target takes increased damage with attunement
+        MutableFloat damage2 = new MutableFloat(startingDamage);
+        CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
+        final float actual = damage2.getValue();
+        final float expected = 2F * startingDamage;
+        helper.assertTrue(expected == actual, "Damage not modified as expected after attunement");
+
+        helper.succeed();
+    }
+
+    public void greater_hallowed_attunement_prevents_death(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Confirm that the target is not saved without attunement
+        helper.assertFalse(CombatEvents.onDeath(player), "Death cancelled before attunement");
+        helper.assertTrue(player.getActiveEffects().isEmpty(), "Player has unexpected effects before attunement");
+        helper.assertTrue(Services.CAPABILITIES.cooldowns(player).map(c -> c.getRemainingCooldown(IPlayerCooldowns.CooldownType.DEATH_SAVE)).orElse(0L) == 0L,
+                "Player incurred a death save cooldown before attunement");
+
+        // Grant the player greater attunement to the Hallowed
+        AttunementManager.setAttunement(player, Sources.HALLOWED, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+
+        // Confirm that the target is saved with attunement
+        helper.assertTrue(CombatEvents.onDeath(player), "Death not cancelled after attunement");
+        helper.assertTrue(player.hasEffect(MobEffects.REGENERATION), "Player missing regeneration effect after attunement");
+        helper.assertTrue(player.hasEffect(MobEffects.ABSORPTION), "Player missing absorption effect after attunement");
+        helper.assertTrue(player.hasEffect(Objects.requireNonNull(EffectsPM.WEAKENED_SOUL.getHolder())), "Player missing weakened soul effect after attunement");
+        helper.assertTrue(Services.CAPABILITIES.cooldowns(player).map(c -> c.getRemainingCooldown(IPlayerCooldowns.CooldownType.DEATH_SAVE)).orElse(0L) > 0L,
+                "Player missing a death save cooldown after attunement");
 
         helper.succeed();
     }
