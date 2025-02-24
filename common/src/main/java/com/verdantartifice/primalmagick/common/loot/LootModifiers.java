@@ -117,9 +117,13 @@ public class LootModifiers {
                             bag.add(source, amount);
                         }
                     }
-                    for (int index = 0; index < 2 * enchantLevel; index++) {
-                        generatedLoot.add(EssenceItem.getEssence(EssenceType.DUST, bag.getRandom(context.getRandom())));
-                    }
+                    EssenceType type = switch (enchantLevel) {
+                        case 1 -> EssenceType.DUST;
+                        case 2 -> EssenceType.SHARD;
+                        case 3 -> EssenceType.CRYSTAL;
+                        default -> EssenceType.CLUSTER;
+                    };
+                    generatedLoot.add(EssenceItem.getEssence(type, bag.getRandom(context.getRandom())));
                 }
             }
         }

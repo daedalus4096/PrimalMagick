@@ -206,7 +206,8 @@ public class LootModifierProviderForge extends GlobalLootModifierProvider {
         this.add("essence_thief", new EssenceThiefModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
-                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.1F, 0.05F).build()
                 }));
         this.add("guillotine_zombie_head", new GuillotineModifier(
                 new LootItemCondition[] {

@@ -1,5 +1,6 @@
 v6.0.2-beta
 -----------
+* Redesigned the Essence Thief enchantment: now provides a chance to drop a single essence from slain mobs, with higher enchantment levels yields higher grades of essence
 * Made all glow fields sparkle for visibility
 * Glow fields conjured by spells are now permanent
 * Glow fields conjured by player Sun attunement now fade over time
