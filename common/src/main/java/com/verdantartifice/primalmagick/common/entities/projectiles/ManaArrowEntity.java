@@ -25,8 +25,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Definition for a mana-tinged arrow.  Has minor secondary effects in addition to regular arrow damage.
@@ -45,7 +44,12 @@ public class ManaArrowEntity extends AbstractArrow {
         super(EntityTypesPM.MANA_ARROW.get(), shooter, level, pickupItem, weapon);
         this.setSource(source);
     }
-    
+
+    public ManaArrowEntity(Level pLevel, double pX, double pY, double pZ, Source source, ItemStack pPickupItemStack, @Nullable ItemStack pFiredFromWeapon) {
+        super(EntityTypesPM.MANA_ARROW.get(), pX, pY, pZ, pLevel, pPickupItemStack, pFiredFromWeapon);
+        this.setSource(source);
+    }
+
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);

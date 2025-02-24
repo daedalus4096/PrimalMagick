@@ -1,3 +1,7 @@
+v6.0.2-beta
+-----------
+* Fixed dispenser behavior for Mana-Tinged Arrows
+
 v6.0.1-beta
 -----------
 * Added recipes to un-attune Humming Artifacts
