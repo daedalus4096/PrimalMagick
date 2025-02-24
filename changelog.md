@@ -1,5 +1,8 @@
 v6.0.2-beta
 -----------
+* Made all glow fields sparkle for visibility
+* Glow fields conjured by spells are now permanent
+* Glow fields conjured by player Sun attunement now fade over time
 * Fixed dispenser behavior for Mana-Tinged Arrows
 
 v6.0.1-beta

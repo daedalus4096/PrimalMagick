@@ -42,7 +42,7 @@ import java.util.Optional;
  * just the top or bottom.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock
  */
 public class SunlampBlock extends BaseEntityBlock {
     public static final MapCodec<SunlampBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -132,7 +132,7 @@ public class SunlampBlock extends BaseEntityBlock {
     }
     
     public Optional<GlowFieldBlock> getGlowField(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(Registries.BLOCK).getOptional(this.glowBlockKey).filter(b -> GlowFieldBlock.class.isInstance(b)).map(b -> GlowFieldBlock.class.cast(b));
+        return registryAccess.registryOrThrow(Registries.BLOCK).getOptional(this.glowBlockKey).filter(GlowFieldBlock.class::isInstance).map(GlowFieldBlock.class::cast);
     }
 
     @Override

@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 /**
- * Definition for a light conjuration spell.  Creates a fading glow field at the designated point.
+ * Definition for a light conjuration spell.  Creates a permanent glow field at the designated point.
  * Most of the work is done in the base class.  Has no effect when cast by non-players.
  * 
  * @author Daedalus4096
@@ -37,7 +37,7 @@ public class ConjureLightSpellPayload extends AbstractConjureBlockSpellPayload<C
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_LIGHT));
     
     public ConjureLightSpellPayload() {
-        super(() -> BlocksPM.GLOW_FIELD.get().defaultBlockState().setValue(GlowFieldBlock.FADING, Boolean.TRUE));
+        super(() -> BlocksPM.GLOW_FIELD.get().defaultBlockState());
     }
 
     public static AbstractRequirement<?> getRequirement() {
