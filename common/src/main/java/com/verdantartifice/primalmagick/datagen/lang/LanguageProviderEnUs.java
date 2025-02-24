@@ -1219,9 +1219,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .partialRuneText("The Soulpiercing enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow or crossbow.  When applied, the first strike against a target causes it to drop soul gem slivers.")
             .build();
         this.enchantment(EnchantmentsPM.ESSENCE_THIEF).name("Essence Thief")
-            .description("Steals a portion of the victim's essence, causing them to drop essence dust when slain.")
-            .fullRuneText("The Essence Thief enchantment can be imbued through the use of Summon, Item, and Void runes.  It can be applied to any sword, axe, trident, or wand.  When applied, it steals a portion of the victim's essence, causing them to drop essence dust when slain.")
-            .partialRuneText("The Essence Thief enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, trident, or wand.  When applied, it steals a portion of the victim's essence, causing them to drop essence dust when slain.")
+            .description("Steals a portion of the victim's essence, causing them to drop essence when slain.")
+            .fullRuneText("The Essence Thief enchantment can be imbued through the use of Summon, Item, and Void runes.  It can be applied to any sword, axe, trident, or wand.  When applied, it steals a portion of the victim's essence, causing them to drop essence when slain.")
+            .partialRuneText("The Essence Thief enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, trident, or wand.  When applied, it steals a portion of the victim's essence, causing them to drop essence when slain.")
             .build();
         this.enchantment(EnchantmentsPM.BULWARK).name("Bulwark")
             .description("Causes the wielder to take less damage from all sources while blocking.")
@@ -3671,7 +3671,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.FORBIDDEN_SWORD, lookupProvider).name("Forbidden Sword")
             .stages()
                 .add("I believe that I can increase the might of my weapons by ritually aligning them with a primal source.  The blade cuts through air, leaving only emptiness in its wake, making it a perfect vessel for the Void.")
-                .add("Ritually aligning a hexium sword to the Void has resulted in a very hungry blade.<BR>Creatures killed by it will have a portion of their essence consumed, dropping as dust for me to collect.  Some powerful creatures are immune to the effect.<BR>The sword doesn't seem to want to take on any other enchantments, though.  Maybe I'll find a way around that in the future.")
+                .add("Ritually aligning a hexium sword to the Void has resulted in a very hungry blade.<BR>Creatures killed by it will have a portion of their essence consumed, dropping for me to collect.  Some powerful creatures are immune to the effect.<BR>The sword doesn't seem to want to take on any other enchantments, though.  Maybe I'll find a way around that in the future.")
                 .end()
             .addenda()
                 .add("I've learned how to recreate this sword's special properties using a rune enchantment.  By combining the Summon, Item, and Void runes, I can apply this enchantment to any trident, sword, or axe to allow it to consume my foes' very essence.")
