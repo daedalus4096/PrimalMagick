@@ -91,6 +91,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.HoneycombItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.Items;
@@ -553,7 +554,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, EarthshatterHammerItem> EARTHSHATTER_HAMMER = registerSupplier("earthshatter_hammer", Services.ITEM_PROTOTYPES.earthshatterHammer());
     public static final IRegistryItem<Item, Item> MANA_PRISM = registerSupplier("mana_prism", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> TALLOW = registerSupplier("tallow", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> BEESWAX = registerSupplier("beeswax", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> BEESWAX = registerSupplier("beeswax", () -> new HoneycombItem(new Item.Properties()));
     public static final IRegistryItem<Item, Item> MANA_SALTS = registerSupplier("mana_salts", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, ManafruitItem> MANAFRUIT = registerSupplier("manafruit", () -> new ManafruitItem(0, new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationModifier(0.8F).build())));
     public static final IRegistryItem<Item, Item> INCENSE_STICK = registerSupplier("incense_stick", () -> new Item(new Item.Properties()));

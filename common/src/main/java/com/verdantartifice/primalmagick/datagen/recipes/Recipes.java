@@ -39,6 +39,9 @@ import net.minecraft.data.recipes.SmithingTrimRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.HoneycombItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -101,6 +104,7 @@ public abstract class Recipes extends RecipeProvider {
         this.registerCropRecipes(consumer);
         this.registerIgnyxRecipes(consumer);
         this.registerGemBudRecipes(consumer);
+        this.registerWaxRecipes(consumer, FeatureFlagSet.of(FeatureFlags.VANILLA));
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(CommonTags.Items.RODS_WOODEN)
@@ -7331,5 +7335,18 @@ public abstract class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.DISCOVER_HALLOWED)
             .noExpertise()
             .build(consumer);
+    }
+
+    protected void registerWaxRecipes(RecipeOutput consumer, FeatureFlagSet featureFlagSet) {
+        HoneycombItem.WAXABLES.get().forEach((waxOff, waxOn) -> {
+            if (waxOn.requiredFeatures().isSubsetOf(featureFlagSet)) {
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, waxOn)
+                        .requires(waxOff)
+                        .requires(ItemsPM.BEESWAX.get())
+                        .group(getItemName(waxOn))
+                        .unlockedBy(getHasName(waxOff), has(waxOff))
+                        .save(consumer, getConversionRecipeName(waxOn, ItemsPM.BEESWAX.get()));
+            }
+        });
     }
 }

@@ -1,5 +1,6 @@
 v6.0.2-beta
 -----------
+* Added ability to wax copper blocks using beeswax
 * Redesigned the Essence Thief enchantment: now provides a chance to drop a single essence from slain mobs, with higher enchantment levels yields higher grades of essence
 * Made all glow fields sparkle for visibility
 * Glow fields conjured by spells are now permanent
