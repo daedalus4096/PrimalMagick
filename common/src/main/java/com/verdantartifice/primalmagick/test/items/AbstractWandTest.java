@@ -277,7 +277,7 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 var lessCentimana = exactCentimana - 1;
                 var greaterCentimana = exactCentimana + 1;
 
-                // Confirm that the wand recognizes it contains mana up to the threshold of what it was given
+                // Confirm that the wand recognizes it contains centimana up to the threshold of what it was given
                 helper.assertTrue(wand.containsMana(wandStack, player, source, lessCentimana, helper.getLevel().registryAccess()), "Contains returned false for less than held");
                 helper.assertTrue(wand.containsMana(wandStack, player, source, exactCentimana, helper.getLevel().registryAccess()), "Contains returned false for exact held");
                 helper.assertFalse(wand.containsMana(wandStack, player, source, greaterCentimana, helper.getLevel().registryAccess()), "Contains returned true for greater than held");
@@ -296,15 +296,62 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 // Add some real mana to the wand for all sources except the test source
                 Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, 1));
 
-                // Confirm that the wand contains real mana for a list containing all source except the test source
+                // Confirm that the wand contains centimana for a list containing all source except the test source
                 var greenList = SourceList.EMPTY;
                 Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, 100));
                 helper.assertTrue(wand.containsMana(wandStack, player, greenList, helper.getLevel().registryAccess()), "Contains returned false for green list");
 
-                // Confirm that the wand does not contain real mana for all sources
+                // Confirm that the wand does not contain centimana for all sources
                 var redList = SourceList.EMPTY;
                 Sources.getAll().forEach(s -> redList.add(s, 100));
                 helper.assertFalse(wand.containsMana(wandStack, player, redList, helper.getLevel().registryAccess()), "Contains returned true for red list");
+            });
+        });
+    }
+
+    public Collection<TestFunction> wand_contains_real_mana(String testName, String templateName) {
+        return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
+            var player = this.makeMockServerPlayer(helper);
+            var wandStack = this.getTestWand();
+            helper.succeedIf(() -> {
+                // Confirm that the wand was created successfully
+                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
+
+                // Add some real mana to the wand for the test source
+                helper.assertTrue(wand.addRealMana(wandStack, source, 2) == 0, "Failed to add real mana to wand");
+
+                var exactRealMana = 2;
+                var lessRealMana = exactRealMana - 1;
+                var greaterRealMana = exactRealMana + 1;
+
+                // Confirm that the wand recognizes it contains mana up to the threshold of what it was given
+                helper.assertTrue(wand.containsRealMana(wandStack, player, source, lessRealMana, helper.getLevel().registryAccess()), "Contains returned false for less than held");
+                helper.assertTrue(wand.containsRealMana(wandStack, player, source, exactRealMana, helper.getLevel().registryAccess()), "Contains returned false for exact held");
+                helper.assertFalse(wand.containsRealMana(wandStack, player, source, greaterRealMana, helper.getLevel().registryAccess()), "Contains returned true for greater than held");
+            });
+        });
+    }
+
+    public Collection<TestFunction> wand_contains_real_mana_list(String testName, String templateName) {
+        return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
+            var player = this.makeMockServerPlayer(helper);
+            var wandStack = this.getTestWand();
+            helper.succeedIf(() -> {
+                // Confirm that the wand was created successfully
+                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
+
+                // Add some real mana to the wand for all sources except the test source
+                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, 1));
+
+                // Confirm that the wand contains real mana for a list containing all source except the test source
+                var greenList = SourceList.EMPTY;
+                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, 1));
+                helper.assertTrue(wand.containsRealMana(wandStack, player, greenList, helper.getLevel().registryAccess()), "Contains returned false for green list");
+
+                // Confirm that the wand does not contain real mana for all sources
+                var redList = SourceList.EMPTY;
+                Sources.getAll().forEach(s -> redList.add(s, 1));
+                helper.assertFalse(wand.containsRealMana(wandStack, player, redList, helper.getLevel().registryAccess()), "Contains returned true for red list");
             });
         });
     }
