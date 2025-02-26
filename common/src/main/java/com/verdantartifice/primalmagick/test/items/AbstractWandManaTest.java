@@ -42,58 +42,61 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
     public Collection<TestFunction> wand_can_get_and_add_mana(String testName, String templateName) {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Confirm that the wand is empty at first
-                helper.assertTrue(wand.getMana(wandStack, source) == 0, "Wand is not empty as expected");
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand
-                helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
+            // Confirm that the wand is empty at first
+            helper.assertTrue(wand.getMana(wandStack, source) == 0, "Wand is not empty as expected");
 
-                // Confirm that the wand has mana in it
-                helper.assertTrue(wand.getMana(wandStack, source) == 100, "Wand mana total is not as expected");
-            });
+            // Add a point of real mana to the wand
+            helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
+
+            // Confirm that the wand has mana in it
+            helper.assertTrue(wand.getMana(wandStack, source) == 100, "Wand mana total is not as expected");
+
+            helper.succeed();
         });
     }
 
     public Collection<TestFunction> wand_cannot_add_too_much_mana(String testName, String templateName) {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                int maxCentimana = wand.getMaxMana(wandStack);
-                int attemptedRealMana = 100000;
-                int expectedCentimana = (100 * attemptedRealMana) - maxCentimana;
-                int actualRealMana = wand.addRealMana(wandStack, source, attemptedRealMana);
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Confirm that the overfill for the wand is as expected
-                helper.assertTrue(wand.getMana(wandStack, source) == maxCentimana, "Wand mana total is not as expected");
-                helper.assertTrue(expectedCentimana == (actualRealMana * 100), "Wand overfill is not as expected");
-            });
+            int maxCentimana = wand.getMaxMana(wandStack);
+            int attemptedRealMana = 100000;
+            int expectedCentimana = (100 * attemptedRealMana) - maxCentimana;
+            int actualRealMana = wand.addRealMana(wandStack, source, attemptedRealMana);
+
+            // Confirm that the overfill for the wand is as expected
+            helper.assertTrue(wand.getMana(wandStack, source) == maxCentimana, "Wand mana total is not as expected");
+            helper.assertTrue(expectedCentimana == (actualRealMana * 100), "Wand overfill is not as expected");
+
+            helper.succeed();
         });
     }
 
     public Collection<TestFunction> wand_can_get_all_mana(String testName, String templateName) {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand for each source *except* the test source
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, 1));
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Create a source list of centimana to be expected; all sources *except* the test source
-                var sourceList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, 100));
+            // Add a point of real mana to the wand for each source *except* the test source
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, 1));
 
-                // Confirm that the wand has the expected amount of mana in it
-                helper.assertTrue(wand.getAllMana(wandStack).equals(sourceList), "Wand mana total is not as expected");
-            });
+            // Create a source list of centimana to be expected; all sources *except* the test source
+            var sourceList = SourceList.EMPTY;
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, 100));
+
+            // Confirm that the wand has the expected amount of mana in it
+            helper.assertTrue(wand.getAllMana(wandStack).equals(sourceList), "Wand mana total is not as expected");
+
+            helper.succeed();
         });
     }
 
@@ -101,25 +104,26 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 1;
-                final int startingCentimana = 100 * startingRealMana;
-                final int consumedCentimana = 10;
-                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
-                final int expectedCentimana = startingCentimana - (int)(consumedCentimana * costModifier);
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand
-                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
+            final int startingRealMana = 1;
+            final int startingCentimana = 100 * startingRealMana;
+            final int consumedCentimana = 10;
+            final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+            final int expectedCentimana = startingCentimana - (int)(consumedCentimana * costModifier);
 
-                // Confirm that a few points of centimana can be consumed
-                helper.assertTrue(wand.consumeMana(wandStack, player, source, consumedCentimana, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
+            // Add a point of real mana to the wand
+            helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
 
-                // Confirm that the mana was deducted correctly
-                helper.assertTrue(wand.getMana(wandStack, source) == expectedCentimana, "Wand mana total is not as expected");
-            });
+            // Confirm that a few points of centimana can be consumed
+            helper.assertTrue(wand.consumeMana(wandStack, player, source, consumedCentimana, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
+
+            // Confirm that the mana was deducted correctly
+            helper.assertTrue(wand.getMana(wandStack, source) == expectedCentimana, "Wand mana total is not as expected");
+
+            helper.succeed();
         });
     }
 
@@ -127,19 +131,20 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand
-                helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Confirm that attempting to consume more mana than the wand has fails
-                helper.assertFalse(wand.consumeMana(wandStack, player, source, 200, helper.getLevel().registryAccess()), "Consumption of maan succeeded when it shouldn't have");
+            // Add a point of real mana to the wand
+            helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
 
-                // Confirm that the wand still has the mana it started with
-                helper.assertTrue(wand.getMana(wandStack, source) == 100, "Wand mana total is not as expected");
-            });
+            // Confirm that attempting to consume more mana than the wand has fails
+            helper.assertFalse(wand.consumeMana(wandStack, player, source, 200, helper.getLevel().registryAccess()), "Consumption of maan succeeded when it shouldn't have");
+
+            // Confirm that the wand still has the mana it started with
+            helper.assertTrue(wand.getMana(wandStack, source) == 100, "Wand mana total is not as expected");
+
+            helper.succeed();
         });
     }
 
@@ -147,34 +152,35 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 1;
-                final int startingCentimana = 100 * startingRealMana;
-                final int consumedCentimana = 10;
-                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
-                final int expectedCentimana = startingCentimana - (int)(consumedCentimana * costModifier);
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand for each source
-                Sources.getAll().forEach(s -> {
-                    helper.assertTrue(wand.addRealMana(wandStack, s, startingRealMana) == 0, "Failed to add real mana to wand for " + s.getId());
-                });
+            final int startingRealMana = 1;
+            final int startingCentimana = 100 * startingRealMana;
+            final int consumedCentimana = 10;
+            final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+            final int expectedCentimana = startingCentimana - (int)(consumedCentimana * costModifier);
 
-                // Create a source list of centimana to be deducted; all sources *except* the test source
-                var sourceList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, consumedCentimana));
-
-                // Confirm that the centimana can be consumed
-                helper.assertTrue(wand.consumeMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
-
-                // Confirm that the mana was deducted correctly for each source
-                Sources.getAll().forEach(s -> {
-                    var expected = s.equals(source) ? startingCentimana : expectedCentimana;
-                    helper.assertTrue(wand.getMana(wandStack, source) == expected, "Wand mana total is not as expected");
-                });
+            // Add a point of real mana to the wand for each source
+            Sources.getAll().forEach(s -> {
+                helper.assertTrue(wand.addRealMana(wandStack, s, startingRealMana) == 0, "Failed to add real mana to wand for " + s.getId());
             });
+
+            // Create a source list of centimana to be deducted; all sources *except* the test source
+            var sourceList = SourceList.EMPTY;
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, consumedCentimana));
+
+            // Confirm that the centimana can be consumed
+            helper.assertTrue(wand.consumeMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
+
+            // Confirm that the mana was deducted correctly for each source
+            Sources.getAll().forEach(s -> {
+                var expected = s.equals(source) ? startingCentimana : expectedCentimana;
+                helper.assertTrue(wand.getMana(wandStack, source) == expected, "Wand mana total is not as expected");
+            });
+
+            helper.succeed();
         });
     }
 
@@ -182,23 +188,24 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand for every source
-                Sources.getAll().forEach(s -> wand.addRealMana(wandStack, s, 1));
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Create a source list of centimana to be deducted; all sources *except* for the test source
-                var sourceList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, 500));
+            // Add a point of real mana to the wand for every source
+            Sources.getAll().forEach(s -> wand.addRealMana(wandStack, s, 1));
 
-                // Confirm that attempting to deduct more mana than the wand has fails
-                helper.assertFalse(wand.consumeMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Mana consumption succeeded when it shouldn't have");
+            // Create a source list of centimana to be deducted; all sources *except* for the test source
+            var sourceList = SourceList.EMPTY;
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, 500));
 
-                // Confirm that the wand's mana is still in its original state
-                Sources.getAll().forEach(s -> helper.assertTrue(wand.getMana(wandStack, source) == 100, "Mana total is not as expected"));
-            });
+            // Confirm that attempting to deduct more mana than the wand has fails
+            helper.assertFalse(wand.consumeMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Mana consumption succeeded when it shouldn't have");
+
+            // Confirm that the wand's mana is still in its original state
+            Sources.getAll().forEach(s -> helper.assertTrue(wand.getMana(wandStack, source) == 100, "Mana total is not as expected"));
+
+            helper.succeed();
         });
     }
 
@@ -206,24 +213,25 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 10;
-                final int consumedRealMana = 5;
-                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
-                final int expectedRealMana = startingRealMana - (int)(consumedRealMana * costModifier);
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand
-                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
+            final int startingRealMana = 10;
+            final int consumedRealMana = 5;
+            final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+            final int expectedRealMana = startingRealMana - (int)(consumedRealMana * costModifier);
 
-                // Confirm that a point of real mana can be consumed
-                helper.assertTrue(wand.consumeRealMana(wandStack, player, source, consumedRealMana, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
+            // Add a point of real mana to the wand
+            helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
 
-                // Confirm that the mana was deducted correctly, leaving the wand empty
-                helper.assertTrue(wand.getMana(wandStack, source) == expectedRealMana, "Wand mana total is not as expected");
-            });
+            // Confirm that a point of real mana can be consumed
+            helper.assertTrue(wand.consumeRealMana(wandStack, player, source, consumedRealMana, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
+
+            // Confirm that the mana was deducted correctly, leaving the wand empty
+            helper.assertTrue(wand.getMana(wandStack, source) == expectedRealMana, "Wand mana total is not as expected");
+
+            helper.succeed();
         });
     }
 
@@ -231,19 +239,20 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand
-                helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Confirm that attempts to consume more real mana than the wand has fail
-                helper.assertFalse(wand.consumeRealMana(wandStack, player, source, 2, helper.getLevel().registryAccess()), "Mana consumption succeeded when it shouldn't have");
+            // Add a point of real mana to the wand
+            helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
 
-                // Confirm that the wand's mana is still in its original state
-                helper.assertTrue(wand.getMana(wandStack, source) == 100, "Mana total is not as expected");
-            });
+            // Confirm that attempts to consume more real mana than the wand has fail
+            helper.assertFalse(wand.consumeRealMana(wandStack, player, source, 2, helper.getLevel().registryAccess()), "Mana consumption succeeded when it shouldn't have");
+
+            // Confirm that the wand's mana is still in its original state
+            helper.assertTrue(wand.getMana(wandStack, source) == 100, "Mana total is not as expected");
+
+            helper.succeed();
         });
     }
 
@@ -251,33 +260,34 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 10;
-                final int consumedRealMana = 5;
-                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
-                final int expectedRealMana = startingRealMana - (int)(consumedRealMana * costModifier);
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand for each source
-                Sources.getAll().forEach(s -> {
-                    helper.assertTrue(wand.addRealMana(wandStack, s, startingRealMana) == 0, "Failed to add real mana to wand for " + s.getId());
-                });
+            final int startingRealMana = 10;
+            final int consumedRealMana = 5;
+            final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+            final int expectedRealMana = startingRealMana - (int)(consumedRealMana * costModifier);
 
-                // Create a source list of centimana to be deducted; all sources *except* the test source
-                var sourceList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, consumedRealMana));
-
-                // Confirm that the centimana can be consumed
-                helper.assertTrue(wand.consumeRealMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
-
-                // Confirm that the mana was deducted correctly for each source
-                Sources.getAll().forEach(s -> {
-                    var expected = s.equals(source) ? startingRealMana : expectedRealMana;
-                    helper.assertTrue(wand.getMana(wandStack, source) == expected, "Wand mana total is not as expected");
-                });
+            // Add a point of real mana to the wand for each source
+            Sources.getAll().forEach(s -> {
+                helper.assertTrue(wand.addRealMana(wandStack, s, startingRealMana) == 0, "Failed to add real mana to wand for " + s.getId());
             });
+
+            // Create a source list of centimana to be deducted; all sources *except* the test source
+            var sourceList = SourceList.EMPTY;
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, consumedRealMana));
+
+            // Confirm that the centimana can be consumed
+            helper.assertTrue(wand.consumeRealMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
+
+            // Confirm that the mana was deducted correctly for each source
+            Sources.getAll().forEach(s -> {
+                var expected = s.equals(source) ? startingRealMana : expectedRealMana;
+                helper.assertTrue(wand.getMana(wandStack, source) == expected, "Wand mana total is not as expected");
+            });
+
+            helper.succeed();
         });
     }
 
@@ -285,66 +295,69 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add a point of real mana to the wand for every source
-                Sources.getAll().forEach(s -> wand.addRealMana(wandStack, s, 1));
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Create a source list of real mana to be deducted; all sources *except* for the test source
-                var sourceList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, 2));
+            // Add a point of real mana to the wand for every source
+            Sources.getAll().forEach(s -> wand.addRealMana(wandStack, s, 1));
 
-                // Confirm that attempting to deduct more mana than the wand has fails
-                helper.assertFalse(wand.consumeRealMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Mana consumption succeeded when it shouldn't have");
+            // Create a source list of real mana to be deducted; all sources *except* for the test source
+            var sourceList = SourceList.EMPTY;
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, 2));
 
-                // Confirm that the wand's mana is still in its original state
-                Sources.getAll().forEach(s -> helper.assertTrue(wand.getMana(wandStack, source) == 100, "Mana total is not as expected"));
-            });
+            // Confirm that attempting to deduct more mana than the wand has fails
+            helper.assertFalse(wand.consumeRealMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Mana consumption succeeded when it shouldn't have");
+
+            // Confirm that the wand's mana is still in its original state
+            Sources.getAll().forEach(s -> helper.assertTrue(wand.getMana(wandStack, source) == 100, "Mana total is not as expected"));
+
+            helper.succeed();
         });
     }
 
     public Collection<TestFunction> wand_can_remove_mana_raw(String testName, String templateName) {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 1;
-                final int startingCentimana = 100 * startingRealMana;
-                final int removedCentimana = 10;
-                final int expectedCentimana = startingCentimana - removedCentimana;
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add some real mana to the wand for the test source
-                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
+            final int startingRealMana = 1;
+            final int startingCentimana = 100 * startingRealMana;
+            final int removedCentimana = 10;
+            final int expectedCentimana = startingCentimana - removedCentimana;
 
-                // Confirm that a few points of centimana can be consumed
-                helper.assertTrue(wand.removeManaRaw(wandStack, source, removedCentimana), "Failed to remove mana from wand");
+            // Add some real mana to the wand for the test source
+            helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
 
-                // Confirm that the mana was deducted correctly
-                helper.assertTrue(wand.getMana(wandStack, source) == expectedCentimana, "Wand mana total is not as expected");
-            });
+            // Confirm that a few points of centimana can be consumed
+            helper.assertTrue(wand.removeManaRaw(wandStack, source, removedCentimana), "Failed to remove mana from wand");
+
+            // Confirm that the mana was deducted correctly
+            helper.assertTrue(wand.getMana(wandStack, source) == expectedCentimana, "Wand mana total is not as expected");
+
+            helper.succeed();
         });
     }
 
     public Collection<TestFunction> wand_cannot_remove_more_raw_mana_than_it_has(String testName, String templateName) {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add some real mana to teh wand for the test source
-                helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Confirm that attempting to remove more than that fails
-                helper.assertFalse(wand.removeManaRaw(wandStack, source, 200), "Mana removal succeeded when it shouldn't have");
+            // Add some real mana to teh wand for the test source
+            helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
 
-                // Confirm that the wand's mana is still in its starting state
-                helper.assertTrue(wand.getMana(wandStack, source) == 100, "Mana total is not as expected");
-            });
+            // Confirm that attempting to remove more than that fails
+            helper.assertFalse(wand.removeManaRaw(wandStack, source, 200), "Mana removal succeeded when it shouldn't have");
+
+            // Confirm that the wand's mana is still in its starting state
+            helper.assertTrue(wand.getMana(wandStack, source) == 100, "Mana total is not as expected");
+
+            helper.succeed();
         });
     }
 
@@ -352,24 +365,26 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 2;
-                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
-                final int exactCentimana = (int)(costModifier * (100 * startingRealMana));
-                final int lessCentimana = exactCentimana - 1;
-                final int greaterCentimana = exactCentimana + 1;
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add some real mana to the wand for the test source
-                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
+            final int startingRealMana = 2;
+            final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+            final int exactCentimana = (int)(costModifier * (100 * startingRealMana));
+            final int lessCentimana = exactCentimana - 1;
+            final int greaterCentimana = exactCentimana + 1;
 
-                // Confirm that the wand recognizes it contains centimana up to the threshold of what it was given
-                helper.assertTrue(wand.containsMana(wandStack, player, source, lessCentimana, helper.getLevel().registryAccess()), "Contains returned false for less than held");
-                helper.assertTrue(wand.containsMana(wandStack, player, source, exactCentimana, helper.getLevel().registryAccess()), "Contains returned false for exact held");
-                helper.assertFalse(wand.containsMana(wandStack, player, source, greaterCentimana, helper.getLevel().registryAccess()), "Contains returned true for greater than held");
-            });
+            // Add some real mana to the wand for the test source
+            final int overflow = wand.addRealMana(wandStack, source, startingRealMana);
+            helper.assertTrue(overflow == 0, "Failed to add real mana to wand, overflow is " + overflow);
+
+            // Confirm that the wand recognizes it contains centimana up to the threshold of what it was given
+            helper.assertTrue(wand.containsMana(wandStack, player, source, lessCentimana, helper.getLevel().registryAccess()), "Contains returned false for less than held");
+            helper.assertTrue(wand.containsMana(wandStack, player, source, exactCentimana, helper.getLevel().registryAccess()), "Contains returned false for exact held");
+            helper.assertFalse(wand.containsMana(wandStack, player, source, greaterCentimana, helper.getLevel().registryAccess()), "Contains returned true for greater than held");
+
+            helper.succeed();
         });
     }
 
@@ -377,28 +392,29 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 2;
-                final int startingCentimana = startingRealMana * 100;
-                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
-                final int modifiedCentimana = (int)(costModifier * startingCentimana);
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add some real mana to the wand for all sources except the test source
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, startingRealMana));
+            final int startingRealMana = 2;
+            final int startingCentimana = startingRealMana * 100;
+            final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+            final int modifiedCentimana = (int)(costModifier * startingCentimana);
 
-                // Confirm that the wand contains centimana for a list containing all source except the test source
-                var greenList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, modifiedCentimana));
-                helper.assertTrue(wand.containsMana(wandStack, player, greenList, helper.getLevel().registryAccess()), "Contains returned false for green list");
+            // Add some real mana to the wand for all sources except the test source
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, startingRealMana));
 
-                // Confirm that the wand does not contain centimana for all sources
-                var redList = SourceList.EMPTY;
-                Sources.getAll().forEach(s -> redList.add(s, modifiedCentimana));
-                helper.assertFalse(wand.containsMana(wandStack, player, redList, helper.getLevel().registryAccess()), "Contains returned true for red list");
-            });
+            // Confirm that the wand contains centimana for a list containing all source except the test source
+            var greenList = SourceList.EMPTY;
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, modifiedCentimana));
+            helper.assertTrue(wand.containsMana(wandStack, player, greenList, helper.getLevel().registryAccess()), "Contains returned false for green list");
+
+            // Confirm that the wand does not contain centimana for all sources
+            var redList = SourceList.EMPTY;
+            Sources.getAll().forEach(s -> redList.add(s, modifiedCentimana));
+            helper.assertFalse(wand.containsMana(wandStack, player, redList, helper.getLevel().registryAccess()), "Contains returned true for red list");
+
+            helper.succeed();
         });
     }
 
@@ -406,24 +422,25 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 10;
-                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
-                final int exactRealMana = (int)(costModifier * startingRealMana);
-                final int lessRealMana = exactRealMana - 1;
-                final int greaterRealMana = exactRealMana + 1;
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add some real mana to the wand for the test source
-                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
+            final int startingRealMana = 10;
+            final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+            final int exactRealMana = (int)(costModifier * startingRealMana);
+            final int lessRealMana = exactRealMana - 1;
+            final int greaterRealMana = exactRealMana + 1;
 
-                // Confirm that the wand recognizes it contains mana up to the threshold of what it was given
-                helper.assertTrue(wand.containsRealMana(wandStack, player, source, lessRealMana, helper.getLevel().registryAccess()), "Contains returned false for less than held");
-                helper.assertTrue(wand.containsRealMana(wandStack, player, source, exactRealMana, helper.getLevel().registryAccess()), "Contains returned false for exact held");
-                helper.assertFalse(wand.containsRealMana(wandStack, player, source, greaterRealMana, helper.getLevel().registryAccess()), "Contains returned true for greater than held");
-            });
+            // Add some real mana to the wand for the test source
+            helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
+
+            // Confirm that the wand recognizes it contains mana up to the threshold of what it was given
+            helper.assertTrue(wand.containsRealMana(wandStack, player, source, lessRealMana, helper.getLevel().registryAccess()), "Contains returned false for less than held");
+            helper.assertTrue(wand.containsRealMana(wandStack, player, source, exactRealMana, helper.getLevel().registryAccess()), "Contains returned false for exact held");
+            helper.assertFalse(wand.containsRealMana(wandStack, player, source, greaterRealMana, helper.getLevel().registryAccess()), "Contains returned true for greater than held");
+
+            helper.succeed();
         });
     }
 
@@ -431,50 +448,53 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var player = this.makeMockServerPlayer(helper);
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 10;
-                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
-                final int modifiedRealMana = (int)(costModifier * startingRealMana);
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add some real mana to the wand for all sources except the test source
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, startingRealMana));
+            final int startingRealMana = 10;
+            final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+            final int modifiedRealMana = (int)(costModifier * startingRealMana);
 
-                // Confirm that the wand contains real mana for a list containing all source except the test source
-                var greenList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, modifiedRealMana));
-                helper.assertTrue(wand.containsRealMana(wandStack, player, greenList, helper.getLevel().registryAccess()), "Contains returned false for green list");
+            // Add some real mana to the wand for all sources except the test source
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, startingRealMana));
 
-                // Confirm that the wand does not contain real mana for all sources
-                var redList = SourceList.EMPTY;
-                Sources.getAll().forEach(s -> redList.add(s, modifiedRealMana));
-                helper.assertFalse(wand.containsRealMana(wandStack, player, redList, helper.getLevel().registryAccess()), "Contains returned true for red list");
-            });
+            // Confirm that the wand contains real mana for a list containing all source except the test source
+            var greenList = SourceList.EMPTY;
+            Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, modifiedRealMana));
+            helper.assertTrue(wand.containsRealMana(wandStack, player, greenList, helper.getLevel().registryAccess()), "Contains returned false for green list");
+
+            // Confirm that the wand does not contain real mana for all sources
+            var redList = SourceList.EMPTY;
+            Sources.getAll().forEach(s -> redList.add(s, modifiedRealMana));
+            helper.assertFalse(wand.containsRealMana(wandStack, player, redList, helper.getLevel().registryAccess()), "Contains returned true for red list");
+
+            helper.succeed();
         });
     }
 
     public Collection<TestFunction> wand_contains_mana_raw(String testName, String templateName) {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var wandStack = this.getTestWand();
-            helper.succeedIf(() -> {
-                // Confirm that the wand was created successfully
-                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                final int startingRealMana = 10;
-                final int exactCentimana = 100 * startingRealMana;
-                final int lessCentimana = exactCentimana - 1;
-                final int greaterCentimana = exactCentimana + 1;
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add some real mana to the wand for the test source
-                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
+            final int startingRealMana = 10;
+            final int exactCentimana = 100 * startingRealMana;
+            final int lessCentimana = exactCentimana - 1;
+            final int greaterCentimana = exactCentimana + 1;
 
-                // Confirm that the wand recognizes it contains centimana up to the threshold of what it was given
-                helper.assertTrue(wand.containsManaRaw(wandStack, source, lessCentimana), "Contains returned false for less than held");
-                helper.assertTrue(wand.containsManaRaw(wandStack, source, exactCentimana), "Contains returned false for exact held");
-                helper.assertFalse(wand.containsManaRaw(wandStack, source, greaterCentimana), "Contains returned true for greater than held");
-            });
+            // Add some real mana to the wand for the test source
+            final int overflow = wand.addRealMana(wandStack, source, startingRealMana);
+            helper.assertTrue(overflow == 0, "Failed to add real mana to wand, overflow is " + overflow);
+
+            // Confirm that the wand recognizes it contains centimana up to the threshold of what it was given
+            helper.assertTrue(wand.containsManaRaw(wandStack, source, lessCentimana), "Contains returned false for less than held");
+            helper.assertTrue(wand.containsManaRaw(wandStack, source, exactCentimana), "Contains returned false for exact held");
+            helper.assertFalse(wand.containsManaRaw(wandStack, source, greaterCentimana), "Contains returned true for greater than held");
+
+            helper.succeed();
         });
     }
 }
