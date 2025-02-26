@@ -84,14 +84,20 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 // Confirm that the wand was created successfully
                 IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
+                final int startingRealMana = 1;
+                final int startingCentimana = 100 * startingRealMana;
+                final int consumedCentimana = 10;
+                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+                final int expectedCentimana = startingCentimana - (int)(consumedCentimana * costModifier);
+
                 // Add a point of real mana to the wand
-                helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
+                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
 
                 // Confirm that a few points of centimana can be consumed
-                helper.assertTrue(wand.consumeMana(wandStack, player, source, 5, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
+                helper.assertTrue(wand.consumeMana(wandStack, player, source, consumedCentimana, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
 
                 // Confirm that the mana was deducted correctly, assuming no efficiency discounts or penalties
-                helper.assertTrue(wand.getMana(wandStack, source) == 95, "Wand mana total is not as expected");
+                helper.assertTrue(wand.getMana(wandStack, source) == expectedCentimana, "Wand mana total is not as expected");
             });
         });
     }
@@ -124,21 +130,27 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 // Confirm that the wand was created successfully
                 IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
+                final int startingRealMana = 1;
+                final int startingCentimana = 100 * startingRealMana;
+                final int consumedCentimana = 10;
+                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+                final int expectedCentimana = startingCentimana - (int)(consumedCentimana * costModifier);
+
                 // Add a point of real mana to the wand for each source
                 Sources.getAll().forEach(s -> {
-                    helper.assertTrue(wand.addRealMana(wandStack, s, 1) == 0, "Failed to add real mana to wand for " + s.getId());
+                    helper.assertTrue(wand.addRealMana(wandStack, s, startingRealMana) == 0, "Failed to add real mana to wand for " + s.getId());
                 });
 
                 // Create a source list of centimana to be deducted; all sources *except* the test source
                 var sourceList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, 5));
+                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, consumedCentimana));
 
                 // Confirm that the centimana can be consumed
                 helper.assertTrue(wand.consumeMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
 
                 // Confirm that the mana was deducted correctly for each source, assuming no efficiency discounts or penalties
                 Sources.getAll().forEach(s -> {
-                    var expected = s.equals(source) ? 100 : 95;
+                    var expected = s.equals(source) ? startingCentimana : expectedCentimana;
                     helper.assertTrue(wand.getMana(wandStack, source) == expected, "Wand mana total is not as expected");
                 });
             });
@@ -177,14 +189,19 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 // Confirm that the wand was created successfully
                 IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
+                final int startingRealMana = 10;
+                final int consumedRealMana = 5;
+                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+                final int expectedRealMana = startingRealMana - (int)(consumedRealMana * costModifier);
+
                 // Add a point of real mana to the wand
-                helper.assertTrue(wand.addRealMana(wandStack, source, 1) == 0, "Failed to add real mana to wand");
+                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
 
                 // Confirm that a point of real mana can be consumed
-                helper.assertTrue(wand.consumeRealMana(wandStack, player, source, 1, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
+                helper.assertTrue(wand.consumeRealMana(wandStack, player, source, consumedRealMana, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
 
                 // Confirm that the mana was deducted correctly, assuming no efficiency discounts or penalties, leaving the wand empty
-                helper.assertTrue(wand.getAllMana(wandStack).isEmpty(), "Wand mana total is not as expected");
+                helper.assertTrue(wand.getMana(wandStack, source) == expectedRealMana, "Wand mana total is not as expected");
             });
         });
     }
@@ -217,21 +234,26 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 // Confirm that the wand was created successfully
                 IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
+                final int startingRealMana = 10;
+                final int consumedRealMana = 5;
+                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+                final int expectedRealMana = startingRealMana - (int)(consumedRealMana * costModifier);
+
                 // Add a point of real mana to the wand for each source
                 Sources.getAll().forEach(s -> {
-                    helper.assertTrue(wand.addRealMana(wandStack, s, 1) == 0, "Failed to add real mana to wand for " + s.getId());
+                    helper.assertTrue(wand.addRealMana(wandStack, s, startingRealMana) == 0, "Failed to add real mana to wand for " + s.getId());
                 });
 
                 // Create a source list of centimana to be deducted; all sources *except* the test source
                 var sourceList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, 1));
+                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> sourceList.add(s, consumedRealMana));
 
                 // Confirm that the centimana can be consumed
                 helper.assertTrue(wand.consumeRealMana(wandStack, player, sourceList, helper.getLevel().registryAccess()), "Failed to consume mana from wand");
 
                 // Confirm that the mana was deducted correctly for each source, assuming no efficiency discounts or penalties
                 Sources.getAll().forEach(s -> {
-                    var expected = s.equals(source) ? 1 : 0;
+                    var expected = s.equals(source) ? startingRealMana : expectedRealMana;
                     helper.assertTrue(wand.getMana(wandStack, source) == expected, "Wand mana total is not as expected");
                 });
             });
@@ -270,12 +292,14 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 // Confirm that the wand was created successfully
                 IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add some real mana to the wand for the test source
-                helper.assertTrue(wand.addRealMana(wandStack, source, 2) == 0, "Failed to add real mana to wand");
+                final int startingRealMana = 2;
+                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+                final int exactCentimana = (int)(costModifier * (100 * startingRealMana));
+                final int lessCentimana = exactCentimana - 1;
+                final int greaterCentimana = exactCentimana + 1;
 
-                var exactCentimana = 200;
-                var lessCentimana = exactCentimana - 1;
-                var greaterCentimana = exactCentimana + 1;
+                // Add some real mana to the wand for the test source
+                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
 
                 // Confirm that the wand recognizes it contains centimana up to the threshold of what it was given
                 helper.assertTrue(wand.containsMana(wandStack, player, source, lessCentimana, helper.getLevel().registryAccess()), "Contains returned false for less than held");
@@ -293,17 +317,22 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 // Confirm that the wand was created successfully
                 IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
+                final int startingRealMana = 2;
+                final int startingCentimana = startingRealMana * 100;
+                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+                final int modifiedCentimana = (int)(costModifier * startingCentimana);
+
                 // Add some real mana to the wand for all sources except the test source
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, 1));
+                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, startingRealMana));
 
                 // Confirm that the wand contains centimana for a list containing all source except the test source
                 var greenList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, 100));
+                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, modifiedCentimana));
                 helper.assertTrue(wand.containsMana(wandStack, player, greenList, helper.getLevel().registryAccess()), "Contains returned false for green list");
 
                 // Confirm that the wand does not contain centimana for all sources
                 var redList = SourceList.EMPTY;
-                Sources.getAll().forEach(s -> redList.add(s, 100));
+                Sources.getAll().forEach(s -> redList.add(s, modifiedCentimana));
                 helper.assertFalse(wand.containsMana(wandStack, player, redList, helper.getLevel().registryAccess()), "Contains returned true for red list");
             });
         });
@@ -317,12 +346,14 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 // Confirm that the wand was created successfully
                 IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-                // Add some real mana to the wand for the test source
-                helper.assertTrue(wand.addRealMana(wandStack, source, 2) == 0, "Failed to add real mana to wand");
+                final int startingRealMana = 10;
+                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+                final int exactRealMana = (int)(costModifier * startingRealMana);
+                final int lessRealMana = exactRealMana - 1;
+                final int greaterRealMana = exactRealMana + 1;
 
-                var exactRealMana = 2;
-                var lessRealMana = exactRealMana - 1;
-                var greaterRealMana = exactRealMana + 1;
+                // Add some real mana to the wand for the test source
+                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
 
                 // Confirm that the wand recognizes it contains mana up to the threshold of what it was given
                 helper.assertTrue(wand.containsRealMana(wandStack, player, source, lessRealMana, helper.getLevel().registryAccess()), "Contains returned false for less than held");
@@ -340,17 +371,21 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 // Confirm that the wand was created successfully
                 IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
+                final int startingRealMana = 10;
+                final double costModifier = wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess());
+                final int modifiedRealMana = (int)(costModifier * startingRealMana);
+
                 // Add some real mana to the wand for all sources except the test source
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, 1));
+                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addRealMana(wandStack, s, startingRealMana));
 
                 // Confirm that the wand contains real mana for a list containing all source except the test source
                 var greenList = SourceList.EMPTY;
-                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, 1));
+                Sources.stream().filter(s -> !s.equals(source)).forEach(s -> greenList.add(s, modifiedRealMana));
                 helper.assertTrue(wand.containsRealMana(wandStack, player, greenList, helper.getLevel().registryAccess()), "Contains returned false for green list");
 
                 // Confirm that the wand does not contain real mana for all sources
                 var redList = SourceList.EMPTY;
-                Sources.getAll().forEach(s -> redList.add(s, 1));
+                Sources.getAll().forEach(s -> redList.add(s, modifiedRealMana));
                 helper.assertFalse(wand.containsRealMana(wandStack, player, redList, helper.getLevel().registryAccess()), "Contains returned true for red list");
             });
         });
