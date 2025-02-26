@@ -1,22 +1,43 @@
 package com.verdantartifice.primalmagick.test.items;
 
+import com.verdantartifice.primalmagick.common.items.wands.IHasWandComponents;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.common.wands.WandCap;
+import com.verdantartifice.primalmagick.common.wands.WandCore;
+import com.verdantartifice.primalmagick.common.wands.WandGem;
+import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class AbstractWandManaTest extends AbstractBaseTest {
     protected static final Map<String, Source> SOURCE_TEST_PARAMS = Sources.streamSorted().collect(Collectors.toMap(source -> source.getId().getPath(), source -> source));
 
-    protected abstract ItemStack getTestWand();
+    protected abstract Item getTestWandItem();
+
+    protected ItemStack getTestWand() {
+        ItemStack stack = new ItemStack(this.getTestWandItem());
+        if (stack.getItem() instanceof IHasWandComponents wand) {
+            wand.setWandCore(stack, WandCore.HEARTWOOD);
+            wand.setWandCap(stack, WandCap.IRON);
+            wand.setWandGem(stack, WandGem.APPRENTICE);
+        }
+        return stack;
+    }
+
+    protected String makeTestName(String testNameInfix) {
+        return Objects.requireNonNull(Services.ITEMS_REGISTRY.getKey(this.getTestWandItem())).getPath() + "." + testNameInfix;
+    }
 
     public Collection<TestFunction> wand_can_get_and_add_mana(String testName, String templateName) {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
