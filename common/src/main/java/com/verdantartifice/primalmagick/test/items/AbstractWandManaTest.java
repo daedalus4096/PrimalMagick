@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public abstract class AbstractWandTest extends AbstractBaseTest {
+public abstract class AbstractWandManaTest extends AbstractBaseTest {
     protected static final Map<String, Source> SOURCE_TEST_PARAMS = Sources.streamSorted().collect(Collectors.toMap(source -> source.getId().getPath(), source -> source));
 
     protected abstract ItemStack getTestWand();
@@ -430,6 +430,29 @@ public abstract class AbstractWandTest extends AbstractBaseTest {
                 var redList = SourceList.EMPTY;
                 Sources.getAll().forEach(s -> redList.add(s, modifiedRealMana));
                 helper.assertFalse(wand.containsRealMana(wandStack, player, redList, helper.getLevel().registryAccess()), "Contains returned true for red list");
+            });
+        });
+    }
+
+    public Collection<TestFunction> wand_contains_mana_raw(String testName, String templateName) {
+        return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
+            var wandStack = this.getTestWand();
+            helper.succeedIf(() -> {
+                // Confirm that the wand was created successfully
+                IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
+
+                final int startingRealMana = 10;
+                final int exactCentimana = 100 * startingRealMana;
+                final int lessCentimana = exactCentimana - 1;
+                final int greaterCentimana = exactCentimana + 1;
+
+                // Add some real mana to the wand for the test source
+                helper.assertTrue(wand.addRealMana(wandStack, source, startingRealMana) == 0, "Failed to add real mana to wand");
+
+                // Confirm that the wand recognizes it contains centimana up to the threshold of what it was given
+                helper.assertTrue(wand.containsManaRaw(wandStack, source, lessCentimana), "Contains returned false for less than held");
+                helper.assertTrue(wand.containsManaRaw(wandStack, source, exactCentimana), "Contains returned false for exact held");
+                helper.assertFalse(wand.containsManaRaw(wandStack, source, greaterCentimana), "Contains returned true for greater than held");
             });
         });
     }
