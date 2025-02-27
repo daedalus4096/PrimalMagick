@@ -31,11 +31,11 @@ public class WandCap implements IWandComponent {
     public static final Codec<WandCap> CODEC = Codec.STRING.xmap(WandCap::getWandCap, WandCap::getTag);
     public static final StreamCodec<ByteBuf, WandCap> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(WandCap::getWandCap, WandCap::getTag);
     
-    public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1D, 1);
-    public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 1.0D, 2);
-    public static final WandCap PRIMALITE = new WandCap("primalite", Rarity.UNCOMMON, 0.95D, 4);
-    public static final WandCap HEXIUM = new WandCap("hexium", Rarity.RARE, 0.9D, 8);
-    public static final WandCap HALLOWSTEEL = new WandCap("hallowsteel", Rarity.EPIC, 0.85D, 16);
+    public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1D, 100);
+    public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 1.0D, 200);
+    public static final WandCap PRIMALITE = new WandCap("primalite", Rarity.UNCOMMON, 0.95D, 400);
+    public static final WandCap HEXIUM = new WandCap("hexium", Rarity.RARE, 0.9D, 800);
+    public static final WandCap HALLOWSTEEL = new WandCap("hallowsteel", Rarity.EPIC, 0.85D, 1600);
     
     protected final String tag;                     // Unique identifier for the wand cap
     protected final Rarity rarity;                  // The cap's rarity, used to color its name and determine completed wand rarity
@@ -80,7 +80,12 @@ public class WandCap implements IWandComponent {
     public double getBaseCostModifier() {
         return this.baseCostModifier;
     }
-    
+
+    /**
+     * Return the transfer rate of this wand cap in centimana
+     *
+     * @return the transfer rate of this wand cap
+     */
     public int getSiphonAmount() {
         return this.siphonAmount;
     }

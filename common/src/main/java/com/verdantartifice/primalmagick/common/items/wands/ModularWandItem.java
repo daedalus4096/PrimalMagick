@@ -75,10 +75,10 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     public int getSiphonAmount(ItemStack stack) {
         // The siphon amount of a wand is determined by its cap
         if (stack == null) {
-            return 1;
+            return WandCap.IRON.getSiphonAmount();
         }
         WandCap cap = this.getWandCap(stack);
-        return (cap == null) ? 1 : cap.getSiphonAmount();
+        return (cap == null) ? WandCap.IRON.getSiphonAmount() : cap.getSiphonAmount();
     }
 
     @Override

@@ -138,8 +138,8 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         // Return the max amount of centimana that can be transfered by the battery per tick
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
             return switch (batteryBlock.getDeviceTier()) {
-                case FORBIDDEN -> 100 * WandCap.HEXIUM.getSiphonAmount();
-                case HEAVENLY, CREATIVE -> 100 * WandCap.HALLOWSTEEL.getSiphonAmount();
+                case FORBIDDEN -> WandCap.HEXIUM.getSiphonAmount();
+                case HEAVENLY, CREATIVE -> WandCap.HALLOWSTEEL.getSiphonAmount();
                 default -> 0;
             };
         } else {
@@ -237,7 +237,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     
     protected boolean doWandSiphon(ItemStack inputStack, Source source) {
         if (this.canSiphonWand(inputStack, source) && inputStack.getItem() instanceof IWand wand) {
-            int maxTransferRate = Math.min(this.getBatteryTransferCap(), 100 * wand.getSiphonAmount(inputStack));
+            int maxTransferRate = Math.min(this.getBatteryTransferCap(), wand.getSiphonAmount(inputStack));
             int centimanaMissingInBattery = this.manaStorage.getMaxManaStored(source) - this.manaStorage.getManaStored(source);
             int centimanaPresentInWand = wand.getMana(inputStack, source);
             if (centimanaPresentInWand == -1) {

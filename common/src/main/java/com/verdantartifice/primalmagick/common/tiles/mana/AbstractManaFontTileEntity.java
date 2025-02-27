@@ -86,7 +86,7 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
                 Source source = fontBlock.getSource();
                 if (source != null) {
                     // Transfer mana from the font to the wand
-                    int tap = Math.min(this.mana, wand.getSiphonAmount(wandStack));
+                    int tap = Math.min(this.mana, wand.getSiphonAmount(wandStack) / 100);
                     int leftover = wand.addRealMana(wandStack, source, tap);
                     if (leftover < tap) {
                         this.mana -= (tap - leftover);

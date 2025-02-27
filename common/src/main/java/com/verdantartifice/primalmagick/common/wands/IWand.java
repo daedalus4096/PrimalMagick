@@ -215,10 +215,10 @@ public interface IWand {
     public double getTotalCostModifier(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, HolderLookup.Provider registries);
     
     /**
-     * Get the amount of real mana to siphon from a mana font when channeling it.
+     * Get the amount of centimana to siphon from a mana font when channeling it.
      * 
      * @param stack the wand stack to be queried
-     * @return the amount of real mana to siphon from mana fonts
+     * @return the amount of centimana to siphon from mana fonts
      */
     public int getSiphonAmount(@Nullable ItemStack stack);
 
