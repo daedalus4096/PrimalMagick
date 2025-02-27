@@ -5,16 +5,19 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -74,6 +77,16 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
         this.setMana(mana);
     }
 
+    /**
+     * Creates and returns a new mana storage capability with the given capacity in centimana for attachment to a wand.
+     *
+     * @param capacity the max amount of centimana for the capability
+     * @return a new mana storage capability for use in a wand
+     */
+    public static @NotNull ManaStorage emptyWand(int capacity) {
+        return new ManaStorage(capacity, Integer.MAX_VALUE, Integer.MAX_VALUE, SourceList.EMPTY, Sources.getAllSorted());
+    }
+
     @Override
     public Codec<ManaStorage> codec() {
         return CODEC;
@@ -84,9 +97,19 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
         return STREAM_CODEC;
     }
     
-    public void copyInto(ManaStorage other) {
+    public void copyManaInto(ManaStorage other) {
         // Only copy current mana levels to avoid blowing away unchanging values such as capacity
         other.setMana(this.mana);
+    }
+
+    public ManaStorage copy() {
+        return new ManaStorage(this.capacity, this.maxReceive, this.maxExtract, this.mana, new HashSet<>(this.allowedSources));
+    }
+
+    public ManaStorage copyWith(Source source, int amount) {
+        ManaStorage retVal = this.copy();
+        retVal.setMana(source, amount);
+        return retVal;
     }
 
     public void setMana(SourceList mana) {
@@ -129,6 +152,17 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
             this.onManaChanged();
         }
         return manaExtracted;
+    }
+
+    @Override
+    public SourceList getAllManaStored() {
+        if (this.capacity == INFINITE) {
+            SourceList.Builder builder = SourceList.builder();
+            Sources.getAll().forEach(s -> builder.with(s, Integer.MAX_VALUE));
+            return builder.build();
+        } else {
+            return this.mana.copy();
+        }
     }
 
     @Override

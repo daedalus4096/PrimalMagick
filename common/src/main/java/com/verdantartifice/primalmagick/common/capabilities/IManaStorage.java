@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -33,6 +34,13 @@ public interface IManaStorage<T extends IManaStorage<T>> {
      * @return amount of centimana that was (or would have been, if simulated) extracted from the storage
      */
     int extractMana(Source source, int maxExtract, boolean simulate);
+
+    /**
+     * Returns the centimana of all sources currently stored.
+     *
+     * @return the centimana of all sources currently stored
+     */
+    SourceList getAllManaStored();
     
     /**
      * Returns the amount of centimana of the given source currently stored.

@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
@@ -69,6 +70,21 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         super(properties);
     }
 
+    @Deprecated(forRemoval = true, since = "6.0.2-beta")
+    private ManaStorage getManaStorage(ItemStack stack) {
+        // FIXME Remove in next major revision
+        // If the wand already has a mana storage capability attached, return it. Otherwise, convert the stack from the
+        // old component type to the new one and then return the new one.
+        if (stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+            return stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
+        } else {
+            ManaStorage retVal = ManaStorage.emptyWand(this.getMaxMana(stack));
+            retVal.setMana(stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY));
+            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), retVal);
+            return retVal;
+        }
+    }
+
     @Override
     public int getMana(ItemStack stack, Source source) {
         if (this.getMaxMana(stack) == -1) {
@@ -78,7 +94,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             // Otherwise get the current centimana for that source from the stack's data
             int retVal = 0;
             if (stack != null && source != null) {
-                retVal = stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY).getAmount(source);
+                retVal = this.getManaStorage(stack).getManaStored(source);
             }
             return retVal;
         }
@@ -87,7 +103,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     public MutableComponent getManaText(ItemStack stack, Source source) {
         int mana = this.getMana(stack, source);
         if (mana == -1) {
-            // If the given wand stack has infinte mana, show the infinity symbol
+            // If the given wand stack has infinite mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
             // Otherwise show the current real mana for that source from the stack's data
@@ -98,7 +114,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     @Override
     public SourceList getAllMana(ItemStack stack) {
         SourceList retVal = SourceList.EMPTY;
-        SourceList stored = stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY);
+        SourceList stored = this.getManaStorage(stack).getAllManaStored();
         boolean isInfinite = this.getMaxMana(stack) == -1;
         for (Source source : Sources.getAllSorted()) {
             if (isInfinite) {
@@ -115,17 +131,32 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     public MutableComponent getMaxManaText(ItemStack stack) {
         int mana = this.getMaxMana(stack);
         if (mana == -1) {
-            // If the given wand stack has infinte mana, show the infinity symbol
+            // If the given wand stack has infinite mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
             // Otherwise show the max centimana for that source from the stack's data
             return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
-    
+
+    @Deprecated(forRemoval = true, since = "6.0.2-beta")
+    private void updateManaStorageWith(ItemStack stack, Source source, int amount) {
+        // FIXME Remove in next major revision
+        // If the wand already has a mana storage capability attached, update it. Otherwise, convert the stack from the
+        // old component type to the new one and then update the new one.
+        if (stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+            stack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, mana -> mana.copyWith(source, amount));
+        } else {
+            ManaStorage newStorage = ManaStorage.emptyWand(this.getMaxMana(stack));
+            newStorage.setMana(stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY));
+            newStorage.setMana(source, amount);
+            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), newStorage);
+        }
+    }
+
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
         // Save the given amount of centimana for the given source into the stack's data
-        stack.update(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY, mana -> mana.set(source, amount));
+        this.updateManaStorageWith(stack, source, amount);
     }
 
     @Override
@@ -305,7 +336,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                 modifier -= 0.05D;
             }
             
-            // Substract discounts from temporary conditions
+            // Subtract discounts from temporary conditions
             if (player.hasEffect(EffectsPM.MANAFRUIT.getHolder())) {
                 // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
                 modifier -= (0.01D * ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder()).getAmplifier()) + 1));

@@ -151,7 +151,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
         this.superchargeTimeTotal = compound.getInt("SuperchargeTimeTotal");
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
         
         CompoundTag recipesUsedTag = compound.getCompound("RecipesUsed");
         for (String key : recipesUsedTag.getAllKeys()) {
@@ -502,7 +502,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     @Override
     protected void applyImplicitComponents(DataComponentInput pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
-        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override
