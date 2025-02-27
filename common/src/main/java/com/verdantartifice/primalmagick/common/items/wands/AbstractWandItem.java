@@ -146,6 +146,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         // old component type to the new one and then update the new one.
         if (stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
             stack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, mana -> mana.copyWith(source, amount));
+            stack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
         } else {
             ManaStorage newStorage = ManaStorage.emptyWand(this.getMaxMana(stack));
             newStorage.setMana(stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY));
