@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.items.wands;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandISTER;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -226,12 +227,14 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
             wandItem.setWandCore(stack, WandCore.HEARTWOOD);
             wandItem.setWandCap(stack, WandCap.IRON);
             wandItem.setWandGem(stack, WandGem.APPRENTICE);
+            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(WandGem.APPRENTICE.getCapacity() * 100));
             output.accept(stack);
             
             stack = new ItemStack(wandItem);
             wandItem.setWandCore(stack, WandCore.HEARTWOOD);
             wandItem.setWandCap(stack, WandCap.IRON);
             wandItem.setWandGem(stack, WandGem.CREATIVE);
+            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(ManaStorage.INFINITE));
             output.accept(stack);
         }
     }

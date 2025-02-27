@@ -44,7 +44,7 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
             ManaStorage::new);
     
     public static final ManaStorage EMPTY = new ManaStorage(0, 0, 0, SourceList.EMPTY, ImmutableList.of());
-    protected static final int INFINITE = -1;
+    public static final int INFINITE = -1;
     
     protected int capacity;
     protected int maxReceive;

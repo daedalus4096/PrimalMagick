@@ -1,11 +1,14 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
 import com.verdantartifice.primalmagick.client.renderers.itemstack.MundaneWandISTER;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +21,8 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class MundaneWandItem extends AbstractWandItem {
+    private static final int MAX_MANA = 2500;
+
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public MundaneWandItem() {
@@ -25,9 +30,16 @@ public abstract class MundaneWandItem extends AbstractWandItem {
     }
 
     @Override
+    public @NotNull ItemStack getDefaultInstance() {
+        ItemStack retVal = super.getDefaultInstance();
+        retVal.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(MAX_MANA));
+        return retVal;
+    }
+
+    @Override
     public int getMaxMana(ItemStack stack) {
         // With no gem, a mundane wand's mana capacity is low and fixed
-        return 2500;
+        return MAX_MANA;
     }
     
     @Override
