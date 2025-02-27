@@ -30,10 +30,10 @@ public class WandGem implements IWandComponent {
     public static final Codec<WandGem> CODEC = Codec.STRING.xmap(WandGem::getWandGem, WandGem::getTag);
     public static final StreamCodec<ByteBuf, WandGem> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(WandGem::getWandGem, WandGem::getTag);
     
-    public static final WandGem APPRENTICE = new WandGem("apprentice", Rarity.COMMON, 75);
-    public static final WandGem ADEPT = new WandGem("adept", Rarity.UNCOMMON, 250);
-    public static final WandGem WIZARD = new WandGem("wizard", Rarity.RARE, 750);
-    public static final WandGem ARCHMAGE = new WandGem("archmage", Rarity.EPIC, 2500);
+    public static final WandGem APPRENTICE = new WandGem("apprentice", Rarity.COMMON, 7500);
+    public static final WandGem ADEPT = new WandGem("adept", Rarity.UNCOMMON, 25000);
+    public static final WandGem WIZARD = new WandGem("wizard", Rarity.RARE, 75000);
+    public static final WandGem ARCHMAGE = new WandGem("archmage", Rarity.EPIC, 250000);
     public static final WandGem CREATIVE = new WandGem("creative", Rarity.EPIC, -1);    // Creative-only wand gem allowing infinite mana
     
     protected final String tag;                 // Unique identifier for the wand gem
@@ -66,7 +66,12 @@ public class WandGem implements IWandComponent {
     public Type getComponentType() {
         return IWandComponent.Type.GEM;
     }
-    
+
+    /**
+     * Return the capacity of this wand gem in centimana.
+     *
+     * @return the capacity of this wand gem
+     */
     public int getCapacity() {
         return this.capacity;
     }

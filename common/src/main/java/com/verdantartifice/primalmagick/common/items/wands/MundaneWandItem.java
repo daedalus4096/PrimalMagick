@@ -21,7 +21,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class MundaneWandItem extends AbstractWandItem {
-    private static final int MAX_MANA = 2500;
+    public static final int MAX_MANA = 2500;
 
     private BlockEntityWithoutLevelRenderer customRenderer;
 

@@ -49,15 +49,15 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     public int getMaxMana(ItemStack stack) {
         // The maximum amount of real mana a wand can hold is determined by its gem
         if (stack == null) {
-            return 2500;
+            return MundaneWandItem.MAX_MANA;
         }
         WandGem gem = this.getWandGem(stack);
         if (gem == null) {
-            return 2500;
+            return MundaneWandItem.MAX_MANA;
         } else if (gem.getCapacity() == -1) {
             return -1;
         } else {
-            return 100 * gem.getCapacity();
+            return gem.getCapacity();
         }
     }
     
@@ -227,7 +227,7 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
             wandItem.setWandCore(stack, WandCore.HEARTWOOD);
             wandItem.setWandCap(stack, WandCap.IRON);
             wandItem.setWandGem(stack, WandGem.APPRENTICE);
-            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(WandGem.APPRENTICE.getCapacity() * 100));
+            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(WandGem.APPRENTICE.getCapacity()));
             output.accept(stack);
             
             stack = new ItemStack(wandItem);

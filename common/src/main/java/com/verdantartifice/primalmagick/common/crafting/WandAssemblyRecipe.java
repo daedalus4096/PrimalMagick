@@ -65,7 +65,7 @@ public class WandAssemblyRecipe extends CustomRecipe {
         outputItem.setWandCap(outputStack, ((WandCapItem)capStack.getItem()).getWandCap());
         WandGem gem = ((WandGemItem)gemStack.getItem()).getWandGem();
         outputItem.setWandGem(outputStack, gem);
-        outputStack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(gem.getCapacity() * 100));
+        outputStack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(gem.getCapacity()));
 
         return outputStack;
     }

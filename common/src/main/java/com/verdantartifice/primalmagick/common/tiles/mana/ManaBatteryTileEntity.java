@@ -124,8 +124,8 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         // Return the capacity of the battery in centimana
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
             return switch (batteryBlock.getDeviceTier()) {
-                case FORBIDDEN -> 400 * WandGem.WIZARD.getCapacity();
-                case HEAVENLY -> 400 * WandGem.ARCHMAGE.getCapacity();
+                case FORBIDDEN -> 4 * WandGem.WIZARD.getCapacity();
+                case HEAVENLY -> 4 * WandGem.ARCHMAGE.getCapacity();
                 case CREATIVE -> -1;
                 default -> 0;
             };
