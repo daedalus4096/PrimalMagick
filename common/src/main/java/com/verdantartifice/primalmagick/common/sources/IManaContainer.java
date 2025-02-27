@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
  * another block, item, or tile entity, see the IManaStorage capability.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.capabilities.IManaStorage}
+ * @see com.verdantartifice.primalmagick.common.capabilities.IManaStorage
  */
 public interface IManaContainer {
     /**

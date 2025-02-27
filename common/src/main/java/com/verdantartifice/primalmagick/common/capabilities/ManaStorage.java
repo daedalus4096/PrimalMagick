@@ -29,7 +29,7 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
             Codec.INT.fieldOf("maxReceive").forGetter(cap -> cap.maxReceive),
             Codec.INT.fieldOf("maxExtract").forGetter(cap -> cap.maxExtract),
             SourceList.CODEC.fieldOf("mana").forGetter(cap -> cap.mana),
-            Source.CODEC.listOf().fieldOf("allowedSources").<Set<Source>>xmap(l -> new HashSet<>(l), s -> new ArrayList<>(s)).forGetter(cap -> cap.allowedSources)
+            Source.CODEC.listOf().fieldOf("allowedSources").<Set<Source>>xmap(HashSet::new, ArrayList::new).forGetter(cap -> cap.allowedSources)
         ).apply(instance, ManaStorage::new));
     
     public static final StreamCodec<ByteBuf, ManaStorage> STREAM_CODEC = StreamCodec.composite(
