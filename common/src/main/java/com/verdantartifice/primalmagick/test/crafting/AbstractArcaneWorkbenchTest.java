@@ -71,7 +71,17 @@ public class AbstractArcaneWorkbenchTest extends AbstractBaseTest {
         helper.assertFalse(menu.getSlots().get(2).hasItem(), "Salt material stack not empty");
         helper.assertFalse(menu.getSlots().get(3).hasItem(), "Essence material stack not empty");
 
-        // TODO Confirm that mana was deducted from the wand correctly
+        // Confirm that mana was deducted from the wand correctly
+        // FIXME Don't use hard-coded mana values for expectations
+        helper.assertValueEqual(wand.getMana(wandStack, Sources.EARTH), 1900, "Wand remaining earth mana");
+        helper.assertValueEqual(wand.getMana(wandStack, Sources.SEA), 1900, "Wand remaining sea mana");
+        helper.assertValueEqual(wand.getMana(wandStack, Sources.SKY), 1900, "Wand remaining sky mana");
+        helper.assertValueEqual(wand.getMana(wandStack, Sources.SUN), 1900, "Wand remaining sun mana");
+        helper.assertValueEqual(wand.getMana(wandStack, Sources.MOON), 1900, "Wand remaining moon mana");
+        helper.assertValueEqual(wand.getMana(wandStack, Sources.BLOOD), 2500, "Wand remaining blood mana");
+        helper.assertValueEqual(wand.getMana(wandStack, Sources.INFERNAL), 2500, "Wand remaining infernal mana");
+        helper.assertValueEqual(wand.getMana(wandStack, Sources.VOID), 2500, "Wand remaining void mana");
+        helper.assertValueEqual(wand.getMana(wandStack, Sources.HALLOWED), 2500, "Wand remaining hallowed mana");
 
         // Confirm that expertise was granted to the player
         helper.assertTrue(ExpertiseManager.getValue(player, ResearchDisciplines.MANAWEAVING).orElse(-1) == 5, "Final expertise is not as expected for test player");
