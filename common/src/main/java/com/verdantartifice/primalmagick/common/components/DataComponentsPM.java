@@ -47,6 +47,9 @@ public class DataComponentsPM {
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<Boolean>> ENABLED = register("enabled", builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
     
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<Integer>> MANA_DISCOUNT = register("mana_discount", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    @Deprecated(forRemoval = true, since = "6.0.2-beta")
+    // FIXME Remove in next major revision
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<SourceList>> STORED_CENTIMANA = register("stored_centimana", builder -> builder.persistent(SourceList.CODEC).networkSynchronized(SourceList.STREAM_CODEC));
     
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<List<Rune>>> INSCRIBED_RUNES = register("inscribed_runes", builder -> builder.persistent(Rune.CODEC.listOf()).networkSynchronized(Rune.STREAM_CODEC.apply(ByteBufCodecs.list())));

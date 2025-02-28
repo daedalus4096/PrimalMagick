@@ -71,6 +71,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
 
     @Deprecated(forRemoval = true, since = "6.0.2-beta")
+    @SuppressWarnings("removal")
     private ManaStorage getManaStorage(ItemStack stack) {
         // FIXME Remove in next major revision
         // If the wand already has a mana storage capability attached, return it. Otherwise, convert the stack from the
@@ -81,6 +82,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             ManaStorage retVal = ManaStorage.emptyWand(this.getMaxMana(stack));
             retVal.setMana(stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY));
             stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), retVal);
+            stack.remove(DataComponentsPM.STORED_CENTIMANA.get());
             return retVal;
         }
     }
@@ -140,6 +142,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
 
     @Deprecated(forRemoval = true, since = "6.0.2-beta")
+    @SuppressWarnings("removal")
     private void updateManaStorageWith(ItemStack stack, Source source, int amount) {
         // FIXME Remove in next major revision
         // If the wand already has a mana storage capability attached, update it. Otherwise, convert the stack from the
@@ -152,6 +155,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             newStorage.setMana(stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY));
             newStorage.setMana(source, amount);
             stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), newStorage);
+            stack.remove(DataComponentsPM.STORED_CENTIMANA.get());
         }
     }
 
