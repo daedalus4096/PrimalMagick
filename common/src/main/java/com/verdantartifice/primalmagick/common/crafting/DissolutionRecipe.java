@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition for a dissolution recipe.  Similar to a smelting recipe, but used by the dissolution chamber
@@ -57,7 +58,7 @@ public class DissolutionRecipe extends AbstractStackCraftingRecipe<SingleRecipeI
     }
 
     @Override
-    public SourceList getManaCosts() {
+    public @NotNull SourceList getManaCosts() {
         return this.manaCosts;
     }
 

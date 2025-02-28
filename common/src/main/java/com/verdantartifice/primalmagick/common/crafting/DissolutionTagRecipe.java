@@ -18,6 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition for a dissolution tag recipe.  Similar to a normal dissolution recipe, but it outputs
@@ -61,7 +62,7 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<SingleRecipe
     }
 
     @Override
-    public SourceList getManaCosts() {
+    public @NotNull SourceList getManaCosts() {
         return this.manaCosts;
     }
 

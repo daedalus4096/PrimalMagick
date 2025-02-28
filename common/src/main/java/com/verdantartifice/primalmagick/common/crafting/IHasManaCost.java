@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Interface for a crafting recipe that has a mana cost.
@@ -9,9 +10,9 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
  */
 public interface IHasManaCost {
     /**
-     * Get the mana cost for the recipe.
+     * Get the mana cost for the recipe in centimana.
      * 
      * @return the mana cost for the recipe
      */
-    public SourceList getManaCosts();
+    @NotNull SourceList getManaCosts();
 }
