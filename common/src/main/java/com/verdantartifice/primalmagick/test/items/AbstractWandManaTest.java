@@ -26,13 +26,7 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
     protected abstract Item getTestWandItem();
 
     protected ItemStack getTestWand() {
-        ItemStack stack = new ItemStack(this.getTestWandItem());
-        if (stack.getItem() instanceof IHasWandComponents wand) {
-            wand.setWandCore(stack, WandCore.HEARTWOOD);
-            wand.setWandCap(stack, WandCap.IRON);
-            wand.setWandGem(stack, WandGem.APPRENTICE);
-        }
-        return stack;
+        return IHasWandComponents.setWandComponents(this.getTestWandItem().getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE);
     }
 
     protected String makeTestName(String testNameInfix) {
@@ -40,6 +34,26 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
     }
 
     public Collection<TestFunction> wand_can_get_and_add_mana(String testName, String templateName) {
+        return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
+            var wandStack = this.getTestWand();
+
+            // Confirm that the wand was created successfully
+            IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
+
+            // Confirm that the wand is empty at first
+            helper.assertValueEqual(wand.getMana(wandStack, source), 0, "Wand is not empty as expected");
+
+            // Add a point of real mana to the wand
+            helper.assertValueEqual(wand.addMana(wandStack, source, 1), 0, "Failed to add centimana to wand");
+
+            // Confirm that the wand has mana in it
+            helper.assertValueEqual(wand.getMana(wandStack, source), 1, "Wand mana total is not as expected");
+
+            helper.succeed();
+        });
+    }
+
+    public Collection<TestFunction> wand_can_get_and_add_real_mana(String testName, String templateName) {
         return TestUtils.createParameterizedTestFunctions(testName, templateName, SOURCE_TEST_PARAMS, (helper, source) -> {
             var wandStack = this.getTestWand();
 

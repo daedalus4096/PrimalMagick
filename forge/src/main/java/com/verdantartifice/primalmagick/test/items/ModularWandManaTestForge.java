@@ -23,6 +23,11 @@ public class ModularWandManaTestForge extends AbstractWandManaTest {
     }
 
     @GameTestGenerator
+    public Collection<TestFunction> wand_can_get_and_add_real_mana() {
+        return super.wand_can_get_and_add_real_mana(this.makeTestName("wand_can_get_and_add_real_mana"), TestUtilsForge.DEFAULT_TEMPLATE);
+    }
+
+    @GameTestGenerator
     public Collection<TestFunction> wand_cannot_add_too_much_mana() {
         return super.wand_cannot_add_too_much_mana(this.makeTestName("wand_cannot_add_too_much_mana"), TestUtilsForge.DEFAULT_TEMPLATE);
     }

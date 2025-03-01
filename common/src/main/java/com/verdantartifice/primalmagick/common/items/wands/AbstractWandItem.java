@@ -165,6 +165,11 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
 
     @Override
+    public int addMana(ItemStack stack, Source source, int amount) {
+        return this.addMana(stack, source, amount, this.getMaxMana(stack));
+    }
+
+    @Override
     public int addRealMana(ItemStack stack, Source source, int amount) {
         int leftoverCentimana = this.addMana(stack, source, amount * 100, this.getMaxMana(stack));
         return (int)(leftoverCentimana / 100.0D);

@@ -23,6 +23,11 @@ public class MundaneWandManaTestNeoforge extends AbstractWandManaTest {
     }
 
     @GameTestGenerator
+    public Collection<TestFunction> wand_can_get_and_add_real_mana() {
+        return super.wand_can_get_and_add_real_mana(this.makeTestName("wand_can_get_and_add_real_mana"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    }
+
+    @GameTestGenerator
     public Collection<TestFunction> wand_cannot_add_too_much_mana() {
         return super.wand_cannot_add_too_much_mana(this.makeTestName("wand_cannot_add_too_much_mana"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }

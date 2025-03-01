@@ -72,6 +72,16 @@ public interface IWand {
      * @return the text representation of the maximum amount of centimana that can be held by the given wand stack
      */
     public MutableComponent getMaxManaText(@Nullable ItemStack stack);
+
+    /**
+     * Add the given amount of the given type of centimana to teh given wand stack, up to its maximum.
+     *
+     * @param stack the wand stack to be modified
+     * @param source the type of mana to be added
+     * @param amount the amount of centimana to be added
+     * @return the amount of leftover centimana that could not fit in the wand
+     */
+    public int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     /**
      * Add the given amount of the given type of mana to the given wand stack, up to its maximum.
