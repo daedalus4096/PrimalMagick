@@ -59,12 +59,19 @@ public class AbstractArcaneWorkbenchTest extends AbstractBaseTest {
         IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand not of expected type");
         var maxCentimana = wand.getMaxMana(wandStack);
         var maxRealMana = maxCentimana / 100;
-        Sources.getAll().forEach(s -> wand.addRealMana(wandStack, s, maxRealMana));
+        Sources.getAll().forEach(s -> {
+            wand.addRealMana(wandStack, s, maxRealMana);
+            helper.assertValueEqual(wand.getMana(wandStack, s), maxCentimana, "Wand starting mana for " + s.getId());
+        });
+        helper.assertFalse(wand.getAllMana(wandStack).isEmpty(), "Wand mana is empty after adding mana");
         menu.getSlots().get(10).safeInsert(wandStack);
 
         // Take the result that should be there and confirm it's the right type of item
+        ItemStack slottedWandStack = menu.getSlots().get(10).getItem(); // Inserting into the slot modifies the original item stack
+        helper.assertFalse(wand.getAllMana(slottedWandStack).isEmpty(), "Wand mana is empty before taking recipe output");
         var output = menu.quickMoveStack(player, 0);
         helper.assertTrue(output.is(ItemsPM.MANA_SALTS.get()), "Output item not of expected type");
+        helper.assertFalse(wand.getAllMana(slottedWandStack).isEmpty(), "Wand mana is empty after taking recipe output");
 
         // Confirm that crafting materials were consumed
         helper.assertFalse(menu.getSlots().get(1).hasItem(), "Redstone material stack not empty");
@@ -73,15 +80,15 @@ public class AbstractArcaneWorkbenchTest extends AbstractBaseTest {
 
         // Confirm that mana was deducted from the wand correctly
         // FIXME Don't use hard-coded mana values for expectations
-        helper.assertValueEqual(wand.getMana(wandStack, Sources.EARTH), 1900, "Wand remaining earth mana");
-        helper.assertValueEqual(wand.getMana(wandStack, Sources.SEA), 1900, "Wand remaining sea mana");
-        helper.assertValueEqual(wand.getMana(wandStack, Sources.SKY), 1900, "Wand remaining sky mana");
-        helper.assertValueEqual(wand.getMana(wandStack, Sources.SUN), 1900, "Wand remaining sun mana");
-        helper.assertValueEqual(wand.getMana(wandStack, Sources.MOON), 1900, "Wand remaining moon mana");
-        helper.assertValueEqual(wand.getMana(wandStack, Sources.BLOOD), 2500, "Wand remaining blood mana");
-        helper.assertValueEqual(wand.getMana(wandStack, Sources.INFERNAL), 2500, "Wand remaining infernal mana");
-        helper.assertValueEqual(wand.getMana(wandStack, Sources.VOID), 2500, "Wand remaining void mana");
-        helper.assertValueEqual(wand.getMana(wandStack, Sources.HALLOWED), 2500, "Wand remaining hallowed mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.EARTH), 1900, "Wand remaining earth mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.SEA), 1900, "Wand remaining sea mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.SKY), 1900, "Wand remaining sky mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.SUN), 1900, "Wand remaining sun mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.MOON), 1900, "Wand remaining moon mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.BLOOD), 2500, "Wand remaining blood mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.INFERNAL), 2500, "Wand remaining infernal mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.VOID), 2500, "Wand remaining void mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.HALLOWED), 2500, "Wand remaining hallowed mana");
 
         // Confirm that expertise was granted to the player
         helper.assertTrue(ExpertiseManager.getValue(player, ResearchDisciplines.MANAWEAVING).orElse(-1) == 5, "Final expertise is not as expected for test player");
