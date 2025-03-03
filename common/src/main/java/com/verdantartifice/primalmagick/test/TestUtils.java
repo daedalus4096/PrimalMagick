@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
+import org.apache.commons.lang3.function.TriConsumer;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -131,7 +132,7 @@ public class TestUtils {
     public static <T> Collection<TestFunction> createParameterizedTestFunctions(String generatedGroupName, TestOptions options, Map<String, T> params, BiConsumer<GameTestHelper, T> consumer) {
         return createParameterizedTestFunctionsInner(findPrefix(2), generatedGroupName, options, params, consumer);
     }
-    
+
     private static <T> Collection<TestFunction> createParameterizedTestFunctionsInner(String prefix, String generatedGroupName, TestOptions options, Map<String, T> params, BiConsumer<GameTestHelper, T> consumer) {
         List<TestFunction> retVal = new ArrayList<>();
         params.forEach((name, param) -> {
@@ -141,7 +142,48 @@ public class TestUtils {
         });
         return retVal;
     }
-    
+
+    /**
+     * Transforms the given tri-consumer into a collection of TestFunction objects that can be run via the Minecraft game test
+     * framework with default options. One TestFunction is created for each entry combination in the given {@code params1} and
+     * {@code params2} map2, with the keys being the joined suffix of the generated test function name and the values being the
+     * parameters passed into the given tri-consumer. <strong>This method is expected to be run from a class registered via the
+     * GameTestHolder annotation, rather than through the RegisterGameTestsEvent event. It will behave unpredictably otherwise.</strong>
+     *
+     * @param <T> the first type of parameter to be accepted by the given test tri-consumer
+     * @param <U> the second type of parameter to be accepted by the given test tri-consumer
+     * @param generatedGroupName the method name of the calling test generator; used to compose the generated test name
+     * @param templateName the name of the structure template to use for the generated test
+     * @param params1 a map of test name suffixes to test parameter values for the tri-consumer's first parameter
+     * @param params2 a map of test name suffixes to test parameter values for the tri-consumer's second parameter
+     * @param consumer the tri-consumer to be transformed into a test function collection
+     * @return the final collection of TestFunction objects, to be run in the Minecraft game test framework
+     */
+    public static <T, U> Collection<TestFunction> createDualParameterizedTestFunctions(String generatedGroupName,
+                                                                                       String templateName,
+                                                                                       Map<String, T> params1,
+                                                                                       Map<String, U> params2,
+                                                                                       TriConsumer<GameTestHelper, T, U> consumer) {
+        return createDualParameterizedTestFunctionsInner(findPrefix(2), generatedGroupName, TestOptions.builder(templateName).build(), params1, params2, consumer);
+    }
+
+    private static <T, U> Collection<TestFunction> createDualParameterizedTestFunctionsInner(String prefix,
+                                                                                             String generatedGroupName,
+                                                                                             TestOptions options,
+                                                                                             Map<String, T> params1,
+                                                                                             Map<String, U> params2,
+                                                                                             TriConsumer<GameTestHelper, T, U> consumer) {
+        List<TestFunction> retVal = new ArrayList<>();
+        params1.forEach((name1, param1) -> {
+            params2.forEach((name2, param2) -> {
+                retVal.add(createTestFunctionInner(prefix, generatedGroupName, String.join(".", name1, name2), options, helper -> {
+                    consumer.accept(helper, param1, param2);
+                }));
+            });
+        });
+        return retVal;
+    }
+
     public static void placeBed(GameTestHelper helper, BlockPos bedPos) {
         helper.setBlock(bedPos, Blocks.BLUE_BED);
         BlockState footState = helper.getBlockState(bedPos);
