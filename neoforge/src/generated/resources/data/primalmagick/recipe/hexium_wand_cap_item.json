@@ -7,11 +7,11 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:earth": 50,
-      "primalmagick:moon": 50,
-      "primalmagick:sea": 50,
-      "primalmagick:sky": 50,
-      "primalmagick:sun": 50
+      "primalmagick:earth": 5000,
+      "primalmagick:moon": 5000,
+      "primalmagick:sea": 5000,
+      "primalmagick:sky": 5000,
+      "primalmagick:sun": 5000
     }
   },
   "pattern": [

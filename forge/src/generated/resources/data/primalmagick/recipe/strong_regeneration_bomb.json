@@ -31,7 +31,7 @@
   ],
   "mana": {
     "sources": {
-      "primalmagick:infernal": 3
+      "primalmagick:infernal": 300
     }
   },
   "requirement": {

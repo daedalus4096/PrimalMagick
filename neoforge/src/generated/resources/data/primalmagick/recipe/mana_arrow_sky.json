@@ -12,7 +12,7 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:sky": 5
+      "primalmagick:sky": 500
     }
   },
   "pattern": [

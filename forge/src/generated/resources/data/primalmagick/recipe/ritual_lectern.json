@@ -10,7 +10,7 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:moon": 10
+      "primalmagick:moon": 1000
     }
   },
   "pattern": [

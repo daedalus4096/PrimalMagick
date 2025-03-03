@@ -13,7 +13,7 @@
   ],
   "mana": {
     "sources": {
-      "primalmagick:sea": 40
+      "primalmagick:sea": 4000
     }
   },
   "requirement": {

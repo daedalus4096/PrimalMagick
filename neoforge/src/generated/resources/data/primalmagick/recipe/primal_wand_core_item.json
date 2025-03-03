@@ -27,11 +27,11 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "primalmagick:earth": 15,
-      "primalmagick:moon": 15,
-      "primalmagick:sea": 15,
-      "primalmagick:sky": 15,
-      "primalmagick:sun": 15
+      "primalmagick:earth": 1500,
+      "primalmagick:moon": 1500,
+      "primalmagick:sea": 1500,
+      "primalmagick:sky": 1500,
+      "primalmagick:sun": 1500
     }
   },
   "props": [

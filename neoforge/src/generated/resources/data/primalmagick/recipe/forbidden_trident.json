@@ -23,7 +23,7 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "primalmagick:blood": 40
+      "primalmagick:blood": 4000
     }
   },
   "props": [

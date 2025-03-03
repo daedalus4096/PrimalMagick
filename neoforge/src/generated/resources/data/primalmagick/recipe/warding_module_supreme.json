@@ -19,7 +19,7 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:earth": 400
+      "primalmagick:earth": 40000
     }
   },
   "pattern": [

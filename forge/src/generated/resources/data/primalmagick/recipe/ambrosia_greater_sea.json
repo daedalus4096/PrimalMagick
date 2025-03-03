@@ -24,7 +24,7 @@
   "instability": 6,
   "mana": {
     "sources": {
-      "primalmagick:sea": 100
+      "primalmagick:sea": 10000
     }
   },
   "props": [

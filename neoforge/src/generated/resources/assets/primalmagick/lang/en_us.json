@@ -1526,7 +1526,7 @@
   "label.primalmagick.comprehension_gain.3": "Moderate",
   "label.primalmagick.comprehension_gain.4": "Major",
   "label.primalmagick.comprehension_gain.5": "Profound",
-  "label.primalmagick.crafting.mana": "%1$d %2$s mana",
+  "label.primalmagick.crafting.mana": "%1$s %2$s mana",
   "label.primalmagick.crafting.mana.base": "Base cost: %1$d",
   "label.primalmagick.crafting.mana.bonus": "Efficiency bonus: %1$s",
   "label.primalmagick.crafting.mana.modified": "Total %2$s mana: %1$s",

@@ -13,7 +13,7 @@
   ],
   "mana": {
     "sources": {
-      "primalmagick:moon": 40
+      "primalmagick:moon": 4000
     }
   },
   "requirement": {
