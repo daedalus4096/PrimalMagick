@@ -14,6 +14,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 
 import javax.annotation.Nonnull;
@@ -327,7 +328,7 @@ public class SourceList {
      * @return a new source list with the updated values
      */
     @Nonnull
-    public SourceList multiply(int multiplier) {
+    public SourceList multiply(double multiplier) {
         // Scale each value in the source list by the given multiplier
         if (multiplier == 0) {
             return SourceList.EMPTY;
@@ -336,7 +337,7 @@ public class SourceList {
         } else if (multiplier > 0) {
             SourceList retVal = new SourceList(this);
             for (Source source : this.getSources()) {
-                retVal.setInner(source, multiplier * this.getAmount(source));
+                retVal.setInner(source, Mth.floor(multiplier * this.getAmount(source)));
             }
             return retVal;
         } else {

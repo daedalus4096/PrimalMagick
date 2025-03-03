@@ -248,7 +248,8 @@ public class ExpertiseManager {
      */
     public static void awardExpertise(@Nullable Player player, @Nullable SpellPackage spellPackage) {
         if (player != null && spellPackage != null) {
-            incrementValue(player, new ResearchDisciplineKey(ResearchDisciplines.SORCERY), spellPackage.getManaCost().getManaSize());
+            // Award an expertise point for each whole mana point required to cast the spell
+            incrementValue(player, new ResearchDisciplineKey(ResearchDisciplines.SORCERY), spellPackage.getManaCost().getManaSize() / 100);
         }
     }
 }

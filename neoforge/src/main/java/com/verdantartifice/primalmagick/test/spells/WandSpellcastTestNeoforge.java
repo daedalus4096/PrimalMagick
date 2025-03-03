@@ -11,7 +11,7 @@ import java.util.Collection;
 @GameTestHolder(Constants.MOD_ID)
 public class WandSpellcastTestNeoforge extends AbstractWandSpellcastTest {
     @GameTestGenerator
-    public Collection<TestFunction> damage_spells_deduct_mana_from_wand() {
-        return super.damage_spells_deduct_mana_from_wand(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    public Collection<TestFunction> damage_spells_deduct_mana_from_wand_and_award_expertise() {
+        return super.damage_spells_deduct_mana_from_wand_and_award_expertise(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
 }

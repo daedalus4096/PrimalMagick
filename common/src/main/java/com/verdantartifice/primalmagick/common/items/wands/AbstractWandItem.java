@@ -481,7 +481,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                 if (isTargetWandInteractable(worldIn, playerIn, hit)) {
                     // If the current mouseover target in range has special interaction with wands, then suppress the spell cast
                     return InteractionResultHolder.pass(stack);
-                } else if (this.consumeRealMana(stack, playerIn, activeSpell.getManaCost(), worldIn.registryAccess())) {
+                } else if (this.consumeMana(stack, playerIn, activeSpell.getManaCost(), worldIn.registryAccess())) {
                     // If the wand contains enough mana, consume it and cast the spell
                     activeSpell.cast(worldIn, playerIn, stack);
                     playerIn.swing(handIn);

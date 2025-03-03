@@ -46,7 +46,7 @@ public interface ISpellPayload extends ISpellComponent {
     public Source getSource();
     
     /**
-     * Get the base mana cost of a spell containing this payload.
+     * Get the base mana cost of a spell containing this payload, in whole mana points.
      * 
      * @return the base mana cost of the spell
      */

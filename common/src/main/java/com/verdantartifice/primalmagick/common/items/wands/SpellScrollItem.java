@@ -92,7 +92,7 @@ public class SpellScrollItem extends Item {
         SpellPackage spell = this.getSpell(stack);
         if (spell != null) {
             StatsManager.incrementValue(playerIn, StatsPM.SPELLS_CRAFTED, stack.getCount());
-            StatsManager.setValueIfMax(playerIn, StatsPM.SPELLS_CRAFTED_MAX_COST, spell.getManaCost().getManaSize());
+            StatsManager.setValueIfMax(playerIn, StatsPM.SPELLS_CRAFTED_MAX_COST, spell.getManaCost().getManaSize() / 100); // Record in whole mana points
         }
     }
 }

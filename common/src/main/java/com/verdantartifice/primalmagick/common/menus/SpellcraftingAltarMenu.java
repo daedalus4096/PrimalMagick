@@ -411,7 +411,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
             return false;
         }
         IWand wand = (IWand)stack.getItem();
-        return wand.containsRealMana(stack, player, this.getManaCosts(), player.registryAccess());
+        return wand.containsMana(stack, player, this.getManaCosts(), player.registryAccess());
     }
     
     public ItemStack getWand() {

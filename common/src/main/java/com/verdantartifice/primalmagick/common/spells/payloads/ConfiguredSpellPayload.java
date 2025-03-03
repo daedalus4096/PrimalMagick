@@ -44,7 +44,7 @@ public class ConfiguredSpellPayload<T extends AbstractSpellPayload<?>> extends A
     }
 
     /**
-     * Get the base cost of the spell payload.
+     * Get the base cost of the spell payload, in whole mana points.
      * 
      * @return the base cost of the spell payload
      */
