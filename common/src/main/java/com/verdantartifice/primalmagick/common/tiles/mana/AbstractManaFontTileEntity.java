@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.VisibleForTesting;
 
 /**
  * Base definition of a mana font tile entity.  Provides the recharge and wand interaction
@@ -30,7 +31,7 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand {
-    protected static final int RECHARGE_TICKS = 20;
+    public static final int CENTIMANA_RECHARGED_PER_TICK = 5;
     
     protected int ticksExisted = 0;
     protected int mana;
@@ -43,13 +44,13 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
     @Override
     public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
-        this.mana = compound.getShort("mana");
+        this.mana = compound.getInt("mana");
     }
     
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
-        compound.putShort("mana", (short)this.mana);
+        compound.putInt("mana", this.mana);
     }
 
     public int getMana() {
@@ -98,11 +99,11 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
                 Source source = fontBlock.getSource();
                 if (source != null) {
                     // Transfer mana from the font to the wand
-                    int tap = Math.min(this.mana, wand.getSiphonAmount(wandStack) / 100);
-                    int leftover = wand.addRealMana(wandStack, source, tap);
+                    int tap = Math.min(this.mana, wand.getSiphonAmount(wandStack));
+                    int leftover = wand.addMana(wandStack, source, tap);
                     if (leftover < tap) {
                         this.mana -= (tap - leftover);
-                        StatsManager.incrementValue(player, StatsPM.MANA_SIPHONED, tap - leftover);
+                        StatsManager.incrementValue(player, StatsPM.MANA_SIPHONED, (tap - leftover) / 100); // Record whole mana siphoned for stats
                         this.setChanged();
                         this.syncTile(true);
                         
@@ -125,11 +126,11 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
             Source source = fontBlock.getSource();
             if (source != null) {
                 // Transfer mana from the font to the container
-                int tap = Math.min(this.mana, maxTransferCentimana / 100);
-                int realManaTransfered = manaCap.receiveMana(source, tap * 100, false) / 100;
-                if (realManaTransfered > 0) {
-                    this.mana -= realManaTransfered;
-                    StatsManager.incrementValue(player, StatsPM.MANA_SIPHONED, realManaTransfered);
+                int tap = Math.min(this.mana, maxTransferCentimana);
+                int manaTransfered = manaCap.receiveMana(source, tap, false);
+                if (manaTransfered > 0) {
+                    this.mana -= manaTransfered;
+                    StatsManager.incrementValue(player, StatsPM.MANA_SIPHONED, manaTransfered / 100);
                     this.setChanged();
                     this.syncTile(true);
                     
@@ -145,13 +146,11 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
             }
         }
     }
-    
-    protected void doRecharge() {
+
+    @VisibleForTesting
+    public void doRecharge() {
         // Recharge the font over time
-        this.mana++;
-        if (this.mana > this.getManaCapacity()) {
-            this.mana = this.getManaCapacity();
-        } else {
+        if (this.setMana(this.getMana() + CENTIMANA_RECHARGED_PER_TICK)) {
             // Sync the tile if its mana total changed
             this.setChanged();
             this.syncTile(true);
