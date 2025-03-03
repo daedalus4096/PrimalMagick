@@ -223,7 +223,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     
     protected void breakDownEssence(ItemStack inputStack) {
         if (this.canBreakDownEssence(inputStack) && inputStack.getItem() instanceof EssenceItem essenceItem) {
-            this.manaStorage.setMana(essenceItem.getSource(), this.manaStorage.getManaStored(essenceItem.getSource()) + essenceItem.getEssenceType().getManaEquivalent() * 100);
+            this.manaStorage.setMana(essenceItem.getSource(), this.manaStorage.getManaStored(essenceItem.getSource()) + essenceItem.getEssenceType().getManaEquivalent());
             inputStack.shrink(1);
         }
     }

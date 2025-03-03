@@ -93,20 +93,20 @@ public class ManaGaugeWidget extends AbstractWidget {
 
     protected MutableComponent getManaText() {
         if (this.maxAmount == -1) {
-            // If the given source has infinte mana, show the infinity symbol
+            // If the given source has infinite mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
-            // Otherwise show the current real mana for that source
+            // Otherwise show the current whole mana value for that source
             return Component.literal(MANA_FORMATTER.format(this.curAmount / 100.0D));
         }
     }
 
     public MutableComponent getMaxManaText() {
         if (this.maxAmount == -1) {
-            // If the given source has infinte mana, show the infinity symbol
+            // If the given source has infinite mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
-            // Otherwise show the max real for that source
+            // Otherwise show the max whole mana value for that source
             return Component.literal(MANA_FORMATTER.format(this.maxAmount / 100.0D));
         }
     }
