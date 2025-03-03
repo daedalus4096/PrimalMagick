@@ -66,11 +66,13 @@ public class ClientRenderEvents {
             tooltip.add(Component.translatable("tooltip.primalmagick.warded").append(CommonComponents.SPACE).append(levelComponent).withStyle(ChatFormatting.DARK_AQUA));
         }
         
-        // Show a tooltip entry if the item has attached mana storage
-        ManaStorage manaStorage = stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
-        if (manaStorage != null) {
-            Sources.getAllSorted().stream().filter(source -> source.isDiscovered(player) && manaStorage.canStore(source)).forEach(source ->
-                tooltip.add(Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (manaStorage.getManaStored(source) / 100.0D))));
+        // Show a tooltip entry if the item has attached mana storage but is not a wand; wands have their own special tooltips
+        if (!(stack.getItem() instanceof IWand)) {
+            ManaStorage manaStorage = stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
+            if (manaStorage != null) {
+                Sources.getAllSorted().stream().filter(source -> source.isDiscovered(player) && manaStorage.canStore(source)).forEach(source ->
+                        tooltip.add(Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (manaStorage.getManaStored(source) / 100.0D))));
+            }
         }
     }
     

@@ -15,7 +15,7 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:void": 250
+      "primalmagick:void": 25000
     }
   },
   "pattern": [

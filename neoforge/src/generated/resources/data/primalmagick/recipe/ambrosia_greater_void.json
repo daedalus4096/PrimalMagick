@@ -24,7 +24,7 @@
   "instability": 6,
   "mana": {
     "sources": {
-      "primalmagick:void": 100
+      "primalmagick:void": 10000
     }
   },
   "props": [

@@ -12,7 +12,7 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:void": 5
+      "primalmagick:void": 500
     }
   },
   "pattern": [

@@ -124,8 +124,8 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         // Return the capacity of the battery in centimana
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
             return switch (batteryBlock.getDeviceTier()) {
-                case FORBIDDEN -> 400 * WandGem.WIZARD.getCapacity();
-                case HEAVENLY -> 400 * WandGem.ARCHMAGE.getCapacity();
+                case FORBIDDEN -> 4 * WandGem.WIZARD.getCapacity();
+                case HEAVENLY -> 4 * WandGem.ARCHMAGE.getCapacity();
                 case CREATIVE -> -1;
                 default -> 0;
             };
@@ -138,8 +138,8 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         // Return the max amount of centimana that can be transfered by the battery per tick
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
             return switch (batteryBlock.getDeviceTier()) {
-                case FORBIDDEN -> 100 * WandCap.HEXIUM.getSiphonAmount();
-                case HEAVENLY, CREATIVE -> 100 * WandCap.HALLOWSTEEL.getSiphonAmount();
+                case FORBIDDEN -> WandCap.HEXIUM.getSiphonAmount();
+                case HEAVENLY, CREATIVE -> WandCap.HALLOWSTEEL.getSiphonAmount();
                 default -> 0;
             };
         } else {
@@ -223,7 +223,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     
     protected void breakDownEssence(ItemStack inputStack) {
         if (this.canBreakDownEssence(inputStack) && inputStack.getItem() instanceof EssenceItem essenceItem) {
-            this.manaStorage.setMana(essenceItem.getSource(), this.manaStorage.getManaStored(essenceItem.getSource()) + essenceItem.getEssenceType().getManaEquivalent() * 100);
+            this.manaStorage.setMana(essenceItem.getSource(), this.manaStorage.getManaStored(essenceItem.getSource()) + essenceItem.getEssenceType().getManaEquivalent());
             inputStack.shrink(1);
         }
     }
@@ -237,7 +237,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     
     protected boolean doWandSiphon(ItemStack inputStack, Source source) {
         if (this.canSiphonWand(inputStack, source) && inputStack.getItem() instanceof IWand wand) {
-            int maxTransferRate = Math.min(this.getBatteryTransferCap(), 100 * wand.getSiphonAmount(inputStack));
+            int maxTransferRate = Math.min(this.getBatteryTransferCap(), wand.getSiphonAmount(inputStack));
             int centimanaMissingInBattery = this.manaStorage.getMaxManaStored(source) - this.manaStorage.getManaStored(source);
             int centimanaPresentInWand = wand.getMana(inputStack, source);
             if (centimanaPresentInWand == -1) {
@@ -280,10 +280,10 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     protected void doOutput(ItemStack outputStack, Source source) {
         if (this.canOutputToWand(outputStack, source)) {
             if (outputStack.getItem() instanceof IWand wand) {
-                int realMaxTransferRate = Math.min(this.getBatteryTransferCap() / 100, wand.getSiphonAmount(outputStack));
-                int realManaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source) / 100, 0, realMaxTransferRate);
-                int leftoverRealMana = wand.addRealMana(outputStack, source, realManaToTransfer);
-                int transferedCentimana = 100 * (realManaToTransfer - leftoverRealMana);
+                int maxCentimanaTransferRate = Math.min(this.getBatteryTransferCap(), wand.getSiphonAmount(outputStack));
+                int centimanaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source), 0, maxCentimanaTransferRate);
+                int leftoverCentimana = wand.addMana(outputStack, source, centimanaToTransfer);
+                int transferedCentimana = centimanaToTransfer - leftoverCentimana;
                 this.manaStorage.extractMana(source, transferedCentimana, false);
             } else if (outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 outputStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, stackManaStorage -> {
@@ -305,7 +305,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         this.fontSiphonTime = compound.getInt("FontSiphonTime");
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
     }
     
     @Override
@@ -420,7 +420,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     @Override
     protected void applyImplicitComponents(DataComponentInput pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
-        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override

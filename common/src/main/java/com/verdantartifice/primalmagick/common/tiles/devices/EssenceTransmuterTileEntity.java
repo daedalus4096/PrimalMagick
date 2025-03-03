@@ -140,7 +140,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
         this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(ResourceLocation.parse(compound.getString("NextSource"))) : null;
         
@@ -421,7 +421,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     @Override
     protected void applyImplicitComponents(DataComponentInput pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
-        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override

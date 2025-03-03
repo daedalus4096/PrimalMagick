@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -49,7 +50,7 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<CraftingInput>
     }
 
     @Override
-    public SourceList getManaCosts() {
+    public @NotNull SourceList getManaCosts() {
         return this.manaCosts;
     }
 

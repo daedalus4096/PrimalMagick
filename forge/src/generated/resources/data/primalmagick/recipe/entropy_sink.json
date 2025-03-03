@@ -19,11 +19,11 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:earth": 75,
-      "primalmagick:moon": 75,
-      "primalmagick:sea": 75,
-      "primalmagick:sky": 75,
-      "primalmagick:sun": 75
+      "primalmagick:earth": 7500,
+      "primalmagick:moon": 7500,
+      "primalmagick:sea": 7500,
+      "primalmagick:sky": 7500,
+      "primalmagick:sun": 7500
     }
   },
   "pattern": [

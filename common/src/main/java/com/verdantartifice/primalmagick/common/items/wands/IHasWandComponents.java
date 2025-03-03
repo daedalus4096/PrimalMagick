@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -9,6 +11,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface IHasWandComponents {
+    static ItemStack setWandComponents(@Nonnull ItemStack stack, @Nonnull WandCore core, @Nonnull WandCap cap, @Nonnull WandGem gem) {
+        if (stack.getItem() instanceof IHasWandComponents wand) {
+            wand.setWandCore(stack, core);
+            wand.setWandCap(stack, cap);
+            wand.setWandGem(stack, gem);
+            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(gem.getCapacity()));
+        }
+        return stack;
+    }
+
     @Nullable
     WandCore getWandCore(@Nonnull ItemStack stack);
 

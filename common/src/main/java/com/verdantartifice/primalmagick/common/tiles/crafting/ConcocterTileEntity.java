@@ -138,7 +138,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         this.cookTimeTotal = compound.getInt("CookTimeTotal");
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
         this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         
         this.ownerUUID = null;
@@ -274,7 +274,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
             ItemStack output = recipe.getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
-            } else if (this.getMana(Sources.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Sources.INFERNAL))) {
+            } else if (this.getMana(Sources.INFERNAL) < recipe.getManaCosts().getAmount(Sources.INFERNAL)) {
                 return false;
             } else if (!this.isResearchKnown(recipe.getRequirement())) {
                 return false;
@@ -304,7 +304,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
                     stack.shrink(1);
                 }
             }
-            this.setMana(Sources.INFERNAL, this.getMana(Sources.INFERNAL) - (100 * recipe.getManaCosts().getAmount(Sources.INFERNAL)));
+            this.setMana(Sources.INFERNAL, this.getMana(Sources.INFERNAL) - recipe.getManaCosts().getAmount(Sources.INFERNAL));
         }
     }
     
@@ -421,7 +421,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     @Override
     protected void applyImplicitComponents(DataComponentInput pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
-        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override

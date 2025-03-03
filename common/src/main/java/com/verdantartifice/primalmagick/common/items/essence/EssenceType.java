@@ -21,10 +21,10 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public enum EssenceType implements StringRepresentable {
-    DUST("dust", Rarity.COMMON, 5, 1),
-    SHARD("shard", Rarity.UNCOMMON, 20, 10),
-    CRYSTAL("crystal", Rarity.RARE, 50, 100),
-    CLUSTER("cluster", Rarity.EPIC, 100, 1000);
+    DUST("dust", Rarity.COMMON, 5, 100),
+    SHARD("shard", Rarity.UNCOMMON, 20, 1000),
+    CRYSTAL("crystal", Rarity.RARE, 50, 10000),
+    CLUSTER("cluster", Rarity.EPIC, 100, 100000);
     
     private final String name;
     private final Rarity rarity;
@@ -54,7 +54,7 @@ public enum EssenceType implements StringRepresentable {
     }
     
     /**
-     * Gets the amount of real mana this essence type is worth when broken down in a machine such
+     * Gets the amount of centimana this essence type is worth when broken down in a machine such
      * as the Wand Charger.
      * 
      * @return the mana equivalent of this essence type

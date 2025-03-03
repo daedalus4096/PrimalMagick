@@ -104,7 +104,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 0) {
@@ -212,11 +212,10 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     
     protected boolean wandContainsEnoughMana(Player player, IArcaneRecipe recipe) {
         ItemStack stack = this.getWand();
-        if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof IWand)) {
+        if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof IWand wand)) {
             return false;
         }
-        IWand wand = (IWand)stack.getItem();
-        return wand.containsRealMana(stack, player, recipe.getManaCosts(), player.registryAccess());
+        return wand.containsMana(stack, player, recipe.getManaCosts(), player.registryAccess());
     }
 
     @Override

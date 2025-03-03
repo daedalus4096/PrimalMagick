@@ -50,7 +50,7 @@ public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEnti
             float b = sourceColor.getBlue() / 255.0F;
             float ds = 0.1875F;
             int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
-            float scale = (float)tileEntityIn.getMana() / Math.max(20.0F, (float)tileEntityIn.getManaCapacity());    // Shrink the core as it holds less mana
+            float scale = (float)tileEntityIn.getMana() / Math.max(2000.0F, (float)tileEntityIn.getManaCapacity());    // Shrink the core as it holds less mana
             
             @SuppressWarnings("deprecation")
             TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(ManaFontTER.TEXTURE);

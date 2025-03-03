@@ -24,7 +24,7 @@
   "instability": 6,
   "mana": {
     "sources": {
-      "primalmagick:infernal": 100
+      "primalmagick:infernal": 10000
     }
   },
   "props": [

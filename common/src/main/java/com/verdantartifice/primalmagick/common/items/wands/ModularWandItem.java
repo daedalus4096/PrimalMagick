@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.items.wands;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandISTER;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -46,17 +47,17 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
 
     @Override
     public int getMaxMana(ItemStack stack) {
-        // The maximum amount of real mana a wand can hold is determined by its gem
+        // The maximum amount of mana a wand can hold is determined by its gem
         if (stack == null) {
-            return 2500;
+            return MundaneWandItem.MAX_MANA;
         }
         WandGem gem = this.getWandGem(stack);
         if (gem == null) {
-            return 2500;
+            return MundaneWandItem.MAX_MANA;
         } else if (gem.getCapacity() == -1) {
             return -1;
         } else {
-            return 100 * gem.getCapacity();
+            return gem.getCapacity();
         }
     }
     
@@ -74,10 +75,10 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     public int getSiphonAmount(ItemStack stack) {
         // The siphon amount of a wand is determined by its cap
         if (stack == null) {
-            return 1;
+            return WandCap.IRON.getSiphonAmount();
         }
         WandCap cap = this.getWandCap(stack);
-        return (cap == null) ? 1 : cap.getSiphonAmount();
+        return (cap == null) ? WandCap.IRON.getSiphonAmount() : cap.getSiphonAmount();
     }
 
     @Override
@@ -226,12 +227,14 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
             wandItem.setWandCore(stack, WandCore.HEARTWOOD);
             wandItem.setWandCap(stack, WandCap.IRON);
             wandItem.setWandGem(stack, WandGem.APPRENTICE);
+            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(WandGem.APPRENTICE.getCapacity()));
             output.accept(stack);
             
             stack = new ItemStack(wandItem);
             wandItem.setWandCore(stack, WandCore.HEARTWOOD);
             wandItem.setWandCap(stack, WandCap.IRON);
             wandItem.setWandGem(stack, WandGem.CREATIVE);
+            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(ManaStorage.INFINITE));
             output.accept(stack);
         }
     }

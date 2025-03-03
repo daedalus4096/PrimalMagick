@@ -13,9 +13,9 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:blood": 20,
-      "primalmagick:infernal": 20,
-      "primalmagick:void": 20
+      "primalmagick:blood": 2000,
+      "primalmagick:infernal": 2000,
+      "primalmagick:void": 2000
     }
   },
   "pattern": [

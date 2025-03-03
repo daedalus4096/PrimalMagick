@@ -27,14 +27,14 @@
   "instability": 6,
   "mana": {
     "sources": {
-      "primalmagick:blood": 50,
-      "primalmagick:earth": 50,
-      "primalmagick:infernal": 50,
-      "primalmagick:moon": 50,
-      "primalmagick:sea": 50,
-      "primalmagick:sky": 50,
-      "primalmagick:sun": 50,
-      "primalmagick:void": 50
+      "primalmagick:blood": 5000,
+      "primalmagick:earth": 5000,
+      "primalmagick:infernal": 5000,
+      "primalmagick:moon": 5000,
+      "primalmagick:sea": 5000,
+      "primalmagick:sky": 5000,
+      "primalmagick:sun": 5000,
+      "primalmagick:void": 5000
     }
   },
   "props": [

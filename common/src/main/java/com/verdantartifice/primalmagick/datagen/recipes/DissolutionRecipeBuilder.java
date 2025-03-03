@@ -58,7 +58,11 @@ public class DissolutionRecipeBuilder {
     }
     
     public DissolutionRecipeBuilder manaCost(SourceList mana) {
-        this.manaCosts = mana.copy();
+        return this.centimanaCost(mana.multiply(100));
+    }
+
+    public DissolutionRecipeBuilder centimanaCost(SourceList centimana) {
+        this.manaCosts = centimana.copy();
         return this;
     }
     

@@ -290,7 +290,8 @@ public class SpellManager {
             retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));
             
             if (!spellSource.is(ItemsPM.SPELL_SCROLL_FILLED.get())) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost", spell.getManaCost().getText())));
+                // Scale the spell's centimana cost down to whole mana points for display
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost", spell.getManaCost().multiply(0.01D).getText())));
             }
         }
         return retVal;

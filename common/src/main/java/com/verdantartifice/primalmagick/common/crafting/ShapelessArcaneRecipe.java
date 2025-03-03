@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -25,7 +26,6 @@ import java.util.function.Predicate;
  * Definition for a shapeless arcane recipe.  Like a vanilla shapeless recipe, but has research and optional mana requirements.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
  */
 public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IShapelessArcaneRecipePM {
     protected final Optional<AbstractRequirement<?>> requirement;
@@ -66,7 +66,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingI
     }
     
     @Override
-    public SourceList getManaCosts() {
+    public @NotNull SourceList getManaCosts() {
         return this.manaCosts;
     }
 

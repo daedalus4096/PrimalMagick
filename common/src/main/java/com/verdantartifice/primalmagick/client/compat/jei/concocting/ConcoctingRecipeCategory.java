@@ -62,7 +62,7 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<ICon
     @Override
     public void draw(RecipeHolder<IConcoctingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         IConcoctingRecipe recipe = recipeHolder.value();
-        if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
+        if (!recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
         if (recipe.getRequirement().isPresent()) {
@@ -79,7 +79,7 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<ICon
         IConcoctingRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
         Optional<AbstractRequirement<?>> requirementOpt = recipe.getRequirement();
-        if ( manaCosts != null && !manaCosts.isEmpty() && 
+        if ( !manaCosts.isEmpty() &&
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
             builder.addAll(JeiHelper.getManaCostTooltipStrings(manaCosts));

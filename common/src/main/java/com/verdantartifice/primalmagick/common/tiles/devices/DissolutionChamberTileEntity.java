@@ -112,7 +112,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyInto(this.manaStorage));
+        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
     }
 
     @Override
@@ -180,7 +180,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
             ItemStack output = recipe.value().getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
-            } else if (this.getMana(Sources.EARTH) < (100 * recipe.value().getManaCosts().getAmount(Sources.EARTH))) {
+            } else if (this.getMana(Sources.EARTH) < recipe.value().getManaCosts().getAmount(Sources.EARTH)) {
                 return false;
             } else {
                 ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
@@ -216,7 +216,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
                     stack.shrink(1);
                 }
             }
-            this.setMana(Sources.EARTH, this.getMana(Sources.EARTH) - (100 * recipe.value().getManaCosts().getAmount(Sources.EARTH)));
+            this.setMana(Sources.EARTH, this.getMana(Sources.EARTH) - recipe.value().getManaCosts().getAmount(Sources.EARTH));
         }
     }
     
@@ -322,7 +322,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     @Override
     protected void applyImplicitComponents(DataComponentInput pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
-        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyInto(this.manaStorage);
+        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override

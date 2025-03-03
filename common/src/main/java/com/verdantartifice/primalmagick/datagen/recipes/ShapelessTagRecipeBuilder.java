@@ -24,7 +24,6 @@ import java.util.Objects;
  * Definition of a recipe data file builder for shapeless tag recipes.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.data.ShapelessRecipeBuilder}
  */
 public class ShapelessTagRecipeBuilder {
     protected final RecipeCategory category;
@@ -129,7 +128,7 @@ public class ShapelessTagRecipeBuilder {
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}.
+     * Builds this recipe into a finished recipe.
      * 
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe

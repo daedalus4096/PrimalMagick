@@ -117,8 +117,9 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
         if (this.payload == null) {
             return SourceList.EMPTY;
         }
-        
-        int baseManaCost = this.payload.getBaseManaCost();
+
+        // Get the base cost of the spell payload and convert it to centimana from whole mana points
+        int baseManaCost = 100 * this.payload.getBaseManaCost();
         if (baseManaCost == 0) {
             return SourceList.EMPTY;
         }

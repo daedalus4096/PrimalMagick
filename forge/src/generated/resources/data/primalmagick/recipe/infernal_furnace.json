@@ -13,7 +13,7 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:infernal": 50
+      "primalmagick:infernal": 5000
     }
   },
   "pattern": [

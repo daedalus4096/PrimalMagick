@@ -155,7 +155,11 @@ public class ArcaneShapelessRecipeBuilder {
      * @return the modified builder
      */
     public ArcaneShapelessRecipeBuilder manaCost(SourceList mana) {
-        this.manaCosts = mana.copy();
+        return this.centimanaCost(mana.multiply(100));
+    }
+
+    public ArcaneShapelessRecipeBuilder centimanaCost(SourceList centimana) {
+        this.manaCosts = centimana.copy();
         return this;
     }
     

@@ -1,11 +1,14 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.IHasWandComponents;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -59,9 +62,11 @@ public class WandAssemblyRecipe extends CustomRecipe {
         } else {
             outputItem.setWandCore(outputStack, ((WandCoreItem)coreStack.getItem()).getWandCore());
         }
-        outputItem.setWandGem(outputStack, ((WandGemItem)gemStack.getItem()).getWandGem());
         outputItem.setWandCap(outputStack, ((WandCapItem)capStack.getItem()).getWandCap());
-        
+        WandGem gem = ((WandGemItem)gemStack.getItem()).getWandGem();
+        outputItem.setWandGem(outputStack, gem);
+        outputStack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(gem.getCapacity()));
+
         return outputStack;
     }
 

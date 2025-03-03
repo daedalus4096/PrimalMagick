@@ -23,7 +23,7 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "primalmagick:earth": 40
+      "primalmagick:earth": 4000
     }
   },
   "props": [

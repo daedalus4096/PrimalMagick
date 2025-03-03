@@ -55,7 +55,11 @@ public class DissolutionTagRecipeBuilder {
     }
     
     public DissolutionTagRecipeBuilder manaCost(SourceList mana) {
-        this.manaCosts = mana.copy();
+        return this.centimanaCost(mana.multiply(100));
+    }
+
+    public DissolutionTagRecipeBuilder centimanaCost(SourceList centimana) {
+        this.manaCosts = centimana.copy();
         return this;
     }
     

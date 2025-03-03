@@ -49,7 +49,7 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
 
     @Override
     public void draw(RecipeHolder<IDissolutionRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        if (recipe.value().getManaCosts() != null && !recipe.value().getManaCosts().isEmpty()) {
+        if (!recipe.value().getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
     }
@@ -57,7 +57,7 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
     @Override
     public void getTooltip(ITooltipBuilder builder, RecipeHolder<IDissolutionRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         SourceList manaCosts = recipe.value().getManaCosts();
-        if ( manaCosts != null && !manaCosts.isEmpty() && 
+        if ( !manaCosts.isEmpty() &&
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
             builder.addAll(JeiHelper.getManaCostTooltipStrings(manaCosts));

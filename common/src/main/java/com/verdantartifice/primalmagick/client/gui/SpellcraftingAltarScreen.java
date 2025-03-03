@@ -110,7 +110,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
 
         // Init mana cost indicator
         SourceList manaCost = this.menu.getSpellPackage().getManaCost();
-        if (manaCost != null && !manaCost.isEmpty()) {
+        if (!manaCost.isEmpty()) {
             Source source = manaCost.getSourcesSorted().get(0);
             this.localWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, manaCost.getAmount(source), this.leftPos + 28, this.topPos + 8, this.menu::getWand, this.menu.getPlayer())));
         }

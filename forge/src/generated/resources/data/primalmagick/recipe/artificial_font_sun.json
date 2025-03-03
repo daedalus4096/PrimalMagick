@@ -15,7 +15,7 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:sun": 250
+      "primalmagick:sun": 25000
     }
   },
   "pattern": [

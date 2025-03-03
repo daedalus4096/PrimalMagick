@@ -15,6 +15,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
+import java.text.DecimalFormat;
+
 /**
  * Display widget for summarizing recipe mana costs.  Used on arcane recipe pages.
  * 
@@ -22,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class ManaCostSummaryWidget extends AbstractWidget {
     protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/mana_cost_summary_widget.png");
+    protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
 
     protected SourceList manaCosts;
     
@@ -40,7 +43,8 @@ public class ManaCostSummaryWidget extends AbstractWidget {
                 Component sourceText = discovered ? 
                         source.getNameText() :
                         Component.translatable(Source.getUnknownTranslationKey());
-                tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("label.primalmagick.crafting.mana", this.manaCosts.getAmount(source), sourceText));
+                tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("label.primalmagick.crafting.mana",
+                        MANA_FORMATTER.format(this.manaCosts.getAmount(source) / 100D), sourceText));
             }
         }
         this.setTooltip(Tooltip.create(tooltip));

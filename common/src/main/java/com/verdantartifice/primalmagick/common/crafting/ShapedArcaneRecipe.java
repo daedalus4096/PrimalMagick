@@ -18,6 +18,7 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -61,7 +62,7 @@ public class ShapedArcaneRecipe extends ShapedRecipe implements IShapedArcaneRec
     }
     
     @Override
-    public SourceList getManaCosts() {
+    public @NotNull SourceList getManaCosts() {
         return this.manaCosts;
     }
 

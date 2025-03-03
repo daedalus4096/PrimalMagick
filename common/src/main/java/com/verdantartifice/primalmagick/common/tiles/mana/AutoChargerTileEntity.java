@@ -79,6 +79,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
                                 tile.doSiphon(manaCap, level, null, chargerCenter, 100);    // TODO Get the stack's max charge rate somehow
                                 return manaCap;
                             });
+                            chargeStack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
                         }
                     }
                 }

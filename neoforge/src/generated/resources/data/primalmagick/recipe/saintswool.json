@@ -13,7 +13,7 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:hallowed": 50
+      "primalmagick:hallowed": 5000
     }
   },
   "pattern": [
