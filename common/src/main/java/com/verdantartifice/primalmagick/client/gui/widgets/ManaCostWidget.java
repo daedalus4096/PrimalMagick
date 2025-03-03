@@ -72,16 +72,16 @@ public class ManaCostWidget extends AbstractSourceWidget {
         
         if (modifiedCost > baseCost) {
             retVal = ImmutableList.<Component>of(
-                    Component.translatable("label.primalmagick.crafting.mana.base", baseCost),
+                    Component.translatable("label.primalmagick.crafting.mana.base", formatInWholeMana(baseCost)),
                     Component.translatable("label.primalmagick.crafting.mana.penalty", Component.literal(formatInWholeMana(costDelta)).withStyle(ChatFormatting.RED)),
                     Component.translatable("label.primalmagick.crafting.mana.modified", formatInWholeMana(modifiedCost), this.getSourceText()));
         } else if (modifiedCost < baseCost) {
             retVal = ImmutableList.<Component>of(
-                    Component.translatable("label.primalmagick.crafting.mana.base", baseCost),
+                    Component.translatable("label.primalmagick.crafting.mana.base", formatInWholeMana(baseCost)),
                     Component.translatable("label.primalmagick.crafting.mana.bonus", Component.literal(formatInWholeMana(costDelta)).withStyle(ChatFormatting.GREEN)),
                     Component.translatable("label.primalmagick.crafting.mana.modified", formatInWholeMana(modifiedCost), this.getSourceText()));
         } else {
-            retVal = Collections.singletonList(Component.translatable("label.primalmagick.crafting.mana", baseCost, this.getSourceText()));
+            retVal = Collections.singletonList(Component.translatable("label.primalmagick.crafting.mana", formatInWholeMana(baseCost), this.getSourceText()));
         }
         
         return retVal;
