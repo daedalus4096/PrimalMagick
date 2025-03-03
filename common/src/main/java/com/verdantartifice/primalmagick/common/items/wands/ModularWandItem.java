@@ -47,7 +47,7 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
 
     @Override
     public int getMaxMana(ItemStack stack) {
-        // The maximum amount of real mana a wand can hold is determined by its gem
+        // The maximum amount of mana a wand can hold is determined by its gem
         if (stack == null) {
             return MundaneWandItem.MAX_MANA;
         }

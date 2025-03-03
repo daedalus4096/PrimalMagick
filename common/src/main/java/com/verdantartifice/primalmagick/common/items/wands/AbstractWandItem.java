@@ -57,8 +57,7 @@ import java.util.List;
 /**
  * Base item definition for a wand.  Wands store mana for use in crafting and, optionally, casting spells.
  * They are replenished by drawing from mana fonts or being charged in a wand charger.  The wand's mana is
- * stored internally as centimana (hundredths of mana points), though most mana manipulation methods deal
- * in "real" mana, not centimana.
+ * stored internally as centimana (hundredths of mana points).
  * 
  * @author Daedalus4096
  */
@@ -108,7 +107,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             // If the given wand stack has infinite mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
-            // Otherwise show the current real mana for that source from the stack's data
+            // Otherwise show the current whole mana value for that source from the stack's data
             return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
@@ -169,12 +168,6 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         return this.addMana(stack, source, amount, this.getMaxMana(stack));
     }
 
-    @Override
-    public int addRealMana(ItemStack stack, Source source, int amount) {
-        int leftoverCentimana = this.addMana(stack, source, amount * 100, this.getMaxMana(stack));
-        return (int)(leftoverCentimana / 100.0D);
-    }
-    
     protected int addMana(ItemStack stack, Source source, int amount, int max) {
         // If the parameters are invalid or the given wand stack has infinite mana, do nothing
         if (stack == null || source == null || this.getMaxMana(stack) == -1) {
@@ -258,16 +251,6 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
 
     @Override
-    public boolean consumeRealMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
-        return this.consumeMana(stack, player, source, amount * 100, registries);
-    }
-    
-    @Override
-    public boolean consumeRealMana(ItemStack stack, Player player, SourceList sources, HolderLookup.Provider registries) {
-        return this.consumeMana(stack, player, sources.multiply(100), registries);
-    }
-    
-    @Override
     public boolean removeManaRaw(ItemStack stack, Source source, int amount) {
         if (stack == null || source == null) {
             return false;
@@ -302,16 +285,6 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         return true;
     }
 
-    @Override
-    public boolean containsRealMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
-        return this.containsMana(stack, player, source, amount * 100, registries);
-    }
-    
-    @Override
-    public boolean containsRealMana(ItemStack stack, Player player, SourceList sources, HolderLookup.Provider registries) {
-        return this.containsMana(stack, player, sources.multiply(100), registries);
-    }
-    
     @Override
     public boolean containsManaRaw(ItemStack stack, Source source, int amount) {
         // A wand stack with infinite mana always contains the requested amount of mana

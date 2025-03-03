@@ -58,26 +58,6 @@ public class ModularWandManaTestNeoforge extends AbstractWandManaTest {
     }
 
     @GameTestGenerator
-    public Collection<TestFunction> wand_can_consume_real_mana() {
-        return super.wand_can_consume_real_mana(this.makeTestName("wand_can_consume_real_mana"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
-    @GameTestGenerator
-    public Collection<TestFunction> wand_cannot_consume_more_real_mana_than_it_has() {
-        return super.wand_cannot_consume_more_real_mana_than_it_has(this.makeTestName("wand_cannot_consume_more_real_mana_than_it_has"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
-    @GameTestGenerator
-    public Collection<TestFunction> wand_can_consume_multiple_types_of_real_mana() {
-        return super.wand_can_consume_multiple_types_of_real_mana(this.makeTestName("wand_can_consume_multiple_types_of_real_mana"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
-    @GameTestGenerator
-    public Collection<TestFunction> wand_cannot_consume_more_real_mana_than_it_has_with_multiple_types() {
-        return super.wand_cannot_consume_more_real_mana_than_it_has_with_multiple_types(this.makeTestName("wand_cannot_consume_more_real_mana_than_it_has_with_multiple_types"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
-    @GameTestGenerator
     public Collection<TestFunction> wand_can_remove_mana_raw() {
         return super.wand_can_remove_mana_raw(this.makeTestName("wand_can_remove_mana_raw"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
@@ -95,16 +75,6 @@ public class ModularWandManaTestNeoforge extends AbstractWandManaTest {
     @GameTestGenerator
     public Collection<TestFunction> wand_contains_mana_list() {
         return super.wand_contains_mana_list(this.makeTestName("wand_contains_mana_list"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
-    @GameTestGenerator
-    public Collection<TestFunction> wand_contains_real_mana() {
-        return super.wand_contains_real_mana(this.makeTestName("wand_contains_real_mana"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
-    @GameTestGenerator
-    public Collection<TestFunction> wand_contains_real_mana_list() {
-        return super.wand_contains_real_mana_list(this.makeTestName("wand_contains_real_mana_list"), TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
 
     @GameTestGenerator

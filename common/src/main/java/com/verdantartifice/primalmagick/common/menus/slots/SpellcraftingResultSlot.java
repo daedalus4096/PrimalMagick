@@ -38,7 +38,7 @@ public class SpellcraftingResultSlot extends ResultSlot {
         if (manaCosts != null && !manaCosts.isEmpty()) {
             ItemStack wandStack = this.wandInventory.getItem(0);
             if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
-                wand.consumeRealMana(wandStack, this.player, manaCosts, player.registryAccess());
+                wand.consumeMana(wandStack, this.player, manaCosts, player.registryAccess());
             }
         }
         super.onTake(player, stack);

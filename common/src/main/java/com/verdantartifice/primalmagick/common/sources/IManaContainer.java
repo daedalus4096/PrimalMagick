@@ -4,8 +4,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Base interface for a block, item, or tile entity that can store mana.  The mana is
- * stored internally as "centimana" (hundredths of a mana point), though most mana
- * manipulation methods deal in "real" mana (whole points) as opposed to centimana.
+ * stored internally as "centimana" (hundredths of a mana point).
  * <p>
  * This interface is meant for internal use only.  To query or modify mana levels from
  * another block, item, or tile entity, see the IManaStorage capability.

@@ -280,10 +280,10 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     protected void doOutput(ItemStack outputStack, Source source) {
         if (this.canOutputToWand(outputStack, source)) {
             if (outputStack.getItem() instanceof IWand wand) {
-                int realMaxTransferRate = Math.min(this.getBatteryTransferCap() / 100, wand.getSiphonAmount(outputStack));
-                int realManaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source) / 100, 0, realMaxTransferRate);
-                int leftoverRealMana = wand.addRealMana(outputStack, source, realManaToTransfer);
-                int transferedCentimana = 100 * (realManaToTransfer - leftoverRealMana);
+                int maxCentimanaTransferRate = Math.min(this.getBatteryTransferCap(), wand.getSiphonAmount(outputStack));
+                int centimanaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source), 0, maxCentimanaTransferRate);
+                int leftoverCentimana = wand.addMana(outputStack, source, centimanaToTransfer);
+                int transferedCentimana = centimanaToTransfer - leftoverCentimana;
                 this.manaStorage.extractMana(source, transferedCentimana, false);
             } else if (outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 outputStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, stackManaStorage -> {
