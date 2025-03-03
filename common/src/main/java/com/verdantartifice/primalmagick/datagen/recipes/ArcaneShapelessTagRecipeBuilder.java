@@ -26,7 +26,6 @@ import java.util.Optional;
  * Definition of a recipe data file builder for shapeless arcane tag recipes.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.data.ShapelessRecipeBuilder}
  */
 public class ArcaneShapelessTagRecipeBuilder {
     protected final TagKey<Item> resultTag;
@@ -144,7 +143,11 @@ public class ArcaneShapelessTagRecipeBuilder {
      * @return the modified builder
      */
     public ArcaneShapelessTagRecipeBuilder manaCost(SourceList mana) {
-        this.manaCosts = mana.copy();
+        return this.centimanaCost(mana.multiply(100));
+    }
+
+    public ArcaneShapelessTagRecipeBuilder centimanaCost(SourceList centimana) {
+        this.manaCosts = centimana.copy();
         return this;
     }
     
@@ -187,7 +190,7 @@ public class ArcaneShapelessTagRecipeBuilder {
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}.
+     * Builds this recipe into a finished recipe.
      * 
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe

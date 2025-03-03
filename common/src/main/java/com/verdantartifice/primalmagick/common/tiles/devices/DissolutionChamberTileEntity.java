@@ -180,7 +180,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
             ItemStack output = recipe.value().getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
-            } else if (this.getMana(Sources.EARTH) < (100 * recipe.value().getManaCosts().getAmount(Sources.EARTH))) {
+            } else if (this.getMana(Sources.EARTH) < recipe.value().getManaCosts().getAmount(Sources.EARTH)) {
                 return false;
             } else {
                 ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
@@ -216,7 +216,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
                     stack.shrink(1);
                 }
             }
-            this.setMana(Sources.EARTH, this.getMana(Sources.EARTH) - (100 * recipe.value().getManaCosts().getAmount(Sources.EARTH)));
+            this.setMana(Sources.EARTH, this.getMana(Sources.EARTH) - recipe.value().getManaCosts().getAmount(Sources.EARTH));
         }
     }
     

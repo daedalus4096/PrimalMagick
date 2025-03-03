@@ -1030,7 +1030,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("expertise").sub("claimed").output(" (claimed)").end().build();
         
         // Generate miscellaneous GUI label localizations
-        this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
+        this.label("crafting").sub("mana").output("%1$s %2$s mana").end().build();
         this.label("crafting").sub("mana").sub("base").output("Base cost: %1$d").end().build();
         this.label("crafting").sub("mana").sub("bonus").output("Efficiency bonus: %1$s").end().build();
         this.label("crafting").sub("mana").sub("penalty").output("Efficiency penalty: %1$s").end().build();

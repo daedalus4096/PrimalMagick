@@ -52,6 +52,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import javax.annotation.Nullable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +64,8 @@ import java.util.List;
 @JeiPlugin
 public class JeiHelper implements IModPlugin {
     private static final ResourceLocation UID = ResourceUtils.loc("jei");
-    
+    private static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
+
     @Nullable
     private IRecipeCategory<RecipeHolder<IArcaneRecipe>> arcaneCategory;
     @Nullable
@@ -153,7 +155,7 @@ public class JeiHelper implements IModPlugin {
         List<Component> tooltip = new ArrayList<>();
         tooltip.add(Component.translatable("label.primalmagick.crafting.mana_cost_header"));
         for (Source source : manaCosts.getSourcesSorted()) {
-            tooltip.add(Component.translatable("label.primalmagick.crafting.mana", manaCosts.getAmount(source), source.getNameText()));
+            tooltip.add(Component.translatable("label.primalmagick.crafting.mana", MANA_FORMATTER.format(manaCosts.getAmount(source) / 100D), source.getNameText()));
         }
         return tooltip;
     }

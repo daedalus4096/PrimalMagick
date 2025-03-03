@@ -383,7 +383,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                             SourceList manaCosts = manaRecipe.getManaCosts();
                             for (Source source : manaCosts.getSources()) {
                                 if (manaCosts.getAmount(source) > 0) {
-                                    int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 2) / recipeHolder.value().getResultItem(registryAccess).getCount());
+                                    int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 200D) / recipeHolder.value().getResultItem(registryAccess).getCount());
                                     if (manaAmount > 0) {
                                         retVal = retVal.add(source, manaAmount);
                                     }

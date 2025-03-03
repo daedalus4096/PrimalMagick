@@ -517,7 +517,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             return false;
         }
         IWand wand = (IWand)wandStack.getItem();
-        return wand.consumeRealMana(wandStack, player, recipe.getManaCosts(), player.registryAccess());
+        return wand.consumeMana(wandStack, player, recipe.getManaCosts(), player.registryAccess());
     }
     
     protected void scanSurroundings() {

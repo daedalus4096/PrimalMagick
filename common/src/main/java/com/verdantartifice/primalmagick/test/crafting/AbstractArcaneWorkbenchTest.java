@@ -58,9 +58,8 @@ public class AbstractArcaneWorkbenchTest extends AbstractBaseTest {
         ItemStack wandStack = ItemsPM.MUNDANE_WAND.get().getDefaultInstance();
         IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand not of expected type");
         var maxCentimana = wand.getMaxMana(wandStack);
-        var maxRealMana = maxCentimana / 100;
         Sources.getAll().forEach(s -> {
-            wand.addRealMana(wandStack, s, maxRealMana);
+            wand.addMana(wandStack, s, maxCentimana);
             helper.assertValueEqual(wand.getMana(wandStack, s), maxCentimana, "Wand starting mana for " + s.getId());
         });
         helper.assertFalse(wand.getAllMana(wandStack).isEmpty(), "Wand mana is empty after adding mana");

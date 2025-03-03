@@ -78,7 +78,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
         guiGraphics.drawString(mc.font, Component.translatable("jei.primalmagick.ritual.props.header"), 0, 51, Color.BLACK.getRGB(), false);
         
         IRitualRecipe recipe = recipeHolder.value();
-        if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
+        if (!recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
         if (recipe.getRequirement().isPresent()) {
@@ -95,7 +95,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
         IRitualRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
         Optional<AbstractRequirement<?>> requirementOpt = recipe.getRequirement();
-        if ( manaCosts != null && !manaCosts.isEmpty() && 
+        if ( !manaCosts.isEmpty() &&
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
             builder.addAll(JeiHelper.getManaCostTooltipStrings(manaCosts));

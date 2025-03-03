@@ -274,7 +274,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
             ItemStack output = recipe.getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
-            } else if (this.getMana(Sources.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Sources.INFERNAL))) {
+            } else if (this.getMana(Sources.INFERNAL) < recipe.getManaCosts().getAmount(Sources.INFERNAL)) {
                 return false;
             } else if (!this.isResearchKnown(recipe.getRequirement())) {
                 return false;
@@ -304,7 +304,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
                     stack.shrink(1);
                 }
             }
-            this.setMana(Sources.INFERNAL, this.getMana(Sources.INFERNAL) - (100 * recipe.getManaCosts().getAmount(Sources.INFERNAL)));
+            this.setMana(Sources.INFERNAL, this.getMana(Sources.INFERNAL) - recipe.getManaCosts().getAmount(Sources.INFERNAL));
         }
     }
     

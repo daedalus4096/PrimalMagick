@@ -98,7 +98,7 @@ public class ArcaneCraftingResultSlot extends Slot {
                 if (!manaCosts.isEmpty()) {
                     ItemStack wandStack = this.wandInventory.getItem(0);
                     if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
-                        wand.consumeRealMana(wandStack, this.player, manaCosts, thePlayer.registryAccess());
+                        wand.consumeMana(wandStack, this.player, manaCosts, thePlayer.registryAccess());
                     }
                 }
             }

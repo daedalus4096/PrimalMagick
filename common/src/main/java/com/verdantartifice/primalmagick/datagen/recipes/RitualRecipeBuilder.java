@@ -246,7 +246,11 @@ public class RitualRecipeBuilder {
      * @return the modified builder
      */
     public RitualRecipeBuilder manaCost(SourceList mana) {
-        this.manaCosts = mana.copy();
+        return this.centimanaCost(mana.multiply(100));
+    }
+
+    public RitualRecipeBuilder centimanaCost(SourceList centimana) {
+        this.manaCosts = centimana.copy();
         return this;
     }
     

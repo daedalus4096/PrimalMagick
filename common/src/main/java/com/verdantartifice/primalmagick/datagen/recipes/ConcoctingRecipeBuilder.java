@@ -97,7 +97,11 @@ public class ConcoctingRecipeBuilder {
     }
     
     public ConcoctingRecipeBuilder manaCost(SourceList mana) {
-        this.manaCosts = mana.copy();
+        return this.centimanaCost(mana.multiply(100));
+    }
+
+    public ConcoctingRecipeBuilder centimanaCost(SourceList centimana) {
+        this.manaCosts = centimana.copy();
         return this;
     }
     

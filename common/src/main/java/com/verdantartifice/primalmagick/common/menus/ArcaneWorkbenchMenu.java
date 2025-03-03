@@ -215,7 +215,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
         if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof IWand wand)) {
             return false;
         }
-        return wand.containsRealMana(stack, player, recipe.getManaCosts(), player.registryAccess());
+        return wand.containsMana(stack, player, recipe.getManaCosts(), player.registryAccess());
     }
 
     @Override

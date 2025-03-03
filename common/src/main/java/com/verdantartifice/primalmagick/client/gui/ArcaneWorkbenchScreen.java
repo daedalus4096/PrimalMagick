@@ -94,7 +94,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
         RecipeHolder<IArcaneRecipe> activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
-        if (activeArcaneRecipe == null || activeArcaneRecipe.value().getManaCosts() == null || activeArcaneRecipe.value().getManaCosts().isEmpty()) {
+        if (activeArcaneRecipe == null || activeArcaneRecipe.value().getManaCosts().isEmpty()) {
             Component text = Component.translatable("label.primalmagick.crafting.no_mana");
             int width = this.font.width(text.getString());
             int x = 1 + (this.imageWidth - width) / 2;
