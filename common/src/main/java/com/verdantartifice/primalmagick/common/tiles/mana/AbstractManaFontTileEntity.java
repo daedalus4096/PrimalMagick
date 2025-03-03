@@ -55,6 +55,18 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
     public int getMana() {
         return this.mana;
     }
+
+    /**
+     * Sets the font's current mana level, to a max of its capacity.
+     *
+     * @param mana the new mana total for the font
+     * @return true if the font's mana total was changed, false otherwise
+     */
+    public boolean setMana(int mana) {
+        int startMana = this.getMana();
+        this.mana = Math.min(mana, this.getManaCapacity());
+        return this.getMana() != startMana;
+    }
     
     public int getManaCapacity() {
         return this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock ? fontBlock.getManaCapacity() : 0;

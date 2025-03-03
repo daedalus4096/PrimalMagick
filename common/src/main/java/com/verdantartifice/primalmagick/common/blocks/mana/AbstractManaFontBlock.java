@@ -76,6 +76,10 @@ public abstract class AbstractManaFontBlock extends BaseEntityBlock implements I
             default -> 0;
         };
     }
+
+    public static Collection<AbstractManaFontBlock> getAll() {
+        return REGISTRY.entrySet().stream().flatMap(e -> e.getValue().stream()).toList();
+    }
     
     public static Collection<AbstractManaFontBlock> getAllManaFontsForTier(DeviceTier tier) {
         return Collections.unmodifiableList(REGISTRY.getOrDefault(tier, List.of()));

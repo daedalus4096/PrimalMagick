@@ -51,7 +51,7 @@ public abstract class MundaneWandItem extends AbstractWandItem {
     @Override
     public int getSiphonAmount(ItemStack stack) {
         // With no cap, a mundane wand siphons the minimum amount
-        return 1;
+        return 100;
     }
 
     @Override
