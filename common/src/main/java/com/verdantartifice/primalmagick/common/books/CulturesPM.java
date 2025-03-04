@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.books;
 
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -28,11 +29,11 @@ public class CulturesPM {
     }
     
     public static void bootstrap(BootstrapContext<Culture> context) {
-        context.register(CulturesPM.EARTH, new Culture(ResourceUtils.loc("earth"), LootTablesPM.LIBRARY_EARTH, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, Blocks.EMERALD_BLOCK.defaultBlockState()));
-        context.register(CulturesPM.SEA, new Culture(ResourceUtils.loc("sea"), LootTablesPM.LIBRARY_SEA, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, Blocks.LAPIS_BLOCK.defaultBlockState()));
-        context.register(CulturesPM.SKY, new Culture(ResourceUtils.loc("sky"), LootTablesPM.LIBRARY_SKY, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, Blocks.DIAMOND_BLOCK.defaultBlockState()));
-        context.register(CulturesPM.SUN, new Culture(ResourceUtils.loc("sun"), LootTablesPM.LIBRARY_SUN, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, Blocks.GOLD_BLOCK.defaultBlockState()));
-        context.register(CulturesPM.MOON, new Culture(ResourceUtils.loc("moon"), LootTablesPM.LIBRARY_MOON, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, Blocks.IRON_BLOCK.defaultBlockState()));
-        context.register(CulturesPM.FORBIDDEN, new Culture(ResourceUtils.loc("forbidden"), LootTablesPM.LIBRARY_FORBIDDEN, LootTablesPM.LIBRARY_WARNING, BuiltInLootTables.EMPTY, Blocks.REDSTONE_BLOCK.defaultBlockState()));
+        context.register(CulturesPM.EARTH, new Culture(ResourceUtils.loc("earth"), LootTablesPM.LIBRARY_EARTH, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, BlocksPM.STAINED_SKYGLASS_GREEN.get().defaultBlockState()));
+        context.register(CulturesPM.SEA, new Culture(ResourceUtils.loc("sea"), LootTablesPM.LIBRARY_SEA, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, BlocksPM.STAINED_SKYGLASS_BLUE.get().defaultBlockState()));
+        context.register(CulturesPM.SKY, new Culture(ResourceUtils.loc("sky"), LootTablesPM.LIBRARY_SKY, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get().defaultBlockState()));
+        context.register(CulturesPM.SUN, new Culture(ResourceUtils.loc("sun"), LootTablesPM.LIBRARY_SUN, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, BlocksPM.STAINED_SKYGLASS_YELLOW.get().defaultBlockState()));
+        context.register(CulturesPM.MOON, new Culture(ResourceUtils.loc("moon"), LootTablesPM.LIBRARY_MOON, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get().defaultBlockState()));
+        context.register(CulturesPM.FORBIDDEN, new Culture(ResourceUtils.loc("forbidden"), LootTablesPM.LIBRARY_FORBIDDEN, LootTablesPM.LIBRARY_WARNING, BuiltInLootTables.EMPTY, BlocksPM.STAINED_SKYGLASS_RED.get().defaultBlockState()));
     }
 }

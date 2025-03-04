@@ -6,6 +6,7 @@ v6.0.2-beta
 * Glow fields conjured by spells are now permanent
 * Glow fields conjured by player Sun attunement now fade over time
 * Updated all recipes to express mana cost in hundredths of mana points, rather than whole mana points
+* Replaced ancient library accent blocks with stained skyglass
 * Fixed dispenser behavior for Mana-Tinged Arrows
 
 v6.0.1-beta

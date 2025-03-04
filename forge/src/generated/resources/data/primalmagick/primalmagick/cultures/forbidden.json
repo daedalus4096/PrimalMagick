@@ -1,6 +1,14 @@
 {
   "accentBlockState": {
-    "Name": "minecraft:redstone_block"
+    "Name": "primalmagick:stained_skyglass_red",
+    "Properties": {
+      "down": "false",
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "up": "false",
+      "west": "false"
+    }
   },
   "hiddenLootTable": "minecraft:empty",
   "languageId": "primalmagick:forbidden",

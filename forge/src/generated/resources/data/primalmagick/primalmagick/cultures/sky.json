@@ -1,6 +1,14 @@
 {
   "accentBlockState": {
-    "Name": "minecraft:diamond_block"
+    "Name": "primalmagick:stained_skyglass_light_blue",
+    "Properties": {
+      "down": "false",
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "up": "false",
+      "west": "false"
+    }
   },
   "hiddenLootTable": "primalmagick:gameplay/library/hidden",
   "languageId": "primalmagick:sky",

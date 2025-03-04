@@ -1,6 +1,14 @@
 {
   "accentBlockState": {
-    "Name": "minecraft:lapis_block"
+    "Name": "primalmagick:stained_skyglass_blue",
+    "Properties": {
+      "down": "false",
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "up": "false",
+      "west": "false"
+    }
   },
   "hiddenLootTable": "primalmagick:gameplay/library/hidden",
   "languageId": "primalmagick:sea",
