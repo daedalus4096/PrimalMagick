@@ -2,10 +2,12 @@ package com.verdantartifice.primalmagick.common.items.armor;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -67,6 +69,17 @@ public class WardingModuleItem extends Item implements ITieredDevice {
             case HEAVENLY -> 3;
             default -> 0;
         };
+    }
+
+    public ItemStack applyWard(ItemStack stack) {
+        if (this.hasWard() && stack.is(ItemTagsPM.WARDABLE_ARMOR)) {
+            stack.set(DataComponentsPM.WARD_LEVEL.get(), this.getWardLevel());
+            if (!stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+                // TODO Properly handle case where item already has a mana storage component; shouldn't be any items that do that yet
+                stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), new ManaStorage(MANA_CAPACITY, CHARGE_RATE, REGEN_COST, Sources.EARTH));
+            }
+        }
+        return stack;
     }
     
     public static boolean hasWardAttached(ItemStack stack) {
