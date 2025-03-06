@@ -61,7 +61,7 @@ public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerT
         
         // Slot 1: wand input/output
         this.wandSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.NORTH), 0, 108, 35, 
-                new FilteredSlotProperties().filter(stack -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(WAND_SLOT_TOOLTIP)));
+                new FilteredSlotProperties().filter(stack -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(WAND_SLOT_TOOLTIP)));
         
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {

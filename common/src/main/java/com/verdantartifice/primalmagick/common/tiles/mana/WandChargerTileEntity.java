@@ -150,10 +150,7 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
         ItemStack inputStack = this.getItem(INPUT_INV_INDEX, 0);
         ItemStack chargeStack = this.getItem(CHARGE_INV_INDEX, 0);
         if (inputStack != null && !inputStack.isEmpty() && inputStack.getItem() instanceof EssenceItem essence && chargeStack != null && !chargeStack.isEmpty()) {
-            if (chargeStack.getItem() instanceof IWand wand) {
-                // The wand can be charged if it and an essence are slotted, and the wand is not at max mana for the essence's source
-                return (wand.getMana(chargeStack, essence.getSource()) < wand.getMaxMana(chargeStack));
-            } else if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+            if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 // The mana storage item can be charged if it and an essence are slotted, and the storage is not at max mana for the essence's source
                 ManaStorage manaCap = chargeStack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
                 return (manaCap.getManaStored(essence.getSource()) < manaCap.getMaxManaStored(essence.getSource()));
@@ -168,9 +165,7 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
         ItemStack chargeStack = this.getItem(CHARGE_INV_INDEX, 0);
         if (this.canCharge()) {
             EssenceItem essence = (EssenceItem)inputStack.getItem();
-            if (chargeStack.getItem() instanceof IWand wand) {
-                wand.addMana(chargeStack, essence.getSource(), essence.getEssenceType().getManaEquivalent());
-            } else if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+            if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
                     manaCap.receiveMana(essence.getSource(), essence.getEssenceType().getManaEquivalent(), false);
                     return manaCap;
@@ -226,7 +221,7 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
         
         // Create charge handler
         retVal.set(CHARGE_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(CHARGE_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
+                .itemValidFunction((slot, stack) -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
                 .build());
 
         return retVal;
