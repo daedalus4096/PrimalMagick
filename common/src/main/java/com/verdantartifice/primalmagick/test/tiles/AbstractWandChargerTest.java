@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.wands.IHasWandComponents;
+import com.verdantartifice.primalmagick.common.menus.WandChargerMenu;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
@@ -28,6 +29,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class AbstractWandChargerTest extends AbstractBaseTest {
+    public void wand_charger_can_have_its_menu_opened(GameTestHelper helper) {
+        // Create a test player
+        var player = this.makeMockServerPlayer(helper);
+
+        // Place a wand charger block and get its block entity
+        var pos = BlockPos.ZERO;
+        helper.setBlock(pos, BlocksPM.WAND_CHARGER.get());
+        var tile = helper.<WandChargerTileEntity>getBlockEntity(pos);
+
+        // Open the block entity menu
+        Services.PLAYER.openMenu(player, tile, pos);
+        assertInstanceOf(helper, player.containerMenu, WandChargerMenu.class, "Menu not of expected type");
+
+        helper.succeed();
+    }
+
     public Collection<TestFunction> wand_charger_output_allows_chargeable_items(String templateName) {
         Map<String, ItemStack> testParams = ImmutableMap.<String, ItemStack>builder()
                 .put("mundane_wand", ItemsPM.MUNDANE_WAND.get().getDefaultInstance())
