@@ -72,7 +72,7 @@ public class WardingModuleItem extends Item implements ITieredDevice {
     }
 
     public ItemStack applyWard(ItemStack stack) {
-        if (this.hasWard()) {
+        if (this.hasWard() && canApplyWard(stack)) {
             stack.set(DataComponentsPM.WARD_LEVEL.get(), this.getWardLevel());
             if (!stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 // TODO Properly handle case where item already has a mana storage component; shouldn't be any items that do that yet
@@ -80,6 +80,11 @@ public class WardingModuleItem extends Item implements ITieredDevice {
             }
         }
         return stack;
+    }
+
+    public static boolean canApplyWard(ItemStack stack) {
+        // FIXME Determine why a simple tag test fails during Neoforge tests
+        return getApplicableItems().stream().anyMatch(itemSupplier -> stack.is(itemSupplier.get()));
     }
     
     public static boolean hasWardAttached(ItemStack stack) {
