@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.IHasWandComponents;
-import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -21,17 +21,17 @@ import net.minecraft.world.item.Items;
 import java.util.Collection;
 import java.util.Map;
 
-public class AbstractAutoChargerTest extends AbstractBaseTest {
-    public Collection<TestFunction> auto_charger_output_allows_chargeable_items(String templateName) {
+public class AbstractManaBatteryTest extends AbstractBaseTest {
+    public Collection<TestFunction> mana_battery_output_allows_chargeable_items(String templateName) {
         Map<String, ItemStack> testParams = ImmutableMap.<String, ItemStack>builder()
                 .put("mundane_wand", ItemsPM.MUNDANE_WAND.get().getDefaultInstance())
                 .put("modular_wand", IHasWandComponents.setWandComponents(ItemsPM.MODULAR_WAND.get().getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE))
                 .put("modular_staff", IHasWandComponents.setWandComponents(ItemsPM.MODULAR_STAFF.get().getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE))
                 .put("warded_armor", ItemsPM.BASIC_WARDING_MODULE.get().applyWard(ItemsPM.PRIMALITE_CHEST.get().getDefaultInstance()))
                 .build();
-        return TestUtils.createParameterizedTestFunctions("auto_charger_output_allows_chargeable_items", templateName, testParams, (helper, stack) -> {
+        return TestUtils.createParameterizedTestFunctions("mana_battery_output_allows_chargeable_items", templateName, testParams, (helper, stack) -> {
             // Place a wand charger block and get its output handler
-            var handler = this.getItemHandlerForNewAutoCharger(helper, Direction.NORTH);
+            var handler = this.getItemHandlerForNewManaBattery(helper, Direction.NORTH);
 
             // Confirm that the output item handler will accept the test item
             helper.assertTrue(handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
@@ -40,15 +40,15 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
         });
     }
 
-    public Collection<TestFunction> auto_charger_output_does_not_allow_unchargeable_items(String templateName) {
+    public Collection<TestFunction> mana_battery_output_does_not_allow_unchargeable_items(String templateName) {
         Map<String, ItemStack> testParams = ImmutableMap.<String, ItemStack>builder()
                 .put("stick", Items.STICK.getDefaultInstance())
                 .put("earth_shard", ItemsPM.ESSENCE_DUST_EARTH.get().getDefaultInstance())
                 .put("unwarded_armor", ItemsPM.PRIMALITE_CHEST.get().getDefaultInstance())
                 .build();
-        return TestUtils.createParameterizedTestFunctions("auto_charger_output_does_not_allow_unchargeable_items", templateName, testParams, (helper, stack) -> {
+        return TestUtils.createParameterizedTestFunctions("mana_battery_output_does_not_allow_unchargeable_items", templateName, testParams, (helper, stack) -> {
             // Place a wand charger block and get its output handler
-            var handler = this.getItemHandlerForNewAutoCharger(helper, Direction.NORTH);
+            var handler = this.getItemHandlerForNewManaBattery(helper, Direction.NORTH);
 
             // Confirm that the output item handler will accept the test item
             helper.assertFalse(handler.isItemValid(0, stack), "Test stack unexpectedly valid for item handler");
@@ -57,11 +57,11 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
         });
     }
 
-    private IItemHandlerPM getItemHandlerForNewAutoCharger(GameTestHelper helper, Direction direction) {
+    private IItemHandlerPM getItemHandlerForNewManaBattery(GameTestHelper helper, Direction direction) {
         // Place a wand charger block and get its block entity
         var pos = BlockPos.ZERO;
-        helper.setBlock(pos, BlocksPM.AUTO_CHARGER.get());
-        var tile = helper.<AutoChargerTileEntity>getBlockEntity(pos);
+        helper.setBlock(pos, BlocksPM.MANA_NEXUS.get());
+        var tile = helper.<ManaBatteryTileEntity>getBlockEntity(pos);
 
         // Get the item handler for the block entity for the given face
         var handler = tile.getRawItemHandler(direction);
