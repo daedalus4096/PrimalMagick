@@ -29,4 +29,9 @@ public class WandChargerTestForge extends AbstractWandChargerTest {
     public Collection<TestFunction> wand_charger_input_does_not_allow_non_essence() {
         return super.wand_charger_input_does_not_allow_non_essence(TestUtilsForge.DEFAULT_TEMPLATE);
     }
+
+    @GameTestGenerator
+    public Collection<TestFunction> wand_charger_can_charge_with_right_items() {
+        return super.wand_charger_can_charge_with_right_items(TestUtilsForge.DEFAULT_TEMPLATE);
+    }
 }

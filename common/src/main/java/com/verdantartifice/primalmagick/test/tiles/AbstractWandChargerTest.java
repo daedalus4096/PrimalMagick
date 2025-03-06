@@ -106,4 +106,28 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
 
         return handler;
     }
+
+    public Collection<TestFunction> wand_charger_can_charge_with_right_items(String templateName) {
+        Map<String, ItemStack> testParams = ImmutableMap.<String, ItemStack>builder()
+                .put("mundane_wand", ItemsPM.MUNDANE_WAND.get().getDefaultInstance())
+                .put("modular_wand", IHasWandComponents.setWandComponents(ItemsPM.MODULAR_WAND.get().getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE))
+                .put("modular_staff", IHasWandComponents.setWandComponents(ItemsPM.MODULAR_STAFF.get().getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE))
+                .put("warded_armor", ItemsPM.BASIC_WARDING_MODULE.get().applyWard(ItemsPM.PRIMALITE_CHEST.get().getDefaultInstance()))
+                .build();
+        return TestUtils.createParameterizedTestFunctions("wand_charger_can_charge_with_right_items", templateName, testParams, (helper, stack) -> {
+            // Place a wand charger block and get its block entity
+            var pos = BlockPos.ZERO;
+            helper.setBlock(pos, BlocksPM.WAND_CHARGER.get());
+            var tile = helper.<WandChargerTileEntity>getBlockEntity(pos);
+
+            // Fill the block entity with essence and a chargeable item
+            tile.setItem(WandChargerTileEntity.INPUT_INV_INDEX, 0, ItemsPM.ESSENCE_DUST_EARTH.get().getDefaultInstance());
+            tile.setItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0, stack);
+
+            // Confirm that the charger can charge with the inputs provided
+            helper.assertTrue(tile.canCharge(), "Unable to charge");
+
+            helper.succeed();
+        });
+    }
 }
