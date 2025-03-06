@@ -161,8 +161,9 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
         }
         return false;
     }
-    
-    protected void doCharge() {
+
+    @VisibleForTesting
+    public void doCharge() {
         ItemStack inputStack = this.getItem(INPUT_INV_INDEX, 0);
         ItemStack chargeStack = this.getItem(CHARGE_INV_INDEX, 0);
         if (this.canCharge()) {

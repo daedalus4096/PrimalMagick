@@ -34,4 +34,9 @@ public class WandChargerTestNeoforge extends AbstractWandChargerTest {
     public Collection<TestFunction> wand_charger_can_charge_with_right_items() {
         return super.wand_charger_can_charge_with_right_items(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
+
+    @GameTestGenerator
+    public Collection<TestFunction> wand_charger_do_charge_with_right_items() {
+        return super.wand_charger_do_charge_with_right_items(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    }
 }
