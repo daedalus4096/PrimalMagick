@@ -19,4 +19,14 @@ public class WandChargerTestNeoforge extends AbstractWandChargerTest {
     public Collection<TestFunction> wand_charger_output_does_not_allow_unchargeable_items() {
         return super.wand_charger_output_does_not_allow_unchargeable_items(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
+
+    @GameTestGenerator
+    public Collection<TestFunction> wand_charger_input_allows_essence() {
+        return super.wand_charger_input_allows_essence(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    }
+
+    @GameTestGenerator
+    public Collection<TestFunction> wand_charger_input_does_not_allow_non_essence() {
+        return super.wand_charger_input_does_not_allow_non_essence(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    }
 }
