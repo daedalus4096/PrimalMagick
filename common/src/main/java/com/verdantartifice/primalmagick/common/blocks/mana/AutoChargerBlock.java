@@ -56,7 +56,7 @@ public class AutoChargerBlock extends BaseEntityBlock {
         if (!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity charger) {
-                if (charger.getItem().isEmpty() && (stack.getItem() instanceof IWand || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))) {
+                if (charger.getItem().isEmpty() && stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                     // If a wand is in hand and the charger is empty, deposit the wand
                     charger.setItem(stack.copyWithCount(1));
                     stack.shrink(1);
