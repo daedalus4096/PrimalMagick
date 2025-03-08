@@ -19,4 +19,9 @@ public class AutoChargerTestNeoforge extends AbstractAutoChargerTest {
     public Collection<TestFunction> auto_charger_output_does_not_allow_unchargeable_items() {
         return super.auto_charger_output_does_not_allow_unchargeable_items(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
+
+    @GameTestGenerator
+    public Collection<TestFunction> auto_charger_siphons_into_chargeable_items() {
+        return super.auto_charger_siphons_into_chargeable_items(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    }
 }
