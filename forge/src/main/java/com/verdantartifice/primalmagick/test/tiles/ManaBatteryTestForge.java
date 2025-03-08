@@ -24,4 +24,14 @@ public class ManaBatteryTestForge extends AbstractManaBatteryTest {
     public Collection<TestFunction> mana_battery_output_does_not_allow_unchargeable_items() {
         return super.mana_battery_output_does_not_allow_unchargeable_items(TestUtilsForge.DEFAULT_TEMPLATE);
     }
+
+    @GameTestGenerator
+    public Collection<TestFunction> mana_battery_input_allows_essence() {
+        return super.mana_battery_input_allows_essence(TestUtilsForge.DEFAULT_TEMPLATE);
+    }
+
+    @GameTestGenerator
+    public Collection<TestFunction> mana_battery_input_allows_wands() {
+        return super.mana_battery_input_allows_wands(TestUtilsForge.DEFAULT_TEMPLATE);
+    }
 }
