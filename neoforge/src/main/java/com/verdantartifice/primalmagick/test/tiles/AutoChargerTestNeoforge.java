@@ -31,6 +31,11 @@ public class AutoChargerTestNeoforge extends AbstractAutoChargerTest {
     }
 
     @GameTestGenerator
+    public Collection<TestFunction> auto_charger_can_have_chargeable_items_removed() {
+        return super.auto_charger_can_have_chargeable_items_removed(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    }
+
+    @GameTestGenerator
     public Collection<TestFunction> auto_charger_siphons_into_chargeable_items() {
         return super.auto_charger_siphons_into_chargeable_items(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }

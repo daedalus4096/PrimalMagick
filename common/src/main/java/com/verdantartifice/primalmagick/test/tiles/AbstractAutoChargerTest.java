@@ -137,6 +137,36 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
         });
     }
 
+    public Collection<TestFunction> auto_charger_can_have_chargeable_items_removed(String templateName) {
+        var testParams = this.getChargeableTestParams();
+        return TestUtils.createParameterizedTestFunctions("auto_charger_can_have_chargeable_items_removed", templateName, testParams, (helper, stack) -> {
+            // Track a copy of the test stack for later
+            var before = stack.copy();
+
+            // Create a test player
+            var player = this.makeMockServerPlayer(helper);
+            player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+
+            // Place an auto charger, get its item handler, and insert the test stack
+            var chargerPos = BlockPos.ZERO;
+            var handler = this.getItemHandlerForNewAutoCharger(helper, chargerPos, Direction.UP);
+            handler.setStackInSlot(0, stack);
+            helper.assertFalse(handler.getStackInSlot(0).isEmpty(), "Failed to set item in charger");
+
+            // Use the player's empty main hand on the charger
+            var chargerState = helper.getBlockState(chargerPos);
+            var hitResult = new BlockHitResult(helper.absolutePos(chargerPos).getCenter(), Direction.UP, helper.absolutePos(chargerPos), true);
+            var useResult = chargerState.useItemOn(ItemStack.EMPTY, helper.getLevel(), player, InteractionHand.MAIN_HAND, hitResult);
+
+            // Confirm success
+            helper.assertTrue(useResult.consumesAction(), "Use action failed");
+            helper.assertTrue(handler.getStackInSlot(0).isEmpty(), "Charger has item after use");
+            helper.assertTrue(player.getItemInHand(InteractionHand.MAIN_HAND).is(before.getItem()), "Hand item does not match initial stack");
+
+            helper.succeed();
+        });
+    }
+
     public Collection<TestFunction> auto_charger_siphons_into_chargeable_items(String templateName) {
         var stackParams = this.getChargeableTestParams();
         return TestUtils.createParameterizedTestFunctions("auto_charger_siphons_into_chargeable_items", templateName, stackParams, (helper, baseStack) -> {
