@@ -19,16 +19,4 @@ public class ManaFontTestForge extends AbstractManaFontTest {
     public Collection<TestFunction> font_siphoned_by_mundane_wand() {
         return super.font_siphoned_by_wand(TestUtilsForge.DEFAULT_TEMPLATE);
     }
-
-//    @GameTestGenerator
-//    public Collection<TestFunction> font_siphoned_by_modular_wand() {
-//        return super.font_siphoned_by_wand(IHasWandComponents.setWandComponents(ItemsPM.MODULAR_WAND.get().getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE),
-//                TestUtilsForge.DEFAULT_TEMPLATE);
-//    }
-//
-//    @GameTestGenerator
-//    public Collection<TestFunction> font_siphoned_by_modular_staff() {
-//        return super.font_siphoned_by_wand(IHasWandComponents.setWandComponents(ItemsPM.MODULAR_STAFF.get().getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE),
-//                TestUtilsForge.DEFAULT_TEMPLATE);
-//    }
 }

@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -133,8 +134,9 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             return 0;
         }
     }
-    
-    protected int getBatteryTransferCap() {
+
+    @VisibleForTesting
+    public int getBatteryTransferCap() {
         // Return the max amount of centimana that can be transfered by the battery per tick
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
             return switch (batteryBlock.getDeviceTier()) {
@@ -268,24 +270,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     
     protected boolean canOutputToWand(ItemStack outputStack, Source source) {
         if (!outputStack.isEmpty() && (this.manaStorage.getMaxManaStored(source) == -1 || this.manaStorage.getManaStored(source) > 0)) {
-            if (outputStack.getItem() instanceof IWand wand) {
-                return wand.getMana(outputStack, source) < wand.getMaxMana(outputStack);
-            } else {
-                return outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
-            }
+            return outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
         }
         return false;
     }
     
     protected void doOutput(ItemStack outputStack, Source source) {
         if (this.canOutputToWand(outputStack, source)) {
-            if (outputStack.getItem() instanceof IWand wand) {
-                int maxCentimanaTransferRate = Math.min(this.getBatteryTransferCap(), wand.getSiphonAmount(outputStack));
-                int centimanaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source), 0, maxCentimanaTransferRate);
-                int leftoverCentimana = wand.addMana(outputStack, source, centimanaToTransfer);
-                int transferedCentimana = centimanaToTransfer - leftoverCentimana;
-                this.manaStorage.extractMana(source, transferedCentimana, false);
-            } else if (outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+            if (outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 outputStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, stackManaStorage -> {
                     int centimanaToTransfer = Math.min(this.getBatteryTransferCap(), this.manaStorage.getManaStored(source));
                     int transferedCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
@@ -411,7 +403,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         
         // Create charge handler
         retVal.set(CHARGE_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(CHARGE_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
+                .itemValidFunction((slot, stack) -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
                 .build());
 
         return retVal;

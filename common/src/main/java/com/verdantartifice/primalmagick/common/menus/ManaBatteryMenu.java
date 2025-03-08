@@ -70,7 +70,7 @@ public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryT
         
         // Slot 1: charge slot
         this.chargeSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.NORTH), 0, 206, 34, 
-                new FilteredSlotProperties().filter(stack -> (stack.getItem() instanceof IWand) || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(CHARGE_SLOT_TOOLTIP)));
+                new FilteredSlotProperties().filter(stack -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())).tooltip(CHARGE_SLOT_TOOLTIP)));
 
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {

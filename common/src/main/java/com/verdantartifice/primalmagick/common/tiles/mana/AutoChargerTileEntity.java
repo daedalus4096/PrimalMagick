@@ -70,13 +70,12 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
             Vec3 chargerCenter = Vec3.atCenterOf(pos);
             for (BlockPos fontPos : entity.fontLocations) {
                 if (level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity tile) {
-                    if (chargeStack.getItem() instanceof IWand) {
-                        // NOTE: Normally this method is called with a count that's descending, but the method doesn't actually care
-                        tile.onWandUseTick(chargeStack, level, null, chargerCenter, entity.chargeTime);
-                    } else if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+                    if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                         if (entity.chargeTime % 5 == 0) {
+                            final int toSiphon = chargeStack.getItem() instanceof IWand wand ? wand.getSiphonAmount(chargeStack) : 100;
                             chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
-                                tile.doSiphon(manaCap, level, null, chargerCenter, 100);    // TODO Get the stack's max charge rate somehow
+                                // TODO Get the stack's max charge rate somehow, instead of siphoning one point of mana at a time for non-wands
+                                tile.doSiphon(manaCap, level, null, chargerCenter, toSiphon);
                                 return manaCap;
                             });
                             chargeStack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
@@ -147,7 +146,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.getItem() instanceof IWand || stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
+                .itemValidFunction((slot, stack) -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
                 .build());
 
         return retVal;
