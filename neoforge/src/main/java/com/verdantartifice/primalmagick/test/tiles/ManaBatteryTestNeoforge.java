@@ -11,6 +11,11 @@ import java.util.Collection;
 @GameTestHolder(Constants.MOD_ID)
 public class ManaBatteryTestNeoforge extends AbstractManaBatteryTest {
     @GameTestGenerator
+    public Collection<TestFunction> mana_battery_can_have_its_menu_opened() {
+        return super.mana_battery_can_have_its_menu_opened(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    }
+
+    @GameTestGenerator
     public Collection<TestFunction> mana_battery_output_allows_chargeable_items() {
         return super.mana_battery_output_allows_chargeable_items(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
