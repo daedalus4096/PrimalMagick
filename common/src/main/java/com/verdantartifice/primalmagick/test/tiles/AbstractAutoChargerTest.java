@@ -19,8 +19,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.Collection;
 import java.util.Map;
@@ -35,7 +37,7 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
                 .build();
     }
 
-    private Map<String, ItemStack> getUnchargableTestParams() {
+    private Map<String, ItemStack> getUnchargeableTestParams() {
         return ImmutableMap.<String, ItemStack>builder()
                 .put("stick", Items.STICK.getDefaultInstance())
                 .put("earth_shard", ItemsPM.ESSENCE_DUST_EARTH.get().getDefaultInstance())
@@ -57,7 +59,7 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
     }
 
     public Collection<TestFunction> auto_charger_output_does_not_allow_unchargeable_items(String templateName) {
-        var testParams = this.getUnchargableTestParams();
+        var testParams = this.getUnchargeableTestParams();
         return TestUtils.createParameterizedTestFunctions("auto_charger_output_does_not_allow_unchargeable_items", templateName, testParams, (helper, stack) -> {
             // Place an auto charger block and get its output handler
             var handler = this.getItemHandlerForNewAutoCharger(helper, BlockPos.ZERO, Direction.NORTH);
@@ -79,6 +81,60 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
         helper.assertFalse(handler == null, "No item handler found");
 
         return handler;
+    }
+
+    public Collection<TestFunction> auto_charger_can_have_chargeable_items_inserted(String templateName) {
+        var testParams = this.getChargeableTestParams();
+        return TestUtils.createParameterizedTestFunctions("auto_charger_can_have_chargeable_items_inserted", templateName, testParams, (helper, stack) -> {
+            // Track a copy of the test stack for later
+            var before = stack.copy();
+
+            // Create a test player with a chargeable item in hand
+            var player = this.makeMockServerPlayer(helper);
+            player.setItemInHand(InteractionHand.MAIN_HAND, stack);
+
+            // Place an auto charger and get its item handler
+            var chargerPos = BlockPos.ZERO;
+            var handler = this.getItemHandlerForNewAutoCharger(helper, chargerPos, Direction.UP);
+            helper.assertTrue(handler.getStackInSlot(0).isEmpty(), "Charger has an item before use");
+
+            // Use the player's main hand item on the charger
+            var chargerState = helper.getBlockState(chargerPos);
+            var hitResult = new BlockHitResult(helper.absolutePos(chargerPos).getCenter(), Direction.UP, helper.absolutePos(chargerPos), true);
+            var useResult = chargerState.useItemOn(stack, helper.getLevel(), player, InteractionHand.MAIN_HAND, hitResult);
+
+            // Confirm success
+            helper.assertTrue(useResult.consumesAction(), "Use action failed");
+            helper.assertFalse(handler.getStackInSlot(0).isEmpty(), "Charger has no item after use");
+            helper.assertTrue(handler.getStackInSlot(0).is(before.getItem()), "Charge item does not match initial stack");
+
+            helper.succeed();
+        });
+    }
+
+    public Collection<TestFunction> auto_charger_cannot_have_unchargeable_items_inserted(String templateName) {
+        var testParams = this.getUnchargeableTestParams();
+        return TestUtils.createParameterizedTestFunctions("auto_charger_cannot_have_unchargeable_items_inserted", templateName, testParams, (helper, stack) -> {
+            // Create a test player with a chargeable item in hand
+            var player = this.makeMockServerPlayer(helper);
+            player.setItemInHand(InteractionHand.MAIN_HAND, stack);
+
+            // Place an auto charger and get its item handler
+            var chargerPos = BlockPos.ZERO.north();
+            var handler = this.getItemHandlerForNewAutoCharger(helper, chargerPos, Direction.UP);
+            helper.assertTrue(handler.getStackInSlot(0).isEmpty(), "Charger has an item before use");
+
+            // Use the player's main hand item on the charger
+            var chargerState = helper.getBlockState(chargerPos);
+            var hitResult = new BlockHitResult(chargerPos.getCenter(), Direction.UP, chargerPos, true);
+            var useResult = chargerState.useItemOn(stack, helper.getLevel(), player, InteractionHand.MAIN_HAND, hitResult);
+
+            // Confirm success
+            helper.assertFalse(useResult.consumesAction(), "Use action unexpectedly succeeded");
+            helper.assertTrue(handler.getStackInSlot(0).isEmpty(), "Charger has item after use");
+
+            helper.succeed();
+        });
     }
 
     public Collection<TestFunction> auto_charger_siphons_into_chargeable_items(String templateName) {
