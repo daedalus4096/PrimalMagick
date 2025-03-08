@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -133,8 +134,9 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             return 0;
         }
     }
-    
-    protected int getBatteryTransferCap() {
+
+    @VisibleForTesting
+    public int getBatteryTransferCap() {
         // Return the max amount of centimana that can be transfered by the battery per tick
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
             return switch (batteryBlock.getDeviceTier()) {

@@ -34,4 +34,9 @@ public class ManaBatteryTestForge extends AbstractManaBatteryTest {
     public Collection<TestFunction> mana_battery_input_allows_wands() {
         return super.mana_battery_input_allows_wands(TestUtilsForge.DEFAULT_TEMPLATE);
     }
+
+    @GameTestGenerator
+    public Collection<TestFunction> mana_battery_siphons_from_nearby_fonts() {
+        return super.mana_battery_siphons_from_nearby_fonts(TestUtilsForge.DEFAULT_TEMPLATE);
+    }
 }

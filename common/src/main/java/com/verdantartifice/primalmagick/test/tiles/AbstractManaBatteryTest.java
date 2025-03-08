@@ -2,12 +2,15 @@ package com.verdantartifice.primalmagick.test.tiles;
 
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.wands.IHasWandComponents;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.tiles.mana.AbstractManaFontTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
@@ -139,6 +142,46 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
 
             // Confirm that the input item handler will accept the test item
             helper.assertTrue(handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
+
+            helper.succeed();
+        });
+    }
+
+    public Collection<TestFunction> mana_battery_siphons_from_nearby_fonts(String templateName) {
+        // Exclude the Creative Mana Singularity because it's always full by definition
+        var blockParams = ImmutableMap.<String, ManaBatteryBlock>builder()
+                .put("mana_nexus", BlocksPM.MANA_NEXUS.get())
+                .put("mana_singularity", BlocksPM.MANA_SINGULARITY.get())
+                .build();
+        var fontParams = AbstractManaFontBlock.getAll().stream().collect(Collectors.toMap(b -> Services.BLOCKS_REGISTRY.getKey(b).getPath(), b -> b));
+        return TestUtils.createDualParameterizedTestFunctions("mana_battery_siphons_from_nearby_fonts", templateName, blockParams, fontParams, (helper, block, font) -> {
+            // Place a mana battery block
+            var batteryPos = BlockPos.ZERO.north();
+            helper.setBlock(batteryPos, block);
+            var batteryTile = helper.<ManaBatteryTileEntity>getBlockEntity(batteryPos);
+            var batteryState = helper.getBlockState(batteryPos);
+
+            // Place a mana font block
+            var fontPos = BlockPos.ZERO.east();
+            helper.setBlock(fontPos, font);
+            var fontTile = helper.<AbstractManaFontTileEntity>getBlockEntity(fontPos);
+            final int startFontMana = 1000;
+            fontTile.setMana(startFontMana);
+
+            // Confirm initial state
+            helper.assertValueEqual(fontTile.getMana(), startFontMana, "Before font mana");
+            helper.assertTrue(batteryTile.getAllMana().isEmpty(), "Before battery mana not empty");
+
+            // Run a tick of the mana battery
+            ManaBatteryTileEntity.tick(helper.getLevel(), helper.absolutePos(batteryPos), batteryState, batteryTile);
+
+            // Confirm that mana was siphoned from the font to the battery
+            final int transferCap = batteryTile.getBatteryTransferCap();
+            final int expectedTransfer = Math.min(startFontMana, transferCap);
+            final int expectedFontMana = startFontMana - expectedTransfer;
+            final SourceList expectedBatteryMana = SourceList.builder().with(font.getSource(), expectedTransfer).build();
+            helper.assertValueEqual(fontTile.getMana(), expectedFontMana, "After font mana");
+            helper.assertValueEqual(batteryTile.getAllMana(), expectedBatteryMana, "After battery mana");
 
             helper.succeed();
         });

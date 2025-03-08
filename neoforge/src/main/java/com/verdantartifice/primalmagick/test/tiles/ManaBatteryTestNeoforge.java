@@ -34,4 +34,9 @@ public class ManaBatteryTestNeoforge extends AbstractManaBatteryTest {
     public Collection<TestFunction> mana_battery_input_allows_wands() {
         return super.mana_battery_input_allows_wands(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
     }
+
+    @GameTestGenerator
+    public Collection<TestFunction> mana_battery_siphons_from_nearby_fonts() {
+        return super.mana_battery_siphons_from_nearby_fonts(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
+    }
 }
