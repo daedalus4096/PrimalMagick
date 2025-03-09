@@ -34,6 +34,7 @@ public class DataPackUtils {
     static String itemFilePrefix = "data/primalmagick/affinities/items/";
     static String entityFilePrefix = "data/primalmagick/affinities/entity_types/";
 
+    static String packName = "primalMagickAffinities";
     static String packMCMetaFilename = "pack.mcmeta";
     static String packMCMeta = """
         {
@@ -51,15 +52,15 @@ public class DataPackUtils {
     static String itemTemplate = """
             { "type": "item", 
               "set": { 
-                "earth": 0, 
-                "sun": 0, 
-                "moon": 0, 
-                "sky": 0, 
-                "sea": 0, 
-                "blood": 0, 
-                "infernal": 0, 
-                "void": 0, 
-                "hallowed": 0 
+                "primalmagick:earth": 0,
+                "primalmagick:sun": 0,
+                "primalmagick:moon": 0,
+                "primalmagick:sky": 0,
+                "primalmagick:sea": 0,
+                "primalmagick:blood": 0,
+                "primalmagick:infernal": 0,
+                "primalmagick:void": 0,
+                "primalmagick:hallowed": 0
               }, 
               "target": "%s"
             }
@@ -68,15 +69,15 @@ public class DataPackUtils {
     static String entityTemplate = """
             { "type": "entity_type", 
               "values": { 
-                "earth": 0, 
-                "sun": 0, 
-                "moon": 0, 
-                "sky": 0, 
-                "sea": 0, 
-                "blood": 0, 
-                "infernal": 0, 
-                "void": 0, 
-                "hallowed": 0 
+                "primalmagick:earth": 0,
+                "primalmagick:sun": 0,
+                "primalmagick:moon": 0,
+                "primalmagick:sky": 0,
+                "primalmagick:sea": 0,
+                "primalmagick:blood": 0,
+                "primalmagick:infernal": 0,
+                "primalmagick:void": 0,
+                "primalmagick:hallowed": 0
               }, 
               "target": "%s"
             }
@@ -87,7 +88,7 @@ public class DataPackUtils {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ZipOutputStream zos = new ZipOutputStream(bos);
 
-        ZipEntry z = new ZipEntry(packMCMetaFilename);
+        ZipEntry z = new ZipEntry(String.format("%s/%s", packName, packMCMetaFilename));
         zos.putNextEntry(z);
         zos.write(packMCMeta.getBytes());
         zos.closeEntry();
@@ -96,10 +97,12 @@ public class DataPackUtils {
             @Nullable
             ResourceLocation resourceLocation = Services.ITEMS_REGISTRY.getKey(item);
             if (resourceLocation != null) {
+                String namespace= resourceLocation.getNamespace();
+                String path = resourceLocation.getPath();
+                String entryPath = String.format("%s/data/%s/affinities/items/%s.json", packName, namespace, path);
                 String target = resourceLocation.toString();
-                String filename = target.replace(":", "_")+".json";
 
-                z = new ZipEntry(itemFilePrefix + filename);
+                z = new ZipEntry(entryPath);
                 zos.putNextEntry(z);
                 zos.write(String.format(itemTemplate, target).getBytes());
                 zos.closeEntry();
@@ -109,10 +112,12 @@ public class DataPackUtils {
         for (EntityType<?> entityType : sourceEntities) {
             ResourceLocation resourceLocation = Services.ENTITY_TYPES_REGISTRY.getKey(entityType);
             if (resourceLocation != null) {
-                String target = resourceLocation.toString();
-                String filename = target.replace(":", "_") + ".json";
+                String namespace= resourceLocation.getNamespace();
+                String path = resourceLocation.getPath();
                 
-                z = new ZipEntry(entityFilePrefix + filename);
+                String target = resourceLocation.toString();
+                String entryPath = String.format("%s/data/%s/affinities/entity_types/%s.json", packName, namespace, path);
+                z = new ZipEntry(entryPath);
                 zos.putNextEntry(z);
                 zos.write(String.format(entityTemplate, target).getBytes());
                 zos.closeEntry();
