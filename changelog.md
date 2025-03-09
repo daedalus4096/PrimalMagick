@@ -1,5 +1,5 @@
-v6.0.2-beta
------------
+v6.0.2
+------
 * Added ability to wax copper blocks using beeswax
 * Redesigned the Essence Thief enchantment: now provides a chance to drop a single essence from slain mobs, with higher enchantment levels yields higher grades of essence
 * Made all glow fields sparkle for visibility
@@ -8,6 +8,8 @@ v6.0.2-beta
 * Updated all recipes to express mana cost in hundredths of mana points, rather than whole mana points
 * Replaced ancient library accent blocks with stained skyglass
 * Fixed dispenser behavior for Mana-Tinged Arrows
+* Updated to Forge 52.1.0
+* Updated to NeoForge 21.1.132
 
 v6.0.1-beta
 -----------
