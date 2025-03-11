@@ -19,6 +19,13 @@ public class PlayerKnowledgeTestNeoforge extends AbstractPlayerKnowledgeTest {
     @PrefixGameTestTemplate(false)
     @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
     @Override
+    public void player_knowledge_cannot_add_duplicate_research(GameTestHelper helper) {
+        super.player_knowledge_cannot_add_duplicate_research(helper);
+    }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
+    @Override
     public void player_knowledge_remove_research(GameTestHelper helper) {
         super.player_knowledge_remove_research(helper);
     }
@@ -63,13 +70,6 @@ public class PlayerKnowledgeTestNeoforge extends AbstractPlayerKnowledgeTest {
     @Override
     public void player_knowledge_get_research_status(GameTestHelper helper) {
         super.player_knowledge_get_research_status(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void player_knowledge_is_research_known(GameTestHelper helper) {
-        super.player_knowledge_is_research_known(helper);
     }
 
     @PrefixGameTestTemplate(false)
