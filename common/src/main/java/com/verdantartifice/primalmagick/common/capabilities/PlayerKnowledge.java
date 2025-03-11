@@ -29,6 +29,7 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -412,5 +413,16 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             // Remove all popup flags after syncing to prevent spam
             this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof PlayerKnowledge that)) return false;
+        return syncTimestamp == that.syncTimestamp && Objects.equals(research, that.research) && Objects.equals(stages, that.stages) && Objects.equals(flags, that.flags) && Objects.equals(knowledge, that.knowledge) && Objects.equals(topicHistory, that.topicHistory) && Objects.equals(project, that.project) && Objects.equals(topic, that.topic);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(research, stages, flags, knowledge, topicHistory, project, topic, syncTimestamp);
     }
 }

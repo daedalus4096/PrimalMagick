@@ -88,8 +88,8 @@ public class PlayerKnowledgeTestForge extends AbstractPlayerKnowledgeTest {
 
     @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
     @Override
-    public void player_knowledge_get_set_last_research_project(GameTestHelper helper) {
-        super.player_knowledge_get_set_last_research_project(helper);
+    public void player_knowledge_get_set_last_research_topic(GameTestHelper helper) {
+        super.player_knowledge_get_set_last_research_topic(helper);
     }
 
     @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
