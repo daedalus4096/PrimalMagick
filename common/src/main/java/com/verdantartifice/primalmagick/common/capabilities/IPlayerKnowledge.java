@@ -1,19 +1,27 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.IntFunction;
 
 /**
  * Capability interface for storing research and knowledge.  Attached to player entities.
@@ -213,9 +221,30 @@ public interface IPlayerKnowledge extends INBTSerializablePM<CompoundTag> {
         COMPLETE
     }
     
-    enum ResearchFlag {
-        NEW,
-        UPDATED,
-        POPUP
+    enum ResearchFlag implements StringRepresentable {
+        NEW(0, "new"),
+        UPDATED(1, "updated"),
+        POPUP(2, "popup"),;
+
+        private static final IntFunction<ResearchFlag> BY_ID = ByIdMap.continuous(ResearchFlag::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
+        public static final Codec<ResearchFlag> CODEC = StringRepresentable.fromValues(ResearchFlag::values);
+        public static final StreamCodec<ByteBuf, ResearchFlag> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, ResearchFlag::getId);
+
+        private final int id;
+        private final String name;
+
+        ResearchFlag(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return this.id;
+        }
+
+        @Override
+        public @NotNull String getSerializedName() {
+            return this.name;
+        }
     }
 }

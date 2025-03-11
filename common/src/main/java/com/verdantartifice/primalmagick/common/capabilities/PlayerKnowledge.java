@@ -1,5 +1,10 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
@@ -16,8 +21,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.StringRepresentable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,16 +50,69 @@ import java.util.stream.Collectors;
  */
 public class PlayerKnowledge implements IPlayerKnowledge {
     private static final Logger LOGGER = LogManager.getLogger();
+
+    public static final Codec<PlayerKnowledge> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                AbstractResearchKey.dispatchCodec().listOf().<Set<AbstractResearchKey<?>>>xmap(keyList -> {
+                    ImmutableSet.Builder<AbstractResearchKey<?>> builder = ImmutableSet.builder();
+                    keyList.forEach(builder::add);
+                    return builder.build();
+                }, keySet -> {
+                    ImmutableList.Builder<AbstractResearchKey<?>> builder = ImmutableList.builder();
+                    keySet.forEach(builder::add);
+                    return builder.build();
+                }).fieldOf("research").forGetter(k -> k.research),
+                StageEntry.CODEC.listOf().<Map<AbstractResearchKey<?>, Integer>>xmap(entryList -> {
+                    ImmutableMap.Builder<AbstractResearchKey<?>, Integer> builder = ImmutableMap.builder();
+                    entryList.forEach(se -> builder.put(se.key(), se.stage()));
+                    return builder.build();
+                }, entryMap -> {
+                    ImmutableList.Builder<StageEntry> builder = ImmutableList.builder();
+                    entryMap.forEach((key, value) -> builder.add(new StageEntry(key, value)));
+                    return builder.build();
+                }).fieldOf("stages").forGetter(k -> k.stages),
+                FlagsEntry.CODEC.listOf().<Map<AbstractResearchKey<?>, Set<ResearchFlag>>>xmap(entryList -> {
+                    ImmutableMap.Builder<AbstractResearchKey<?>, Set<ResearchFlag>> builder = ImmutableMap.builder();
+                    entryList.forEach(fe -> builder.put(fe.key(), fe.flagSet()));
+                    return builder.build();
+                }, entryMap -> {
+                    ImmutableList.Builder<FlagsEntry> builder = ImmutableList.builder();
+                    entryMap.forEach((key, value) -> builder.add(new FlagsEntry(key, value)));
+                    return builder.build();
+                }).fieldOf("flags").forGetter(k -> k.flags),
+                Codec.simpleMap(KnowledgeType.CODEC, Codec.INT, StringRepresentable.keys(KnowledgeType.values())).fieldOf("knowledge").forGetter(k -> k.knowledge),
+                AbstractResearchTopic.dispatchCodec().listOf().fieldOf("topicHistory").forGetter(k -> k.topicHistory),
+                Project.codec().optionalFieldOf("project", null).forGetter(k -> k.project),
+                AbstractResearchTopic.dispatchCodec().optionalFieldOf("topic", null).forGetter(k -> k.topic),
+                Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(k -> k.syncTimestamp)
+            ).apply(instance, PlayerKnowledge::new));
     
     private final Set<AbstractResearchKey<?>> research = ConcurrentHashMap.newKeySet();                 // Set of known research
     private final Map<AbstractResearchKey<?>, Integer> stages = new ConcurrentHashMap<>();              // Map of research keys to current stage numbers
     private final Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags = new ConcurrentHashMap<>();     // Map of research keys to attached flag sets
     private final Map<KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();                    // Map of knowledge types to accrued points
-    private final LinkedList<AbstractResearchTopic<?>> topicHistory = new LinkedList<>();                  // Grimoire research topic history
+    private final LinkedList<AbstractResearchTopic<?>> topicHistory = new LinkedList<>();               // Grimoire research topic history
     
-    private Project project = null;     // Currently active research project
-    private AbstractResearchTopic<?> topic = null; // Last active grimoire research topic
-    private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
+    private Project project;                // Currently active research project
+    private AbstractResearchTopic<?> topic; // Last active grimoire research topic
+    private long syncTimestamp;             // Last timestamp at which this capability received a sync from the server
+
+    public PlayerKnowledge() {
+        this(Set.of(), Map.of(), Map.of(), Map.of(), List.of(), null, null, 0L);
+    }
+
+    protected PlayerKnowledge(Set<AbstractResearchKey<?>> research, Map<AbstractResearchKey<?>, Integer> stages,
+                              Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags, Map<KnowledgeType, Integer> knowledge,
+                              List<AbstractResearchTopic<?>> topicHistory, Project project, AbstractResearchTopic<?> topic,
+                              long syncTimestamp) {
+        this.research.addAll(research);
+        this.stages.putAll(stages);
+        this.flags.putAll(flags);
+        this.knowledge.putAll(knowledge);
+        this.topicHistory.addAll(topicHistory);
+        this.project = project;
+        this.topic = topic;
+        this.syncTimestamp = syncTimestamp;
+    }
 
     @Override
     @Nonnull
@@ -430,5 +492,45 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Override
     public int hashCode() {
         return Objects.hash(research, stages, flags, knowledge, topicHistory, project, topic);
+    }
+
+    protected record StageEntry(AbstractResearchKey<?> key, int stage) {
+        public static final Codec<StageEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    AbstractResearchKey.dispatchCodec().fieldOf("key").forGetter(StageEntry::key),
+                    Codec.INT.fieldOf("stage").forGetter(StageEntry::stage)
+            ).apply(instance, StageEntry::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, StageEntry> STREAM_CODEC = StreamCodec.composite(
+                AbstractResearchKey.dispatchStreamCodec(), StageEntry::key,
+                ByteBufCodecs.VAR_INT, StageEntry::stage,
+                StageEntry::new);
+    }
+
+    protected record FlagsEntry(AbstractResearchKey<?> key, Set<ResearchFlag> flagSet) {
+        public static final Codec<FlagsEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    AbstractResearchKey.dispatchCodec().fieldOf("key").forGetter(FlagsEntry::key),
+                    ResearchFlag.CODEC.listOf().<Set<ResearchFlag>>xmap(flagList -> {
+                        ImmutableSet.Builder<ResearchFlag> builder = ImmutableSet.builder();
+                        flagList.forEach(builder::add);
+                        return builder.build();
+                    }, flagSet -> {
+                        ImmutableList.Builder<ResearchFlag> builder = ImmutableList.builder();
+                        flagSet.forEach(builder::add);
+                        return builder.build();
+                    }).fieldOf("flagSet").forGetter(FlagsEntry::flagSet)
+            ).apply(instance, FlagsEntry::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, FlagsEntry> STREAM_CODEC = StreamCodec.composite(
+                AbstractResearchKey.dispatchStreamCodec(), FlagsEntry::key,
+                ResearchFlag.STREAM_CODEC.apply(ByteBufCodecs.list()).map(flagList -> {
+                    ImmutableSet.Builder<ResearchFlag> builder = ImmutableSet.builder();
+                    flagList.forEach(builder::add);
+                    return builder.build();
+                }, flagSet -> {
+                    ImmutableList.Builder<ResearchFlag> builder = ImmutableList.builder();
+                    flagSet.forEach(builder::add);
+                    return builder.build();
+                }), FlagsEntry::flagSet,
+                FlagsEntry::new);
     }
 }
