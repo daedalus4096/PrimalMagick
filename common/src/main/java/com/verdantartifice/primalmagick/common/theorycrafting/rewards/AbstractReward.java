@@ -34,4 +34,10 @@ public abstract class AbstractReward<T extends AbstractReward<T>> {
     public void toNetwork(RegistryFriendlyByteBuf buf) {
         AbstractReward.dispatchStreamCodec().encode(buf, this);
     }
+
+    @Override
+    public abstract int hashCode();
+
+    @Override
+    public abstract boolean equals(Object obj);
 }

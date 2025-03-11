@@ -418,11 +418,17 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof PlayerKnowledge that)) return false;
-        return syncTimestamp == that.syncTimestamp && Objects.equals(research, that.research) && Objects.equals(stages, that.stages) && Objects.equals(flags, that.flags) && Objects.equals(knowledge, that.knowledge) && Objects.equals(topicHistory, that.topicHistory) && Objects.equals(project, that.project) && Objects.equals(topic, that.topic);
+        return Objects.equals(research, that.research) &&
+                Objects.equals(stages, that.stages) &&
+                Objects.equals(flags, that.flags) &&
+                Objects.equals(knowledge, that.knowledge) &&
+                Objects.equals(topicHistory, that.topicHistory) &&
+                Objects.equals(project, that.project) &&
+                Objects.equals(topic, that.topic);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(research, stages, flags, knowledge, topicHistory, project, topic, syncTimestamp);
+        return Objects.hash(research, stages, flags, knowledge, topicHistory, project, topic);
     }
 }

@@ -9,6 +9,8 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import java.util.Objects;
+
 /**
  * Research topic that points to a rune enchantment entry in the Grimoire.
  * 
@@ -44,5 +46,17 @@ public class EnchantmentResearchTopic extends AbstractResearchTopic<EnchantmentR
     @Override
     public EnchantmentResearchTopic withPage(int newPage) {
         return new EnchantmentResearchTopic(this.enchantment, newPage);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof EnchantmentResearchTopic that)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(enchantment, that.enchantment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), enchantment);
     }
 }

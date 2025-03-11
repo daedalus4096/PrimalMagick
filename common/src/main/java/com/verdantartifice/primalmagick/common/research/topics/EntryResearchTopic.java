@@ -8,6 +8,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
+import java.util.Objects;
+
 /**
  * Research topic that points to a mod research entry in the Grimoire.
  * 
@@ -43,5 +45,17 @@ public class EntryResearchTopic extends AbstractResearchTopic<EntryResearchTopic
     @Override
     public EntryResearchTopic withPage(int newPage) {
         return new EntryResearchTopic(this.entry, newPage);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof EntryResearchTopic that)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(entry, that.entry);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), entry);
     }
 }

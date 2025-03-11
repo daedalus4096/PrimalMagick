@@ -10,6 +10,8 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 
+import java.util.Objects;
+
 /**
  * Research topic that points to a linguistics entry in the Grimoire.
  * 
@@ -45,5 +47,17 @@ public class LanguageResearchTopic extends AbstractResearchTopic<LanguageResearc
     @Override
     public LanguageResearchTopic withPage(int newPage) {
         return new LanguageResearchTopic(this.language, newPage);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof LanguageResearchTopic that)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(language, that.language);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), language);
     }
 }

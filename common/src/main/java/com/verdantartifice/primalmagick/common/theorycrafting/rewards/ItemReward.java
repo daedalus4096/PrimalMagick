@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 /**
  * Theorycrafting reward that grants a specific item stack.
@@ -72,5 +73,16 @@ public class ItemReward extends AbstractReward<ItemReward> {
             itemName.withStyle(ChatFormatting.ITALIC);
         }
         return Component.translatable("label.primalmagick.research_table.reward", this.stack.getCount(), itemName);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ItemReward that)) return false;
+        return Objects.equals(stack, that.stack);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(stack);
     }
 }

@@ -148,9 +148,9 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
 
     public void player_knowledge_get_knowledge_levels(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        helper.assertValueEqual(knowledge.getKnowledgeRaw(KnowledgeType.THEORY), 0, "Pre-set knowledge");
+        helper.assertValueEqual(knowledge.getKnowledge(KnowledgeType.THEORY), 0, "Pre-set knowledge");
         helper.assertTrue(knowledge.addKnowledge(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression()), "Failed to add knowledge");
-        helper.assertValueEqual(knowledge.getKnowledgeRaw(KnowledgeType.THEORY), 1, "Post-set knowledge");
+        helper.assertValueEqual(knowledge.getKnowledge(KnowledgeType.THEORY), 1, "Post-set knowledge");
         helper.succeed();
     }
 

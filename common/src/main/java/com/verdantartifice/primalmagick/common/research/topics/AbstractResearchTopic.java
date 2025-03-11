@@ -5,6 +5,8 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
+import java.util.Objects;
+
 /**
  * Base research topic that points to a specific page in the Grimoire.
  * 
@@ -32,4 +34,15 @@ public abstract class AbstractResearchTopic<T extends AbstractResearchTopic<T>> 
     }
     
     public abstract T withPage(int newPage);
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof AbstractResearchTopic<?> that)) return false;
+        return page == that.page;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(page);
+    }
 }
