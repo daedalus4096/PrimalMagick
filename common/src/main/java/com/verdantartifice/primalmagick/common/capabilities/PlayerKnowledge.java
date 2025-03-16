@@ -27,8 +27,12 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
+import org.apache.commons.lang3.mutable.Mutable;
+import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -96,9 +100,58 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.syncTimestamp = syncTimestamp;
     }
 
+    @Nullable
     @Override
+    public Tag serializeNBT(@NotNull HolderLookup.Provider registryAccess) {
+        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
+        this.syncTimestamp = System.currentTimeMillis();
+        return CODEC.encodeStart(registryOps, this)
+                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player knowledge: {}", msg))
+                .orElse(null);
+    }
+
+    @Override
+    public synchronized void deserializeNBT(@NotNull HolderLookup.Provider registryAccess, @NotNull Tag nbt) {
+        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
+        Mutable<PlayerKnowledge> parsedKnowledge = new MutableObject<>(null);
+        CODEC.parse(registryOps, nbt)
+                .ifSuccess(parsedKnowledge::setValue)
+                .ifError(err -> {
+                    // If the tag could not be parsed via codec, it might be in the legacy format
+                    LOGGER.warn("Failed to deserialize player knowledge using codec, trying fallback: {}", err.message());
+                    if (nbt instanceof CompoundTag compoundTag) {
+                        PlayerKnowledge legacyKnowledge = new PlayerKnowledge();
+                        legacyKnowledge.deserializeLegacyNBT(registryAccess, compoundTag);
+                        parsedKnowledge.setValue(legacyKnowledge);
+                    }
+                });
+
+        // If parsing succeeds and the data is new, copy it into this object
+        this.copyFrom(parsedKnowledge.getValue());
+    }
+
+    protected void copyFrom(@Nullable PlayerKnowledge other) {
+        if (other == null || other.syncTimestamp <= this.syncTimestamp) {
+            return;
+        }
+
+        this.syncTimestamp = other.syncTimestamp;
+        this.clearResearch();
+        this.clearKnowledge();
+
+        this.research.addAll(other.research);
+        this.stages.putAll(other.stages);
+        this.flags.putAll(other.flags);
+        this.knowledge.putAll(other.knowledge);
+        this.topicHistory.addAll(other.topicHistory);
+        this.project = other.project;
+        this.topic = other.topic;
+    }
+
+    @Deprecated(forRemoval = true, since = "6.0.2-beta")
+    @VisibleForTesting
     @Nonnull
-    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+    public CompoundTag serializeLegacyNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         
         RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
@@ -165,8 +218,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         return rootTag;
     }
 
-    @Override
-    public synchronized void deserializeNBT(HolderLookup.Provider registries, @Nullable CompoundTag nbt) {
+    @Deprecated(forRemoval = true, since = "6.0.2-beta")
+    protected synchronized void deserializeLegacyNBT(HolderLookup.Provider registries, @Nullable CompoundTag nbt) {
         if (nbt == null || nbt.getLong("syncTimestamp") <= this.syncTimestamp) {
             return;
         }

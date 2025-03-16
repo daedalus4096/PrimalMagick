@@ -13,7 +13,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -29,7 +29,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
     public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_knowledge");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncKnowledgePacket> STREAM_CODEC = StreamCodec.ofMember(SyncKnowledgePacket::encode, SyncKnowledgePacket::decode);
 
-    protected final CompoundTag data;
+    protected final Tag data;
     
     @SuppressWarnings("deprecation")
     public SyncKnowledgePacket(Player player) {
@@ -41,7 +41,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
         return new CustomPacketPayload.Type<>(CHANNEL);
     }
 
-    protected SyncKnowledgePacket(CompoundTag data) {
+    protected SyncKnowledgePacket(Tag data) {
         this.data = data;
     }
     

@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,7 +29,7 @@ import java.util.function.IntFunction;
  * 
  * @author Daedalus4096
  */
-public interface IPlayerKnowledge extends INBTSerializablePM<CompoundTag> {
+public interface IPlayerKnowledge extends INBTSerializablePM<Tag> {
     /**
      * Remove all research from the player.
      */

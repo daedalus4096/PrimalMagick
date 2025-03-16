@@ -49,6 +49,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -436,7 +437,7 @@ public class PlayerEvents {
         RegistryAccess registryAccess = newPlayer.registryAccess();
         
         try {
-            CompoundTag nbtKnowledge = Services.CAPABILITIES.knowledge(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Tag nbtKnowledge = Services.CAPABILITIES.knowledge(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
             Services.CAPABILITIES.knowledge(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtKnowledge);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} knowledge", oldPlayer.getName().getString());

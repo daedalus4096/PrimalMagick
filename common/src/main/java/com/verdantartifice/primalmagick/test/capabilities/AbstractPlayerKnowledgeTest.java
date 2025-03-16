@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.research.keys.EntityScanKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
+import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplates;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -154,7 +155,7 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
         helper.succeed();
     }
 
-    public void player_knowledge_get_set_active_research_project(GameTestHelper helper) {
+    private Project createTestProject(GameTestHelper helper) {
         // Create a player to test with
         var player = this.makeMockServerPlayer(helper);
 
@@ -164,6 +165,11 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
         var project = projectTemplate.initialize(player, Set.of());
         helper.assertTrue(project != null, "Failed to initialize project");
 
+        return project;
+    }
+
+    public void player_knowledge_get_set_active_research_project(GameTestHelper helper) {
+        var project = this.createTestProject(helper);
         var knowledge = new PlayerKnowledge();
         helper.assertTrue(knowledge.getActiveResearchProject() == null, "Pre-set active research project");
         knowledge.setActiveResearchProject(project);
@@ -192,32 +198,45 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
         helper.succeed();
     }
 
-    public void player_knowledge_serialization(GameTestHelper helper) {
-        // Create a player to test with
-        var player = this.makeMockServerPlayer(helper);
-
-        // Create a research project to test with
-        var projectTemplateKey = ProjectTemplates.EXPEDITION;
-        var projectTemplate = helper.getLevel().registryAccess().registryOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).getOrThrow(projectTemplateKey);
-        var project = projectTemplate.initialize(player, Set.of());
-        helper.assertTrue(project != null, "Failed to initialize project");
-
+    private PlayerKnowledge createTestPlayerKnowledge(GameTestHelper helper) {
+        var project = this.createTestProject(helper);
         var topic = new EntryResearchTopic(DEFAULT_RESEARCH_KEY, 0);
 
         // Populate knowledge capability
-        var before = new PlayerKnowledge();
-        before.addResearch(DEFAULT_RESEARCH_KEY);
-        before.setResearchStage(DEFAULT_RESEARCH_KEY, 1);
-        before.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED);
-        before.addKnowledge(KnowledgeType.THEORY, 1);
-        before.setActiveResearchProject(project);
-        before.setLastResearchTopic(topic);
-        before.setResearchTopicHistory(List.of(topic));
+        var retVal = new PlayerKnowledge();
+        retVal.addResearch(DEFAULT_RESEARCH_KEY);
+        retVal.setResearchStage(DEFAULT_RESEARCH_KEY, 1);
+        retVal.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED);
+        retVal.addKnowledge(KnowledgeType.THEORY, 1);
+        retVal.setActiveResearchProject(project);
+        retVal.setLastResearchTopic(topic);
+        retVal.setResearchTopicHistory(List.of(topic));
+
+        return retVal;
+    }
+
+    public void player_knowledge_serialization(GameTestHelper helper) {
+        var before = this.createTestPlayerKnowledge(helper);
 
         // Serialize the capability to a tag
         var tag = before.serializeNBT(helper.getLevel().registryAccess());
 
         // Deserialize a new capability and ensure it's the same
+        var after = new PlayerKnowledge();
+        after.deserializeNBT(helper.getLevel().registryAccess(), tag);
+        helper.assertValueEqual(after, before, "Knowledge capabilities");
+
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    public void player_knowledge_deserialize_from_legacy_format(GameTestHelper helper) {
+        var before = this.createTestPlayerKnowledge(helper);
+
+        // Serialize the capability to a legacy formatted tag
+        var tag = before.serializeLegacyNBT(helper.getLevel().registryAccess());
+
+        // Deserialize a new capability and ensure it matches the previous one
         var after = new PlayerKnowledge();
         after.deserializeNBT(helper.getLevel().registryAccess(), tag);
         helper.assertValueEqual(after, before, "Knowledge capabilities");

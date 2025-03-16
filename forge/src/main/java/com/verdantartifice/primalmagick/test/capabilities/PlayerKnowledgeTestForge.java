@@ -103,4 +103,10 @@ public class PlayerKnowledgeTestForge extends AbstractPlayerKnowledgeTest {
     public void player_knowledge_serialization(GameTestHelper helper) {
         super.player_knowledge_serialization(helper);
     }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void player_knowledge_deserialize_from_legacy_format(GameTestHelper helper) {
+        super.player_knowledge_deserialize_from_legacy_format(helper);
+    }
 }

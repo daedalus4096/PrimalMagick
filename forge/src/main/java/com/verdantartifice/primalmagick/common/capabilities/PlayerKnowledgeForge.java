@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -16,7 +16,7 @@ public class PlayerKnowledgeForge extends PlayerKnowledge implements IPlayerKnow
      * @author Daedalus4096
      * @see com.verdantartifice.primalmagick.common.events.CapabilityEvents
      */
-    public static class Provider implements ICapabilitySerializable<CompoundTag> {
+    public static class Provider implements ICapabilitySerializable<Tag> {
         public static final ResourceLocation NAME = ResourceUtils.loc("capability_knowledge");
 
         private final IPlayerKnowledge instance = new PlayerKnowledge();
@@ -32,12 +32,12 @@ public class PlayerKnowledgeForge extends PlayerKnowledge implements IPlayerKnow
         }
 
         @Override
-        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+        public Tag serializeNBT(HolderLookup.Provider registries) {
             return instance.serializeNBT(registries);
         }
 
         @Override
-        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+        public void deserializeNBT(HolderLookup.Provider registries, Tag nbt) {
             instance.deserializeNBT(registries, nbt);
         }
     }
