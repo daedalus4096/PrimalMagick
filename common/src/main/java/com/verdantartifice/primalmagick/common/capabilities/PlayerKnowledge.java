@@ -45,6 +45,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -86,8 +87,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             ), k -> k.flags,
             ByteBufCodecs.map(Object2IntOpenHashMap::new, KnowledgeType.STREAM_CODEC, ByteBufCodecs.VAR_INT), k -> k.knowledge,
             AbstractResearchTopic.dispatchStreamCodec().apply(ByteBufCodecs.list()), k -> k.topicHistory,
-            Project.streamCodec(), k -> k.project,
-            AbstractResearchTopic.dispatchStreamCodec(), k -> k.topic,
+            StreamCodecUtils.nullable(Project.streamCodec()), k -> k.project,
+            StreamCodecUtils.nullable(AbstractResearchTopic.dispatchStreamCodec()), k -> k.topic,
             ByteBufCodecs.VAR_LONG, k -> k.syncTimestamp,
             PlayerKnowledge::new);
     

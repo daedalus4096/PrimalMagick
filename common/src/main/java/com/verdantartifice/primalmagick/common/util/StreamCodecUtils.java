@@ -6,12 +6,14 @@ import com.mojang.datafixers.util.Function9;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Registry;
 import net.minecraft.network.VarInt;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import org.joml.Vector2i;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public class StreamCodecUtils {
@@ -31,6 +33,10 @@ public class StreamCodecUtils {
             VarInt.write(pBuffer, pValue.y());
         }
     };
+
+    public static <B extends ByteBuf, V> StreamCodec<B, V> nullable(final StreamCodec<B, V> pCodec) {
+        return ByteBufCodecs.optional(pCodec).map(o -> o.orElse(null), Optional::ofNullable);
+    }
 
     public static <B, C, T1, T2, T3, T4, T5, T6, T7> StreamCodec<B, C> composite(
             final StreamCodec<? super B, T1> pCodec1,
