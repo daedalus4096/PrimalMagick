@@ -52,33 +52,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final Codec<PlayerKnowledge> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                AbstractResearchKey.dispatchCodec().listOf().<Set<AbstractResearchKey<?>>>xmap(keyList -> {
-                    ImmutableSet.Builder<AbstractResearchKey<?>> builder = ImmutableSet.builder();
-                    keyList.forEach(builder::add);
-                    return builder.build();
-                }, keySet -> {
-                    ImmutableList.Builder<AbstractResearchKey<?>> builder = ImmutableList.builder();
-                    keySet.forEach(builder::add);
-                    return builder.build();
-                }).fieldOf("research").forGetter(k -> k.research),
-                StageEntry.CODEC.listOf().<Map<AbstractResearchKey<?>, Integer>>xmap(entryList -> {
-                    ImmutableMap.Builder<AbstractResearchKey<?>, Integer> builder = ImmutableMap.builder();
-                    entryList.forEach(se -> builder.put(se.key(), se.stage()));
-                    return builder.build();
-                }, entryMap -> {
-                    ImmutableList.Builder<StageEntry> builder = ImmutableList.builder();
-                    entryMap.forEach((key, value) -> builder.add(new StageEntry(key, value)));
-                    return builder.build();
-                }).fieldOf("stages").forGetter(k -> k.stages),
-                FlagsEntry.CODEC.listOf().<Map<AbstractResearchKey<?>, Set<ResearchFlag>>>xmap(entryList -> {
-                    ImmutableMap.Builder<AbstractResearchKey<?>, Set<ResearchFlag>> builder = ImmutableMap.builder();
-                    entryList.forEach(fe -> builder.put(fe.key(), fe.flagSet()));
-                    return builder.build();
-                }, entryMap -> {
-                    ImmutableList.Builder<FlagsEntry> builder = ImmutableList.builder();
-                    entryMap.forEach((key, value) -> builder.add(new FlagsEntry(key, value)));
-                    return builder.build();
-                }).fieldOf("flags").forGetter(k -> k.flags),
+                AbstractResearchKey.dispatchCodec().listOf().<Set<AbstractResearchKey<?>>>xmap(ImmutableSet::copyOf, ImmutableList::copyOf).fieldOf("research").forGetter(k -> k.research),
+                StageEntry.CODEC.listOf().<Map<AbstractResearchKey<?>, Integer>>xmap(
+                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(StageEntry::key, StageEntry::stage)),
+                    entryMap -> entryMap.entrySet().stream().map(e -> new StageEntry(e.getKey(), e.getValue())).toList()
+                ).fieldOf("stages").forGetter(k -> k.stages),
+                FlagsEntry.CODEC.listOf().<Map<AbstractResearchKey<?>, Set<ResearchFlag>>>xmap(
+                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(FlagsEntry::key, FlagsEntry::flagSet)),
+                    entryMap -> entryMap.entrySet().stream().map(e -> new FlagsEntry(e.getKey(), e.getValue())).toList()
+                ).fieldOf("flags").forGetter(k -> k.flags),
                 Codec.simpleMap(KnowledgeType.CODEC, Codec.INT, StringRepresentable.keys(KnowledgeType.values())).fieldOf("knowledge").forGetter(k -> k.knowledge),
                 AbstractResearchTopic.dispatchCodec().listOf().fieldOf("topicHistory").forGetter(k -> k.topicHistory),
                 Project.codec().optionalFieldOf("project", null).forGetter(k -> k.project),
