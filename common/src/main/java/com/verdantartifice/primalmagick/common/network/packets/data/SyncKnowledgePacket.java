@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.network.packets.data;
 import com.verdantartifice.primalmagick.client.toast.ToastManager;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledge;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
@@ -13,7 +14,6 @@ import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -27,39 +27,29 @@ import net.minecraft.world.entity.player.Player;
  */
 public class SyncKnowledgePacket implements IMessageToClient {
     public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_knowledge");
-    public static final StreamCodec<RegistryFriendlyByteBuf, SyncKnowledgePacket> STREAM_CODEC = StreamCodec.ofMember(SyncKnowledgePacket::encode, SyncKnowledgePacket::decode);
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncKnowledgePacket> STREAM_CODEC = StreamCodec.composite(
+            PlayerKnowledge.STREAM_CODEC, p -> p.packetKnowledge,
+            SyncKnowledgePacket::new);
 
-    protected final Tag data;
+    protected final PlayerKnowledge packetKnowledge;
     
-    @SuppressWarnings("deprecation")
-    public SyncKnowledgePacket(Player player) {
-        IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
-        this.data = knowledge.serializeNBT(player.registryAccess());
+    public SyncKnowledgePacket(PlayerKnowledge knowledge) {
+        this.packetKnowledge = knowledge;
     }
 
     public static CustomPacketPayload.Type<CustomPacketPayload> type() {
         return new CustomPacketPayload.Type<>(CHANNEL);
     }
 
-    protected SyncKnowledgePacket(Tag data) {
-        this.data = data;
-    }
-    
-    public static void encode(SyncKnowledgePacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeNbt(message.data);
-    }
-    
-    public static SyncKnowledgePacket decode(RegistryFriendlyByteBuf buf) {
-        return new SyncKnowledgePacket(buf.readNbt());
-    }
-    
-    @SuppressWarnings("deprecation")
     public static void onMessage(PacketContext<SyncKnowledgePacket> ctx) {
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
         if (player != null) {
             Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 RegistryAccess registryAccess = player.level().registryAccess();
-                knowledge.deserializeNBT(player.registryAccess(), ctx.message().data);
+                if (knowledge instanceof PlayerKnowledge playerKnowledge) {
+                    // FIXME The rest of this packet is implementation specific; how important is it to have this import respect the interface boundary?
+                    playerKnowledge.copyFrom(ctx.message().packetKnowledge);
+                }
                 for (AbstractResearchKey<?> key : knowledge.getResearchSet()) {
                     // Show a research completion toast for any research entries so flagged
                     if (key instanceof ResearchEntryKey entryKey && knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP)) {

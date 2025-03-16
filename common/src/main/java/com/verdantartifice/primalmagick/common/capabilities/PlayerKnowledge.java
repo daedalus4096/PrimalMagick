@@ -23,7 +23,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -76,7 +75,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             ).apply(instance, PlayerKnowledge::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerKnowledge> STREAM_CODEC = StreamCodecUtils.composite(
-            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), k -> k.research,
+            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).<Set<AbstractResearchKey<?>>>map(ImmutableSet::copyOf, ImmutableList::copyOf), k -> k.research,
             StageEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).<Map<AbstractResearchKey<?>, Integer>>map(
                 entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(StageEntry::key, StageEntry::stage)),
                 entryMap -> entryMap.entrySet().stream().map(e -> new StageEntry(e.getKey(), e.getValue())).toList()
@@ -150,7 +149,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.copyFrom(parsedKnowledge.getValue());
     }
 
-    protected void copyFrom(@Nullable PlayerKnowledge other) {
+    public void copyFrom(@Nullable PlayerKnowledge other) {
         if (other == null || other.syncTimestamp <= this.syncTimestamp) {
             return;
         }
@@ -525,7 +524,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Override
     public void sync(@Nullable ServerPlayer player) {
         if (player != null) {
-            PacketHandler.sendToPlayer(new SyncKnowledgePacket(player), player);
+            PacketHandler.sendToPlayer(new SyncKnowledgePacket(this), player);
             
             // Remove all popup flags after syncing to prevent spam
             this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
