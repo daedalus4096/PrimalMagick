@@ -15,12 +15,15 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -71,6 +74,23 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 AbstractResearchTopic.dispatchCodec().optionalFieldOf("topic", null).forGetter(k -> k.topic),
                 Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(k -> k.syncTimestamp)
             ).apply(instance, PlayerKnowledge::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, PlayerKnowledge> STREAM_CODEC = StreamCodecUtils.composite(
+            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), k -> k.research,
+            StageEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).<Map<AbstractResearchKey<?>, Integer>>map(
+                entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(StageEntry::key, StageEntry::stage)),
+                entryMap -> entryMap.entrySet().stream().map(e -> new StageEntry(e.getKey(), e.getValue())).toList()
+            ), k -> k.stages,
+            FlagsEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).<Map<AbstractResearchKey<?>, Set<ResearchFlag>>>map(
+                entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(FlagsEntry::key, FlagsEntry::flagSet)),
+                entryMap -> entryMap.entrySet().stream().map(e -> new FlagsEntry(e.getKey(), e.getValue())).toList()
+            ), k -> k.flags,
+            ByteBufCodecs.map(Object2IntOpenHashMap::new, KnowledgeType.STREAM_CODEC, ByteBufCodecs.VAR_INT), k -> k.knowledge,
+            AbstractResearchTopic.dispatchStreamCodec().apply(ByteBufCodecs.list()), k -> k.topicHistory,
+            Project.streamCodec(), k -> k.project,
+            AbstractResearchTopic.dispatchStreamCodec(), k -> k.topic,
+            ByteBufCodecs.VAR_LONG, k -> k.syncTimestamp,
+            PlayerKnowledge::new);
     
     private final Set<AbstractResearchKey<?>> research = ConcurrentHashMap.newKeySet();                 // Set of known research
     private final Map<AbstractResearchKey<?>, Integer> stages = new ConcurrentHashMap<>();              // Map of research keys to current stage numbers
