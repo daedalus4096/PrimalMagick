@@ -127,4 +127,11 @@ public class PlayerKnowledgeTestNeoforge extends AbstractPlayerKnowledgeTest {
     public void player_knowledge_deserialize_from_legacy_format(GameTestHelper helper) {
         super.player_knowledge_deserialize_from_legacy_format(helper);
     }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
+    @Override
+    public void player_knowledge_add_and_check_research_post_serialization(GameTestHelper helper) {
+        super.player_knowledge_add_and_check_research_post_serialization(helper);
+    }
 }

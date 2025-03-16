@@ -243,4 +243,15 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
 
         helper.succeed();
     }
+
+    public void player_knowledge_add_and_check_research_post_serialization(GameTestHelper helper) {
+        var before = new PlayerKnowledge();
+        var tag = before.serializeNBT(helper.getLevel().registryAccess());
+        var knowledge = new PlayerKnowledge();
+        knowledge.deserializeNBT(helper.getLevel().registryAccess(), tag);
+        helper.assertFalse(knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known upon creation");
+        helper.assertTrue(knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        helper.assertTrue(knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
+        helper.succeed();
+    }
 }
