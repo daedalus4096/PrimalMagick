@@ -138,7 +138,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 .ifSuccess(parsedKnowledge::setValue)
                 .ifError(err -> {
                     // If the tag could not be parsed via codec, it might be in the legacy format
-                    LOGGER.warn("Failed to deserialize player knowledge using codec, trying fallback: {}", err.message());
+                    LOGGER.warn("Failed to deserialize player knowledge using codec, trying fallback");
                     if (nbt instanceof CompoundTag compoundTag) {
                         PlayerKnowledge legacyKnowledge = new PlayerKnowledge();
                         legacyKnowledge.deserializeLegacyNBT(registryAccess, compoundTag);
@@ -564,28 +564,12 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     protected record FlagsEntry(AbstractResearchKey<?> key, Set<ResearchFlag> flagSet) {
         public static final Codec<FlagsEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                     AbstractResearchKey.dispatchCodec().fieldOf("key").forGetter(FlagsEntry::key),
-                    ResearchFlag.CODEC.listOf().<Set<ResearchFlag>>xmap(flagList -> {
-                        ImmutableSet.Builder<ResearchFlag> builder = ImmutableSet.builder();
-                        flagList.forEach(builder::add);
-                        return builder.build();
-                    }, flagSet -> {
-                        ImmutableList.Builder<ResearchFlag> builder = ImmutableList.builder();
-                        flagSet.forEach(builder::add);
-                        return builder.build();
-                    }).fieldOf("flagSet").forGetter(FlagsEntry::flagSet)
+                    ResearchFlag.CODEC.listOf().<Set<ResearchFlag>>xmap(EnumSet::copyOf, ImmutableList::copyOf).fieldOf("flagSet").forGetter(FlagsEntry::flagSet)
             ).apply(instance, FlagsEntry::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, FlagsEntry> STREAM_CODEC = StreamCodec.composite(
                 AbstractResearchKey.dispatchStreamCodec(), FlagsEntry::key,
-                ResearchFlag.STREAM_CODEC.apply(ByteBufCodecs.list()).map(flagList -> {
-                    ImmutableSet.Builder<ResearchFlag> builder = ImmutableSet.builder();
-                    flagList.forEach(builder::add);
-                    return builder.build();
-                }, flagSet -> {
-                    ImmutableList.Builder<ResearchFlag> builder = ImmutableList.builder();
-                    flagSet.forEach(builder::add);
-                    return builder.build();
-                }), FlagsEntry::flagSet,
+                ResearchFlag.STREAM_CODEC.apply(ByteBufCodecs.list()).map(EnumSet::copyOf, ImmutableList::copyOf), FlagsEntry::flagSet,
                 FlagsEntry::new);
     }
 }
