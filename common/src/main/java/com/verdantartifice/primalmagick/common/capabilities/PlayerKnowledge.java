@@ -70,8 +70,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 ).fieldOf("flags").forGetter(k -> k.flags),
                 Codec.simpleMap(KnowledgeType.CODEC, Codec.INT, StringRepresentable.keys(KnowledgeType.values())).fieldOf("knowledge").forGetter(k -> k.knowledge),
                 AbstractResearchTopic.dispatchCodec().listOf().fieldOf("topicHistory").forGetter(k -> k.topicHistory),
-                Project.codec().optionalFieldOf("project", null).forGetter(k -> k.project),
-                AbstractResearchTopic.dispatchCodec().optionalFieldOf("topic", null).forGetter(k -> k.topic),
+                Project.codec().optionalFieldOf("project").forGetter(k -> k.project),
+                AbstractResearchTopic.dispatchCodec().optionalFieldOf("topic").forGetter(k -> k.topic),
                 Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(k -> k.syncTimestamp)
             ).apply(instance, PlayerKnowledge::new));
 
@@ -87,8 +87,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             ), k -> k.flags,
             ByteBufCodecs.map(Object2IntOpenHashMap::new, KnowledgeType.STREAM_CODEC, ByteBufCodecs.VAR_INT), k -> k.knowledge,
             AbstractResearchTopic.dispatchStreamCodec().apply(ByteBufCodecs.list()), k -> k.topicHistory,
-            StreamCodecUtils.nullable(Project.streamCodec()), k -> k.project,
-            StreamCodecUtils.nullable(AbstractResearchTopic.dispatchStreamCodec()), k -> k.topic,
+            ByteBufCodecs.optional(Project.streamCodec()), k -> k.project,
+            ByteBufCodecs.optional(AbstractResearchTopic.dispatchStreamCodec()), k -> k.topic,
             ByteBufCodecs.VAR_LONG, k -> k.syncTimestamp,
             PlayerKnowledge::new);
     
@@ -98,18 +98,18 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Map<KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();                    // Map of knowledge types to accrued points
     private final LinkedList<AbstractResearchTopic<?>> topicHistory = new LinkedList<>();               // Grimoire research topic history
     
-    private Project project;                // Currently active research project
-    private AbstractResearchTopic<?> topic; // Last active grimoire research topic
-    private long syncTimestamp;             // Last timestamp at which this capability received a sync from the server
+    private Optional<Project> project;                  // Currently active research project
+    private Optional<AbstractResearchTopic<?>> topic;   // Last active grimoire research topic
+    private long syncTimestamp;                         // Last timestamp at which this capability received a sync from the server
 
     public PlayerKnowledge() {
-        this(Set.of(), Map.of(), Map.of(), Map.of(), List.of(), null, null, 0L);
+        this(Set.of(), Map.of(), Map.of(), Map.of(), List.of(), Optional.empty(), Optional.empty(), 0L);
     }
 
     protected PlayerKnowledge(Set<AbstractResearchKey<?>> research, Map<AbstractResearchKey<?>, Integer> stages,
                               Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags, Map<KnowledgeType, Integer> knowledge,
-                              List<AbstractResearchTopic<?>> topicHistory, Project project, AbstractResearchTopic<?> topic,
-                              long syncTimestamp) {
+                              List<AbstractResearchTopic<?>> topicHistory, Optional<Project> project,
+                              Optional<AbstractResearchTopic<?>> topic, long syncTimestamp) {
         this.research.addAll(research);
         this.stages.putAll(stages);
         this.flags.putAll(flags);
@@ -215,18 +215,14 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         rootTag.put("knowledge", knowledgeList);
         
         // Serialize active research project, if any
-        if (this.project != null) {
-            Project.codec().encodeStart(registryOps, this.project)
+        this.project.ifPresent(value -> Project.codec().encodeStart(registryOps, value)
                 .resultOrPartial(msg -> LOGGER.error("Failed to encode active research project in player knowledge capability: {}", msg))
-                .ifPresent(encodedProject -> rootTag.put("project", encodedProject));
-        }
+                .ifPresent(encodedProject -> rootTag.put("project", encodedProject)));
         
         // Serialize last active grimoire topic, if any
-        if (this.topic != null) {
-            AbstractResearchTopic.dispatchCodec().encodeStart(registryOps, this.topic)
+        this.topic.ifPresent(topic -> AbstractResearchTopic.dispatchCodec().encodeStart(registryOps, topic)
                 .resultOrPartial(msg -> LOGGER.error("Failed to encode current grimoire topic in player knowledge capability: {}", msg))
-                .ifPresent(encodedTopic -> rootTag.put("topic", encodedTopic));
-        }
+                .ifPresent(encodedTopic -> rootTag.put("topic", encodedTopic)));
         
         // Serialize grimoire topic history
         AbstractResearchTopic.dispatchCodec().listOf().encodeStart(registryOps, this.topicHistory)
@@ -247,8 +243,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.syncTimestamp = nbt.getLong("syncTimestamp");
         this.clearResearch();
         this.clearKnowledge();
-        this.project = null;
-        
+
         RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
         
         // Deserialize known research, including stage number and attached flags
@@ -297,14 +292,14 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (nbt.contains("project")) {
             Project.codec().parse(registryOps, nbt.getCompound("project"))
                 .resultOrPartial(msg -> LOGGER.error("Failed to decode active research project in player knowledge capability: {}", msg))
-                .ifPresent(project -> this.project = project);
+                .ifPresent(project -> this.project = Optional.ofNullable(project));
         }
         
         // Deserialize last active grimoire topic
         if (nbt.contains("topic")) {
             AbstractResearchTopic.dispatchCodec().parse(registryOps, nbt.get("topic"))
                 .resultOrPartial(msg -> LOGGER.error("Failed to decode current grimoire topic in player knowledge capability: {}", msg))
-                .ifPresent(decodedTopic -> this.topic = decodedTopic);
+                .ifPresent(decodedTopic -> this.topic = Optional.ofNullable(decodedTopic));
         }
         
         // Deserialize grimoire topic history
@@ -318,8 +313,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.research.clear();
         this.stages.clear();
         this.flags.clear();
-        this.project = null;
-        this.topic = null;
+        this.project = Optional.empty();
+        this.topic = Optional.empty();
         this.topicHistory.clear();
     }
     
@@ -493,22 +488,22 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     
     @Override
     public Project getActiveResearchProject() {
-        return this.project;
+        return this.project.orElse(null);
     }
     
     @Override
     public void setActiveResearchProject(Project project) {
-        this.project = project;
+        this.project = Optional.ofNullable(project);
     }
 
     @Override
     public AbstractResearchTopic<?> getLastResearchTopic() {
-        return this.topic == null ? MainIndexResearchTopic.INSTANCE : this.topic;
+        return this.topic.orElse(MainIndexResearchTopic.INSTANCE);
     }
 
     @Override
     public void setLastResearchTopic(AbstractResearchTopic<?> topic) {
-        this.topic = topic;
+        this.topic = Optional.ofNullable(topic);
     }
 
     @Override

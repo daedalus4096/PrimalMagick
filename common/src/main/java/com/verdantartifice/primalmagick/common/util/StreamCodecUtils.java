@@ -34,10 +34,6 @@ public class StreamCodecUtils {
         }
     };
 
-    public static <B extends ByteBuf, V> StreamCodec<B, V> nullable(final StreamCodec<B, V> pCodec) {
-        return ByteBufCodecs.optional(pCodec).map(o -> o.orElse(null), Optional::ofNullable);
-    }
-
     public static <B, C, T1, T2, T3, T4, T5, T6, T7> StreamCodec<B, C> composite(
             final StreamCodec<? super B, T1> pCodec1,
             final Function<C, T1> pGetter1,
