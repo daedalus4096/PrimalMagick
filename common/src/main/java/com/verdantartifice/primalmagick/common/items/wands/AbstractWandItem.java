@@ -48,9 +48,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -158,7 +158,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         }
     }
 
-    protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
+    protected void setMana(@NotNull ItemStack stack, @NotNull Source source, int amount) {
         // Save the given amount of centimana for the given source into the stack's data
         this.updateManaStorageWith(stack, source, amount);
     }
@@ -191,7 +191,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             // If the wand stack contains enough mana, process the consumption and return success
             if (this.getMaxMana(stack) != -1) {
                 // Only actually consume something if the wand doesn't have infinite mana
-                this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, (int)(this.getTotalCostModifier(stack, player, source, registries) * amount))));
+                this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, this.getModifiedCost(stack, player, source, amount, registries))));
             }
             
             if (player != null) {
@@ -226,7 +226,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                 int realAmount = amount / 100;
                 if (!isInfinite) {
                     // Only actually consume something if the wand doesn't have infinite mana
-                    this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source, registries) * amount));
+                    this.setMana(stack, source, this.getMana(stack, source) - this.getModifiedCost(stack, player, source, amount, registries));
                 }
                 
                 if (player != null) {
@@ -272,7 +272,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     @Override
     public boolean containsMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
         // A wand stack with infinite mana always contains the requested amount of mana
-        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (int)Math.floor(this.getTotalCostModifier(stack, player, source, registries) * amount);
+        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= this.getModifiedCost(stack, player, source, amount, registries);
     }
 
     @Override
@@ -334,7 +334,19 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         
         return modifier;
     }
-    
+
+    @Override
+    public int getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int baseCost, HolderLookup.Provider registries) {
+        return (int)Math.floor(this.getTotalCostModifier(stack, player, source, registries) * baseCost);
+    }
+
+    @Override
+    public SourceList getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, SourceList baseCost, HolderLookup.Provider registries) {
+        SourceList retVal = SourceList.EMPTY;
+        baseCost.getSources().forEach(s -> retVal.set(s, this.getModifiedCost(stack, player, s, baseCost.getAmount(s), registries)));
+        return retVal;
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltip, flagIn);

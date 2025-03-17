@@ -16,9 +16,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -36,7 +36,7 @@ public interface IWand {
      * @param source the type of mana to be queried
      * @return the amount of centimana contained
      */
-    public int getMana(@Nullable ItemStack stack, @Nullable Source source);
+    int getMana(@Nullable ItemStack stack, @Nullable Source source);
     
     /**
      * Get the text representation of centimana for the given source which is contained in the given wand stack.
@@ -45,7 +45,7 @@ public interface IWand {
      * @param source the type of mana to be queried
      * @return the text representation of the amount of centimana contained
      */
-    public MutableComponent getManaText(@Nullable ItemStack stack, @Nullable Source source);
+    MutableComponent getManaText(@Nullable ItemStack stack, @Nullable Source source);
     
     /**
      * Get the centimana amounts of all types of mana contained in the given wand stack.
@@ -53,8 +53,8 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return the amount of each type of mana contained
      */
-    @Nonnull
-    public SourceList getAllMana(@Nullable ItemStack stack);
+    @NotNull
+    SourceList getAllMana(@Nullable ItemStack stack);
     
     /**
      * Get the maximum amount of centimana that can be held by the given wand stack.
@@ -62,7 +62,7 @@ public interface IWand {
      * @param stack the wand stack whose maximum mana to return
      * @return the maximum amount of centimana that can be held by the given wand stack
      */
-    public int getMaxMana(@Nullable ItemStack stack);
+    int getMaxMana(@Nullable ItemStack stack);
     
     /**
      * Get the text representation of the maximum amount of centimana that can be held by the given wand stack.
@@ -70,7 +70,7 @@ public interface IWand {
      * @param stack the wand stack whose maximum mana to return
      * @return the text representation of the maximum amount of centimana that can be held by the given wand stack
      */
-    public MutableComponent getMaxManaText(@Nullable ItemStack stack);
+    MutableComponent getMaxManaText(@Nullable ItemStack stack);
 
     /**
      * Add the given amount of the given type of centimana to teh given wand stack, up to its maximum.
@@ -80,7 +80,7 @@ public interface IWand {
      * @param amount the amount of centimana to be added
      * @return the amount of leftover centimana that could not fit in the wand
      */
-    public int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
+    int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     /**
      * Consume the given amount of the given type of centimana from the given wand stack for the given player.  Takes
@@ -92,7 +92,7 @@ public interface IWand {
      * @param amount the amount of centimana to be consumed
      * @return true if sufficient centimana was present in the wand and successfully consumed, false otherwise
      */
-    public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries);
+    boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries);
     
     /**
      * Consume the given amounts of centimana from the given wand stack for the given player.  Takes into account any
@@ -103,7 +103,7 @@ public interface IWand {
      * @param sources the amount of each type of centimana to be consumed
      * @return true if sufficient centimana was present in the wand and successfully consumed, false otherwise
      */
-    public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources, HolderLookup.Provider registries);
+    boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources, HolderLookup.Provider registries);
     
     /**
      * Remove the given amount of the given type of centimana from the given wand stack.  Ignores any cost modifiers.
@@ -113,7 +113,7 @@ public interface IWand {
      * @param amount the amount of mana to be removed
      * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
      */
-    public boolean removeManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount);
+    boolean removeManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     /**
      * Determine if the given wand stack contains the given amount of the given type of centimana for the given player.  Takes
@@ -125,7 +125,7 @@ public interface IWand {
      * @param amount the amount of centimana required
      * @return true if sufficient centimana is present, false otherwise
      */
-    public boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries);
+    boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries);
     
     /**
      * Determine if the given wand stack contains the given amounts of centimana for the given player.  Takes into account
@@ -136,7 +136,7 @@ public interface IWand {
      * @param sources the amount of each type of centimana required
      * @return true if sufficient centimana is present, false otherwise
      */
-    public boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources, HolderLookup.Provider registries);
+    boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources, HolderLookup.Provider registries);
     
     /**
      * Determine if the given wand stack contains the given amount of the given type of centimana.  Ignores any cost
@@ -147,7 +147,7 @@ public interface IWand {
      * @param amount the amount of mana required
      * @return true if sufficient mana is present, false otherwise
      */
-    public boolean containsManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount);
+    boolean containsManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     /**
      * Get the base mana cost modifier to be applied to mana consumption, as determined by the cap of the wand, if any.
@@ -155,7 +155,7 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return the base mana cost modifier to be applied to mana consumption
      */
-    public double getBaseCostModifier(@Nullable ItemStack stack);
+    double getBaseCostModifier(@Nullable ItemStack stack);
     
     /**
      * Get the total mana cost modifier to be applied to mana consumption, from all factors (e.g. wand cap, player gear, attunement).
@@ -163,9 +163,32 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @param player the player consuming the mana
      * @param source the type of mana being consumed
+     * @param registries a registry lookup provider
      * @return the total mana cost modifier to be applied to mana consumption
      */
-    public double getTotalCostModifier(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, HolderLookup.Provider registries);
+    double getTotalCostModifier(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, HolderLookup.Provider registries);
+
+    /**
+     * Compute the final, fully-modified mana cost for the given base cost.
+     *
+     * @param stack the wand stack to be queried
+     * @param player the player consuming the mana
+     * @param source the type of mana being consumed
+     * @param baseCost the base amount of mana being consumed
+     * @param registries a registry lookup provider
+     * @return the final mana cost modified from the given base cost
+     */
+    int getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int baseCost, HolderLookup.Provider registries);
+
+    /**
+     *
+     * @param stack the wand stack to be queried
+     * @param player the player consuming the mana
+     * @param baseCost the base amount of mana being consumed for each source
+     * @param registries a registry lookup provider
+     * @return the final mana cost modified from the given base costs
+     */
+    SourceList getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, SourceList baseCost, HolderLookup.Provider registries);
     
     /**
      * Get the amount of centimana to siphon from a mana font when channeling it.
@@ -173,14 +196,14 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return the amount of centimana to siphon from mana fonts
      */
-    public int getSiphonAmount(@Nullable ItemStack stack);
+    int getSiphonAmount(@Nullable ItemStack stack);
 
     /**
      * Clear any stored position data for the last interacted-with tile.
      * 
      * @param wandStack the wand stack to be modified
      */
-    public void clearPositionInUse(@Nonnull ItemStack wandStack);
+    void clearPositionInUse(@NotNull ItemStack wandStack);
 
     /**
      * Store the given position data into the given wand stack.
@@ -188,7 +211,7 @@ public interface IWand {
      * @param wandStack the wand stack to be modified
      * @param pos the position data is to be stored
      */
-    public void setPositionInUse(@Nonnull ItemStack wandStack, @Nonnull BlockPos pos);
+    void setPositionInUse(@NotNull ItemStack wandStack, @NotNull BlockPos pos);
 
     /**
      * Get the position currently being interacted with by the given wand stack.
@@ -197,7 +220,7 @@ public interface IWand {
      * @return the position currently being interacted with, or null if none was found
      */
     @Nullable
-    public BlockPos getPositionInUse(@Nonnull ItemStack wandStack);
+    BlockPos getPositionInUse(@NotNull ItemStack wandStack);
     
     /**
      * Get the list of spell packages currently inscribed on the given wand stack.
@@ -205,8 +228,8 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return the list of spell packages currently inscribed
      */
-    @Nonnull
-    public List<SpellPackage> getSpells(@Nullable ItemStack stack);
+    @NotNull
+    List<SpellPackage> getSpells(@Nullable ItemStack stack);
     
     /**
      * Get the number of spell packages currently inscribed on the given wand stack.
@@ -214,7 +237,7 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return the number of spell packages currently inscribed
      */
-    public int getSpellCount(@Nullable ItemStack stack);
+    int getSpellCount(@Nullable ItemStack stack);
     
     /**
      * Get the text for the spell capacity of the given wand stack.
@@ -222,7 +245,7 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return the text for the spell capacity
      */
-    public Component getSpellCapacityText(@Nullable ItemStack stack);
+    Component getSpellCapacityText(@Nullable ItemStack stack);
     
     /**
      * Get the index of the currently selected inscribed spell package on the given wand stack.
@@ -230,7 +253,7 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return the zero-based index of the currently selected spell, or -1 if no spell is selected
      */
-    public int getActiveSpellIndex(@Nullable ItemStack stack);
+    int getActiveSpellIndex(@Nullable ItemStack stack);
     
     /**
      * Get the currently selected inscribed spell package on the given wand stack.
@@ -239,7 +262,7 @@ public interface IWand {
      * @return the currently selected spell, or null if no spell is selected
      */
     @Nullable
-    public SpellPackage getActiveSpell(@Nullable ItemStack stack);
+    SpellPackage getActiveSpell(@Nullable ItemStack stack);
     
     /**
      * Get the index of the currently selected inscribed spell package on the given wand stack.
@@ -248,7 +271,7 @@ public interface IWand {
      * @param index the zero-based index of the newly selected spell, or -1 if no spell is to be selected
      * @return true if the given index was valid for the given wand, false otherwise
      */
-    public boolean setActiveSpellIndex(@Nullable ItemStack stack, int index);
+    boolean setActiveSpellIndex(@Nullable ItemStack stack, int index);
     
     /**
      * Determine if the given spell package can be inscribed onto the given wand stack.
@@ -257,7 +280,7 @@ public interface IWand {
      * @param spell the spell package to be inscribed
      * @return true if the spell will fit on the wand, false otherwise
      */
-    public boolean canAddSpell(@Nullable ItemStack stack, @Nullable SpellPackage spell);
+    boolean canAddSpell(@Nullable ItemStack stack, @Nullable SpellPackage spell);
     
     /**
      * Add the given spell package to the given wand stack's list of inscribed spells.
@@ -266,14 +289,14 @@ public interface IWand {
      * @param spell the spell package to be inscribed
      * @return true if the spell was successfully added, false otherwise
      */
-    public boolean addSpell(@Nullable ItemStack stack, @Nullable SpellPackage spell);
+    boolean addSpell(@Nullable ItemStack stack, @Nullable SpellPackage spell);
     
     /**
      * Remove all spell packages from the given wand stack's list of inscribed spells.
      * 
      * @param stack the wand stack to be modified
      */
-    public void clearSpells(@Nullable ItemStack stack);
+    void clearSpells(@Nullable ItemStack stack);
     
     /**
      * Determine if the given wand stack has a glamour applied (i.e. if its appearance differs from that 
@@ -282,7 +305,7 @@ public interface IWand {
      * @param stack the wand stack to be queried
      * @return true if the wand has a glamour applied, false otherwise
      */
-    public boolean isGlamoured(@Nullable ItemStack stack);
+    boolean isGlamoured(@Nullable ItemStack stack);
 
     default InteractionResult onWandUseFirst(ItemStack stack, UseOnContext context) {
         // Only process on server side
