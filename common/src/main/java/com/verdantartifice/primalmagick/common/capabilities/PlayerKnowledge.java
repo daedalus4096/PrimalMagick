@@ -520,6 +520,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Override
     public void sync(@Nullable ServerPlayer player) {
         if (player != null) {
+            this.syncTimestamp = System.currentTimeMillis();
             PacketHandler.sendToPlayer(new SyncKnowledgePacket(this), player);
             
             // Remove all popup flags after syncing to prevent spam
