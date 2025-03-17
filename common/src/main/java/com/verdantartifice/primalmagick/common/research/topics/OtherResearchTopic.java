@@ -7,6 +7,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
+import java.util.Objects;
+
 /**
  * Research topic that points to a specific page in the Grimoire.
  * 
@@ -42,5 +44,17 @@ public class OtherResearchTopic extends AbstractResearchTopic<OtherResearchTopic
     @Override
     public OtherResearchTopic withPage(int newPage) {
         return new OtherResearchTopic(this.data, newPage);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof OtherResearchTopic that)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(data, that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), data);
     }
 }

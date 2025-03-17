@@ -8,6 +8,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
+import java.util.Objects;
+
 /**
  * Research topic that points to a mod research discipline in the Grimoire.
  * 
@@ -43,5 +45,17 @@ public class DisciplineResearchTopic extends AbstractResearchTopic<DisciplineRes
     @Override
     public DisciplineResearchTopic withPage(int newPage) {
         return new DisciplineResearchTopic(this.discipline, newPage);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof DisciplineResearchTopic that)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(discipline, that.discipline);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), discipline);
     }
 }

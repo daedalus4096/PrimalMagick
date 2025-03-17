@@ -1,5 +1,10 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
@@ -10,16 +15,26 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.StringRepresentable;
+import org.apache.commons.lang3.mutable.Mutable;
+import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,6 +44,8 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -40,20 +57,121 @@ import java.util.stream.Collectors;
  */
 public class PlayerKnowledge implements IPlayerKnowledge {
     private static final Logger LOGGER = LogManager.getLogger();
+
+    public static final Codec<PlayerKnowledge> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                AbstractResearchKey.dispatchCodec().listOf().<Set<AbstractResearchKey<?>>>xmap(ImmutableSet::copyOf, ImmutableList::copyOf).fieldOf("research").forGetter(k -> k.research),
+                StageEntry.CODEC.listOf().<Map<AbstractResearchKey<?>, Integer>>xmap(
+                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(StageEntry::key, StageEntry::stage)),
+                    entryMap -> entryMap.entrySet().stream().map(e -> new StageEntry(e.getKey(), e.getValue())).toList()
+                ).fieldOf("stages").forGetter(k -> k.stages),
+                FlagsEntry.CODEC.listOf().<Map<AbstractResearchKey<?>, Set<ResearchFlag>>>xmap(
+                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(FlagsEntry::key, FlagsEntry::flagSet)),
+                    entryMap -> entryMap.entrySet().stream().map(e -> new FlagsEntry(e.getKey(), e.getValue())).toList()
+                ).fieldOf("flags").forGetter(k -> k.flags),
+                Codec.simpleMap(KnowledgeType.CODEC, Codec.INT, StringRepresentable.keys(KnowledgeType.values())).fieldOf("knowledge").forGetter(k -> k.knowledge),
+                AbstractResearchTopic.dispatchCodec().listOf().fieldOf("topicHistory").forGetter(k -> k.topicHistory),
+                Project.codec().optionalFieldOf("project").forGetter(k -> k.project),
+                AbstractResearchTopic.dispatchCodec().optionalFieldOf("topic").forGetter(k -> k.topic),
+                Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(k -> k.syncTimestamp)
+            ).apply(instance, PlayerKnowledge::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, PlayerKnowledge> STREAM_CODEC = StreamCodecUtils.composite(
+            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).<Set<AbstractResearchKey<?>>>map(ImmutableSet::copyOf, ImmutableList::copyOf), k -> k.research,
+            StageEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).<Map<AbstractResearchKey<?>, Integer>>map(
+                entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(StageEntry::key, StageEntry::stage)),
+                entryMap -> entryMap.entrySet().stream().map(e -> new StageEntry(e.getKey(), e.getValue())).toList()
+            ), k -> k.stages,
+            FlagsEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).<Map<AbstractResearchKey<?>, Set<ResearchFlag>>>map(
+                entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(FlagsEntry::key, FlagsEntry::flagSet)),
+                entryMap -> entryMap.entrySet().stream().map(e -> new FlagsEntry(e.getKey(), e.getValue())).toList()
+            ), k -> k.flags,
+            ByteBufCodecs.map(Object2IntOpenHashMap::new, KnowledgeType.STREAM_CODEC, ByteBufCodecs.VAR_INT), k -> k.knowledge,
+            AbstractResearchTopic.dispatchStreamCodec().apply(ByteBufCodecs.list()), k -> k.topicHistory,
+            ByteBufCodecs.optional(Project.streamCodec()), k -> k.project,
+            ByteBufCodecs.optional(AbstractResearchTopic.dispatchStreamCodec()), k -> k.topic,
+            ByteBufCodecs.VAR_LONG, k -> k.syncTimestamp,
+            PlayerKnowledge::new);
     
     private final Set<AbstractResearchKey<?>> research = ConcurrentHashMap.newKeySet();                 // Set of known research
     private final Map<AbstractResearchKey<?>, Integer> stages = new ConcurrentHashMap<>();              // Map of research keys to current stage numbers
     private final Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags = new ConcurrentHashMap<>();     // Map of research keys to attached flag sets
     private final Map<KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();                    // Map of knowledge types to accrued points
-    private final LinkedList<AbstractResearchTopic<?>> topicHistory = new LinkedList<>();                  // Grimoire research topic history
+    private final LinkedList<AbstractResearchTopic<?>> topicHistory = new LinkedList<>();               // Grimoire research topic history
     
-    private Project project = null;     // Currently active research project
-    private AbstractResearchTopic<?> topic = null; // Last active grimoire research topic
-    private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
+    private Optional<Project> project;                  // Currently active research project
+    private Optional<AbstractResearchTopic<?>> topic;   // Last active grimoire research topic
+    private long syncTimestamp;                         // Last timestamp at which this capability received a sync from the server
+
+    public PlayerKnowledge() {
+        this(Set.of(), Map.of(), Map.of(), Map.of(), List.of(), Optional.empty(), Optional.empty(), 0L);
+    }
+
+    protected PlayerKnowledge(Set<AbstractResearchKey<?>> research, Map<AbstractResearchKey<?>, Integer> stages,
+                              Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags, Map<KnowledgeType, Integer> knowledge,
+                              List<AbstractResearchTopic<?>> topicHistory, Optional<Project> project,
+                              Optional<AbstractResearchTopic<?>> topic, long syncTimestamp) {
+        this.research.addAll(research);
+        this.stages.putAll(stages);
+        this.flags.putAll(flags);
+        this.knowledge.putAll(knowledge);
+        this.topicHistory.addAll(topicHistory);
+        this.project = project;
+        this.topic = topic;
+        this.syncTimestamp = syncTimestamp;
+    }
+
+    @Nullable
+    @Override
+    public Tag serializeNBT(@NotNull HolderLookup.Provider registryAccess) {
+        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
+        this.syncTimestamp = System.currentTimeMillis();
+        return CODEC.encodeStart(registryOps, this)
+                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player knowledge: {}", msg))
+                .orElse(null);
+    }
 
     @Override
+    public synchronized void deserializeNBT(@NotNull HolderLookup.Provider registryAccess, @NotNull Tag nbt) {
+        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
+        Mutable<PlayerKnowledge> parsedKnowledge = new MutableObject<>(null);
+        CODEC.parse(registryOps, nbt)
+                .ifSuccess(parsedKnowledge::setValue)
+                .ifError(err -> {
+                    // If the tag could not be parsed via codec, it might be in the legacy format
+                    LOGGER.warn("Failed to deserialize player knowledge using codec, trying fallback");
+                    if (nbt instanceof CompoundTag compoundTag) {
+                        PlayerKnowledge legacyKnowledge = new PlayerKnowledge();
+                        legacyKnowledge.deserializeLegacyNBT(registryAccess, compoundTag);
+                        parsedKnowledge.setValue(legacyKnowledge);
+                    }
+                });
+
+        // If parsing succeeds and the data is new, copy it into this object
+        this.copyFrom(parsedKnowledge.getValue());
+    }
+
+    public void copyFrom(@Nullable PlayerKnowledge other) {
+        if (other == null || other.syncTimestamp <= this.syncTimestamp) {
+            return;
+        }
+
+        this.syncTimestamp = other.syncTimestamp;
+        this.clearResearch();
+        this.clearKnowledge();
+
+        this.research.addAll(other.research);
+        this.stages.putAll(other.stages);
+        this.flags.putAll(other.flags);
+        this.knowledge.putAll(other.knowledge);
+        this.topicHistory.addAll(other.topicHistory);
+        this.project = other.project;
+        this.topic = other.topic;
+    }
+
+    @Deprecated(forRemoval = true, since = "6.0.2-beta")
+    @VisibleForTesting
     @Nonnull
-    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+    public CompoundTag serializeLegacyNBT(HolderLookup.Provider registries) {
         CompoundTag rootTag = new CompoundTag();
         
         RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
@@ -97,18 +215,14 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         rootTag.put("knowledge", knowledgeList);
         
         // Serialize active research project, if any
-        if (this.project != null) {
-            Project.codec().encodeStart(registryOps, this.project)
+        this.project.ifPresent(value -> Project.codec().encodeStart(registryOps, value)
                 .resultOrPartial(msg -> LOGGER.error("Failed to encode active research project in player knowledge capability: {}", msg))
-                .ifPresent(encodedProject -> rootTag.put("project", encodedProject));
-        }
+                .ifPresent(encodedProject -> rootTag.put("project", encodedProject)));
         
         // Serialize last active grimoire topic, if any
-        if (this.topic != null) {
-            AbstractResearchTopic.dispatchCodec().encodeStart(registryOps, this.topic)
+        this.topic.ifPresent(topic -> AbstractResearchTopic.dispatchCodec().encodeStart(registryOps, topic)
                 .resultOrPartial(msg -> LOGGER.error("Failed to encode current grimoire topic in player knowledge capability: {}", msg))
-                .ifPresent(encodedTopic -> rootTag.put("topic", encodedTopic));
-        }
+                .ifPresent(encodedTopic -> rootTag.put("topic", encodedTopic)));
         
         // Serialize grimoire topic history
         AbstractResearchTopic.dispatchCodec().listOf().encodeStart(registryOps, this.topicHistory)
@@ -120,8 +234,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         return rootTag;
     }
 
-    @Override
-    public synchronized void deserializeNBT(HolderLookup.Provider registries, @Nullable CompoundTag nbt) {
+    @Deprecated(forRemoval = true, since = "6.0.2-beta")
+    protected synchronized void deserializeLegacyNBT(HolderLookup.Provider registries, @Nullable CompoundTag nbt) {
         if (nbt == null || nbt.getLong("syncTimestamp") <= this.syncTimestamp) {
             return;
         }
@@ -129,8 +243,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.syncTimestamp = nbt.getLong("syncTimestamp");
         this.clearResearch();
         this.clearKnowledge();
-        this.project = null;
-        
+
         RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
         
         // Deserialize known research, including stage number and attached flags
@@ -179,14 +292,14 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (nbt.contains("project")) {
             Project.codec().parse(registryOps, nbt.getCompound("project"))
                 .resultOrPartial(msg -> LOGGER.error("Failed to decode active research project in player knowledge capability: {}", msg))
-                .ifPresent(project -> this.project = project);
+                .ifPresent(project -> this.project = Optional.ofNullable(project));
         }
         
         // Deserialize last active grimoire topic
         if (nbt.contains("topic")) {
             AbstractResearchTopic.dispatchCodec().parse(registryOps, nbt.get("topic"))
                 .resultOrPartial(msg -> LOGGER.error("Failed to decode current grimoire topic in player knowledge capability: {}", msg))
-                .ifPresent(decodedTopic -> this.topic = decodedTopic);
+                .ifPresent(decodedTopic -> this.topic = Optional.ofNullable(decodedTopic));
         }
         
         // Deserialize grimoire topic history
@@ -200,8 +313,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.research.clear();
         this.stages.clear();
         this.flags.clear();
-        this.project = null;
-        this.topic = null;
+        this.project = Optional.empty();
+        this.topic = Optional.empty();
         this.topicHistory.clear();
     }
     
@@ -375,22 +488,22 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     
     @Override
     public Project getActiveResearchProject() {
-        return this.project;
+        return this.project.orElse(null);
     }
     
     @Override
     public void setActiveResearchProject(Project project) {
-        this.project = project;
+        this.project = Optional.ofNullable(project);
     }
 
     @Override
     public AbstractResearchTopic<?> getLastResearchTopic() {
-        return this.topic == null ? MainIndexResearchTopic.INSTANCE : this.topic;
+        return this.topic.orElse(MainIndexResearchTopic.INSTANCE);
     }
 
     @Override
     public void setLastResearchTopic(AbstractResearchTopic<?> topic) {
-        this.topic = topic;
+        this.topic = Optional.ofNullable(topic);
     }
 
     @Override
@@ -407,10 +520,52 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Override
     public void sync(@Nullable ServerPlayer player) {
         if (player != null) {
-            PacketHandler.sendToPlayer(new SyncKnowledgePacket(player), player);
+            this.syncTimestamp = System.currentTimeMillis();
+            PacketHandler.sendToPlayer(new SyncKnowledgePacket(this), player);
             
             // Remove all popup flags after syncing to prevent spam
             this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof PlayerKnowledge that)) return false;
+        return Objects.equals(research, that.research) &&
+                Objects.equals(stages, that.stages) &&
+                Objects.equals(flags, that.flags) &&
+                Objects.equals(knowledge, that.knowledge) &&
+                Objects.equals(topicHistory, that.topicHistory) &&
+                Objects.equals(project, that.project) &&
+                Objects.equals(topic, that.topic);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(research, stages, flags, knowledge, topicHistory, project, topic);
+    }
+
+    protected record StageEntry(AbstractResearchKey<?> key, int stage) {
+        public static final Codec<StageEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    AbstractResearchKey.dispatchCodec().fieldOf("key").forGetter(StageEntry::key),
+                    Codec.INT.fieldOf("stage").forGetter(StageEntry::stage)
+            ).apply(instance, StageEntry::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, StageEntry> STREAM_CODEC = StreamCodec.composite(
+                AbstractResearchKey.dispatchStreamCodec(), StageEntry::key,
+                ByteBufCodecs.VAR_INT, StageEntry::stage,
+                StageEntry::new);
+    }
+
+    protected record FlagsEntry(AbstractResearchKey<?> key, Set<ResearchFlag> flagSet) {
+        public static final Codec<FlagsEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    AbstractResearchKey.dispatchCodec().fieldOf("key").forGetter(FlagsEntry::key),
+                    ResearchFlag.CODEC.listOf().<Set<ResearchFlag>>xmap(EnumSet::copyOf, ImmutableList::copyOf).fieldOf("flagSet").forGetter(FlagsEntry::flagSet)
+            ).apply(instance, FlagsEntry::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, FlagsEntry> STREAM_CODEC = StreamCodec.composite(
+                AbstractResearchKey.dispatchStreamCodec(), FlagsEntry::key,
+                ResearchFlag.STREAM_CODEC.apply(ByteBufCodecs.list()).map(EnumSet::copyOf, ImmutableList::copyOf), FlagsEntry::flagSet,
+                FlagsEntry::new);
     }
 }

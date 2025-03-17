@@ -9,6 +9,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ExtraCodecs;
 
+import java.util.Objects;
+
 /**
  * Theorycrafting reward that grants experience points.
  * 
@@ -44,5 +46,16 @@ public class ExperienceReward extends AbstractReward<ExperienceReward> {
     public Component getDescription() {
         Component label = Component.translatable("label.primalmagick.experience.points");
         return Component.translatable("label.primalmagick.research_table.reward", this.points, label);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ExperienceReward that)) return false;
+        return points == that.points;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(points);
     }
 }

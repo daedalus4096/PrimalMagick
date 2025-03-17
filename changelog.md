@@ -8,6 +8,7 @@ v6.0.2
 * Updated all recipes to express mana cost in hundredths of mana points, rather than whole mana points
 * Replaced ancient library accent blocks with stained skyglass
 * Fixed dispenser behavior for Mana-Tinged Arrows
+* Fixed a world-destroying bug that could occur when players accumulated too much knowledge
 * Updated to Forge 52.1.0
 * Updated to NeoForge 21.1.132
 

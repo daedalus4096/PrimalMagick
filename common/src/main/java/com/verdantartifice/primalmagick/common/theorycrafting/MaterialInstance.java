@@ -7,6 +7,8 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
+import java.util.Objects;
+
 /**
  * An instance of a material in an initialized theorycrafting project.  Tracks whether the material
  * has been selected for use.
@@ -52,5 +54,16 @@ public class MaterialInstance {
     
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof MaterialInstance that)) return false;
+        return selected == that.selected && Objects.equals(materialDefinition, that.materialDefinition);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(materialDefinition, selected);
     }
 }

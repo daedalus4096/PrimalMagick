@@ -21,6 +21,8 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
+import java.util.Objects;
+
 /**
  * Theorycrafting reward that grants random items from a loot table.
  * 
@@ -87,6 +89,17 @@ public class LootTableReward extends AbstractReward<LootTableReward> {
     @Override
     public Component getDescription() {
         return Component.translatable("label.primalmagick.research_table.reward", this.pullCount, Component.translatable(this.descTranslationKey));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof LootTableReward that)) return false;
+        return pullCount == that.pullCount && Objects.equals(lootTable, that.lootTable) && Objects.equals(descTranslationKey, that.descTranslationKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lootTable, pullCount, descTranslationKey);
     }
 
     public static Builder builder(ResourceKey<LootTable> lootTable) {

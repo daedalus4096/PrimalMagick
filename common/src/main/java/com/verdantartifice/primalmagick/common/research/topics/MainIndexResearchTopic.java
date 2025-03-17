@@ -28,4 +28,15 @@ public class MainIndexResearchTopic extends AbstractResearchTopic<MainIndexResea
     public MainIndexResearchTopic withPage(int newPage) {
         return INSTANCE;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof MainIndexResearchTopic)) return false;
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
