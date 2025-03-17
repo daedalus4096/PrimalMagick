@@ -79,11 +79,11 @@ public class AbstractArcaneWorkbenchTest extends AbstractBaseTest {
 
         // Confirm that mana was deducted from the wand correctly
         // FIXME Don't use hard-coded mana values for expectations
-        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.EARTH), 1900, "Wand remaining earth mana");
-        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.SEA), 1900, "Wand remaining sea mana");
-        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.SKY), 1900, "Wand remaining sky mana");
-        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.SUN), 1900, "Wand remaining sun mana");
-        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.MOON), 1900, "Wand remaining moon mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.EARTH), 2000, "Wand remaining earth mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.SEA), 2000, "Wand remaining sea mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.SKY), 2000, "Wand remaining sky mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.SUN), 2000, "Wand remaining sun mana");
+        helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.MOON), 2000, "Wand remaining moon mana");
         helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.BLOOD), 2500, "Wand remaining blood mana");
         helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.INFERNAL), 2500, "Wand remaining infernal mana");
         helper.assertValueEqual(wand.getMana(slottedWandStack, Sources.VOID), 2500, "Wand remaining void mana");

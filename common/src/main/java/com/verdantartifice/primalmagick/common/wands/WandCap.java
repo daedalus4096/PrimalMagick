@@ -31,11 +31,11 @@ public class WandCap implements IWandComponent {
     public static final Codec<WandCap> CODEC = Codec.STRING.xmap(WandCap::getWandCap, WandCap::getTag);
     public static final StreamCodec<ByteBuf, WandCap> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(WandCap::getWandCap, WandCap::getTag);
     
-    public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1D, 100);
-    public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 1.0D, 200);
-    public static final WandCap PRIMALITE = new WandCap("primalite", Rarity.UNCOMMON, 0.95D, 400);
-    public static final WandCap HEXIUM = new WandCap("hexium", Rarity.RARE, 0.9D, 800);
-    public static final WandCap HALLOWSTEEL = new WandCap("hallowsteel", Rarity.EPIC, 0.85D, 1600);
+    public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 0.9D, 100);
+    public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 0.8D, 200);
+    public static final WandCap PRIMALITE = new WandCap("primalite", Rarity.UNCOMMON, 0.75D, 400);
+    public static final WandCap HEXIUM = new WandCap("hexium", Rarity.RARE, 0.7D, 800);
+    public static final WandCap HALLOWSTEEL = new WandCap("hallowsteel", Rarity.EPIC, 0.65D, 1600);
     
     protected final String tag;                     // Unique identifier for the wand cap
     protected final Rarity rarity;                  // The cap's rarity, used to color its name and determine completed wand rarity
