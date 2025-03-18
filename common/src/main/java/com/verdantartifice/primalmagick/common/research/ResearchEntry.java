@@ -42,13 +42,15 @@ import java.util.stream.Stream;
  * 
  * @author Daedalus4096
  */
-public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<ResearchTier> tierOpt, Optional<IconDefinition> iconOpt, List<ResearchEntryKey> parents, 
-        ResearchEntry.Flags flags, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
+public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<ResearchTier> tierOpt,
+                            Optional<String> nameKeyOpt, Optional<IconDefinition> iconOpt, List<ResearchEntryKey> parents,  ResearchEntry.Flags flags,
+                            List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
     public static Codec<ResearchEntry> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
                 ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
                 ResearchTier.CODEC.optionalFieldOf("tier").forGetter(ResearchEntry::tierOpt),
+                Codec.STRING.optionalFieldOf("nameKey").forGetter(ResearchEntry::nameKeyOpt),
                 IconDefinition.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
                 ResearchEntryKey.CODEC.codec().listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
                 ResearchEntry.Flags.CODEC.fieldOf("flags").forGetter(ResearchEntry::flags),
@@ -60,24 +62,16 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     
     public static StreamCodec<RegistryFriendlyByteBuf, ResearchEntry> streamCodec() {
         return StreamCodecUtils.composite(
-                ResearchEntryKey.STREAM_CODEC,
-                ResearchEntry::key,
-                ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC),
-                ResearchEntry::disciplineKeyOpt,
-                ByteBufCodecs.optional(ResearchTier.STREAM_CODEC),
-                ResearchEntry::tierOpt,
-                ByteBufCodecs.optional(IconDefinition.STREAM_CODEC),
-                ResearchEntry::iconOpt,
-                ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()),
-                ResearchEntry::parents,
-                ResearchEntry.Flags.STREAM_CODEC,
-                ResearchEntry::flags,
-                ResearchDisciplineKey.STREAM_CODEC.apply(ByteBufCodecs.list()),
-                ResearchEntry::finales,
-                ResearchStage.streamCodec().apply(ByteBufCodecs.list()),
-                ResearchEntry::stages,
-                ResearchAddendum.streamCodec().apply(ByteBufCodecs.list()),
-                ResearchEntry::addenda,
+                ResearchEntryKey.STREAM_CODEC, ResearchEntry::key,
+                ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC), ResearchEntry::disciplineKeyOpt,
+                ByteBufCodecs.optional(ResearchTier.STREAM_CODEC), ResearchEntry::tierOpt,
+                ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8), ResearchEntry::nameKeyOpt,
+                ByteBufCodecs.optional(IconDefinition.STREAM_CODEC), ResearchEntry::iconOpt,
+                ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchEntry::parents,
+                ResearchEntry.Flags.STREAM_CODEC, ResearchEntry::flags,
+                ResearchDisciplineKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchEntry::finales,
+                ResearchStage.streamCodec().apply(ByteBufCodecs.list()), ResearchEntry::stages,
+                ResearchAddendum.streamCodec().apply(ByteBufCodecs.list()), ResearchEntry::addenda,
                 ResearchEntry::new);
     }
     
@@ -90,7 +84,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
     
     public String getNameTranslationKey() {
-        return String.join(".", this.getBaseTranslationKey(), "title");
+        return this.nameKeyOpt().orElseGet(() -> String.join(".", this.getBaseTranslationKey(), "title"));
     }
     
     public Optional<String> getHintTranslationKey() {
@@ -272,6 +266,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         protected final ResearchEntryKey key;
         protected Optional<ResearchDisciplineKey> disciplineKeyOpt = Optional.empty();
         protected Optional<ResearchTier> tierOpt = Optional.empty();
+        protected Optional<String> nameKeyOpt = Optional.empty();
         protected Optional<IconDefinition> iconOpt = Optional.empty();
         protected final List<ResearchEntryKey> parents = new ArrayList<>();
         protected ResearchEntry.Flags.Builder flagsBuilder = ResearchEntry.Flags.builder();
@@ -303,6 +298,11 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         
         public Builder tier(ResearchTier tier) {
             this.tierOpt = Optional.ofNullable(tier);
+            return this;
+        }
+
+        public Builder nameKey(String key) {
+            this.nameKeyOpt = Optional.ofNullable(key);
             return this;
         }
         
@@ -363,7 +363,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         
         public ResearchEntry build() {
             this.validate();
-            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.tierOpt, this.iconOpt, this.parents, this.flagsBuilder.build(), this.finales,
+            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.tierOpt, this.nameKeyOpt, this.iconOpt, this.parents, this.flagsBuilder.build(), this.finales,
                     this.stageBuilders.stream().map(b -> b.build()).toList(), this.addendumBuilders.stream().map(b -> b.build()).toList());
         }
     }

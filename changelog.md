@@ -9,6 +9,7 @@ v6.0.2
 * Glow fields conjured by player Sun attunement now fade over time
 * Updated all recipes to express mana cost in hundredths of mana points, rather than whole mana points
 * Replaced ancient library accent blocks with stained skyglass
+* Added support for specifying a name translation key for research entries in datapacks
 * Fixed dispenser behavior for Mana-Tinged Arrows
 * Fixed a world-destroying bug that could occur when players accumulated too much knowledge
 * Updated to Forge 52.1.0
