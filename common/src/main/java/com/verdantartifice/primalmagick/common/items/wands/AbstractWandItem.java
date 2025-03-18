@@ -292,14 +292,14 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
 
     @Override
-    public double getTotalCostModifier(ItemStack stack, @Nullable Player player, Source source, HolderLookup.Provider registries) {
+    public int getTotalCostModifier(ItemStack stack, @Nullable Player player, Source source, HolderLookup.Provider registries) {
         // Start with the base modifier, as determined by wand cap
-        double modifier = this.getBaseCostModifier(stack);
+        int modifier = this.getBaseCostModifier(stack);
         
         // Subtract discounts from wand enchantments
         int efficiencyLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.MANA_EFFICIENCY, registries);
         if (efficiencyLevel > 0) {
-            modifier += (0.02D * efficiencyLevel);
+            modifier += (2 * efficiencyLevel);
         }
         
         if (player != null) {
@@ -311,24 +311,24 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                 }
             }
             if (gearDiscount > 0) {
-                modifier += (0.01D * gearDiscount);
+                modifier += gearDiscount;
             }
             
             // Subtract discounts from attuned sources
             if (AttunementManager.meetsThreshold(player, source, AttunementThreshold.MINOR)) {
-                modifier += 0.05D;
+                modifier += 5;
             }
             
             // Subtract discounts from temporary conditions
             if (player.hasEffect(EffectsPM.MANAFRUIT.getHolder())) {
                 // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
-                modifier += (0.01D * ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder()).getAmplifier()) + 1));
+                modifier += ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder()).getAmplifier()) + 1);
             }
             
             // Add penalties from temporary conditions
             if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.getHolder())) {
                 // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
-                modifier -= (0.05D * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder()).getAmplifier() + 1));
+                modifier -= (5 * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder()).getAmplifier() + 1));
             }
         }
         
@@ -337,7 +337,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
 
     @Override
     public int getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int baseCost, HolderLookup.Provider registries) {
-        return (int)Math.floor(baseCost * (1 - this.getTotalCostModifier(stack, player, source, registries)));
+        return (int)Math.floor(baseCost * (1 - (this.getTotalCostModifier(stack, player, source, registries) / 100.0D)));
     }
 
     @Override

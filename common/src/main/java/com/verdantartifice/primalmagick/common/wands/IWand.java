@@ -150,23 +150,25 @@ public interface IWand {
     boolean containsManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     /**
-     * Get the base mana cost modifier to be applied to mana consumption, as determined by the cap of the wand, if any.
-     * 
+     * Get the base mana cost modifier to be applied to mana consumption, in whole percentage points, as determined by
+     * the cap of the wand, if any.
+     *
      * @param stack the wand stack to be queried
      * @return the base mana cost modifier to be applied to mana consumption
      */
-    double getBaseCostModifier(@Nullable ItemStack stack);
+    int getBaseCostModifier(@Nullable ItemStack stack);
     
     /**
-     * Get the total mana cost modifier to be applied to mana consumption, from all factors (e.g. wand cap, player gear, attunement).
-     * 
-     * @param stack the wand stack to be queried
-     * @param player the player consuming the mana
-     * @param source the type of mana being consumed
+     * Get the total mana cost modifier to be applied to mana consumption, in whole percentage points, from all factors
+     * (e.g. wand cap, player gear, attunement).
+     *
+     * @param stack      the wand stack to be queried
+     * @param player     the player consuming the mana
+     * @param source     the type of mana being consumed
      * @param registries a registry lookup provider
      * @return the total mana cost modifier to be applied to mana consumption
      */
-    double getTotalCostModifier(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, HolderLookup.Provider registries);
+    int getTotalCostModifier(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, HolderLookup.Provider registries);
 
     /**
      * Compute the final, fully-modified mana cost for the given base cost.

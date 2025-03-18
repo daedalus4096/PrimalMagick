@@ -62,13 +62,13 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
     
     @Override
-    public double getBaseCostModifier(ItemStack stack) {
+    public int getBaseCostModifier(ItemStack stack) {
         // The base mana cost modifier of a wand is determined by its cap
         if (stack == null) {
-            return 0D;
+            return 0;
         }
         WandCap cap = this.getWandCap(stack);
-        return (cap == null) ? 0D : cap.getBaseCostModifier();
+        return (cap == null) ? 0 : cap.getBaseCostModifier();
     }
     
     @Override
@@ -82,13 +82,13 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
 
     @Override
-    public double getTotalCostModifier(ItemStack stack, Player player, Source source, HolderLookup.Provider registries) {
-        double mod = super.getTotalCostModifier(stack, player, source, registries);
+    public int getTotalCostModifier(ItemStack stack, Player player, Source source, HolderLookup.Provider registries) {
+        int mod = super.getTotalCostModifier(stack, player, source, registries);
         
         // Add discount for wand core alignment, if any
         WandCore core = this.getWandCore(stack);
         if (core != null && core.getAlignedSources().contains(source)) {
-            mod += 0.05D;
+            mod += 5;
         }
         
         return mod;
