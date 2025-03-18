@@ -110,6 +110,7 @@ processResources {
             'neoforge_loader_version_range': neoforge_loader_version_range,
             "forge_version"                : forge_version,
             "forge_loader_version_range"   : forge_loader_version_range,
+            "common_network_version"       : common_network_version,
             'credits'                      : credits,
             'jei_version'                  : jei_version,
             'java_version'                 : java_version

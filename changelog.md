@@ -1,3 +1,7 @@
+v6.0.3
+------
+* Fixed incorrectly specified mod dependency on Common Networking
+
 v6.0.2
 ------
 * Redesigned mana efficiency, now called mana effectiveness, to feature diminishing returns; increased mana effectiveness of all wand types to compensate

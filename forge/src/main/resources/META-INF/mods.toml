@@ -27,3 +27,10 @@ mandatory=true
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="commonnetworking"
+mandatory=true
+versionRange="[${common_network_version},)"
+ordering="NONE"
+side="BOTH"
