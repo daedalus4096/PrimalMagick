@@ -284,8 +284,8 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
 
             final int startingRealMana = 10;
             final int startingCentimana = 100 * startingRealMana;
-            final double costModifier = 1 - (wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess()) / 100D);
-            final int exactCentimana = (int)(startingCentimana / costModifier);
+            final double costModifier = 1 + (wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess()) / 100D);
+            final int exactCentimana = (int)(startingCentimana * costModifier);
             final int lessCentimana = exactCentimana - 10;
             final int greaterCentimana = exactCentimana + 10;
 
@@ -313,8 +313,8 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
 
             final int startingRealMana = 10;
             final int startingCentimana = startingRealMana * 100;
-            final double costModifier = 1 - (wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess()) / 100D);
-            final int modifiedCentimana = (int)(startingCentimana / costModifier);
+            final double costModifier = 1 + (wand.getTotalCostModifier(wandStack, player, source, helper.getLevel().registryAccess()) / 100D);
+            final int modifiedCentimana = (int)(startingCentimana * costModifier);
 
             // Add some real mana to the wand for all sources except the test source
             Sources.stream().filter(s -> !s.equals(source)).forEach(s -> wand.addMana(wandStack, s, startingCentimana));

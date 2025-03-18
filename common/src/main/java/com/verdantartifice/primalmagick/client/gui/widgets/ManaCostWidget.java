@@ -32,16 +32,16 @@ public class ManaCostWidget extends AbstractSourceWidget {
         this.player = player;
     }
     
-    protected double getCostModifier() {
-        Minecraft mc = Minecraft.getInstance();
-        ItemStack wandStack = this.wandStackSupplier.get();
-        return wandStack.getItem() instanceof IWand wand ? wand.getTotalCostModifier(wandStack, this.player, this.source, mc.level.registryAccess()) : 0D;
-    }
-    
-    protected double getModifiedAmount() {
+    protected int getModifiedAmount() {
         Minecraft mc = Minecraft.getInstance();
         ItemStack wandStack = this.wandStackSupplier.get();
         return wandStack.getItem() instanceof IWand wand ? wand.getModifiedCost(wandStack, this.player, this.source, this.getAmount(), mc.level.registryAccess()) : this.getAmount();
+    }
+
+    protected boolean hasModifiedAmount() {
+        Minecraft mc = Minecraft.getInstance();
+        ItemStack wandStack = this.wandStackSupplier.get();
+        return !(wandStack.getItem() instanceof IWand wand) || wand.containsMana(wandStack, this.player, this.source, this.getAmount(), mc.level.registryAccess());
     }
 
     @Override
@@ -55,11 +55,9 @@ public class ManaCostWidget extends AbstractSourceWidget {
 
     @Override
     protected int getAmountStringColor() {
-        // FIXME Convert to effectiveness model
-        double costModifier = this.getCostModifier();
-        if (costModifier > 1) {
+        if (!this.hasModifiedAmount()) {
             return Color.RED.getRGB();
-        } else if (costModifier < 1) {
+        } else if (this.getModifiedAmount() < this.getAmount()) {
             return Color.GREEN.getRGB();
         } else {
             return super.getAmountStringColor();
@@ -69,17 +67,17 @@ public class ManaCostWidget extends AbstractSourceWidget {
     @Override
     protected List<Component> getTooltipLines() {
         int baseCost = this.getAmount();
-        double modifiedCost = this.getModifiedAmount();
-        double costDelta = Math.abs(modifiedCost - (double)baseCost);
+        int modifiedCost = this.getModifiedAmount();
+        int costDelta = Math.abs(modifiedCost - baseCost);
         List<Component> retVal;
         
         if (modifiedCost > baseCost) {
-            retVal = ImmutableList.<Component>of(
+            retVal = ImmutableList.of(
                     Component.translatable("label.primalmagick.crafting.mana.base", formatInWholeMana(baseCost)),
                     Component.translatable("label.primalmagick.crafting.mana.penalty", Component.literal(formatInWholeMana(costDelta)).withStyle(ChatFormatting.RED)),
                     Component.translatable("label.primalmagick.crafting.mana.modified", formatInWholeMana(modifiedCost), this.getSourceText()));
         } else if (modifiedCost < baseCost) {
-            retVal = ImmutableList.<Component>of(
+            retVal = ImmutableList.of(
                     Component.translatable("label.primalmagick.crafting.mana.base", formatInWholeMana(baseCost)),
                     Component.translatable("label.primalmagick.crafting.mana.bonus", Component.literal(formatInWholeMana(costDelta)).withStyle(ChatFormatting.GREEN)),
                     Component.translatable("label.primalmagick.crafting.mana.modified", formatInWholeMana(modifiedCost), this.getSourceText()));

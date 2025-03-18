@@ -337,7 +337,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
 
     @Override
     public int getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int baseCost, HolderLookup.Provider registries) {
-        return (int)Math.floor(baseCost * (1 - (this.getTotalCostModifier(stack, player, source, registries) / 100.0D)));
+        return (int)Math.floor(baseCost / (1 + (this.getTotalCostModifier(stack, player, source, registries) / 100.0D)));
     }
 
     @Override
@@ -358,9 +358,8 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             for (Source source : Sources.getAllSorted()) {
                 // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
-                    // FIXME Convert to effectiveness model
                     Component nameComp = source.getNameText();
-                    int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source, context.registries()));
+                    int modifier = this.getTotalCostModifier(stack, player, source, context.registries());
                     Component line = Component.translatable("tooltip.primalmagick.source.mana", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);
                 }
