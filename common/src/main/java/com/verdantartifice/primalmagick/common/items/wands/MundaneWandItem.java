@@ -43,9 +43,9 @@ public abstract class MundaneWandItem extends AbstractWandItem {
     }
     
     @Override
-    public double getBaseCostModifier(ItemStack stack) {
-        // With no cap, a mundane wand gets a 20% penalty to all mana expenditures
-        return 1.2F;
+    public int getBaseCostModifier(ItemStack stack) {
+        // With no cap, a mundane wand gets no bonus to mana effectiveness
+        return 0;
     }
 
     @Override

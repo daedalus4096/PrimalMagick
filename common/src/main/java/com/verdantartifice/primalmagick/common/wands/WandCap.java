@@ -31,24 +31,24 @@ public class WandCap implements IWandComponent {
     public static final Codec<WandCap> CODEC = Codec.STRING.xmap(WandCap::getWandCap, WandCap::getTag);
     public static final StreamCodec<ByteBuf, WandCap> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(WandCap::getWandCap, WandCap::getTag);
     
-    public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 1.1D, 100);
-    public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 1.0D, 200);
-    public static final WandCap PRIMALITE = new WandCap("primalite", Rarity.UNCOMMON, 0.95D, 400);
-    public static final WandCap HEXIUM = new WandCap("hexium", Rarity.RARE, 0.9D, 800);
-    public static final WandCap HALLOWSTEEL = new WandCap("hallowsteel", Rarity.EPIC, 0.85D, 1600);
+    public static final WandCap IRON = new WandCap("iron", Rarity.COMMON, 10, 100);
+    public static final WandCap GOLD = new WandCap("gold", Rarity.COMMON, 20, 200);
+    public static final WandCap PRIMALITE = new WandCap("primalite", Rarity.UNCOMMON, 25, 400);
+    public static final WandCap HEXIUM = new WandCap("hexium", Rarity.RARE, 30, 800);
+    public static final WandCap HALLOWSTEEL = new WandCap("hallowsteel", Rarity.EPIC, 35, 1600);
     
-    protected final String tag;                     // Unique identifier for the wand cap
-    protected final Rarity rarity;                  // The cap's rarity, used to color its name and determine completed wand rarity
-    protected final double baseCostModifier;        // The base discount or penalty to apply to mana usage, modified by other factors later
-    protected final int siphonAmount;               // The amount of mana to siphon from mana fonts when channeling 
+    protected final String tag;                         // Unique identifier for the wand cap
+    protected final Rarity rarity;                      // The cap's rarity, used to color its name and determine completed wand rarity
+    protected final int baseCostModifier;               // The base discount or penalty to apply to mana usage, modified by other factors later
+    protected final int siphonAmount;                   // The amount of mana to siphon from mana fonts when channeling
     protected final ResourceLocation wandMrlNamespace;  // Resource location of the wand cap's model, stored in a blockstate file
     protected final ResourceLocation staffMrlNamespace; // Resource location of the staff cap's model, stored in a blockstate file
     
-    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, int siphon) {
+    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, int costModifier, int siphon) {
         this(tag, rarity, costModifier, siphon, ResourceUtils.loc(tag + "_wand_cap"), ResourceUtils.loc(tag + "_staff_cap"));
     }
     
-    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, int siphon, @Nonnull ResourceLocation wmrln, @Nonnull ResourceLocation smrln) {
+    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, int costModifier, int siphon, @Nonnull ResourceLocation wmrln, @Nonnull ResourceLocation smrln) {
         if (REGISTRY.containsKey(tag)) {
             // Don't allow a given cap to be registered more than once
             throw new IllegalArgumentException("Wand cap " + tag + " already registered!");
@@ -77,7 +77,7 @@ public class WandCap implements IWandComponent {
         return IWandComponent.Type.CAP;
     }
 
-    public double getBaseCostModifier() {
+    public int getBaseCostModifier() {
         return this.baseCostModifier;
     }
 
@@ -113,7 +113,7 @@ public class WandCap implements IWandComponent {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof WandCap wandCap)) return false;
-        return Double.compare(baseCostModifier, wandCap.baseCostModifier) == 0 && siphonAmount == wandCap.siphonAmount && Objects.equals(tag, wandCap.tag) && rarity == wandCap.rarity && Objects.equals(wandMrlNamespace, wandCap.wandMrlNamespace) && Objects.equals(staffMrlNamespace, wandCap.staffMrlNamespace);
+        return baseCostModifier == wandCap.baseCostModifier && siphonAmount == wandCap.siphonAmount && Objects.equals(tag, wandCap.tag) && rarity == wandCap.rarity && Objects.equals(wandMrlNamespace, wandCap.wandMrlNamespace) && Objects.equals(staffMrlNamespace, wandCap.staffMrlNamespace);
     }
 
     @Override

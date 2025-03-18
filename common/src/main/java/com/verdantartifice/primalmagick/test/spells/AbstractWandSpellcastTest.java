@@ -76,9 +76,9 @@ public class AbstractWandSpellcastTest extends AbstractBaseTest {
             // Confirm that the correct amount of each source of mana was deducted from the wand
             var spellCost = spellPackage.getManaCost();
             Sources.getAll().forEach(s -> {
-                final double costModifier = wand.getTotalCostModifier(wandStack, player, s, helper.getLevel().registryAccess());
                 final int consumedCentimana = spellCost.getAmount(s);
-                final int expectedCentimana = maxWandMana - (int)(consumedCentimana * costModifier);
+                final int finalCost = wand.getModifiedCost(wandStack, player, s, consumedCentimana, helper.getLevel().registryAccess());
+                final int expectedCentimana = maxWandMana - finalCost;
                 helper.assertValueEqual(wand.getMana(wandStack, s), expectedCentimana, "Final wand mana for " + s.getId());
             });
 

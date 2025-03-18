@@ -947,7 +947,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("applies_to").output("Robes").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("base_slot_description").output("Add a piece of robe armor").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("ingredients").output("Source Runes").end().build();
-        this.tooltip("source").sub("mana").output("%1$s: %2$d / %3$d (%4$d%% mana cost)").end().build();
+        this.tooltip("source").sub("mana").output("%1$s: %2$d / %3$d (+%4$d%% mana effectiveness)").end().build();
         this.tooltip("source").sub("mana_gauge").output("%1$s mana: %2$s / %3$s").end().build();
         this.tooltip("source").sub("mana_container").output("%1$s mana: %2$d").end().build();
         this.tooltip("source").sub("mana_summary_fragment").output("%1$s/%2$s").end().build();
@@ -1031,10 +1031,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$s %2$s mana").end().build();
-        this.label("crafting").sub("mana").sub("base").output("Base cost: %1$d").end().build();
-        this.label("crafting").sub("mana").sub("bonus").output("Efficiency bonus: %1$s").end().build();
-        this.label("crafting").sub("mana").sub("penalty").output("Efficiency penalty: %1$s").end().build();
-        this.label("crafting").sub("mana").sub("modified").output("Total %2$s mana: %1$s").end().build();
+        this.label("crafting").sub("mana").sub("base").output("Base cost: %1$s").end().build();
+        this.label("crafting").sub("mana").sub("bonus").output("Effectiveness bonus: %1$s").end().build();
+        this.label("crafting").sub("mana").sub("penalty").output("Effectiveness penalty: %1$s").end().build();
+        this.label("crafting").sub("mana").sub("modified").output("Total %2$s mana required: %1$s").end().build();
         this.label("crafting").sub("mana_cost_header").output("Mana cost:").end().build();
         this.label("crafting").sub("no_mana").output("No mana cost").end().build();
         this.label("crafting").sub("research_header").output("Required research:").end().build();
@@ -1164,9 +1164,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .partialRuneText("The Aegis enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage, with greater effect for fire, explosion, projectile, or falling damage.  It does not, however, reduce the amount of time that the wearer is engulfed in flames, or the distance that the wearer is knocked back by explosions.  It is incompatible with other damage-reducing enchantments.")
             .build();
         this.enchantment(EnchantmentsPM.MANA_EFFICIENCY).name("Mana Efficiency")
-            .description("Reduces all mana costs when crafting or casting a spell.")
-            .fullRuneText("The Mana Efficiency enchantment can be imbued through the use of Dispel, Item, and Void runes.  It can be applied to any wand or staff.  When applied, it reduces all mana costs when crafting or casting a spell.")
-            .partialRuneText("The Mana Efficiency enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any wand or staff.  When applied, it reduces all mana costs when crafting or casting a spell.")
+            .description("Increases effectiveness of all sources of mana when crafting or casting a spell.")
+            .fullRuneText("The Mana Efficiency enchantment can be imbued through the use of Dispel, Item, and Void runes.  It can be applied to any wand or staff.  When applied, it increases mana effectiveness when crafting or casting a spell, reducing the amount of mana required.  As with all sources of mana effectiveness, this effect has diminishing returns.")
+            .partialRuneText("The Mana Efficiency enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any wand or staff.  When applied, it increases mana effectiveness when crafting or casting a spell, reducing the amount of mana required.  As with all sources of mana effectiveness, this effect has diminishing returns.")
             .build();
         this.enchantment(EnchantmentsPM.SPELL_POWER).name("Spell Power")
             .description("Increases the Power and Duration traits of spell payloads and mods by one per level when cast.")
