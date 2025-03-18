@@ -1,5 +1,7 @@
 v6.0.2
 ------
+* Redesigned mana efficiency, now called mana effectiveness, to feature diminishing returns; increased mana effectiveness of all wand types to compensate
+    * NOTE: This change seeks to eliminate the efficiency penalty on low-grade wands without resulting in overwhelming discounts at high levels. The end result should be a buff to players at low power levels and a nerf at high power levels, breaking even at roughly the Master tier of research.
 * Added ability to wax copper blocks using beeswax
 * Redesigned the Essence Thief enchantment: now provides a chance to drop a single essence from slain mobs, with higher enchantment levels yields higher grades of essence
 * Made all glow fields sparkle for visibility
