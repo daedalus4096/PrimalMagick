@@ -35,11 +35,13 @@ public class ManaCostWidget extends AbstractSourceWidget {
     protected double getCostModifier() {
         Minecraft mc = Minecraft.getInstance();
         ItemStack wandStack = this.wandStackSupplier.get();
-        return wandStack.getItem() instanceof IWand wand ? wand.getTotalCostModifier(wandStack, this.player, this.source, mc.level.registryAccess()) : 1D;
+        return wandStack.getItem() instanceof IWand wand ? wand.getTotalCostModifier(wandStack, this.player, this.source, mc.level.registryAccess()) : 0D;
     }
     
     protected double getModifiedAmount() {
-        return this.getAmount() * this.getCostModifier();
+        Minecraft mc = Minecraft.getInstance();
+        ItemStack wandStack = this.wandStackSupplier.get();
+        return wandStack.getItem() instanceof IWand wand ? wand.getModifiedCost(wandStack, this.player, this.source, this.getAmount(), mc.level.registryAccess()) : this.getAmount();
     }
 
     @Override
@@ -53,6 +55,7 @@ public class ManaCostWidget extends AbstractSourceWidget {
 
     @Override
     protected int getAmountStringColor() {
+        // FIXME Convert to effectiveness model
         double costModifier = this.getCostModifier();
         if (costModifier > 1) {
             return Color.RED.getRGB();

@@ -299,7 +299,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         // Subtract discounts from wand enchantments
         int efficiencyLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.MANA_EFFICIENCY, registries);
         if (efficiencyLevel > 0) {
-            modifier -= (0.02D * efficiencyLevel);
+            modifier += (0.02D * efficiencyLevel);
         }
         
         if (player != null) {
@@ -311,24 +311,24 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                 }
             }
             if (gearDiscount > 0) {
-                modifier -= (0.01D * gearDiscount);
+                modifier += (0.01D * gearDiscount);
             }
             
             // Subtract discounts from attuned sources
             if (AttunementManager.meetsThreshold(player, source, AttunementThreshold.MINOR)) {
-                modifier -= 0.05D;
+                modifier += 0.05D;
             }
             
             // Subtract discounts from temporary conditions
             if (player.hasEffect(EffectsPM.MANAFRUIT.getHolder())) {
                 // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
-                modifier -= (0.01D * ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder()).getAmplifier()) + 1));
+                modifier += (0.01D * ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder()).getAmplifier()) + 1));
             }
             
             // Add penalties from temporary conditions
             if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.getHolder())) {
                 // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
-                modifier += (0.05D * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder()).getAmplifier() + 1));
+                modifier -= (0.05D * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder()).getAmplifier() + 1));
             }
         }
         
@@ -337,7 +337,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
 
     @Override
     public int getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int baseCost, HolderLookup.Provider registries) {
-        return (int)Math.floor(this.getTotalCostModifier(stack, player, source, registries) * baseCost);
+        return (int)Math.floor(baseCost * (1 - this.getTotalCostModifier(stack, player, source, registries)));
     }
 
     @Override
@@ -358,6 +358,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             for (Source source : Sources.getAllSorted()) {
                 // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
+                    // FIXME Convert to effectiveness model
                     Component nameComp = source.getNameText();
                     int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source, context.registries()));
                     Component line = Component.translatable("tooltip.primalmagick.source.mana", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);

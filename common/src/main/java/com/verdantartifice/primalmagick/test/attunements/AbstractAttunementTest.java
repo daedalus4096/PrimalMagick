@@ -70,7 +70,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
             // Confirm that all sources have neither a discount nor penalty before attunement grant
             Sources.streamSorted().forEach(s -> {
                 double actual = wandItem.getTotalCostModifier(wandStack, player, s, helper.getLevel().registryAccess());
-                helper.assertTrue(actual == 0.8D, "Base wand cost modifier is not as expected for source " + s.getId());
+                helper.assertTrue(actual == 0.2D, "Base wand cost modifier is not as expected for source " + s.getId());
             });
 
             // Grant the test player minor attunement in the source being tested
@@ -78,7 +78,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
             // Confirm that the tested source has a 5% discount while all others are unmodified
             Sources.streamSorted().forEach(s -> {
-                double expected = s.equals(source) ? 0.75D : 0.8D;
+                double expected = s.equals(source) ? 0.25D : 0.2D;
                 double actual = wandItem.getTotalCostModifier(wandStack, player, s, helper.getLevel().registryAccess());
                 helper.assertTrue(actual == expected, "Final wand cost modifier is not as expected for source " + s.getId() + ": " + actual);
             });
