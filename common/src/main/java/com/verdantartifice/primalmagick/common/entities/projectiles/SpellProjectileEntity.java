@@ -115,4 +115,9 @@ public class SpellProjectileEntity extends AbstractArrow {
     protected ItemStack getDefaultPickupItem() {
         return ItemStack.EMPTY;
     }
+
+    @Override
+    public boolean canUsePortal(boolean pAllowPassengers) {
+        return false;
+    }
 }

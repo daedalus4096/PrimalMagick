@@ -1,3 +1,7 @@
+v6.0.4
+------
+* Fixed a bug that could crash a server when firing projectile spells through Nether portals in certain circumstances
+
 v6.0.3
 ------
 * Fixed incorrectly specified mod dependency on Common Networking
