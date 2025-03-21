@@ -41,6 +41,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -521,8 +522,19 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     public void sync(@Nullable ServerPlayer player) {
         if (player != null) {
             this.syncTimestamp = System.currentTimeMillis();
-            PacketHandler.sendToPlayer(new SyncKnowledgePacket(this), player);
-            
+
+            // Clone this data before passing it to the network
+            RegistryOps<Tag> registryOps = player.level().registryAccess().createSerializationContext(NbtOps.INSTANCE);
+            CODEC.encodeStart(registryOps, this)
+                    .resultOrPartial(err -> LOGGER.error("Failed to encode knowledge data for syncing"))
+                    .ifPresent(tag -> {
+                        CODEC.parse(registryOps, tag)
+                                .resultOrPartial(err -> LOGGER.error("Failed to parse knowledge data for syncing"))
+                                .ifPresent(knowledge -> {
+                                    PacketHandler.sendToPlayer(new SyncKnowledgePacket(knowledge), player);
+                                });
+                    });
+
             // Remove all popup flags after syncing to prevent spam
             this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
         }
@@ -560,12 +572,12 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     protected record FlagsEntry(AbstractResearchKey<?> key, Set<ResearchFlag> flagSet) {
         public static final Codec<FlagsEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                     AbstractResearchKey.dispatchCodec().fieldOf("key").forGetter(FlagsEntry::key),
-                    ResearchFlag.CODEC.listOf().<Set<ResearchFlag>>xmap(EnumSet::copyOf, ImmutableList::copyOf).fieldOf("flagSet").forGetter(FlagsEntry::flagSet)
+                    ResearchFlag.CODEC.listOf().<Set<ResearchFlag>>xmap(HashSet::new, ImmutableList::copyOf).fieldOf("flagSet").forGetter(FlagsEntry::flagSet)
             ).apply(instance, FlagsEntry::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, FlagsEntry> STREAM_CODEC = StreamCodec.composite(
                 AbstractResearchKey.dispatchStreamCodec(), FlagsEntry::key,
-                ResearchFlag.STREAM_CODEC.apply(ByteBufCodecs.list()).map(EnumSet::copyOf, ImmutableList::copyOf), FlagsEntry::flagSet,
+                ResearchFlag.STREAM_CODEC.apply(ByteBufCodecs.list()).map(HashSet::new, ImmutableList::copyOf), FlagsEntry::flagSet,
                 FlagsEntry::new);
     }
 }
