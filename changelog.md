@@ -1,3 +1,7 @@
+v4.0.10
+-------
+* Fixed a bug allowing some attribute modifiers to ignore suppression by Attunement Shackles
+
 v4.0.9
 ------
 * Fixed a client crash when picking up the Dream Journal in some modpacks
