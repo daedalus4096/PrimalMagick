@@ -38,7 +38,7 @@ public abstract class AbstractToastPM implements Toast {
         if (bodyLines.size() == 1) {
             // If only one body line is needed, render the title and body together
             pGuiGraphics.drawString(pToastComponent.getMinecraft().font, this.getTitleText(), x, 7, titleColor | 0xFF000000, false);
-            pGuiGraphics.drawString(pToastComponent.getMinecraft().font, bodyLines.getFirst(), x, 18, -1, false);
+            pGuiGraphics.drawString(pToastComponent.getMinecraft().font, bodyLines.getFirst(), x, 18, 0, false);
         } else {
             // If more than one body line is needed, render the title first, then the body, fading between the two
             if (pTimeSinceLastVisible < TITLE_TIME) {
@@ -48,7 +48,7 @@ public abstract class AbstractToastPM implements Toast {
                 int bodyFade = Mth.floor(Mth.clamp((float)(pTimeSinceLastVisible - TITLE_TIME) / FADE_DURATION, 0.0F, 1.0F) * 252.0F) << 24 | 67108864;
                 int y = this.height() / 2 - bodyLines.size() * 9 / 2;
                 for (FormattedCharSequence formattedcharsequence : bodyLines) {
-                    pGuiGraphics.drawString(pToastComponent.getMinecraft().font, formattedcharsequence, x, y, 16777215 | bodyFade, false);
+                    pGuiGraphics.drawString(pToastComponent.getMinecraft().font, formattedcharsequence, x, y, bodyFade, false);
                     y += 9;
                 }
             }
