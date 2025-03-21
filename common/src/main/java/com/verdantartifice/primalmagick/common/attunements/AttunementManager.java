@@ -188,13 +188,13 @@ public class AttunementManager {
                     int thresholdValue = threshold.getValue();
                     Component sourceText = source.getNameText();
                     Component thresholdText = threshold.getThresholdText();
-                    if (oldTotal < thresholdValue && newTotal >= thresholdValue) {
-                        // If gaining a threshold, send a message to the player
+                    if (oldTotal < thresholdValue && newTotal >= thresholdValue && !isSuppressed(player, source)) {
+                        // If gaining a threshold and not suppressed, send a message to the player
                         if (source.isDiscovered(player)) {
                             player.displayClientMessage(Component.translatable("event.primalmagick.attunement.threshold_gain", sourceText, thresholdText), false);
                         }
 
-                        // Apply any new attribute modifiers from the threshold gain
+                        // Apply any new attribute modifiers from the threshold gain for non-suppressed sources
                         for (AttunementAttributeModifier modifier : MODIFIERS) {
                             if (source.equals(modifier.getSource()) && threshold == modifier.getThreshold()) {
                                 modifier.applyToEntity(player);
@@ -202,8 +202,8 @@ public class AttunementManager {
                         }
                     }
                     if (oldTotal >= thresholdValue && newTotal < thresholdValue) {
-                        // If losing a threshold, send a message to the player
-                        if (source.isDiscovered(player)) {
+                        // If losing a threshold and the source isn't suppressed, send a message to the player
+                        if (source.isDiscovered(player) && !isSuppressed(player, source)) {
                             player.displayClientMessage(Component.translatable("event.primalmagick.attunement.threshold_loss", sourceText, thresholdText), false);
                         }
 
