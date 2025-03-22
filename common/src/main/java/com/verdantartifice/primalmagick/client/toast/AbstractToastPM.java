@@ -19,8 +19,10 @@ public abstract class AbstractToastPM implements Toast {
 
     protected abstract ResourceLocation getBackgroundSprite();
     protected abstract Component getTitleText();
+    protected abstract Optional<Component> getSubtitleText();
     protected abstract Component getBodyText();
     protected abstract int getTitleColor();
+    protected abstract int getSubtitleColor();
     protected abstract int getBodyColor();
     protected abstract Optional<ResourceLocation> getIcon();
 
@@ -42,12 +44,36 @@ public abstract class AbstractToastPM implements Toast {
 
         // Split the body text into lines to fit the toast
         List<FormattedCharSequence> bodyLines = pToastComponent.getMinecraft().font.split(this.getBodyText(), lineMax);
-        if (bodyLines.size() == 1) {
-            // If only one body line is needed, render the title and body together
+        if (this.getSubtitleText().isPresent() && bodyLines.size() == 1) {
+            // If only one body line is needed and there's a subtitle, render the title and subtitle first, then the body, fading between the two
+            if (pTimeSinceLastVisible < TITLE_TIME) {
+                int titleFade = Mth.floor(Mth.clamp((float)(TITLE_TIME - pTimeSinceLastVisible) / FADE_DURATION, 0.0F, 1.0F) * 255.0F) << 24 | 67108864;
+                pGuiGraphics.drawString(pToastComponent.getMinecraft().font, this.getTitleText(), x, 7, this.getTitleColor() | titleFade, false);
+                pGuiGraphics.drawString(pToastComponent.getMinecraft().font, this.getSubtitleText().get(), x, 18, this.getSubtitleColor() | titleFade, false);
+            } else {
+                int bodyFade = Mth.floor(Mth.clamp((float)(pTimeSinceLastVisible - TITLE_TIME) / FADE_DURATION, 0.0F, 1.0F) * 252.0F) << 24 | 67108864;
+                pGuiGraphics.drawString(pToastComponent.getMinecraft().font, bodyLines.getFirst(), x, 11, this.getBodyColor() | bodyFade, false);
+            }
+        } else if (this.getSubtitleText().isPresent()) {
+            // If more than one body line is needed and there's a subtitle, render the title and subtitle first, then the body, fading between the two
+            if (pTimeSinceLastVisible < TITLE_TIME) {
+                int titleFade = Mth.floor(Mth.clamp((float)(TITLE_TIME - pTimeSinceLastVisible) / FADE_DURATION, 0.0F, 1.0F) * 255.0F) << 24 | 67108864;
+                pGuiGraphics.drawString(pToastComponent.getMinecraft().font, this.getTitleText(), x, 7, this.getTitleColor() | titleFade, false);
+                pGuiGraphics.drawString(pToastComponent.getMinecraft().font, this.getSubtitleText().get(), x, 18, this.getSubtitleColor() | titleFade, false);
+            } else {
+                int bodyFade = Mth.floor(Mth.clamp((float)(pTimeSinceLastVisible - TITLE_TIME) / FADE_DURATION, 0.0F, 1.0F) * 252.0F) << 24 | 67108864;
+                int y = this.height() / 2 - bodyLines.size() * 9 / 2;
+                for (FormattedCharSequence formattedcharsequence : bodyLines) {
+                    pGuiGraphics.drawString(pToastComponent.getMinecraft().font, formattedcharsequence, x, y, this.getBodyColor() | bodyFade, false);
+                    y += 9;
+                }
+            }
+        } else if (bodyLines.size() == 1) {
+            // If only one body line is needed and there's no subtitle, render the title and body together without a fade
             pGuiGraphics.drawString(pToastComponent.getMinecraft().font, this.getTitleText(), x, 7, this.getTitleColor() | 0xFF000000, false);
             pGuiGraphics.drawString(pToastComponent.getMinecraft().font, bodyLines.getFirst(), x, 18, this.getBodyColor(), false);
         } else {
-            // If more than one body line is needed, render the title first, then the body, fading between the two
+            // If more than one body line is needed and there's no subtitle, render the title first, then the body, fading between the two
             if (pTimeSinceLastVisible < TITLE_TIME) {
                 int titleFade = Mth.floor(Mth.clamp((float)(TITLE_TIME - pTimeSinceLastVisible) / FADE_DURATION, 0.0F, 1.0F) * 255.0F) << 24 | 67108864;
                 pGuiGraphics.drawString(pToastComponent.getMinecraft().font, this.getTitleText(), x, 11, this.getTitleColor() | titleFade, false);

@@ -35,6 +35,11 @@ public class ResearchToast extends AbstractToastPM {
     }
 
     @Override
+    protected Optional<Component> getSubtitleText() {
+        return Optional.empty();
+    }
+
+    @Override
     protected Component getBodyText() {
         return Component.translatable(this.entry.getNameTranslationKey());
     }
@@ -42,6 +47,11 @@ public class ResearchToast extends AbstractToastPM {
     @Override
     protected int getTitleColor() {
         return this.isComplete ? Sources.VOID.getColor() : Sources.INFERNAL.getColor();
+    }
+
+    @Override
+    protected int getSubtitleColor() {
+        return 0;
     }
 
     @Override

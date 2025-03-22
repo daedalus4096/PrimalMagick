@@ -28,6 +28,11 @@ public class DisciplineUnlockToast extends AbstractToastPM {
     }
 
     @Override
+    protected Optional<Component> getSubtitleText() {
+        return Optional.of(Component.translatable(this.discipline.getNameTranslationKey()));
+    }
+
+    @Override
     protected Component getBodyText() {
         return Component.translatable("label.primalmagick.toast.discipline.body");
     }
@@ -35,6 +40,11 @@ public class DisciplineUnlockToast extends AbstractToastPM {
     @Override
     protected int getTitleColor() {
         return Sources.SUN.getColor();
+    }
+
+    @Override
+    protected int getSubtitleColor() {
+        return -1;
     }
 
     @Override
