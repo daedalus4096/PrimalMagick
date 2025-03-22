@@ -303,7 +303,7 @@ public class GrimoireScreen extends Screen {
 
     private List<ResearchDiscipline> buildDisciplineList() {
         // Gather a list of all research disciplines, sorted by their registration order, that appear in the main index
-        return ResearchDisciplines.getIndexDisciplines(this.minecraft.level.registryAccess());
+        return ResearchDisciplines.streamIndexDisciplines(this.minecraft.level.registryAccess()).toList();
     }
     
     private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {

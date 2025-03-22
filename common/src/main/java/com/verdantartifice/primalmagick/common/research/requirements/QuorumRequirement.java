@@ -89,6 +89,11 @@ public class QuorumRequirement extends AbstractRequirement<QuorumRequirement> {
     }
 
     @Override
+    public boolean satisfiedBy(AbstractResearchKey<?> researchKey) {
+        return this.subs.stream().mapToInt(req -> req.satisfiedBy(researchKey) ? 1 : 0).sum() >= this.requiredCount;
+    }
+
+    @Override
     public Stream<AbstractResearchKey<?>> streamKeys() {
         return this.subs.stream().flatMap(req -> req.streamKeys());
     }

@@ -73,6 +73,11 @@ public class OrRequirement extends AbstractRequirement<OrRequirement> {
     }
 
     @Override
+    public boolean satisfiedBy(AbstractResearchKey<?> researchKey) {
+        return this.subs.stream().anyMatch(req -> req.satisfiedBy(researchKey));
+    }
+
+    @Override
     public Stream<AbstractResearchKey<?>> streamKeys() {
         return this.subs.stream().flatMap(req -> req.streamKeys());
     }

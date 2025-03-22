@@ -75,6 +75,11 @@ public class ResearchRequirement extends AbstractRequirement<ResearchRequirement
     }
 
     @Override
+    public boolean satisfiedBy(AbstractResearchKey<?> researchKey) {
+        return this.contains(researchKey);
+    }
+
+    @Override
     public Stream<AbstractResearchKey<?>> streamKeys() {
         return Stream.of(this.rootKey);
     }

@@ -9,7 +9,8 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
 /**
  * Collection of all defined research disciplines and their defining JSON data files.
@@ -60,11 +61,11 @@ public class ResearchDisciplines {
     /**
      * Retrieves a list of the research disciplines that should be shown in the main index of the
      * grimoire, in sorted order.  Disciplines without an index sort order are excluded.
-     * 
+     *
      * @param registryAccess a registry access object
      * @return a list of the research disciplines that should be shown in the grimoire index
      */
-    public static List<ResearchDiscipline> getIndexDisciplines(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).stream().filter(d -> d.indexSortOrder().isPresent()).sorted((a, b) -> Integer.compare(a.indexSortOrder().getAsInt(), b.indexSortOrder().getAsInt())).toList();
+    public static Stream<ResearchDiscipline> streamIndexDisciplines(RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).stream().filter(d -> d.indexSortOrder().isPresent()).sorted(Comparator.comparingInt(a -> a.indexSortOrder().getAsInt()));
     }
 }
