@@ -24,6 +24,14 @@ public abstract class AbstractToastPM implements Toast {
     protected abstract int getBodyColor();
     protected abstract Optional<ResourceLocation> getIcon();
 
+    protected int getIconWidth() {
+        return 16;
+    }
+
+    protected int getIconHeight() {
+        return 16;
+    }
+
     @Override
     public @NotNull Visibility render(GuiGraphics pGuiGraphics, ToastComponent pToastComponent, long pTimeSinceLastVisible) {
         int x = this.getIcon().isPresent() ? 30 : 6;
@@ -55,7 +63,11 @@ public abstract class AbstractToastPM implements Toast {
 
         // Render the toast icon if present
         this.getIcon().ifPresent(iconLoc -> {
-            pGuiGraphics.blit(iconLoc, 8, 8, 0, 0, 255, 255);
+            pGuiGraphics.pose().pushPose();
+            pGuiGraphics.pose().translate(8, 8, 0);
+            pGuiGraphics.pose().scale(this.getIconWidth() / 256F, this.getIconHeight() / 256F, 1F);
+            pGuiGraphics.blit(iconLoc, 0, 0, 0, 0, 255, 255);
+            pGuiGraphics.pose().popPose();
         });
 
         return (double)pTimeSinceLastVisible >= DISPLAY_TIME * pToastComponent.getNotificationDisplayTimeMultiplier() ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
