@@ -3,23 +3,19 @@ package com.verdantartifice.primalmagick.client.toast;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.toasts.Toast;
-import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-import java.awt.Color;
+import java.util.Optional;
 
 /**
  * GUI element for the toast that shows when you complete a research entry.
  * 
  * @author Daedalus4096
  */
-public class ResearchToast implements Toast {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/hud.png");
-    
+public class ResearchToast extends AbstractToastPM {
+    protected static final ResourceLocation BACKGROUND_SPRITE = ResourceUtils.loc("toast/research");
+
     protected final ResearchEntry entry;
     protected final boolean isComplete;
     
@@ -27,35 +23,44 @@ public class ResearchToast implements Toast {
         this.entry = entry;
         this.isComplete = isComplete;
     }
-    
+
     @Override
-    public Visibility render(GuiGraphics guiGraphics, ToastComponent toastGui, long delta) {
-        Minecraft mc = toastGui.getMinecraft();
-        
-        // Render the toast background
-        guiGraphics.blit(TEXTURE, 0, 0, 0, 224, 160, 32);
-        
-        // Render the toast title text
-        Component titleText = this.isComplete ? Component.translatable("label.primalmagick.toast.completed") : Component.translatable("label.primalmagick.toast.revealed");
-        guiGraphics.drawString(mc.font, titleText, 6, 7, this.isComplete ? Sources.VOID.getColor() : Sources.INFERNAL.getColor(), false);
-        
-        // Render the description of the completed research
-        Component descText = Component.translatable(this.entry.getNameTranslationKey());
-        float width = mc.font.width(descText.getString());
-        if (width > 148.0F) {
-            // Scale down the research description to make it fit, if needed
-            float scale = (148.0F / width);
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(6.0F, 18.0F, 0.0F);
-            guiGraphics.pose().scale(scale, scale, scale);
-            guiGraphics.drawString(mc.font, descText, 0, 0, Color.BLACK.getRGB(), false);
-            guiGraphics.pose().popPose();
-        } else {
-            guiGraphics.drawString(mc.font, descText, 6, 18, Color.BLACK.getRGB(), false);
-        }
-        
-        // If the toast has been open long enough, hide it
-        return (delta >= 5000L) ? Visibility.HIDE : Visibility.SHOW;
+    protected ResourceLocation getBackgroundSprite() {
+        return BACKGROUND_SPRITE;
     }
 
+    @Override
+    protected Component getTitleText() {
+        return this.isComplete ? Component.translatable("label.primalmagick.toast.completed") : Component.translatable("label.primalmagick.toast.revealed");
+    }
+
+    @Override
+    protected Optional<Component> getSubtitleText() {
+        return Optional.empty();
+    }
+
+    @Override
+    protected Component getBodyText() {
+        return Component.translatable(this.entry.getNameTranslationKey());
+    }
+
+    @Override
+    protected int getTitleColor() {
+        return this.isComplete ? Sources.VOID.getColor() : Sources.INFERNAL.getColor();
+    }
+
+    @Override
+    protected int getSubtitleColor() {
+        return 0;
+    }
+
+    @Override
+    protected int getBodyColor() {
+        return 0;
+    }
+
+    @Override
+    protected Optional<ResourceLocation> getIcon() {
+        return Optional.empty();
+    }
 }

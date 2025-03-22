@@ -6,6 +6,8 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.misc.UnlockDisciplinePacket;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.EntityScanKey;
@@ -493,6 +495,13 @@ public class ResearchManager {
                     }
                 }
             });
+
+            // If completing this entry unlocked a new discipline, show a toast to the player
+            if (entry != null && player instanceof ServerPlayer serverPlayer) {
+                ResearchDisciplines.streamIndexDisciplines(registryAccess)
+                        .filter(d -> d.unlockRequirementOpt().map(req -> req.satisfiedBy(entry.key())).orElse(false))
+                        .forEach(d -> PacketHandler.sendToPlayer(new UnlockDisciplinePacket(d), serverPlayer));
+            }
             
             // If completing this entry finished its discipline, reveal any appropriate finale research
             if (entry != null) {

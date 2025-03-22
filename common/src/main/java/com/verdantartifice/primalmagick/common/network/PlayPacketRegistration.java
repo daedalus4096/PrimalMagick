@@ -36,6 +36,7 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPa
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.UnlockDisciplinePacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
@@ -83,6 +84,7 @@ public class PlayPacketRegistration {
                 .registerPacket(OpenEnchantedBookScreenPacket.type(), OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket.STREAM_CODEC, OpenEnchantedBookScreenPacket::onMessage)
                 .registerPacket(SyncLinguisticsPacket.type(), SyncLinguisticsPacket.class, SyncLinguisticsPacket.STREAM_CODEC, SyncLinguisticsPacket::onMessage)
                 .registerPacket(ContainerSetVarintDataPacket.type(), ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.STREAM_CODEC, ContainerSetVarintDataPacket::onMessage)
+                .registerPacket(UnlockDisciplinePacket.type(), UnlockDisciplinePacket.class, UnlockDisciplinePacket.STREAM_CODEC, UnlockDisciplinePacket::onMessage)
                 // Server-bound play channel packets
                 .registerPacket(SyncProgressPacket.type(), SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                 .registerPacket(SyncResearchFlagsPacket.type(), SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)

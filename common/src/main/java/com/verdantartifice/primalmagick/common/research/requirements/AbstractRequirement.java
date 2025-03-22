@@ -45,6 +45,16 @@ public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     public boolean contains(AbstractResearchKey<?> researchKey) {
         return false;
     }
+
+    /**
+     * Returns true if the given research key will satisfy the entirety of this requirement.
+     *
+     * @param researchKey the research key to be tested
+     * @return whether the given research key satisfies this requirement
+     */
+    public boolean satisfiedBy(AbstractResearchKey<?> researchKey) {
+        return false;
+    }
     
     /**
      * Returns a stream of the research keys used in this requirement, if any.

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.toast;
 
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
 
@@ -11,5 +12,9 @@ import net.minecraft.client.Minecraft;
 public class ToastManager {
     public static void showResearchToast(ResearchEntry entry, boolean isComplete) {
         Minecraft.getInstance().getToasts().addToast(new ResearchToast(entry, isComplete));
+    }
+
+    public static void showDisciplineUnlockToast(ResearchDiscipline discipline) {
+        Minecraft.getInstance().getToasts().addToast(new DisciplineUnlockToast(discipline));
     }
 }

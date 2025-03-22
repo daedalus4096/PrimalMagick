@@ -1059,6 +1059,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("essence_cask").sub("right_click").output("Right-click to withdraw one item").end().build();
         this.label("toast").sub("completed").output("Research Complete!").end().build();
         this.label("toast").sub("revealed").output("Research Revealed!").end().build();
+        this.label("toast").sub("discipline").sub("title").output("Discipline Unlocked!").end().build();
+        this.label("toast").sub("discipline").sub("body").output("Check your Grimoire's main index!").end().build();
         this.label("attunement_gain").sub("0").output("None").end().build();
         this.label("attunement_gain").sub("1").output("Trivial").end().build();
         this.label("attunement_gain").sub("2").output("Minor").end().build();

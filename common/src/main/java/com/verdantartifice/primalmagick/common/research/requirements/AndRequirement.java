@@ -73,6 +73,13 @@ public class AndRequirement extends AbstractRequirement<AndRequirement> {
     }
 
     @Override
+    public boolean satisfiedBy(AbstractResearchKey<?> researchKey) {
+        // One research key can only satisfy an AND requirement if all the keys contained within are the same; this isn't
+        // likely, but it is possible.
+        return this.subs.stream().allMatch(req -> req.satisfiedBy(researchKey));
+    }
+
+    @Override
     public Stream<AbstractResearchKey<?>> streamKeys() {
         return this.subs.stream().flatMap(req -> req.streamKeys());
     }

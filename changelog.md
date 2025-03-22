@@ -1,5 +1,6 @@
 v6.0.4
 ------
+* Added a toast that appears when the player unlocks a new research discipline
 * Fixed a bug that could crash a server when firing projectile spells through Nether portals in certain circumstances
 * Fixed a bug allowing some attribute modifiers to ignore suppression by Attunement Shackles
 
