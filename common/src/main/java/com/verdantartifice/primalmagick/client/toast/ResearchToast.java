@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.toast;
 
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -13,12 +14,19 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ResearchToast extends AbstractToastPM {
+    protected static final ResourceLocation BACKGROUND_SPRITE = ResourceUtils.loc("toast/research");
+
     protected final ResearchEntry entry;
     protected final boolean isComplete;
     
     public ResearchToast(ResearchEntry entry, boolean isComplete) {
         this.entry = entry;
         this.isComplete = isComplete;
+    }
+
+    @Override
+    protected ResourceLocation getBackgroundSprite() {
+        return BACKGROUND_SPRITE;
     }
 
     @Override
@@ -34,6 +42,11 @@ public class ResearchToast extends AbstractToastPM {
     @Override
     protected int getTitleColor() {
         return this.isComplete ? Sources.VOID.getColor() : Sources.INFERNAL.getColor();
+    }
+
+    @Override
+    protected int getBodyColor() {
+        return 0;
     }
 
     @Override
