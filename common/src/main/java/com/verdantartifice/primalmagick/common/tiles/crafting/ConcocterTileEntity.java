@@ -51,6 +51,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -390,7 +391,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     }
 
     @Override
-    public Optional<Integer> getInventoryIndexForFace(Direction face) {
+    public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return switch (face) {
             case UP -> Optional.of(INPUT_INV_INDEX);
             case DOWN -> Optional.of(OUTPUT_INV_INDEX);

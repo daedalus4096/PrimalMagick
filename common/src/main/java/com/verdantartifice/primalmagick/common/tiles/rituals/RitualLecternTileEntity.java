@@ -14,6 +14,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -98,7 +99,7 @@ public abstract class RitualLecternTileEntity extends AbstractTileSidedInventory
     }
 
     @Override
-    public Optional<Integer> getInventoryIndexForFace(Direction face) {
+    public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         // Don't connect pipes on any side of the lectern
         return Optional.empty();
     }

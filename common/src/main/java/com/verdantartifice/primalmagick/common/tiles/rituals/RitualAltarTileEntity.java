@@ -72,6 +72,7 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -1056,7 +1057,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public Optional<Integer> getInventoryIndexForFace(Direction face) {
+    public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return Optional.of(OUTPUT_INV_INDEX);
     }
 

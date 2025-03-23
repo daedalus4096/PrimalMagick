@@ -25,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.awt.Color;
@@ -240,7 +241,7 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
     }
 
     @Override
-    public Optional<Integer> getInventoryIndexForFace(Direction face) {
+    public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return switch (face) {
             case UP, DOWN -> Optional.empty();
             default -> Optional.of(INPUT_INV_INDEX);

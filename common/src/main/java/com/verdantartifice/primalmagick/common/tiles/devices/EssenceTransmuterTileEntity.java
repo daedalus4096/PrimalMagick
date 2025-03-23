@@ -45,6 +45,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -388,7 +389,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     }
 
     @Override
-    public Optional<Integer> getInventoryIndexForFace(Direction face) {
+    public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return switch (face) {
             case UP -> Optional.of(INPUT_INV_INDEX);
             case DOWN -> Optional.of(OUTPUT_INV_INDEX);

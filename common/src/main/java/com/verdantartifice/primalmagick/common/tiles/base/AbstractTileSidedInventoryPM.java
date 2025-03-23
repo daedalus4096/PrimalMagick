@@ -91,7 +91,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         return Collections.emptySet();
     }
     
-    public int getInventorySize(Direction face) {
+    public int getInventorySize(@Nullable Direction face) {
         MutableInt retVal = new MutableInt(0);
         if (face != null) {
             this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
@@ -116,11 +116,12 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
      * @param face the face of the block whose item handler to fetch
      * @return the item handler for the given face, or null if one doesn't exist
      */
-    public IItemHandlerPM getRawItemHandler(Direction face) {
-        return this.getInventoryIndexForFace(face).map(this.itemHandlers::get).orElse(null);
+    @Nullable
+    public IItemHandlerPM getRawItemHandler(@Nullable Direction face) {
+        return face == null ? null : this.getInventoryIndexForFace(face).map(this.itemHandlers::get).orElse(null);
     }
 
-    public void addListener(Direction face, IItemHandlerChangeListener listener) {
+    public void addListener(@Nullable Direction face, @NotNull IItemHandlerChangeListener listener) {
         if (face != null) {
             this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
                 this.listeners.get(invIndex).add(listener);

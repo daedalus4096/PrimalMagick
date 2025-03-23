@@ -35,6 +35,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.mutable.MutableBoolean;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
 import javax.annotation.Nonnull;
@@ -138,7 +139,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    public Optional<Integer> getInventoryIndexForFace(Direction face) {
+    public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return switch (face) {
             case UP -> Optional.of(INPUT_INV_INDEX);
             case DOWN -> Optional.of(OUTPUT_INV_INDEX);
