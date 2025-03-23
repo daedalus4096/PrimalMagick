@@ -93,9 +93,10 @@ public class ItemAffinity extends AbstractAffinity {
             } else if (json.has("set")) {
                 entry.setValues = JsonUtils.toSourceList(json.get("set").getAsJsonObject());
             } else if (json.has("base")) {
-                entry.baseEntryId = ResourceLocation.parse(json.getAsJsonPrimitive("base").getAsString());
+                String base = json.getAsJsonPrimitive("base").getAsString();
+                entry.baseEntryId = ResourceLocation.parse(base);
                 if (!Services.ITEMS_REGISTRY.containsKey(entry.baseEntryId)) {
-                    throw new JsonSyntaxException("Unknown base item " + target + " in affinity JSON for " + affinityId.toString());
+                    throw new JsonSyntaxException("Unknown base item " + base + " in affinity JSON for " + affinityId.toString());
                 }
                 if (json.has("add")) {
                     entry.addValues = JsonUtils.toSourceList(json.get("add").getAsJsonObject());
