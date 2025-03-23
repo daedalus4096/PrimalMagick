@@ -760,29 +760,22 @@ public class PrimalMagickCommand {
 
         Vector<Item> items = new Vector<>();
         Services.ITEMS_REGISTRY.getAll().forEach( (item) -> {
-                ItemStack stack = item.getDefaultInstance();
-
-                ResourceLocation resourceLocation = Services.ITEMS_REGISTRY.getKey(item);
-                if (resourceLocation == null) {
+                ResourceLocation itemId = Services.ITEMS_REGISTRY.getKey(item);
+                if (itemId == null) {
                     // If the Item can't be resolved in registry, it's got problems I can't care about.
                     return;
                 }
-                String namespace = resourceLocation.getNamespace();
+                String namespace = itemId.getNamespace();
                 if (excludeNamespaces != null && excludeNamespaces.contains(namespace)){
                     return;
                 }
 
-                CompletableFuture<SourceList> f = am.getAffinityValuesAsync(stack, level);
-
-                try {
-                    SourceList sources = f.get();
-                    if (sources.isEmpty()){
-                        if (getRecipeCountForItem(recipeManager, registryAccess, item) == 0) {
-                            items.add(item);
+                IAffinity affinityData = am.getOrGenerateItemAffinityAsync(itemId, recipeManager, registryAccess, new ArrayList<>()).join();
+                if (getRecipeCountForItem(recipeManager, registryAccess, item) ==0) {
+                        SourceList sources = affinityData.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()).join();
+                        if (sources.isEmpty()){
+                                items.add(item);
                         }
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
                 }
             }
         );
