@@ -95,6 +95,9 @@ public class ItemAffinity extends AbstractAffinity {
             } else if (json.has("base")) {
                 String base = json.getAsJsonPrimitive("base").getAsString();
                 entry.baseEntryId = ResourceLocation.parse(base);
+                if (entry.baseEntryId.equals(targetId)) {
+                    throw new JsonSyntaxException("Base item cannot be the same as the target at " + affinityId.toString());
+                }
                 if (!Services.ITEMS_REGISTRY.containsKey(entry.baseEntryId)) {
                     throw new JsonSyntaxException("Unknown base item " + base + " in affinity JSON for " + affinityId.toString());
                 }
