@@ -35,6 +35,11 @@
       "textTranslationKey": "research.primalmagick.unlock_ritual.text.stage.1"
     },
     {
+      "ctaLink": {
+        "target": {
+          "topic_type": "primalmagick:main_index"
+        }
+      },
       "parentKey": {
         "rootKey": "primalmagick:unlock_ritual"
       },
