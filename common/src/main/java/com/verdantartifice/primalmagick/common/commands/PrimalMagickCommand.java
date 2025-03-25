@@ -42,6 +42,7 @@ import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.DataPackUtils;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.Util;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -62,6 +63,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -692,36 +694,45 @@ public class PrimalMagickCommand {
         Logger LOGGER = LogManager.getLogger();
         ServerPlayer target = source.getPlayer();
         ServerLevel level = source.getLevel();
-        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getLevel().getRecipeManager();
+        RecipeManager recipeManager = source.getLevel().getRecipeManager();
         RegistryAccess registryAccess = source.registryAccess();
 
-        List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
-        List<EntityType<?>> sourcelessEntities = listSourcelessEntityTypes(registryAccess, excludeNamespaces);
+        target.sendSystemMessage(Component.literal("Starting datapack template generation; this may take a while."));
 
-        byte[] itemsToDataPackTemplate;
-        try {
-            itemsToDataPackTemplate = DataPackUtils.ItemsToDataPackTemplate(sourcelessItems, sourcelessEntities);
-        } catch (IOException e){
-            LOGGER.atError().withThrowable(e).log("unable to generate datapack");
-            return 1;
-        }
+        CompletableFuture.runAsync(() -> {
+            List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
+            List<EntityType<?>> sourcelessEntities = listSourcelessEntityTypes(registryAccess, excludeNamespaces);
 
-        try {
-            File tempFile = File.createTempFile("primalMagickDataPack", ".zip");
-            String filePath = tempFile.getAbsolutePath();
+            byte[] itemsToDataPackTemplate;
+            try {
+                itemsToDataPackTemplate = DataPackUtils.ItemsToDataPackTemplate(sourcelessItems, sourcelessEntities);
+            } catch (IOException e) {
+                LOGGER.atError().withThrowable(e).log("Unable to generate datapack");
+                target.sendSystemMessage(Component.literal("Failed to write datapack template"));
+                return;
+            }
 
-            FileOutputStream fos = new FileOutputStream(tempFile);
+            try {
+                File tempFile = File.createTempFile("primalMagickDataPack", ".zip");
+                String filePath = tempFile.getAbsolutePath();
 
-            fos.write(itemsToDataPackTemplate);
-            fos.close();
+                FileOutputStream fos = new FileOutputStream(tempFile);
 
-            // Being very careful not to make this a tool for users to use to enumerate server attributes.
-            target.sendSystemMessage(Component.literal("Wrote datapack template for sourceless items and entities to disk; check system logs for location."));
-            LOGGER.atInfo().log("Wrote Datapack to "+ filePath );
-        } catch (IOException e) {
-            LOGGER.atError().withThrowable(e).log("unable to write datapack");
-            return 1;
-        }
+                fos.write(itemsToDataPackTemplate);
+                fos.close();
+
+                // Being very careful not to make this a tool for users to use to enumerate server attributes.
+                target.sendSystemMessage(Component.literal("Wrote datapack template for sourceless items and entities to disk; check system logs for location."));
+                LOGGER.atInfo().log("Wrote datapack to {}", filePath);
+            } catch (IOException e) {
+                LOGGER.atError().withThrowable(e).log("Unable to write datapack");
+                target.sendSystemMessage(Component.literal("Failed to write datapack template"));
+            }
+        }, Util.backgroundExecutor()).exceptionally(e -> {
+            LOGGER.error("Unable to write datapack", e);
+            target.sendSystemMessage(Component.literal("Failed to write datapack template"));
+            return null;
+        });
 
         return 0;
     }
