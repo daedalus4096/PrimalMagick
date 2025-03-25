@@ -19,6 +19,8 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.VanillaCustomStatRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.VanillaItemUsedStatRequirement;
+import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.TopicLink;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
@@ -36,6 +38,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import org.apache.commons.lang3.mutable.MutableBoolean;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -54,7 +57,7 @@ import java.util.stream.Stream;
  * @author Daedalus4096
  */
 public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceLocation> recipes,
-        List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, SourceList attunements) {
+                            List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, SourceList attunements, Optional<TopicLink> ctaLinkOpt) {
     public static Codec<ResearchStage> codec() { 
         return RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.codec().fieldOf("parentKey").forGetter(ResearchStage::parentKey),
@@ -63,26 +66,21 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
             AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
             ResearchEntryKey.CODEC.codec().listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
-            SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchStage::attunements)
+            SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchStage::attunements),
+            TopicLink.codec().optionalFieldOf("ctaLink").forGetter(ResearchStage::ctaLinkOpt)
         ).apply(instance, ResearchStage::new));
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, ResearchStage> streamCodec() {
         return StreamCodecUtils.composite(
-                ResearchEntryKey.STREAM_CODEC,
-                ResearchStage::parentKey,
-                ByteBufCodecs.STRING_UTF8,
-                ResearchStage::textTranslationKey,
-                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()),
-                ResearchStage::completionRequirementOpt,
-                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()),
-                ResearchStage::recipes,
-                AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()),
-                ResearchStage::siblings,
-                ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()),
-                ResearchStage::revelations,
-                SourceList.STREAM_CODEC,
-                ResearchStage::attunements,
+                ResearchEntryKey.STREAM_CODEC, ResearchStage::parentKey,
+                ByteBufCodecs.STRING_UTF8, ResearchStage::textTranslationKey,
+                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), ResearchStage::completionRequirementOpt,
+                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::recipes,
+                AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchStage::siblings,
+                ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::revelations,
+                SourceList.STREAM_CODEC, ResearchStage::attunements,
+                ByteBufCodecs.optional(TopicLink.streamCodec()), ResearchStage::ctaLinkOpt,
                 ResearchStage::new);
     }
     
@@ -133,6 +131,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
         protected final List<ResearchEntryKey> revelations = new ArrayList<>();
         protected final SourceList.Builder attunements = SourceList.builder();
+        protected Optional<TopicLink> ctaLinkOpt = Optional.empty();
         
         public Builder(String modId, ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int stageIndex) {
             this.modId = Preconditions.checkNotNull(modId);
@@ -255,6 +254,16 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             return this;
         }
 
+        public Builder ctaLink(@NotNull AbstractResearchTopic<?> target) {
+            this.ctaLinkOpt = Optional.of(TopicLink.builder(target).build());
+            return this;
+        }
+
+        public Builder ctaLink(@NotNull AbstractResearchTopic<?> target, String textTranslationKey) {
+            this.ctaLinkOpt = Optional.of(TopicLink.builder(target).textTranslationKey(textTranslationKey).build());
+            return this;
+        }
+
         private String getTextTranslationKey() {
             return String.join(".", "research", this.modId.toLowerCase(), this.parentKey.getRootKey().location().getPath().toLowerCase(), "text", "stage", Integer.toString(this.stageIndex));
         }
@@ -263,7 +272,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             if (this.requirements.isEmpty()) {
                 return Optional.empty();
             } else if (this.requirements.size() == 1) {
-                return Optional.of(this.requirements.get(0));
+                return Optional.of(this.requirements.getFirst());
             } else {
                 return Optional.of(new AndRequirement(this.requirements));
             }
@@ -279,7 +288,8 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         
         ResearchStage build() {
             this.validate();
-            return new ResearchStage(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes, this.siblings, this.revelations, this.attunements.build());
+            return new ResearchStage(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes,
+                    this.siblings, this.revelations, this.attunements.build(), this.ctaLinkOpt);
         }
         
         public ResearchEntry.Builder end() {
