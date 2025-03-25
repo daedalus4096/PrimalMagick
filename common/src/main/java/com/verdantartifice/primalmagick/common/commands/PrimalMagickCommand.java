@@ -689,39 +689,47 @@ public class PrimalMagickCommand {
     }
 
     private static int writeSourcelessItemDatapack(CommandSourceStack source, Collection<String> excludeNamespaces) {
-        Logger LOGGER = LogManager.getLogger();
-        ServerPlayer target = source.getPlayer();
-        ServerLevel level = source.getLevel();
-        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getLevel().getRecipeManager();
-        RegistryAccess registryAccess = source.registryAccess();
+        new Thread() {
+            public void run() {
+                Logger LOGGER = LogManager.getLogger();
+                ServerPlayer target = source.getPlayer();
+                ServerLevel level = source.getLevel();
+                net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getLevel().getRecipeManager();
+                RegistryAccess registryAccess = source.registryAccess();
 
-        List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
-        List<EntityType<?>> sourcelessEntities = listSourcelessEntityTypes(registryAccess, excludeNamespaces);
+                target.sendSystemMessage(Component.literal("IT HAS BEGUN. ... This may take a while. Go brew yourself a wakefulness potion or something."));
+                target.sendSystemMessage(Component.literal("Also, if the universe starts to stutter, or the clock seems to tick slower, remember: you did this to yourself"));
 
-        byte[] itemsToDataPackTemplate;
-        try {
-            itemsToDataPackTemplate = DataPackUtils.ItemsToDataPackTemplate(sourcelessItems, sourcelessEntities);
-        } catch (IOException e){
-            LOGGER.atError().withThrowable(e).log("unable to generate datapack");
-            return 1;
-        }
+                List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
+                List<EntityType<?>> sourcelessEntities = listSourcelessEntityTypes(registryAccess, excludeNamespaces);
+                byte[] itemsToDataPackTemplate;
+                try {
+                    itemsToDataPackTemplate = DataPackUtils.ItemsToDataPackTemplate(sourcelessItems, sourcelessEntities);
+                } catch (IOException e){
+                    target.sendSystemMessage(Component.literal("Couldn't generate datapack, check logs for reasons"));
+                    LOGGER.atError().withThrowable(e).log("unable to generate datapack");
+                    return;
+                }
 
-        try {
-            File tempFile = File.createTempFile("primalMagickDataPack", ".zip");
-            String filePath = tempFile.getAbsolutePath();
+                try {
+                    File tempFile = File.createTempFile("primalMagickDataPack", ".zip");
+                    String filePath = tempFile.getAbsolutePath();
 
-            FileOutputStream fos = new FileOutputStream(tempFile);
+                    FileOutputStream fos = new FileOutputStream(tempFile);
 
-            fos.write(itemsToDataPackTemplate);
-            fos.close();
+                    fos.write(itemsToDataPackTemplate);
+                    fos.close();
 
-            // Being very careful not to make this a tool for users to use to enumerate server attributes.
-            target.sendSystemMessage(Component.literal("Wrote datapack template for sourceless items and entities to disk; check system logs for location."));
-            LOGGER.atInfo().log("Wrote Datapack to "+ filePath );
-        } catch (IOException e) {
-            LOGGER.atError().withThrowable(e).log("unable to write datapack");
-            return 1;
-        }
+                    // Being very careful not to make this a tool for users to use to enumerate server attributes.
+                    target.sendSystemMessage(Component.literal("Wrote datapack template for sourceless items and entities to disk; check system logs for location."));
+                    LOGGER.atInfo().log("Wrote Datapack to "+ filePath );
+                } catch (IOException e) {
+                    target.sendSystemMessage(Component.literal("Couldn't write datapack, check logs for reasons"));
+                    LOGGER.atError().withThrowable(e).log("unable to write datapack");
+                    return;
+                }
+            }
+        }.run();
 
         return 0;
     }
