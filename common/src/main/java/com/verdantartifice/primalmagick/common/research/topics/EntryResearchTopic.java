@@ -3,10 +3,12 @@ package com.verdantartifice.primalmagick.common.research.topics;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceKey;
 
 import java.util.Objects;
 
@@ -31,6 +33,11 @@ public class EntryResearchTopic extends AbstractResearchTopic<EntryResearchTopic
     public EntryResearchTopic(ResearchEntryKey entryKey, int page) {
         super(page);
         this.entry = entryKey;
+    }
+
+    public EntryResearchTopic(ResourceKey<ResearchEntry> entryRawKey, int page) {
+        super(page);
+        this.entry = new ResearchEntryKey(entryRawKey);
     }
     
     public ResearchEntryKey getEntry() {

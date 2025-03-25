@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -502,7 +503,8 @@ public class ResearchEntries {
                         .recipe(ItemsPM.MARBLE_SMOKED_STAIRS.get()).recipe(ItemsPM.MARBLE_SMOKED_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BOOKSHELF.get()).end()
                 .build());
         register(context, SUPREME_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_MANAWEAVING).parent(WAND_CAP_HEXIUM).parent(WAND_GEM_WIZARD)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE)
+                        .ctaLink(new EntryResearchTopic(SECRETS_OF_THE_UNIVERSE, 0), "label.primalmagick.topic_link.text.sotu").end()
                 .stage().recipe(ItemsPM.MARBLE_HALLOWED.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
                         .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
                         .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
@@ -758,7 +760,8 @@ public class ResearchEntries {
                 .stage().end()
                 .build());
         register(context, SUPREME_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_ALCHEMY).parent(CALCINATOR_FORBIDDEN).parent(HEXIUM)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE)
+                        .ctaLink(new EntryResearchTopic(SECRETS_OF_THE_UNIVERSE, 0), "label.primalmagick.topic_link.text.sotu").end()
                 .stage().end()
                 .build());
         register(context, COMPLETE_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_ALCHEMY).finale(discipline)
@@ -1001,7 +1004,8 @@ public class ResearchEntries {
                 .stage().end()
                 .build());
         register(context, SUPREME_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(SPELL_VEHICLE_BOLT).parent(SPELL_MOD_QUICKEN)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 250).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 250).reveals(SECRETS_OF_THE_UNIVERSE)
+                        .ctaLink(new EntryResearchTopic(SECRETS_OF_THE_UNIVERSE, 0), "label.primalmagick.topic_link.text.sotu").end()
                 .stage().end()
                 .build());
         register(context, COMPLETE_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_SORCERY).finale(discipline)
@@ -1147,7 +1151,8 @@ public class ResearchEntries {
                 .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).end()
                 .build());
         register(context, SUPREME_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_RUNEWORKING).parent(RUNE_POWER)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE)
+                        .ctaLink(new EntryResearchTopic(SECRETS_OF_THE_UNIVERSE, 0), "label.primalmagick.topic_link.text.sotu").end()
                 .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).end()
                 .build());
         register(context, COMPLETE_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_RUNEWORKING).finale(discipline)
@@ -1282,7 +1287,8 @@ public class ResearchEntries {
                 .stage().end()
                 .build());
         register(context, SUPREME_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_RITUAL).parent(BLOODLETTER).parent(SOUL_ANVIL)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).reveals(SECRETS_OF_THE_UNIVERSE)
+                        .ctaLink(new EntryResearchTopic(SECRETS_OF_THE_UNIVERSE, 0), "label.primalmagick.topic_link.text.sotu").end()
                 .stage().end()
                 .build());
         register(context, COMPLETE_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_RITUAL).finale(discipline)
@@ -1541,7 +1547,8 @@ public class ResearchEntries {
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).end()
                 .build());
         register(context, SUPREME_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ICON_MAGITECH).parent(HEXIUM_GOLEM)
-                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).requiredResearch(SCAN_HALLOWSTEEL).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredExpertise(discipline, ResearchTier.SUPREME).requiredResearch(SCAN_HALLOWSTEEL).reveals(SECRETS_OF_THE_UNIVERSE)
+                        .ctaLink(new EntryResearchTopic(SECRETS_OF_THE_UNIVERSE, 0), "label.primalmagick.topic_link.text.sotu").end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).end()
                 .build());
         register(context, COMPLETE_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ICON_MAGITECH).finale(discipline)
