@@ -28,6 +28,7 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.TipsPage;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.TopicLinkButton;
 import com.verdantartifice.primalmagick.client.tips.TipManager;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -55,6 +56,7 @@ import com.verdantartifice.primalmagick.common.research.topics.LanguageResearchT
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.SourceResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.TopicLink;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -599,20 +601,34 @@ public class GrimoireScreen extends Screen {
         }
         
         // Deal with any remaining images
-        tempPage = new StagePage(stage);
-        heightRemaining = 165;
-        while (!tempImages.isEmpty()) {
-            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
-                heightRemaining = 165;
+        if (!tempImages.isEmpty()) {
+            tempPage = new StagePage(stage);
+            heightRemaining = 165;
+            while (!tempImages.isEmpty()) {
+                if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+                    heightRemaining = 165;
+                    this.pages.add(tempPage);
+                    tempPage = new StagePage(stage);
+                } else {
+                    heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                    tempPage.addElement(tempImages.remove(0));
+                }
+            }
+            if (!tempPage.getElements().isEmpty()) {
                 this.pages.add(tempPage);
-                tempPage = new StagePage(stage);
-            } else {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
-                tempPage.addElement(tempImages.remove(0));
             }
         }
-        if (!tempPage.getElements().isEmpty()) {
-            this.pages.add(tempPage);
+
+        // If the stage has a CTA link, add it to the bottom of the final stage page, adding a new one if there's no room
+        if (stage.ctaLinkOpt().isPresent()) {
+            TopicLink link = stage.ctaLinkOpt().get();
+            if (heightRemaining < TopicLinkButton.HEIGHT + 2) {
+                tempPage = new StagePage(stage);
+                tempPage.setTopicLink(link);
+                this.pages.add(tempPage);
+            } else {
+                tempPage.setTopicLink(link);
+            }
         }
         
         // Add attunement gain page if applicable
