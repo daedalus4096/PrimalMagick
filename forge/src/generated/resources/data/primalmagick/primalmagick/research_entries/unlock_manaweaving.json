@@ -32,6 +32,11 @@
       "textTranslationKey": "research.primalmagick.unlock_manaweaving.text.stage.1"
     },
     {
+      "ctaLink": {
+        "target": {
+          "topic_type": "primalmagick:main_index"
+        }
+      },
       "parentKey": {
         "rootKey": "primalmagick:unlock_manaweaving"
       },

@@ -45,6 +45,16 @@
           }
         ]
       },
+      "ctaLink": {
+        "target": {
+          "entry": {
+            "rootKey": "primalmagick:secrets_of_the_universe"
+          },
+          "page": 0,
+          "topic_type": "primalmagick:research_entry"
+        },
+        "textTranslationKey": "label.primalmagick.topic_link.text.sotu"
+      },
       "parentKey": {
         "rootKey": "primalmagick:supreme_sorcery"
       },
