@@ -65,7 +65,7 @@ public abstract class AbstractTopicButton extends Button {
         }
         if (this.icon != null) {
             if (this.isHighlighted()) {
-                float scaleMod = Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F;
+                float scaleMod = Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 1.1F;
                 this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1), scaleMod);
             } else {
                 this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
