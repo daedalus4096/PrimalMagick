@@ -130,7 +130,11 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     public boolean isUpdated(@Nonnull Player player) {
         return this.getKnowledge(player).hasResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
     }
-    
+
+    public boolean isHighlighted(@Nonnull Player player) {
+        return this.getKnowledge(player).hasResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
+    }
+
     public boolean isComplete(@Nonnull Player player) {
         return this.getKnowledge(player).getResearchStatus(player.level().registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.COMPLETE;
     }

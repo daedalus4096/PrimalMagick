@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.util.CodecUtils;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -51,6 +52,10 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
     
     public Stream<ResearchEntry> getEntryStream(RegistryAccess registryAccess) {
         return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isForDiscipline(this.key));
+    }
+
+    public boolean isHighlighted(Player player) {
+        return this.getEntryStream(player.level().registryAccess()).anyMatch(entry -> entry.isHighlighted(player));
     }
     
     /**

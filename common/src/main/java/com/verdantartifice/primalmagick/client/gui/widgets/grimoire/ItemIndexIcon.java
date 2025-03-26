@@ -30,12 +30,13 @@ public class ItemIndexIcon extends AbstractIndexIcon {
     }
     
     @Override
-    public void render(GuiGraphics guiGraphics, double x, double y) {
+    public void render(GuiGraphics guiGraphics, double x, double y, float scale) {
         if (this.stack == null || this.stack.isEmpty()) {
             return;
         }
-        
-        Optional<Vec3> scaleOpt = this.large ? Optional.empty() : Optional.of(new Vec3(0.67D, 0.67D, 1D));
+
+        Vec3 baseScale = this.large ? new Vec3(1D, 1D, 1D) : new Vec3(0.67D, 0.67D, 1D);
+        Optional<Vec3> scaleOpt = Optional.of(baseScale.multiply(scale, scale, 1D));
         GuiUtils.renderItemStack(guiGraphics, this.stack, (int)(x + (this.large ? 0 : -3)), (int)(y + (this.large ? 0 : -2)), "", true, scaleOpt);
     }
 }

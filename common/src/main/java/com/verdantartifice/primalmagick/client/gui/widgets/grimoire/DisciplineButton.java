@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.topics.DisciplineResearchTopic;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
@@ -22,7 +23,13 @@ public class DisciplineButton extends AbstractTopicButton {
     public ResearchDiscipline getDiscipline() {
         return this.discipline;
     }
-    
+
+    @Override
+    protected boolean isHighlighted() {
+        Minecraft mc = Minecraft.getInstance();
+        return this.discipline.isHighlighted(mc.player);
+    }
+
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {

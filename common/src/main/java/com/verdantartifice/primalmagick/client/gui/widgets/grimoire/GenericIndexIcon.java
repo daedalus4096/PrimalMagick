@@ -21,12 +21,12 @@ public class GenericIndexIcon extends AbstractIndexIcon {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, double x, double y) {
+    public void render(GuiGraphics guiGraphics, double x, double y, float scale) {
         if (this.iconLocation != null) {
-            float scale = this.large ? 0.06F : 0.04F;
+            float s = scale * (this.large ? 0.06F : 0.04F);
             guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(x, y, 0d);
-            guiGraphics.pose().scale(scale, scale, scale);
+            guiGraphics.pose().translate(x, y, 0D);
+            guiGraphics.pose().scale(s, s, 1F);
             guiGraphics.blit(this.iconLocation, 0, 0, 0, 0, 255, 255);
             guiGraphics.pose().popPose();
         }

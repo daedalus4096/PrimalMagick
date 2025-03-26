@@ -29,7 +29,13 @@ public class EntryButton extends AbstractTopicButton {
     public ResearchEntry getEntry() {
         return this.entry;
     }
-    
+
+    @Override
+    protected boolean isHighlighted() {
+        Minecraft mc = Minecraft.getInstance();
+        return this.entry.isHighlighted(mc.player);
+    }
+
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
@@ -44,6 +50,7 @@ public class EntryButton extends AbstractTopicButton {
                     Services.CAPABILITIES.knowledge(mc.player).ifPresent(knowledge -> {
                         knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.NEW);
                         knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                        knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
                         PacketHandler.sendToServer(new SyncResearchFlagsPacket(mc.player, geb.getEntry().key()));
                     });
                 } else {

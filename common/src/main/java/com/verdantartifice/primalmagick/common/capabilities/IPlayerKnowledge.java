@@ -210,7 +210,7 @@ public interface IPlayerKnowledge extends INBTSerializablePM<Tag> {
     void setResearchTopicHistory(List<AbstractResearchTopic<?>> history);
     
     /**
-     * Sync the given player's research and knowledge data to the their client.
+     * Sync the given player's research and knowledge data to their client.
      * 
      * @param player the player whose client should receive the data
      */
@@ -225,7 +225,8 @@ public interface IPlayerKnowledge extends INBTSerializablePM<Tag> {
     enum ResearchFlag implements StringRepresentable {
         NEW(0, "new"),
         UPDATED(1, "updated"),
-        POPUP(2, "popup"),;
+        POPUP(2, "popup"),
+        HIGHLIGHT(3, "highlight");
 
         private static final IntFunction<ResearchFlag> BY_ID = ByIdMap.continuous(ResearchFlag::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
         public static final Codec<ResearchFlag> CODEC = StringRepresentable.fromValues(ResearchFlag::values);
