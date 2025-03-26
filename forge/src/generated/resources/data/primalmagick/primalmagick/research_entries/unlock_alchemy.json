@@ -37,6 +37,11 @@
           "topic_type": "primalmagick:main_index"
         }
       },
+      "highlights": [
+        {
+          "rootKey": "primalmagick:basic_alchemy"
+        }
+      ],
       "parentKey": {
         "rootKey": "primalmagick:unlock_alchemy"
       },

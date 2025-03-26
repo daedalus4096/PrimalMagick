@@ -57,7 +57,8 @@ import java.util.stream.Stream;
  * @author Daedalus4096
  */
 public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceLocation> recipes,
-                            List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, SourceList attunements, Optional<TopicLink> ctaLinkOpt) {
+                            List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, List<ResearchEntryKey> highlights, SourceList attunements,
+                            Optional<TopicLink> ctaLinkOpt) {
     public static Codec<ResearchStage> codec() { 
         return RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.codec().fieldOf("parentKey").forGetter(ResearchStage::parentKey),
@@ -66,6 +67,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
             AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
             ResearchEntryKey.CODEC.codec().listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
+            ResearchEntryKey.CODEC.codec().listOf().optionalFieldOf("highlights", List.of()).forGetter(ResearchStage::highlights),
             SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchStage::attunements),
             TopicLink.codec().optionalFieldOf("ctaLink").forGetter(ResearchStage::ctaLinkOpt)
         ).apply(instance, ResearchStage::new));
@@ -79,6 +81,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
                 ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::recipes,
                 AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchStage::siblings,
                 ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::revelations,
+                ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::highlights,
                 SourceList.STREAM_CODEC, ResearchStage::attunements,
                 ByteBufCodecs.optional(TopicLink.streamCodec()), ResearchStage::ctaLinkOpt,
                 ResearchStage::new);
@@ -130,6 +133,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         protected final List<ResourceLocation> recipes = new ArrayList<>();
         protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
         protected final List<ResearchEntryKey> revelations = new ArrayList<>();
+        protected final List<ResearchEntryKey> highlights = new ArrayList<>();
         protected final SourceList.Builder attunements = SourceList.builder();
         protected Optional<TopicLink> ctaLinkOpt = Optional.empty();
         
@@ -243,6 +247,11 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             this.revelations.add(new ResearchEntryKey(revelationKey));
             return this;
         }
+
+        public Builder highlights(ResourceKey<ResearchEntry> highlightKey) {
+            this.highlights.add(new ResearchEntryKey(highlightKey));
+            return this;
+        }
         
         public Builder attunement(SourceList sources) {
             this.attunements.with(sources);
@@ -289,7 +298,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         ResearchStage build() {
             this.validate();
             return new ResearchStage(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes,
-                    this.siblings, this.revelations, this.attunements.build(), this.ctaLinkOpt);
+                    this.siblings, this.revelations, this.highlights, this.attunements.build(), this.ctaLinkOpt);
         }
         
         public ResearchEntry.Builder end() {
