@@ -40,6 +40,11 @@
           "topic_type": "primalmagick:main_index"
         }
       },
+      "highlights": [
+        {
+          "rootKey": "primalmagick:basic_ritual"
+        }
+      ],
       "parentKey": {
         "rootKey": "primalmagick:unlock_ritual"
       },

@@ -424,6 +424,11 @@ public class ResearchManager {
                         knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.NEW);
                     }
                 }
+
+                // Flag any research entries to be highlighted as such
+                for (ResearchEntryKey highlight : currentStage.highlights()) {
+                    knowledge.addResearchFlag(highlight, IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
+                }
             }
             
             if (entryComplete && !entry.addenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {

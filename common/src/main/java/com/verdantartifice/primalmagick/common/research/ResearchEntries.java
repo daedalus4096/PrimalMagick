@@ -391,27 +391,27 @@ public class ResearchEntries {
                 .build());
         register(context, UNLOCK_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(FIRST_STEPS)
                 .stage().requiredObservations(1).end()
-                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).end()
+                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).highlights(BASIC_MANAWEAVING).end()
                 .build());
         register(context, UNLOCK_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(MANA_ARROWS)
                 .stage().requiredObservations(1).end()
-                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).end()
+                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).highlights(BASIC_ALCHEMY).end()
                 .build());
         register(context, UNLOCK_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(WAND_CHARGER)
                 .stage().requiredObservations(1).end()
-                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).end()
+                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).highlights(BASIC_SORCERY).end()
                 .build());
         register(context, UNLOCK_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(CALCINATOR_BASIC)
                 .stage().requiredObservations(1).end()
-                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).end()
+                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).highlights(BASIC_RUNEWORKING).end()
                 .build());
         register(context, UNLOCK_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RITUAL).parent(WAND_INSCRIPTION).parent(RUNE_PROJECT)
                 .stage().requiredObservations(1).end()
-                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).end()
+                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).highlights(BASIC_RITUAL).end()
                 .build());
         register(context, UNLOCK_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(MANAFRUIT).parent(MANA_SALTS)
                 .stage().requiredObservations(1).end()
-                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).end()
+                .stage().ctaLink(MainIndexResearchTopic.INSTANCE).highlights(BASIC_MAGITECH).end()
                 .build());
         register(context, TERRESTRIAL_MAGICK, key -> ResearchEntry.builder(key).discipline(discipline).parent(ATTUNEMENTS)
                 .stage().end()

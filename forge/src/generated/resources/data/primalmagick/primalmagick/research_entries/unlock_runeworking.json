@@ -37,6 +37,11 @@
           "topic_type": "primalmagick:main_index"
         }
       },
+      "highlights": [
+        {
+          "rootKey": "primalmagick:basic_runeworking"
+        }
+      ],
       "parentKey": {
         "rootKey": "primalmagick:unlock_runeworking"
       },

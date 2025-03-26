@@ -17,6 +17,10 @@ public abstract class AbstractIndexIcon {
     public boolean isLarge() {
         return this.large;
     }
+
+    public void render(GuiGraphics guiGraphics, double x, double y) {
+        this.render(guiGraphics, x, y, 1F);
+    }
     
-    public abstract void render(GuiGraphics guiGraphics, double x, double y);
+    public abstract void render(GuiGraphics guiGraphics, double x, double y, float scale);
 }

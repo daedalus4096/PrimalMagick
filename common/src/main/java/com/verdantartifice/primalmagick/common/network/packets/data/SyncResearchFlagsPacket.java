@@ -26,6 +26,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
     protected final boolean isNew;
     protected final boolean isUpdated;
     protected final boolean isPopup;
+    protected final boolean isHighlight;
     
     public SyncResearchFlagsPacket(Player player, ResearchEntryKey key) {
         IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
@@ -33,13 +34,15 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         this.isNew = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
         this.isUpdated = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.UPDATED);
         this.isPopup = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
+        this.isHighlight = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
     }
     
-    protected SyncResearchFlagsPacket(ResearchEntryKey key, boolean isNew, boolean isUpdated, boolean isPopup) {
+    protected SyncResearchFlagsPacket(ResearchEntryKey key, boolean isNew, boolean isUpdated, boolean isPopup, boolean isHighlight) {
         this.key = key;
         this.isNew = isNew;
         this.isUpdated = isUpdated;
         this.isPopup = isPopup;
+        this.isHighlight = isHighlight;
     }
 
     public static CustomPacketPayload.Type<CustomPacketPayload> type() {
@@ -51,10 +54,11 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         buf.writeBoolean(message.isNew);
         buf.writeBoolean(message.isUpdated);
         buf.writeBoolean(message.isPopup);
+        buf.writeBoolean(message.isHighlight);
     }
     
     public static SyncResearchFlagsPacket decode(RegistryFriendlyByteBuf buf) {
-        return new SyncResearchFlagsPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
+        return new SyncResearchFlagsPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
     }
     
     public static void onMessage(PacketContext<SyncResearchFlagsPacket> ctx) {
@@ -77,6 +81,11 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
                     knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.POPUP);
                 } else {
                     knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.POPUP);
+                }
+                if (message.isHighlight) {
+                    knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
+                } else {
+                    knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
                 }
             });
         }

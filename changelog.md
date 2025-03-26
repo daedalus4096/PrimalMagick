@@ -2,6 +2,8 @@ v6.0.4
 ------
 * Added a toast that appears when the player unlocks a new research discipline
 * Added Grimoire buttons to certain entries to help guide players to where they need to go in the book
+* Made the icons of newly-unlocked disciplines pulse until read
+* Moved datapack template generation to a background thread
 * Fixed a bug that could crash a server when firing projectile spells through Nether portals in certain circumstances
 * Fixed a bug allowing some attribute modifiers to ignore suppression by Attunement Shackles
 * Fixed a server crash that would occur when retrieving a block entity's item handler with a null direction on Neoforge

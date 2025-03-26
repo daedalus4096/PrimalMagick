@@ -29,7 +29,13 @@ public class EntryButton extends AbstractTopicButton {
     public ResearchEntry getEntry() {
         return this.entry;
     }
-    
+
+    @Override
+    protected boolean isHighlighted() {
+        Minecraft mc = Minecraft.getInstance();
+        return this.entry.isHighlighted(mc.player);
+    }
+
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
@@ -39,15 +45,18 @@ public class EntryButton extends AbstractTopicButton {
                 // Push the current grimoire topic onto the history stack
                 geb.getScreen().pushCurrentHistoryTopic();
                 geb.getScreen().setTopic(new EntryResearchTopic(geb.getEntry().key(), 0));
-                if (ResearchManager.isResearchStarted(mc.player, geb.getEntry().key())) {
-                    // If the research entry has been flagged as new or updated, clear those flags
-                    Services.CAPABILITIES.knowledge(mc.player).ifPresent(knowledge -> {
-                        knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.NEW);
-                        knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.UPDATED);
-                        PacketHandler.sendToServer(new SyncResearchFlagsPacket(mc.player, geb.getEntry().key()));
-                    });
-                } else {
-                    PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().key(), true, false, true, false));  // Advance research from unknown to stage 1
+
+                // If the research entry has been marked with flags that should be cleared on read, do so now
+                Services.CAPABILITIES.knowledge(mc.player).ifPresent(knowledge -> {
+                    knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.NEW);
+                    knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                    knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
+                    PacketHandler.sendToServer(new SyncResearchFlagsPacket(mc.player, geb.getEntry().key()));
+                });
+
+                if (!ResearchManager.isResearchStarted(mc.player, geb.getEntry().key())) {
+                    // Advance research from unknown to stage 1
+                    PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().key(), true, false, true, false));
                 }
                 
                 // Set the new grimoire topic and open a new screen for it
