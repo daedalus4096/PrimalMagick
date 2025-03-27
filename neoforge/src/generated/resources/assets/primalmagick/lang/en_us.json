@@ -2804,6 +2804,8 @@
   "tooltip.primalmagick.mana_battery.slot.input": "Add magickal essence or a wand",
   "tooltip.primalmagick.mana_discount": "Mana discount: %1$d%%",
   "tooltip.primalmagick.mana_discount_attuned": "%2$s mana discount: %1$d%%",
+  "tooltip.primalmagick.mark_read.all": "Mark all as read",
+  "tooltip.primalmagick.mark_read.discipline": "Mark all %1$s entries as read",
   "tooltip.primalmagick.more_info": "Hold Shift for more information",
   "tooltip.primalmagick.none": "None",
   "tooltip.primalmagick.question_marks": "???",
