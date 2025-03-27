@@ -226,7 +226,8 @@ public interface IPlayerKnowledge extends INBTSerializablePM<Tag> {
         NEW(0, "new"),
         UPDATED(1, "updated"),
         POPUP(2, "popup"),
-        HIGHLIGHT(3, "highlight");
+        HIGHLIGHT(3, "highlight"),
+        READ(4, "read");
 
         private static final IntFunction<ResearchFlag> BY_ID = ByIdMap.continuous(ResearchFlag::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
         public static final Codec<ResearchFlag> CODEC = StringRepresentable.fromValues(ResearchFlag::values);

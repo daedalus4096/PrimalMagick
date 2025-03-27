@@ -57,6 +57,10 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
     public boolean isHighlighted(Player player) {
         return this.getEntryStream(player.level().registryAccess()).anyMatch(entry -> entry.isHighlighted(player));
     }
+
+    public boolean isUnread(Player player) {
+        return this.getEntryStream(player.level().registryAccess()).anyMatch(entry -> entry.isUnread(player));
+    }
     
     /**
      * Get the list of all research entries, from any discipline, which serve as a finale to this discipline.

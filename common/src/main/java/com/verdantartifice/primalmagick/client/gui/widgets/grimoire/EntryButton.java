@@ -36,6 +36,12 @@ public class EntryButton extends AbstractTopicButton {
         return this.entry.isHighlighted(mc.player);
     }
 
+    @Override
+    protected boolean isUnread() {
+        Minecraft mc = Minecraft.getInstance();
+        return this.entry.isUnread(mc.player);
+    }
+
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {

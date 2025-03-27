@@ -30,6 +30,12 @@ public class DisciplineButton extends AbstractTopicButton {
         return this.discipline.isHighlighted(mc.player);
     }
 
+    @Override
+    protected boolean isUnread() {
+        Minecraft mc = Minecraft.getInstance();
+        return this.discipline.isUnread(mc.player);
+    }
+
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
