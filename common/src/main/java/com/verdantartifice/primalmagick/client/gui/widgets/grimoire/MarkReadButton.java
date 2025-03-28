@@ -22,8 +22,8 @@ public class MarkReadButton extends Button {
     protected static final ResourceLocation SPRITE = ResourceUtils.loc("grimoire/mark_all_as_read");
     protected static final int BUTTON_WIDTH = 10;
     protected static final int BUTTON_HEIGHT = 10;
-    protected static final int SPRITE_WIDTH = 32;
-    protected static final int SPRITE_HEIGHT = 32;
+    protected static final int SPRITE_WIDTH = 16;
+    protected static final int SPRITE_HEIGHT = 16;
     protected static final float BASE_SCALE = (float)BUTTON_WIDTH / (float)SPRITE_WIDTH;
 
     protected final Optional<ResearchDiscipline> disciplineOpt;

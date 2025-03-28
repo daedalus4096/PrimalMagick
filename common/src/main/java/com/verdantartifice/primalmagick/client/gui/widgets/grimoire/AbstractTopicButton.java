@@ -23,8 +23,8 @@ import java.awt.Color;
  */
 public abstract class AbstractTopicButton extends Button {
     protected static final ResourceLocation UNREAD_SPRITE = ResourceUtils.loc("grimoire/unread");
-    protected static final int UNREAD_WIDTH = 32;
-    protected static final int UNREAD_HEIGHT = 32;
+    protected static final int UNREAD_WIDTH = 16;
+    protected static final int UNREAD_HEIGHT = 16;
 
     protected GrimoireScreen screen;
     protected AbstractIndexIcon icon;
@@ -81,7 +81,7 @@ public abstract class AbstractTopicButton extends Button {
                 this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
             }
             if (this.isUnread()) {
-                float s = this.icon.isLarge() ? 0.25F : 0.2F;
+                float s = this.icon.isLarge() ? 0.5F : 0.4F;
                 int dx2 = this.icon.isLarge() ? 11 : 7;
                 guiGraphics.pose().pushPose();
                 guiGraphics.pose().translate(this.getX() + dx2 - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1) - 2, 5F);
