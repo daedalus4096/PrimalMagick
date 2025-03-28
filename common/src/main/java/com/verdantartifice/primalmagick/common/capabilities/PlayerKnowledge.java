@@ -59,6 +59,10 @@ import java.util.stream.Collectors;
 public class PlayerKnowledge implements IPlayerKnowledge {
     private static final Logger LOGGER = LogManager.getLogger();
 
+    public static final int LEGACY_VERSION = 0;
+    public static final int UNREAD_FLAG_VERSION = 1;
+    public static final int CURRENT_SCHEMA_VERSION = UNREAD_FLAG_VERSION;
+
     public static final Codec<PlayerKnowledge> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 AbstractResearchKey.dispatchCodec().listOf().<Set<AbstractResearchKey<?>>>xmap(ImmutableSet::copyOf, ImmutableList::copyOf).fieldOf("research").forGetter(k -> k.research),
                 StageEntry.CODEC.listOf().<Map<AbstractResearchKey<?>, Integer>>xmap(
@@ -73,6 +77,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 AbstractResearchTopic.dispatchCodec().listOf().fieldOf("topicHistory").forGetter(k -> k.topicHistory),
                 Project.codec().optionalFieldOf("project").forGetter(k -> k.project),
                 AbstractResearchTopic.dispatchCodec().optionalFieldOf("topic").forGetter(k -> k.topic),
+                Codec.INT.optionalFieldOf("schemaVersion", LEGACY_VERSION).forGetter(k -> k.schemaVersion),
                 Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(k -> k.syncTimestamp)
             ).apply(instance, PlayerKnowledge::new));
 
@@ -90,6 +95,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             AbstractResearchTopic.dispatchStreamCodec().apply(ByteBufCodecs.list()), k -> k.topicHistory,
             ByteBufCodecs.optional(Project.streamCodec()), k -> k.project,
             ByteBufCodecs.optional(AbstractResearchTopic.dispatchStreamCodec()), k -> k.topic,
+            ByteBufCodecs.VAR_INT, k -> k.schemaVersion,
             ByteBufCodecs.VAR_LONG, k -> k.syncTimestamp,
             PlayerKnowledge::new);
     
@@ -101,16 +107,17 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     
     private Optional<Project> project;                  // Currently active research project
     private Optional<AbstractResearchTopic<?>> topic;   // Last active grimoire research topic
+    private int schemaVersion;                          // Version of this object's schema, used to know when certain legacy updates should be done
     private long syncTimestamp;                         // Last timestamp at which this capability received a sync from the server
 
     public PlayerKnowledge() {
-        this(Set.of(), Map.of(), Map.of(), Map.of(), List.of(), Optional.empty(), Optional.empty(), 0L);
+        this(Set.of(), Map.of(), Map.of(), Map.of(), List.of(), Optional.empty(), Optional.empty(), CURRENT_SCHEMA_VERSION, 0L);
     }
 
     protected PlayerKnowledge(Set<AbstractResearchKey<?>> research, Map<AbstractResearchKey<?>, Integer> stages,
                               Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags, Map<KnowledgeType, Integer> knowledge,
                               List<AbstractResearchTopic<?>> topicHistory, Optional<Project> project,
-                              Optional<AbstractResearchTopic<?>> topic, long syncTimestamp) {
+                              Optional<AbstractResearchTopic<?>> topic, int schemaVersion, long syncTimestamp) {
         this.research.addAll(research);
         this.stages.putAll(stages);
         this.flags.putAll(flags);
@@ -118,7 +125,13 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.topicHistory.addAll(topicHistory);
         this.project = project;
         this.topic = topic;
+        this.schemaVersion = schemaVersion;
         this.syncTimestamp = syncTimestamp;
+    }
+
+    @VisibleForTesting
+    public int getSchemaVersion() {
+        return this.schemaVersion;
     }
 
     @Nullable
@@ -149,6 +162,22 @@ public class PlayerKnowledge implements IPlayerKnowledge {
 
         // If parsing succeeds and the data is new, copy it into this object
         this.copyFrom(parsedKnowledge.getValue());
+
+        // If the deserialized data is from before the read flag existed, set default flags on appropriate entries
+        if (this.schemaVersion < UNREAD_FLAG_VERSION) {
+            this.research.stream()
+                    .map(ark -> ark instanceof ResearchEntryKey rek ? rek : null)
+                    .filter(Objects::nonNull)
+                    .filter(this::isReadByDefault)
+                    .forEach(k -> this.addResearchFlag(k, ResearchFlag.READ));
+        }
+
+        // After post-processing, mark the new data as fully up-versioned
+        this.schemaVersion = CURRENT_SCHEMA_VERSION;
+    }
+
+    protected boolean isReadByDefault(ResearchEntryKey key) {
+        return this.research.contains(key) && !this.hasResearchFlag(key, ResearchFlag.NEW) && !this.hasResearchFlag(key, ResearchFlag.UPDATED);
     }
 
     public void copyFrom(@Nullable PlayerKnowledge other) {
@@ -167,6 +196,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.topicHistory.addAll(other.topicHistory);
         this.project = other.project;
         this.topic = other.topic;
+        this.schemaVersion = other.schemaVersion;
     }
 
     @Deprecated(forRemoval = true, since = "6.0.2-beta")
@@ -236,7 +266,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Deprecated(forRemoval = true, since = "6.0.2-beta")
-    protected synchronized void deserializeLegacyNBT(HolderLookup.Provider registries, @Nullable CompoundTag nbt) {
+    @VisibleForTesting
+    public synchronized void deserializeLegacyNBT(HolderLookup.Provider registries, @Nullable CompoundTag nbt) {
         if (nbt == null || nbt.getLong("syncTimestamp") <= this.syncTimestamp) {
             return;
         }
@@ -246,6 +277,9 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.clearKnowledge();
 
         RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
+
+        // Deserialize schema version
+        this.schemaVersion = nbt.getInt("schemaVersion");
         
         // Deserialize known research, including stage number and attached flags
         ListTag researchList = nbt.getList("research", Tag.TAG_COMPOUND);

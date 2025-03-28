@@ -115,4 +115,22 @@ public class PlayerKnowledgeTestForge extends AbstractPlayerKnowledgeTest {
     public void player_knowledge_add_and_check_research_post_serialization(GameTestHelper helper) {
         super.player_knowledge_add_and_check_research_post_serialization(helper);
     }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void player_knowledge_schema_version(GameTestHelper helper) {
+        super.player_knowledge_schema_version(helper);
+    }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void player_knowledge_marks_default_entries_as_read_on_upversion(GameTestHelper helper) {
+        super.player_knowledge_marks_default_entries_as_read_on_upversion(helper);
+    }
+
+    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
+    @Override
+    public void player_knowledge_does_not_mark_non_default_entries_as_read_on_upversion(GameTestHelper helper) {
+        super.player_knowledge_does_not_mark_non_default_entries_as_read_on_upversion(helper);
+    }
 }

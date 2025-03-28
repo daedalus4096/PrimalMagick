@@ -57,6 +57,7 @@ public class EntryButton extends AbstractTopicButton {
                     knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.NEW);
                     knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.UPDATED);
                     knowledge.removeResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
+                    knowledge.addResearchFlag(geb.getEntry().key(), IPlayerKnowledge.ResearchFlag.READ);
                     PacketHandler.sendToServer(new SyncResearchFlagsPacket(mc.player, geb.getEntry().key()));
                 });
 

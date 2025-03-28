@@ -230,6 +230,7 @@ public class ResearchManager {
                         for (ResearchStage searchStage : searchEntry.stages()) {
                             if (searchStage.completionRequirementOpt().isPresent() && searchStage.completionRequirementOpt().get().contains(key)) {
                                 knowledge.addResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                                knowledge.removeResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.READ);
                                 break;
                             }
                         }
@@ -422,6 +423,7 @@ public class ResearchManager {
                             knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.POPUP);
                         }
                         knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.NEW);
+                        knowledge.removeResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.READ);
                     }
                 }
 
@@ -462,6 +464,7 @@ public class ResearchManager {
                 }
                 if (showNewFlags) {
                     knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
+                    knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.READ);
                 }
             }
             
@@ -474,6 +477,7 @@ public class ResearchManager {
                             Component nameComp = Component.translatable(searchEntry.getNameTranslationKey());
                             player.sendSystemMessage(Component.translatable("event.primalmagick.add_addendum", nameComp));
                             knowledge.addResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                            knowledge.removeResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.READ);
                             
                             // Process attunement grants
                             SourceList attunements = addendum.attunements();
@@ -524,6 +528,7 @@ public class ResearchManager {
                                         knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.POPUP);
                                     }
                                     knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.NEW);
+                                    knowledge.removeResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.READ);
                                 }
                             }
                         }
