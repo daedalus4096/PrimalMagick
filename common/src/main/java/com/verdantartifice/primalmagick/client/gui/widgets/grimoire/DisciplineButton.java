@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.topics.DisciplineResearchTopic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 
 /**
@@ -17,7 +18,14 @@ public class DisciplineButton extends AbstractTopicButton {
 
     public DisciplineButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, ResearchDiscipline discipline, boolean showIcon, boolean enlarge) {
         super(widthIn, heightIn, 123, enlarge ? 18 : 12, text, screen, showIcon ? GenericIndexIcon.of(discipline.iconLocation(), true) : null, new Handler());
+        Minecraft mc = Minecraft.getInstance();
         this.discipline = discipline;
+        int unreadCount = this.discipline.getUnreadEntryCount(mc.player);
+        if (unreadCount == 1) {
+            this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.unread_count.single")));
+        } else if (unreadCount > 0) {
+            this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.unread_count.multiple", unreadCount)));
+        }
     }
     
     public ResearchDiscipline getDiscipline() {

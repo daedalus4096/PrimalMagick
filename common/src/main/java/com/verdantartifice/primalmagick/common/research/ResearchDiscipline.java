@@ -68,6 +68,10 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
         return this.getEntryStream(player.level().registryAccess()).anyMatch(entry -> entry.isUnread(player));
     }
 
+    public int getUnreadEntryCount(Player player) {
+        return this.getEntryStream(player.registryAccess()).mapToInt(e -> e.isUnread(player) ? 1 : 0).sum();
+    }
+
     public void markAllAsRead(Player player) {
         this.getEntryStream(player.registryAccess()).filter(e -> e.isUnread(player)).forEach(e -> {
             e.markRead(player);
