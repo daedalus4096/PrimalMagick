@@ -54,12 +54,20 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
         return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isForDiscipline(this.key));
     }
 
+    public boolean isUnlocked(Player player) {
+        return this.unlockRequirementOpt().map(req -> req.isMetBy(player)).orElse(true);
+    }
+
     public boolean isHighlighted(Player player) {
         return this.getEntryStream(player.level().registryAccess()).anyMatch(entry -> entry.isHighlighted(player));
     }
 
     public boolean isUnread(Player player) {
         return this.getEntryStream(player.level().registryAccess()).anyMatch(entry -> entry.isUnread(player));
+    }
+
+    public void markAllAsRead(Player player) {
+        this.getEntryStream(player.registryAccess()).filter(e -> e.isUnread(player)).forEach(e -> e.markRead(player));
     }
     
     /**

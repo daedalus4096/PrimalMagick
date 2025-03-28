@@ -139,6 +139,10 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         return !this.getKnowledge(player).hasResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.READ) && this.isAvailable(player);
     }
 
+    public void markRead(@Nonnull Player player) {
+        this.getKnowledge(player).addResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.READ);
+    }
+
     /**
      * Returns whether this entry should be considered read when being imported from knowledge data prior to the version
      * containing that flag option.

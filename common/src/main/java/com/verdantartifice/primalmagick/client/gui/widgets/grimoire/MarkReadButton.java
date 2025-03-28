@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
@@ -69,7 +70,14 @@ public class MarkReadButton extends Button {
         @Override
         public void onPress(Button button) {
             if (button instanceof MarkReadButton mrb) {
-                LogUtils.getLogger().warn("Marking all as read for {}", mrb.getDiscipline().map(d -> d.key().getRootKey().location().getPath()).orElse("all disciplines"));
+                Minecraft mc = Minecraft.getInstance();
+                mrb.getDiscipline().ifPresentOrElse(discipline -> {
+                    discipline.markAllAsRead(mc.player);
+                }, () -> {
+                    ResearchDisciplines.streamIndexDisciplines(mc.player.registryAccess())
+                            .filter(d -> d.isUnlocked(mc.player))
+                            .forEach(d -> d.markAllAsRead(mc.player));
+                });
             }
         }
     }
