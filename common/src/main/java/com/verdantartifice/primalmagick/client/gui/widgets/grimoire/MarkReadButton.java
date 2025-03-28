@@ -74,7 +74,7 @@ public class MarkReadButton extends Button {
                 mrb.getDiscipline().ifPresentOrElse(discipline -> {
                     discipline.markAllAsRead(mc.player);
                 }, () -> {
-                    ResearchDisciplines.streamIndexDisciplines(mc.player.registryAccess())
+                    ResearchDisciplines.stream(mc.player.registryAccess())
                             .filter(d -> d.isUnlocked(mc.player))
                             .forEach(d -> d.markAllAsRead(mc.player));
                 });

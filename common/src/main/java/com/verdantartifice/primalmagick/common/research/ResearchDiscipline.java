@@ -4,6 +4,8 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -67,7 +69,12 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
     }
 
     public void markAllAsRead(Player player) {
-        this.getEntryStream(player.registryAccess()).filter(e -> e.isUnread(player)).forEach(e -> e.markRead(player));
+        this.getEntryStream(player.registryAccess()).filter(e -> e.isUnread(player)).forEach(e -> {
+            e.markRead(player);
+            if (player.level().isClientSide()) {
+                PacketHandler.sendToServer(new SyncResearchFlagsPacket(player, e.key()));
+            }
+        });
     }
     
     /**
