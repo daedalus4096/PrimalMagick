@@ -25,7 +25,6 @@ import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.MobEffectTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPMForge;
 import com.verdantartifice.primalmagick.datagen.tags.SpellPropertyTagsProviderPMForge;
-import com.verdantartifice.primalmagick.datagen.tips.TipDefinitionProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -57,7 +56,6 @@ public class DataGeneratorsForge {
         generator.addProvider(event.includeClient(), new ItemModelProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPMForge(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeClient(), new TipDefinitionProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new RecipesForge(generator.getPackOutput(), registryLookupFuture));
         BlockTagsProviderPMForge blockTagsProvider = new BlockTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTagsProvider);
