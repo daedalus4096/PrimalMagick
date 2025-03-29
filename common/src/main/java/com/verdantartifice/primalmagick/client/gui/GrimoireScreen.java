@@ -1231,6 +1231,10 @@ public class GrimoireScreen extends Screen {
         }
         return false;
     }
+
+    public Optional<AbstractResearchTopic<?>> getPreviousTopic() {
+        return Optional.ofNullable(this.knowledge.getResearchTopicHistory().peek());
+    }
     
     public void gotoTopic(AbstractResearchTopic<?> newTopic) {
         this.gotoTopic(newTopic, true);

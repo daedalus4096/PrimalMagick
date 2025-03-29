@@ -22,9 +22,9 @@ public class DisciplineButton extends AbstractTopicButton {
         this.discipline = discipline;
         int unreadCount = this.discipline.getUnreadEntryCount(mc.player);
         if (unreadCount == 1) {
-            this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.unread_count.single")));
+            this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.unread_count.entry.single")));
         } else if (unreadCount > 0) {
-            this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.unread_count.multiple", unreadCount)));
+            this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.unread_count.entry.multiple", unreadCount)));
         }
     }
     
