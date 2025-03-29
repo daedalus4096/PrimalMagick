@@ -1,10 +1,11 @@
-package com.verdantartifice.primalmagick.client.tips;
+package com.verdantartifice.primalmagick.common.tips;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -36,6 +37,10 @@ public record TipDefinition(String translationKey, Optional<AbstractRequirement<
     
     public boolean shouldShow(Player player) {
         return this.requirement.map(req -> req.isMetBy(player)).orElse(true);
+    }
+
+    public static Builder builder(ResourceKey<TipDefinition> key) {
+        return new Builder(key.location());
     }
     
     public static Builder builder(ResourceLocation id) {
@@ -73,6 +78,10 @@ public record TipDefinition(String translationKey, Optional<AbstractRequirement<
         
         public Builder requiredResearch(ResourceKey<ResearchEntry> rawResearchKey) {
             return this.requiredResearch(new ResearchEntryKey(rawResearchKey));
+        }
+
+        public Builder requiredResearch(ResourceKey<ResearchEntry> rawResearchKey, int stage) {
+            return this.requiredResearch(new ResearchStageKey(rawResearchKey, stage));
         }
         
         public TipDefinition build() {

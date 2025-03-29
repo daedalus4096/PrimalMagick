@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplates;
+import com.verdantartifice.primalmagick.common.tips.TipDefinitionsPM;
 import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPMNeoforge;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
@@ -58,7 +59,8 @@ public class RegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesProvide
             .add(RegistryKeysPM.PROJECT_TEMPLATES, ProjectTemplates::bootstrap)
             .add(RegistryKeysPM.BOOKS, BooksPM::bootstrap)
             .add(RegistryKeysPM.BOOK_LANGUAGES, BookLanguagesPM::bootstrap)
-            .add(RegistryKeysPM.CULTURES, CulturesPM::bootstrap);
+            .add(RegistryKeysPM.CULTURES, CulturesPM::bootstrap)
+            .add(RegistryKeysPM.TIPS, TipDefinitionsPM::bootstrap);
 
     // Use addProviders() instead
     private RegistryDataGeneratorNeoforge(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {

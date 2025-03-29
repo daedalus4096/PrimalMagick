@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
+import com.verdantartifice.primalmagick.common.tips.TipDefinition;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +28,7 @@ public class RegistryEvents {
         registrar.register(RegistryKeysPM.BOOKS, BookDefinition.DIRECT_CODEC, BookDefinition.NETWORK_CODEC);
         registrar.register(RegistryKeysPM.BOOK_LANGUAGES, BookLanguage.DIRECT_CODEC, BookLanguage.NETWORK_CODEC);
         registrar.register(RegistryKeysPM.CULTURES, Culture.DIRECT_CODEC, Culture.NETWORK_CODEC);
+        registrar.register(RegistryKeysPM.TIPS, TipDefinition.codec(), TipDefinition.codec());
     }
 
     public interface SyncedDataPackRegistrar {

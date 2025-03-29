@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialType;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionType;
+import com.verdantartifice.primalmagick.common.tips.TipDefinition;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -32,6 +33,7 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<BookDefinition>> BOOKS = key("books");
     public static final ResourceKey<Registry<BookLanguage>> BOOK_LANGUAGES = key("book_languages");
     public static final ResourceKey<Registry<Culture>> CULTURES = key("cultures");
+    public static final ResourceKey<Registry<TipDefinition>> TIPS = key("tips");
     public static final ResourceKey<Registry<RequirementType<?>>> REQUIREMENT_TYPES = key("requirement_types");
     public static final ResourceKey<Registry<ResearchKeyType<?>>> RESEARCH_KEY_TYPES = key("research_key_types");
     public static final ResourceKey<Registry<ResearchDiscipline>> RESEARCH_DISCIPLINES = key("research_disciplines");

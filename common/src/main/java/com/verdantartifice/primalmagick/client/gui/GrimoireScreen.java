@@ -29,7 +29,6 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.TopicLinkButton;
-import com.verdantartifice.primalmagick.client.tips.TipManager;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
@@ -64,6 +63,8 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
+import com.verdantartifice.primalmagick.common.tips.TipDefinition;
+import com.verdantartifice.primalmagick.common.tips.TipDefinitionsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
@@ -1103,7 +1104,7 @@ public class GrimoireScreen extends Screen {
     protected Component getCurrentTip() {
         if (this.cachedTip == null) {
             Minecraft mc = Minecraft.getInstance();
-            this.cachedTip = TipManager.getRandomTipForPlayer(mc.player, mc.player.getRandom()).getText();
+            this.cachedTip = TipDefinitionsPM.getRandom(mc.player, mc.player.getRandom()).map(TipDefinition::getText).orElse(Component.empty());
         }
         return this.cachedTip;
     }
