@@ -142,6 +142,9 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
 
     public void markRead(@Nonnull Player player) {
         this.getKnowledge(player).addResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.READ);
+        this.getKnowledge(player).removeResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.NEW);
+        this.getKnowledge(player).removeResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
+        this.getKnowledge(player).removeResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
     }
 
     /**

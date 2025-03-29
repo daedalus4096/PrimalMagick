@@ -61,8 +61,8 @@ public class DisciplineIndexPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a mark-all-as-read button if any of the player's disciplines are unread
         Minecraft mc = Minecraft.getInstance();
-        if (this.isFirstPage() && ResearchDisciplines.streamIndexDisciplines(mc.player.registryAccess()).anyMatch(d -> d.isUnread(mc.player))) {
-            screen.addWidgetToScreen(new MarkReadButton(x + 8 + (side * 140), y - 21));
+        if (this.isFirstPage() && ResearchDisciplines.stream(mc.player.registryAccess()).anyMatch(d -> d.isUnread(mc.player))) {
+            screen.addWidgetToScreen(new MarkReadButton(x + 8 + (side * 140), y - 21, screen));
         }
 
         // Add a button to the screen for each discipline in the page contents

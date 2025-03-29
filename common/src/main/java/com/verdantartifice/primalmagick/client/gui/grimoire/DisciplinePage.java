@@ -65,7 +65,7 @@ public class DisciplinePage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
         if (this.isFirstPage() && this.discipline.isUnread(mc.player)) {
-            screen.addWidgetToScreen(new MarkReadButton(x + 8 + (side * 140), y - 21, this.discipline));
+            screen.addWidgetToScreen(new MarkReadButton(x + 8 + (side * 140), y - 21, screen, this.discipline));
         }
         for (Object obj : this.getContents()) {
             if (obj instanceof ResearchEntry entry) {

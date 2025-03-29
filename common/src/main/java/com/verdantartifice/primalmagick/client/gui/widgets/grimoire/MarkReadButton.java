@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.mojang.logging.LogUtils;
+import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -27,14 +28,16 @@ public class MarkReadButton extends Button {
     protected static final float BASE_SCALE = (float)BUTTON_WIDTH / (float)SPRITE_WIDTH;
 
     protected final Optional<ResearchDiscipline> disciplineOpt;
+    protected final GrimoireScreen screen;
 
-    public MarkReadButton(int pX, int pY) {
-        this(pX, pY, null);
+    public MarkReadButton(int pX, int pY, GrimoireScreen screen) {
+        this(pX, pY, screen, null);
     }
 
-    public MarkReadButton(int pX, int pY, @Nullable ResearchDiscipline discipline) {
+    public MarkReadButton(int pX, int pY, GrimoireScreen screen, @Nullable ResearchDiscipline discipline) {
         super(pX, pY, BUTTON_WIDTH, BUTTON_HEIGHT, Component.empty(), new Handler(), Button.DEFAULT_NARRATION);
         this.disciplineOpt = Optional.ofNullable(discipline);
+        this.screen = screen;
         this.setTooltip(Tooltip.create(
                 this.disciplineOpt.map(d -> Component.translatable("tooltip.primalmagick.mark_read.discipline", Component.translatable(d.getNameTranslationKey())))
                         .orElse(Component.translatable("tooltip.primalmagick.mark_read.all"))));
@@ -42,6 +45,10 @@ public class MarkReadButton extends Button {
 
     public Optional<ResearchDiscipline> getDiscipline() {
         return this.disciplineOpt;
+    }
+
+    public GrimoireScreen getScreen() {
+        return this.screen;
     }
 
     @Override
@@ -78,6 +85,7 @@ public class MarkReadButton extends Button {
                             .filter(d -> d.isUnlocked(mc.player))
                             .forEach(d -> d.markAllAsRead(mc.player));
                 });
+                mrb.getScreen().setRefreshing();
             }
         }
     }
