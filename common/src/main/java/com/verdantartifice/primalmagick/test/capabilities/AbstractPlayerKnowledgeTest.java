@@ -254,4 +254,65 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
         helper.assertTrue(knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
         helper.succeed();
     }
+
+    @SuppressWarnings("removal")
+    public void player_knowledge_schema_version(GameTestHelper helper) {
+        var before = this.createTestPlayerKnowledge(helper);
+
+        // Assert that newly created knowledge data is of the current schema version
+        helper.assertValueEqual(before.getSchemaVersion(), PlayerKnowledge.CURRENT_SCHEMA_VERSION, "Knowledge schema");
+
+        // Serialize the capability to a legacy formatted tag
+        var tag = before.serializeLegacyNBT(helper.getLevel().registryAccess());
+
+        // Deserialize a new capability from the legacy tag and confirm that it has the legacy schema version when
+        // deserialized in the legacy fashion
+        var after1 = new PlayerKnowledge();
+        after1.deserializeLegacyNBT(helper.getLevel().registryAccess(), tag);
+        helper.assertValueEqual(after1.getSchemaVersion(), PlayerKnowledge.LEGACY_VERSION, "Legacy knowledge schema");
+
+        // Deserialize another new capability from the legacy tag using the current method, and confirm that it's been
+        // up-versioned to the latest schema
+        var after2 = new PlayerKnowledge();
+        after2.deserializeNBT(helper.getLevel().registryAccess(), tag);
+        helper.assertValueEqual(after2.getSchemaVersion(), PlayerKnowledge.CURRENT_SCHEMA_VERSION, "Up-versioned knowledge schema");
+
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    public void player_knowledge_marks_default_entries_as_read_on_upversion(GameTestHelper helper) {
+        var before = new PlayerKnowledge();
+        before.addResearch(DEFAULT_RESEARCH_KEY);
+        before.setResearchStage(DEFAULT_RESEARCH_KEY, 1);
+        helper.assertFalse(before.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.READ), "Research key read before up-version");
+
+        // Serialize the capability to a legacy formatted tag
+        var tag = before.serializeLegacyNBT(helper.getLevel().registryAccess());
+
+        // Confirm that an up-versioning deserialize operation marks the entry as read
+        var after = new PlayerKnowledge();
+        after.deserializeNBT(helper.getLevel().registryAccess(), tag);
+        helper.assertTrue(after.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.READ), "Research key unread after up-version");
+
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    public void player_knowledge_does_not_mark_non_default_entries_as_read_on_upversion(GameTestHelper helper) {
+        var before = new PlayerKnowledge();
+        before.addResearch(DEFAULT_RESEARCH_KEY);
+        before.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.NEW);
+        helper.assertFalse(before.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.READ), "Research key read before up-version");
+
+        // Serialize the capability to a legacy formatted tag
+        var tag = before.serializeLegacyNBT(helper.getLevel().registryAccess());
+
+        // Confirm that an up-versioning deserialize operation marks the entry as read
+        var after = new PlayerKnowledge();
+        after.deserializeNBT(helper.getLevel().registryAccess(), tag);
+        helper.assertFalse(after.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.READ), "Research key read after up-version");
+
+        helper.succeed();
+    }
 }

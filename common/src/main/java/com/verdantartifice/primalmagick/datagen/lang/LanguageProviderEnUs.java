@@ -1028,7 +1028,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("expertise").sub("base").output("Base expertise reward: %1$d").end().build();
         this.tooltip("expertise").sub("bonus").output("First-craft bonus reward: %1$d").end().build();
         this.tooltip("expertise").sub("claimed").output(" (claimed)").end().build();
-        
+        this.tooltip("mark_read").sub("all").output("Mark all as read").end().build();
+        this.tooltip("mark_read").sub("discipline").output("Mark all %1$s entries as read").end().build();
+        this.tooltip("unread_count").sub("discipline").sub("single").output("1 unread discipline").end().build();
+        this.tooltip("unread_count").sub("discipline").sub("multiple").output("%1$d unread disciplines").end().build();
+        this.tooltip("unread_count").sub("entry").sub("single").output("1 unread entry").end().build();
+        this.tooltip("unread_count").sub("entry").sub("multiple").output("%1$d unread entries").end().build();
+
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$s %2$s mana").end().build();
         this.label("crafting").sub("mana").sub("base").output("Base cost: %1$s").end().build();

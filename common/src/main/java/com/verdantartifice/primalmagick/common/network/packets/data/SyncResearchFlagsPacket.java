@@ -27,6 +27,7 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
     protected final boolean isUpdated;
     protected final boolean isPopup;
     protected final boolean isHighlight;
+    protected final boolean isRead;
     
     public SyncResearchFlagsPacket(Player player, ResearchEntryKey key) {
         IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElseThrow(() -> new IllegalArgumentException("No knowledge provider for player"));
@@ -35,14 +36,16 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         this.isUpdated = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.UPDATED);
         this.isPopup = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
         this.isHighlight = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
+        this.isRead = knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.READ);
     }
     
-    protected SyncResearchFlagsPacket(ResearchEntryKey key, boolean isNew, boolean isUpdated, boolean isPopup, boolean isHighlight) {
+    protected SyncResearchFlagsPacket(ResearchEntryKey key, boolean isNew, boolean isUpdated, boolean isPopup, boolean isHighlight, boolean isRead) {
         this.key = key;
         this.isNew = isNew;
         this.isUpdated = isUpdated;
         this.isPopup = isPopup;
         this.isHighlight = isHighlight;
+        this.isRead = isRead;
     }
 
     public static CustomPacketPayload.Type<CustomPacketPayload> type() {
@@ -55,10 +58,11 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         buf.writeBoolean(message.isUpdated);
         buf.writeBoolean(message.isPopup);
         buf.writeBoolean(message.isHighlight);
+        buf.writeBoolean(message.isRead);
     }
     
     public static SyncResearchFlagsPacket decode(RegistryFriendlyByteBuf buf) {
-        return new SyncResearchFlagsPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
+        return new SyncResearchFlagsPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
     }
     
     public static void onMessage(PacketContext<SyncResearchFlagsPacket> ctx) {
@@ -86,6 +90,11 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
                     knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
                 } else {
                     knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
+                }
+                if (message.isRead) {
+                    knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.READ);
+                } else {
+                    knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.READ);
                 }
             });
         }

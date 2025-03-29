@@ -3,14 +3,18 @@ package com.verdantartifice.primalmagick.common.research.topics;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Research topic that points to a mod research entry in the Grimoire.
@@ -52,6 +56,17 @@ public class EntryResearchTopic extends AbstractResearchTopic<EntryResearchTopic
     @Override
     public EntryResearchTopic withPage(int newPage) {
         return new EntryResearchTopic(this.entry, newPage);
+    }
+
+    @Override
+    public boolean isUnread(Player player) {
+        ResearchEntry e = ResearchEntries.getEntry(player.registryAccess(), this.entry);
+        return e != null && e.isUnread(player);
+    }
+
+    @Override
+    public Optional<Component> getUnreadTooltip(Player player) {
+        return this.isUnread(player) ? Optional.of(Component.translatable("tooltip.primalmagick.unread_count.entry.single")) : Optional.empty();
     }
 
     @Override

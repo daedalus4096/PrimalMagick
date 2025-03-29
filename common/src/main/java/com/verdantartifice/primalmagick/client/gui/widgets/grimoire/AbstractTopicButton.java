@@ -4,12 +4,14 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 import java.awt.Color;
@@ -20,6 +22,10 @@ import java.awt.Color;
  * @author Daedalus4096
  */
 public abstract class AbstractTopicButton extends Button {
+    protected static final ResourceLocation UNREAD_SPRITE = ResourceUtils.loc("grimoire/unread");
+    protected static final int UNREAD_WIDTH = 16;
+    protected static final int UNREAD_HEIGHT = 16;
+
     protected GrimoireScreen screen;
     protected AbstractIndexIcon icon;
     
@@ -34,6 +40,10 @@ public abstract class AbstractTopicButton extends Button {
     }
 
     protected boolean isHighlighted() {
+        return false;
+    }
+
+    protected boolean isUnread() {
         return false;
     }
     
@@ -69,6 +79,15 @@ public abstract class AbstractTopicButton extends Button {
                 this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1), scaleMod);
             } else {
                 this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
+            }
+            if (this.isUnread()) {
+                float s = this.icon.isLarge() ? 0.5F : 0.4F;
+                int dx2 = this.icon.isLarge() ? 11 : 7;
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().translate(this.getX() + dx2 - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1) - 2, 5F);
+                guiGraphics.pose().scale(s, s, 1F);
+                guiGraphics.blitSprite(UNREAD_SPRITE, 0, 0, UNREAD_WIDTH, UNREAD_HEIGHT);
+                guiGraphics.pose().popPose();
             }
         }
         guiGraphics.pose().popPose();

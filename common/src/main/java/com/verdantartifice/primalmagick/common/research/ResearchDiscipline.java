@@ -4,6 +4,8 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -54,8 +56,29 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
         return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isForDiscipline(this.key));
     }
 
+    public boolean isUnlocked(Player player) {
+        return this.unlockRequirementOpt().map(req -> req.isMetBy(player)).orElse(true);
+    }
+
     public boolean isHighlighted(Player player) {
         return this.getEntryStream(player.level().registryAccess()).anyMatch(entry -> entry.isHighlighted(player));
+    }
+
+    public boolean isUnread(Player player) {
+        return this.getEntryStream(player.level().registryAccess()).anyMatch(entry -> entry.isUnread(player));
+    }
+
+    public int getUnreadEntryCount(Player player) {
+        return this.getEntryStream(player.registryAccess()).mapToInt(e -> e.isUnread(player) ? 1 : 0).sum();
+    }
+
+    public void markAllAsRead(Player player) {
+        this.getEntryStream(player.registryAccess()).filter(e -> e.isUnread(player)).forEach(e -> {
+            e.markRead(player);
+            if (player.level().isClientSide()) {
+                PacketHandler.sendToServer(new SyncResearchFlagsPacket(player, e.key()));
+            }
+        });
     }
     
     /**

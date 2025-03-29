@@ -123,6 +123,7 @@ public class GrimoireScreen extends Screen {
     protected int lastStageIndex = 0;
     protected long lastCheck = 0L;
     protected boolean progressing = false;
+    protected boolean refreshing = false;
     protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
     protected NavigableMap<String, List<RecipeHolder<?>>> indexMap;
@@ -146,7 +147,7 @@ public class GrimoireScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh
         long millis = System.currentTimeMillis();
-        if ((this.isProgressing() || this.currentStageIndex > this.lastStageIndex) && millis > this.lastCheck) {
+        if ((this.isProgressing() || this.isRefreshing() || this.currentStageIndex > this.lastStageIndex) && millis > this.lastCheck) {
             // Reset to the first page of the entry if the current stage has advanced
             if (this.currentStageIndex > this.lastStageIndex) {
                 this.progressing = false;
@@ -161,6 +162,15 @@ public class GrimoireScreen extends Screen {
         }
         
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    }
+
+    public boolean isRefreshing() {
+        return this.refreshing;
+    }
+
+    public void setRefreshing() {
+        this.refreshing = true;
+        this.lastCheck = 0;
     }
     
     public boolean isProgressing() {
@@ -1220,6 +1230,10 @@ public class GrimoireScreen extends Screen {
             return true;
         }
         return false;
+    }
+
+    public Optional<AbstractResearchTopic<?>> getPreviousTopic() {
+        return Optional.ofNullable(this.knowledge.getResearchTopicHistory().peek());
     }
     
     public void gotoTopic(AbstractResearchTopic<?> newTopic) {

@@ -135,6 +135,29 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         return this.getKnowledge(player).hasResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
     }
 
+    public boolean isUnread(@Nonnull Player player) {
+        return !this.getKnowledge(player).hasResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.READ) && this.isAvailable(player) &&
+                (!this.flags().hidden() || this.getKnowledge(player).getResearchStage(this.key()) >= 0);
+    }
+
+    public void markRead(@Nonnull Player player) {
+        this.getKnowledge(player).addResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.READ);
+        this.getKnowledge(player).removeResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.NEW);
+        this.getKnowledge(player).removeResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
+        this.getKnowledge(player).removeResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.HIGHLIGHT);
+    }
+
+    /**
+     * Returns whether this entry should be considered read when being imported from knowledge data prior to the version
+     * containing that flag option.
+     *
+     * @param player the player whose data is to be queried
+     * @return true whether this entry should be considered read, false otherwise
+     */
+    public boolean isReadByDefault(@Nonnull Player player) {
+        return !this.isAvailable(player) || (!this.isNew(player) && !this.isUpdated(player) && !this.isUnknown(player));
+    }
+
     public boolean isComplete(@Nonnull Player player) {
         return this.getKnowledge(player).getResearchStatus(player.level().registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.COMPLETE;
     }
@@ -156,6 +179,10 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
 
     public boolean isVisible(@Nonnull Player player) {
         return this.isAvailable(player) || this.isUpcoming(player);
+    }
+
+    public boolean isUnknown(@Nonnull Player player) {
+        return this.getKnowledge(player).getResearchStatus(player.registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.UNKNOWN;
     }
     
     @Nonnull

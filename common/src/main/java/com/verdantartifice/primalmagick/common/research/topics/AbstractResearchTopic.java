@@ -3,9 +3,13 @@ package com.verdantartifice.primalmagick.common.research.topics;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.player.Player;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Base research topic that points to a specific page in the Grimoire.
@@ -34,6 +38,14 @@ public abstract class AbstractResearchTopic<T extends AbstractResearchTopic<T>> 
     }
     
     public abstract T withPage(int newPage);
+
+    public boolean isUnread(Player player) {
+        return false;
+    }
+
+    public Optional<Component> getUnreadTooltip(Player player) {
+        return Optional.empty();
+    }
 
     @Override
     public boolean equals(Object o) {

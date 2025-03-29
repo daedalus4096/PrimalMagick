@@ -57,6 +57,10 @@ public class ResearchDisciplines {
     public static ResearchDiscipline getDiscipline(RegistryAccess registryAccess, ResourceKey<ResearchDiscipline> rawKey) {
         return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(rawKey);
     }
+
+    public static Stream<ResearchDiscipline> stream(RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).stream();
+    }
     
     /**
      * Retrieves a list of the research disciplines that should be shown in the main index of the
