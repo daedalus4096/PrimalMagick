@@ -136,7 +136,8 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
 
     public boolean isUnread(@Nonnull Player player) {
-        return !this.getKnowledge(player).hasResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.READ) && this.isAvailable(player);
+        return !this.getKnowledge(player).hasResearchFlag(this.key(), IPlayerKnowledge.ResearchFlag.READ) && this.isAvailable(player) &&
+                (!this.flags().hidden() || this.getKnowledge(player).getResearchStage(this.key()) >= 0);
     }
 
     public void markRead(@Nonnull Player player) {
