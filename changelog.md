@@ -8,6 +8,7 @@ v6.0.4
 * Fixed a bug that could crash a server when firing projectile spells through Nether portals in certain circumstances
 * Fixed a bug allowing some attribute modifiers to ignore suppression by Attunement Shackles
 * Fixed a server crash that would occur when retrieving a block entity's item handler with a null direction on Neoforge
+* Moved tips data from client resource pack to server data pack
 
 v6.0.3
 ------
