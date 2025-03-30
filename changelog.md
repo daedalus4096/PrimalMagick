@@ -9,6 +9,7 @@ v6.0.4
 * Fixed a bug allowing some attribute modifiers to ignore suppression by Attunement Shackles
 * Fixed a server crash that would occur when retrieving a block entity's item handler with a null direction on Neoforge
 * Moved tips data from client resource pack to server data pack
+* Hardened the Treefolk fertilization process against errors in other mods' blocks
 
 v6.0.3
 ------

@@ -13,8 +13,12 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Fertilize<E extends TreefolkEntity> extends Behavior<E> {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private final float maxDistanceSqr;
     private final IntProvider cooldownRange;
     
@@ -33,7 +37,11 @@ public class Fertilize<E extends TreefolkEntity> extends Behavior<E> {
         BlockState state = pLevel.getBlockState(targetPos);
         if (state.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, targetPos, state)) {
             if (bonemealable.isBonemealSuccess(pLevel, pLevel.random, targetPos, state)) {
-                bonemealable.performBonemeal(pLevel, pLevel.random, targetPos, state);
+                try {
+                    bonemealable.performBonemeal(pLevel, pLevel.random, targetPos, state);
+                } catch (Exception e) {
+                    LOGGER.warn("Unexpected failure during treefolk plant fertilization", e);
+                }
                 pLevel.levelEvent(1505, targetPos, 0);
             }
             brain.setMemoryWithExpiry(MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(), true, this.cooldownRange.sample(pLevel.random));
