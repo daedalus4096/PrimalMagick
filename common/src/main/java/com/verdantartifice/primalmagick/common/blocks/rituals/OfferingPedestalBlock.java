@@ -36,7 +36,7 @@ import java.awt.Color;
  * 
  * @author Daedalus4096
  */
-public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPowered, IRitualStabilizer {
+public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualStabilizer {
     public static final MapCodec<OfferingPedestalBlock> CODEC = simpleCodec(OfferingPedestalBlock::new);
     
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/offering_pedestal"));

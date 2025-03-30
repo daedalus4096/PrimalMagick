@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public interface IRitualStabilizer {
+public interface IRitualStabilizer extends ISaltPowered {
     /**
      * Determine whether this block is currently exacting a symmetry penalty on ritual stability.
      * 
@@ -17,8 +17,17 @@ public interface IRitualStabilizer {
      * @param otherPos the position of the mirroring block
      * @return true if this block is exacting a symmetry penalty on the ritual, false otherwise
      */
-    public default boolean hasSymmetryPenalty(Level world, BlockPos pos, BlockPos otherPos) {
-        return (world.getBlockState(pos).getBlock() != world.getBlockState(otherPos).getBlock());
+    default boolean hasSymmetryPenalty(Level world, BlockPos pos, BlockPos otherPos) {
+        if (!(world.getBlockState(pos).getBlock() instanceof IRitualStabilizer block1)) {
+            // If the main block isn't a stabilizer, then it shouldn't interfere
+            return false;
+        } else if (world.getBlockState(otherPos).getBlock() instanceof IRitualStabilizer block2) {
+            // If both blocks are stabilizers, then they have to be the same and both powered, or else there's a penalty
+            return block1 != block2 || !block1.isBlockSaltPowered(world, pos) || !block2.isBlockSaltPowered(world, otherPos);
+        } else {
+            // If the main block is a stabilizer and the other block isn't, then it's an automatic penalty
+            return true;
+        }
     }
     
     /**
@@ -29,7 +38,7 @@ public interface IRitualStabilizer {
      * @param pos the position of this block
      * @return the absolute value of the bonus to ritual stability
      */
-    public float getStabilityBonus(Level world, BlockPos pos);
+    float getStabilityBonus(Level world, BlockPos pos);
     
     /**
      * Get the absolute value of the penalty to ritual stability inflicted by this block, if currently
@@ -39,5 +48,5 @@ public interface IRitualStabilizer {
      * @param pos the position of this block
      * @return the absolute value of the penalty to ritual stability
      */
-    public float getSymmetryPenalty(Level world, BlockPos pos);
+    float getSymmetryPenalty(Level world, BlockPos pos);
 }

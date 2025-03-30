@@ -10,6 +10,7 @@ v6.0.4
 * Fixed a server crash that would occur when retrieving a block entity's item handler with a null direction on Neoforge
 * Moved tips data from client resource pack to server data pack
 * Hardened the Treefolk fertilization process against errors in other mods' blocks
+* Fixed a bug where ritual props not connected to salt would still count for stability purposes
 
 v6.0.3
 ------

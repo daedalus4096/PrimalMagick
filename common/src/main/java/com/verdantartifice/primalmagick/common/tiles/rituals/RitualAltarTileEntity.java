@@ -618,9 +618,9 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         for (BlockPos scanPos : toScan) {
             BlockPos symPos = getSymmetricPosition(this.worldPosition, scanPos);
             Block block = this.level.getBlockState(scanPos).getBlock();
-            
-            if (block instanceof IRitualStabilizer) {
-                IRitualStabilizer stabilizer = (IRitualStabilizer)block;
+
+            // Only stabilizers connected to the salt network should count for stability modifiers
+            if (block instanceof IRitualStabilizer stabilizer && stabilizer.isBlockSaltPowered(this.level, scanPos)) {
                 if (stabilizer.hasSymmetryPenalty(this.level, scanPos, symPos)) {
                     delta -= stabilizer.getSymmetryPenalty(this.level, scanPos);
                 } else {
