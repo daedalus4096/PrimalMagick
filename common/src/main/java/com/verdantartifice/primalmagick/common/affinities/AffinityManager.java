@@ -27,6 +27,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.TransientCraftingContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -49,6 +50,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
@@ -415,20 +417,21 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         
         // Populate a fake crafting inventory with ingredients to see what container items would be left behind
         CompletableFuture<NonNullList<ItemStack>> containerFuture;
-        if (recipeHolder.value() instanceof CraftingRecipe craftingRecipe) {
-            CraftingContainer inv = new TransientCraftingContainer(new FakeMenu(), ingredients.size(), 1);
+        if (recipeHolder.value() instanceof CraftingRecipe) {
             List<CompletableFuture<ItemStack>> ingFutures = new ArrayList<>();
             for (Ingredient ingredient : ingredients) {
                 ingFutures.add(this.getMatchingItemStackAsync(ingredient, recipeManager, registryAccess, history));
             }
             containerFuture = Util.sequence(ingFutures).thenApply(ingStackList -> {
-                MutableInt index = new MutableInt(0);
-                ingStackList.forEach(ingStack -> {
-                    if (!ingStack.isEmpty()) {
-                        inv.setItem(index.intValue(), ingStack);
-                    }
-                });
-                return craftingRecipe.getRemainingItems(inv.asCraftInput());
+                // Determine remaining container items manually. Don't call Recipe#getRemainingItems because that would
+                // require reassembling the recipe structure from incomplete data. Some mods, such as Immersive Engineering,
+                // are very sensitive about this and throw errors if you get the crafting input structure wrong.
+                // See: https://github.com/daedalus4096/PrimalMagick/issues/246
+                return NonNullList.of(ItemStack.EMPTY, ingStackList.stream()
+                        .map(ItemStack::getItem)
+                        .filter(Item::hasCraftingRemainingItem)
+                        .map(item -> new ItemStack(Objects.requireNonNull(item.getCraftingRemainingItem())))
+                        .toArray(ItemStack[]::new));
             });
         } else {
             containerFuture = CompletableFuture.completedFuture(NonNullList.create());

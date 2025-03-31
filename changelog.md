@@ -11,6 +11,7 @@ v6.0.4
 * Moved tips data from client resource pack to server data pack
 * Hardened the Treefolk fertilization process against errors in other mods' blocks
 * Fixed a bug where ritual props not connected to salt would still count for stability purposes
+* Fixed a mod conflict with Immersive Engineering during some affinity calculations
 
 v6.0.3
 ------
