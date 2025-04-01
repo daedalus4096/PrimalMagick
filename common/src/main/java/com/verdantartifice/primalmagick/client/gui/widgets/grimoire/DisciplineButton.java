@@ -17,7 +17,7 @@ public class DisciplineButton extends AbstractTopicButton {
     protected final ResearchDiscipline discipline;
 
     public DisciplineButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, ResearchDiscipline discipline, boolean showIcon, boolean enlarge) {
-        super(widthIn, heightIn, 123, enlarge ? 18 : 12, text, screen, showIcon ? GenericIndexIcon.of(discipline.iconLocation(), true) : null, new Handler());
+        super(widthIn, heightIn, 123, enlarge ? 17 : 12, text, screen, showIcon ? GenericIndexIcon.of(discipline.iconLocation(), true) : null, new Handler());
         Minecraft mc = Minecraft.getInstance();
         this.discipline = discipline;
         int unreadCount = this.discipline.getUnreadEntryCount(mc.player);

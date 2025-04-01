@@ -15,7 +15,7 @@ import net.minecraft.network.chat.Component;
 public class RuneEnchantmentIndexButton extends AbstractTopicButton {
     @SuppressWarnings("resource")
     public RuneEnchantmentIndexButton(int widthIn, int heightIn, Component text, GrimoireScreen screen) {
-        super(widthIn, heightIn, 123, 18, text, screen, 
+        super(widthIn, heightIn, 123, 17, text, screen,
                 GenericIndexIcon.of(ResearchDisciplines.getDiscipline(Minecraft.getInstance().level.registryAccess(), ResearchDisciplines.RUNEWORKING).iconLocation(), true), new Handler());
     }
     

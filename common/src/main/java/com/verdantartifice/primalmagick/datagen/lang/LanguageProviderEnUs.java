@@ -2071,6 +2071,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("index_header").name("Disciplines").build();
         this.grimoire("other_header").name("Other Topics").build();
         this.grimoire("stats_header").name("Statistics").build();
+        this.grimoire("affinity_index_header").name("Affinities").build();
         this.grimoire("attunement_header").name("Attunements").build();
         this.grimoire("linguistics_header").name("Linguistics").build();
         this.grimoire("rune_enchantment_header").name("Rune Enchantments").build();
