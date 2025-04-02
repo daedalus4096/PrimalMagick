@@ -31,6 +31,8 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.TopicLinkButton;
+import com.verdantartifice.primalmagick.common.affinities.AffinityIndexEntry;
+import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
@@ -45,6 +47,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ItemScanKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
@@ -100,9 +103,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.NavigableMap;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * GUI screen for the grimoire research browser.
@@ -846,6 +852,24 @@ public class GrimoireScreen extends Screen {
     protected void parseAffinityPage(Source source) {
         this.currentStageIndex = 0;
 
+        Minecraft mc = Minecraft.getInstance();
+        var entries = this.knowledge.getResearchSet().stream()
+                .map(k -> k instanceof ItemScanKey scanKey ? scanKey : null)
+                .filter(Objects::nonNull)
+                .map(k -> new AffinityIndexEntry(k.getStack(), AffinityManager.getInstance().getAffinityValuesAsync(k.getStack(), mc.level)));
+        var loadedFuture = CompletableFuture.allOf(entries.map(AffinityIndexEntry::affinities).toArray(CompletableFuture[]::new));
+
+        Stream<AffinityIndexEntry> sortedEntries;
+        if (loadedFuture.isDone()) {
+            // TODO Sort the entries by relevant affinity then name
+            sortedEntries = entries.sorted(
+                    Comparator.<AffinityIndexEntry, Integer>comparing(e -> e.affinities().join().getAmount(source))
+                            .thenComparing(e -> e.stack().getDisplayName().getString()));
+        } else {
+            // TODO Sort the entries by name and trigger a page refresh when calculation is complete
+            sortedEntries = entries.sorted(Comparator.comparing(e -> e.stack().getDisplayName().getString()));
+            loadedFuture.thenAccept($ -> this.setRefreshing());
+        }
         this.pages.add(new AffinityPage(source, true));
     }
     

@@ -30,6 +30,10 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
     public ItemScanKey(ItemLike itemLike) {
         this(new ItemStack(itemLike.asItem()));
     }
+
+    public ItemStack getStack() {
+        return this.stack;
+    }
     
     @Override
     public String toString() {

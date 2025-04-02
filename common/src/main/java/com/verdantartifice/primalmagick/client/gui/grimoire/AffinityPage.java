@@ -1,21 +1,22 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AffinityRecordWidget;
+import com.verdantartifice.primalmagick.common.affinities.AffinityIndexEntry;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class AffinityPage extends AbstractPage {
     protected Source source;
-    protected List<ItemStack> contents = new ArrayList<>();
+    protected List<AffinityIndexEntry> contents = new ArrayList<>();
     protected boolean firstPage;
 
     public AffinityPage(@NotNull Source source) {
@@ -28,11 +29,11 @@ public class AffinityPage extends AbstractPage {
     }
 
     @NotNull
-    public List<ItemStack> getElements() {
+    public List<AffinityIndexEntry> getElements() {
         return Collections.unmodifiableList(this.contents);
     }
 
-    public boolean addElement(ItemStack element) {
+    public boolean addElement(AffinityIndexEntry element) {
         return this.contents.add(element);
     }
 
@@ -67,6 +68,10 @@ public class AffinityPage extends AbstractPage {
 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
-
+        for (AffinityIndexEntry entry : this.getElements()) {
+            AffinityRecordWidget widget = new AffinityRecordWidget(x, y, entry, this.source, screen);
+            screen.addWidgetToScreen(widget);
+            y += widget.getHeight();
+        }
     }
 }
