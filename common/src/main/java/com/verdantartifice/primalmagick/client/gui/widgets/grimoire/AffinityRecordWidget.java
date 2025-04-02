@@ -8,13 +8,13 @@ import net.minecraft.client.sounds.SoundManager;
 import org.jetbrains.annotations.NotNull;
 
 public class AffinityRecordWidget extends AbstractTopicButton {
-    public static final int WIDGET_HEIGHT = 12;
+    public static final int WIDGET_HEIGHT = 17;
 
     protected final AffinityIndexEntry entry;
     protected final Source source;
 
     public AffinityRecordWidget(int x, int y, @NotNull AffinityIndexEntry entry, Source source, GrimoireScreen screen) {
-        super(x, y, 123, WIDGET_HEIGHT, entry.stack().getHoverName(), screen, ItemIndexIcon.of(entry.stack().getItem(), false), button -> {});
+        super(x, y, 123, WIDGET_HEIGHT, entry.stack().getHoverName(), screen, ItemIndexIcon.of(entry.stack().getItem(), true), button -> {});
         this.entry = entry;
         this.source = source;
         // TODO Set tooltip data to be full affinity source list
