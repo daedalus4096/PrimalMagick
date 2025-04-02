@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractRecipePage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.AffinityIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementGainPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementPage;
@@ -233,6 +234,8 @@ public class GrimoireScreen extends Screen {
                 this.parseTipsPages();
             } else if (LinguisticsIndexPage.TOPIC.getData().equals(data)) {
                 this.parseLinguisticsIndexPages();
+            } else if (AffinityIndexPage.TOPIC.getData().equals(data)) {
+                this.parseAffinityIndexPages();
             } else {
                 LOGGER.warn("Unexpected OtherResearchTopic data {}", data);
             }
@@ -829,6 +832,11 @@ public class GrimoireScreen extends Screen {
         if (!tempPage.getElements().isEmpty()) {
             this.pages.add(tempPage);
         }
+    }
+
+    protected void parseAffinityIndexPages() {
+        this.currentStageIndex = 0;
+        this.pages.add(new AffinityIndexPage(true));
     }
     
     protected void parseAttunementIndexPages() {
