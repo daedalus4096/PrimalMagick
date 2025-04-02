@@ -854,17 +854,22 @@ public class GrimoireScreen extends Screen {
         this.currentStageIndex = 0;
 
         Minecraft mc = Minecraft.getInstance();
-        var entries = this.knowledge.getResearchSet().stream()
+        List<AffinityIndexEntry> entries = this.knowledge.getResearchSet().stream()
                 .map(k -> k instanceof ItemScanKey scanKey ? scanKey : null)
                 .filter(Objects::nonNull)
                 .map(k -> new AffinityIndexEntry(k.getStack(), AffinityManager.getInstance().getAffinityValuesAsync(k.getStack(), mc.level)))
                 .toList();
-        var loadedFuture = CompletableFuture.allOf(entries.stream().map(AffinityIndexEntry::affinities).toArray(CompletableFuture[]::new));
-        loadedFuture.join();
+        CompletableFuture<Void> loadedFuture = CompletableFuture.allOf(entries.stream().map(AffinityIndexEntry::affinities).toArray(CompletableFuture[]::new));
+
+        // Wait just the barest beat for any completed futures to register as done so that we don't end up in a refresh loop
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+        }
 
         if (loadedFuture.isDone()) {
             // Sort the entries by relevant affinity then name
-            var sortedEntries = entries.stream().filter(e -> e.affinities().join().getAmount(source) > 0).sorted(
+            List<AffinityIndexEntry> sortedEntries = entries.stream().filter(e -> e.affinities().join().getAmount(source) > 0).sorted(
                     Comparator.<AffinityIndexEntry, Integer>comparing(e -> e.affinities().join().getAmount(source)).reversed()
                             .thenComparing(e -> e.stack().getDisplayName().getString())).toList();
             AffinityPage tempPage = new AffinityPage(source, loadedFuture, true);
@@ -884,9 +889,8 @@ public class GrimoireScreen extends Screen {
             }
         } else {
             // Trigger a page refresh when calculation is complete
-//            loadedFuture.thenAccept($ -> this.setRefreshing());
+            loadedFuture.thenAccept($ -> this.setRefreshing());
             this.pages.add(new AffinityPage(source, loadedFuture, true));
-//            this.pages.add(new AffinityPage(source, loadedFuture.thenAccept($ -> this.setRefreshing()), true));
         }
     }
     
