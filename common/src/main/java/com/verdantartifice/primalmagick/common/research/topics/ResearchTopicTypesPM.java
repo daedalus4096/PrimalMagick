@@ -20,6 +20,7 @@ public class ResearchTopicTypesPM {
     public static final IRegistryItem<ResearchTopicType<?>, ResearchTopicType<MainIndexResearchTopic>> MAIN_INDEX = register("main_index", MainIndexResearchTopic.CODEC, MainIndexResearchTopic.STREAM_CODEC);
     public static final IRegistryItem<ResearchTopicType<?>, ResearchTopicType<OtherResearchTopic>> OTHER = register("other", OtherResearchTopic.CODEC, OtherResearchTopic.STREAM_CODEC);
     public static final IRegistryItem<ResearchTopicType<?>, ResearchTopicType<SourceResearchTopic>> SOURCE = register("source", SourceResearchTopic.CODEC, SourceResearchTopic.STREAM_CODEC);
+    public static final IRegistryItem<ResearchTopicType<?>, ResearchTopicType<AffinityResearchTopic>> AFFINITY = register("affinity", AffinityResearchTopic.CODEC, AffinityResearchTopic.STREAM_CODEC);
     
     protected static <T extends AbstractResearchTopic<T>> IRegistryItem<ResearchTopicType<?>, ResearchTopicType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         return Services.RESEARCH_TOPIC_TYPES_REGISTRY.register(id, () -> new ResearchTopicType<T>(ResourceUtils.loc(id), codec, streamCodec));

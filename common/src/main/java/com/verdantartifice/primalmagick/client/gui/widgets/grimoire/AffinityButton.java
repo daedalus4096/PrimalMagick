@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.common.research.topics.AffinityResearchTopic;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -22,9 +22,8 @@ public class AffinityButton extends AbstractTopicButton {
         @Override
         public void onPress(Button button) {
             if (button instanceof AffinityButton gab) {
-                // TODO Set the new grimoire topic and open a new screen for it
-                LogUtils.getLogger().info("Affinity button pressed: {}", gab.getSource());
-//                gab.getScreen().gotoTopic(new SourceResearchTopic(gab.getSource(), 0));
+                // Set the new grimoire topic and open a new screen for it
+                gab.getScreen().gotoTopic(new AffinityResearchTopic(gab.getSource(), 0));
             }
         }
     }

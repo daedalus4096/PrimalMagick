@@ -2124,6 +2124,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("linguistics_data").sub("comprehension_rating").sub("2").output("Advanced").end().build();
         this.grimoire("linguistics_data").sub("comprehension_rating").sub("3").output("Superior").end().build();
         this.grimoire("linguistics_data").sub("comprehension_rating").sub("4").output("Fluent").end().build();
+        this.grimoire("affinity_data").sub("no_entries").output("No relevant items").end().build();
         
         // Generate JEI GUI localizations
         this.jei("ritual").sub("offerings").sub("header").output("Offerings").end().build();

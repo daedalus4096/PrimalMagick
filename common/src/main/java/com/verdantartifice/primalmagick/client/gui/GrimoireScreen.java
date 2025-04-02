@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractRecipePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AffinityIndexPage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.AffinityPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementGainPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementPage;
@@ -49,6 +50,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.AffinityResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.DisciplineResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
@@ -218,6 +220,8 @@ public class GrimoireScreen extends Screen {
             this.parseRuneEnchantmentPage(enchTopic.getEnchantment());
         } else if (topic instanceof LanguageResearchTopic langTopic) {
             this.parseLinguisticsPage(langTopic.getLanguage());
+        } else if (topic instanceof AffinityResearchTopic affinityTopic) {
+            this.parseAffinityPage(affinityTopic.getSource());
         } else if (topic instanceof OtherResearchTopic otherTopic) {
             String data = otherTopic.getData();
             if (this.isIndexKey(data)) {
@@ -837,6 +841,12 @@ public class GrimoireScreen extends Screen {
     protected void parseAffinityIndexPages() {
         this.currentStageIndex = 0;
         this.pages.add(new AffinityIndexPage(true));
+    }
+
+    protected void parseAffinityPage(Source source) {
+        this.currentStageIndex = 0;
+
+        this.pages.add(new AffinityPage(source, true));
     }
     
     protected void parseAttunementIndexPages() {
