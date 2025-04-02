@@ -27,6 +27,7 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.RuneEnchantmentPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.StagePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.StatisticsPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.TipsPage;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AffinityRecordWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
@@ -856,21 +857,37 @@ public class GrimoireScreen extends Screen {
         var entries = this.knowledge.getResearchSet().stream()
                 .map(k -> k instanceof ItemScanKey scanKey ? scanKey : null)
                 .filter(Objects::nonNull)
-                .map(k -> new AffinityIndexEntry(k.getStack(), AffinityManager.getInstance().getAffinityValuesAsync(k.getStack(), mc.level)));
-        var loadedFuture = CompletableFuture.allOf(entries.map(AffinityIndexEntry::affinities).toArray(CompletableFuture[]::new));
+                .map(k -> new AffinityIndexEntry(k.getStack(), AffinityManager.getInstance().getAffinityValuesAsync(k.getStack(), mc.level)))
+                .toList();
+        var loadedFuture = CompletableFuture.allOf(entries.stream().map(AffinityIndexEntry::affinities).toArray(CompletableFuture[]::new));
+        loadedFuture.join();
 
-        Stream<AffinityIndexEntry> sortedEntries;
         if (loadedFuture.isDone()) {
-            // TODO Sort the entries by relevant affinity then name
-            sortedEntries = entries.sorted(
-                    Comparator.<AffinityIndexEntry, Integer>comparing(e -> e.affinities().join().getAmount(source))
-                            .thenComparing(e -> e.stack().getDisplayName().getString()));
+            // Sort the entries by relevant affinity then name
+            var sortedEntries = entries.stream().filter(e -> e.affinities().join().getAmount(source) > 0).sorted(
+                    Comparator.<AffinityIndexEntry, Integer>comparing(e -> e.affinities().join().getAmount(source)).reversed()
+                            .thenComparing(e -> e.stack().getDisplayName().getString())).toList();
+            AffinityPage tempPage = new AffinityPage(source, loadedFuture, true);
+            final int lineHeight = AffinityRecordWidget.WIDGET_HEIGHT;
+            int heightRemaining = 137;  // First page has less available height to account for title
+            for (AffinityIndexEntry entry : sortedEntries) {
+                tempPage.addElement(entry);
+                heightRemaining -= lineHeight;
+                if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
+                    heightRemaining = 165;
+                    this.pages.add(tempPage);
+                    tempPage = new AffinityPage(source, loadedFuture, false);
+                }
+            }
+            if (!tempPage.getElements().isEmpty()) {
+                this.pages.add(tempPage);
+            }
         } else {
-            // TODO Sort the entries by name and trigger a page refresh when calculation is complete
-            sortedEntries = entries.sorted(Comparator.comparing(e -> e.stack().getDisplayName().getString()));
-            loadedFuture.thenAccept($ -> this.setRefreshing());
+            // Trigger a page refresh when calculation is complete
+//            loadedFuture.thenAccept($ -> this.setRefreshing());
+            this.pages.add(new AffinityPage(source, loadedFuture, true));
+//            this.pages.add(new AffinityPage(source, loadedFuture.thenAccept($ -> this.setRefreshing()), true));
         }
-        this.pages.add(new AffinityPage(source, true));
     }
     
     protected void parseAttunementIndexPages() {

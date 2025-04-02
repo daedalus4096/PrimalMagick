@@ -13,18 +13,21 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class AffinityPage extends AbstractPage {
-    protected Source source;
-    protected List<AffinityIndexEntry> contents = new ArrayList<>();
-    protected boolean firstPage;
+    protected final Source source;
+    protected final CompletableFuture<Void> loadedFuture;
+    protected final List<AffinityIndexEntry> contents = new ArrayList<>();
+    protected final boolean firstPage;
 
-    public AffinityPage(@NotNull Source source) {
-        this(source, false);
+    public AffinityPage(@NotNull Source source, CompletableFuture<Void> loadedFuture) {
+        this(source, loadedFuture, false);
     }
 
-    public AffinityPage(@NotNull Source source, boolean firstPage) {
+    public AffinityPage(@NotNull Source source, CompletableFuture<Void> loadedFuture, boolean firstPage) {
         this.source = source;
+        this.loadedFuture = loadedFuture;
         this.firstPage = firstPage;
     }
 
@@ -41,6 +44,10 @@ public class AffinityPage extends AbstractPage {
         return this.firstPage;
     }
 
+    protected boolean isLoaded() {
+        return this.loadedFuture.isDone();
+    }
+
     @Override
     public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Draw title page if applicable
@@ -51,9 +58,15 @@ public class AffinityPage extends AbstractPage {
             y += 25;
         }
 
-        // If the page has no contents, render a label saying so
-        if (this.isFirstPage() && this.getElements().isEmpty()) {
-            Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
+        if (this.isFirstPage() && !this.isLoaded()) {
+            // If the page contents aren't yet loaded, render a label saying so
+            Component text = Component.translatable("grimoire.primalmagick.affinity_data.calculating");
+            int width = mc.font.width(text.getString());
+            int indent = 124;
+            guiGraphics.drawString(mc.font, text, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB(), false);
+        } else if (this.isFirstPage() && this.getElements().isEmpty()) {
+            // If the page has no contents, render a label saying so
             Component text = Component.translatable("grimoire.primalmagick.affinity_data.no_entries");
             int width = mc.font.width(text.getString());
             int indent = 124;
