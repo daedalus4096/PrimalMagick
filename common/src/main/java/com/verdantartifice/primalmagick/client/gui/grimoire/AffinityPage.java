@@ -82,7 +82,7 @@ public class AffinityPage extends AbstractPage {
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         for (AffinityIndexEntry entry : this.getElements()) {
-            AffinityRecordWidget widget = new AffinityRecordWidget(x, y, entry, this.source, screen);
+            AffinityRecordWidget widget = new AffinityRecordWidget(x + 12 + (side * 140), y, entry, this.source, screen);
             screen.addWidgetToScreen(widget);
             y += widget.getHeight();
         }

@@ -879,7 +879,7 @@ public class GrimoireScreen extends Screen {
                     tempPage = new AffinityPage(source, loadedFuture, false);
                 }
             }
-            if (!tempPage.getElements().isEmpty()) {
+            if (sortedEntries.isEmpty() || !tempPage.getElements().isEmpty()) {
                 this.pages.add(tempPage);
             }
         } else {
