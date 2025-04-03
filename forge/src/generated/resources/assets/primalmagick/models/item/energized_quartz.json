@@ -1,3 +1,6 @@
 {
-  "parent": "minecraft:item/quartz"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/energized_quartz"
+  }
 }

@@ -131,10 +131,10 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         this.basicItem(ItemsPM.HEXIUM_NUGGET.get());
         this.basicItem(ItemsPM.HALLOWSTEEL_NUGGET.get());
         this.basicItem(ItemsPM.QUARTZ_NUGGET.get());
-        this.itemWithParent(ItemsPM.ENERGIZED_AMETHYST.get(), Items.AMETHYST_SHARD);
-        this.itemWithParent(ItemsPM.ENERGIZED_DIAMOND.get(), Items.DIAMOND);
-        this.itemWithParent(ItemsPM.ENERGIZED_EMERALD.get(), Items.EMERALD);
-        this.itemWithParent(ItemsPM.ENERGIZED_QUARTZ.get(), Items.QUARTZ);
+        this.basicItem(ItemsPM.ENERGIZED_AMETHYST.get());
+        this.basicItem(ItemsPM.ENERGIZED_DIAMOND.get());
+        this.basicItem(ItemsPM.ENERGIZED_EMERALD.get());
+        this.basicItem(ItemsPM.ENERGIZED_QUARTZ.get());
         
         // Generate tool items
         this.handheldItem(ItemsPM.PRIMALITE_SWORD.get());
