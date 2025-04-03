@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AffinityRecordWidget extends AbstractTopicButton {
@@ -24,16 +25,15 @@ public class AffinityRecordWidget extends AbstractTopicButton {
     protected final AffinityIndexEntry entry;
     protected final Source source;
     protected final Component amountText;
-    protected final List<Either<FormattedText, TooltipComponent>> elements;
+    protected final List<Either<FormattedText, TooltipComponent>> elements = new ArrayList<>();
 
     public AffinityRecordWidget(int x, int y, @NotNull AffinityIndexEntry entry, Source source, GrimoireScreen screen) {
         super(x, y, 123, WIDGET_HEIGHT, entry.stack().getHoverName(), screen, ItemIndexIcon.of(entry.stack().getItem(), true), button -> {});
         this.entry = entry;
         this.source = source;
         this.amountText = Component.literal(Integer.toString(this.entry.affinities().join().getAmount(this.source)));
-        this.elements = ImmutableList.of(
-                Either.left(Component.translatable("tooltip.primalmagick.affinities.label")),
-                Either.right(new AffinityTooltipComponent(this.entry.affinities().join())));
+        this.elements.add(Either.left(Component.translatable("tooltip.primalmagick.affinities.label")));
+        this.elements.add(Either.right(new AffinityTooltipComponent(this.entry.affinities().join())));
     }
 
     @Override
