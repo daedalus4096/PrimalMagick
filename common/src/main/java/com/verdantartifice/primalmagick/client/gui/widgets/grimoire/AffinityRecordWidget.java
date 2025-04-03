@@ -16,7 +16,6 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AffinityRecordWidget extends AbstractTopicButton {
