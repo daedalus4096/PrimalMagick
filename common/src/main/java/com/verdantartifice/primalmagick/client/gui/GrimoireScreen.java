@@ -859,11 +859,12 @@ public class GrimoireScreen extends Screen {
                 .filter(Objects::nonNull)
                 .map(k -> new AffinityIndexEntry(k.getStack(), AffinityManager.getInstance().getAffinityValuesAsync(k.getStack(), mc.level)))
                 .toList();
-        CompletableFuture<Void> loadedFuture = CompletableFuture.allOf(entries.stream().map(AffinityIndexEntry::affinities).toArray(CompletableFuture[]::new));
+        List<CompletableFuture<SourceList>> affinityFutures = entries.stream().map(AffinityIndexEntry::affinities).toList();
+        CompletableFuture<Void> loadedFuture = CompletableFuture.allOf(affinityFutures.toArray(CompletableFuture[]::new));
 
-        // Wait just the barest beat for any completed futures to register as done so that we don't end up in a refresh loop
+        // Wait just a beat for any completed futures to register as done so that we don't end up in a refresh loop
         try {
-            Thread.sleep(1);
+            Thread.sleep(5);
         } catch (InterruptedException e) {
         }
 
@@ -890,7 +891,9 @@ public class GrimoireScreen extends Screen {
         } else {
             // Trigger a page refresh when calculation is complete
             loadedFuture.thenAccept($ -> this.setRefreshing());
-            this.pages.add(new AffinityPage(source, loadedFuture, true));
+            AffinityPage loadingPage = new AffinityPage(source, loadedFuture, true);
+            loadingPage.setProgressFutures(affinityFutures);
+            this.pages.add(loadingPage);
         }
     }
     
