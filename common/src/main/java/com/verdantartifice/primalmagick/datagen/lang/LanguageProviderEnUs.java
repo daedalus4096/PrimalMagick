@@ -2071,6 +2071,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("index_header").name("Disciplines").build();
         this.grimoire("other_header").name("Other Topics").build();
         this.grimoire("stats_header").name("Statistics").build();
+        this.grimoire("affinity_index_header").name("Affinities").build();
         this.grimoire("attunement_header").name("Attunements").build();
         this.grimoire("linguistics_header").name("Linguistics").build();
         this.grimoire("rune_enchantment_header").name("Rune Enchantments").build();
@@ -2123,6 +2124,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("linguistics_data").sub("comprehension_rating").sub("2").output("Advanced").end().build();
         this.grimoire("linguistics_data").sub("comprehension_rating").sub("3").output("Superior").end().build();
         this.grimoire("linguistics_data").sub("comprehension_rating").sub("4").output("Fluent").end().build();
+        this.grimoire("affinity_data").sub("no_entries").output("No relevant items").end().build();
+        this.grimoire("affinity_data").sub("calculating").output("Calculating...").end().build();
         
         // Generate JEI GUI localizations
         this.jei("ritual").sub("offerings").sub("header").output("Offerings").end().build();

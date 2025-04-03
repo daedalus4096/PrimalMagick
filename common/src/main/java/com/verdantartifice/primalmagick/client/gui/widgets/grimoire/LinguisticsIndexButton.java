@@ -13,7 +13,7 @@ import net.minecraft.world.item.Items;
  */
 public class LinguisticsIndexButton extends AbstractTopicButton {
     public LinguisticsIndexButton(int widthIn, int heightIn, Component text, GrimoireScreen screen) {
-        super(widthIn, heightIn, 123, 18, text, screen, ItemIndexIcon.of(Items.WRITABLE_BOOK, true), new Handler());
+        super(widthIn, heightIn, 123, 17, text, screen, ItemIndexIcon.of(Items.WRITABLE_BOOK, true), new Handler());
     }
 
     private static class Handler implements OnPress {

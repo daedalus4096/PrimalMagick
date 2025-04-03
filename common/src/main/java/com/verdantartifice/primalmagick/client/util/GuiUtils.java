@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.datafixers.util.Either;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -24,10 +25,12 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -140,6 +143,11 @@ public class GuiUtils {
     public static void renderCustomTooltip(GuiGraphics guiGraphics, List<Component> textList, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
         Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, mc.font, textList, x, y, ItemStack.EMPTY);
+    }
+
+    public static void renderComponentTooltipFromElements(GuiGraphics guiGraphics, List<Either<FormattedText, TooltipComponent>> elements, int x, int y) {
+        Minecraft mc = Minecraft.getInstance();
+        Services.GUI_GRAPHICS.renderComponentTooltipFromElements(guiGraphics, mc.font, elements, x, y, ItemStack.EMPTY);
     }
     
     public static void renderSourcesForPlayer(GuiGraphics guiGraphics, @Nullable SourceList sources, @Nullable Player player, int startX, int startY) {

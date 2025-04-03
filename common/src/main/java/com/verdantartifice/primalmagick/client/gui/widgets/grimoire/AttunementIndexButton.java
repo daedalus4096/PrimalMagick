@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
  */
 public class AttunementIndexButton extends AbstractTopicButton {
     public AttunementIndexButton(int widthIn, int heightIn, Component text, GrimoireScreen screen) {
-        super(widthIn, heightIn, 123, 18, text, screen, GenericIndexIcon.of(Sources.EARTH.getImage(), true), new Handler());
+        super(widthIn, heightIn, 123, 17, text, screen, GenericIndexIcon.of(Sources.EARTH.getImage(), true), new Handler());
     }
     
     private static class Handler implements OnPress {

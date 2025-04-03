@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AffinityIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.DisciplineButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.LinguisticsIndexButton;
@@ -39,10 +40,18 @@ public class OtherIndexPage extends AbstractPage {
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
+        ResearchEntry firstSteps = ResearchEntries.getEntry(mc.level.registryAccess(), ResearchEntries.FIRST_STEPS);
         Component text;
         
         // Make room for page title
         y += 24;
+
+        // Add affinities button
+        if (firstSteps != null && (firstSteps.isComplete(mc.player) || firstSteps.isInProgress(mc.player))) {
+            text = Component.translatable("grimoire.primalmagick.affinity_index_header");
+            Button button = screen.addWidgetToScreen(new AffinityIndexButton(x + 12 + (side * 140), y, text, screen));
+            y += button.getHeight();
+        }
         
         // Add attunements button if attunements are unlocked
         if (ResearchManager.isResearchComplete(mc.player, ResearchEntries.ATTUNEMENTS)) {
@@ -59,7 +68,6 @@ public class OtherIndexPage extends AbstractPage {
         }
         
         // Add recipes button
-        ResearchEntry firstSteps = ResearchEntries.getEntry(mc.level.registryAccess(), ResearchEntries.FIRST_STEPS);
         if (firstSteps != null && (firstSteps.isComplete(mc.player) || firstSteps.isInProgress(mc.player))) {
             text = Component.translatable("grimoire.primalmagick.recipe_index_header");
             Button button = screen.addWidgetToScreen(new RecipeIndexButton(x + 12 + (side * 140), y, text, screen));

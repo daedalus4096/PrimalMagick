@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
  */
 public class TipsButton extends AbstractTopicButton {
     public TipsButton(int widthIn, int heightIn, Component text, GrimoireScreen screen) {
-        super(widthIn, heightIn, 123, 18, text, screen, GenericIndexIcon.of(Source.getUnknownImage(), true), new Handler());
+        super(widthIn, heightIn, 123, 17, text, screen, GenericIndexIcon.of(Source.getUnknownImage(), true), new Handler());
     }
     
     private static class Handler implements OnPress {

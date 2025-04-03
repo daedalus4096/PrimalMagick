@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
  */
 public class RecipeIndexButton extends AbstractTopicButton {
     public RecipeIndexButton(int widthIn, int heightIn, Component text, GrimoireScreen screen) {
-        super(widthIn, heightIn, 123, 18, text, screen, ItemIndexIcon.of(ItemsPM.ARCANE_WORKBENCH.get(), true), new Handler());
+        super(widthIn, heightIn, 123, 17, text, screen, ItemIndexIcon.of(ItemsPM.ARCANE_WORKBENCH.get(), true), new Handler());
     }
     
     private static class Handler implements OnPress {

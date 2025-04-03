@@ -430,7 +430,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                 return NonNullList.of(ItemStack.EMPTY, ingStackList.stream()
                         .map(ItemStack::getItem)
                         .filter(Item::hasCraftingRemainingItem)
-                        .map(item -> new ItemStack(Objects.requireNonNull(item.getCraftingRemainingItem())))
+                        .map(Item::getCraftingRemainingItem)
+                        .filter(Objects::nonNull)
+                        .map(ItemStack::new)
                         .toArray(ItemStack[]::new));
             });
         } else {

@@ -1,3 +1,7 @@
+v6.0.5
+------
+* Added an affinity index to the Grimoire, to remind you of all the data you've analyzed
+
 v6.0.4
 ------
 * Added a toast that appears when the player unlocks a new research discipline

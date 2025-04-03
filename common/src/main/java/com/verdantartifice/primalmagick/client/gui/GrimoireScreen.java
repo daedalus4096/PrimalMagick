@@ -4,6 +4,8 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractRecipePage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.AffinityIndexPage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.AffinityPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementGainPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementPage;
@@ -25,10 +27,13 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.RuneEnchantmentPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.StagePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.StatisticsPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.TipsPage;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AffinityRecordWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.TopicLinkButton;
+import com.verdantartifice.primalmagick.common.affinities.AffinityIndexEntry;
+import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
@@ -43,11 +48,13 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ItemScanKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.AffinityResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.DisciplineResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
@@ -97,9 +104,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.NavigableMap;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * GUI screen for the grimoire research browser.
@@ -123,6 +133,7 @@ public class GrimoireScreen extends Screen {
     protected int currentStageIndex = 0;
     protected int lastStageIndex = 0;
     protected long lastCheck = 0L;
+    protected long lastRefresh = 0L;
     protected boolean progressing = false;
     protected boolean refreshing = false;
     protected List<AbstractPage> pages = new ArrayList<>();
@@ -170,8 +181,13 @@ public class GrimoireScreen extends Screen {
     }
 
     public void setRefreshing() {
-        this.refreshing = true;
-        this.lastCheck = 0;
+        // Allow at most one refresh every quarter of a second
+        long millis = System.currentTimeMillis();
+        if (millis > this.lastRefresh) {
+            this.refreshing = true;
+            this.lastCheck = 0;
+            this.lastRefresh = millis + 250L;
+        }
     }
     
     public boolean isProgressing() {
@@ -217,6 +233,8 @@ public class GrimoireScreen extends Screen {
             this.parseRuneEnchantmentPage(enchTopic.getEnchantment());
         } else if (topic instanceof LanguageResearchTopic langTopic) {
             this.parseLinguisticsPage(langTopic.getLanguage());
+        } else if (topic instanceof AffinityResearchTopic affinityTopic) {
+            this.parseAffinityPage(affinityTopic.getSource());
         } else if (topic instanceof OtherResearchTopic otherTopic) {
             String data = otherTopic.getData();
             if (this.isIndexKey(data)) {
@@ -233,6 +251,8 @@ public class GrimoireScreen extends Screen {
                 this.parseTipsPages();
             } else if (LinguisticsIndexPage.TOPIC.getData().equals(data)) {
                 this.parseLinguisticsIndexPages();
+            } else if (AffinityIndexPage.TOPIC.getData().equals(data)) {
+                this.parseAffinityIndexPages();
             } else {
                 LOGGER.warn("Unexpected OtherResearchTopic data {}", data);
             }
@@ -828,6 +848,48 @@ public class GrimoireScreen extends Screen {
         }
         if (!tempPage.getElements().isEmpty()) {
             this.pages.add(tempPage);
+        }
+    }
+
+    protected void parseAffinityIndexPages() {
+        this.currentStageIndex = 0;
+        this.pages.add(new AffinityIndexPage(true));
+    }
+
+    protected void parseAffinityPage(Source source) {
+        this.currentStageIndex = 0;
+
+        Minecraft mc = Minecraft.getInstance();
+        List<AffinityIndexEntry> entries = ResearchManager.getAffinityIndexEntries(mc.player);
+        List<CompletableFuture<SourceList>> affinityFutures = entries.stream().map(AffinityIndexEntry::affinities).toList();
+        CompletableFuture<Void> loadedFuture = CompletableFuture.allOf(affinityFutures.toArray(CompletableFuture[]::new));
+
+        if (loadedFuture.isDone()) {
+            // Sort the entries by relevant affinity then name
+            List<AffinityIndexEntry> sortedEntries = entries.stream().filter(e -> e.affinities().join().getAmount(source) > 0).sorted(
+                    Comparator.<AffinityIndexEntry, Integer>comparing(e -> e.affinities().join().getAmount(source)).reversed()
+                            .thenComparing(e -> e.stack().getDisplayName().getString())).toList();
+            AffinityPage tempPage = new AffinityPage(source, loadedFuture, true);
+            final int lineHeight = AffinityRecordWidget.WIDGET_HEIGHT;
+            int heightRemaining = 137;  // First page has less available height to account for title
+            for (AffinityIndexEntry entry : sortedEntries) {
+                tempPage.addElement(entry);
+                heightRemaining -= lineHeight;
+                if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
+                    heightRemaining = 165;
+                    this.pages.add(tempPage);
+                    tempPage = new AffinityPage(source, loadedFuture, false);
+                }
+            }
+            if (sortedEntries.isEmpty() || !tempPage.getElements().isEmpty()) {
+                this.pages.add(tempPage);
+            }
+        } else {
+            // Trigger a page refresh when calculation is complete
+            loadedFuture.thenAccept($ -> this.setRefreshing());
+            AffinityPage loadingPage = new AffinityPage(source, loadedFuture, true);
+            loadingPage.setProgressFutures(affinityFutures);
+            this.pages.add(loadingPage);
         }
     }
     
