@@ -133,6 +133,7 @@ public class GrimoireScreen extends Screen {
     protected int currentStageIndex = 0;
     protected int lastStageIndex = 0;
     protected long lastCheck = 0L;
+    protected long lastRefresh = 0L;
     protected boolean progressing = false;
     protected boolean refreshing = false;
     protected List<AbstractPage> pages = new ArrayList<>();
@@ -180,8 +181,13 @@ public class GrimoireScreen extends Screen {
     }
 
     public void setRefreshing() {
-        this.refreshing = true;
-        this.lastCheck = 0;
+        // Allow at most one refresh every quarter of a second
+        long millis = System.currentTimeMillis();
+        if (millis > this.lastRefresh) {
+            this.refreshing = true;
+            this.lastCheck = 0;
+            this.lastRefresh = millis + 250L;
+        }
     }
     
     public boolean isProgressing() {
@@ -854,19 +860,9 @@ public class GrimoireScreen extends Screen {
         this.currentStageIndex = 0;
 
         Minecraft mc = Minecraft.getInstance();
-        List<AffinityIndexEntry> entries = this.knowledge.getResearchSet().stream()
-                .map(k -> k instanceof ItemScanKey scanKey ? scanKey : null)
-                .filter(Objects::nonNull)
-                .map(k -> new AffinityIndexEntry(k.getStack(), AffinityManager.getInstance().getAffinityValuesAsync(k.getStack(), mc.level)))
-                .toList();
+        List<AffinityIndexEntry> entries = ResearchManager.getAffinityIndexEntries(mc.player);
         List<CompletableFuture<SourceList>> affinityFutures = entries.stream().map(AffinityIndexEntry::affinities).toList();
         CompletableFuture<Void> loadedFuture = CompletableFuture.allOf(affinityFutures.toArray(CompletableFuture[]::new));
-
-        // Wait just a beat for any completed futures to register as done so that we don't end up in a refresh loop
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-        }
 
         if (loadedFuture.isDone()) {
             // Sort the entries by relevant affinity then name

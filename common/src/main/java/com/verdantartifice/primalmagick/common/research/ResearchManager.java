@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.research;
 
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import com.verdantartifice.primalmagick.common.affinities.AffinityIndexEntry;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
@@ -47,6 +48,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -65,6 +67,8 @@ public class ResearchManager {
     private static final List<IScanTrigger> SCAN_TRIGGERS = new ArrayList<>();
     
     private static final ResearchEntryKey FIRST_STEPS = new ResearchEntryKey(ResearchEntries.FIRST_STEPS);
+
+    private static Function<Player, List<AffinityIndexEntry>> memoizedAffinityIndexEntries = Util.memoize(ResearchManager::getAffinityIndexEntriesInner);
     
     public static Set<Integer> getAllCraftingReferences() {
         return Collections.unmodifiableSet(CRAFTING_REFERENCES);
@@ -721,6 +725,10 @@ public class ResearchManager {
             if (sync) {
                 knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
             }
+
+            // Invalidate cached affinity index entries
+            invalidateAffinityIndexEntries();
+
             return true;
         } else {
             return false;
@@ -809,6 +817,9 @@ public class ResearchManager {
         if (count > 0) {
             knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
         }
+
+        // Invalidate cached affinity index entries
+        invalidateAffinityIndexEntries();
         
         // Return the number of items successfully scanned
         return count;
@@ -839,5 +850,23 @@ public class ResearchManager {
         
         // Round up to ensure that any item with affinities generates at least one observation point
         return Mth.ceil(total);
+    }
+
+    public static List<AffinityIndexEntry> getAffinityIndexEntries(Player player) {
+        return memoizedAffinityIndexEntries.apply(player);
+    }
+
+    private static List<AffinityIndexEntry> getAffinityIndexEntriesInner(Player player) {
+        final Level level = player.level();
+        return Services.CAPABILITIES.knowledge(player).map(knowledge -> knowledge.getResearchSet().stream()
+                .map(k -> k instanceof ItemScanKey scanKey ? scanKey : null)
+                .filter(Objects::nonNull)
+                .map(k -> new AffinityIndexEntry(k.getStack(), AffinityManager.getInstance().getAffinityValuesAsync(k.getStack(), level)))
+                .toList())
+            .orElseGet(List::of);
+    }
+
+    private static void invalidateAffinityIndexEntries() {
+        memoizedAffinityIndexEntries = Util.memoize(ResearchManager::getAffinityIndexEntriesInner);
     }
 }
