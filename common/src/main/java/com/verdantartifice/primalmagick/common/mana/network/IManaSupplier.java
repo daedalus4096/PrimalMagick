@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.verdantartifice.primalmagick.common.sources.Source;
+
 /**
  * Interface identifying a network node which can supply mana to other network nodes and, optionally, connect directly
  * to devices to extract mana into the network.
@@ -12,5 +14,6 @@ public interface IManaSupplier extends IManaNetworkNode {
     }
 
     int getTransmissionRange();
-    int getThroughput();
+    boolean canSupply(Source source);
+    int getManaThroughput();
 }

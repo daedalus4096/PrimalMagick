@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.verdantartifice.primalmagick.common.sources.Source;
+
 /**
  * Interface identifying a relay in a mana network, a device which can both transmit and receive mana but cannot
  * directly connect to devices to store it.
@@ -16,4 +18,16 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
     default boolean isOrigin() {
         return false;
     }
+
+    @Override
+    default boolean canSupply(Source source) {
+        return this.canRelay(source);
+    }
+
+    @Override
+    default boolean canConsume(Source source) {
+        return this.canRelay(source);
+    }
+
+    boolean canRelay(Source source);
 }

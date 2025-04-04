@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.verdantartifice.primalmagick.common.sources.Source;
+
 /**
  * Interface identifying a network node which can receive mana from other network nodes and, optionally, connect
  * directly to devices to sink mana out of the network.
@@ -12,4 +14,5 @@ public interface IManaConsumer extends IManaNetworkNode {
     }
 
     int getReceptionRange();
+    boolean canConsume(Source source);
 }
