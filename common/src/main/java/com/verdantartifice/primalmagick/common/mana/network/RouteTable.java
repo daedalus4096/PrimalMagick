@@ -26,7 +26,7 @@ public class RouteTable {
 
     public Optional<Route> getRoute(long nodeId) {
         if (this.routes.containsKey(nodeId)) {
-            return this.routes.get(nodeId).stream().max(Comparator.comparing(Route::getScore));
+            return this.routes.get(nodeId).stream().max(Comparator.comparing(Route::getScore).thenComparing(Route::hashCode));
         } else {
             return Optional.empty();
         }
