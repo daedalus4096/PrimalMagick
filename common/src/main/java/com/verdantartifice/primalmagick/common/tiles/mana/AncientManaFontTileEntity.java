@@ -23,7 +23,7 @@ import java.util.List;
  * shrines.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock
  */
 public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
     public AncientManaFontTileEntity(BlockPos pos, BlockState state) {
