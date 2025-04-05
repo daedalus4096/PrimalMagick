@@ -15,5 +15,4 @@ public interface IManaSupplier extends IManaNetworkNode {
 
     int getTransmissionRange();
     boolean canSupply(Source source);
-    int getManaThroughput();
 }

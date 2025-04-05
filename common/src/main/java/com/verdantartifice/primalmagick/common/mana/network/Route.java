@@ -188,7 +188,7 @@ public class Route {
         }
 
         public int getManaThroughput() {
-            return this.supplier.getManaThroughput();
+            return Math.min(this.supplier.getManaThroughput(), this.consumer.getManaThroughput());
         }
     }
 }

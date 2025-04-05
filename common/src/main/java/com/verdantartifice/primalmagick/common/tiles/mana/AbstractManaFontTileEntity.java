@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
+import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -22,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
 /**
@@ -30,9 +33,10 @@ import org.jetbrains.annotations.VisibleForTesting;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand {
+public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand, IManaSupplier {
     public static final int CENTIMANA_RECHARGED_PER_TICK = 5;
-    
+
+    protected final RouteTable routeTable = new RouteTable();
     protected int ticksExisted = 0;
     protected int mana;
     
@@ -155,5 +159,25 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
             this.setChanged();
             this.syncTile(true);
         }
+    }
+
+    @Override
+    public int getTransmissionRange() {
+        return 5;
+    }
+
+    @Override
+    public boolean canSupply(Source source) {
+        return this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock && fontBlock.getSource().equals(source);
+    }
+
+    @Override
+    public int getManaThroughput() {
+        return this.getManaCapacity();
+    }
+
+    @Override
+    public @NotNull RouteTable getRouteTable() {
+        return this.routeTable;
     }
 }
