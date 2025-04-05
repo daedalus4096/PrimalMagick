@@ -52,7 +52,6 @@ public interface IManaConsumer extends IManaNetworkNode {
                 .forEach(this.getRouteTable()::addRoute);
 
         // Update connected nodes on the newly created routes
-        Set<IManaNetworkNode> processed = new HashSet<>(Set.of(this));
-        this.getRouteTable().propagateRoutes(processed);
+        this.getRouteTable().propagateRoutes(Set.of(this));
     }
 }

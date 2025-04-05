@@ -33,6 +33,7 @@ public class Route {
     protected final Supplier<Integer> throughputSupplier = Suppliers.memoize(this::getMaxThroughputInner);
     protected final Supplier<Double> scoreSupplier = Suppliers.memoize(this::getScoreInner);
     protected final Supplier<Boolean> validSupplier = Suppliers.memoize(this::isValidInner);
+    protected final Supplier<Boolean> completeSupplier = Suppliers.memoize(this::isCompleteInner);
 
     public Route(@NotNull IManaSupplier origin, @NotNull IManaConsumer terminus) {
         this(origin, terminus, List.of());
@@ -152,10 +153,6 @@ public class Route {
     }
 
     protected boolean isValidInner() {
-        if (!this.origin.isOrigin() || !this.terminus.isTerminus()) {
-            // Confirm that the origin and terminus of the route are correctly populated
-            return false;
-        }
         if (this.origin.getNodeId() == this.terminus.getNodeId()) {
             // A zero-hop route is invalid, as is a circular route going through one or more relays
             return false;
@@ -173,14 +170,28 @@ public class Route {
     }
 
     /**
+     * Tests whether this route is complete, in that it's valid, its start node is a proper origin, and its end node is
+     * a proper terminus.
+     *
+     * @return whether this route is complete
+     */
+    public boolean isComplete() {
+        return this.completeSupplier.get();
+    }
+
+    protected boolean isCompleteInner() {
+        return this.isValid() && this.origin.isOrigin() && this.terminus.isTerminus();
+    }
+
+    /**
      * Tests whether this route is active and can currently be used to successfully transport mana.
      *
      * @param level the level of the network
      * @return whether this route is active
      */
     public boolean isActive(Level level) {
-        // First test that the route is valid at all
-        if (!this.isValid()) {
+        // First test that the route is valid and complete at all
+        if (!this.isValid() || !this.isComplete()) {
             return false;
         }
 
