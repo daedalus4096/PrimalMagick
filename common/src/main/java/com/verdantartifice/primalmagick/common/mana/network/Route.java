@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -103,6 +104,40 @@ public class Route {
         retVal.add(new Hop(supplier, this.terminus));
 
         return retVal;
+    }
+
+    /**
+     * Retruns a new route with the given supplier at the head of the node list.
+     *
+     * @param supplier the desired new first node
+     * @return an optional containing the new route, or empty if such a route is not valid
+     */
+    public Optional<Route> pushOrigin(IManaSupplier supplier) {
+        if (this.origin instanceof IManaRelay relay) {
+            // If this route starts in a relay, then push the old origin to the head of the relay list
+            Route retVal = new Route(supplier, this.terminus, ImmutableList.<IManaRelay>builder().add(relay).addAll(this.relays).build());
+            return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
+        } else {
+            // If this route's existing origin is not a relay, then the given supplier cannot be made a new origin
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Returns a new route with the given consumer at the tail of the node list.
+     *
+     * @param consumer the desired new final node
+     * @return an optional containing the new route, or empty if such a route is not valid
+     */
+    public Optional<Route> pushTerminus(IManaConsumer consumer) {
+        if (this.terminus instanceof IManaRelay relay) {
+            // If this route ends in a relay, then push the old terminus to the end of the relay list
+            Route retVal = new Route(this.origin, consumer, ImmutableList.<IManaRelay>builder().addAll(this.relays).add(relay).build());
+            return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
+        } else {
+            // If this route's existing terminus is not a relay, then the given consumer cannot be made a new terminus
+            return Optional.empty();
+        }
     }
 
     /**
