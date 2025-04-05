@@ -82,7 +82,14 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .filter(Route::isValid)
                 .forEach(this.getRouteTable()::addRoute);
 
-        // TODO Connect existing routes that can use this relay as a bridge
+        // Connect existing routes that can use this relay as a bridge
+        Set<Route> heads = this.getRouteTable().getRoutesForTerminus(this);
+        Set<Route> tails = this.getRouteTable().getRoutesForOrigin(this);
+        heads.forEach(head -> tails.stream().map(head::connect)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute));
 
         // Update connected nodes on the newly created routes
         this.getRouteTable().propagateRoutes(Set.of(this));

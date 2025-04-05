@@ -108,7 +108,7 @@ public class Route {
     }
 
     /**
-     * Retruns a new route with the given supplier at the head of the node list.
+     * Returns a new route with the given supplier at the head of the node list.
      *
      * @param supplier the desired new first node
      * @return an optional containing the new route, or empty if such a route is not valid
@@ -137,6 +137,27 @@ public class Route {
             return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
         } else {
             // If this route's existing terminus is not a relay, then the given consumer cannot be made a new terminus
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Returns a new route that connects this route and the given one. The given route is appended to this route, if
+     * and only if the terminus of this route is the same as the origin of the given route.
+     *
+     * @param other the route to be appended to this one
+     * @return an optional containing the new route, or empty if such a route is not valid
+     */
+    public Optional<Route> connect(Route other) {
+        if (this.terminus.getNodeId() == other.getOrigin().getNodeId() && this.terminus instanceof IManaRelay relay) {
+            List<IManaRelay> newRelays = ImmutableList.<IManaRelay>builder()
+                    .addAll(this.relays)
+                    .add(relay)
+                    .addAll(other.relays)
+                    .build();
+            Route retVal = new Route(this.origin, other.terminus, newRelays);
+            return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
+        } else {
             return Optional.empty();
         }
     }
