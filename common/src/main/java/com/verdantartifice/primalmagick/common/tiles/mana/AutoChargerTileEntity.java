@@ -5,6 +5,9 @@ import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
+import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
+import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -31,9 +34,10 @@ import java.util.Set;
  * @author Daedalus4096
  * @see com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock
  */
-public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
+public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM implements IManaConsumer {
     protected static final int INPUT_INV_INDEX = 0;
-    
+
+    protected final RouteTable routeTable = new RouteTable();
     protected final Set<BlockPos> fontLocations = new HashSet<>();
     protected int chargeTime;
 
@@ -89,7 +93,6 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
         }
     }
     
-    @SuppressWarnings("deprecation")
     protected void scanSurroundings() {
         BlockPos pos = this.getBlockPos();
         if (Services.LEVEL.isAreaLoaded(this.level, pos, 5)) {
@@ -151,5 +154,25 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
                 .build());
 
         return retVal;
+    }
+
+    @Override
+    public int getReceptionRange() {
+        return 5;
+    }
+
+    @Override
+    public boolean canConsume(Source source) {
+        return true;
+    }
+
+    @Override
+    public int getManaThroughput() {
+        return 100;
+    }
+
+    @Override
+    public @NotNull RouteTable getRouteTable() {
+        return this.routeTable;
     }
 }
