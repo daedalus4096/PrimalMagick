@@ -182,8 +182,8 @@ public class Route {
 
         public boolean inRange() {
             double distanceSqr = this.getDistanceSqr();
-            int supplierRange = this.supplier.getTransmissionRange();
-            int consumerRange = this.consumer.getReceptionRange();
+            int supplierRange = this.supplier.getNetworkRange();
+            int consumerRange = this.consumer.getNetworkRange();
             return ((supplierRange * supplierRange) >= distanceSqr) && ((consumerRange * consumerRange) >= distanceSqr);
         }
 

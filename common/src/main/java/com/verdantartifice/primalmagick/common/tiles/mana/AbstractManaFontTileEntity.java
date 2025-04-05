@@ -162,7 +162,7 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
     }
 
     @Override
-    public int getTransmissionRange() {
+    public int getNetworkRange() {
         return 5;
     }
 

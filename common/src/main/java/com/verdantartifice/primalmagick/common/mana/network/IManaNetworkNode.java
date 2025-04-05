@@ -14,6 +14,7 @@ public interface IManaNetworkNode {
     }
 
     BlockPos getBlockPos();
+    int getNetworkRange();
     int getManaThroughput();
     @NotNull RouteTable getRouteTable();
 }

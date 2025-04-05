@@ -73,22 +73,20 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
             
             // Channel each nearby font
             Vec3 chargerCenter = Vec3.atCenterOf(pos);
-            for (BlockPos fontPos : entity.fontLocations) {
-                if (level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity tile) {
-                    if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
-                        if (entity.chargeTime % 5 == 0) {
-                            final int toSiphon = chargeStack.getItem() instanceof IWand wand ? wand.getSiphonAmount(chargeStack) : 100;
-                            chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
-                                // TODO Get the stack's max charge rate somehow, instead of siphoning one point of mana at a time for non-wands
-                                tile.doSiphon(manaCap, level, null, chargerCenter, toSiphon);
-                                return manaCap;
-                            });
-                            chargeStack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
-                        }
+            if (entity.chargeTime % 5 == 0 && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+                for (BlockPos fontPos : entity.fontLocations) {
+                    if (level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity tile) {
+//                        final int toSiphon = chargeStack.getItem() instanceof IWand wand ? wand.getSiphonAmount(chargeStack) : 100;
+//                        chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
+//                            // TODO Get the stack's max charge rate somehow, instead of siphoning one point of mana at a time for non-wands
+//                            tile.doSiphon(manaCap, level, null, chargerCenter, toSiphon);
+//                            return manaCap;
+//                        });
+//                        chargeStack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
                     }
                 }
             }
-            
+
             entity.chargeTime++;
         }
     }
@@ -157,7 +155,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public int getReceptionRange() {
+    public int getNetworkRange() {
         return 5;
     }
 

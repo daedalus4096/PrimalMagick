@@ -13,6 +13,5 @@ public interface IManaConsumer extends IManaNetworkNode {
         return true;
     }
 
-    int getReceptionRange();
     boolean canConsume(Source source);
 }
