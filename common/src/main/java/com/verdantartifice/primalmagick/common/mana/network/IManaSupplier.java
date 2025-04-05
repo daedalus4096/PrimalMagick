@@ -25,8 +25,9 @@ public interface IManaSupplier extends IManaNetworkNode {
     default void onPlaced(Level level) {
         // Search for mana consumers to which this supplier can provide
         int range = this.getNetworkRange();
+        int rangeSqr = range * range;
         BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
-                .filter(pos -> pos.distSqr(this.getBlockPos()) <= (range * range))
+                .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaConsumer consumer ? consumer : null)
                 .filter(Objects::nonNull)
                 .map(consumer -> new Route(this, consumer))

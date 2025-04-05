@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
+import net.minecraft.world.level.Level;
 
 /**
  * Interface identifying a relay in a mana network, a device which can both transmit and receive mana but cannot
@@ -30,4 +31,9 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
     }
 
     boolean canRelay(Source source);
+
+    @Override
+    default void onPlaced(Level leve) {
+        // TODO Stub
+    }
 }
