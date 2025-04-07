@@ -30,7 +30,6 @@ public class Route {
     // Cached data suppliers
     protected final Supplier<List<IManaNetworkNode>> nodeSupplier = Suppliers.memoize(this::getNodesInner);
     protected final Supplier<List<Hop>> hopSupplier = Suppliers.memoize(this::getHopsInner);
-    protected final Supplier<Integer> throughputSupplier = Suppliers.memoize(this::getMaxThroughputInner);
     protected final Supplier<Double> scoreSupplier = Suppliers.memoize(this::getScoreInner);
     protected final Supplier<Boolean> validSupplier = Suppliers.memoize(this::isValidInner);
     protected final Supplier<Boolean> completeSupplier = Suppliers.memoize(this::isCompleteInner);
@@ -71,10 +70,6 @@ public class Route {
     }
 
     public int getMaxThroughput() {
-        return this.throughputSupplier.get();
-    }
-
-    protected int getMaxThroughputInner() {
         return this.getHops().stream().mapToInt(Hop::getManaThroughput).min().orElse(0);
     }
 

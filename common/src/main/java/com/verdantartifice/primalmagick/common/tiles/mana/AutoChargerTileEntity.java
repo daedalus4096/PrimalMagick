@@ -8,8 +8,10 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,7 +21,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 
@@ -78,29 +79,11 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {
-        ItemStack chargeStack = entity.getItem(INPUT_INV_INDEX, 0);
         if (!level.isClientSide) {
-            if (entity.chargeTime % 20 == 0) {
-                // Scan surroundings for mana fonts once a second
-                entity.scanSurroundings();
+            if (entity.chargeTime % 5 == 0) {
+                final int throughput = entity.getManaThroughput();
+                Sources.getAllSorted().forEach(s -> entity.doSiphon(level, s, throughput));
             }
-            
-            // Channel each nearby font
-            Vec3 chargerCenter = Vec3.atCenterOf(pos);
-            if (entity.chargeTime % 5 == 0 && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
-                for (BlockPos fontPos : entity.fontLocations) {
-                    if (level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity tile) {
-//                        final int toSiphon = chargeStack.getItem() instanceof IWand wand ? wand.getSiphonAmount(chargeStack) : 100;
-//                        chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
-//                            // TODO Get the stack's max charge rate somehow, instead of siphoning one point of mana at a time for non-wands
-//                            tile.doSiphon(manaCap, level, null, chargerCenter, toSiphon);
-//                            return manaCap;
-//                        });
-//                        chargeStack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
-                    }
-                }
-            }
-
             entity.chargeTime++;
         }
     }
@@ -180,8 +163,10 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public int getManaThroughput() {
-        // TODO Get acceptable throughput from contained charge stack
-        return 100;
+        // Get acceptable throughput from contained charge stack
+        // TODO Get the stack's max charge rate somehow, instead of siphoning one point of mana at a time for non-wands
+        ItemStack chargeStack = this.getItem(INPUT_INV_INDEX, 0);
+        return chargeStack.getItem() instanceof IWand wand ? wand.getSiphonAmount(chargeStack) : 100;
     }
 
     @Override
