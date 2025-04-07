@@ -4,8 +4,8 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,12 +22,14 @@ public interface IManaSupplier extends IManaNetworkNode {
         return true;
     }
 
-    boolean canSupply(Source source);
-    int extractMana(Source source, int maxExtract, boolean simulate);
+    boolean canSupply(@NotNull Source source);
+    int extractMana(@NotNull Source source, int maxExtract, boolean simulate);
 
-    default void onPlaced(Level level) {
+    default void onPlaced(@NotNull Level level) {
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
+
+        // TODO Confirm that area is loaded before scanning
 
         // Search for mana consumers which are in range of this node
         List<IManaConsumer> consumers = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))

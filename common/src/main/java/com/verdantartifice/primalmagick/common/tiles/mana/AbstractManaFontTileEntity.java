@@ -151,6 +151,19 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
         }
     }
 
+    @Override
+    public int extractMana(@NotNull Source source, int maxExtract, boolean simulate) {
+        if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock) {
+            Source fontSource = fontBlock.getSource();
+            if (source.equals(fontSource) && !simulate) {
+                int tap = Math.min(this.mana, maxExtract);
+                this.mana -= tap;
+                return tap;
+            }
+        }
+        return 0;
+    }
+
     @VisibleForTesting
     public void doRecharge() {
         // Recharge the font over time
@@ -167,8 +180,8 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
     }
 
     @Override
-    public boolean canSupply(Source source) {
-        return this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock && fontBlock.getSource().equals(source);
+    public boolean canSupply(@NotNull Source source) {
+        return this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock && source.equals(fontBlock.getSource());
     }
 
     @Override

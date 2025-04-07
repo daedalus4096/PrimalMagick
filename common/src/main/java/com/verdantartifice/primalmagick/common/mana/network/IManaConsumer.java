@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -27,10 +28,10 @@ public interface IManaConsumer extends IManaNetworkNode {
         return true;
     }
 
-    boolean canConsume(Source source);
-    int receiveMana(Source source, int maxReceive, boolean simulate);
+    boolean canConsume(@NotNull Source source);
+    int receiveMana(@NotNull Source source, int maxReceive, boolean simulate);
 
-    default void doSiphon(Level level, Source source, final int maxTransferCentimana) {
+    default void doSiphon(@NotNull Level level, @NotNull Source source, final int maxTransferCentimana) {
         int remainingTransfer = maxTransferCentimana;
         RouteTable routeTable = this.getRouteTable();
         Set<Route.Hop> particleHops = new HashSet<>();
@@ -64,9 +65,11 @@ public interface IManaConsumer extends IManaNetworkNode {
         }
     }
 
-    default void onPlaced(Level level) {
+    default void onPlaced(@NotNull Level level) {
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
+
+        // TODO Confirm that area is loaded before scanning
 
         // Search for mana suppliers which are in range of this node
         List<IManaSupplier> suppliers = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))

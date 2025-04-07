@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,31 +29,31 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
     }
 
     @Override
-    default int extractMana(Source source, int maxExtract, boolean simulate) {
+    default int extractMana(@NotNull Source source, int maxExtract, boolean simulate) {
         // Relays don't contain mana, they only pass it along
         return 0;
     }
 
     @Override
-    default int receiveMana(Source source, int maxReceive, boolean simulate) {
+    default int receiveMana(@NotNull Source source, int maxReceive, boolean simulate) {
         // Relays don't contain mana, they only pass it along
         return 0;
     }
 
     @Override
-    default boolean canSupply(Source source) {
+    default boolean canSupply(@NotNull Source source) {
         return this.canRelay(source);
     }
 
     @Override
-    default boolean canConsume(Source source) {
+    default boolean canConsume(@NotNull Source source) {
         return this.canRelay(source);
     }
 
     boolean canRelay(Source source);
 
     @Override
-    default void onPlaced(Level level) {
+    default void onPlaced(@NotNull Level level) {
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 

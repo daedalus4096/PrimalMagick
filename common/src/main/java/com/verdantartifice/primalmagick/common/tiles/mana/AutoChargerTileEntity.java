@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -61,6 +61,20 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
         compound.putInt("ChargeTime", this.chargeTime);
+    }
+
+    @Override
+    public int receiveMana(@NotNull Source source, int maxReceive, boolean simulate) {
+        ItemStack chargeStack = this.getItem(INPUT_INV_INDEX, 0);
+        if (!this.getLevel().isClientSide() && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+            MutableInt actualReceived = new MutableInt(0);
+            chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
+                actualReceived.setValue(manaCap.receiveMana(source, maxReceive, simulate));
+                return manaCap;
+            });
+            return actualReceived.intValue();
+        }
+        return 0;
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {
@@ -160,12 +174,13 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public boolean canConsume(Source source) {
+    public boolean canConsume(@NotNull Source source) {
         return true;
     }
 
     @Override
     public int getManaThroughput() {
+        // TODO Get acceptable throughput from contained charge stack
         return 100;
     }
 
