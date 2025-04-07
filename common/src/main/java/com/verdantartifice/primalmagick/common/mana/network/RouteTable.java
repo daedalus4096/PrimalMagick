@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -35,10 +37,14 @@ public class RouteTable {
         return target != null && target.remove(route);
     }
 
-    public Optional<Route> getRoute(@NotNull IManaSupplier origin, @NotNull IManaConsumer terminus) {
+    public Optional<Route> getRoute(@NotNull Level level, @NotNull Source source, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus) {
         if (this.routes.contains(origin.getNodeId(), terminus.getNodeId())) {
             Set<Route> routeSet = this.routes.get(origin.getNodeId(), terminus.getNodeId());
-            return routeSet == null ? Optional.empty() : routeSet.stream().max(Comparator.comparing(Route::getScore).thenComparing(Route::hashCode));
+            return routeSet == null ?
+                    Optional.empty() :
+                    routeSet.stream()
+                            .filter(r -> r.canRoute(source) && r.isActive(level))
+                            .max(Comparator.comparing(Route::getScore).thenComparing(Route::hashCode));
         } else {
             return Optional.empty();
         }
@@ -50,6 +56,10 @@ public class RouteTable {
 
     public Set<Route> getRoutesForTerminus(@NotNull IManaConsumer terminus) {
         return this.routes.column(terminus.getNodeId()).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+    }
+
+    public Set<IManaSupplier> getLinkedOrigins(@NotNull IManaConsumer terminus) {
+        return this.getRoutesForTerminus(terminus).stream().map(Route::getOrigin).collect(Collectors.toSet());
     }
 
     protected void mergeRoutes(@NotNull RouteTable other) {

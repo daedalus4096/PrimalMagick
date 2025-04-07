@@ -143,7 +143,8 @@ public class Route {
 
     /**
      * Returns a new route that connects this route and the given one. The given route is appended to this route, if
-     * and only if the terminus of this route is the same as the origin of the given route.
+     * and only if the terminus of this route is the same as the origin of the given route. The overlapping node is
+     * de-duplicated.
      *
      * @param other the route to be appended to this one
      * @return an optional containing the new route, or empty if such a route is not valid
@@ -242,7 +243,7 @@ public class Route {
         return Objects.hash(origin, relays, terminus);
     }
 
-    protected record Hop(@NotNull IManaSupplier supplier, @NotNull IManaConsumer consumer) {
+    public record Hop(@NotNull IManaSupplier supplier, @NotNull IManaConsumer consumer) {
         public double getDistanceSqr() {
             return this.supplier.getBlockPos().distSqr(this.consumer.getBlockPos());
         }

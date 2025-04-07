@@ -23,6 +23,7 @@ public interface IManaSupplier extends IManaNetworkNode {
     }
 
     boolean canSupply(Source source);
+    int extractMana(Source source, int maxExtract, boolean simulate);
 
     default void onPlaced(Level level) {
         int range = this.getNetworkRange();

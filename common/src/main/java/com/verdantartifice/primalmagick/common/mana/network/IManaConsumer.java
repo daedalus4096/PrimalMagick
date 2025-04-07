@@ -1,11 +1,16 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,6 +28,41 @@ public interface IManaConsumer extends IManaNetworkNode {
     }
 
     boolean canConsume(Source source);
+    int receiveMana(Source source, int maxReceive, boolean simulate);
+
+    default void doSiphon(Level level, Source source, final int maxTransferCentimana) {
+        int remainingTransfer = maxTransferCentimana;
+        RouteTable routeTable = this.getRouteTable();
+        Set<Route.Hop> particleHops = new HashSet<>();
+
+        // Get the best route for each origin linked to this terminus that can carry the requested source
+        List<Route> routes = routeTable.getLinkedOrigins(this).stream()
+                .map(supplier -> routeTable.getRoute(level, source, supplier, this))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .sorted(Comparator.comparing(Route::getMaxThroughput).reversed().thenComparing(Route::hashCode))
+                .toList();
+        Iterator<Route> routeIterator = routes.iterator();
+
+        // Transfer mana directly from the origin to the terminus
+        while (remainingTransfer > 0 && routeIterator.hasNext()) {
+            Route route = routeIterator.next();
+            int toExtract = Math.min(remainingTransfer, route.getMaxThroughput());
+            int actualExtracted = route.getOrigin().extractMana(source, toExtract, false);
+            int actualReceived = route.getTerminus().receiveMana(source, actualExtracted, false);
+            remainingTransfer -= actualReceived;
+            particleHops.addAll(route.getHops());
+        }
+
+        // Show particles for each hop in the route
+        if (level instanceof ServerLevel serverLevel) {
+            particleHops.forEach(hop -> PacketHandler.sendToAllAround(
+                    new ManaSparklePacket(hop.supplier().getBlockPos().getCenter(), hop.consumer().getBlockPos().getCenter(), 20, source.getColor()),
+                    serverLevel,
+                    hop.supplier().getBlockPos(),
+                    32D));
+        }
+    }
 
     default void onPlaced(Level level) {
         int range = this.getNetworkRange();

@@ -28,6 +28,18 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
     }
 
     @Override
+    default int extractMana(Source source, int maxExtract, boolean simulate) {
+        // Relays don't contain mana, they only pass it along
+        return 0;
+    }
+
+    @Override
+    default int receiveMana(Source source, int maxReceive, boolean simulate) {
+        // Relays don't contain mana, they only pass it along
+        return 0;
+    }
+
+    @Override
     default boolean canSupply(Source source) {
         return this.canRelay(source);
     }
