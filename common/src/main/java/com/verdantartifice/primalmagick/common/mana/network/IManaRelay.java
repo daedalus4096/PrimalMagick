@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -53,58 +54,61 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
     boolean canRelay(Source source);
 
     @Override
-    default void onPlaced(@NotNull Level level) {
+    default void loadManaNetwork(@NotNull Level level) {
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 
-        // Search for mana network nodes in range of this one
-        List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
-                .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
-                .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
-                .filter(Objects::nonNull)
-                .toList();
+        // Confirm that area is loaded before scanning
+        if (Services.LEVEL.isAreaLoaded(level, this.getBlockPos(), this.getNetworkRange())) {
+            // Search for mana network nodes in range of this one
+            List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
+                    .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
+                    .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
+                    .filter(Objects::nonNull)
+                    .toList();
 
-        // Create direct routes to this relay for origin suppliers
-        nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
-                .filter(supplier -> supplier != null && supplier.isOrigin())
-                .map(supplier -> new Route(supplier, this))
-                .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+            // Create direct routes to this relay for origin suppliers
+            nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
+                    .filter(supplier -> supplier != null && supplier.isOrigin())
+                    .map(supplier -> new Route(supplier, this))
+                    .filter(Route::isValid)
+                    .forEach(this.getRouteTable()::addRoute);
 
-        // Create direct routes to this relay for terminus consumers
-        nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
-                .filter(consumer -> consumer != null && consumer.isTerminus())
-                .map(consumer -> new Route(this, consumer))
-                .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+            // Create direct routes to this relay for terminus consumers
+            nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
+                    .filter(consumer -> consumer != null && consumer.isTerminus())
+                    .map(consumer -> new Route(this, consumer))
+                    .filter(Route::isValid)
+                    .forEach(this.getRouteTable()::addRoute);
 
-        // For nodes that are actually relays, create bidirectional routes connecting this and that
-        List<IManaRelay> relays = nodes.stream().map(node -> node instanceof IManaRelay relay ? relay : null)
-                .filter(Objects::nonNull)
-                .toList();
-        relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForOrigin(relay).stream())
-                .map(route -> route.pushOrigin(this))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
-        relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForTerminus(relay).stream())
-                .map(route -> route.pushTerminus(this))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+            // For nodes that are actually relays, create bidirectional routes connecting this and that
+            List<IManaRelay> relays = nodes.stream().map(node -> node instanceof IManaRelay relay ? relay : null)
+                    .filter(Objects::nonNull)
+                    .toList();
+            relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForOrigin(relay).stream())
+                    .map(route -> route.pushOrigin(this))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .filter(Route::isValid)
+                    .forEach(this.getRouteTable()::addRoute);
+            relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForTerminus(relay).stream())
+                    .map(route -> route.pushTerminus(this))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .filter(Route::isValid)
+                    .forEach(this.getRouteTable()::addRoute);
 
-        // Connect existing routes that can use this relay as a bridge
-        Set<Route> heads = this.getRouteTable().getRoutesForTerminus(this);
-        Set<Route> tails = this.getRouteTable().getRoutesForOrigin(this);
-        heads.forEach(head -> tails.stream().map(head::connect)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute));
+            // Connect existing routes that can use this relay as a bridge
+            Set<Route> heads = this.getRouteTable().getRoutesForTerminus(this);
+            Set<Route> tails = this.getRouteTable().getRoutesForOrigin(this);
+            heads.forEach(head -> tails.stream().map(head::connect)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .filter(Route::isValid)
+                    .forEach(this.getRouteTable()::addRoute));
 
-        // Update connected nodes on the newly created routes
-        this.getRouteTable().propagateRoutes(Set.of(this));
+            // Update connected nodes on the newly created routes
+            this.getRouteTable().propagateRoutes(Set.of(this));
+        }
     }
 }
