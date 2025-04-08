@@ -177,7 +177,6 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             var chargerPos = BlockPos.ZERO.north();
             helper.setBlock(chargerPos, BlocksPM.AUTO_CHARGER.get());
             var chargerTile = helper.<AutoChargerTileEntity>getBlockEntity(chargerPos);
-            var chargerState = helper.getBlockState(chargerPos);
 
             // Place an earth font block
             var fontPos = BlockPos.ZERO.east();
@@ -198,18 +197,17 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             helper.assertValueEqual(beforeStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).getManaStored(Sources.EARTH), 0, "Before stack not initially empty");
             helper.assertValueEqual(fontTile.getMana(), startFontMana, "Before font mana not as expected");
 
-            // Run a tick of the auto charger
-            AutoChargerTileEntity.tick(helper.getLevel(), chargerPos, chargerState, chargerTile);
-
             // Confirm that mana was successfully siphoned
             final int expectedSiphonAmount = 100;
-            var afterStack = handler.getStackInSlot(0);
-            helper.assertFalse(afterStack.isEmpty(), "After stack empty");
-            helper.assertTrue(afterStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "After stack has no mana storage");
-            helper.assertValueEqual(afterStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).getManaStored(Sources.EARTH), expectedSiphonAmount, "After stack mana total not as expected");
-            helper.assertValueEqual(fontTile.getMana(), startFontMana - expectedSiphonAmount, "After font mana not as expected");
-
-            helper.succeed();
+            helper.succeedOnTickWhen(1, () -> {
+                var afterStack = handler.getStackInSlot(0);
+                helper.assertFalse(afterStack.isEmpty(), "After stack empty");
+                helper.assertTrue(afterStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "After stack has no mana storage");
+                int afterStackMana = afterStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).getManaStored(Sources.EARTH);
+                int fontMana = fontTile.getMana();
+                helper.assertValueEqual(afterStackMana, expectedSiphonAmount, "After stack mana total not as expected");
+                helper.assertValueEqual(fontMana, startFontMana - expectedSiphonAmount + AbstractManaFontTileEntity.CENTIMANA_RECHARGED_PER_TICK, "After font mana not as expected");
+            });
         });
     }
 }
