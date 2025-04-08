@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
+import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -51,7 +53,7 @@ import java.util.Set;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock
  * @author Daedalus4096
  */
-public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
+public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IManaConsumer {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int FONT_RANGE = 5;
@@ -63,7 +65,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
 
-    protected final Set<BlockPos> fontLocations = new HashSet<>();
+    protected final RouteTable routeTable = new RouteTable();
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chargerData = new ContainerData() {
@@ -149,7 +151,12 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             return 0;
         }
     }
-    
+
+    @Override
+    public int receiveMana(@NotNull Source source, int maxReceive, boolean simulate) {
+        return this.manaStorage.receiveMana(source, maxReceive, simulate);
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, ManaBatteryTileEntity entity) {
         boolean shouldMarkDirty = false;
         
@@ -157,19 +164,10 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             
-            // Scan surroundings for mana fonts once a second
-            if (entity.fontSiphonTime % 20 == 0) {
-                entity.scanSurroundings();
-            }
-
             // Siphon from nearby fonts
-            Vec3 chargerCenter = Vec3.atCenterOf(pos);
-            for (BlockPos fontPos : entity.fontLocations) {
-                if (entity.fontSiphonTime % 5 == 0 && 
-                        level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity fontEntity && 
-                        level.getBlockState(fontPos).getBlock() instanceof AbstractManaFontBlock) {
-                    fontEntity.doSiphon(entity.manaStorage, level, null, chargerCenter, entity.getBatteryTransferCap());
-                }
+            if (entity.fontSiphonTime % 5 == 0) {
+                final int throughput = entity.getManaThroughput();
+                Sources.getAllSorted().forEach(s -> entity.doSiphon(level, s, throughput));
             }
             entity.fontSiphonTime++;
 
@@ -253,20 +251,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             }
         }
         return false;
-    }
-    
-    @SuppressWarnings("deprecation")
-    protected void scanSurroundings() {
-        BlockPos pos = this.getBlockPos();
-        if (Services.LEVEL.isAreaLoaded(this.level, pos, FONT_RANGE)) {
-            this.fontLocations.clear();
-            Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-FONT_RANGE, -FONT_RANGE, -FONT_RANGE), pos.offset(FONT_RANGE, FONT_RANGE, FONT_RANGE));
-            for (BlockPos searchPos : positions) {
-                if (this.level.getBlockState(searchPos).getBlock() instanceof AbstractManaFontBlock) {
-                    this.fontLocations.add(searchPos.immutable());
-                }
-            }
-        }
     }
     
     protected boolean canOutputToWand(ItemStack outputStack, Source source) {
@@ -425,5 +409,25 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     @Override
     public void removeComponentsFromTag(CompoundTag pTag) {
         pTag.remove("ManaStorage");
+    }
+
+    @Override
+    public boolean canConsume(@NotNull Source source) {
+        return true;
+    }
+
+    @Override
+    public int getNetworkRange() {
+        return 5;
+    }
+
+    @Override
+    public int getManaThroughput() {
+        return this.getBatteryTransferCap();
+    }
+
+    @Override
+    public @NotNull RouteTable getRouteTable() {
+        return this.routeTable;
     }
 }
