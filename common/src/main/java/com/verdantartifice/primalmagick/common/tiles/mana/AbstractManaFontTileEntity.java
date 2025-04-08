@@ -158,6 +158,8 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
             if (source.equals(fontSource) && !simulate) {
                 int tap = Math.min(this.mana, maxExtract);
                 this.mana -= tap;
+                this.setChanged();
+                this.syncTile(true);
                 return tap;
             }
         }
