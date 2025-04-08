@@ -175,6 +175,12 @@ public class Route {
             return false;
         }
 
+        // Disallow any routes between nodes that are both origin and terminus to prevent feedback loops
+        if (this.origin.isOrigin() && this.origin instanceof IManaConsumer consumer && consumer.isTerminus() &&
+                this.terminus.isTerminus() && this.terminus instanceof IManaSupplier supplier && supplier.isOrigin()) {
+            return false;
+        }
+
         // Confirm that there are no cycles in the route by checking for duplicate nodes
         List<Long> idList = this.getNodes().stream().map(IManaNetworkNode::getNodeId).toList();
         Set<Long> deduplicatedIdSet = new HashSet<>(idList);
