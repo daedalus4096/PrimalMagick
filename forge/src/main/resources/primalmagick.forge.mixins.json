@@ -4,6 +4,7 @@
   "package": "com.verdantartifice.primalmagick.mixin",
   "compatibilityLevel": "JAVA_18",
   "mixins": [
+    "AbstractManaFontTileEntityMixinForge",
     "RepairItemRecipeMixin"
   ],
   "client": [
