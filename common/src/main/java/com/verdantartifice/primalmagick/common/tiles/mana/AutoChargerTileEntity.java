@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.google.common.collect.ImmutableSet;
-import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
@@ -85,19 +84,6 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
                 Sources.getAllSorted().forEach(s -> entity.doSiphon(level, s, throughput));
             }
             entity.chargeTime++;
-        }
-    }
-    
-    protected void scanSurroundings() {
-        BlockPos pos = this.getBlockPos();
-        if (Services.LEVEL.isAreaLoaded(this.level, pos, 5)) {
-            this.fontLocations.clear();
-            Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5));
-            for (BlockPos searchPos : positions) {
-                if (this.level.getBlockState(searchPos).getBlock() instanceof AbstractManaFontBlock) {
-                    this.fontLocations.add(searchPos.immutable());
-                }
-            }
         }
     }
     
