@@ -8,6 +8,10 @@ import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
+import com.verdantartifice.primalmagick.common.mana.network.IManaNetworkNode;
+import com.verdantartifice.primalmagick.common.mana.network.IManaRelay;
+import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
+import com.verdantartifice.primalmagick.common.mana.network.Route;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
@@ -37,6 +41,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,6 +49,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -53,10 +60,9 @@ import java.util.Set;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock
  * @author Daedalus4096
  */
-public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IManaConsumer {
+public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IManaSupplier, IManaConsumer {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected static final int FONT_RANGE = 5;
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int CHARGE_INV_INDEX = 1;
     
@@ -150,6 +156,11 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public int extractMana(@NotNull Source source, int maxExtract, boolean simulate) {
+        return this.manaStorage.extractMana(source, maxExtract, simulate);
     }
 
     @Override
@@ -414,6 +425,11 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
+    public boolean canSupply(@NotNull Source source) {
+        return true;
+    }
+
+    @Override
     public boolean canConsume(@NotNull Source source) {
         return true;
     }
@@ -431,5 +447,63 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     @Override
     public @NotNull RouteTable getRouteTable() {
         return this.routeTable;
+    }
+
+    @Override
+    public void loadManaNetwork(@NotNull Level level) {
+        // Combine supplier and consumer network loading
+        int range = this.getNetworkRange();
+        int rangeSqr = range * range;
+
+        // Confirm that area is loaded before scanning
+        if (Services.LEVEL.isAreaLoaded(level, this.getBlockPos(), this.getNetworkRange())) {
+            // Search for mana suppliers and consumers which are in range of this node
+            List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
+                    .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
+                    .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
+                    .filter(Objects::nonNull)
+                    .toList();
+            List<IManaConsumer> consumers = nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
+                    .filter(Objects::nonNull)
+                    .toList();
+            List<IManaSupplier> suppliers = nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
+                    .filter(Objects::nonNull)
+                    .toList();
+
+            // Create direct routes from this supplier for terminus consumers
+            consumers.stream().filter(IManaConsumer::isTerminus)
+                    .map(consumer -> new Route(this, consumer))
+                    .filter(Route::isValid)
+                    .forEach(this.getRouteTable()::addRoute);
+
+            // Create direct routes to this consumer for origin suppliers
+            suppliers.stream().filter(IManaSupplier::isOrigin)
+                    .map(supplier -> new Route(supplier, this))
+                    .filter(Route::isValid)
+                    .forEach(this.getRouteTable()::addRoute);
+
+            // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
+            consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
+                    .filter(Objects::nonNull)
+                    .flatMap(relay -> relay.getRouteTable().getRoutesForOrigin(relay).stream())
+                    .map(route -> route.pushOrigin(this))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .filter(Route::isValid)
+                    .forEach(this.getRouteTable()::addRoute);
+
+            // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
+            suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
+                    .filter(Objects::nonNull)
+                    .flatMap(relay -> relay.getRouteTable().getRoutesForTerminus(relay).stream())
+                    .map(route -> route.pushTerminus(this))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .filter(Route::isValid)
+                    .forEach(this.getRouteTable()::addRoute);
+
+            // Update connected nodes on the newly created routes
+            this.getRouteTable().propagateRoutes(Set.of(this));
+        }
     }
 }
