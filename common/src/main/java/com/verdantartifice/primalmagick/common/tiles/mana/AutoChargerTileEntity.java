@@ -77,7 +77,8 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {
         if (!level.isClientSide) {
-            if (entity.chargeTime % 5 == 0) {
+            ItemStack chargeStack = entity.getItem(INPUT_INV_INDEX, 0);
+            if (entity.chargeTime % 5 == 0 && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 final int throughput = entity.getManaThroughput();
                 Sources.getAllSorted().forEach(s -> entity.doSiphon(level, s, throughput));
             }
