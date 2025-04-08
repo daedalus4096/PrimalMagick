@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -38,7 +37,6 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     protected static final int INPUT_INV_INDEX = 0;
 
     protected final RouteTable routeTable = new RouteTable();
-    protected final Set<BlockPos> fontLocations = new HashSet<>();
     protected int chargeTime;
 
     public AutoChargerTileEntity(BlockPos pos, BlockState state) {
