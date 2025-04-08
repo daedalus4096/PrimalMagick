@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
@@ -79,8 +80,11 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
         if (!level.isClientSide) {
             ItemStack chargeStack = entity.getItem(INPUT_INV_INDEX, 0);
             if (entity.chargeTime % 5 == 0 && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+                final ManaStorage manaStorage = chargeStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
                 final int throughput = entity.getManaThroughput();
-                Sources.getAllSorted().forEach(s -> entity.doSiphon(level, s, throughput));
+                Sources.getAllSorted().stream()
+                        .filter(manaStorage::canReceive)
+                        .forEach(s -> entity.doSiphon(level, s, Math.min(throughput, manaStorage.getMaxManaStored(s) - manaStorage.getManaStored(s))));
             }
             entity.chargeTime++;
         }

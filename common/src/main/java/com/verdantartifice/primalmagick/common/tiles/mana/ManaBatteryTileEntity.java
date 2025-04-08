@@ -167,7 +167,9 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             // Siphon from nearby fonts
             if (entity.fontSiphonTime % 5 == 0) {
                 final int throughput = entity.getManaThroughput();
-                Sources.getAllSorted().forEach(s -> entity.doSiphon(level, s, throughput));
+                Sources.getAllSorted().stream()
+                        .filter(entity.manaStorage::canReceive)
+                        .forEach(s -> entity.doSiphon(level, s, Math.min(throughput, entity.manaStorage.getMaxManaStored(s) - entity.manaStorage.getManaStored(s))));
             }
             entity.fontSiphonTime++;
 
