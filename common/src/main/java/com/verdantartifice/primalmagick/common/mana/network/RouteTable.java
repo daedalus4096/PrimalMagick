@@ -34,6 +34,10 @@ public class RouteTable {
         other.routes.values().stream().flatMap(Collection::stream).forEach(this::addRoute);
     }
 
+    public Set<Route> getAllRoutes() {
+        return this.routes.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
+    }
+
     public boolean addRoute(@NotNull Route route) {
         Set<Route> target;
         if (this.routes.contains(route.getOrigin().getNodeId(), route.getTerminus().getNodeId())) {
@@ -50,14 +54,14 @@ public class RouteTable {
         return target != null && target.remove(route);
     }
 
-    public Optional<Route> getRoute(@NotNull Level level, @NotNull Source source, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull IManaNetworkNode owner) {
+    public Optional<Route> getRoute(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull IManaNetworkNode owner) {
         if (this.routes.contains(origin.getNodeId(), terminus.getNodeId())) {
             Set<Route> routeSet = this.routes.get(origin.getNodeId(), terminus.getNodeId());
             Set<Route> toForget = new HashSet<>();
             Optional<Route> retVal = routeSet == null ?
                     Optional.empty() :
                     routeSet.stream()
-                            .filter(r -> r.canRoute(source))
+                            .filter(r -> sourceOpt.isEmpty() || r.canRoute(sourceOpt.get()))
                             .filter(r -> {
                                 if (r.isActive(level)) {
                                     return true;
@@ -76,6 +80,10 @@ public class RouteTable {
 
     public Set<Route> getRoutesForOrigin(@NotNull IManaSupplier origin) {
         return this.routes.row(origin.getNodeId()).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+    }
+
+    public Set<IManaConsumer> getLinkedTerminuses(@NotNull IManaSupplier origin) {
+        return this.getRoutesForOrigin(origin).stream().map(Route::getTerminus).collect(Collectors.toSet());
     }
 
     public Set<Route> getRoutesForTerminus(@NotNull IManaConsumer terminus) {

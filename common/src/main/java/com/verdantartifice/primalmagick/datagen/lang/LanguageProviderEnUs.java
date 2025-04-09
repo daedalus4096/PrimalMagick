@@ -1620,6 +1620,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("knowledge_item").sub("success").output("You have gained valuable arcane knowledge").end().build();
         this.event("knowledge_item").sub("failure").output("You can't make heads or tails of this").end().build();
         this.event("knowledge_item").sub("already_known").output("You already know everything this has to teach").end().build();
+        this.event("dowsing_rod").sub("position").sub("clear").output("Clearing recorded dowsing positions").end().build();
+        this.event("dowsing_rod").sub("position").sub("record").output("Dowsing at position %1$s").end().build();
+        this.event("dowsing_rod").sub("mana_network").sub("routes").output("Showing connected network routes for %1$s").end().build();
+        this.event("dowsing_rod").sub("mana_network").sub("route_highlight").output("Highlighting best route between %1$s and %2$s").end().build();
+        this.event("dowsing_rod").sub("mana_network").sub("no_route").output("No route found between %1$s and %2$s").end().build();
         this.event("dowsing_rod").sub("altar_stability").sub("very_good").output("Altar layout stability: very good").end().build();
         this.event("dowsing_rod").sub("altar_stability").sub("good").output("Altar layout stability: good").end().build();
         this.event("dowsing_rod").sub("altar_stability").sub("neutral").output("Altar layout stability: neutral").end().build();

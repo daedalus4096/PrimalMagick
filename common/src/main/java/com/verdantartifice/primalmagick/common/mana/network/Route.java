@@ -85,7 +85,7 @@ public class Route {
                 .build();
     }
 
-    protected List<Hop> getHops() {
+    public List<Hop> getHops() {
         return this.hopSupplier.get();
     }
 

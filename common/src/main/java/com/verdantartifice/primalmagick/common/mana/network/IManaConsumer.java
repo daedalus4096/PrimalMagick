@@ -39,7 +39,7 @@ public interface IManaConsumer extends IManaNetworkNode {
 
         // Get the best route for each origin linked to this terminus that can carry the requested source
         List<Route> routes = routeTable.getLinkedOrigins(this).stream()
-                .map(supplier -> routeTable.getRoute(level, source, supplier, this, this))
+                .map(supplier -> routeTable.getRoute(level, Optional.of(source), supplier, this, this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .sorted(Comparator.comparing(Route::getMaxThroughput).reversed().thenComparing(Route::hashCode))
