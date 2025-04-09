@@ -113,6 +113,7 @@
     "primalmagick:infernal_furnace",
     "primalmagick:mana_nexus",
     "primalmagick:mana_singularity",
-    "primalmagick:mana_singularity_creative"
+    "primalmagick:mana_singularity_creative",
+    "primalmagick:mana_relay_basic"
   ]
 }
