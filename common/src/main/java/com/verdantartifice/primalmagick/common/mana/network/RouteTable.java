@@ -50,14 +50,25 @@ public class RouteTable {
         return target != null && target.remove(route);
     }
 
-    public Optional<Route> getRoute(@NotNull Level level, @NotNull Source source, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus) {
+    public Optional<Route> getRoute(@NotNull Level level, @NotNull Source source, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull IManaNetworkNode owner) {
         if (this.routes.contains(origin.getNodeId(), terminus.getNodeId())) {
             Set<Route> routeSet = this.routes.get(origin.getNodeId(), terminus.getNodeId());
-            return routeSet == null ?
+            Set<Route> toForget = new HashSet<>();
+            Optional<Route> retVal = routeSet == null ?
                     Optional.empty() :
                     routeSet.stream()
-                            .filter(r -> r.canRoute(source) && r.isActive(level))
+                            .filter(r -> r.canRoute(source))
+                            .filter(r -> {
+                                if (r.isActive(level)) {
+                                    return true;
+                                } else {
+                                    toForget.add(r);
+                                    return false;
+                                }
+                            })
                             .max(Comparator.comparing(Route::getScore).thenComparing(Route::hashCode));
+            this.forgetRoutes(toForget, Set.of(owner));
+            return retVal;
         } else {
             return Optional.empty();
         }
@@ -81,17 +92,32 @@ public class RouteTable {
 
     public void propagateRoutes(@NotNull Set<IManaNetworkNode> processedNodes) {
         // Update the route tables of every known node with this table's routes
-        Set<Long> processedIds = processedNodes.stream().map(IManaNetworkNode::getNodeId).collect(Collectors.toSet());
-        Set<IManaNetworkNode> knownNodes = this.routes.values().stream()
-                .flatMap(Collection::stream)
-                .flatMap(r -> r.getNodes().stream())
-                .filter(node -> !processedIds.contains(node.getNodeId()))
-                .collect(Collectors.toSet());
+        Set<IManaNetworkNode> knownNodes = this.getKnownNodes(processedNodes);
         Set<IManaNetworkNode> newProcessedNodes = new HashSet<>(processedNodes);
         newProcessedNodes.addAll(knownNodes);
         knownNodes.forEach(node -> {
             node.getRouteTable().mergeRoutes(this);
             node.getRouteTable().propagateRoutes(newProcessedNodes);
         });
+    }
+
+    public void forgetRoutes(@NotNull Set<Route> toForget, @NotNull Set<IManaNetworkNode> processedNodes) {
+        // Update the route tables of every known node to remove the given routes
+        Set<IManaNetworkNode> knownNodes = this.getKnownNodes(processedNodes);
+        Set<IManaNetworkNode> newProcessedNodes = new HashSet<>(processedNodes);
+        newProcessedNodes.addAll(knownNodes);
+        knownNodes.forEach(node -> {
+            toForget.forEach(node.getRouteTable()::removeRoute);
+            node.getRouteTable().forgetRoutes(toForget, newProcessedNodes);
+        });
+    }
+
+    protected Set<IManaNetworkNode> getKnownNodes(@NotNull Set<IManaNetworkNode> ignore) {
+        Set<Long> ignoreIds = ignore.stream().map(IManaNetworkNode::getNodeId).collect(Collectors.toSet());
+        return this.routes.values().stream()
+                .flatMap(Collection::stream)
+                .flatMap(r -> r.getNodes().stream())
+                .filter(node -> !ignoreIds.contains(node.getNodeId()))
+                .collect(Collectors.toSet());
     }
 }
