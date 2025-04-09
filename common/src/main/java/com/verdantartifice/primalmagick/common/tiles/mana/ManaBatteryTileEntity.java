@@ -465,55 +465,52 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 
-        // Confirm that area is loaded before scanning
-        if (Services.LEVEL.isAreaLoaded(level, this.getBlockPos(), this.getNetworkRange())) {
-            // Search for mana suppliers and consumers which are in range of this node
-            List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
-                    .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
-                    .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
-                    .filter(Objects::nonNull)
-                    .toList();
-            List<IManaConsumer> consumers = nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
-                    .filter(Objects::nonNull)
-                    .toList();
-            List<IManaSupplier> suppliers = nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
-                    .filter(Objects::nonNull)
-                    .toList();
+        // Search for mana suppliers and consumers which are in range of this node
+        List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
+                .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
+                .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
+                .filter(Objects::nonNull)
+                .toList();
+        List<IManaConsumer> consumers = nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
+                .filter(Objects::nonNull)
+                .toList();
+        List<IManaSupplier> suppliers = nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
+                .filter(Objects::nonNull)
+                .toList();
 
-            // Create direct routes from this supplier for terminus consumers
-            consumers.stream().filter(IManaConsumer::isTerminus)
-                    .map(consumer -> new Route(this, consumer))
-                    .filter(Route::isValid)
-                    .forEach(this.getRouteTable()::addRoute);
+        // Create direct routes from this supplier for terminus consumers
+        consumers.stream().filter(IManaConsumer::isTerminus)
+                .map(consumer -> new Route(this, consumer))
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute);
 
-            // Create direct routes to this consumer for origin suppliers
-            suppliers.stream().filter(IManaSupplier::isOrigin)
-                    .map(supplier -> new Route(supplier, this))
-                    .filter(Route::isValid)
-                    .forEach(this.getRouteTable()::addRoute);
+        // Create direct routes to this consumer for origin suppliers
+        suppliers.stream().filter(IManaSupplier::isOrigin)
+                .map(supplier -> new Route(supplier, this))
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute);
 
-            // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
-            consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
-                    .filter(Objects::nonNull)
-                    .flatMap(relay -> relay.getRouteTable().getRoutesForOrigin(relay).stream())
-                    .map(route -> route.pushOrigin(this))
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .filter(Route::isValid)
-                    .forEach(this.getRouteTable()::addRoute);
+        // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
+        consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
+                .filter(Objects::nonNull)
+                .flatMap(relay -> relay.getRouteTable().getRoutesForOrigin(relay).stream())
+                .map(route -> route.pushOrigin(this))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute);
 
-            // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
-            suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
-                    .filter(Objects::nonNull)
-                    .flatMap(relay -> relay.getRouteTable().getRoutesForTerminus(relay).stream())
-                    .map(route -> route.pushTerminus(this))
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .filter(Route::isValid)
-                    .forEach(this.getRouteTable()::addRoute);
+        // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
+        suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
+                .filter(Objects::nonNull)
+                .flatMap(relay -> relay.getRouteTable().getRoutesForTerminus(relay).stream())
+                .map(route -> route.pushTerminus(this))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute);
 
-            // Update connected nodes on the newly created routes
-            this.getRouteTable().propagateRoutes(Set.of(this));
-        }
+        // Update connected nodes on the newly created routes
+        this.getRouteTable().propagateRoutes(Set.of(this));
     }
 }
