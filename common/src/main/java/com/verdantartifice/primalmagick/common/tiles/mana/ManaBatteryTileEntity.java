@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
@@ -42,13 +41,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -296,13 +293,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
-
-        // Deserialize the tile's mana networking route table
-        if (this.getLevel() != null) {
-            this.routeTable.deserializeNBT(registries, compound.get("RouteTable"), this.getLevel());
-        } else {
-            LOGGER.warn("Unable to load route table, no level present");
-        }
     }
     
     @Override
@@ -314,9 +304,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
-
-        // Serialize the tile's mana networking route table
-        this.routeTable.serializeNBT(registries).ifPresent(tag -> compound.put("RouteTable", tag));
     }
 
     @Override

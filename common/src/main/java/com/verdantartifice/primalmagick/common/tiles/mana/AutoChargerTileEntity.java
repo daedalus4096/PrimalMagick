@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
-import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
@@ -57,22 +56,12 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
         this.chargeTime = compound.getInt("ChargeTime");
-
-        // Deserialize the tile's mana networking route table
-        if (this.getLevel() != null) {
-            this.routeTable.deserializeNBT(registries, compound.get("RouteTable"), this.getLevel());
-        } else {
-            LOGGER.warn("Unable to load route table, no level present");
-        }
     }
     
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
         compound.putInt("ChargeTime", this.chargeTime);
-
-        // Serialize the tile's mana networking route table
-        this.routeTable.serializeNBT(registries).ifPresent(tag -> compound.put("RouteTable", tag));
     }
 
     @Override

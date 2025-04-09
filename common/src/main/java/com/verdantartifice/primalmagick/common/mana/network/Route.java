@@ -2,10 +2,7 @@ package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,7 +14,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * A unidirectional path through a mana distribution network, consisting of an origin, a terminus, and zero or more
@@ -237,10 +233,6 @@ public class Route {
         return this.origin.canSupply(source) && this.terminus.canConsume(source) && this.relays.stream().allMatch(r -> r.canRelay(source));
     }
 
-    protected Route.Serialized serialize() {
-        return new Route.Serialized(this);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Route route)) return false;
@@ -266,41 +258,6 @@ public class Route {
 
         public int getManaThroughput() {
             return Math.min(this.supplier.getManaThroughput(), this.consumer.getManaThroughput());
-        }
-    }
-
-    protected static class Serialized {
-        public static final Codec<Route.Serialized> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                BlockPos.CODEC.fieldOf("originPos").forGetter(s -> s.originPos),
-                BlockPos.CODEC.fieldOf("terminusPos").forGetter(s -> s.terminusPos),
-                BlockPos.CODEC.listOf().fieldOf("relayPosList").forGetter(s -> s.relayPosList)
-            ).apply(instance, Route.Serialized::new));
-
-        protected final BlockPos originPos;
-        protected final BlockPos terminusPos;
-        protected final List<BlockPos> relayPosList;
-
-        protected Serialized(final Route route) {
-            this.originPos = route.getOrigin().getBlockPos();
-            this.terminusPos = route.getTerminus().getBlockPos();
-            this.relayPosList = route.getRelays().stream().map(IManaRelay::getBlockPos).toList();
-        }
-
-        protected Serialized(BlockPos originPos, BlockPos terminusPos, List<BlockPos> relayPosList) {
-            this.originPos = originPos;
-            this.terminusPos = terminusPos;
-            this.relayPosList = ImmutableList.copyOf(relayPosList);
-        }
-
-        public Optional<Route> deserialize(@NotNull Level level) {
-            IManaSupplier origin = level.getBlockEntity(this.originPos) instanceof IManaSupplier supplier ? supplier : null;
-            IManaConsumer terminus = level.getBlockEntity(this.terminusPos) instanceof IManaConsumer consumer ? consumer : null;
-            List<IManaRelay> relays = this.relayPosList.stream().map(pos -> level.getBlockEntity(pos) instanceof IManaRelay relay ? relay : null).toList();
-            if (origin != null && terminus != null && relays.stream().noneMatch(Objects::isNull)) {
-                return Optional.of(new Route(origin, terminus, relays));
-            } else {
-                return Optional.empty();
-            }
         }
     }
 }

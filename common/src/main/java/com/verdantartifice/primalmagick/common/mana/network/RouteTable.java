@@ -1,26 +1,16 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Table;
 import com.mojang.logging.LogUtils;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,12 +24,6 @@ public class RouteTable {
     protected static final Logger LOGGER = LogUtils.getLogger();
 
     protected final Table<Long, Long, Set<Route>> routes = HashBasedTable.create();
-
-    public RouteTable() {}
-
-    public RouteTable(List<Route> routes) {
-        routes.stream().filter(Objects::nonNull).forEach(this::addRoute);
-    }
 
     public void clear() {
         this.routes.clear();
@@ -109,51 +93,5 @@ public class RouteTable {
             node.getRouteTable().mergeRoutes(this);
             node.getRouteTable().propagateRoutes(newProcessedNodes);
         });
-    }
-
-    public @NotNull Optional<Tag> serializeNBT(HolderLookup.Provider pRegistries) {
-        RegistryOps<Tag> registryOps = pRegistries.createSerializationContext(NbtOps.INSTANCE);
-        return RouteTable.Serialized.CODEC.encodeStart(registryOps, this.serialize()).resultOrPartial(LOGGER::error);
-    }
-
-    public void deserializeNBT(HolderLookup.Provider pRegistries, @Nullable Tag pTag, @NotNull Level pLevel) {
-        if (pTag != null) {
-            RegistryOps<Tag> registryOps = pRegistries.createSerializationContext(NbtOps.INSTANCE);
-            RouteTable.Serialized.CODEC.parse(registryOps, pTag)
-                    .resultOrPartial(LOGGER::error)
-                    .map(ser -> ser.deserialize(pLevel))
-                    .ifPresent(this::copyFrom);
-        }
-    }
-
-    protected RouteTable.Serialized serialize() {
-        return new RouteTable.Serialized(this);
-    }
-
-    public static class Serialized {
-        public static final Codec<RouteTable.Serialized> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Route.Serialized.CODEC.listOf().fieldOf("serializedRoutes").forGetter(s -> s.serializedRoutes)
-            ).apply(instance, RouteTable.Serialized::new));
-
-        protected final List<Route.Serialized> serializedRoutes;
-
-        protected Serialized(final RouteTable routeTable) {
-            this.serializedRoutes = routeTable.routes.values().stream()
-                    .flatMap(Collection::stream)
-                    .map(Route::serialize)
-                    .toList();
-        }
-
-        protected Serialized(List<Route.Serialized> serializedRoutes) {
-            this.serializedRoutes = ImmutableList.copyOf(serializedRoutes);
-        }
-
-        public RouteTable deserialize(@NotNull Level level) {
-            return new RouteTable(this.serializedRoutes.stream()
-                    .map(ser -> ser.deserialize(level))
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .toList());
-        }
     }
 }
