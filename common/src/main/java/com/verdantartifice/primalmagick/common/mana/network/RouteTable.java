@@ -3,11 +3,17 @@ package com.verdantartifice.primalmagick.common.mana.network;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Table;
+import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -24,6 +30,8 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public class RouteTable {
+    protected static final Logger LOGGER = LogUtils.getLogger();
+
     protected final Table<Long, Long, Set<Route>> routes = HashBasedTable.create();
 
     public RouteTable() {}
@@ -102,7 +110,20 @@ public class RouteTable {
         });
     }
 
-    public RouteTable.Serialized serialize() {
+    public @NotNull Optional<Tag> serializeNBT(HolderLookup.Provider pRegistries) {
+        RegistryOps<Tag> registryOps = pRegistries.createSerializationContext(NbtOps.INSTANCE);
+        return RouteTable.Serialized.CODEC.encodeStart(registryOps, this.serialize()).resultOrPartial(LOGGER::error);
+    }
+
+    public void deserializeNBT(HolderLookup.Provider pRegistries, Tag pTag, @NotNull Level pLevel) {
+        RegistryOps<Tag> registryOps = pRegistries.createSerializationContext(NbtOps.INSTANCE);
+        RouteTable.Serialized.CODEC.parse(registryOps, pTag)
+                .resultOrPartial(LOGGER::error)
+                .map(ser -> ser.deserialize(pLevel))
+                .ifPresent(this::copyFrom);
+    }
+
+    protected RouteTable.Serialized serialize() {
         return new RouteTable.Serialized(this);
     }
 
