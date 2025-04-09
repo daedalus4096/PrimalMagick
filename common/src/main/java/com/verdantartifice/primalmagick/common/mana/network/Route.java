@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -268,6 +270,12 @@ public class Route {
     }
 
     protected static class Serialized {
+        public static final Codec<Route.Serialized> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                BlockPos.CODEC.fieldOf("originPos").forGetter(s -> s.originPos),
+                BlockPos.CODEC.fieldOf("terminusPos").forGetter(s -> s.terminusPos),
+                BlockPos.CODEC.listOf().fieldOf("relayPosList").forGetter(s -> s.relayPosList)
+            ).apply(instance, Route.Serialized::new));
+
         protected final BlockPos originPos;
         protected final BlockPos terminusPos;
         protected final List<BlockPos> relayPosList;
@@ -276,6 +284,12 @@ public class Route {
             this.originPos = route.getOrigin().getBlockPos();
             this.terminusPos = route.getTerminus().getBlockPos();
             this.relayPosList = route.getRelays().stream().map(IManaRelay::getBlockPos).toList();
+        }
+
+        protected Serialized(BlockPos originPos, BlockPos terminusPos, List<BlockPos> relayPosList) {
+            this.originPos = originPos;
+            this.terminusPos = terminusPos;
+            this.relayPosList = ImmutableList.copyOf(relayPosList);
         }
 
         public Optional<Route> deserialize(@NotNull Level level) {

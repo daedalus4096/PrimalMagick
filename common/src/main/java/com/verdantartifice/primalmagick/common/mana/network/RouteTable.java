@@ -1,7 +1,10 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Table;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +34,11 @@ public class RouteTable {
 
     public void clear() {
         this.routes.clear();
+    }
+
+    public void copyFrom(final RouteTable other) {
+        this.clear();
+        other.routes.values().stream().flatMap(Collection::stream).forEach(this::addRoute);
     }
 
     public boolean addRoute(@NotNull Route route) {
@@ -99,6 +107,10 @@ public class RouteTable {
     }
 
     public static class Serialized {
+        public static final Codec<RouteTable.Serialized> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Route.Serialized.CODEC.listOf().fieldOf("serializedRoutes").forGetter(s -> s.serializedRoutes)
+            ).apply(instance, RouteTable.Serialized::new));
+
         protected final List<Route.Serialized> serializedRoutes;
 
         protected Serialized(final RouteTable routeTable) {
@@ -106,6 +118,10 @@ public class RouteTable {
                     .flatMap(Collection::stream)
                     .map(Route::serialize)
                     .toList();
+        }
+
+        protected Serialized(List<Route.Serialized> serializedRoutes) {
+            this.serializedRoutes = ImmutableList.copyOf(serializedRoutes);
         }
 
         public RouteTable deserialize(@NotNull Level level) {
