@@ -355,6 +355,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK).name("Flawed Budding Quartz Block").build();
         this.block(BlocksPM.ENDERWARD).name("Enderward").build();
         this.block(BlocksPM.SCRIBE_TABLE).name("Scribe's Table").build();
+        this.block(BlocksPM.MANA_RELAY_BASIC).name("Mana Relay").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();

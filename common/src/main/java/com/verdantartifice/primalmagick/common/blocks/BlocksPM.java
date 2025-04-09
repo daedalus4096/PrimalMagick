@@ -37,6 +37,7 @@ import com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ArtificialManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
+import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.WandChargerBlock;
 import com.verdantartifice.primalmagick.common.blocks.minerals.BuddingGemClusterBlock;
 import com.verdantartifice.primalmagick.common.blocks.minerals.BuddingGemSourceBlock;
@@ -402,6 +403,7 @@ public class BlocksPM {
     public static final IRegistryItem<Block, ManaBatteryBlock> MANA_SINGULARITY = register("mana_singularity", () -> new ManaBatteryBlock(DeviceTier.HEAVENLY, Block.Properties.of().mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion()));
     public static final IRegistryItem<Block, ManaBatteryBlock> MANA_SINGULARITY_CREATIVE = register("mana_singularity_creative", () -> new ManaBatteryBlock(DeviceTier.CREATIVE, Block.Properties.of().mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion()));
     public static final IRegistryItem<Block, ScribeTableBlock> SCRIBE_TABLE = register("scribe_table", () -> new ScribeTableBlock(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.5F, 6.0F).sound(SoundType.WOOD).noOcclusion()));
+    public static final IRegistryItem<Block, ManaRelayBlock> MANA_RELAY_BASIC = register("mana_relay_basic", () -> new ManaRelayBlock(DeviceTier.BASIC, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
 
     // Register misc blocks
     public static final IRegistryItem<Block, ConsecrationFieldBlock> CONSECRATION_FIELD = register("consecration_field", ConsecrationFieldBlock::new);

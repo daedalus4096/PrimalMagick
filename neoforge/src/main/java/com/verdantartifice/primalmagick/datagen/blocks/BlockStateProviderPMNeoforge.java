@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBl
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.AbstractEnchantedGolemControllerBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
+import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
@@ -287,6 +288,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY.get());
         this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get());
         this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.SCRIBE_TABLE.get());
+        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_BASIC.get());
 
         // Generate misc blocks
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
@@ -711,7 +713,12 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
             .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 45, 0).translation(0, 0, 0).scale(0.40F).end()
             .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 225, 0).translation(0, 0, 0).scale(0.40F).end();
     }
-    
+
+    private void manaRelayBlockWithItem(ManaRelayBlock block) {
+        // FIXME Change to real model
+        this.simpleCubeBlockWithItem(block);
+    }
+
     private void sunlampBlockWithItem(SunlampBlock block) {
         ResourceLocation modelLoc = this.defaultModel(block);
         DirectionProperty prop = SunlampBlock.ATTACHMENT;

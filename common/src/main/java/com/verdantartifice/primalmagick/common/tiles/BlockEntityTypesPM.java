@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.common.tiles.mana.AncientManaFontTileEnt
 import com.verdantartifice.primalmagick.common.tiles.mana.ArtificialManaFontTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaRelayTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.BloodletterTileEntity;
@@ -83,6 +84,7 @@ public class BlockEntityTypesPM {
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<ManaBatteryTileEntity>> MANA_BATTERY = register("mana_battery", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.manaBattery(), BlocksPM.MANA_NEXUS.get(), BlocksPM.MANA_SINGULARITY.get(), BlocksPM.MANA_SINGULARITY_CREATIVE.get()).build(null));
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<ScribeTableTileEntity>> SCRIBE_TABLE = register("scribe_table", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.scribeTable(), BlocksPM.SCRIBE_TABLE.get()).build(null));
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<CarvedBookshelfTileEntity>> CARVED_BOOKSHELF = register("carved_bookshelf", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.carvedBookshelf(), BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get()).build(null));
+    public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<ManaRelayTileEntity>> MANA_RELAY = register("mana_relay", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.manaRelay(), BlocksPM.MANA_RELAY_BASIC.get()).build(null));
 
     private static <T extends BlockEntity> IRegistryItem<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType<T>> typeSupplier) {
         return Services.BLOCK_ENTITY_TYPES_REGISTRY.register(name, typeSupplier);
