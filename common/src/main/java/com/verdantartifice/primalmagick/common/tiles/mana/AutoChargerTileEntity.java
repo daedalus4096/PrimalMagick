@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.google.common.collect.ImmutableSet;
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import java.util.Optional;
 import java.util.Set;
@@ -35,6 +37,7 @@ import java.util.Set;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock
  */
 public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM implements IManaConsumer {
+    protected static final Logger LOGGER = LogUtils.getLogger();
     protected static final int INPUT_INV_INDEX = 0;
 
     protected final RouteTable routeTable = new RouteTable();
@@ -54,12 +57,22 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
         this.chargeTime = compound.getInt("ChargeTime");
+
+        // Deserialize the tile's mana networking route table
+        if (this.getLevel() != null) {
+            this.routeTable.deserializeNBT(registries, compound.get("RouteTable"), this.getLevel());
+        } else {
+            LOGGER.warn("Unable to load route table, no level present");
+        }
     }
     
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
         compound.putInt("ChargeTime", this.chargeTime);
+
+        // Serialize the tile's mana networking route table
+        this.routeTable.serializeNBT(registries).ifPresent(tag -> compound.put("RouteTable", tag));
     }
 
     @Override

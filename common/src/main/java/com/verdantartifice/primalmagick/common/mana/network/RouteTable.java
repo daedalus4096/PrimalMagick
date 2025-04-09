@@ -13,6 +13,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.Collection;
@@ -115,12 +116,14 @@ public class RouteTable {
         return RouteTable.Serialized.CODEC.encodeStart(registryOps, this.serialize()).resultOrPartial(LOGGER::error);
     }
 
-    public void deserializeNBT(HolderLookup.Provider pRegistries, Tag pTag, @NotNull Level pLevel) {
-        RegistryOps<Tag> registryOps = pRegistries.createSerializationContext(NbtOps.INSTANCE);
-        RouteTable.Serialized.CODEC.parse(registryOps, pTag)
-                .resultOrPartial(LOGGER::error)
-                .map(ser -> ser.deserialize(pLevel))
-                .ifPresent(this::copyFrom);
+    public void deserializeNBT(HolderLookup.Provider pRegistries, @Nullable Tag pTag, @NotNull Level pLevel) {
+        if (pTag != null) {
+            RegistryOps<Tag> registryOps = pRegistries.createSerializationContext(NbtOps.INSTANCE);
+            RouteTable.Serialized.CODEC.parse(registryOps, pTag)
+                    .resultOrPartial(LOGGER::error)
+                    .map(ser -> ser.deserialize(pLevel))
+                    .ifPresent(this::copyFrom);
+        }
     }
 
     protected RouteTable.Serialized serialize() {

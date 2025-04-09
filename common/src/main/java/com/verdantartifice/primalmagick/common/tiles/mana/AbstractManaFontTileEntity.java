@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
+import org.slf4j.Logger;
 
 /**
  * Base definition of a mana font tile entity.  Provides the recharge and wand interaction
@@ -35,6 +37,7 @@ import org.jetbrains.annotations.VisibleForTesting;
  */
 public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand, IManaSupplier {
     public static final int CENTIMANA_RECHARGED_PER_TICK = 5;
+    protected static final Logger LOGGER = LogUtils.getLogger();
 
     protected final RouteTable routeTable = new RouteTable();
     protected int ticksExisted = 0;
@@ -49,12 +52,22 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
     public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
         this.mana = compound.getInt("mana");
+
+        // Deserialize the tile's mana networking route table
+        if (this.getLevel() != null) {
+            this.routeTable.deserializeNBT(registries, compound.get("RouteTable"), this.getLevel());
+        } else {
+            LOGGER.warn("Unable to load route table, no level present");
+        }
     }
     
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
         compound.putInt("mana", this.mana);
+
+        // Serialize the tile's mana networking route table
+        this.routeTable.serializeNBT(registries).ifPresent(tag -> compound.put("RouteTable", tag));
     }
 
     public int getMana() {

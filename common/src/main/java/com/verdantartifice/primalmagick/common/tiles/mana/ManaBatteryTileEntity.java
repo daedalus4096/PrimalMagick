@@ -296,6 +296,13 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
+
+        // Deserialize the tile's mana networking route table
+        if (this.getLevel() != null) {
+            this.routeTable.deserializeNBT(registries, compound.get("RouteTable"), this.getLevel());
+        } else {
+            LOGGER.warn("Unable to load route table, no level present");
+        }
     }
     
     @Override
@@ -307,6 +314,9 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+
+        // Serialize the tile's mana networking route table
+        this.routeTable.serializeNBT(registries).ifPresent(tag -> compound.put("RouteTable", tag));
     }
 
     @Override
