@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +22,16 @@ import java.util.stream.Collectors;
  */
 public class RouteTable {
     protected final Table<Long, Long, Set<Route>> routes = HashBasedTable.create();
+
+    public RouteTable() {}
+
+    public RouteTable(List<Route> routes) {
+        routes.stream().filter(Objects::nonNull).forEach(this::addRoute);
+    }
+
+    public void clear() {
+        this.routes.clear();
+    }
 
     public boolean addRoute(@NotNull Route route) {
         Set<Route> target;
@@ -80,5 +92,28 @@ public class RouteTable {
             node.getRouteTable().mergeRoutes(this);
             node.getRouteTable().propagateRoutes(newProcessedNodes);
         });
+    }
+
+    public RouteTable.Serialized serialize() {
+        return new RouteTable.Serialized(this);
+    }
+
+    public static class Serialized {
+        protected final List<Route.Serialized> serializedRoutes;
+
+        protected Serialized(final RouteTable routeTable) {
+            this.serializedRoutes = routeTable.routes.values().stream()
+                    .flatMap(Collection::stream)
+                    .map(Route::serialize)
+                    .toList();
+        }
+
+        public RouteTable deserialize(@NotNull Level level) {
+            return new RouteTable(this.serializedRoutes.stream()
+                    .map(ser -> ser.deserialize(level))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .toList());
+        }
     }
 }
