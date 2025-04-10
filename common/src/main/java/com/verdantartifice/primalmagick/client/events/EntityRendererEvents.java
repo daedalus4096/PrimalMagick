@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellMineModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellProjectileModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import net.minecraft.client.model.HumanoidModel;
@@ -107,5 +108,6 @@ public class EntityRendererEvents {
         consumer.accept(ModelLayersPM.SPELL_PROJECTILE, SpellProjectileModel::createBodyLayer);
         consumer.accept(ModelLayersPM.TREEFOLK, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
         consumer.accept(ModelLayersPM.SPELLCRAFTING_ALTAR_RING, SpellcraftingAltarRingModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_CUBE, ManaCubeModel::createBodyLayer);
     }
 }

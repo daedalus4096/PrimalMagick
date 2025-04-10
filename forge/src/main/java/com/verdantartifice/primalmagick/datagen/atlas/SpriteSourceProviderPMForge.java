@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelSh
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.ManaRelayTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
@@ -80,6 +81,7 @@ public class SpriteSourceProviderPMForge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, ManaFontTER.TEXTURE);
         this.addSingle(blockAtlas, RitualBellTER.TEXTURE);
         this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.CORE_TEXTURE);
         
         // Add custom item stack renderer textures to the block atlas
         this.addSingle(blockAtlas, PrimaliteShieldISTER.TEXTURE_SHIELD_BASE);

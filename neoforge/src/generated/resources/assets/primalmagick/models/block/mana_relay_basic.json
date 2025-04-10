@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "primalmagick:block/mana_relay_basic"
-  }
-}

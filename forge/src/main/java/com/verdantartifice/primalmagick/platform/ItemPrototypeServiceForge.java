@@ -11,6 +11,8 @@ import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemForge;
+import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItemForge;
@@ -79,6 +81,11 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     @Override
     public <T extends Block> Supplier<SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier, Item.Properties properties) {
         return () -> new SpellcraftingAltarBlockItemForge(blockSupplier.get(), properties);
+    }
+
+    @Override
+    public <T extends Block> Supplier<ManaRelayBlockItem> manaRelay(Supplier<T> blockSupplier, Item.Properties properties) {
+        return () -> new ManaRelayBlockItemForge(blockSupplier.get(), properties);
     }
 
     @Override

@@ -38,6 +38,7 @@ import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagick.common.items.misc.KnowledgeGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.RecallStoneItem;
 import com.verdantartifice.primalmagick.common.items.misc.ResearchGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
@@ -419,7 +420,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY = registerSupplier("mana_singularity", () -> new BlockItem(BlocksPM.MANA_SINGULARITY.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY_CREATIVE = registerSupplier("mana_singularity_creative", () -> new BlockItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, BurnableBlockItem> SCRIBE_TABLE = registerSupplier("scribe_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.SCRIBE_TABLE, 300, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MANA_RELAY_BASIC = registerSupplier("mana_relay_basic", () -> new BlockItem(BlocksPM.MANA_RELAY_BASIC.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_BASIC = registerSupplier("mana_relay_basic", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_BASIC, new Item.Properties()));
 
     // Register miscellaneous block items
     public static final IRegistryItem<Item, ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));
