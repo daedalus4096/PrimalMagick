@@ -244,6 +244,14 @@ public class Route {
         return Objects.hash(origin, relays, terminus);
     }
 
+    @Override
+    public String toString() {
+        String routeStr = String.join("->", this.getNodes().stream()
+                .map(node -> "[" + node.getBlockPos().toShortString() + "]")
+                .toList());
+        return "Route{" + routeStr + "}";
+    }
+
     public record Hop(@NotNull IManaSupplier supplier, @NotNull IManaConsumer consumer) {
         public double getDistanceSqr() {
             return this.supplier.getBlockPos().distSqr(this.consumer.getBlockPos());
