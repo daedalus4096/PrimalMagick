@@ -83,7 +83,7 @@ public class RouteTable {
     }
 
     public Set<IManaConsumer> getLinkedTerminuses(@NotNull IManaSupplier origin) {
-        return this.getRoutesForOrigin(origin).stream().map(Route::getTerminus).collect(Collectors.toSet());
+        return this.getRoutesForOrigin(origin).stream().map(Route::getTerminus).filter(IManaConsumer::isTerminus).collect(Collectors.toSet());
     }
 
     public Set<Route> getRoutesForTerminus(@NotNull IManaConsumer terminus) {
@@ -91,7 +91,7 @@ public class RouteTable {
     }
 
     public Set<IManaSupplier> getLinkedOrigins(@NotNull IManaConsumer terminus) {
-        return this.getRoutesForTerminus(terminus).stream().map(Route::getOrigin).collect(Collectors.toSet());
+        return this.getRoutesForTerminus(terminus).stream().map(Route::getOrigin).filter(IManaSupplier::isOrigin).collect(Collectors.toSet());
     }
 
     protected void mergeRoutes(@NotNull RouteTable other) {
