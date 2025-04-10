@@ -18,13 +18,38 @@ import java.util.Set;
  * @author Daedalus4096
  */
 public interface IManaSupplier extends IManaNetworkNode {
+    /**
+     * Gets whether this supplier is a valid origin for a network transmission packet.
+     *
+     * @return true if this supplier can provide mana to the network, or false if it's merely a relay
+     */
     default boolean isOrigin() {
         return true;
     }
 
+    /**
+     * Gets whether this supplier can provide the given source of mana to the network.
+     *
+     * @param source the source of mana to be queried
+     * @return true if this supplier can provide the given source of mana to the network, false otherwise
+     */
     boolean canSupply(@NotNull Source source);
+
+    /**
+     * Extracts the given source and amount of mana from storage and supplies it to the network for transmission.
+     *
+     * @param source source of mana to be extracted
+     * @param maxExtract maximum amount of centimana to be extracted
+     * @param simulate if {@code true}, the extraction will only be simulated
+     * @return amount of centimana that was (or would have been, if simulated) supplied from storage
+     */
     int extractMana(@NotNull Source source, int maxExtract, boolean simulate);
 
+    /**
+     * Scans this supplier's surroundings for other mana network nodes and connects this supplier to the network.
+     *
+     * @param level the world in which this supplier resides
+     */
     default void loadManaNetwork(@NotNull Level level) {
         int range = this.getNetworkRange();
         int rangeSqr = range * range;

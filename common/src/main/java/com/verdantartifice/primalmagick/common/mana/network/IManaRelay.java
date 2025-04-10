@@ -50,6 +50,12 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
         return this.canRelay(source);
     }
 
+    /**
+     * Gets whether this relay can transmit the given source of mana through the network.
+     *
+     * @param source the source of mana to be queried
+     * @return true if this relay can transmit the given source of mana through the network, false otherwise
+     */
     boolean canRelay(Source source);
 
     @Override

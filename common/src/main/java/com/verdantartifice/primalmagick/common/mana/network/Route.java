@@ -16,8 +16,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 /**
- * A unidirectional path through a mana distribution network, consisting of an origin, a terminus, and zero or more
- * relays.
+ * A unidirectional path through a mana distribution network, consisting of a head, a tail, and zero or more relays.
  *
  * @author Daedalus4096
  */

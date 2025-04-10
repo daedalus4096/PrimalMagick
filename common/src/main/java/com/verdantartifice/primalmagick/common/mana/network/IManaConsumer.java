@@ -24,13 +24,41 @@ import java.util.Set;
  * @author Daedalus4096
  */
 public interface IManaConsumer extends IManaNetworkNode {
+    /**
+     * Gets whether this consumer is a valid terminus for a network transmission packet.
+     *
+     * @return true if this consumer can sink mana from the network, or false if it's merely a relay
+     */
     default boolean isTerminus() {
         return true;
     }
 
+    /**
+     * Gets whether this consumer can sink the given source of mana out of the network.
+     *
+     * @param source the source of mana to be queried
+     * @return true if this consumer can sink the given source of mana out of the network, false otherwise
+     */
     boolean canConsume(@NotNull Source source);
+
+    /**
+     * Receives the given source and amount of mana from the network and inserts it to storage.
+     *
+     * @param source source of mana to be inserted
+     * @param maxReceive maximum amount of centimana to be inserted
+     * @param simulate if {@code true}, the insertion will only be simulated
+     * @return amount of centimana that was (or would have been, if simulated) inserted into storage
+     */
     int receiveMana(@NotNull Source source, int maxReceive, boolean simulate);
 
+    /**
+     * Requests the given source and amount of mana from the network to be consumed. The network supplies mana from all
+     * nodes which can support the request along the best known and active route for each.
+     *
+     * @param level the level in which this consumer resides
+     * @param source the source of mana to be transferred
+     * @param maxTransferCentimana the maximum amount of centimana to be transferred
+     */
     default void doSiphon(@NotNull Level level, @NotNull Source source, final int maxTransferCentimana) {
         int remainingTransfer = maxTransferCentimana;
         RouteTable routeTable = this.getRouteTable();
@@ -65,6 +93,11 @@ public interface IManaConsumer extends IManaNetworkNode {
         }
     }
 
+    /**
+     * Scans this consumer's surroundings for other mana network nodes and connects this consumer to the network.
+     *
+     * @param level the world in which this consumer resides
+     */
     default void loadManaNetwork(@NotNull Level level) {
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
