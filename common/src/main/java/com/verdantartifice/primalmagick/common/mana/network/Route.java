@@ -23,9 +23,9 @@ import java.util.function.Supplier;
  */
 @Immutable
 public class Route {
-    protected final IManaSupplier origin;
+    protected final IManaSupplier head;
     protected final List<IManaRelay> relays;    // Ordered from origin to terminus
-    protected final IManaConsumer terminus;
+    protected final IManaConsumer tail;
 
     // Cached data suppliers
     protected final Supplier<List<IManaNetworkNode>> nodeSupplier = Suppliers.memoize(this::getNodesInner);
@@ -34,26 +34,26 @@ public class Route {
     protected final Supplier<Boolean> validSupplier = Suppliers.memoize(this::isValidInner);
     protected final Supplier<Boolean> completeSupplier = Suppliers.memoize(this::isCompleteInner);
 
-    public Route(@NotNull IManaSupplier origin, @NotNull IManaConsumer terminus) {
-        this(origin, terminus, List.of());
+    public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail) {
+        this(head, tail, List.of());
     }
 
-    public Route(@NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull IManaRelay... relays) {
-        this(origin, terminus, ImmutableList.copyOf(relays));
+    public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail, @NotNull IManaRelay... relays) {
+        this(head, tail, ImmutableList.copyOf(relays));
     }
 
-    public Route(@NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull List<IManaRelay> relays) {
-        this.origin = Objects.requireNonNull(origin);
-        this.terminus = Objects.requireNonNull(terminus);
+    public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail, @NotNull List<IManaRelay> relays) {
+        this.head = Objects.requireNonNull(head);
+        this.tail = Objects.requireNonNull(tail);
         this.relays = ImmutableList.copyOf(relays.stream().filter(Objects::nonNull).toList());
     }
 
-    public IManaSupplier getOrigin() {
-        return this.origin;
+    public IManaSupplier getHead() {
+        return this.head;
     }
 
-    public IManaConsumer getTerminus() {
-        return this.terminus;
+    public IManaConsumer getTail() {
+        return this.tail;
     }
 
     public List<IManaRelay> getRelays() {
@@ -79,9 +79,9 @@ public class Route {
 
     protected List<IManaNetworkNode> getNodesInner() {
         return ImmutableList.<IManaNetworkNode>builder()
-                .add(this.origin)
+                .add(this.head)
                 .addAll(this.relays)
-                .add(this.terminus)
+                .add(this.tail)
                 .build();
     }
 
@@ -91,13 +91,13 @@ public class Route {
 
     protected List<Hop> getHopsInner() {
         List<Hop> retVal = new ArrayList<>();
-        IManaSupplier supplier = this.origin;
+        IManaSupplier supplier = this.head;
 
         for (IManaRelay relay : this.relays) {
             retVal.add(new Hop(supplier, relay));
             supplier = relay;
         }
-        retVal.add(new Hop(supplier, this.terminus));
+        retVal.add(new Hop(supplier, this.tail));
 
         return retVal;
     }
@@ -108,13 +108,13 @@ public class Route {
      * @param supplier the desired new first node
      * @return an optional containing the new route, or empty if such a route is not valid
      */
-    public Optional<Route> pushOrigin(IManaSupplier supplier) {
-        if (this.origin instanceof IManaRelay relay) {
-            // If this route starts in a relay, then push the old origin to the head of the relay list
-            Route retVal = new Route(supplier, this.terminus, ImmutableList.<IManaRelay>builder().add(relay).addAll(this.relays).build());
+    public Optional<Route> pushHead(IManaSupplier supplier) {
+        if (this.head instanceof IManaRelay relay) {
+            // If this route starts in a relay, then push the old head to the front of the relay list
+            Route retVal = new Route(supplier, this.tail, ImmutableList.<IManaRelay>builder().add(relay).addAll(this.relays).build());
             return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
         } else {
-            // If this route's existing origin is not a relay, then the given supplier cannot be made a new origin
+            // If this route's existing head is not a relay, then the given supplier cannot be made a new head
             return Optional.empty();
         }
     }
@@ -125,13 +125,13 @@ public class Route {
      * @param consumer the desired new final node
      * @return an optional containing the new route, or empty if such a route is not valid
      */
-    public Optional<Route> pushTerminus(IManaConsumer consumer) {
-        if (this.terminus instanceof IManaRelay relay) {
-            // If this route ends in a relay, then push the old terminus to the end of the relay list
-            Route retVal = new Route(this.origin, consumer, ImmutableList.<IManaRelay>builder().addAll(this.relays).add(relay).build());
+    public Optional<Route> pushTail(IManaConsumer consumer) {
+        if (this.tail instanceof IManaRelay relay) {
+            // If this route ends in a relay, then push the old tail to the end of the relay list
+            Route retVal = new Route(this.head, consumer, ImmutableList.<IManaRelay>builder().addAll(this.relays).add(relay).build());
             return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
         } else {
-            // If this route's existing terminus is not a relay, then the given consumer cannot be made a new terminus
+            // If this route's existing tail is not a relay, then the given consumer cannot be made a new tail
             return Optional.empty();
         }
     }
@@ -145,13 +145,13 @@ public class Route {
      * @return an optional containing the new route, or empty if such a route is not valid
      */
     public Optional<Route> connect(Route other) {
-        if (this.terminus.getNodeId() == other.getOrigin().getNodeId() && this.terminus instanceof IManaRelay relay) {
+        if (this.tail.getNodeId() == other.getHead().getNodeId() && this.tail instanceof IManaRelay relay) {
             List<IManaRelay> newRelays = ImmutableList.<IManaRelay>builder()
                     .addAll(this.relays)
                     .add(relay)
                     .addAll(other.relays)
                     .build();
-            Route retVal = new Route(this.origin, other.terminus, newRelays);
+            Route retVal = new Route(this.head, other.tail, newRelays);
             return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
         } else {
             return Optional.empty();
@@ -170,14 +170,14 @@ public class Route {
     }
 
     protected boolean isValidInner() {
-        if (this.origin.getNodeId() == this.terminus.getNodeId()) {
+        if (this.head.getNodeId() == this.tail.getNodeId()) {
             // A zero-hop route is invalid, as is a circular route going through one or more relays
             return false;
         }
 
         // Disallow any routes between nodes that are both origin and terminus to prevent feedback loops
-        if (this.origin.isOrigin() && this.origin instanceof IManaConsumer consumer && consumer.isTerminus() &&
-                this.terminus.isTerminus() && this.terminus instanceof IManaSupplier supplier && supplier.isOrigin()) {
+        if (this.head.isOrigin() && this.head instanceof IManaConsumer consumer && consumer.isTerminus() &&
+                this.tail.isTerminus() && this.tail instanceof IManaSupplier supplier && supplier.isOrigin()) {
             return false;
         }
 
@@ -203,7 +203,7 @@ public class Route {
     }
 
     protected boolean isCompleteInner() {
-        return this.isValid() && this.origin.isOrigin() && this.terminus.isTerminus();
+        return this.isValid() && this.head.isOrigin() && this.tail.isTerminus();
     }
 
     /**
@@ -219,8 +219,8 @@ public class Route {
         }
 
         // Test whether the corresponding block entities for each node still exist in the world
-        if (!(level.getBlockEntity(this.origin.getBlockPos()) instanceof IManaSupplier) ||
-                !(level.getBlockEntity(this.terminus.getBlockPos()) instanceof IManaConsumer) ||
+        if (!(level.getBlockEntity(this.head.getBlockPos()) instanceof IManaSupplier) ||
+                !(level.getBlockEntity(this.tail.getBlockPos()) instanceof IManaConsumer) ||
                 !this.relays.stream().map(IManaRelay::getBlockPos).allMatch(pos -> level.getBlockEntity(pos) instanceof IManaRelay)) {
             return false;
         }
@@ -230,18 +230,18 @@ public class Route {
     }
 
     public boolean canRoute(Source source) {
-        return this.origin.canSupply(source) && this.terminus.canConsume(source) && this.relays.stream().allMatch(r -> r.canRelay(source));
+        return this.head.canSupply(source) && this.tail.canConsume(source) && this.relays.stream().allMatch(r -> r.canRelay(source));
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Route route)) return false;
-        return Objects.equals(origin, route.origin) && Objects.equals(relays, route.relays) && Objects.equals(terminus, route.terminus);
+        return Objects.equals(head, route.head) && Objects.equals(relays, route.relays) && Objects.equals(tail, route.tail);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(origin, relays, terminus);
+        return Objects.hash(head, relays, tail);
     }
 
     @Override

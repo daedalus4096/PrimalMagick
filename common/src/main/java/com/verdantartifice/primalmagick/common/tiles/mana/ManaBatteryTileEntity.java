@@ -480,8 +480,8 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
         consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
-                .flatMap(relay -> relay.getRouteTable().getRoutesForOrigin(relay).stream())
-                .map(route -> route.pushOrigin(this))
+                .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
+                .map(route -> route.pushHead(this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
@@ -490,8 +490,8 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
         suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
-                .flatMap(relay -> relay.getRouteTable().getRoutesForTerminus(relay).stream())
-                .map(route -> route.pushTerminus(this))
+                .flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
+                .map(route -> route.pushTail(this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)

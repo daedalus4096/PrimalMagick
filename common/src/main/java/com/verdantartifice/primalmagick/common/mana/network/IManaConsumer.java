@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.mana.network;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -50,8 +49,8 @@ public interface IManaConsumer extends IManaNetworkNode {
         while (remainingTransfer > 0 && routeIterator.hasNext()) {
             Route route = routeIterator.next();
             int toExtract = Math.min(remainingTransfer, route.getMaxThroughput());
-            int actualExtracted = route.getOrigin().extractMana(source, toExtract, false);
-            int actualReceived = route.getTerminus().receiveMana(source, actualExtracted, false);
+            int actualExtracted = route.getHead().extractMana(source, toExtract, false);
+            int actualReceived = route.getTail().receiveMana(source, actualExtracted, false);
             remainingTransfer -= actualReceived;
             particleHops.addAll(route.getHops());
         }
@@ -86,8 +85,8 @@ public interface IManaConsumer extends IManaNetworkNode {
         // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
         suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
-                .flatMap(relay -> relay.getRouteTable().getRoutesForTerminus(relay).stream())
-                .map(route -> route.pushTerminus(this))
+                .flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
+                .map(route -> route.pushTail(this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)

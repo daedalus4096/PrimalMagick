@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -46,8 +45,8 @@ public interface IManaSupplier extends IManaNetworkNode {
         // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
         consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
-                .flatMap(relay -> relay.getRouteTable().getRoutesForOrigin(relay).stream())
-                .map(route -> route.pushOrigin(this))
+                .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
+                .map(route -> route.pushHead(this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)

@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -83,22 +82,22 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
         List<IManaRelay> relays = nodes.stream().map(node -> node instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
                 .toList();
-        relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForOrigin(relay).stream())
-                .map(route -> route.pushOrigin(this))
+        relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
+                .map(route -> route.pushHead(this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
                 .forEach(this.getRouteTable()::addRoute);
-        relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForTerminus(relay).stream())
-                .map(route -> route.pushTerminus(this))
+        relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
+                .map(route -> route.pushTail(this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
                 .forEach(this.getRouteTable()::addRoute);
 
         // Connect existing routes that can use this relay as a bridge
-        Set<Route> heads = this.getRouteTable().getRoutesForTerminus(this);
-        Set<Route> tails = this.getRouteTable().getRoutesForOrigin(this);
+        Set<Route> heads = this.getRouteTable().getRoutesForTail(this);
+        Set<Route> tails = this.getRouteTable().getRoutesForHead(this);
         heads.forEach(head -> tails.stream().map(head::connect)
                 .filter(Optional::isPresent)
                 .map(Optional::get)

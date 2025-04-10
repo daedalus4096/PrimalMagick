@@ -40,17 +40,17 @@ public class RouteTable {
 
     public boolean addRoute(@NotNull Route route) {
         Set<Route> target;
-        if (this.routes.contains(route.getOrigin().getNodeId(), route.getTerminus().getNodeId())) {
-            target = this.routes.get(route.getOrigin().getNodeId(), route.getTerminus().getNodeId());
+        if (this.routes.contains(route.getHead().getNodeId(), route.getTail().getNodeId())) {
+            target = this.routes.get(route.getHead().getNodeId(), route.getTail().getNodeId());
         } else {
             target = new HashSet<>();
-            this.routes.put(route.getOrigin().getNodeId(), route.getTerminus().getNodeId(), target);
+            this.routes.put(route.getHead().getNodeId(), route.getTail().getNodeId(), target);
         }
         return target != null && route.isValid() && target.add(route);
     }
 
     public boolean removeRoute(@NotNull Route route) {
-        Set<Route> target = this.routes.get(route.getOrigin().getNodeId(), route.getTerminus().getNodeId());
+        Set<Route> target = this.routes.get(route.getHead().getNodeId(), route.getTail().getNodeId());
         return target != null && target.remove(route);
     }
 
@@ -78,20 +78,20 @@ public class RouteTable {
         }
     }
 
-    public Set<Route> getRoutesForOrigin(@NotNull IManaSupplier origin) {
-        return this.routes.row(origin.getNodeId()).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+    public Set<Route> getRoutesForHead(@NotNull IManaSupplier head) {
+        return this.routes.row(head.getNodeId()).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
     }
 
     public Set<IManaConsumer> getLinkedTerminuses(@NotNull IManaSupplier origin) {
-        return this.getRoutesForOrigin(origin).stream().map(Route::getTerminus).filter(IManaConsumer::isTerminus).collect(Collectors.toSet());
+        return this.getRoutesForHead(origin).stream().map(Route::getTail).filter(IManaConsumer::isTerminus).collect(Collectors.toSet());
     }
 
-    public Set<Route> getRoutesForTerminus(@NotNull IManaConsumer terminus) {
-        return this.routes.column(terminus.getNodeId()).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+    public Set<Route> getRoutesForTail(@NotNull IManaConsumer tail) {
+        return this.routes.column(tail.getNodeId()).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
     }
 
     public Set<IManaSupplier> getLinkedOrigins(@NotNull IManaConsumer terminus) {
-        return this.getRoutesForTerminus(terminus).stream().map(Route::getOrigin).filter(IManaSupplier::isOrigin).collect(Collectors.toSet());
+        return this.getRoutesForTail(terminus).stream().map(Route::getHead).filter(IManaSupplier::isOrigin).collect(Collectors.toSet());
     }
 
     protected void mergeRoutes(@NotNull RouteTable other) {
