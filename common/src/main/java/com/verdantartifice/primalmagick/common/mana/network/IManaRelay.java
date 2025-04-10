@@ -60,7 +60,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
 
         // Search for mana network nodes in range of this one
         List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
-                .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
+                .filter(pos -> !this.getBlockPos().equals(pos) && pos.distSqr(this.getBlockPos()) <= rangeSqr)
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
                 .filter(Objects::nonNull)
                 .toList();
