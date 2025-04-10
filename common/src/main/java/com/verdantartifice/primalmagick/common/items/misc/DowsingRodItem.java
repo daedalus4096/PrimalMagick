@@ -17,9 +17,11 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTil
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -64,27 +66,35 @@ public class DowsingRodItem extends Item {
             if (blockEntity instanceof RitualAltarTileEntity altarEntity) {
                 this.doStabilityCheck(altarEntity, player);
                 this.damageRod(player, stack);
-                return InteractionResult.SUCCESS;
+                return InteractionResult.sidedSuccess(level.isClientSide);
             } else if (block instanceof OfferingPedestalBlock pedestalBlock && blockEntity instanceof OfferingPedestalTileEntity pedestalTile) {
                 this.doPropSaltCheck(level, pedestalBlock, targetPos, player);
                 this.doPropSymmetryCheck(level, pedestalBlock, targetPos, pedestalTile.getAltarPos(), player);
                 this.damageRod(player, stack);
-                return InteractionResult.SUCCESS;
+                return InteractionResult.sidedSuccess(level.isClientSide);
             } else if (block instanceof IRitualPropBlock propBlock && blockEntity instanceof IRitualPropTileEntity propTile) {
                 this.doPropSaltCheck(level, propBlock, targetPos, player);
                 this.doPropSymmetryCheck(level, propBlock, targetPos, propTile.getAltarPos(), player);
                 this.damageRod(player, stack);
-                return InteractionResult.SUCCESS;
+                return InteractionResult.sidedSuccess(level.isClientSide);
             } else if (blockEntity instanceof IManaNetworkNode node) {
                 this.doRouteTableCheck(level, node, player, stack);
                 this.damageRod(player, stack);
-                return InteractionResult.SUCCESS;
+                return InteractionResult.sidedSuccess(level.isClientSide);
             } else {
                 return InteractionResult.PASS;
             }
         } else {
             return InteractionResult.PASS;
         }
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+        // If using the dowsing rod on empty air, then clear any recorded dowsing positions
+        InteractionResultHolder<ItemStack> retVal = super.use(pLevel, pPlayer, pUsedHand);
+        this.recordDowsingPosition(pPlayer.getItemInHand(pUsedHand), pPlayer, null);
+        return retVal;
     }
 
     @Override
@@ -125,34 +135,40 @@ public class DowsingRodItem extends Item {
 
     protected void recordDowsingPosition(@NotNull ItemStack stack, @Nullable Player player, @Nullable BlockPos targetPos) {
         boolean sendStatusMessage = player != null && !player.level().isClientSide;
-        if (targetPos == null) {
-            // Clear all set positions if using the rod on empty air
+        if (targetPos == null && player != null && player.isShiftKeyDown()) {
+            // Clear all set positions if using the rod on empty air while sneaking
             stack.remove(DataComponentsPM.DOWSING_PRIMARY_POSITION.get());
             stack.remove(DataComponentsPM.DOWSING_SECONDARY_POSITION.get());
             if (sendStatusMessage) {
                 player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.position.clear"));
             }
-        } else {
+        } else if (targetPos != null) {
             if (stack.has(DataComponentsPM.DOWSING_PRIMARY_POSITION.get())) {
                 // If a primary position has already been recorded, roll it down to secondary
                 stack.set(DataComponentsPM.DOWSING_SECONDARY_POSITION.get(), stack.get(DataComponentsPM.DOWSING_PRIMARY_POSITION.get()));
             }
             stack.set(DataComponentsPM.DOWSING_PRIMARY_POSITION.get(), targetPos);
             if (sendStatusMessage) {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.position.record", targetPos));
+                Component posText = ComponentUtils.wrapInSquareBrackets(Component.literal(targetPos.toShortString()));
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.position.record", posText));
             }
         }
     }
 
     protected void doRouteTableCheck(@NotNull Level level, @NotNull IManaNetworkNode primaryNode, @NotNull Player player, @NotNull ItemStack stack) {
         BlockPos secondaryPos = stack.has(DataComponentsPM.DOWSING_SECONDARY_POSITION.get()) ? stack.get(DataComponentsPM.DOWSING_SECONDARY_POSITION.get()) : null;
-        player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.routes", primaryNode.getBlockPos()));
+        player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.routes",
+                ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
         if (secondaryPos != null && level.getBlockEntity(secondaryPos) instanceof IManaNetworkNode secondaryNode) {
             if (secondaryNode instanceof IManaSupplier supplier && primaryNode instanceof IManaConsumer consumer &&
                     consumer.getRouteTable().getRoute(level, Optional.empty(), supplier, consumer, consumer).isPresent()) {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.route_highlight", secondaryPos, primaryNode.getBlockPos()));
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.route_highlight",
+                        ComponentUtils.wrapInSquareBrackets(Component.literal(secondaryPos.toShortString())),
+                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
             } else {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.no_route", secondaryPos, primaryNode.getBlockPos()));
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.no_route",
+                        ComponentUtils.wrapInSquareBrackets(Component.literal(secondaryPos.toShortString())),
+                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
             }
         }
     }
