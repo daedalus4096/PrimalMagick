@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * Custom tile entity renderer for spellcrafting altar blocks.
@@ -125,6 +125,6 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         matrixStack.popPose();
         
         // Draw a particle stream rising from the core
-        FxDispatcher.INSTANCE.spellcraftingGlow(tileEntityIn.getBlockPos(), r, g, b);
+        FxDispatcher.INSTANCE.spellcraftingGlow(tileEntityIn.getBlockPos(), 1.125D, r, g, b);
     }
 }

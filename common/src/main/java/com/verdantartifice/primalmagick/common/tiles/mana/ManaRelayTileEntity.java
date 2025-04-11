@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
-import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -23,8 +22,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class ManaRelayTileEntity extends AbstractTilePM implements IManaRelay {
-    protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON);
+    public static final int BOB_CYCLE_TIME_TICKS = 200;
     protected static final int TICKS_PER_PHASE = 40;
+    protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON);
     protected static final Logger LOGGER = LogUtils.getLogger();
 
     protected final RouteTable routeTable = new RouteTable();

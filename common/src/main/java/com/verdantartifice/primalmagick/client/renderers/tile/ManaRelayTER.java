@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.renderers.tile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaRelayFrameModel;
@@ -41,9 +42,14 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
         BlockState state = manaRelayTileEntity.getBlockState();
         DeviceTier tier = state.getBlock() instanceof ManaRelayBlock relayBlock ? relayBlock.getDeviceTier() : DeviceTier.BASIC;
         long time = manaRelayTileEntity.getLevel().getLevelData().getGameTime();
+        double bobDelta = 0.125D * Math.sin((time + (double)partialTicks) * (2D * Math.PI / (double)ManaRelayTileEntity.BOB_CYCLE_TIME_TICKS));
         int rot = 2 * (int)(time % 360);
         final float baseScale = 0.5F;
         final float tilt = 45.0F;
+        final int coreColor = manaRelayTileEntity.getCurrentColor(partialTicks);
+
+        poseStack.pushPose();
+        poseStack.translate(0D, bobDelta, 0D);
 
         // Render the relay's frame
         poseStack.pushPose();
@@ -66,8 +72,13 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
         poseStack.scale(baseScale, baseScale, baseScale);
         poseStack.scale(coreScale, coreScale, coreScale);
         VertexConsumer ringBuilder = CORE_MATERIAL.buffer(multiBufferSource, RenderType::entitySolid);
-        this.manaCubeModel.renderToBuffer(poseStack, ringBuilder, combinedLight, combinedOverlay, manaRelayTileEntity.getCurrentColor(partialTicks));
+        this.manaCubeModel.renderToBuffer(poseStack, ringBuilder, combinedLight, combinedOverlay, coreColor);
         poseStack.popPose();
+
+        poseStack.popPose();
+
+        // Draw a particle stream rising from the core
+        FxDispatcher.INSTANCE.spellcraftingGlow(manaRelayTileEntity.getBlockPos(), 0.5D + bobDelta, coreColor);
     }
 
     protected Material getFrameMaterial(DeviceTier tier) {
