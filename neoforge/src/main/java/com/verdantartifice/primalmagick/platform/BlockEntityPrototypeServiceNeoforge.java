@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.platform;
 
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaInjectorTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaRelayTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.CalcinatorTileEntityNeoforge;
@@ -116,7 +117,7 @@ public class BlockEntityPrototypeServiceNeoforge implements IBlockEntityPrototyp
 
     @Override
     public BlockEntityType.BlockEntitySupplier<ManaInjectorTileEntity> manaInjector() {
-        return ManaIn
+        return ManaInjectorTileEntityNeoforge::new;
     }
 
     @Override

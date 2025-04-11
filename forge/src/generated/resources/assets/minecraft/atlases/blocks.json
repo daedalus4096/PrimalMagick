@@ -82,6 +82,22 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/basic_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/enchanted_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/forbidden_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/heavenly_frame"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "primalmagick:entity/shield/primalite_shield_base"
     },
     {

@@ -117,6 +117,10 @@
     "primalmagick:mana_relay_basic",
     "primalmagick:mana_relay_enchanted",
     "primalmagick:mana_relay_forbidden",
-    "primalmagick:mana_relay_heavenly"
+    "primalmagick:mana_relay_heavenly",
+    "primalmagick:mana_injector_basic",
+    "primalmagick:mana_injector_enchanted",
+    "primalmagick:mana_injector_forbidden",
+    "primalmagick:mana_injector_heavenly"
   ]
 }
