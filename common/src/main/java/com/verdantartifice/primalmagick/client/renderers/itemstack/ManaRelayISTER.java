@@ -50,19 +50,22 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             VertexConsumer builder = pBuffer.getBuffer(RenderType.solid());
+            final float baseScale = 0.5F;
 
             // TODO Draw the relay frame
             pPoseStack.pushPose();
             pPoseStack.translate(0.5D, 0D, 0.5D);
+            pPoseStack.scale(baseScale, baseScale, baseScale);
             VertexConsumer frameBuilder = this.getFrameMaterial(relayBlock.getDeviceTier()).buffer(pBuffer, RenderType::entitySolid);
             this.frameModel.renderToBuffer(pPoseStack, frameBuilder, pPackedLight, pPackedOverlay, -1);
             pPoseStack.popPose();
 
             // TODO Draw the relay core
-            final float scale = 0.375F;
+            final float coreScale = 0.375F;
             pPoseStack.pushPose();
-            pPoseStack.translate(0.5D, 0D, 0.5D);
-            pPoseStack.scale(scale, scale, scale);
+            pPoseStack.translate(0.5D, 0.3125D, 0.5D);
+            pPoseStack.scale(baseScale, baseScale, baseScale);
+            pPoseStack.scale(coreScale, coreScale, coreScale);
             VertexConsumer ringBuilder = CORE_MATERIAL.buffer(pBuffer, RenderType::entitySolid);
             this.cubeModel.renderToBuffer(pPoseStack, ringBuilder, pPackedLight, pPackedOverlay, -1);  // TODO Cycle through colors
             pPoseStack.popPose();

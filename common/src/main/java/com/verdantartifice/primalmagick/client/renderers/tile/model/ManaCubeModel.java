@@ -21,24 +21,24 @@ public class ManaCubeModel extends Model {
 	// Made with Blockbench 4.12.4
 	// Exported for Minecraft version 1.17 or later with Mojang mappings
 
-	private final ModelPart bb_main;
+	private final ModelPart bone;
 
 	public ManaCubeModel(ModelPart root) {
 		super(RenderType::entitySolid);
-		this.bb_main = root.getChild("bb_main");
+		this.bone = root.getChild("bone");
 	}
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition bb_main = partdefinition.addOrReplaceChild("bb_main", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 16.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 16.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
 	}
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-		bb_main.render(poseStack, buffer, packedLight, packedOverlay, color);
+		bone.render(poseStack, buffer, packedLight, packedOverlay, color);
 	}
 }

@@ -6,11 +6,14 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +22,8 @@ public class ManaRelayBlock extends BaseEntityBlock implements ITieredDevice {
             DeviceTier.CODEC.fieldOf("tier").forGetter(b -> b.tier),
             propertiesCodec()
     ).apply(instance, ManaRelayBlock::new));
+
+    protected static final VoxelShape SHAPE = Block.box(5.0D, 5.0D, 5.0D, 11.0D, 11.0D, 11.0D);
 
     protected final DeviceTier tier;
 
@@ -30,6 +35,11 @@ public class ManaRelayBlock extends BaseEntityBlock implements ITieredDevice {
     @Override
     public DeviceTier getDeviceTier() {
         return this.tier;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     @Override
