@@ -34,7 +34,7 @@ public class ManaRelayBlock extends BaseEntityBlock implements ITieredDevice {
 
     @Override
     public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
-        return RenderShape.MODEL;
+        return RenderShape.INVISIBLE;
     }
 
     @Override

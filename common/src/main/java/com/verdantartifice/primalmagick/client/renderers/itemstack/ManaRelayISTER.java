@@ -48,6 +48,7 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
             // TODO Draw the relay core
             final float scale = 0.375F;
             pPoseStack.pushPose();
+            pPoseStack.translate(0.5D, 0D, 0.5D);
             pPoseStack.scale(scale, scale, scale);
             VertexConsumer ringBuilder = CORE_MATERIAL.buffer(pBuffer, RenderType::entitySolid);
             this.model.renderToBuffer(pPoseStack, ringBuilder, pPackedLight, pPackedOverlay, -1);  // TODO Cycle through colors

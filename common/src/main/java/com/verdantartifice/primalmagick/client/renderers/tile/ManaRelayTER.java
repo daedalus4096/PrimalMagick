@@ -37,6 +37,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
         // TODO Render the relay's core
         final float scale = 0.375F;
         poseStack.pushPose();
+        poseStack.translate(0.5D, 0D, 0.5D);
         poseStack.scale(scale, scale, scale);
         VertexConsumer ringBuilder = CORE_MATERIAL.buffer(multiBufferSource, RenderType::entitySolid);
         this.manaCubeModel.renderToBuffer(poseStack, ringBuilder, combinedLight, combinedOverlay, -1);  // TODO Cycle through colors

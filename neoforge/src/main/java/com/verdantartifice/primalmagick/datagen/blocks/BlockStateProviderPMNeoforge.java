@@ -715,6 +715,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     }
 
     private void manaRelayBlockWithItem(ManaRelayBlock block) {
+        this.emptyBlock(block);
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("builtin/entity")).transforms()
             .transform(ItemDisplayContext.GUI).rotation(30, 225, 0).translation(0, 0, 0).scale(0.625F).end()
             .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(0, 3F, 0).scale(0.25F).end()

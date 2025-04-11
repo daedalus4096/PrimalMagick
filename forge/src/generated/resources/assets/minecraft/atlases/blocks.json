@@ -62,6 +62,10 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_cube"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "primalmagick:entity/shield/primalite_shield_base"
     },
     {
