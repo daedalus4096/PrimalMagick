@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaRelayFra
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
 import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -54,7 +55,7 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
             final float baseScale = 0.5F;
             final float tilt = 45.0F;
 
-            // TODO Draw the relay frame
+            // Draw the relay frame
             pPoseStack.pushPose();
             pPoseStack.translate(0.5D, 0.5D, 0.5D);
             pPoseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
@@ -64,7 +65,7 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
             this.frameModel.renderToBuffer(pPoseStack, frameBuilder, pPackedLight, pPackedOverlay, -1);
             pPoseStack.popPose();
 
-            // TODO Draw the relay core
+            // Draw the relay core
             final float coreScale = 0.375F;
             pPoseStack.pushPose();
             pPoseStack.translate(0.5D, 0.5D, 0.5D);
@@ -73,7 +74,7 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
             pPoseStack.scale(baseScale, baseScale, baseScale);
             pPoseStack.scale(coreScale, coreScale, coreScale);
             VertexConsumer ringBuilder = CORE_MATERIAL.buffer(pBuffer, RenderType::entitySolid);
-            this.cubeModel.renderToBuffer(pPoseStack, ringBuilder, pPackedLight, pPackedOverlay, -1);  // TODO Cycle through colors
+            this.cubeModel.renderToBuffer(pPoseStack, ringBuilder, pPackedLight, pPackedOverlay, Sources.SKY.getColor());
             pPoseStack.popPose();
         }
     }

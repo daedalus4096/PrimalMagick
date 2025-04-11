@@ -36,7 +36,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
     }
 
     @Override
-    public void render(ManaRelayTileEntity manaRelayTileEntity, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int combinedLight, int combinedOverlay) {
+    public void render(ManaRelayTileEntity manaRelayTileEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int combinedLight, int combinedOverlay) {
         Minecraft mc = Minecraft.getInstance();
         BlockState state = manaRelayTileEntity.getBlockState();
         DeviceTier tier = state.getBlock() instanceof ManaRelayBlock relayBlock ? relayBlock.getDeviceTier() : DeviceTier.BASIC;
@@ -45,7 +45,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
         final float baseScale = 0.5F;
         final float tilt = 45.0F;
 
-        // TODO Render the relay's frame
+        // Render the relay's frame
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.5D, 0.5D);
         poseStack.mulPose(Axis.YP.rotationDegrees(-rot));   // Spin the frame around its Y-axis
@@ -56,7 +56,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
         this.frameModel.renderToBuffer(poseStack, frameBuilder, combinedLight, combinedOverlay, -1);
         poseStack.popPose();
 
-        // TODO Render the relay's core
+        // Render the relay's core
         final float coreScale = 0.375F;
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.5D, 0.5D);
@@ -66,7 +66,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
         poseStack.scale(baseScale, baseScale, baseScale);
         poseStack.scale(coreScale, coreScale, coreScale);
         VertexConsumer ringBuilder = CORE_MATERIAL.buffer(multiBufferSource, RenderType::entitySolid);
-        this.manaCubeModel.renderToBuffer(poseStack, ringBuilder, combinedLight, combinedOverlay, -1);  // TODO Cycle through colors
+        this.manaCubeModel.renderToBuffer(poseStack, ringBuilder, combinedLight, combinedOverlay, manaRelayTileEntity.getCurrentColor(partialTicks));
         poseStack.popPose();
     }
 
