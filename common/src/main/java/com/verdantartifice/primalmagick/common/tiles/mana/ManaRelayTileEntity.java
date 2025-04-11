@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.mojang.logging.LogUtils;
+import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
 import com.verdantartifice.primalmagick.common.mana.network.IManaRelay;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
+import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
@@ -90,12 +92,24 @@ public abstract class ManaRelayTileEntity extends AbstractTilePM implements IMan
 
     @Override
     public int getNetworkRange() {
-        return 16;
+        DeviceTier tier = this.getBlockState().getBlock() instanceof ManaRelayBlock relay ? relay.getDeviceTier() : DeviceTier.BASIC;
+        return switch (tier) {
+            case BASIC -> 5;
+            case ENCHANTED -> 10;
+            case FORBIDDEN -> 15;
+            case HEAVENLY, CREATIVE -> 20;
+        };
     }
 
     @Override
     public int getManaThroughput() {
-        return 3200;
+        DeviceTier tier = this.getBlockState().getBlock() instanceof ManaRelayBlock relay ? relay.getDeviceTier() : DeviceTier.BASIC;
+        return switch (tier) {
+            case BASIC -> 200;
+            case ENCHANTED -> 400;
+            case FORBIDDEN -> 800;
+            case HEAVENLY, CREATIVE -> 1600;
+        };
     }
 
     @Override
