@@ -28,7 +28,14 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
     private static final Material CORE_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, CORE_TEXTURE);
 
     private static final ResourceLocation BASIC_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_relay/basic_frame");
+    private static final ResourceLocation ENCHANTED_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_relay/enchanted_frame");
+    private static final ResourceLocation FORBIDDEN_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_relay/forbidden_frame");
+    private static final ResourceLocation HEAVENLY_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_relay/heavenly_frame");
+
     private static final Material BASIC_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BASIC_FRAME_TEXTURE);
+    private static final Material ENCHANTED_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, ENCHANTED_FRAME_TEXTURE);
+    private static final Material FORBIDDEN_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, FORBIDDEN_FRAME_TEXTURE);
+    private static final Material HEAVENLY_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, HEAVENLY_FRAME_TEXTURE);
 
     protected ManaRelayFrameModel frameModel;
     protected ManaCubeModel cubeModel;
@@ -80,7 +87,10 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
 
     private Material getFrameMaterial(DeviceTier tier) {
         return switch (tier) {
-            default -> BASIC_FRAME_MATERIAL;
+            case BASIC -> BASIC_FRAME_MATERIAL;
+            case ENCHANTED -> ENCHANTED_FRAME_MATERIAL;
+            case FORBIDDEN -> FORBIDDEN_FRAME_MATERIAL;
+            case HEAVENLY, CREATIVE -> HEAVENLY_FRAME_MATERIAL;
         };
     }
 }

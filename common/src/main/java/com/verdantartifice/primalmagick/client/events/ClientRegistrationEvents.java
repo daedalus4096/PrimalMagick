@@ -79,6 +79,9 @@ public class ClientRegistrationEvents {
         reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_SHIELD.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLCRAFTING_ALTAR.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_RELAY_BASIC.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.MANA_RELAY_ENCHANTED.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.MANA_RELAY_FORBIDDEN.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.MANA_RELAY_HEAVENLY.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(LexiconLoader.getOrCreateInstance());
         reloadListenerConsumer.accept(StyleGuideLoader.getOrCreateInstance());
     }
