@@ -4,6 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaRelayFrameModel;
+import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
+import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaRelayTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
@@ -18,11 +21,16 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
     public static final ResourceLocation CORE_TEXTURE = ResourceUtils.loc("entity/mana_cube");
-    public static final Material CORE_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, CORE_TEXTURE);
+    private static final Material CORE_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, CORE_TEXTURE);
 
+    private static final ResourceLocation BASIC_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_relay/basic_frame");
+    private static final Material BASIC_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BASIC_FRAME_TEXTURE);
+
+    protected ManaRelayFrameModel frameModel;
     protected final ManaCubeModel manaCubeModel;
 
     public ManaRelayTER(BlockEntityRendererProvider.Context context) {
+        this.frameModel = new ManaRelayFrameModel(context.bakeLayer(ModelLayersPM.MANA_RELAY_FRAME));
         this.manaCubeModel = new ManaCubeModel(context.bakeLayer(ModelLayersPM.MANA_CUBE));
     }
 
@@ -30,9 +38,15 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
     public void render(ManaRelayTileEntity manaRelayTileEntity, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int combinedLight, int combinedOverlay) {
         Minecraft mc = Minecraft.getInstance();
         BlockState state = manaRelayTileEntity.getBlockState();
+        DeviceTier tier = state.getBlock() instanceof ManaRelayBlock relayBlock ? relayBlock.getDeviceTier() : DeviceTier.BASIC;
         long time = manaRelayTileEntity.getLevel().getLevelData().getGameTime();
 
         // TODO Render the relay's frame
+        poseStack.pushPose();
+        poseStack.translate(0.5D, 0D, 0.5D);
+        VertexConsumer frameBuilder = this.getFrameMaterial(tier).buffer(multiBufferSource, RenderType::entitySolid);
+        this.frameModel.renderToBuffer(poseStack, frameBuilder, combinedLight, combinedOverlay, -1);
+        poseStack.popPose();
 
         // TODO Render the relay's core
         final float scale = 0.375F;
@@ -42,5 +56,11 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
         VertexConsumer ringBuilder = CORE_MATERIAL.buffer(multiBufferSource, RenderType::entitySolid);
         this.manaCubeModel.renderToBuffer(poseStack, ringBuilder, combinedLight, combinedOverlay, -1);  // TODO Cycle through colors
         poseStack.popPose();
+    }
+
+    protected Material getFrameMaterial(DeviceTier tier) {
+        return switch (tier) {
+            default -> BASIC_FRAME_MATERIAL;
+        };
     }
 }

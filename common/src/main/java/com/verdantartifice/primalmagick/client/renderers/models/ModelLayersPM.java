@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.models;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of registered model layer locations.
@@ -17,4 +18,5 @@ public class ModelLayersPM {
     public static final ModelLayerLocation TREEFOLK = new ModelLayerLocation(ResourceUtils.loc("treefolk"), "main");
     public static final ModelLayerLocation SPELLCRAFTING_ALTAR_RING = new ModelLayerLocation(ResourceUtils.loc("spellcrafting_altar_ring"), "main");
     public static final ModelLayerLocation MANA_CUBE = new ModelLayerLocation(ResourceUtils.loc("mana_cube"), "main");
+    public static final ModelLayerLocation MANA_RELAY_FRAME = new ModelLayerLocation(ResourceUtils.loc("mana_relay_frame"), "main");
 }

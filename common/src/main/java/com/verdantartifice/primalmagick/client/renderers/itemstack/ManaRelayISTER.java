@@ -4,8 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaRelayFrameModel;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
-import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
+import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -24,7 +26,11 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
     private static final ResourceLocation CORE_TEXTURE = ResourceUtils.loc("entity/mana_cube");
     private static final Material CORE_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, CORE_TEXTURE);
 
-    protected ManaCubeModel model;
+    private static final ResourceLocation BASIC_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_relay/basic_frame");
+    private static final Material BASIC_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BASIC_FRAME_TEXTURE);
+
+    protected ManaRelayFrameModel frameModel;
+    protected ManaCubeModel cubeModel;
 
     public ManaRelayISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(),
@@ -33,7 +39,9 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
 
     @Override
     public void onResourceManagerReload(ResourceManager pResourceManager) {
-        this.model = new ManaCubeModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayersPM.MANA_CUBE));
+        Minecraft mc = Minecraft.getInstance();
+        this.frameModel = new ManaRelayFrameModel(mc.getEntityModels().bakeLayer(ModelLayersPM.MANA_RELAY_FRAME));
+        this.cubeModel = new ManaCubeModel(mc.getEntityModels().bakeLayer(ModelLayersPM.MANA_CUBE));
     }
 
     @Override
@@ -44,6 +52,11 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
             VertexConsumer builder = pBuffer.getBuffer(RenderType.solid());
 
             // TODO Draw the relay frame
+            pPoseStack.pushPose();
+            pPoseStack.translate(0.5D, 0D, 0.5D);
+            VertexConsumer frameBuilder = this.getFrameMaterial(relayBlock.getDeviceTier()).buffer(pBuffer, RenderType::entitySolid);
+            this.frameModel.renderToBuffer(pPoseStack, frameBuilder, pPackedLight, pPackedOverlay, -1);
+            pPoseStack.popPose();
 
             // TODO Draw the relay core
             final float scale = 0.375F;
@@ -51,8 +64,14 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
             pPoseStack.translate(0.5D, 0D, 0.5D);
             pPoseStack.scale(scale, scale, scale);
             VertexConsumer ringBuilder = CORE_MATERIAL.buffer(pBuffer, RenderType::entitySolid);
-            this.model.renderToBuffer(pPoseStack, ringBuilder, pPackedLight, pPackedOverlay, -1);  // TODO Cycle through colors
+            this.cubeModel.renderToBuffer(pPoseStack, ringBuilder, pPackedLight, pPackedOverlay, -1);  // TODO Cycle through colors
             pPoseStack.popPose();
         }
+    }
+
+    private Material getFrameMaterial(DeviceTier tier) {
+        return switch (tier) {
+            default -> BASIC_FRAME_MATERIAL;
+        };
     }
 }
