@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.platform;
 
-import com.verdantartifice.primalmagick.common.tiles.ManaRelayTileEntityNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaRelayTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.CalcinatorTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
@@ -28,6 +28,7 @@ import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntityNeoforge;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaInjectorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaRelayTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntityNeoforge;
@@ -111,6 +112,11 @@ public class BlockEntityPrototypeServiceNeoforge implements IBlockEntityPrototyp
     @Override
     public BlockEntityType.BlockEntitySupplier<ManaBatteryTileEntity> manaBattery() {
         return ManaBatteryTileEntityNeoforge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<ManaInjectorTileEntity> manaInjector() {
+        return ManaIn
     }
 
     @Override

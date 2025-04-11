@@ -1,6 +1,5 @@
-package com.verdantartifice.primalmagick.common.tiles;
+package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.verdantartifice.primalmagick.common.tiles.mana.ManaRelayTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 

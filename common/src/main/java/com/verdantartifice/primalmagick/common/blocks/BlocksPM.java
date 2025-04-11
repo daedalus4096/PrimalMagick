@@ -37,6 +37,7 @@ import com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ArtificialManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
+import com.verdantartifice.primalmagick.common.blocks.mana.ManaInjectorBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.WandChargerBlock;
 import com.verdantartifice.primalmagick.common.blocks.minerals.BuddingGemClusterBlock;
@@ -407,6 +408,10 @@ public class BlocksPM {
     public static final IRegistryItem<Block, ManaRelayBlock> MANA_RELAY_ENCHANTED = register("mana_relay_enchanted", () -> new ManaRelayBlock(DeviceTier.ENCHANTED, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
     public static final IRegistryItem<Block, ManaRelayBlock> MANA_RELAY_FORBIDDEN = register("mana_relay_forbidden", () -> new ManaRelayBlock(DeviceTier.FORBIDDEN, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
     public static final IRegistryItem<Block, ManaRelayBlock> MANA_RELAY_HEAVENLY = register("mana_relay_heavenly", () -> new ManaRelayBlock(DeviceTier.HEAVENLY, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
+    public static final IRegistryItem<Block, ManaInjectorBlock> MANA_INJECTOR_BASIC = register("mana_injector_basic", () -> new ManaInjectorBlock(DeviceTier.BASIC, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
+    public static final IRegistryItem<Block, ManaInjectorBlock> MANA_INJECTOR_ENCHANTED = register("mana_injector_enchanted", () -> new ManaInjectorBlock(DeviceTier.ENCHANTED, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
+    public static final IRegistryItem<Block, ManaInjectorBlock> MANA_INJECTOR_FORBIDDEN = register("mana_injector_forbidden", () -> new ManaInjectorBlock(DeviceTier.FORBIDDEN, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
+    public static final IRegistryItem<Block, ManaInjectorBlock> MANA_INJECTOR_HEAVENLY = register("mana_injector_heavenly", () -> new ManaInjectorBlock(DeviceTier.HEAVENLY, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
 
     // Register misc blocks
     public static final IRegistryItem<Block, ConsecrationFieldBlock> CONSECRATION_FIELD = register("consecration_field", ConsecrationFieldBlock::new);

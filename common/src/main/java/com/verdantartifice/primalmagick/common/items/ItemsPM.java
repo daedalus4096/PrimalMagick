@@ -38,6 +38,7 @@ import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagick.common.items.misc.KnowledgeGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.RecallStoneItem;
 import com.verdantartifice.primalmagick.common.items.misc.ResearchGainItem;
@@ -424,6 +425,10 @@ public class ItemsPM {
     public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_ENCHANTED = registerSupplier("mana_relay_enchanted", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_FORBIDDEN = registerSupplier("mana_relay_forbidden", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_HEAVENLY = registerSupplier("mana_relay_heavenly", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_BASIC = registerSupplier("mana_injector_basic", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_BASIC, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_ENCHANTED = registerSupplier("mana_injector_enchanted", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_FORBIDDEN = registerSupplier("mana_injector_forbidden", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_HEAVENLY = registerSupplier("mana_injector_heavenly", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
 
     // Register miscellaneous block items
     public static final IRegistryItem<Item, ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));

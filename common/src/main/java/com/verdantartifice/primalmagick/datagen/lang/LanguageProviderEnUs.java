@@ -359,6 +359,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MANA_RELAY_ENCHANTED).name("Enchanted Mana Relay").build();
         this.block(BlocksPM.MANA_RELAY_FORBIDDEN).name("Forbidden Mana Relay").build();
         this.block(BlocksPM.MANA_RELAY_HEAVENLY).name("Heavenly Mana Relay").build();
+        this.block(BlocksPM.MANA_INJECTOR_BASIC).name("Mana Injector").build();
+        this.block(BlocksPM.MANA_INJECTOR_ENCHANTED).name("Enchanted Mana Injector").build();
+        this.block(BlocksPM.MANA_INJECTOR_FORBIDDEN).name("Forbidden Mana Injector").build();
+        this.block(BlocksPM.MANA_INJECTOR_HEAVENLY).name("Heavenly Mana Injector").build();
 
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
