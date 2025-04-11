@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaRelayFrameModel;
@@ -51,10 +52,13 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
             ItemRenderer itemRenderer = mc.getItemRenderer();
             VertexConsumer builder = pBuffer.getBuffer(RenderType.solid());
             final float baseScale = 0.5F;
+            final float tilt = 45.0F;
 
             // TODO Draw the relay frame
             pPoseStack.pushPose();
-            pPoseStack.translate(0.5D, 0D, 0.5D);
+            pPoseStack.translate(0.5D, 0.5D, 0.5D);
+            pPoseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
+            pPoseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
             pPoseStack.scale(baseScale, baseScale, baseScale);
             VertexConsumer frameBuilder = this.getFrameMaterial(relayBlock.getDeviceTier()).buffer(pBuffer, RenderType::entitySolid);
             this.frameModel.renderToBuffer(pPoseStack, frameBuilder, pPackedLight, pPackedOverlay, -1);
@@ -63,7 +67,9 @@ public class ManaRelayISTER extends BlockEntityWithoutLevelRenderer {
             // TODO Draw the relay core
             final float coreScale = 0.375F;
             pPoseStack.pushPose();
-            pPoseStack.translate(0.5D, 0.3125D, 0.5D);
+            pPoseStack.translate(0.5D, 0.5D, 0.5D);
+            pPoseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
+            pPoseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
             pPoseStack.scale(baseScale, baseScale, baseScale);
             pPoseStack.scale(coreScale, coreScale, coreScale);
             VertexConsumer ringBuilder = CORE_MATERIAL.buffer(pBuffer, RenderType::entitySolid);

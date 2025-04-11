@@ -41,15 +41,16 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
         BlockState state = manaRelayTileEntity.getBlockState();
         DeviceTier tier = state.getBlock() instanceof ManaRelayBlock relayBlock ? relayBlock.getDeviceTier() : DeviceTier.BASIC;
         long time = manaRelayTileEntity.getLevel().getLevelData().getGameTime();
-        int rot = (int)(time % 360);
+        int rot = 2 * (int)(time % 360);
         final float baseScale = 0.5F;
+        final float tilt = 45.0F;
 
         // TODO Render the relay's frame
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0D, 0.5D);
-//        poseStack.mulPose(Axis.YP.rotationDegrees(-rot));            // Spin the frame around its Y-axis
-//        poseStack.mulPose(Axis.ZP.rotationDegrees(45.0F));  // Tilt the frame onto its diagonal
-//        poseStack.mulPose(Axis.XP.rotationDegrees(45.0F));  // Tilt the frame onto its diagonal
+        poseStack.translate(0.5D, 0.5D, 0.5D);
+        poseStack.mulPose(Axis.YP.rotationDegrees(-rot));   // Spin the frame around its Y-axis
+        poseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
+        poseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
         poseStack.scale(baseScale, baseScale, baseScale);
         VertexConsumer frameBuilder = this.getFrameMaterial(tier).buffer(multiBufferSource, RenderType::entitySolid);
         this.frameModel.renderToBuffer(poseStack, frameBuilder, combinedLight, combinedOverlay, -1);
@@ -58,10 +59,10 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
         // TODO Render the relay's core
         final float coreScale = 0.375F;
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0.3125D, 0.5D);
-//        poseStack.mulPose(Axis.YP.rotationDegrees(rot));             // Spin the core around its Y-axis
-//        poseStack.mulPose(Axis.ZP.rotationDegrees(45.0F));  // Tilt the core onto its diagonal
-//        poseStack.mulPose(Axis.XP.rotationDegrees(45.0F));  // Tilt the core onto its diagonal
+        poseStack.translate(0.5D, 0.5D, 0.5D);
+        poseStack.mulPose(Axis.YP.rotationDegrees(rot));    // Spin the core around its Y-axis
+        poseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the core onto its diagonal
+        poseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the core onto its diagonal
         poseStack.scale(baseScale, baseScale, baseScale);
         poseStack.scale(coreScale, coreScale, coreScale);
         VertexConsumer ringBuilder = CORE_MATERIAL.buffer(multiBufferSource, RenderType::entitySolid);

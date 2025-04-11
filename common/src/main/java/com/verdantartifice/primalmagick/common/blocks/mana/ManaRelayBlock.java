@@ -23,7 +23,7 @@ public class ManaRelayBlock extends BaseEntityBlock implements ITieredDevice {
             propertiesCodec()
     ).apply(instance, ManaRelayBlock::new));
 
-    protected static final VoxelShape SHAPE = Block.box(5.0D, 5.0D, 5.0D, 11.0D, 11.0D, 11.0D);
+    protected static final VoxelShape SHAPE = Block.box(4.0D, 4.0D, 4.0D, 12.0D, 12.0D, 12.0D);
 
     protected final DeviceTier tier;
 
