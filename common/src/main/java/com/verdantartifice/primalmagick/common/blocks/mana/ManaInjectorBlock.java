@@ -4,6 +4,9 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaInjectorTileEntity;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -41,12 +44,12 @@ public class ManaInjectorBlock extends BaseEntityBlock implements ITieredDevice 
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-//        return Services.BLOCK_ENTITY_PROTOTYPES.manaRelay().create(blockPos, blockState);
+        return Services.BLOCK_ENTITY_PROTOTYPES.manaInjector().create(blockPos, blockState);
     }
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-//        return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.MANA_RELAY.get(), ManaRelayTileEntity::tick);
+        return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.MANA_INJECTOR.get(), ManaInjectorTileEntity::tick);
     }
 
     @Override
