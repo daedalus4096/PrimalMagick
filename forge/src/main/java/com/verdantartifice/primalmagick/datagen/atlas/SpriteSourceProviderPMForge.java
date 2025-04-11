@@ -82,6 +82,7 @@ public class SpriteSourceProviderPMForge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, RitualBellTER.TEXTURE);
         this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE);
         this.addSingle(blockAtlas, ManaRelayTER.CORE_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.BASIC_FRAME_TEXTURE);
         
         // Add custom item stack renderer textures to the block atlas
         this.addSingle(blockAtlas, PrimaliteShieldISTER.TEXTURE_SHIELD_BASE);

@@ -23,7 +23,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
     public static final ResourceLocation CORE_TEXTURE = ResourceUtils.loc("entity/mana_cube");
     private static final Material CORE_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, CORE_TEXTURE);
 
-    private static final ResourceLocation BASIC_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_relay/basic_frame");
+    public static final ResourceLocation BASIC_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_relay/basic_frame");
     private static final Material BASIC_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BASIC_FRAME_TEXTURE);
 
     protected ManaRelayFrameModel frameModel;
@@ -43,7 +43,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
 
         // TODO Render the relay's frame
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0D, 0.5D);
+        poseStack.translate(0.5D, -0.5D, 0.5D);
         VertexConsumer frameBuilder = this.getFrameMaterial(tier).buffer(multiBufferSource, RenderType::entitySolid);
         this.frameModel.renderToBuffer(poseStack, frameBuilder, combinedLight, combinedOverlay, -1);
         poseStack.popPose();

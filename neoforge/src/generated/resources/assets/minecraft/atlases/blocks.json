@@ -66,6 +66,10 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_relay/basic_frame"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "primalmagick:entity/shield/primalite_shield_base"
     },
     {
