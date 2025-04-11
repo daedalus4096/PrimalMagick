@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "primalmagick:block/empty"
+      "model": "primalmagick:block/mana_relay_basic"
     }
   }
 }
