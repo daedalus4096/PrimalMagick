@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaRelayFrameModel;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
-import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;

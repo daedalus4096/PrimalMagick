@@ -356,7 +356,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.ENDERWARD).name("Enderward").build();
         this.block(BlocksPM.SCRIBE_TABLE).name("Scribe's Table").build();
         this.block(BlocksPM.MANA_RELAY_BASIC).name("Mana Relay").build();
-        
+        this.block(BlocksPM.MANA_RELAY_ENCHANTED).name("Enchanted Mana Relay").build();
+        this.block(BlocksPM.MANA_RELAY_FORBIDDEN).name("Forbidden Mana Relay").build();
+        this.block(BlocksPM.MANA_RELAY_HEAVENLY).name("Heavenly Mana Relay").build();
+
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
         this.item(ItemsPM.CREATIVE_GRIMOIRE).name("Creative Grimoire").tooltip("Contains all the secrets of the arcane").build();

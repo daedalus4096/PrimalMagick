@@ -105,6 +105,9 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.MANA_SINGULARITY_CREATIVE.get());
         this.registerBasicTable(BlocksPM.SCRIBE_TABLE.get());
         this.registerBasicTable(BlocksPM.MANA_RELAY_BASIC.get());
+        this.registerBasicTable(BlocksPM.MANA_RELAY_ENCHANTED.get());
+        this.registerBasicTable(BlocksPM.MANA_RELAY_FORBIDDEN.get());
+        this.registerBasicTable(BlocksPM.MANA_RELAY_HEAVENLY.get());
 
         // Register misc loot tables
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());

@@ -114,6 +114,9 @@
     "primalmagick:mana_nexus",
     "primalmagick:mana_singularity",
     "primalmagick:mana_singularity_creative",
-    "primalmagick:mana_relay_basic"
+    "primalmagick:mana_relay_basic",
+    "primalmagick:mana_relay_enchanted",
+    "primalmagick:mana_relay_forbidden",
+    "primalmagick:mana_relay_heavenly"
   ]
 }

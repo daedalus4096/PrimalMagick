@@ -421,6 +421,9 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY_CREATIVE = registerSupplier("mana_singularity_creative", () -> new BlockItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, BurnableBlockItem> SCRIBE_TABLE = registerSupplier("scribe_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.SCRIBE_TABLE, 300, new Item.Properties()));
     public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_BASIC = registerSupplier("mana_relay_basic", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_BASIC, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_ENCHANTED = registerSupplier("mana_relay_enchanted", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_FORBIDDEN = registerSupplier("mana_relay_forbidden", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_HEAVENLY = registerSupplier("mana_relay_heavenly", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
 
     // Register miscellaneous block items
     public static final IRegistryItem<Item, ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));

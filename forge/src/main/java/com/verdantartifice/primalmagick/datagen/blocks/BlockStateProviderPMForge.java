@@ -289,6 +289,9 @@ public class BlockStateProviderPMForge extends BlockStateProvider {
         this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get());
         this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.SCRIBE_TABLE.get());
         this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_BASIC.get());
+        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_ENCHANTED.get());
+        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_FORBIDDEN.get());
+        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_HEAVENLY.get());
 
         // Generate misc blocks
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
