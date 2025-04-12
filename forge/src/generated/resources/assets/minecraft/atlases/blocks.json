@@ -82,19 +82,23 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "primalmagick:entity/mana_injector/basic_frame"
+      "resource": "primalmagick:entity/mana_injector/basic_frame_top"
     },
     {
       "type": "minecraft:single",
-      "resource": "primalmagick:entity/mana_injector/enchanted_frame"
+      "resource": "primalmagick:entity/mana_injector/enchanted_frame_top"
     },
     {
       "type": "minecraft:single",
-      "resource": "primalmagick:entity/mana_injector/forbidden_frame"
+      "resource": "primalmagick:entity/mana_injector/forbidden_frame_top"
     },
     {
       "type": "minecraft:single",
-      "resource": "primalmagick:entity/mana_injector/heavenly_frame"
+      "resource": "primalmagick:entity/mana_injector/heavenly_frame_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/frame_bottom"
     },
     {
       "type": "minecraft:single",
