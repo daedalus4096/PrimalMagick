@@ -64,22 +64,36 @@ public class ManaInjectorTER implements BlockEntityRenderer<ManaInjectorTileEnti
 
         // Render the injector's frame rings
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0.5D, 0.5D);
-
+        poseStack.translate(0.5D, 0D, 0.5D);
         VertexConsumer topFrameBuilder = this.getTopFrameMaterial(tier).buffer(multiBufferSource, RenderType::entitySolid);
-        this.ringTopModel.renderToBuffer(poseStack, topFrameBuilder, combinedLight, combinedOverlay, -1);
-
         VertexConsumer bottomFrameBuilder = BOTTOM_FRAME_MATERIAL.buffer(multiBufferSource, RenderType::entitySolid);
+
+        poseStack.pushPose();
+        poseStack.translate(0D, 1.875D, 0D);
+        this.ringTopModel.renderToBuffer(poseStack, topFrameBuilder, combinedLight, combinedOverlay, -1);
+        poseStack.popPose();
+
+        poseStack.pushPose();
+        poseStack.translate(0D, 1.375D, 0D);
         this.ringTopMiddleModel.renderToBuffer(poseStack, bottomFrameBuilder, combinedLight, combinedOverlay, -1);
+        poseStack.popPose();
+
+        poseStack.pushPose();
+        poseStack.translate(0D, 0.875D, 0D);
         this.ringBottomMiddleModel.renderToBuffer(poseStack, bottomFrameBuilder, combinedLight, combinedOverlay, -1);
+        poseStack.popPose();
+
+        poseStack.pushPose();
+        poseStack.translate(0D, 0.375D, 0D);
         this.ringBottomModel.renderToBuffer(poseStack, bottomFrameBuilder, combinedLight, combinedOverlay, -1);
+        poseStack.popPose();
 
         poseStack.popPose();
 
         // Render the relay's core
         final float coreScale = 0.1875F;
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0.5D, 0.5D);
+        poseStack.translate(0.5D, 0.75D, 0.5D);
         poseStack.mulPose(Axis.YP.rotationDegrees(rot));    // Spin the core around its Y-axis
         poseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the core onto its diagonal
         poseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the core onto its diagonal
@@ -89,7 +103,7 @@ public class ManaInjectorTER implements BlockEntityRenderer<ManaInjectorTileEnti
         poseStack.popPose();
 
         // Draw a particle stream rising from the core
-        FxDispatcher.INSTANCE.spellcraftingGlow(manaInjectorTileEntity.getBlockPos(), 1.125D, coreColor);
+        FxDispatcher.INSTANCE.spellcraftingGlow(manaInjectorTileEntity.getBlockPos(), 0.75D, coreColor);
     }
 
     protected Material getTopFrameMaterial(DeviceTier tier) {
