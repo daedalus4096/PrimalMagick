@@ -22,6 +22,7 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
+import org.joml.Math;
 
 public class ManaInjectorTER implements BlockEntityRenderer<ManaInjectorTileEntity> {
     public static final ResourceLocation CORE_TEXTURE = ResourceUtils.loc("entity/mana_cube");
@@ -53,6 +54,9 @@ public class ManaInjectorTER implements BlockEntityRenderer<ManaInjectorTileEnti
         this.manaCubeModel = new ManaCubeModel(context.bakeLayer(ModelLayersPM.MANA_CUBE));
     }
 
+    protected static final int DIP_DURATION = 8;
+    protected static final int CYCLE_DURATION = 40;
+
     @Override
     public void render(ManaInjectorTileEntity manaInjectorTileEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int combinedLight, int combinedOverlay) {
         BlockState state = manaInjectorTileEntity.getBlockState();
@@ -69,22 +73,22 @@ public class ManaInjectorTER implements BlockEntityRenderer<ManaInjectorTileEnti
         VertexConsumer bottomFrameBuilder = BOTTOM_FRAME_MATERIAL.buffer(multiBufferSource, RenderType::entitySolid);
 
         poseStack.pushPose();
-        poseStack.translate(0D, 1.875D, 0D);
+        poseStack.translate(0D, 1.875D + this.getDipAmount(time, partialTicks, 0), 0D);
         this.ringTopModel.renderToBuffer(poseStack, topFrameBuilder, combinedLight, combinedOverlay, -1);
         poseStack.popPose();
 
         poseStack.pushPose();
-        poseStack.translate(0D, 1.375D, 0D);
+        poseStack.translate(0D, 1.375D + this.getDipAmount(time, partialTicks, 4), 0D);
         this.ringTopMiddleModel.renderToBuffer(poseStack, bottomFrameBuilder, combinedLight, combinedOverlay, -1);
         poseStack.popPose();
 
         poseStack.pushPose();
-        poseStack.translate(0D, 0.875D, 0D);
+        poseStack.translate(0D, 0.875D + this.getDipAmount(time, partialTicks, 8), 0D);
         this.ringBottomMiddleModel.renderToBuffer(poseStack, bottomFrameBuilder, combinedLight, combinedOverlay, -1);
         poseStack.popPose();
 
         poseStack.pushPose();
-        poseStack.translate(0D, 0.375D, 0D);
+        poseStack.translate(0D, 0.375D + this.getDipAmount(time, partialTicks, 12), 0D);
         this.ringBottomModel.renderToBuffer(poseStack, bottomFrameBuilder, combinedLight, combinedOverlay, -1);
         poseStack.popPose();
 
@@ -104,6 +108,15 @@ public class ManaInjectorTER implements BlockEntityRenderer<ManaInjectorTileEnti
 
         // Draw a particle stream rising from the core
         FxDispatcher.INSTANCE.spellcraftingGlow(manaInjectorTileEntity.getBlockPos(), 0.75D, coreColor);
+    }
+
+    protected double getDipAmount(long gameTime, float partialTicks, int dipStartTime) {
+        double cycleTime = (gameTime % CYCLE_DURATION) + (double)partialTicks;
+        if (cycleTime >= dipStartTime && cycleTime <= (dipStartTime + DIP_DURATION)) {
+            return -0.125D * Math.sin((cycleTime - dipStartTime) * (Math.PI / (double)DIP_DURATION));
+        } else {
+            return 0D;
+        }
     }
 
     protected Material getTopFrameMaterial(DeviceTier tier) {
