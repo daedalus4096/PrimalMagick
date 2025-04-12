@@ -19,4 +19,8 @@ public class ModelLayersPM {
     public static final ModelLayerLocation SPELLCRAFTING_ALTAR_RING = new ModelLayerLocation(ResourceUtils.loc("spellcrafting_altar_ring"), "main");
     public static final ModelLayerLocation MANA_CUBE = new ModelLayerLocation(ResourceUtils.loc("mana_cube"), "main");
     public static final ModelLayerLocation MANA_RELAY_FRAME = new ModelLayerLocation(ResourceUtils.loc("mana_relay_frame"), "main");
+    public static final ModelLayerLocation MANA_INJECTOR_FRAME_TOP = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_top"), "main");
+    public static final ModelLayerLocation MANA_INJECTOR_FRAME_TOP_MIDDLE = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_top_middle"), "main");
+    public static final ModelLayerLocation MANA_INJECTOR_FRAME_BOTTOM_MIDDLE = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_bottom_middle"), "main");
+    public static final ModelLayerLocation MANA_INJECTOR_FRAME_BOTTOM = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_bottom"), "main");
 }

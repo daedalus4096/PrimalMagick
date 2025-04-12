@@ -18,17 +18,17 @@ import net.minecraft.client.renderer.RenderType;
  * @author Daedalus4096
  */
 public class ManaRelayFrameModel extends Model {
-	// Made with Blockbench 4.12.4
-	// Exported for Minecraft version 1.17 or later with Mojang mappings
+    // Made with Blockbench 4.12.4
+    // Exported for Minecraft version 1.17 or later with Mojang mappings
 
-	private final ModelPart bone;
+    private final ModelPart bone;
 
-	public ManaRelayFrameModel(ModelPart root) {
+    public ManaRelayFrameModel(ModelPart root) {
 		super(RenderType::entitySolid);
 		this.bone = root.getChild("bone");
-	}
+    }
 
-	public static LayerDefinition createBodyLayer() {
+    public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
@@ -46,10 +46,10 @@ public class ManaRelayFrameModel extends Model {
 		.texOffs(20, 18).addBox(-6.0F, -6.0F, -4.0F, 2.0F, 2.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
-	}
+    }
 
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
 		bone.render(poseStack, buffer, packedLight, packedOverlay, color);
-	}
+    }
 }

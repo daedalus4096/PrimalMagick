@@ -97,6 +97,7 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, ManaInjectorTER.ENCHANTED_FRAME_TEXTURE);
         this.addSingle(blockAtlas, ManaInjectorTER.FORBIDDEN_FRAME_TEXTURE);
         this.addSingle(blockAtlas, ManaInjectorTER.HEAVENLY_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.BOTTOM_FRAME_TEXTURE);
 
         // Add custom item stack renderer textures to the block atlas
         this.addSingle(blockAtlas, PrimaliteShieldISTER.TEXTURE_SHIELD_BASE);
