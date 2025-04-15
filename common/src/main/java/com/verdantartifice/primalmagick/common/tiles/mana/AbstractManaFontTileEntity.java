@@ -36,7 +36,6 @@ import org.slf4j.Logger;
  * @author Daedalus4096
  */
 public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand, IManaSupplier, ITieredDeviceBlockEntity {
-    public static final int CENTIMANA_RECHARGED_PER_TICK = 5;
     protected static final Logger LOGGER = LogUtils.getLogger();
 
     protected final RouteTable routeTable = new RouteTable();
@@ -78,6 +77,14 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
     
     public int getManaCapacity() {
         return this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock ? fontBlock.getManaCapacity() : 0;
+    }
+
+    public int getManaRechargedPerTick() {
+        return switch (this.getDeviceTier()) {
+            case ENCHANTED -> 1;
+            case BASIC, FORBIDDEN -> 5;
+            case HEAVENLY, CREATIVE -> 25;
+        };
     }
     
     protected abstract int getInitialMana();
@@ -146,7 +153,7 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
     @VisibleForTesting
     public void doRecharge() {
         // Recharge the font over time
-        if (this.setMana(this.getMana() + CENTIMANA_RECHARGED_PER_TICK)) {
+        if (this.setMana(this.getMana() + this.getManaRechargedPerTick())) {
             // Sync the tile if its mana total changed
             this.setChanged();
             this.syncTile(true);

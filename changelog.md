@@ -3,6 +3,8 @@ v6.0.5
 * Added an affinity index to the Grimoire, to remind you of all the data you've analyzed
 * Added Mana Injectors, to let Magitech devices pull mana directly from fonts
 * Added Mana Relays, to extend the range of your mana distribution network
+* Greatly decreased the mana regeneration rate of Artificial Mana Fonts
+* Greatly increased the mana regeneration rate of Heavenly Mana Fonts
 * Made item textures for energized gems more distinct from their parents' versions
 * Fixed various tooltips to refer to mana effectiveness instead of flat discounts
 * Allowed mana fonts to stack to sixteen

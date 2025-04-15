@@ -206,7 +206,7 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
                 int afterStackMana = afterStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).getManaStored(Sources.EARTH);
                 int fontMana = fontTile.getMana();
                 helper.assertValueEqual(afterStackMana, expectedSiphonAmount, "After stack mana total not as expected");
-                helper.assertValueEqual(fontMana, startFontMana - expectedSiphonAmount + AbstractManaFontTileEntity.CENTIMANA_RECHARGED_PER_TICK, "After font mana not as expected");
+                helper.assertValueEqual(fontMana, startFontMana - expectedSiphonAmount + fontTile.getManaRechargedPerTick(), "After font mana not as expected");
             });
         });
     }

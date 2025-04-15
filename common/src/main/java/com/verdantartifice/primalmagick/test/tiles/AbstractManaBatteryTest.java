@@ -174,7 +174,7 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             // Confirm that mana was siphoned from the font to the battery
             final int transferCap = batteryTile.getBatteryTransferCap();
             final int expectedTransfer = Math.min(startFontMana, transferCap);
-            final int expectedFontMana = startFontMana - expectedTransfer + AbstractManaFontTileEntity.CENTIMANA_RECHARGED_PER_TICK;
+            final int expectedFontMana = startFontMana - expectedTransfer + fontTile.getManaRechargedPerTick();
             final SourceList expectedBatteryMana = SourceList.builder().with(font.getSource(), expectedTransfer).build();
             helper.succeedOnTickWhen(1, () -> {
                 helper.assertValueEqual(fontTile.getMana(), expectedFontMana, "After font mana");
