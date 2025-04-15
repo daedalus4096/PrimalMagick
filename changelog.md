@@ -5,6 +5,7 @@ v6.0.5
 * Added Mana Relays, to extend the range of your mana distribution network
 * Made item textures for energized gems more distinct from their parents' versions
 * Fixed various tooltips to refer to mana effectiveness instead of flat discounts
+* Allowed mana fonts to stack to sixteen
 
 v6.0.4
 ------
