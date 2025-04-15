@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.ITieredDeviceBlockEntity;
+import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -76,7 +76,8 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     }
 
     protected Optional<IManaStorage<?>> getConnectedStorage() {
-        return this.hasLevel() ? Services.CAPABILITIES.manaStorage(this.getLevel(), this.getBlockPos().below(), Direction.UP) : Optional.empty();
+        Level level = this.getLevel();
+        return level != null ? Services.CAPABILITIES.manaStorage(level, this.getBlockPos().below(), Direction.UP) : Optional.empty();
     }
 
     @Override

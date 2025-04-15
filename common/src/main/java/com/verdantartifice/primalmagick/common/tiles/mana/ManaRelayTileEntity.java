@@ -1,14 +1,12 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.mojang.logging.LogUtils;
-import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
 import com.verdantartifice.primalmagick.common.mana.network.IManaRelay;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
-import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.ITieredDeviceBlockEntity;
+import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

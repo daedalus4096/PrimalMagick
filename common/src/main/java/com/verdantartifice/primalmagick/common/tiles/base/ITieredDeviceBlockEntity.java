@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.tiles;
+package com.verdantartifice.primalmagick.common.tiles.base;
 
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
