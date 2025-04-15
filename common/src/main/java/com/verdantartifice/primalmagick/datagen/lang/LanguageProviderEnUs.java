@@ -81,15 +81,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
     protected void addLocalizations(HolderLookup.Provider lookupProvider) {
         // Generate magickal source localizations; it's important to do these first so that the language provider has access to
         // the localized source names for the source-multiplied language builders used later.
-        this.source(Sources.EARTH).name("Earth").attunement("Minor attunement to the Earth source makes it easier to channel mana.  In practice, I'll pay 5% less Earth mana for all purposes.<BR>Lesser attunement to the Earth will grant me increased stamina, allowing me to swing swords and tools faster without tiring.<BR>Finally, greater attunement to the Earth will cause the very ground to rise beneath my feet when I walk, allowing me to step up the full height of a block without needing to jump.").build();
-        this.source(Sources.SEA).name("Sea").attunement("Minor attunement to the Sea source makes it easier to channel mana.  In practice, I'll pay 5% less Sea mana for all purposes.<BR>Lesser attunement to the Sea will grant me the grace of a dolphin, greatly increasing my swim speed.<BR>Finally, greater attunement to the Sea will allow me to breathe water as if it were air.").build();
-        this.source(Sources.SKY).name("Sky").attunement("Minor attunement to the Sky source makes it easier to channel mana.  In practice, I'll pay 5% less Sky mana for all purposes.<BR>Lesser attunement to the Sky will infuse me with speed and dexterity, increasing my movement speed and greatly reducing any fall damage I take.<BR>Finally, greater attunement to the Sky truly allows me to soar.  While it won't truly let me fly, I'll be able to jump higher, and even jump a second time while in midair.").build();
-        this.source(Sources.SUN).name("Sun").attunement("Minor attunement to the Sun source makes it easier to channel mana.  In practice, I'll pay 5% less Sun mana for all purposes.<BR>Lesser attunement to the Sun will allow me to draw nourishment from it like a plant, filling my belly so long as I'm outdoors during the daytime.<BR>Finally, greater attunement to the Sun grants me true radiance.  Whenever I'm in a dark area, I'll have a chance to create lasting light in my wake.  Should I not desire this to happen, I need only sneak.").build();
-        this.source(Sources.MOON).name("Moon").attunement("Minor attunement to the Moon source makes it easier to channel mana.  In practice, I'll pay 5% less Moon mana for all purposes.<BR>Lesser attunement to the Moon will let me defensively wrap myself in shifting illusions, giving me a chance to become invisible whenever I take damage.<BR>Finally, greater attunement to the Moon allows me to become one with the night, seeing through the darkness as if it were day.").build();
-        this.source(Sources.BLOOD).name("Blood").attunement("Minor attunement to the Blood source makes it easier to channel mana.  In practice, I'll pay 5% less Blood mana for all purposes.<BR>Lesser attunement to the Blood will let me exsanguinate my foes, causing them to bleed for more damage whenever I score a solid hit on one.  All except for the loathsome undead, that is, who have no blood to shed.<BR>Finally, greater attunement to the Blood will cause me to siphon my enemies' life force, granting me a chance to heal my wounds as I harm them.").build();
-        this.source(Sources.INFERNAL).name("Infernal").attunement("Minor attunement to the Infernal source makes it easier to channel mana.  In practice, I'll pay 5% less Infernal mana for all purposes.<BR>Lesser attunement to the Infernal will let me lash out with a Hellish Chain when I strike, dealing bonus fire damage to the next-closest victim to my original target.<BR>Finally, greater attunement to the Infernal will let me become one with the flames, and immune to their ravages.").build();
-        this.source(Sources.VOID).name("Void").attunement("Minor attunement to the Void source makes it easier to channel mana.  In practice, I'll pay 5% less Void mana for all purposes.<BR>Lesser attunement to the Void will infuse my flesh with nothingness, reducing all damage I take.<BR>Finally, greater attunement to the Void will channel the hunger of the eldritch through my attacks, granting them all increased potency.").build();
-        this.source(Sources.HALLOWED).name("Hallowed").attunement("Minor attunement to the Hallowed source makes it easier to channel mana.  In practice, I'll pay 5% less Hallowed mana for all purposes.<BR>Lesser attunement to the Hallowed will make me anathema to the undead, doubling all damage I deal to them.<BR>Finally, greater attunement to the Hallowed will empower my soul such that, when fatally wounded, I will not die but live on.  Such an effort will weaken my soul for a short time, preventing such a miracle from happening again until I recover.").build();
+        this.source(Sources.EARTH).name("Earth").attunement("Minor attunement to the Earth source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Earth mana for all purposes.<BR>Lesser attunement to the Earth will grant me increased stamina, allowing me to swing swords and tools faster without tiring.<BR>Finally, greater attunement to the Earth will cause the very ground to rise beneath my feet when I walk, allowing me to step up the full height of a block without needing to jump.").build();
+        this.source(Sources.SEA).name("Sea").attunement("Minor attunement to the Sea source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Sea mana for all purposes.<BR>Lesser attunement to the Sea will grant me the grace of a dolphin, greatly increasing my swim speed.<BR>Finally, greater attunement to the Sea will allow me to breathe water as if it were air.").build();
+        this.source(Sources.SKY).name("Sky").attunement("Minor attunement to the Sky source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Sky mana for all purposes.<BR>Lesser attunement to the Sky will infuse me with speed and dexterity, increasing my movement speed and greatly reducing any fall damage I take.<BR>Finally, greater attunement to the Sky truly allows me to soar.  While it won't truly let me fly, I'll be able to jump higher, and even jump a second time while in midair.").build();
+        this.source(Sources.SUN).name("Sun").attunement("Minor attunement to the Sun source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Sun mana for all purposes.<BR>Lesser attunement to the Sun will allow me to draw nourishment from it like a plant, filling my belly so long as I'm outdoors during the daytime.<BR>Finally, greater attunement to the Sun grants me true radiance.  Whenever I'm in a dark area, I'll have a chance to create lasting light in my wake.  Should I not desire this to happen, I need only sneak.").build();
+        this.source(Sources.MOON).name("Moon").attunement("Minor attunement to the Moon source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Moon mana for all purposes.<BR>Lesser attunement to the Moon will let me defensively wrap myself in shifting illusions, giving me a chance to become invisible whenever I take damage.<BR>Finally, greater attunement to the Moon allows me to become one with the night, seeing through the darkness as if it were day.").build();
+        this.source(Sources.BLOOD).name("Blood").attunement("Minor attunement to the Blood source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Blood mana for all purposes.<BR>Lesser attunement to the Blood will let me exsanguinate my foes, causing them to bleed for more damage whenever I score a solid hit on one.  All except for the loathsome undead, that is, who have no blood to shed.<BR>Finally, greater attunement to the Blood will cause me to siphon my enemies' life force, granting me a chance to heal my wounds as I harm them.").build();
+        this.source(Sources.INFERNAL).name("Infernal").attunement("Minor attunement to the Infernal source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Infernal mana for all purposes.<BR>Lesser attunement to the Infernal will let me lash out with a Hellish Chain when I strike, dealing bonus fire damage to the next-closest victim to my original target.<BR>Finally, greater attunement to the Infernal will let me become one with the flames, and immune to their ravages.").build();
+        this.source(Sources.VOID).name("Void").attunement("Minor attunement to the Void source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Void mana for all purposes.<BR>Lesser attunement to the Void will infuse my flesh with nothingness, reducing all damage I take.<BR>Finally, greater attunement to the Void will channel the hunger of the eldritch through my attacks, granting them all increased potency.").build();
+        this.source(Sources.HALLOWED).name("Hallowed").attunement("Minor attunement to the Hallowed source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Hallowed mana for all purposes.<BR>Lesser attunement to the Hallowed will make me anathema to the undead, doubling all damage I deal to them.<BR>Finally, greater attunement to the Hallowed will empower my soul such that, when fatally wounded, I will not die but live on.  Such an effort will weaken my soul for a short time, preventing such a miracle from happening again until I recover.").build();
         this.add(Source.getUnknownTranslationKey(), "Unknown");
         
         // Generate item group (i.e. creative tab) localizations
@@ -928,8 +928,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
         this.tooltip("sanguine_core").sub("2").output("Souls per spawn: %1$d").end().build();
-        this.tooltip("mana_discount").name("Mana discount: %1$d%%").build();
-        this.tooltip("mana_discount_attuned").name("%2$s mana discount: %1$d%%").build();
+        this.tooltip("mana_discount").name("Mana effectiveness: +%1$d%%").build();
+        this.tooltip("mana_discount_attuned").name("%2$s mana effectiveness: +%1$d%%").build();
         this.tooltip("glamoured").name("Glamoured").build();
         this.tooltip("warded").name("Warded").build();
         this.tooltip("runescribed").name("Runescribed").build();
@@ -1474,15 +1474,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate attunement threshold localizations
         this.attunementThreshold(AttunementThreshold.MINOR).name("Minor")
-            .effect(Sources.EARTH, "5% Earth mana discount")
-            .effect(Sources.SEA, "5% Sea mana discount")
-            .effect(Sources.SKY, "5% Sky mana discount")
-            .effect(Sources.SUN, "5% Sun mana discount")
-            .effect(Sources.MOON, "5% Moon mana discount")
-            .effect(Sources.BLOOD, "5% Blood mana discount")
-            .effect(Sources.INFERNAL, "5% Infernal mana discount")
-            .effect(Sources.VOID, "5% Void mana discount")
-            .effect(Sources.HALLOWED, "5% Hallowed mana discount")
+            .effect(Sources.EARTH, "+5% Earth mana effectiveness")
+            .effect(Sources.SEA, "+5% Sea mana effectiveness")
+            .effect(Sources.SKY, "+5% Sky mana effectiveness")
+            .effect(Sources.SUN, "+5% Sun mana effectiveness")
+            .effect(Sources.MOON, "+5% Moon mana effectiveness")
+            .effect(Sources.BLOOD, "+5% Blood mana effectiveness")
+            .effect(Sources.INFERNAL, "+5% Infernal mana effectiveness")
+            .effect(Sources.VOID, "+5% Void mana effectiveness")
+            .effect(Sources.HALLOWED, "+5% Hallowed mana effectiveness")
             .build();
         this.attunementThreshold(AttunementThreshold.LESSER).name("Lesser")
             .effect(Sources.EARTH, "Increased attack/mining speed")
@@ -1688,7 +1688,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tip("sotu").name("The secrets of the universe will take a great deal of work to uncover, and are not for the faint of heart. Check the Fundamentals section of your Grimoire to learn what is required.").build();
         this.tip("mana_charger").name("The Mana Charger lets you convert magickal essence, such as dust, into mana for your wand. More potent types of essence will yield more mana.").build();
         this.tip("staves").name("Magickal staves can be inscribed with more spells than a regular wand, but are too large to fit in most crafting stations.").build();
-        this.tip("robes").name("Robes aren't as protective as normal armor, but they do offer you a discount when spending mana.").build();
+        this.tip("robes").name("Robes aren't as protective as normal armor, but they do offer you more bang for your buck when spending mana.").build();
         this.tip("ritual_symmetry").name("Symmetry is very important when setting up your ritual layout. Try using a Dowsing Rod if you're having trouble with it.").build();
         this.tip("induced_attunement").name("Eating Ambrosia will earn you induced attunement to magick, granting you passive bonuses. But every time you gain induced attunement for one source, you lose a bit for all the others.").build();
         this.tip("ambrosia_cap").name("Ambrosia has a cap on how much induced attunement it can grant you. More powerful types of Ambrosia have higher caps.").build();
@@ -3081,7 +3081,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_OBSIDIAN, lookupProvider).name("Wand Core: Obsidian")
             .stages()
                 .add("If my calculations are correct, obsidian might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("Fascinating!  This wand core has a solid heft to it, and I can feel the metaphysical weight of the Earth behind it.  This alignment to the Earth comes with a few benefits, it seems.<BR>First, an obsidian wand core can be inscribed with an extra spell, so long as that spell is Earth-based.<BR>Second, it channels Earth mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, an obsidian wand core will slowly draw small amounts of Earth magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Earth magick a lot.")
+                .add("Fascinating!  This wand core has a solid heft to it, and I can feel the metaphysical weight of the Earth behind it.  This alignment to the Earth comes with a few benefits, it seems.<BR>First, an obsidian wand core can be inscribed with an extra spell, so long as that spell is Earth-based.<BR>Second, it channels Earth mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, an obsidian wand core will slowly draw small amounts of Earth magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Earth magick a lot.")
                 .end()
             .addenda()
                 .add("Obsidian will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Earth spell slot is not doubled.  In total, that makes two of any type of spell plus one Earth spell.")
@@ -3090,7 +3090,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_CORAL, lookupProvider).name("Wand Core: Coral")
             .stages()
                 .add("If my calculations are correct, coral might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("Intriguing.  I'll definitely need to wear gloves when handling this, on account of the sharp bits, but I can feel the vastness of the Sea when I hold it.  This alignment comes with some benefits.<BR>First, a coral wand core can be inscribed with an extra spell, so long as that spell is Sea-based.<BR>Second, it channels Sea mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, a coral wand core will slowly draw small amounts of Sea magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sea magick a lot.")
+                .add("Intriguing.  I'll definitely need to wear gloves when handling this, on account of the sharp bits, but I can feel the vastness of the Sea when I hold it.  This alignment comes with some benefits.<BR>First, a coral wand core can be inscribed with an extra spell, so long as that spell is Sea-based.<BR>Second, it channels Sea mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, a coral wand core will slowly draw small amounts of Sea magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sea magick a lot.")
                 .end()
             .addenda()
                 .add("Coral will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Sea spell slot is not doubled.  In total, that makes two of any type of spell plus one Sea spell.")
@@ -3099,7 +3099,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_BAMBOO, lookupProvider).name("Wand Core: Bamboo")
             .stages()
                 .add("If my calculations are correct, bamboo might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("Hollow and light, the Sky runs through the center of this wand core, and it is so aligned.  This alignment comes with some benefits.<BR>First, a bamboo wand core can be inscribed with an extra spell, so long as that spell is Sky-based.<BR>Second, it channels Sky mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, a bamboo wand core will slowly draw small amounts of Sky magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sky magick a lot.")
+                .add("Hollow and light, the Sky runs through the center of this wand core, and it is so aligned.  This alignment comes with some benefits.<BR>First, a bamboo wand core can be inscribed with an extra spell, so long as that spell is Sky-based.<BR>Second, it channels Sky mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, a bamboo wand core will slowly draw small amounts of Sky magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sky magick a lot.")
                 .end()
             .addenda()
                 .add("Bamboo will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Sky spell slot is not doubled.  In total, that makes two of any type of spell plus one Sky spell.")
@@ -3108,7 +3108,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_SUNWOOD, lookupProvider).name("Wand Core: Sunwood")
             .stages()
                 .add("If my calculations are correct, sunwood might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("Gently warm to the touch, this wand core casts a very faint light.  It is clearly aligned to the Sun, and that comes with some benefits.<BR>First, a sunwood wand core can be inscribed with an extra spell, so long as that spell is Sun-based.<BR>Second, it channels Sun mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, a sunwood wand core will slowly draw small amounts of Sun magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sun magick a lot.")
+                .add("Gently warm to the touch, this wand core casts a very faint light.  It is clearly aligned to the Sun, and that comes with some benefits.<BR>First, a sunwood wand core can be inscribed with an extra spell, so long as that spell is Sun-based.<BR>Second, it channels Sun mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, a sunwood wand core will slowly draw small amounts of Sun magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sun magick a lot.")
                 .end()
             .addenda()
                 .add("Sunwood will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Sun spell slot is not doubled.  In total, that makes two of any type of spell plus one Sun spell.")
@@ -3117,7 +3117,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_MOONWOOD, lookupProvider).name("Wand Core: Moonwood")
             .stages()
                 .add("If my calculations are correct, moonwood might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("The protean nature of this moonwood wand core is slightly disturbing.  I swear I can almost feel it changing shape under my fingers.  Nonetheless, it's clearly aligned with the Moon, and that comes with some benefits.<BR>First, a moonwood wand core can be inscribed with an extra spell, so long as that spell is Moon-based.<BR>Second, it channels Moon mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, a moonwood wand core will slowly draw small amounts of Moon magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Moon magick a lot.")
+                .add("The protean nature of this moonwood wand core is slightly disturbing.  I swear I can almost feel it changing shape under my fingers.  Nonetheless, it's clearly aligned with the Moon, and that comes with some benefits.<BR>First, a moonwood wand core can be inscribed with an extra spell, so long as that spell is Moon-based.<BR>Second, it channels Moon mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, a moonwood wand core will slowly draw small amounts of Moon magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Moon magick a lot.")
                 .end()
             .addenda()
                 .add("Moonwood will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Moon spell slot is not doubled.  In total, that makes two of any type of spell plus one Moon spell.")
@@ -3126,7 +3126,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_BONE, lookupProvider).name("Wand Core: Bone")
             .stages()
                 .add("The terrestrial sources of magick all have wand cores aligned to them, why not Blood?  It shouldn't be too difficult to find something which fills that niche.")
-                .add("In the end, the choice of material for a Blood-aligned wand core was obvious: bone.  It's hard, straight, well-sized, and has the right mojo.<BR>Unlike lesser materials, a bone wand core can be inscribed with two spells, in addition to a bonus Blood spell.<BR>It still provides a five percent Blood mana discount on all workings, and will harvest Blood mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
+                .add("In the end, the choice of material for a Blood-aligned wand core was obvious: bone.  It's hard, straight, well-sized, and has the right mojo.<BR>Unlike lesser materials, a bone wand core can be inscribed with two spells, in addition to a bonus Blood spell.<BR>It still provides a bonus five percent Blood mana effectiveness on all workings, and will harvest Blood mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
                 .end()
             .addenda()
                 .add("Bone will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Blood spell slot is not doubled.  In total, that makes four of any type of spell plus one Blood spell.")
@@ -3135,7 +3135,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_BLAZE_ROD, lookupProvider).name("Wand Core: Blaze Rod")
             .stages()
                 .add("The terrestrial sources of magick all have wand cores aligned to them, why not Infernal?  It shouldn't be too difficult to find something which fills that niche.")
-                .add("Well, it's exotic and requires some thick gloves, but a blaze rod definitely makes for a good Infernal-aligned wand core.<BR>Unlike lesser materials, a blaze rod wand core can be inscribed with two spells, in addition to a bonus Infernal spell.<BR>It still provides a five percent Infernal mana discount on all workings, and will harvest Infernal mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
+                .add("Well, it's exotic and requires some thick gloves, but a blaze rod definitely makes for a good Infernal-aligned wand core.<BR>Unlike lesser materials, a blaze rod wand core can be inscribed with two spells, in addition to a bonus Infernal spell.<BR>It still provides a bonus five percent Infernal mana effectiveness on all workings, and will harvest Infernal mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
                 .end()
             .addenda()
                 .add("Blaze rods also make suitable cores for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Infernal spell slot is not doubled.  In total, that makes four of any type of spell plus one Infernal spell.")
@@ -3144,7 +3144,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_PURPUR, lookupProvider).name("Wand Core: Purpur")
             .stages()
                 .add("The terrestrial sources of magick all have wand cores aligned to them, why not Void?  It shouldn't be too difficult to find something which fills that niche.")
-                .add("It turned out harder than I expected to isolate a suitable material, but in the end I succeeded.  The alien purpur blocks have the right material properties and have a strong alignment to the Void.<BR>Unlike lesser materials, a purpur wand core can be inscribed with two spells, in addition to a bonus Void spell.<BR>It still provides a five percent Void mana discount on all workings, and will harvest Void mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
+                .add("It turned out harder than I expected to isolate a suitable material, but in the end I succeeded.  The alien purpur blocks have the right material properties and have a strong alignment to the Void.<BR>Unlike lesser materials, a purpur wand core can be inscribed with two spells, in addition to a bonus Void spell.<BR>It still provides a bonus five percent Void mana effectiveness on all workings, and will harvest Void mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
                 .end()
             .addenda()
                 .add("Purpur will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Void spell slot is not doubled.  In total, that makes four of any type of spell plus one Void spell.")
@@ -3153,7 +3153,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.IMBUED_WOOL, lookupProvider).name("Imbued Wool")
             .stages()
                 .add("If I'm going to study magick, I feel it's important that I look the part.  That means robes.<BR>A nice silk or breathable cotton would be nice, but wool is what I've got, so wool is what I'll use.  And I should make sure to imbue them with mana to see how it affects the result.")
-                .add("Well, it's scratchy and a little warm, but I think I made a good fitting of it.<BR>The addition of mana to the design was a good idea.  Not only are the robes more durable and protective this way, but they also seem to make it easier for me to channel mana while wearing them.  Each piece should give me a small discount on all my mana costs, and they're warm enough to prevent me from freezing in wintry environs.  Nice!")
+                .add("Well, it's scratchy and a little warm, but I think I made a good fitting of it.<BR>The addition of mana to the design was a good idea.  Not only are the robes more durable and protective this way, but they also seem to make it easier for me to channel mana while wearing them.  Each piece should give me a small effectiveness boost on all my mana expenditures, and they're warm enough to prevent me from freezing in wintry environs.  Nice!")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.SPELLCLOTH, lookupProvider).name("Spellcloth")
@@ -3428,7 +3428,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.RUNIC_TRIM, lookupProvider).name("Runic Armor Trim")
             .stages()
                 .add("Being able to customize my armor with trim is really cool.  It's so stylish!  But what if it was functional, too?")
-                .add("I've discovered how to make my own armor trim based on the runes I've been learning about.  This runic armor trim, in addition to looking snazzy, will modify the mana discount that I get from the robes I wear.<BR>First I need to make the template, the recipe for which is included here.  Then I combine it with a piece of magickal cloth armor and a source rune at a smithing table as normal.  The modified armor will grant me double the normal mana discount for the source signified by the rune I used, at the cost of no longer providing any discount for any other sources.<BR>I should consider carefully before applying this trim, as once added it cannot be removed, only replaced with a different trim.")
+                .add("I've discovered how to make my own armor trim based on the runes I've been learning about.  This runic armor trim, in addition to looking snazzy, will modify the bonus mana effectiveness that I get from the robes I wear.<BR>First I need to make the template, the recipe for which is included here.  Then I combine it with a piece of magickal cloth armor and a source rune at a smithing table as normal.  The modified armor will grant me double the normal bonus mana effectiveness for the source signified by the rune I used, at the cost of no longer providing any effectiveness for any other sources.<BR>I should consider carefully before applying this trim, as once added it cannot be removed, only replaced with a different trim.")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.ENDERWARD, lookupProvider).name("Enderward")
@@ -3488,7 +3488,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.MANAFRUIT, lookupProvider).name("Manafruit")
             .stages()
                 .add("My first real ritual!  I'm so excited.<BR>I'm piecing together the props and offerings I'll need from my Grimoire's hints.  I'll be ready to try it soon!")
-                .add("Fruit?  Huh, okay then.<BR>It looks like it's not just any old fruit, though.  In addition to being nourishing, this Manafruit will temporarily allow me to channel mana more efficiently, resulting in a slight discount in all my mana costs.<BR>Maybe I can find some other use for it as well?")
+                .add("Fruit?  Huh, okay then.<BR>It looks like it's not just any old fruit, though.  In addition to being nourishing, this Manafruit will temporarily allow me to channel mana more efficiently, resulting in a slight boost in effectiveness in all my mana usage.<BR>Maybe I can find some other use for it as well?")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.RITUAL_LECTERN, lookupProvider).name("Ritual Lectern")
@@ -3524,7 +3524,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_PRIMAL, lookupProvider).name("Wand Core: Primal")
             .stages()
                 .add("The cores that I've discovered so far are potent, but there are only so many wands that a mage can carry!<BR>I wonder if I can combine their power, somehow?")
-                .add("Combining the effects of these wand cores was no mean feat, but I think I've done it!  By taking each of the source-aligned wands cores and offering them up in a ritual with some mana salts, I've managed to fuse them into a single wand core with the power of all five.<BR>This core is aligned to all five terrestrial sources, meaning that it will provide the expected discount with Earth, Sea, Sky, Sun, or Moon magick, and will slowly regenerate mana of any of the five sources.  In addition, it can be inscribed with two spells, regardless of source.")
+                .add("Combining the effects of these wand cores was no mean feat, but I think I've done it!  By taking each of the source-aligned wands cores and offering them up in a ritual with some mana salts, I've managed to fuse them into a single wand core with the power of all five.<BR>This core is aligned to all five terrestrial sources, meaning that it will provide the expected effectiveness boost with Earth, Sea, Sky, Sun, or Moon magick, and will slowly regenerate mana of any of the five sources.  In addition, it can be inscribed with two spells, regardless of source.")
                 .end()
             .addenda()
                 .add("The process seems to work for creating magickal staves as well.  I simply start the ritual offering staff cores instead of wand cores.<BR>As with all staves, it can be inscribed with double the normal amount of spells, for a total of four, regardless of source.")
@@ -3533,7 +3533,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_DARK_PRIMAL, lookupProvider).name("Wand Core: Dark Primal")
             .stages()
                 .add("I am not content with having to use three separate wands to efficiently channel my so-called forbidden magick.  The process I used to create a primal wand core must be replicated for these sources!")
-                .add("The ritual is dangerous, but the risk is worth the reward.<BR>By offering up a primal wand core, along with the three forbidden wand cores and more mana salts, I have created a core worthy of my power.<BR>The core remains aligned to all five terrestrial sources, but is also aligned to the three forbidden sources.  It will provide the expected mana discount and regeneration for all eight sources.  In addition, a Dark Primal wand core can be inscribed with three spells, regardless of source.")
+                .add("The ritual is dangerous, but the risk is worth the reward.<BR>By offering up a primal wand core, along with the three forbidden wand cores and more mana salts, I have created a core worthy of my power.<BR>The core remains aligned to all five terrestrial sources, but is also aligned to the three forbidden sources.  It will provide the expected mana effectiveness boost and regeneration for all eight sources.  In addition, a Dark Primal wand core can be inscribed with three spells, regardless of source.")
                 .end()
             .addenda()
                 .add("Like expected, the ritual will also create a Dark Primal staff core, assuming that I use staff cores to start out with.<BR>As with all staves, it can be inscribed with double the normal amount of spells, for a total of six, regardless of source.")
@@ -3542,7 +3542,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_PURE_PRIMAL, lookupProvider).name("Wand Core: Pure Primal")
             .stages()
                 .add("Can the universe's love be crafted into a wand?  There's only one way to find out.")
-                .add("Enlightenment made manifest, this wand shall be a tool to work wonders to share with the world.<BR>This core is aligned to all of the primal sources, including the Hallowed.  It will provide the expected discount for all magickal workings, and slowly regenerate all sources of mana.  In addition, a Pure Primal wand core can be inscribed with four spells, regardless of source.")
+                .add("Enlightenment made manifest, this wand shall be a tool to work wonders to share with the world.<BR>This core is aligned to all of the primal sources, including the Hallowed.  It will provide the expected effectiveness boost for all magickal workings, and slowly regenerate all sources of mana.  In addition, a Pure Primal wand core can be inscribed with four spells, regardless of source.")
                 .end()
             .addenda()
                 .add("As with the other wand core types, a Pure Primal staff core may be created as well.<BR>As with all staves, it can be inscribed with double the normal amount of spells, for a total of eight, regardless of source.")
