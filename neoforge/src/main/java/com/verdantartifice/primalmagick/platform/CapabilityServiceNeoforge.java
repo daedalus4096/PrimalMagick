@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.platform;
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
 import com.verdantartifice.primalmagick.common.capabilities.IEntitySwappers;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
@@ -97,6 +98,21 @@ public class CapabilityServiceNeoforge implements ICapabilityService {
             return Optional.empty();
         } else {
             return this.itemHandler(tile.getLevel(), tile.getBlockPos(), face);
+        }
+    }
+
+    @Override
+    public Optional<IManaStorage<?>> manaStorage(@NotNull Level level, @NotNull BlockPos pos, @Nullable Direction face) {
+        IManaStorage<?> cap = level.getCapability(CapabilitiesNeoforge.MANA_STORAGE, pos, null);
+        return Optional.ofNullable(cap);
+    }
+
+    @Override
+    public Optional<IManaStorage<?>> manaStorage(@Nullable AbstractTilePM tile, @Nullable Direction face) {
+        if (tile == null || tile.getLevel() == null) {
+            return Optional.empty();
+        } else {
+            return this.manaStorage(tile.getLevel(), tile.getBlockPos(), face);
         }
     }
 }

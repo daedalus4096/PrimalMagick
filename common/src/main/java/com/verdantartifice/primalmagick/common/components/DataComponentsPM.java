@@ -67,7 +67,9 @@ public class DataComponentsPM {
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<WandGem>> WAND_GEM_APPEARANCE = register("wand_gem_appearance", builder -> builder.persistent(WandGem.CODEC).networkSynchronized(WandGem.STREAM_CODEC));
     
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<BlockPos>> WAND_USE_POSITION = register("wand_use_position", builder -> builder.persistent(BlockPos.CODEC).networkSynchronized(BlockPos.STREAM_CODEC));
-    
+    public static final IRegistryItem<DataComponentType<?>, DataComponentType<BlockPos>> DOWSING_PRIMARY_POSITION = register("dowsing_primary_position", builder -> builder.persistent(BlockPos.CODEC).networkSynchronized(BlockPos.STREAM_CODEC));
+    public static final IRegistryItem<DataComponentType<?>, DataComponentType<BlockPos>> DOWSING_SECONDARY_POSITION = register("dowsing_secondary_position", builder -> builder.persistent(BlockPos.CODEC).networkSynchronized(BlockPos.STREAM_CODEC));
+
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<Integer>> WARD_LEVEL = register("ward_level", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
     
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<ManaStorage>> CAPABILITY_MANA_STORAGE = register("capability_mana_storage", builder -> builder.persistent(ManaStorage.CODEC).networkSynchronized(ManaStorage.STREAM_CODEC));

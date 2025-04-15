@@ -11,6 +11,10 @@ import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItemNeoforge;
+import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItemNeoforge;
+import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItemNeoforge;
@@ -79,6 +83,16 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     @Override
     public <T extends Block> Supplier<SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier, Item.Properties properties) {
         return () -> new SpellcraftingAltarBlockItemNeoforge(blockSupplier.get(), properties);
+    }
+
+    @Override
+    public <T extends Block> Supplier<ManaRelayBlockItem> manaRelay(Supplier<T> blockSupplier, Item.Properties properties) {
+        return () -> new ManaRelayBlockItemNeoforge(blockSupplier.get(), properties);
+    }
+
+    @Override
+    public <T extends Block> Supplier<ManaInjectorBlockItem> manaInjector(Supplier<T> blockSupplier, Item.Properties properties) {
+        return () -> new ManaInjectorBlockItemNeoforge(blockSupplier.get(), properties);
     }
 
     @Override

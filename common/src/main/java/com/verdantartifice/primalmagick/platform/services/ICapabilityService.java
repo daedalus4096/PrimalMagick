@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform.services;
 
 import com.verdantartifice.primalmagick.common.capabilities.IEntitySwappers;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
@@ -41,8 +42,19 @@ public interface ICapabilityService {
      * @param level the level containing the desired tile entity
      * @param pos the position of the desired tile entity
      * @param face the side of the tile entity to be queried
-     * @return the item handler of the tile entity, or null if no such capability could be found
+     * @return an optional containing the item handler of the tile entity, or empty if no such capability could be found
      */
     Optional<IItemHandlerPM> itemHandler(@NotNull Level level, @NotNull BlockPos pos, @Nullable Direction face);
     Optional<IItemHandlerPM> itemHandler(@Nullable AbstractTilePM tile, @Nullable Direction face);
+
+    /**
+     * Attempts to get a mana storage capability for the given side of the given position in the given world.
+     *
+     * @param level the level containing the desired tile entity
+     * @param pos the position of the desired tile entity
+     * @param face the side of the tile entity to be queried
+     * @return an optional containing the mana storage of the tile entity, or empty if no such capability could be found
+     */
+    Optional<IManaStorage<?>> manaStorage(@NotNull Level level, @NotNull BlockPos pos, @Nullable Direction face);
+    Optional<IManaStorage<?>> manaStorage(@Nullable AbstractTilePM tile, @Nullable Direction face);
 }

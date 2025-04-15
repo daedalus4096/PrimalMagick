@@ -5,10 +5,12 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import commonnetwork.networking.data.PacketContext;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Position;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 
@@ -39,6 +41,10 @@ public class ManaSparklePacket implements IMessageToClient {
         this.z2 = z2;
         this.maxAge = maxAge;
         this.color = color;
+    }
+
+    public ManaSparklePacket(Position pos1, Position pos2, int maxAge, int color) {
+        this(pos1.x(), pos1.y(), pos1.z(), pos2.x(), pos2.y(), pos2.z(), maxAge, color);
     }
     
     public ManaSparklePacket(@Nonnull BlockPos source, double targetX, double targetY, double targetZ, int maxAge, int color) {

@@ -13,6 +13,8 @@ import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTil
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaInjectorTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaRelayTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
@@ -40,6 +42,8 @@ public interface IBlockEntityPrototypeService {
     // Mana tiles
     BlockEntityType.BlockEntitySupplier<AutoChargerTileEntity> autoCharger();
     BlockEntityType.BlockEntitySupplier<ManaBatteryTileEntity> manaBattery();
+    BlockEntityType.BlockEntitySupplier<ManaInjectorTileEntity> manaInjector();
+    BlockEntityType.BlockEntitySupplier<ManaRelayTileEntity> manaRelay();
     BlockEntityType.BlockEntitySupplier<WandChargerTileEntity> wandCharger();
 
     // Misc tiles

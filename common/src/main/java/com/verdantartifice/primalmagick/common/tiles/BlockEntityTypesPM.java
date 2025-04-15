@@ -21,6 +21,8 @@ import com.verdantartifice.primalmagick.common.tiles.mana.AncientManaFontTileEnt
 import com.verdantartifice.primalmagick.common.tiles.mana.ArtificialManaFontTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaInjectorTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaRelayTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.BloodletterTileEntity;
@@ -50,6 +52,7 @@ public class BlockEntityTypesPM {
         Services.BLOCK_ENTITY_TYPES_REGISTRY.init();
     }
 
+    // TODO Consolidate mana font block and block entity types in next major release
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<AncientManaFontTileEntity>> ANCIENT_MANA_FONT = register("ancient_mana_font", () -> BlockEntityType.Builder.of(AncientManaFontTileEntity::new, BlocksPM.ANCIENT_FONT_EARTH.get(), BlocksPM.ANCIENT_FONT_SEA.get(), BlocksPM.ANCIENT_FONT_SKY.get(), BlocksPM.ANCIENT_FONT_SUN.get(), BlocksPM.ANCIENT_FONT_MOON.get()).build(null));
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<ArtificialManaFontTileEntity>> ARTIFICIAL_MANA_FONT = register("artificial_mana_font", () -> BlockEntityType.Builder.of(ArtificialManaFontTileEntity::new, BlocksPM.ARTIFICIAL_FONT_EARTH.get(), BlocksPM.ARTIFICIAL_FONT_SEA.get(), BlocksPM.ARTIFICIAL_FONT_SKY.get(), BlocksPM.ARTIFICIAL_FONT_SUN.get(), BlocksPM.ARTIFICIAL_FONT_MOON.get(), BlocksPM.ARTIFICIAL_FONT_BLOOD.get(), BlocksPM.ARTIFICIAL_FONT_INFERNAL.get(), BlocksPM.ARTIFICIAL_FONT_VOID.get(), BlocksPM.ARTIFICIAL_FONT_HALLOWED.get(), BlocksPM.FORBIDDEN_FONT_EARTH.get(), BlocksPM.FORBIDDEN_FONT_SEA.get(), BlocksPM.FORBIDDEN_FONT_SKY.get(), BlocksPM.FORBIDDEN_FONT_SUN.get(), BlocksPM.FORBIDDEN_FONT_MOON.get(), BlocksPM.FORBIDDEN_FONT_BLOOD.get(), BlocksPM.FORBIDDEN_FONT_INFERNAL.get(), BlocksPM.FORBIDDEN_FONT_VOID.get(), BlocksPM.FORBIDDEN_FONT_HALLOWED.get(), BlocksPM.HEAVENLY_FONT_EARTH.get(), BlocksPM.HEAVENLY_FONT_SEA.get(), BlocksPM.HEAVENLY_FONT_SKY.get(), BlocksPM.HEAVENLY_FONT_SUN.get(), BlocksPM.HEAVENLY_FONT_MOON.get(), BlocksPM.HEAVENLY_FONT_BLOOD.get(), BlocksPM.HEAVENLY_FONT_INFERNAL.get(), BlocksPM.HEAVENLY_FONT_VOID.get(), BlocksPM.HEAVENLY_FONT_HALLOWED.get()).build(null));
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<AbstractCalcinatorTileEntity>> ESSENCE_FURNACE = register("essence_furnace", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.essenceFurnace(), BlocksPM.ESSENCE_FURNACE.get()).build(null));
@@ -82,6 +85,8 @@ public class BlockEntityTypesPM {
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<ManaBatteryTileEntity>> MANA_BATTERY = register("mana_battery", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.manaBattery(), BlocksPM.MANA_NEXUS.get(), BlocksPM.MANA_SINGULARITY.get(), BlocksPM.MANA_SINGULARITY_CREATIVE.get()).build(null));
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<ScribeTableTileEntity>> SCRIBE_TABLE = register("scribe_table", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.scribeTable(), BlocksPM.SCRIBE_TABLE.get()).build(null));
     public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<CarvedBookshelfTileEntity>> CARVED_BOOKSHELF = register("carved_bookshelf", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.carvedBookshelf(), BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get()).build(null));
+    public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<ManaRelayTileEntity>> MANA_RELAY = register("mana_relay", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.manaRelay(), BlocksPM.MANA_RELAY_BASIC.get(), BlocksPM.MANA_RELAY_ENCHANTED.get(), BlocksPM.MANA_RELAY_FORBIDDEN.get(), BlocksPM.MANA_RELAY_HEAVENLY.get()).build(null));
+    public static final IRegistryItem<BlockEntityType<?>, BlockEntityType<ManaInjectorTileEntity>> MANA_INJECTOR = register("mana_injector", () -> BlockEntityType.Builder.of(Services.BLOCK_ENTITY_PROTOTYPES.manaInjector(), BlocksPM.MANA_INJECTOR_BASIC.get(), BlocksPM.MANA_INJECTOR_ENCHANTED.get(), BlocksPM.MANA_INJECTOR_FORBIDDEN.get(), BlocksPM.MANA_INJECTOR_HEAVENLY.get()).build(null));
 
     private static <T extends BlockEntity> IRegistryItem<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType<T>> typeSupplier) {
         return Services.BLOCK_ENTITY_TYPES_REGISTRY.register(name, typeSupplier);

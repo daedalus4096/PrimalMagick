@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -81,4 +82,23 @@ public interface IManaStorage<T extends IManaStorage<T>> {
      * @return whether this storage can have mana inserted
      */
     boolean canReceive(Source source);
+
+    /**
+     * Returns whether this storage currently contains no mana of any storable sources.
+     *
+     * @return whether this storage is empty
+     */
+    default boolean isEmpty() {
+        return Sources.stream().filter(this::canStore).allMatch(s -> this.getManaStored(s) == 0);
+    }
+
+    /**
+     * Returns whether this storage currently contains the maximum allowed amount of mana for all storable sources.
+     * Also returns true if no sources are storable.
+     *
+     * @return whether this storage is full
+     */
+    default boolean isFull() {
+        return Sources.stream().filter(this::canStore).noneMatch(s -> this.getManaStored(s) < this.getMaxManaStored(s));
+    }
 }

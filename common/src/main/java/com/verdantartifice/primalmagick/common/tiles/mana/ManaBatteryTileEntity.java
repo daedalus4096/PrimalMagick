@@ -1,12 +1,17 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
+import com.verdantartifice.primalmagick.common.mana.network.IManaNetworkNode;
+import com.verdantartifice.primalmagick.common.mana.network.IManaRelay;
+import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
+import com.verdantartifice.primalmagick.common.mana.network.Route;
+import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -35,13 +40,14 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
-import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -51,10 +57,9 @@ import java.util.Set;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock
  * @author Daedalus4096
  */
-public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
+public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IManaSupplier, IManaConsumer {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected static final int FONT_RANGE = 5;
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int CHARGE_INV_INDEX = 1;
     
@@ -63,7 +68,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
 
-    protected final Set<BlockPos> fontLocations = new HashSet<>();
+    protected final RouteTable routeTable = new RouteTable();
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chargerData = new ContainerData() {
@@ -149,7 +154,17 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             return 0;
         }
     }
-    
+
+    @Override
+    public int extractMana(@NotNull Source source, int maxExtract, boolean simulate) {
+        return this.manaStorage.extractMana(source, maxExtract, simulate);
+    }
+
+    @Override
+    public int receiveMana(@NotNull Source source, int maxReceive, boolean simulate) {
+        return this.manaStorage.receiveMana(source, maxReceive, simulate);
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, ManaBatteryTileEntity entity) {
         boolean shouldMarkDirty = false;
         
@@ -157,19 +172,12 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             
-            // Scan surroundings for mana fonts once a second
-            if (entity.fontSiphonTime % 20 == 0) {
-                entity.scanSurroundings();
-            }
-
             // Siphon from nearby fonts
-            Vec3 chargerCenter = Vec3.atCenterOf(pos);
-            for (BlockPos fontPos : entity.fontLocations) {
-                if (entity.fontSiphonTime % 5 == 0 && 
-                        level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity fontEntity && 
-                        level.getBlockState(fontPos).getBlock() instanceof AbstractManaFontBlock) {
-                    fontEntity.doSiphon(entity.manaStorage, level, null, chargerCenter, entity.getBatteryTransferCap());
-                }
+            if (entity.fontSiphonTime % 5 == 0) {
+                final int throughput = entity.getManaThroughput();
+                Sources.getAllSorted().stream()
+                        .filter(entity.manaStorage::canReceive)
+                        .forEach(s -> entity.doSiphon(level, s, Math.min(throughput, entity.manaStorage.getMaxManaStored(s) - entity.manaStorage.getManaStored(s))));
             }
             entity.fontSiphonTime++;
 
@@ -253,20 +261,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             }
         }
         return false;
-    }
-    
-    @SuppressWarnings("deprecation")
-    protected void scanSurroundings() {
-        BlockPos pos = this.getBlockPos();
-        if (Services.LEVEL.isAreaLoaded(this.level, pos, FONT_RANGE)) {
-            this.fontLocations.clear();
-            Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-FONT_RANGE, -FONT_RANGE, -FONT_RANGE), pos.offset(FONT_RANGE, FONT_RANGE, FONT_RANGE));
-            for (BlockPos searchPos : positions) {
-                if (this.level.getBlockState(searchPos).getBlock() instanceof AbstractManaFontBlock) {
-                    this.fontLocations.add(searchPos.immutable());
-                }
-            }
-        }
     }
     
     protected boolean canOutputToWand(ItemStack outputStack, Source source) {
@@ -425,5 +419,85 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     @Override
     public void removeComponentsFromTag(CompoundTag pTag) {
         pTag.remove("ManaStorage");
+    }
+
+    @Override
+    public boolean canSupply(@NotNull Source source) {
+        return true;
+    }
+
+    @Override
+    public boolean canConsume(@NotNull Source source) {
+        return true;
+    }
+
+    @Override
+    public int getNetworkRange() {
+        return 5;
+    }
+
+    @Override
+    public int getManaThroughput() {
+        return this.getBatteryTransferCap();
+    }
+
+    @Override
+    public @NotNull RouteTable getRouteTable() {
+        return this.routeTable;
+    }
+
+    @Override
+    public void loadManaNetwork(@NotNull Level level) {
+        // Combine supplier and consumer network loading
+        int range = this.getNetworkRange();
+        int rangeSqr = range * range;
+
+        // Search for mana suppliers and consumers which are in range of this node
+        List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
+                .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
+                .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
+                .filter(Objects::nonNull)
+                .toList();
+        List<IManaConsumer> consumers = nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
+                .filter(Objects::nonNull)
+                .toList();
+        List<IManaSupplier> suppliers = nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
+                .filter(Objects::nonNull)
+                .toList();
+
+        // Create direct routes from this supplier for terminus consumers
+        consumers.stream().filter(IManaConsumer::isTerminus)
+                .map(consumer -> new Route(this, consumer))
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute);
+
+        // Create direct routes to this consumer for origin suppliers
+        suppliers.stream().filter(IManaSupplier::isOrigin)
+                .map(supplier -> new Route(supplier, this))
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute);
+
+        // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
+        consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
+                .filter(Objects::nonNull)
+                .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
+                .map(route -> route.pushHead(this))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute);
+
+        // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
+        suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
+                .filter(Objects::nonNull)
+                .flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
+                .map(route -> route.pushTail(this))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute);
+
+        // Update connected nodes on the newly created routes
+        this.getRouteTable().propagateRoutes(Set.of(this));
     }
 }

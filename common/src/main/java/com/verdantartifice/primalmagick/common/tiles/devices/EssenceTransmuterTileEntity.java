@@ -391,9 +391,8 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     @Override
     public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return switch (face) {
-            case UP -> Optional.of(INPUT_INV_INDEX);
             case DOWN -> Optional.of(OUTPUT_INV_INDEX);
-            default -> Optional.of(WAND_INV_INDEX);
+            default -> Optional.of(INPUT_INV_INDEX);
         };
     }
 

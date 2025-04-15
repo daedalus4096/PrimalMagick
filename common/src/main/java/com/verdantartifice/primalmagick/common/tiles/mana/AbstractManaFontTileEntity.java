@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
-import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
+import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -22,7 +24,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
+import org.slf4j.Logger;
 
 /**
  * Base definition of a mana font tile entity.  Provides the recharge and wand interaction
@@ -30,9 +34,11 @@ import org.jetbrains.annotations.VisibleForTesting;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand {
+public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand, IManaSupplier {
     public static final int CENTIMANA_RECHARGED_PER_TICK = 5;
-    
+    protected static final Logger LOGGER = LogUtils.getLogger();
+
+    protected final RouteTable routeTable = new RouteTable();
     protected int ticksExisted = 0;
     protected int mana;
     
@@ -121,30 +127,19 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
         }
     }
     
-    public void doSiphon(ManaStorage manaCap, Level level, Player player, Vec3 targetPos, int maxTransferCentimana) {
-        if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock && manaCap != null) {
-            Source source = fontBlock.getSource();
-            if (source != null) {
-                // Transfer mana from the font to the container
-                int tap = Math.min(this.mana, maxTransferCentimana);
-                int manaTransfered = manaCap.receiveMana(source, tap, false);
-                if (manaTransfered > 0) {
-                    this.mana -= manaTransfered;
-                    StatsManager.incrementValue(player, StatsPM.MANA_SIPHONED, manaTransfered / 100);
-                    this.setChanged();
-                    this.syncTile(true);
-                    
-                    // Show fancy sparkles
-                    if (level instanceof ServerLevel serverLevel) {
-                        PacketHandler.sendToAllAround(
-                                new ManaSparklePacket(this.worldPosition, targetPos.x, targetPos.y, targetPos.z, 20, source.getColor()),
-                                serverLevel,
-                                this.worldPosition, 
-                                32.0D);
-                    }
-                }
+    @Override
+    public int extractMana(@NotNull Source source, int maxExtract, boolean simulate) {
+        if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock) {
+            Source fontSource = fontBlock.getSource();
+            if (source.equals(fontSource) && !simulate) {
+                int tap = Math.min(this.mana, maxExtract);
+                this.mana -= tap;
+                this.setChanged();
+                this.syncTile(true);
+                return tap;
             }
         }
+        return 0;
     }
 
     @VisibleForTesting
@@ -155,5 +150,25 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
             this.setChanged();
             this.syncTile(true);
         }
+    }
+
+    @Override
+    public int getNetworkRange() {
+        return 5;
+    }
+
+    @Override
+    public boolean canSupply(@NotNull Source source) {
+        return this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock && source.equals(fontBlock.getSource());
+    }
+
+    @Override
+    public int getManaThroughput() {
+        return this.getManaCapacity();
+    }
+
+    @Override
+    public @NotNull RouteTable getRouteTable() {
+        return this.routeTable;
     }
 }

@@ -105,6 +105,7 @@ public abstract class Recipes extends RecipeProvider {
         this.registerIgnyxRecipes(consumer);
         this.registerGemBudRecipes(consumer);
         this.registerWaxRecipes(consumer, FeatureFlagSet.of(FeatureFlags.VANILLA));
+        this.registerManaNetworkingRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(CommonTags.Items.RODS_WOODEN)
@@ -7348,5 +7349,72 @@ public abstract class Recipes extends RecipeProvider {
                         .save(consumer, getConversionRecipeName(waxOn, ItemsPM.BEESWAX.get()));
             }
         });
+    }
+
+    protected void registerManaNetworkingRecipes(RecipeOutput consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_RELAY_BASIC.get())
+            .patternLine("MEM")
+            .patternLine(" C ")
+            .patternLine("MPM")
+            .key('M', CommonTags.Items.INGOTS_GOLD)
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .key('C', CommonTags.Items.STORAGE_BLOCKS_COPPER)
+            .key('P', ItemsPM.MAGITECH_PARTS_BASIC.get())
+            .requiredResearch(ResearchEntries.MANA_NETWORKING)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_INJECTOR_BASIC.get())
+            .addIngredient(ItemsPM.MANA_RELAY_BASIC.get())
+            .addIngredient(Items.HOPPER)
+            .requiredResearch(ResearchEntries.MANA_NETWORKING)
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_RELAY_ENCHANTED.get())
+            .patternLine("MEM")
+            .patternLine(" C ")
+            .patternLine("MPM")
+            .key('M', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_SHARDS)
+            .key('C', CommonTags.Items.STORAGE_BLOCKS_COPPER)
+            .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .requiredResearch(ResearchEntries.ADVANCED_MANA_NETWORKING)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 20).add(Sources.SEA, 20).add(Sources.SKY, 20).add(Sources.SUN, 20).add(Sources.MOON, 20))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_INJECTOR_ENCHANTED.get())
+            .addIngredient(ItemsPM.MANA_RELAY_ENCHANTED.get())
+            .addIngredient(Items.HOPPER)
+            .requiredResearch(ResearchEntries.ADVANCED_MANA_NETWORKING)
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_RELAY_FORBIDDEN.get())
+            .patternLine("MEM")
+            .patternLine(" C ")
+            .patternLine("MPM")
+            .key('M', ItemTagsPM.INGOTS_HEXIUM)
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_CRYSTALS)
+            .key('C', CommonTags.Items.STORAGE_BLOCKS_COPPER)
+            .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
+            .requiredResearch(ResearchEntries.FORBIDDEN_MANA_NETWORKING)
+            .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 50).add(Sources.INFERNAL, 50).add(Sources.VOID, 50))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_INJECTOR_FORBIDDEN.get())
+            .addIngredient(ItemsPM.MANA_RELAY_FORBIDDEN.get())
+            .addIngredient(Items.HOPPER)
+            .requiredResearch(ResearchEntries.FORBIDDEN_MANA_NETWORKING)
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_RELAY_HEAVENLY.get())
+            .patternLine("MEM")
+            .patternLine(" C ")
+            .patternLine("MPM")
+            .key('M', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_CLUSTERS)
+            .key('C', CommonTags.Items.STORAGE_BLOCKS_COPPER)
+            .key('P', ItemsPM.MAGITECH_PARTS_HEAVENLY.get())
+            .requiredResearch(ResearchEntries.HEAVENLY_MANA_NETWORKING)
+            .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 100))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_INJECTOR_HEAVENLY.get())
+            .addIngredient(ItemsPM.MANA_RELAY_HEAVENLY.get())
+            .addIngredient(Items.HOPPER)
+            .requiredResearch(ResearchEntries.HEAVENLY_MANA_NETWORKING)
+            .build(consumer);
     }
 }

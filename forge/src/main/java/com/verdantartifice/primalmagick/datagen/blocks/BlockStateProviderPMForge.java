@@ -13,6 +13,8 @@ import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBl
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.AbstractEnchantedGolemControllerBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
+import com.verdantartifice.primalmagick.common.blocks.mana.ManaInjectorBlock;
+import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
@@ -287,6 +289,14 @@ public class BlockStateProviderPMForge extends BlockStateProvider {
         this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY.get());
         this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get());
         this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.SCRIBE_TABLE.get());
+        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_BASIC.get());
+        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_ENCHANTED.get());
+        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_FORBIDDEN.get());
+        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_HEAVENLY.get());
+        this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_BASIC.get());
+        this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_ENCHANTED.get());
+        this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_FORBIDDEN.get());
+        this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_HEAVENLY.get());
 
         // Generate misc blocks
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
@@ -711,7 +721,29 @@ public class BlockStateProviderPMForge extends BlockStateProvider {
             .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 45, 0).translation(0, 0, 0).scale(0.40F).end()
             .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 225, 0).translation(0, 0, 0).scale(0.40F).end();
     }
-    
+
+    private void manaRelayBlockWithItem(ManaRelayBlock block) {
+        this.simpleBlock(block, this.models().withExistingParent(this.name(block), ResourceLocation.withDefaultNamespace("block/copper_block")));
+        this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("builtin/entity")).transforms()
+            .transform(ItemDisplayContext.GUI).rotation(30, 225, 0).translation(0, 0, 0).scale(0.625F).end()
+            .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(0, 3F, 0).scale(0.25F).end()
+            .transform(ItemDisplayContext.FIXED).rotation(0, 0, 0).translation(0, 0, 0).scale(0.5F).end()
+            .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 45, 0).translation(0, 2.5F, 0).scale(0.375F).end()
+            .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 45, 0).translation(0, 0, 0).scale(0.40F).end()
+            .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 225, 0).translation(0, 0, 0).scale(0.40F).end();
+    }
+
+    private void manaInjectorBlockWithItem(ManaInjectorBlock block) {
+        this.simpleBlock(block, this.models().withExistingParent(this.name(block), ResourceLocation.withDefaultNamespace("block/copper_block")));
+        this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("builtin/entity")).transforms()
+                .transform(ItemDisplayContext.GUI).rotation(30, 225, 0).translation(0, 0, 0).scale(0.625F).end()
+                .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(0, 3F, 0).scale(0.25F).end()
+                .transform(ItemDisplayContext.FIXED).rotation(0, 0, 0).translation(0, 0, 0).scale(0.5F).end()
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 45, 0).translation(0, 2.5F, 0).scale(0.375F).end()
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 45, 0).translation(0, 0, 0).scale(0.40F).end()
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 225, 0).translation(0, 0, 0).scale(0.40F).end();
+    }
+
     private void sunlampBlockWithItem(SunlampBlock block) {
         ResourceLocation modelLoc = this.defaultModel(block);
         DirectionProperty prop = SunlampBlock.ATTACHMENT;

@@ -62,6 +62,46 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_cube"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_relay/basic_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_relay/enchanted_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_relay/forbidden_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_relay/heavenly_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/basic_frame_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/enchanted_frame_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/forbidden_frame_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/heavenly_frame_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/frame_bottom"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "primalmagick:entity/shield/primalite_shield_base"
     },
     {

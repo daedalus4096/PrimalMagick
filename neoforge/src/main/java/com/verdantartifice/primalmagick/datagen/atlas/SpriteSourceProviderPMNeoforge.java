@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelSh
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.ManaInjectorTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.ManaRelayTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
@@ -86,7 +88,17 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, ManaFontTER.TEXTURE);
         this.addSingle(blockAtlas, RitualBellTER.TEXTURE);
         this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE);
-        
+        this.addSingle(blockAtlas, ManaRelayTER.CORE_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.BASIC_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.ENCHANTED_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.FORBIDDEN_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.HEAVENLY_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.BASIC_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.ENCHANTED_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.FORBIDDEN_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.HEAVENLY_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.BOTTOM_FRAME_TEXTURE);
+
         // Add custom item stack renderer textures to the block atlas
         this.addSingle(blockAtlas, PrimaliteShieldISTER.TEXTURE_SHIELD_BASE);
         this.addSingle(blockAtlas, PrimaliteShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
