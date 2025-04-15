@@ -1,6 +1,8 @@
 v6.0.5
 ------
 * Added an affinity index to the Grimoire, to remind you of all the data you've analyzed
+* Added Mana Injectors, to let Magitech devices pull mana directly from fonts
+* Added Mana Relays, to extend the range of your mana distribution network
 * Made item textures for energized gems more distinct from their parents' versions
 
 v6.0.4
