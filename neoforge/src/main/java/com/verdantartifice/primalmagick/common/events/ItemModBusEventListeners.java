@@ -36,6 +36,14 @@ public class ItemModBusEventListeners {
         registerCustomRenderer(event::registerItem, ItemsPM.MUNDANE_WAND.get());
         registerCustomRenderer(event::registerItem, ItemsPM.MODULAR_WAND.get());
         registerCustomRenderer(event::registerItem, ItemsPM.MODULAR_STAFF.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MANA_RELAY_BASIC.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MANA_RELAY_ENCHANTED.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MANA_RELAY_FORBIDDEN.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MANA_RELAY_HEAVENLY.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MANA_INJECTOR_BASIC.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MANA_INJECTOR_ENCHANTED.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MANA_INJECTOR_FORBIDDEN.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.MANA_INJECTOR_HEAVENLY.get());
     }
 
     protected static <T extends Item & IHasCustomRenderer> void registerCustomRenderer(BiConsumer<IClientItemExtensions, T> registrar, T item) {
