@@ -1683,6 +1683,7 @@ public class ResearchEntries {
                 .parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING).parent(WAND_CHARGER).parent(ARTIFICIAL_MANA_FONTS)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.AUTO_CHARGER.get()).end()
+                .addendum().requiredResearch(MANA_NETWORKING).end()
                 .build());
         register(context, ESSENCE_TRANSMUTER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.ESSENCE_TRANSMUTER.get())
                 .parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING)
@@ -1728,6 +1729,7 @@ public class ResearchEntries {
                 .parent(MASTER_MAGITECH).parent(AUTO_CHARGER).parent(HEXIUM).parent(WAND_GEM_WIZARD)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.MANA_NEXUS.get()).end()
+                .addendum().requiredResearch(MANA_NETWORKING).end()
                 .build());
         register(context, MANA_SINGULARITY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.MANA_SINGULARITY.get())
                 .parent(SUPREME_MAGITECH).parent(MANA_NEXUS).parent(HALLOWSTEEL).parent(WAND_GEM_ARCHMAGE)

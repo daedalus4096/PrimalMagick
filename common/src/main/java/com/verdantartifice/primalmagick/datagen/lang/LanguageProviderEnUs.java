@@ -3723,6 +3723,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Rituals are complicated, and laying out my altar space correctly seems very important to success, according to my Grimoire.<BR>Doing this by eye and the seat of my pants strikes me as a path to disaster.  I need a tool that will give me feedback on the quality of my altar layout before I attempt a ritual.")
                 .add("Well, it's simple, but I think it will do the job.<BR>Waving this dowsing rod at a ritual altar will give me a rough idea of how stable my current ritual layout is.  In addition, waving it at a prop or an offering pedestal will give me feedback on its placement.<BR>I mustn't forget, however, that a complex ritual can quickly overwhelm even a very good layout if I'm not quick and efficient in stepping through the process.")
                 .end()
+            .addenda()
+                .add("With my discovery of mana networking, I realized that I'm likely going to need a diagnostic tool at some point.  To that end, I've modified the enchantments on my Dowsing Rod.  Using it on a network device will cause it to highlight all the network connections that device is aware of for as long as the rod is in hand.  Subsequently, using it on a second device will attempt to show the best known network route between the two devices.  Using it while sneaking will clear all tracked devices.")
+                .end()
             .build();
         this.researchEntry(ResearchEntries.HYDROMELON, lookupProvider).name("Hydromelon")
             .stages()
@@ -3859,6 +3862,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("As my wands can hold more mana, keeping them charged has become a challenge.  Even with mana fonts at home, it can take minutes of channeling to get one to full.<BR>I have an idea for something to ease this process...")
                 .add("My newest device is similar to a Mana Charger, but rather than consuming essence it will automatically siphon from nearby fonts.<BR>Only one wand can be held in the charger at a time, and it only has a range of five blocks, but it can pull from multiple fonts at once.<BR>Best of all, I can just drop the wand in and walk away to do other things while it works.  I think this is going to save me a lot of time.")
                 .end()
+            .addenda()
+                .add("The Auto-Charger works on similar principles to the mana networking devices I've created.  It will connect to such a network automatically, without the need for an injector placed atop it.")
+                .end()
             .build();
         this.researchEntry(ResearchEntries.ESSENCE_TRANSMUTER, lookupProvider).name("Essence Transmuter")
             .stages()
@@ -3898,6 +3904,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("I grow tired of carting around wands like batteries.  There must be a better way to store mana for long periods of time for quick charging.")
                 .add("With careful study of the flows of mana and practice in its applications, I have created the Mana Nexus.<BR>Like the Auto-Charger before it, the Mana Nexus will siphon mana directly from any nearby mana fonts.  This improved model, however, will keep that mana in internal storage indefinitely, rather than requiring immediate application to a wand.<BR>This allow me to keep greater reserves of power on hand.  In addition, the Mana Nexus will also accept mana from any essence or spare wands I have lying around.")
                 .end()
+            .addenda()
+                .add("Like the Auto-Charger before it, the Mana Nexus will automatically connect to a mana network without need for an injector.  In addition, it can also supply mana to a network like a font would.  Despite both supplying and consuming mana, however, it will not function as a relay.")
+                .end()
             .build();
         this.researchEntry(ResearchEntries.MANA_SINGULARITY, lookupProvider).name("Mana Singularity")
             .stages()
@@ -3921,6 +3930,30 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("Life is a gift that must not be squandered.  It must be cherished and protected.  With magickal barriers.")
                 .add("Further upgrades have yielded a new warding module design fully twice as effective as the base model.  My confidence in my safety is higher than ever.")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.MANA_NETWORKING, lookupProvider).name("Mana Networking")
+            .stages()
+                .add("It's apparent from my time siphoning mana fonts with my wand that mana can be transmitted through the air.  But is that a function of the wand, or the person wielding it?  Can this effect be replicated with magitech?")
+                .add("After much trial and error, I've developed a pair of new magitech devices that I think are really cool.<BR>The first device I call a Mana Injector.  When placed directly above a magitech device that consumes mana, the injector will connect with nearby sources of mana, such as fonts, and siphon from them automatically, injecting the mana into the device for use.  The range isn't great, only five blocks, but that's okay on account of the second device.<BR>That one I call a Mana Relay.  Its entire purpose is to extend the range of mana suppliers, again such as fonts, connected to the network.  Each relay has a five-block connection radius and will bounce mana from fonts to injectors in that range.  Multiple relays can be chained to extend this range even further!<BR>These devices should make it a lot easier to keep my magitech powered.  I'm so excited to try it out!")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.ADVANCED_MANA_NETWORKING, lookupProvider).name("Advanced Mana Networking")
+            .stages()
+                .add("My existing mana network is quite useful, but perhaps recent discoveries will let me upgrade it.  This warrants investigation.")
+                .add("Fantastic!  This upgraded injector design has doubled the amount of mana it can channel in the same amount of time!  And the new relays' range now extends to ten whole blocks!  This should let me extend my network further than ever.")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.FORBIDDEN_MANA_NETWORKING, lookupProvider).name("Forbidden Mana Networking")
+            .stages()
+                .add("The mana needs of my devices are greater than ever.  I must see about upgrading my network again; it will not do to stand around twiddling my thumbs while waiting for devices to recharge.")
+                .add("This pleases me. Harnessing the wonders of Hexium, I've doubled the mana throughput of my injectors yet again, and my relays now connect to devices within fifteen blocks of themselves.  Most excellent.")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.HEAVENLY_MANA_NETWORKING, lookupProvider).name("Heavenly Mana Networking")
+            .stages()
+                .add("In my quest for power, I was so preoccupied with how far I could extend my reach that I forgot why I was reaching in the first place.  But perhaps I can remind myself.")
+                .add("The whole point of these devices is to share the marvels of magick with those less fortunate.  And now, with network throughput doubled again and relays that can reach twenty blocks away, I can do so.  Let me bathe the world in these gifts.")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.RAW_MARBLE, lookupProvider).name("Marble")
