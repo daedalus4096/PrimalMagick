@@ -277,6 +277,10 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> WARDING_MODULE = create("warding_module");
     public static final ResourceKey<ResearchEntry> GREATER_WARDING_MODULE = create("greater_warding_module");
     public static final ResourceKey<ResearchEntry> SUPREME_WARDING_MODULE = create("supreme_warding_module");
+    public static final ResourceKey<ResearchEntry> MANA_NETWORKING = create("mana_networking");
+    public static final ResourceKey<ResearchEntry> ADVANCED_MANA_NETWORKING = create("advanced_mana_networking");
+    public static final ResourceKey<ResearchEntry> FORBIDDEN_MANA_NETWORKING = create("forbidden_mana_networking");
+    public static final ResourceKey<ResearchEntry> HEAVENLY_MANA_NETWORKING = create("heavenly_mana_networking");
 
     // Scans research entries
     public static final ResourceKey<ResearchEntry> RAW_MARBLE = create("raw_marble");
@@ -1515,6 +1519,7 @@ public class ResearchEntries {
         register(context, DOWSING_ROD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.DOWSING_ROD.get()).parent(BASIC_RITUAL)
                 .stage().requiredObservations(1).end()
                 .stage().recipe(ItemsPM.DOWSING_ROD.get()).end()
+                .addendum().requiredResearch(MANA_NETWORKING).end()
                 .build());
         register(context, HYDROMELON, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.HYDROMELON_SLICE.get())
                 .parent(EXPERT_RITUAL).parent(RITUAL_CANDLES).parent(RITUAL_BELL).parent(RUNE_SEA).parent(SHARD_SYNTHESIS)
@@ -1743,6 +1748,26 @@ public class ResearchEntries {
                 .parent(SUPREME_MAGITECH).parent(RUNE_GRACE).parent(GREATER_WARDING_MODULE)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.SUPREME_WARDING_MODULE.get()).end()
+                .build());
+        register(context, MANA_NETWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.MANA_RELAY_BASIC.get())
+                .parent(HONEY_EXTRACTOR).parent(DOWSING_ROD)
+                .stage().requiredObservations(1).requiredStat(StatsPM.MANA_SIPHONED, 200).end()
+                .stage().recipe(ItemsPM.MANA_RELAY_BASIC.get()).recipe(ItemsPM.MANA_INJECTOR_BASIC.get()).end()
+                .build());
+        register(context, ADVANCED_MANA_NETWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.MANA_RELAY_ENCHANTED.get())
+                .parent(EXPERT_MAGITECH).parent(MANA_NETWORKING).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.MANA_RELAY_ENCHANTED.get()).recipe(ItemsPM.MANA_INJECTOR_ENCHANTED.get()).end()
+                .build());
+        register(context, FORBIDDEN_MANA_NETWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.MANA_RELAY_FORBIDDEN.get())
+                .parent(MASTER_MAGITECH).parent(ADVANCED_MANA_NETWORKING).parent(HEXIUM).parent(CRYSTAL_SYNTHESIS)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.MANA_RELAY_FORBIDDEN.get()).recipe(ItemsPM.MANA_INJECTOR_FORBIDDEN.get()).end()
+                .build());
+        register(context, HEAVENLY_MANA_NETWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.MANA_RELAY_HEAVENLY.get())
+                .parent(SUPREME_MAGITECH).parent(FORBIDDEN_MANA_NETWORKING).parent(HALLOWSTEEL).parent(CLUSTER_SYNTHESIS)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.MANA_RELAY_HEAVENLY.get()).recipe(ItemsPM.MANA_INJECTOR_HEAVENLY.get()).end()
                 .build());
     }
     
