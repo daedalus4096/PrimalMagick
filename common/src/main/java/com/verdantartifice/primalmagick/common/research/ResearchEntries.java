@@ -1437,7 +1437,7 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 4).recipe(ItemsPM.SUPREME_HALLOWED_AMBROSIA.get()).end()
                 .build());
         register(context, FLYING_CARPET, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.FLYING_CARPET.get())
-                .parent(MASTER_RITUAL).parent(CRYSTAL_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_PROJECT).parent(RUNE_ITEM).parent(RUNE_POWER).parent(INCENSE_BRAZIER).parent(RITUAL_LECTERN)
+                .parent(MASTER_RITUAL).parent(CRYSTAL_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_PROJECT).parent(RUNE_ITEM).parent(RUNE_INSIGHT).parent(INCENSE_BRAZIER).parent(RITUAL_LECTERN)
                 .parent(RITUAL_BELL)
                 .stage().requiredResearch(SCAN_FLYING_CREATURE).requiredTheories(2).end()
                 .stage().attunement(Sources.SKY, 3).recipe(ItemsPM.FLYING_CARPET.get()).end()

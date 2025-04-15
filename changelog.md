@@ -7,6 +7,7 @@ v6.0.5
 * Greatly increased the mana regeneration rate of Heavenly Mana Fonts
 * Made item textures for energized gems more distinct from their parents' versions
 * Fixed various tooltips to refer to mana effectiveness instead of flat discounts
+* Fixed Flying Carpet research to only require knowledge of Insight Runes instead of Power Runes
 * Allowed mana fonts to stack to sixteen
 
 v6.0.4
