@@ -4,6 +4,7 @@ v6.0.5
 * Added Mana Injectors, to let Magitech devices pull mana directly from fonts
 * Added Mana Relays, to extend the range of your mana distribution network
 * Made item textures for energized gems more distinct from their parents' versions
+* Fixed various tooltips to refer to mana effectiveness instead of flat discounts
 
 v6.0.4
 ------
