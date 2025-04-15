@@ -459,6 +459,14 @@ public abstract class StoryAdvancementsPM {
                 .rewards(AdvancementRewards.Builder.experience(100))
                 .addCriterion("reuse_thrice", RuneUseCountTrigger.TriggerInstance.atLeast(4))
                 .save(saver, ResourceUtils.loc("story/reuse_rune_thrice").toString());
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_mana_relay").icon(ItemsPM.MANA_RELAY_BASIC.get()).build())
+                .parent(craftMagitechParts)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("has_basic_relay", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MANA_RELAY_BASIC.get()))
+                .addCriterion("has_enchanted_relay", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MANA_RELAY_ENCHANTED.get()))
+                .addCriterion("has_forbidden_relay", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MANA_RELAY_FORBIDDEN.get()))
+                .addCriterion("has_heavenly_relay", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MANA_RELAY_HEAVENLY.get()))
+                .save(saver, ResourceUtils.loc("story/craft_mana_relay").toString());
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {

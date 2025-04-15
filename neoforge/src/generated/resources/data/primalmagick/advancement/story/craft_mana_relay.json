@@ -1,0 +1,66 @@
+{
+  "parent": "primalmagick:story/craft_magitech_parts",
+  "criteria": {
+    "has_basic_relay": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:mana_relay_basic"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_enchanted_relay": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:mana_relay_enchanted"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_forbidden_relay": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:mana_relay_forbidden"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_heavenly_relay": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:mana_relay_heavenly"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_mana_relay.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:mana_relay_basic"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_mana_relay.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_basic_relay",
+      "has_enchanted_relay",
+      "has_forbidden_relay",
+      "has_heavenly_relay"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
