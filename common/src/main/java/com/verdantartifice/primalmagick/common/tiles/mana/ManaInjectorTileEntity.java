@@ -1,14 +1,16 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.verdantartifice.primalmagick.common.blocks.mana.ManaRelayBlock;
+import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
-import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
@@ -17,8 +19,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-public abstract class ManaInjectorTileEntity extends AbstractTilePM implements IManaConsumer {
+public abstract class ManaInjectorTileEntity extends AbstractTilePM implements ITieredDeviceBlockEntity, IManaConsumer {
     protected static final int TICKS_PER_PHASE = 40;
     protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON);
 
@@ -32,10 +35,21 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ManaInjectorTileEntity entity) {
-        if (entity.ticks++ % TICKS_PER_PHASE == 0) {
+        if (entity.ticks % TICKS_PER_PHASE == 0) {
             entity.nextPhase();
         }
-        // TODO Determine if the attached device needs mana and pull if so
+
+        // Determine if the attached device needs mana and pull if so
+        if (!level.isClientSide && entity.ticks % 5 == 0) {
+            entity.getConnectedStorage().ifPresent(storage -> {
+                final int throughput = entity.getManaThroughput();
+                Sources.streamSorted()
+                        .filter(entity::canConsume)
+                        .forEach(s -> entity.doSiphon(level, s, Math.min(throughput, storage.getMaxManaStored(s) - storage.getManaStored(s))));
+            });
+        }
+
+        entity.ticks++;
     }
 
     protected void nextPhase() {
@@ -61,15 +75,18 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
         }
     }
 
+    protected Optional<IManaStorage<?>> getConnectedStorage() {
+        return this.hasLevel() ? Services.CAPABILITIES.manaStorage(this.getLevel(), this.getBlockPos().below(), Direction.UP) : Optional.empty();
+    }
+
     @Override
     public boolean canConsume(@NotNull Source source) {
-        return true;
+        return this.getConnectedStorage().map(cap -> cap.canReceive(source)).orElse(false);
     }
 
     @Override
     public int receiveMana(@NotNull Source source, int maxReceive, boolean simulate) {
-        // TODO Stub
-        return 0;
+        return this.getConnectedStorage().map(cap -> cap.receiveMana(source, maxReceive, simulate)).orElse(0);
     }
 
     @Override
@@ -79,8 +96,7 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
 
     @Override
     public int getManaThroughput() {
-        DeviceTier tier = this.getBlockState().getBlock() instanceof ManaRelayBlock relay ? relay.getDeviceTier() : DeviceTier.BASIC;
-        return switch (tier) {
+        return switch (this.getDeviceTier()) {
             case BASIC -> 200;
             case ENCHANTED -> 400;
             case FORBIDDEN -> 800;

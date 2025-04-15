@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -23,7 +24,7 @@ import org.slf4j.Logger;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class ManaRelayTileEntity extends AbstractTilePM implements IManaRelay {
+public abstract class ManaRelayTileEntity extends AbstractTilePM implements ITieredDeviceBlockEntity, IManaRelay {
     public static final int BOB_CYCLE_TIME_TICKS = 200;
     protected static final int TICKS_PER_PHASE = 40;
     protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON);
@@ -92,8 +93,7 @@ public abstract class ManaRelayTileEntity extends AbstractTilePM implements IMan
 
     @Override
     public int getNetworkRange() {
-        DeviceTier tier = this.getBlockState().getBlock() instanceof ManaRelayBlock relay ? relay.getDeviceTier() : DeviceTier.BASIC;
-        return switch (tier) {
+        return switch (this.getDeviceTier()) {
             case BASIC -> 5;
             case ENCHANTED -> 10;
             case FORBIDDEN -> 15;
@@ -103,8 +103,7 @@ public abstract class ManaRelayTileEntity extends AbstractTilePM implements IMan
 
     @Override
     public int getManaThroughput() {
-        DeviceTier tier = this.getBlockState().getBlock() instanceof ManaRelayBlock relay ? relay.getDeviceTier() : DeviceTier.BASIC;
-        return switch (tier) {
+        return switch (this.getDeviceTier()) {
             case BASIC -> 200;
             case ENCHANTED -> 400;
             case FORBIDDEN -> 800;
