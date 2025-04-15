@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -47,7 +48,7 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
+public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, ITieredDeviceBlockEntity {
     public static final int NUM_ROWS = EssenceType.values().length;
     public static final int NUM_COLS = Sources.getAllSorted().size();
     public static final int NUM_SLOTS = NUM_ROWS * NUM_COLS;
@@ -140,11 +141,6 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     @Override
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
-    }
-    
-    @Nullable
-    protected DeviceTier getDeviceTier() {
-        return this.getBlockState().getBlock() instanceof ITieredDevice device ? device.getDeviceTier() : null;
     }
     
     public int getTotalEssenceCapacity() {

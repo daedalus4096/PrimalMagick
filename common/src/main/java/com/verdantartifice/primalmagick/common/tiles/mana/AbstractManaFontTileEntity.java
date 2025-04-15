@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
@@ -34,7 +35,7 @@ import org.slf4j.Logger;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand, IManaSupplier {
+public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand, IManaSupplier, ITieredDeviceBlockEntity {
     public static final int CENTIMANA_RECHARGED_PER_TICK = 5;
     protected static final Logger LOGGER = LogUtils.getLogger();
 

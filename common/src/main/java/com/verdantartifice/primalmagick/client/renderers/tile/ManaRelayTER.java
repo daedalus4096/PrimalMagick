@@ -44,8 +44,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity> {
 
     @Override
     public void render(ManaRelayTileEntity manaRelayTileEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int combinedLight, int combinedOverlay) {
-        BlockState state = manaRelayTileEntity.getBlockState();
-        DeviceTier tier = state.getBlock() instanceof ManaRelayBlock relayBlock ? relayBlock.getDeviceTier() : DeviceTier.BASIC;
+        DeviceTier tier = manaRelayTileEntity.getDeviceTier();
         long time = manaRelayTileEntity.getLevel().getLevelData().getGameTime();
         double bobDelta = 0.125D * Math.sin((time + (double)partialTicks) * (2D * Math.PI / (double)ManaRelayTileEntity.BOB_CYCLE_TIME_TICKS));
         int rot = 2 * (int)(time % 360);

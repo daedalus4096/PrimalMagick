@@ -59,8 +59,7 @@ public class ManaInjectorTER implements BlockEntityRenderer<ManaInjectorTileEnti
 
     @Override
     public void render(ManaInjectorTileEntity manaInjectorTileEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int combinedLight, int combinedOverlay) {
-        BlockState state = manaInjectorTileEntity.getBlockState();
-        DeviceTier tier = state.getBlock() instanceof ManaInjectorBlock injectorBlock ? injectorBlock.getDeviceTier() : DeviceTier.BASIC;
+        DeviceTier tier = manaInjectorTileEntity.getDeviceTier();
         long time = manaInjectorTileEntity.getLevel().getLevelData().getGameTime();
         int rot = 2 * (int)(time % 360);
         final float tilt = 45.0F;

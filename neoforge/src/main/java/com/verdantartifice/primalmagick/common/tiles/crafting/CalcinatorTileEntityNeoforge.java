@@ -31,18 +31,13 @@ public class CalcinatorTileEntityNeoforge extends AbstractCalcinatorTileEntityNe
     
     @Override
     protected int getCookTimeTotal() {
-        Block block = this.getBlockState().getBlock();
-        if (block instanceof CalcinatorBlock calcinatorBlock) {
-            return switch (calcinatorBlock.getDeviceTier()) {
-                case BASIC -> 160;
-                case ENCHANTED -> 120;
-                case FORBIDDEN -> 80;
-                case HEAVENLY -> 40;
-                default -> 200;
-            };
-        } else {
-            throw new IllegalStateException("Unknown block type " + block);
-        }
+        return switch (this.getDeviceTier()) {
+            case BASIC -> 160;
+            case ENCHANTED -> 120;
+            case FORBIDDEN -> 80;
+            case HEAVENLY -> 40;
+            default -> 200;
+        };
     }
 
     @Override
@@ -83,17 +78,11 @@ public class CalcinatorTileEntityNeoforge extends AbstractCalcinatorTileEntityNe
     
     @Nonnull
     protected EssenceType getMaxOutputEssenceType() {
-        Block block = this.getBlockState().getBlock();
-        if (block instanceof CalcinatorBlock calcinatorBlock) {
-            return switch (calcinatorBlock.getDeviceTier()) {
-                case BASIC -> EssenceType.DUST;
-                case ENCHANTED -> EssenceType.SHARD;
-                case FORBIDDEN -> EssenceType.CRYSTAL;
-                case HEAVENLY -> EssenceType.CLUSTER;
-                default -> EssenceType.DUST;
-            };
-        } else {
-            throw new IllegalStateException("Unknown block type " + block);
-        }
+        return switch (this.getDeviceTier()) {
+            case ENCHANTED -> EssenceType.SHARD;
+            case FORBIDDEN -> EssenceType.CRYSTAL;
+            case HEAVENLY -> EssenceType.CLUSTER;
+            default -> EssenceType.DUST;
+        };
     }
 }

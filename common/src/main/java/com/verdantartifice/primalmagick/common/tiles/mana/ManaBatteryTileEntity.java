@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -57,7 +58,7 @@ import java.util.Set;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock
  * @author Daedalus4096
  */
-public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IManaSupplier, IManaConsumer {
+public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IManaSupplier, IManaConsumer, ITieredDeviceBlockEntity {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int INPUT_INV_INDEX = 0;
@@ -129,30 +130,22 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
     protected int getBatteryCapacity() {
         // Return the capacity of the battery in centimana
-        if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
-            return switch (batteryBlock.getDeviceTier()) {
-                case FORBIDDEN -> 4 * WandGem.WIZARD.getCapacity();
-                case HEAVENLY -> 4 * WandGem.ARCHMAGE.getCapacity();
-                case CREATIVE -> -1;
-                default -> 0;
-            };
-        } else {
-            return 0;
-        }
+        return switch (this.getDeviceTier()) {
+            case FORBIDDEN -> 4 * WandGem.WIZARD.getCapacity();
+            case HEAVENLY -> 4 * WandGem.ARCHMAGE.getCapacity();
+            case CREATIVE -> -1;
+            default -> 0;
+        };
     }
 
     @VisibleForTesting
     public int getBatteryTransferCap() {
         // Return the max amount of centimana that can be transfered by the battery per tick
-        if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
-            return switch (batteryBlock.getDeviceTier()) {
-                case FORBIDDEN -> WandCap.HEXIUM.getSiphonAmount();
-                case HEAVENLY, CREATIVE -> WandCap.HALLOWSTEEL.getSiphonAmount();
-                default -> 0;
-            };
-        } else {
-            return 0;
-        }
+        return switch (this.getDeviceTier()) {
+            case FORBIDDEN -> WandCap.HEXIUM.getSiphonAmount();
+            case HEAVENLY, CREATIVE -> WandCap.HALLOWSTEEL.getSiphonAmount();
+            default -> 0;
+        };
     }
 
     @Override
