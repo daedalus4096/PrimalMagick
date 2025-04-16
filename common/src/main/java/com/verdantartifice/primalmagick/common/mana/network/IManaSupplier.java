@@ -51,10 +51,14 @@ public interface IManaSupplier extends IManaNetworkNode {
      * @param level the world in which this supplier resides
      */
     default void loadManaNetwork(@NotNull Level level) {
+        level.getProfiler().push("loadManaNetwork");
+        level.getProfiler().push("defaultManaSupplier");
+
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 
         // Search for mana consumers which are in range of this node
+        level.getProfiler().push("findNodes");
         List<IManaConsumer> consumers = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
                 .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaConsumer consumer ? consumer : null)
@@ -62,12 +66,14 @@ public interface IManaSupplier extends IManaNetworkNode {
                 .toList();
 
         // Create direct routes from this supplier for terminus consumers
+        level.getProfiler().popPush("createDirectConsumerRoutes");
         consumers.stream().filter(IManaConsumer::isTerminus)
                 .map(consumer -> new Route(this, consumer))
                 .filter(Route::isValid)
                 .forEach(this.getRouteTable()::addRoute);
 
         // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
+        level.getProfiler().popPush("createRelayRoutes");
         consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
                 .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
@@ -78,6 +84,11 @@ public interface IManaSupplier extends IManaNetworkNode {
                 .forEach(this.getRouteTable()::addRoute);
 
         // Update connected nodes on the newly created routes
+        level.getProfiler().popPush("propagateRoutes");
         this.getRouteTable().propagateRoutes(Set.of(this));
+        level.getProfiler().pop();
+
+        level.getProfiler().pop();
+        level.getProfiler().pop();
     }
 }

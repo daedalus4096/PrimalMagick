@@ -60,10 +60,14 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
 
     @Override
     default void loadManaNetwork(@NotNull Level level) {
+        level.getProfiler().push("loadManaNetwork");
+        level.getProfiler().push("defaultManaRelay");
+
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 
         // Search for mana network nodes in range of this one
+        level.getProfiler().push("findNodes");
         List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
                 .filter(pos -> !this.getBlockPos().equals(pos) && pos.distSqr(this.getBlockPos()) <= rangeSqr)
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
@@ -71,6 +75,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .toList();
 
         // Create direct routes to this relay for origin suppliers
+        level.getProfiler().popPush("createDirectSupplierRoutes");
         nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
                 .filter(supplier -> supplier != null && supplier.isOrigin())
                 .map(supplier -> new Route(supplier, this))
@@ -78,6 +83,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .forEach(this.getRouteTable()::addRoute);
 
         // Create direct routes to this relay for terminus consumers
+        level.getProfiler().popPush("createDirectConsumerRoutes");
         nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
                 .filter(consumer -> consumer != null && consumer.isTerminus())
                 .map(consumer -> new Route(this, consumer))
@@ -85,6 +91,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .forEach(this.getRouteTable()::addRoute);
 
         // For nodes that are actually relays, create bidirectional routes connecting this and that
+        level.getProfiler().popPush("createRelayRoutes");
         List<IManaRelay> relays = nodes.stream().map(node -> node instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
                 .toList();
@@ -102,6 +109,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .forEach(this.getRouteTable()::addRoute);
 
         // Connect existing routes that can use this relay as a bridge
+        level.getProfiler().popPush("bridgeRoutes");
         Set<Route> heads = this.getRouteTable().getRoutesForTail(this);
         Set<Route> tails = this.getRouteTable().getRoutesForHead(this);
         heads.forEach(head -> tails.stream().map(head::connect)
@@ -111,6 +119,11 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .forEach(this.getRouteTable()::addRoute));
 
         // Update connected nodes on the newly created routes
+        level.getProfiler().popPush("propagateRoutes");
         this.getRouteTable().propagateRoutes(Set.of(this));
+        level.getProfiler().pop();
+
+        level.getProfiler().pop();
+        level.getProfiler().pop();
     }
 }
