@@ -56,8 +56,10 @@ public class RouteTable {
 
     public Optional<Route> getRoute(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull IManaNetworkNode owner) {
         if (this.routes.contains(origin.getNodeId(), terminus.getNodeId())) {
+            level.getProfiler().push("getRouteSet");
             Set<Route> routeSet = this.routes.get(origin.getNodeId(), terminus.getNodeId());
             Set<Route> toForget = new HashSet<>();
+            level.getProfiler().popPush("scoreRoutes");
             Optional<Route> retVal = routeSet == null ?
                     Optional.empty() :
                     routeSet.stream()
@@ -71,7 +73,9 @@ public class RouteTable {
                                 }
                             })
                             .max(Comparator.comparing(Route::getScore).thenComparing(Route::hashCode));
+            level.getProfiler().popPush("forgetRoutes");
             this.forgetRoutes(toForget, Set.of(owner));
+            level.getProfiler().pop();
             return retVal;
         } else {
             return Optional.empty();
