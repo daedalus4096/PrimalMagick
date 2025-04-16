@@ -21,4 +21,13 @@ public abstract class AbstractTileSidedInventoryMenu<T extends AbstractTileSided
     public IItemHandlerPM getTileInventory(Direction face) {
         return Services.CAPABILITIES.itemHandler(this.tile, face).orElseThrow(IllegalStateException::new);
     }
+
+    public IItemHandlerPM getTileInventory(int index) {
+        IItemHandlerPM retVal = this.tile.getRawItemHandler(index);
+        if (retVal == null) {
+            throw new IllegalStateException("No tile inventory found for index " + index);
+        } else {
+            return retVal;
+        }
+    }
 }

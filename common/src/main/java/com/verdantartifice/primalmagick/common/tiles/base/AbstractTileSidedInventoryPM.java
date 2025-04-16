@@ -121,6 +121,18 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         return face == null ? null : this.getInventoryIndexForFace(face).map(this.itemHandlers::get).orElse(null);
     }
 
+    /**
+     * This method is intended to provide access to block entity item handlers not exposed on a given block face. Prefer
+     * using other accessor methods such as {@link #getItem(int, int)} whenever possible.
+     *
+     * @param index the index of the item handler within the block entity's list
+     * @return the item handler for the given index, or null if one doesn't exist
+     */
+    @Nullable
+    public IItemHandlerPM getRawItemHandler(int index) {
+        return index >= 0 && index < this.itemHandlers.size() ? this.itemHandlers.get(index) : null;
+    }
+
     public void addListener(@Nullable Direction face, @NotNull IItemHandlerChangeListener listener) {
         if (face != null) {
             this.getInventoryIndexForFace(face).ifPresent(invIndex -> {

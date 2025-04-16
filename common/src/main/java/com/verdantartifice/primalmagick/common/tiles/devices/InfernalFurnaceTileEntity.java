@@ -74,9 +74,9 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     protected static final int MANA_PER_HALF_SECOND = 1;
     protected static final int DEFAULT_COOK_TIME = 100;
     protected static final int LIT_GRACE_TICKS_MAX = 5;
-    protected static final int OUTPUT_INV_INDEX = 0;
-    protected static final int INPUT_INV_INDEX = 1;
-    protected static final int WAND_INV_INDEX = 2;
+    public static final int OUTPUT_INV_INDEX = 0;
+    public static final int INPUT_INV_INDEX = 1;
+    public static final int WAND_INV_INDEX = 2;
     
     protected int superchargeTime;
     protected int superchargeTimeTotal;
