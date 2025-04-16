@@ -115,13 +115,15 @@ public class RouteTable {
 
     public void forgetRoutes(@NotNull Set<Route> toForget, @NotNull Set<IManaNetworkNode> processedNodes) {
         // Update the route tables of every known node to remove the given routes
-        Set<IManaNetworkNode> knownNodes = this.getKnownNodes(processedNodes);
-        Set<IManaNetworkNode> newProcessedNodes = new HashSet<>(processedNodes);
-        newProcessedNodes.addAll(knownNodes);
-        knownNodes.forEach(node -> {
-            toForget.forEach(node.getRouteTable()::removeRoute);
-            node.getRouteTable().forgetRoutes(toForget, newProcessedNodes);
-        });
+        if (!toForget.isEmpty()) {
+            Set<IManaNetworkNode> knownNodes = this.getKnownNodes(processedNodes);
+            Set<IManaNetworkNode> newProcessedNodes = new HashSet<>(processedNodes);
+            newProcessedNodes.addAll(knownNodes);
+            knownNodes.forEach(node -> {
+                toForget.forEach(node.getRouteTable()::removeRoute);
+                node.getRouteTable().forgetRoutes(toForget, newProcessedNodes);
+            });
+        }
     }
 
     protected Set<IManaNetworkNode> getKnownNodes(@NotNull Set<IManaNetworkNode> ignore) {
