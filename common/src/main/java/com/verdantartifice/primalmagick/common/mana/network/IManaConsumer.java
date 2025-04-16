@@ -60,20 +60,25 @@ public interface IManaConsumer extends IManaNetworkNode {
      * @param maxTransferCentimana the maximum amount of centimana to be transferred
      */
     default void doSiphon(@NotNull Level level, @NotNull Source source, final int maxTransferCentimana) {
+        level.getProfiler().push("doSiphon");
+        level.getProfiler().push("defaultManaConsumer");
+
         int remainingTransfer = maxTransferCentimana;
         RouteTable routeTable = this.getRouteTable();
         Set<Route.Hop> particleHops = new HashSet<>();
 
         // Get the best route for each origin linked to this terminus that can carry the requested source
+        level.getProfiler().push("findBestRoutes");
         List<Route> routes = routeTable.getLinkedOrigins(this).stream()
                 .map(supplier -> routeTable.getRoute(level, Optional.of(source), supplier, this, this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .sorted(Comparator.comparing(Route::getMaxThroughput).reversed().thenComparing(Route::hashCode))
                 .toList();
-        Iterator<Route> routeIterator = routes.iterator();
 
         // Transfer mana directly from the origin to the terminus
+        level.getProfiler().popPush("doTransfer");
+        Iterator<Route> routeIterator = routes.iterator();
         while (remainingTransfer > 0 && routeIterator.hasNext()) {
             Route route = routeIterator.next();
             int toExtract = Math.min(remainingTransfer, route.getMaxThroughput());
@@ -84,6 +89,7 @@ public interface IManaConsumer extends IManaNetworkNode {
         }
 
         // Show particles for each hop in the route
+        level.getProfiler().popPush("showParticles");
         if (level instanceof ServerLevel serverLevel) {
             particleHops.forEach(hop -> PacketHandler.sendToAllAround(
                     new ManaSparklePacket(hop.supplier().getBlockPos().getCenter(), hop.consumer().getBlockPos().getCenter(), 20, source.getColor()),
@@ -91,6 +97,10 @@ public interface IManaConsumer extends IManaNetworkNode {
                     hop.supplier().getBlockPos(),
                     32D));
         }
+        level.getProfiler().pop();
+
+        level.getProfiler().pop();
+        level.getProfiler().pop();
     }
 
     /**
