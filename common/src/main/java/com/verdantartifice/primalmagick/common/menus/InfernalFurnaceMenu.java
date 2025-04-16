@@ -48,10 +48,10 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
         this.furnaceData = furnaceData;
         
         // Slot 0: chamber output
-        this.addSlot(Services.MENU.makeInfernalFurnaceResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 125, 35));
+        this.addSlot(Services.MENU.makeInfernalFurnaceResultSlot(playerInv.player, this.getTileInventory(InfernalFurnaceTileEntity.OUTPUT_INV_INDEX), 0, 125, 35));
         
         // Slot 1: material input
-        this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(Direction.UP), 0, 44, 17));
+        this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(InfernalFurnaceTileEntity.INPUT_INV_INDEX), 0, 44, 17));
         
         // Slot 2: ignyx input
         this.ignyxSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(InfernalFurnaceTileEntity.WAND_INV_INDEX), 0, 44, 53,

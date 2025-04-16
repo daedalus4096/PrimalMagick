@@ -52,9 +52,9 @@ import java.util.Optional;
 public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected static final int OUTPUT_INV_INDEX = 0;
-    protected static final int INPUT_INV_INDEX = 1;
-    protected static final int WAND_INV_INDEX = 2;
+    public static final int OUTPUT_INV_INDEX = 0;
+    public static final int INPUT_INV_INDEX = 1;
+    public static final int WAND_INV_INDEX = 2;
     
     protected int processTime;
     protected int processTimeTotal;
