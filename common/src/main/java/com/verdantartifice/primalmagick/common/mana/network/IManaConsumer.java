@@ -94,7 +94,7 @@ public interface IManaConsumer extends IManaNetworkNode {
             remainingTransfer -= actualReceived;
             particleHops.addAll(route.getHops());
             if (owner instanceof ServerPlayer serverPlayer) {
-                CriteriaTriggersPM.MANA_NETWORK_ROUTE_LENGTH.get().trigger(serverPlayer, route.getDistanceSqr());
+                CriteriaTriggersPM.MANA_NETWORK_ROUTE_LENGTH.get().trigger(serverPlayer, route.getDistance());
             }
         }
 

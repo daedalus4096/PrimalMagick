@@ -3,7 +3,7 @@
   "criteria": {
     "long_route": {
       "conditions": {
-        "threshold": 10000.0
+        "threshold": 100.0
       },
       "trigger": "primalmagick:mana_network_route_length"
     }

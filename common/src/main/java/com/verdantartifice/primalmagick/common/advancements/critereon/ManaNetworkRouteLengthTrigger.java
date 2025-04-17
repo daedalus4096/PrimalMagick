@@ -21,22 +21,22 @@ public class ManaNetworkRouteLengthTrigger extends SimpleCriterionTrigger<ManaNe
         return ManaNetworkRouteLengthTrigger.TriggerInstance.CODEC;
     }
 
-    public void trigger(ServerPlayer player, double distSqr) {
-        this.trigger(player, triggerInstance -> triggerInstance.matches(distSqr));
+    public void trigger(ServerPlayer player, double dist) {
+        this.trigger(player, triggerInstance -> triggerInstance.matches(dist));
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, double thresholdSqr) implements SimpleCriterionTrigger.SimpleInstance {
+    public record TriggerInstance(Optional<ContextAwarePredicate> player, double threshold) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<ManaNetworkRouteLengthTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(ManaNetworkRouteLengthTrigger.TriggerInstance::player),
-                Codec.DOUBLE.fieldOf("threshold").forGetter(ManaNetworkRouteLengthTrigger.TriggerInstance::thresholdSqr)
+                Codec.DOUBLE.fieldOf("threshold").forGetter(ManaNetworkRouteLengthTrigger.TriggerInstance::threshold)
             ).apply(instance, ManaNetworkRouteLengthTrigger.TriggerInstance::new));
 
         public static Criterion<ManaNetworkRouteLengthTrigger.TriggerInstance> atLeast(int threshold) {
-            return CriteriaTriggersPM.MANA_NETWORK_ROUTE_LENGTH.get().createCriterion(new ManaNetworkRouteLengthTrigger.TriggerInstance(Optional.empty(), threshold * threshold));
+            return CriteriaTriggersPM.MANA_NETWORK_ROUTE_LENGTH.get().createCriterion(new ManaNetworkRouteLengthTrigger.TriggerInstance(Optional.empty(), threshold));
         }
 
         public boolean matches(double value) {
-            return value >= this.thresholdSqr;
+            return value >= this.threshold;
         }
 
         public Optional<ContextAwarePredicate> player() {
