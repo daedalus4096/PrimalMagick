@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -18,15 +19,19 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Definition of an auto-charger tile entity.  Provides the siphoning functionality for the
@@ -35,12 +40,13 @@ import java.util.Set;
  * @author Daedalus4096
  * @see com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock
  */
-public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM implements IManaConsumer {
+public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM implements IManaConsumer, IOwnedTileEntity {
     protected static final Logger LOGGER = LogUtils.getLogger();
     protected static final int INPUT_INV_INDEX = 0;
 
     protected final RouteTable routeTable = new RouteTable();
     protected int chargeTime;
+    protected UUID ownerUUID;
 
     public AutoChargerTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.AUTO_CHARGER.get(), pos, state);
@@ -49,19 +55,43 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     @Override
     protected Set<Integer> getSyncedSlotIndices(int inventoryIndex) {
         // Sync the charger's wand stack for client rendering use
-        return inventoryIndex == INPUT_INV_INDEX ? ImmutableSet.of(Integer.valueOf(0)) : ImmutableSet.of();
+        return inventoryIndex == INPUT_INV_INDEX ? ImmutableSet.of(0) : ImmutableSet.of();
     }
     
     @Override
     public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
         this.chargeTime = compound.getInt("ChargeTime");
+        this.ownerUUID = null;
+        if (compound.contains("OwnerUUID")) {
+            String ownerUUIDStr = compound.getString("OwnerUUID");
+            if (!ownerUUIDStr.isEmpty()) {
+                this.ownerUUID = UUID.fromString(ownerUUIDStr);
+            }
+        }
     }
     
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
         compound.putInt("ChargeTime", this.chargeTime);
+        if (this.ownerUUID != null) {
+            compound.putString("OwnerUUID", this.ownerUUID.toString());
+        }
+    }
+
+    @Override
+    public void setTileOwner(@Nullable Player owner) {
+        this.ownerUUID = owner == null ? null : owner.getUUID();
+    }
+
+    @Override
+    public @Nullable Player getTileOwner() {
+        if (this.level instanceof ServerLevel serverLevel) {
+            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -86,7 +116,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
                 final int throughput = entity.getManaThroughput();
                 Sources.getAllSorted().stream()
                         .filter(manaStorage::canReceive)
-                        .forEach(s -> entity.doSiphon(level, s, Math.min(throughput, manaStorage.getMaxManaStored(s) - manaStorage.getManaStored(s))));
+                        .forEach(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, manaStorage.getMaxManaStored(s) - manaStorage.getManaStored(s))));
             }
             entity.chargeTime++;
         }

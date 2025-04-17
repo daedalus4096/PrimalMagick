@@ -55,9 +55,6 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
             }
         }
         if (!level.isClientSide) {
-            if (entity.ticksExisted == 0) {
-                entity.loadManaNetwork(level);
-            }
             entity.doRecharge();
         }
     }

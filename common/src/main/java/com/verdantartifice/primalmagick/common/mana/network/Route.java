@@ -32,6 +32,7 @@ public class Route {
     protected final Supplier<Double> scoreSupplier = Suppliers.memoize(this::getScoreInner);
     protected final Supplier<Boolean> validSupplier = Suppliers.memoize(this::isValidInner);
     protected final Supplier<Boolean> completeSupplier = Suppliers.memoize(this::isCompleteInner);
+    protected final Supplier<Double> distanceSqrSupplier = Suppliers.memoize(this::getDistanceSqrInner);
 
     public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail) {
         this(head, tail, List.of());
@@ -230,6 +231,14 @@ public class Route {
 
     public boolean canRoute(Source source) {
         return this.head.canSupply(source) && this.tail.canConsume(source) && this.relays.stream().allMatch(r -> r.canRelay(source));
+    }
+
+    public double getDistanceSqr() {
+        return this.distanceSqrSupplier.get();
+    }
+
+    protected double getDistanceSqrInner() {
+        return this.getHops().stream().mapToDouble(Route.Hop::getDistanceSqr).sum();
     }
 
     @Override

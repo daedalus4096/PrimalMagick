@@ -347,7 +347,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
 
     @Override
     public void setTileOwner(Player owner) {
-        this.ownerUUID = owner.getUUID();
+        this.ownerUUID = owner == null ? null : owner.getUUID();
         this.researchCache.update(owner, this.relevantFilter);
     }
 

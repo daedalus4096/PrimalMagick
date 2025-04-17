@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -45,4 +46,6 @@ public interface IManaNetworkNode {
      * @return this node's route table
      */
     @NotNull RouteTable getRouteTable();
+
+    void loadManaNetwork(@NotNull Level level);
 }

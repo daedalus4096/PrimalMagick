@@ -1,13 +1,17 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -59,7 +63,7 @@ public interface IManaConsumer extends IManaNetworkNode {
      * @param source the source of mana to be transferred
      * @param maxTransferCentimana the maximum amount of centimana to be transferred
      */
-    default void doSiphon(@NotNull Level level, @NotNull Source source, final int maxTransferCentimana) {
+    default void doSiphon(@Nullable Player owner, @NotNull Level level, @NotNull Source source, final int maxTransferCentimana) {
         level.getProfiler().push("doSiphon");
         level.getProfiler().push("defaultManaConsumer");
 
@@ -86,6 +90,9 @@ public interface IManaConsumer extends IManaNetworkNode {
             int actualReceived = route.getTail().receiveMana(source, actualExtracted, false);
             remainingTransfer -= actualReceived;
             particleHops.addAll(route.getHops());
+            if (owner instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggersPM.MANA_NETWORK_ROUTE_LENGTH.get().trigger(serverPlayer, route.getDistanceSqr());
+            }
         }
 
         // Show particles for each hop in the route

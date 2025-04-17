@@ -6,22 +6,29 @@ import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public abstract class ManaInjectorTileEntity extends AbstractTilePM implements ITieredDeviceBlockEntity, IManaConsumer {
+public abstract class ManaInjectorTileEntity extends AbstractTilePM implements ITieredDeviceBlockEntity, IManaConsumer, IOwnedTileEntity {
     protected static final int TICKS_PER_PHASE = 40;
     protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON);
 
@@ -29,9 +36,30 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     protected int ticks = 0;
     protected Source lastSource = Sources.SKY;
     protected Source nextSource = Sources.SKY;
+    protected UUID ownerUUID;
 
     public ManaInjectorTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.MANA_INJECTOR.get(), pos, state);
+    }
+
+    @Override
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
+        this.ownerUUID = null;
+        if (compound.contains("OwnerUUID")) {
+            String ownerUUIDStr = compound.getString("OwnerUUID");
+            if (!ownerUUIDStr.isEmpty()) {
+                this.ownerUUID = UUID.fromString(ownerUUIDStr);
+            }
+        }
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
+        if (this.ownerUUID != null) {
+            compound.putString("OwnerUUID", this.ownerUUID.toString());
+        }
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ManaInjectorTileEntity entity) {
@@ -45,11 +73,25 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
                 final int throughput = entity.getManaThroughput();
                 Sources.streamSorted()
                         .filter(entity::canConsume)
-                        .forEach(s -> entity.doSiphon(level, s, Math.min(throughput, storage.getMaxManaStored(s) - storage.getManaStored(s))));
+                        .forEach(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, storage.getMaxManaStored(s) - storage.getManaStored(s))));
             });
         }
 
         entity.ticks++;
+    }
+
+    @Override
+    public void setTileOwner(@Nullable Player owner) {
+        this.ownerUUID = owner == null ? null : owner.getUUID();
+    }
+
+    @Override
+    public @Nullable Player getTileOwner() {
+        if (this.level instanceof ServerLevel serverLevel) {
+            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+        } else {
+            return null;
+        }
     }
 
     protected void nextPhase() {

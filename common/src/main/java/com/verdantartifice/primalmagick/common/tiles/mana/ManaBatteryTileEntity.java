@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
@@ -32,6 +33,7 @@ import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -45,12 +47,14 @@ import net.minecraft.world.phys.AABB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Definition of a mana battery tile entity.  Holds the charge for the corresponding block.
@@ -58,7 +62,8 @@ import java.util.Set;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock
  * @author Daedalus4096
  */
-public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IManaSupplier, IManaConsumer, ITieredDeviceBlockEntity {
+public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer,
+        IManaSupplier, IManaConsumer, ITieredDeviceBlockEntity, IOwnedTileEntity {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int INPUT_INV_INDEX = 0;
@@ -68,6 +73,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     protected int chargeTimeTotal;
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
+    protected UUID ownerUUID;
 
     protected final RouteTable routeTable = new RouteTable();
 
@@ -149,6 +155,20 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
+    public void setTileOwner(@Nullable Player owner) {
+        this.ownerUUID = owner == null ? null : owner.getUUID();
+    }
+
+    @Override
+    public @Nullable Player getTileOwner() {
+        if (this.level instanceof ServerLevel serverLevel) {
+            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public int extractMana(@NotNull Source source, int maxExtract, boolean simulate) {
         return this.manaStorage.extractMana(source, maxExtract, simulate);
     }
@@ -170,7 +190,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                 final int throughput = entity.getManaThroughput();
                 Sources.getAllSorted().stream()
                         .filter(entity.manaStorage::canReceive)
-                        .forEach(s -> entity.doSiphon(level, s, Math.min(throughput, entity.manaStorage.getMaxManaStored(s) - entity.manaStorage.getManaStored(s))));
+                        .forEach(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, entity.manaStorage.getMaxManaStored(s) - entity.manaStorage.getManaStored(s))));
             }
             entity.fontSiphonTime++;
 
@@ -283,9 +303,18 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
         this.fontSiphonTime = compound.getInt("FontSiphonTime");
+
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
+
+        this.ownerUUID = null;
+        if (compound.contains("OwnerUUID")) {
+            String ownerUUIDStr = compound.getString("OwnerUUID");
+            if (!ownerUUIDStr.isEmpty()) {
+                this.ownerUUID = UUID.fromString(ownerUUIDStr);
+            }
+        }
     }
     
     @Override
@@ -294,9 +323,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
         compound.putInt("FontSiphonTime", this.fontSiphonTime);
+
         ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+
+        if (this.ownerUUID != null) {
+            compound.putString("OwnerUUID", this.ownerUUID.toString());
+        }
     }
 
     @Override
