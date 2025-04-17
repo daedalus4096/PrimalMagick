@@ -124,7 +124,7 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
                         // Show fancy sparkles
                         if (level instanceof ServerLevel serverLevel) {
                             PacketHandler.sendToAllAround(
-                                    new ManaSparklePacket(this.worldPosition, targetPos.x, targetPos.y, targetPos.z, 20, source.getColor()),
+                                    new ManaSparklePacket(this.worldPosition.getCenter(), targetPos, 20, source),
                                     serverLevel,
                                     this.worldPosition, 
                                     32.0D);

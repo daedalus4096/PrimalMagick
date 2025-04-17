@@ -92,7 +92,7 @@ public interface IManaConsumer extends IManaNetworkNode {
         level.getProfiler().popPush("showParticles");
         if (level instanceof ServerLevel serverLevel) {
             particleHops.forEach(hop -> PacketHandler.sendToAllAround(
-                    new ManaSparklePacket(hop.supplier().getBlockPos().getCenter(), hop.consumer().getBlockPos().getCenter(), 20, source.getColor()),
+                    new ManaSparklePacket(hop.supplier().getBlockPos().getCenter(), hop.consumer().getBlockPos().getCenter(), 20, source),
                     serverLevel,
                     hop.supplier().getBlockPos(),
                     32D));

@@ -129,7 +129,7 @@ public class DowsingRodItem extends Item {
 
     protected void showParticlesForRouteHop(ServerPlayer serverPlayer, Route.Hop hop, int color) {
         PacketHandler.sendToPlayer(
-                new ManaSparklePacket(hop.supplier().getBlockPos().getCenter(), hop.consumer().getBlockPos().getCenter(), 20, color),
+                new ManaSparklePacket(hop.supplier().getBlockPos().getCenter(), hop.consumer().getBlockPos().getCenter(), 20, color, 0D),
                 serverPlayer);
     }
 
