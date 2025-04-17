@@ -86,7 +86,7 @@ public class ManaSparkleParticle extends TextureSheetParticle {
         } else {
             double t = (double)this.age / (double)this.lifetime;
             double tpl = 2 * Math.PI * this.loops;
-            double theta = tpl * t;
+            double theta = (tpl * t) + this.phase;
             double radius = 0.5D * Math.sin(Math.PI * t);
             this.age++;
             
