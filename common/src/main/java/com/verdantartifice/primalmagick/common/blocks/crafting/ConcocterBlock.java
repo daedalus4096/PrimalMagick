@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -87,10 +88,9 @@ public class ConcocterBlock extends BaseEntityBlock {
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
 
-        // Set the concocter tile entity's owner when placed by a player.  Needed so that the tile entity can do research checks.
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        if (!worldIn.isClientSide && placer instanceof Player placingPlayer && tile instanceof ConcocterTileEntity concocterTile) {
-            concocterTile.setTileOwner(placingPlayer);
+        // Set the block entity's owner when placed by a player
+        if (!worldIn.isClientSide && placer instanceof Player player && worldIn.getBlockEntity(pos) instanceof IOwnedTileEntity ownedTile) {
+            ownedTile.setTileOwner(player);
         }
     }
 
