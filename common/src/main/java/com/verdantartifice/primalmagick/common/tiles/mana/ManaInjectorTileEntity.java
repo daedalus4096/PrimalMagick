@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
@@ -15,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -71,9 +73,13 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
         if (!level.isClientSide && entity.ticks % 5 == 0) {
             entity.getConnectedStorage().ifPresent(storage -> {
                 final int throughput = entity.getManaThroughput();
-                Sources.streamSorted()
+                final int totalSiphoned = Sources.streamSorted()
                         .filter(entity::canConsume)
-                        .forEach(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, storage.getMaxManaStored(s) - storage.getManaStored(s))));
+                        .mapToInt(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, storage.getMaxManaStored(s) - storage.getManaStored(s))))
+                        .sum();
+                if (entity.getTileOwner() instanceof ServerPlayer serverPlayer) {
+                    CriteriaTriggersPM.MANA_NETWORK_SIPHON.get().trigger(serverPlayer, totalSiphoned);
+                }
             });
         }
 

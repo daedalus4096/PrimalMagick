@@ -22,6 +22,7 @@ public class CriteriaTriggersPM {
     public static final IRegistryItem<CriterionTrigger<?>, RuneUseCountTrigger> RUNE_USE_COUNT = register("rune_use_count", RuneUseCountTrigger::new);
     public static final IRegistryItem<CriterionTrigger<?>, ScanLocationTrigger> SCAN_LOCATION = register("scan_location", ScanLocationTrigger::new);
     public static final IRegistryItem<CriterionTrigger<?>, ManaNetworkRouteLengthTrigger> MANA_NETWORK_ROUTE_LENGTH = register("mana_network_route_length", ManaNetworkRouteLengthTrigger::new);
+    public static final IRegistryItem<CriterionTrigger<?>, ManaNetworkSiphonTrigger> MANA_NETWORK_SIPHON = register("mana_network_siphon", ManaNetworkSiphonTrigger::new);
 
     private static <T extends CriterionTrigger<?>> IRegistryItem<CriterionTrigger<?>, T> register(String name, Supplier<T> supplier) {
         return Services.CRITERION_TRIGGERS_REGISTRY.register(name, supplier);

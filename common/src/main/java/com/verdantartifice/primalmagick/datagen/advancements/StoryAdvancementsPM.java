@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.advancements.critereon.Attunement
 import com.verdantartifice.primalmagick.common.advancements.critereon.EntityHurtPlayerTriggerExt;
 import com.verdantartifice.primalmagick.common.advancements.critereon.LinguisticsComprehensionTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.ManaNetworkRouteLengthTrigger;
+import com.verdantartifice.primalmagick.common.advancements.critereon.ManaNetworkSiphonTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RecallStoneTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RuneUseCountTrigger;
@@ -472,6 +473,11 @@ public abstract class StoryAdvancementsPM {
                 .parent(craftManaRelay)
                 .addCriterion("long_route", ManaNetworkRouteLengthTrigger.TriggerInstance.atLeast(100))
                 .save(saver, ResourceUtils.loc("story/long_network_route").toString());
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("large_network_siphon").icon(ItemsPM.MANA_INJECTOR_HEAVENLY.get()).type(AdvancementType.CHALLENGE).build())
+                .parent(craftManaRelay)
+                .rewards(AdvancementRewards.Builder.experience(100))
+                .addCriterion("large_siphon", ManaNetworkSiphonTrigger.TriggerInstance.atLeast(51200))
+                .save(saver, ResourceUtils.loc("story/large_network_siphon").toString());
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {

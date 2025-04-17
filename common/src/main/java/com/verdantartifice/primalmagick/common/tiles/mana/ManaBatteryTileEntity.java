@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
@@ -34,6 +35,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -188,9 +190,13 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             // Siphon from nearby fonts
             if (entity.fontSiphonTime % 5 == 0) {
                 final int throughput = entity.getManaThroughput();
-                Sources.getAllSorted().stream()
+                final int totalSiphoned = Sources.streamSorted()
                         .filter(entity.manaStorage::canReceive)
-                        .forEach(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, entity.manaStorage.getMaxManaStored(s) - entity.manaStorage.getManaStored(s))));
+                        .mapToInt(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, entity.manaStorage.getMaxManaStored(s) - entity.manaStorage.getManaStored(s))))
+                        .sum();
+                if (entity.getTileOwner() instanceof ServerPlayer serverPlayer) {
+                    CriteriaTriggersPM.MANA_NETWORK_SIPHON.get().trigger(serverPlayer, totalSiphoned);
+                }
             }
             entity.fontSiphonTime++;
 

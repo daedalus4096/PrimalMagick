@@ -62,11 +62,13 @@ public interface IManaConsumer extends IManaNetworkNode {
      * @param level the level in which this consumer resides
      * @param source the source of mana to be transferred
      * @param maxTransferCentimana the maximum amount of centimana to be transferred
+     * @return the total amount of centimana transferred during this operation
      */
-    default void doSiphon(@Nullable Player owner, @NotNull Level level, @NotNull Source source, final int maxTransferCentimana) {
+    default int doSiphon(@Nullable Player owner, @NotNull Level level, @NotNull Source source, final int maxTransferCentimana) {
         level.getProfiler().push("doSiphon");
         level.getProfiler().push("defaultManaConsumer");
 
+        int totalSiphoned = 0;
         int remainingTransfer = maxTransferCentimana;
         RouteTable routeTable = this.getRouteTable();
         Set<Route.Hop> particleHops = new HashSet<>();
@@ -88,6 +90,7 @@ public interface IManaConsumer extends IManaNetworkNode {
             int toExtract = Math.min(remainingTransfer, route.getMaxThroughput());
             int actualExtracted = route.getHead().extractMana(source, toExtract, false);
             int actualReceived = route.getTail().receiveMana(source, actualExtracted, false);
+            totalSiphoned += actualReceived;
             remainingTransfer -= actualReceived;
             particleHops.addAll(route.getHops());
             if (owner instanceof ServerPlayer serverPlayer) {
@@ -108,6 +111,8 @@ public interface IManaConsumer extends IManaNetworkNode {
 
         level.getProfiler().pop();
         level.getProfiler().pop();
+
+        return totalSiphoned;
     }
 
     /**

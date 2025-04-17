@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.google.common.collect.ImmutableSet;
 import com.mojang.logging.LogUtils;
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
@@ -20,6 +21,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -114,9 +116,13 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
             if (entity.chargeTime % 5 == 0 && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 final ManaStorage manaStorage = chargeStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
                 final int throughput = entity.getManaThroughput();
-                Sources.getAllSorted().stream()
+                final int totalSiphoned = Sources.streamSorted()
                         .filter(manaStorage::canReceive)
-                        .forEach(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, manaStorage.getMaxManaStored(s) - manaStorage.getManaStored(s))));
+                        .mapToInt(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, manaStorage.getMaxManaStored(s) - manaStorage.getManaStored(s))))
+                        .sum();
+                if (entity.getTileOwner() instanceof ServerPlayer serverPlayer) {
+                    CriteriaTriggersPM.MANA_NETWORK_SIPHON.get().trigger(serverPlayer, totalSiphoned);
+                }
             }
             entity.chargeTime++;
         }

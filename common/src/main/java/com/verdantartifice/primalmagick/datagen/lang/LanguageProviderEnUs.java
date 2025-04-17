@@ -1763,6 +1763,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("reuse_rune_thrice").name("Runic Conservation").description("Use the same rune in at least four different enchantments on the same item at once").build();
         this.advancement("craft_mana_relay").name("Ping").description("Extend the reach of your mana network with a Mana Relay").build();
         this.advancement("long_network_route").name("Traceroute").description("Transmit mana over 100 blocks to a magitech device").build();
+        this.advancement("large_network_siphon").name("Link Saturation").description("Siphon at least 512 mana into a magitech device in a single instant").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
