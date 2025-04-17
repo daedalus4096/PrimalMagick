@@ -1,0 +1,33 @@
+{
+  "parent": "primalmagick:story/craft_mana_relay",
+  "criteria": {
+    "large_siphon": {
+      "conditions": {
+        "threshold": 51200
+      },
+      "trigger": "primalmagick:mana_network_siphon"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.large_network_siphon.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:mana_injector_heavenly"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.large_network_siphon.title"
+    }
+  },
+  "requirements": [
+    [
+      "large_siphon"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

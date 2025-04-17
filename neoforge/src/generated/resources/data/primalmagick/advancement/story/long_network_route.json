@@ -1,0 +1,29 @@
+{
+  "parent": "primalmagick:story/craft_mana_relay",
+  "criteria": {
+    "long_route": {
+      "conditions": {
+        "threshold": 10000.0
+      },
+      "trigger": "primalmagick:mana_network_route_length"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.long_network_route.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "primalmagick:mana_relay_heavenly"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.long_network_route.title"
+    }
+  },
+  "requirements": [
+    [
+      "long_route"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
