@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * Interface identifying a relay in a mana network, a device which can both transmit and receive mana but cannot
@@ -95,6 +96,11 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
         List<IManaRelay> relays = nodes.stream().map(node -> node instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
                 .toList();
+        relays.stream().flatMap(relay -> Stream.of(new Route(this, relay), new Route(relay, this)))
+                .filter(Route::isValid)
+                .forEach(this.getRouteTable()::addRoute);
+
+        // Extend the routes of neighboring relays
         relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
                 .map(route -> route.pushHead(this))
                 .filter(Optional::isPresent)
