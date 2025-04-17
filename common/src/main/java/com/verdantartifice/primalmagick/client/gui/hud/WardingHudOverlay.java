@@ -19,7 +19,7 @@ public class WardingHudOverlay {
     
     public static boolean shouldRender() {
         Minecraft mc = Minecraft.getInstance();
-        return !mc.options.hideGui && mc.gameMode.canHurtPlayer();
+        return !mc.options.hideGui && mc.gameMode.canHurtPlayer() && (mc.getCameraEntity() instanceof Player);
     }
     
     public static void render(GuiGraphics pGuiGraphics, DeltaTracker pDeltaTracker) {
