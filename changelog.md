@@ -3,6 +3,8 @@ v6.0.5
 * Added an affinity index to the Grimoire, to remind you of all the data you've analyzed
 * Added Mana Injectors, to let Magitech devices pull mana directly from fonts
 * Added Mana Relays, to extend the range of your mana distribution network
+* Magitech devices compatible with Mana Injectors now also accept material inputs from hoppers attached to the sides of the block, in addition to the top
+    * NOTE: Infernal Furnaces cannot currently accept Ignyx fuel via hopper; this will be fixed in a future version
 * Greatly decreased the mana regeneration rate of Artificial Mana Fonts
 * Greatly increased the mana regeneration rate of Heavenly Mana Fonts
 * Made item textures for energized gems more distinct from their parents' versions
