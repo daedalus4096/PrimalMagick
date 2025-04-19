@@ -71,7 +71,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
-    protected static final int MANA_PER_HALF_SECOND = 1;
+    protected static final int MANA_PER_HALF_SECOND = 100;
     protected static final int DEFAULT_COOK_TIME = 100;
     protected static final int LIT_GRACE_TICKS_MAX = 5;
     public static final int OUTPUT_INV_INDEX = 0;

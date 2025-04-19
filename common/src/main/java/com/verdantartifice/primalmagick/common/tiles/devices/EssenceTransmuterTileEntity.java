@@ -121,7 +121,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     
     public EssenceTransmuterTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Sources.MOON);
+        this.manaStorage = new ManaStorage(2000, 200, 200, Sources.MOON);
         this.researchCache = new TileResearchCache();
     }
 
@@ -187,7 +187,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     }
     
     protected int getManaCost() {
-        return 10;
+        return 200;
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceTransmuterTileEntity entity) {
