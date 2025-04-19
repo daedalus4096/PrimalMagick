@@ -12,6 +12,7 @@ v6.0.5
 * Fixed various tooltips to refer to mana effectiveness instead of flat discounts
 * Fixed Flying Carpet research to only require knowledge of Insight Runes instead of Power Runes
 * Removed the Bloodletter from the research and prop requirements for Blood Roses and Emberflowers
+* Standardized the breaking times of many devices, to make it less painful to have to move them
 * Allowed mana fonts to stack to sixteen
 
 v6.0.4
