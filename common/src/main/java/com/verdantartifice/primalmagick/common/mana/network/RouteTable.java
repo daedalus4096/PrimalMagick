@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.google.common.base.Suppliers;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.mojang.logging.LogUtils;
@@ -11,10 +12,10 @@ import org.slf4j.Logger;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -30,9 +31,16 @@ public class RouteTable {
 
     protected final Table<Long, Long, Set<Route>> routes = HashBasedTable.create();
     protected final Set<IManaNetworkNode> knownNodes = new HashSet<>();
+
     protected int ticksExisted = 0;
     protected int nextCheck = calculateNextCheck(this.ticksExisted);
     protected boolean active = false;
+
+    protected Supplier<Set<Route>> allRoutesSupplier = Suppliers.memoize(this::getAllRoutesInner);
+
+    protected void invalidate() {
+        this.allRoutesSupplier = Suppliers.memoize(this::getAllRoutesInner);
+    }
 
     public void activate() {
         this.active = true;
@@ -59,13 +67,26 @@ public class RouteTable {
 
     public void clear() {
         this.routes.clear();
+        this.invalidate();
     }
 
     public Set<Route> getAllRoutes() {
+        return this.allRoutesSupplier.get();
+    }
+
+    private Set<Route> getAllRoutesInner() {
         return this.routes.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
     }
 
-    public boolean addRoute(@NotNull Route route) {
+    public boolean add(@NotNull Route route) {
+        boolean retVal = this.addInner(route);
+        if (retVal) {
+            this.invalidate();
+        }
+        return retVal;
+    }
+
+    private boolean addInner(@NotNull Route route) {
         Set<Route> target;
         if (this.routes.contains(route.getHead().getNodeId(), route.getTail().getNodeId())) {
             target = this.routes.get(route.getHead().getNodeId(), route.getTail().getNodeId());
@@ -79,6 +100,19 @@ public class RouteTable {
             this.knownNodes.addAll(route.getNodes());
         }
         return retVal;
+    }
+
+    public boolean addAll(@NotNull Collection<Route> routes) {
+        boolean modified = false;
+        for (Route route : routes) {
+            if (this.addInner(route)) {
+                modified = true;
+            }
+        }
+        if (modified) {
+            this.invalidate();
+        }
+        return modified;
     }
 
     public Optional<Route> getRoute(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull IManaNetworkNode owner) {
@@ -115,10 +149,6 @@ public class RouteTable {
         return this.getRoutesForTail(terminus).stream().map(Route::getHead).filter(IManaSupplier::isOrigin).collect(Collectors.toSet());
     }
 
-    protected void mergeRoutes(@NotNull Collection<Route> otherRoutes) {
-        otherRoutes.forEach(this::addRoute);
-    }
-
     public void propagateRoutes(@NotNull Level level, @NotNull Set<IManaNetworkNode> processedNodes) {
         // Update the route tables of every known node with this table's routes
         level.getProfiler().push("getKnownNodes");
@@ -127,11 +157,11 @@ public class RouteTable {
         Set<IManaNetworkNode> newProcessedNodes = new HashSet<>(processedNodes);
         newProcessedNodes.addAll(knownNodes);
         level.getProfiler().popPush("collectSelfRoutes");
-        List<Route> selfRoutes = this.routes.values().stream().flatMap(Collection::stream).toList();
+        Set<Route> selfRoutes = this.getAllRoutes();
         level.getProfiler().pop();
         knownNodes.forEach(node -> {
             level.getProfiler().push("mergeRoutes");
-            node.getRouteTable().mergeRoutes(selfRoutes);
+            node.getRouteTable().addAll(selfRoutes);
             level.getProfiler().pop();
             node.getRouteTable().propagateRoutes(level, newProcessedNodes);
         });
@@ -144,7 +174,15 @@ public class RouteTable {
 
     protected void cullInactiveRoutes(@NotNull Level level) {
         level.getProfiler().push("cullInactiveRoutes");
-        this.routes.values().forEach(set -> set.removeIf(route -> !route.isActive(level)));
+        boolean anyRemoved = false;
+        for (Set<Route> set : this.routes.values()) {
+            if (set.removeIf(r -> !r.isActive(level))) {
+                anyRemoved = true;
+            }
+        }
+        if (anyRemoved) {
+            this.invalidate();
+        }
         level.getProfiler().pop();
     }
 }

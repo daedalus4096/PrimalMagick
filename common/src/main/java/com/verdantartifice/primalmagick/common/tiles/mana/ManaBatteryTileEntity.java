@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
-import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
@@ -510,14 +509,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         consumers.stream().filter(IManaConsumer::isTerminus)
                 .map(consumer -> new Route(this, consumer))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // Create direct routes to this consumer for origin suppliers
         level.getProfiler().popPush("createDirectSupplierRoutes");
         suppliers.stream().filter(IManaSupplier::isOrigin)
                 .map(supplier -> new Route(supplier, this))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
         level.getProfiler().popPush("createConsumerRelayRoutes");
@@ -528,7 +527,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
         level.getProfiler().popPush("createSupplierRelayRoutes");
@@ -539,7 +538,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // Update connected nodes on the newly created routes
         level.getProfiler().popPush("propagateRoutes");

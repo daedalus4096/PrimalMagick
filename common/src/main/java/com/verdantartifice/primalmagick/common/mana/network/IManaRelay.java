@@ -81,7 +81,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .filter(supplier -> supplier != null && supplier.isOrigin())
                 .map(supplier -> new Route(supplier, this))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // Create direct routes to this relay for terminus consumers
         level.getProfiler().popPush("createDirectConsumerRoutes");
@@ -89,7 +89,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .filter(consumer -> consumer != null && consumer.isTerminus())
                 .map(consumer -> new Route(this, consumer))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // For nodes that are actually relays, create bidirectional routes connecting this and that
         level.getProfiler().popPush("createRelayRoutes");
@@ -98,7 +98,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .toList();
         relays.stream().flatMap(relay -> Stream.of(new Route(this, relay), new Route(relay, this)))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // Extend the routes of neighboring relays
         relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
@@ -106,13 +106,13 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
         relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
                 .map(route -> route.pushTail(this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // Connect existing routes that can use this relay as a bridge
         level.getProfiler().popPush("bridgeRoutes");
@@ -122,7 +122,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute));
+                .forEach(this.getRouteTable()::add));
 
         // Update connected nodes on the newly created routes
         level.getProfiler().popPush("propagateRoutes");

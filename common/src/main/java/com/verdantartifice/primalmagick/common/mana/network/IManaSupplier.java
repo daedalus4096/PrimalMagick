@@ -70,7 +70,7 @@ public interface IManaSupplier extends IManaNetworkNode {
         consumers.stream().filter(IManaConsumer::isTerminus)
                 .map(consumer -> new Route(this, consumer))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
         level.getProfiler().popPush("createRelayRoutes");
@@ -81,7 +81,7 @@ public interface IManaSupplier extends IManaNetworkNode {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::addRoute);
+                .forEach(this.getRouteTable()::add);
 
         // Update connected nodes on the newly created routes
         level.getProfiler().popPush("propagateRoutes");
