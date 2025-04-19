@@ -544,7 +544,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         // Update connected nodes on the newly created routes
         level.getProfiler().popPush("propagateRoutes");
         this.getRouteTable().propagateRoutes(Set.of(this));
-        LOGGER.warn("Finished propagating routes for mana battery");
         level.getProfiler().pop();
 
         this.getRouteTable().activate();
