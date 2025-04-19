@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 
 import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -55,6 +56,10 @@ public class DissolutionRecipeBuilder {
     public DissolutionRecipeBuilder setGroup(String group) {
         this.group = group;
         return this;
+    }
+
+    public DissolutionRecipeBuilder defaultManaCost() {
+        return this.manaCost(SourceList.EMPTY.add(Sources.EARTH, 10));
     }
     
     public DissolutionRecipeBuilder manaCost(SourceList mana) {

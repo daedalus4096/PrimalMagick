@@ -94,7 +94,7 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     
     public HoneyExtractorTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.HONEY_EXTRACTOR.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Sources.SKY);
+        this.manaStorage = new ManaStorage(2000, 200, 200, Sources.SKY);
     }
 
     public IManaStorage<?> getUncachedManaStorage() {
@@ -136,7 +136,7 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     }
     
     protected int getManaCost() {
-        return 10;
+        return 200;
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, HoneyExtractorTileEntity entity) {

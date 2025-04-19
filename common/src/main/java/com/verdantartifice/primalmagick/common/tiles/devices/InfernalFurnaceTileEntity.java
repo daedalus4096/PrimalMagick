@@ -136,7 +136,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     
     public InfernalFurnaceTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.INFERNAL_FURNACE.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Sources.INFERNAL);
+        this.manaStorage = new ManaStorage(10000, 1000, 1000, Sources.INFERNAL);
     }
 
     public IManaStorage<?> getUncachedManaStorage() {

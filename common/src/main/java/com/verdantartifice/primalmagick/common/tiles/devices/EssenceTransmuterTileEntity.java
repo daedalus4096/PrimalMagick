@@ -329,7 +329,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
 
     @Override
     public void setTileOwner(Player owner) {
-        this.ownerUUID = owner.getUUID();
+        this.ownerUUID = owner == null ? null : owner.getUUID();
         this.updateResearchCache(owner);
     }
 

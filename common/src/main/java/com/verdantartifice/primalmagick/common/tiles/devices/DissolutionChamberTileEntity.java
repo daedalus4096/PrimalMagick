@@ -99,7 +99,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     
     public DissolutionChamberTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), pos, state);
-        this.manaStorage = new ManaStorage(25600, 100, 100, Sources.EARTH);
+        this.manaStorage = new ManaStorage(10000, 1000, 1000, Sources.EARTH);
     }
 
     public IManaStorage<?> getUncachedManaStorage() {

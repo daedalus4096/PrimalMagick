@@ -7,6 +7,7 @@ v6.0.5
     * NOTE: Infernal Furnaces cannot currently accept Ignyx fuel via hopper; this will be fixed in a future version
 * Greatly decreased the mana regeneration rate of Artificial Mana Fonts
 * Greatly increased the mana regeneration rate of Heavenly Mana Fonts
+* Rebalanced mana consumption and storage capacity of magitech devices to account for the introduction of mana networking
 * Made item textures for energized gems more distinct from their parents' versions
 * Fixed various tooltips to refer to mana effectiveness instead of flat discounts
 * Fixed Flying Carpet research to only require knowledge of Insight Runes instead of Power Runes
