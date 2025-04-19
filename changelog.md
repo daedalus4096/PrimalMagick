@@ -11,6 +11,7 @@ v6.0.5
 * Made item textures for energized gems more distinct from their parents' versions
 * Fixed various tooltips to refer to mana effectiveness instead of flat discounts
 * Fixed Flying Carpet research to only require knowledge of Insight Runes instead of Power Runes
+* Removed the Bloodletter from the research and prop requirements for Blood Roses and Emberflowers
 * Allowed mana fonts to stack to sixteen
 
 v6.0.4

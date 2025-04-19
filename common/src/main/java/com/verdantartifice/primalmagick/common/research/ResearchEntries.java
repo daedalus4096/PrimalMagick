@@ -1527,12 +1527,12 @@ public class ResearchEntries {
                 .stage().attunement(Sources.SEA, 2).recipe("hydromelon_seeds_from_ritual").recipe(ItemsPM.HYDROMELON.get()).recipe(ItemsPM.HYDROMELON_SEEDS.get()).end()
                 .build());
         register(context, BLOOD_ROSE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.BLOOD_ROSE.get())
-                .parent(DISCOVER_BLOOD).parent(EXPERT_RITUAL).parent(HYDROMELON).parent(BLOODLETTER).parent(RUNE_BLOOD)
+                .parent(DISCOVER_BLOOD).parent(EXPERT_RITUAL).parent(HYDROMELON).parent(RITUAL_BELL).parent(RUNE_BLOOD)
                 .stage().requiredItem(Items.ROSE_BUSH).requiredTheories(1).end()
                 .stage().attunement(Sources.BLOOD, 2).recipe(ItemsPM.BLOOD_ROSE.get()).end()
                 .build());
         register(context, EMBERFLOWER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.EMBERFLOWER.get())
-                .parent(DISCOVER_INFERNAL).parent(EXPERT_RITUAL).parent(HYDROMELON).parent(BLOODLETTER).parent(RUNE_INFERNAL)
+                .parent(DISCOVER_INFERNAL).parent(EXPERT_RITUAL).parent(HYDROMELON).parent(RITUAL_BELL).parent(RUNE_INFERNAL)
                 .stage().requiredItem(Items.SUNFLOWER).requiredTheories(1).end()
                 .stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.EMBERFLOWER.get()).recipe("blaze_powder_from_emberflower").end()
                 .build());

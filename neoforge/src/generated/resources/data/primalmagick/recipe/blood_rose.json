@@ -28,7 +28,7 @@
       "tag": "primalmagick:ritual_candles"
     },
     {
-      "block": "primalmagick:bloodletter"
+      "block": "primalmagick:ritual_bell"
     }
   ],
   "requirement": {
