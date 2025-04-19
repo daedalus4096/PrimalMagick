@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -28,6 +29,7 @@ public class RouteTable {
     protected static final int JITTER_AMOUNT = 20;
 
     protected final Table<Long, Long, Set<Route>> routes = HashBasedTable.create();
+    protected final Set<IManaNetworkNode> knownNodes = new HashSet<>();
     protected int ticksExisted = 0;
     protected int nextCheck = calculateNextCheck(this.ticksExisted);
     protected boolean active = false;
@@ -71,7 +73,12 @@ public class RouteTable {
             target = new HashSet<>();
             this.routes.put(route.getHead().getNodeId(), route.getTail().getNodeId(), target);
         }
-        return target != null && route.isValid() && target.add(route);
+
+        boolean retVal = target != null && route.isValid() && target.add(route);
+        if (retVal) {
+            this.knownNodes.addAll(route.getNodes());
+        }
+        return retVal;
     }
 
     public Optional<Route> getRoute(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull IManaNetworkNode owner) {
@@ -108,28 +115,31 @@ public class RouteTable {
         return this.getRoutesForTail(terminus).stream().map(Route::getHead).filter(IManaSupplier::isOrigin).collect(Collectors.toSet());
     }
 
-    protected void mergeRoutes(@NotNull RouteTable other) {
-        other.routes.values().stream().flatMap(Collection::stream).forEach(this::addRoute);
+    protected void mergeRoutes(@NotNull Collection<Route> otherRoutes) {
+        otherRoutes.forEach(this::addRoute);
     }
 
-    public void propagateRoutes(@NotNull Set<IManaNetworkNode> processedNodes) {
+    public void propagateRoutes(@NotNull Level level, @NotNull Set<IManaNetworkNode> processedNodes) {
         // Update the route tables of every known node with this table's routes
+        level.getProfiler().push("getKnownNodes");
         Set<IManaNetworkNode> knownNodes = this.getKnownNodes(processedNodes);
+        level.getProfiler().popPush("newProcessedNodes");
         Set<IManaNetworkNode> newProcessedNodes = new HashSet<>(processedNodes);
         newProcessedNodes.addAll(knownNodes);
+        level.getProfiler().popPush("collectSelfRoutes");
+        List<Route> selfRoutes = this.routes.values().stream().flatMap(Collection::stream).toList();
+        level.getProfiler().pop();
         knownNodes.forEach(node -> {
-            node.getRouteTable().mergeRoutes(this);
-            node.getRouteTable().propagateRoutes(newProcessedNodes);
+            level.getProfiler().push("mergeRoutes");
+            node.getRouteTable().mergeRoutes(selfRoutes);
+            level.getProfiler().pop();
+            node.getRouteTable().propagateRoutes(level, newProcessedNodes);
         });
     }
 
     protected Set<IManaNetworkNode> getKnownNodes(@NotNull Set<IManaNetworkNode> ignore) {
         Set<Long> ignoreIds = ignore.stream().map(IManaNetworkNode::getNodeId).collect(Collectors.toSet());
-        return this.routes.values().stream()
-                .flatMap(Collection::stream)
-                .flatMap(r -> r.getNodes().stream())
-                .filter(node -> !ignoreIds.contains(node.getNodeId()))
-                .collect(Collectors.toSet());
+        return this.knownNodes.stream().filter(node -> !ignoreIds.contains(node.getNodeId())).collect(Collectors.toSet());
     }
 
     protected void cullInactiveRoutes(@NotNull Level level) {

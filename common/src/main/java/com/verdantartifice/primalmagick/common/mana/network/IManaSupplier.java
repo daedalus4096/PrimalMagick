@@ -85,7 +85,7 @@ public interface IManaSupplier extends IManaNetworkNode {
 
         // Update connected nodes on the newly created routes
         level.getProfiler().popPush("propagateRoutes");
-        this.getRouteTable().propagateRoutes(Set.of(this));
+        this.getRouteTable().propagateRoutes(level, Set.of(this));
         level.getProfiler().pop();
 
         this.getRouteTable().activate();
