@@ -23,6 +23,9 @@ public class ArtificialManaFontTileEntity extends AbstractManaFontTileEntity {
     public static void tick(Level level, BlockPos pos, BlockState state, ArtificialManaFontTileEntity entity) {
         entity.ticksExisted++;
         if (!level.isClientSide) {
+            // Tick the entity's route table
+            entity.routeTable.tick(level);
+
             entity.doRecharge();
         }
     }

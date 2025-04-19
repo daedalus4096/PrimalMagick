@@ -70,17 +70,22 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
         }
 
         // Determine if the attached device needs mana and pull if so
-        if (!level.isClientSide && entity.ticks % 5 == 0) {
-            entity.getConnectedStorage().ifPresent(storage -> {
-                final int throughput = entity.getManaThroughput();
-                final int totalSiphoned = Sources.streamSorted()
-                        .filter(entity::canConsume)
-                        .mapToInt(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, storage.getMaxManaStored(s) - storage.getManaStored(s))))
-                        .sum();
-                if (entity.getTileOwner() instanceof ServerPlayer serverPlayer) {
-                    CriteriaTriggersPM.MANA_NETWORK_SIPHON.get().trigger(serverPlayer, totalSiphoned);
-                }
-            });
+        if (!level.isClientSide) {
+            // Tick the entity's route table
+            entity.routeTable.tick(level);
+
+            if (entity.ticks % 5 == 0) {
+                entity.getConnectedStorage().ifPresent(storage -> {
+                    final int throughput = entity.getManaThroughput();
+                    final int totalSiphoned = Sources.streamSorted()
+                            .filter(entity::canConsume)
+                            .mapToInt(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, storage.getMaxManaStored(s) - storage.getManaStored(s))))
+                            .sum();
+                    if (entity.getTileOwner() instanceof ServerPlayer serverPlayer) {
+                        CriteriaTriggersPM.MANA_NETWORK_SIPHON.get().trigger(serverPlayer, totalSiphoned);
+                    }
+                });
+            }
         }
 
         entity.ticks++;

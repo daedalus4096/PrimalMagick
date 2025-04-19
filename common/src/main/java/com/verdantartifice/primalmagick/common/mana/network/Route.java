@@ -213,8 +213,8 @@ public class Route {
      * @return whether this route is active
      */
     public boolean isActive(Level level) {
-        // First test that the route is valid and complete at all
-        if (!this.isValid() || !this.isComplete()) {
+        // First test that the route is valid at all
+        if (!this.isValid()) {
             return false;
         }
 

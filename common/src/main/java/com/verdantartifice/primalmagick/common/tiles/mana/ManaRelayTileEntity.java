@@ -41,6 +41,11 @@ public abstract class ManaRelayTileEntity extends AbstractTilePM implements ITie
         if (entity.ticks++ % TICKS_PER_PHASE == 0) {
             entity.nextPhase();
         }
+
+        if (!level.isClientSide()) {
+            // Tick the entity's route table
+            entity.routeTable.tick(level);
+        }
     }
 
     protected void nextPhase() {

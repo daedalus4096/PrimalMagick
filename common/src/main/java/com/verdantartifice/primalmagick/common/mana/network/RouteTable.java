@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,8 +24,37 @@ import java.util.stream.Collectors;
  */
 public class RouteTable {
     protected static final Logger LOGGER = LogUtils.getLogger();
+    protected static final Random RANDOM = new Random();
+    protected static final int CHECK_INTERVAL = 100;
+    protected static final int JITTER_AMOUNT = 20;
 
     protected final Table<Long, Long, Set<Route>> routes = HashBasedTable.create();
+    protected int ticksExisted = 0;
+    protected int nextCheck = calculateNextCheck(this.ticksExisted);
+    protected boolean active = false;
+
+    public void activate() {
+        this.active = true;
+    }
+
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public void tick(@NotNull final Level level) {
+        if (this.ticksExisted >= this.nextCheck) {
+            if (this.isActive()) {
+                // Only cull inactive routes if the route table has been fully bootstrapped and activated
+                this.cullInactiveRoutes(level);
+            }
+            this.nextCheck = calculateNextCheck(this.ticksExisted);
+        }
+        this.ticksExisted++;
+    }
+
+    protected static int calculateNextCheck(int currentValue) {
+        return currentValue + CHECK_INTERVAL + RANDOM.nextInt(JITTER_AMOUNT);
+    }
 
     public void clear() {
         this.routes.clear();
@@ -58,23 +89,13 @@ public class RouteTable {
         if (this.routes.contains(origin.getNodeId(), terminus.getNodeId())) {
             level.getProfiler().push("getRouteSet");
             Set<Route> routeSet = this.routes.get(origin.getNodeId(), terminus.getNodeId());
-            Set<Route> toForget = new HashSet<>();
             level.getProfiler().popPush("scoreRoutes");
             Optional<Route> retVal = routeSet == null ?
                     Optional.empty() :
                     routeSet.stream()
                             .filter(r -> sourceOpt.isEmpty() || r.canRoute(sourceOpt.get()))
-                            .filter(r -> {
-                                if (r.isActive(level)) {
-                                    return true;
-                                } else {
-                                    toForget.add(r);
-                                    return false;
-                                }
-                            })
+                            .filter(r -> r.isActive(level))
                             .max(Comparator.comparing(Route::getScore).thenComparing(Route::hashCode));
-            level.getProfiler().popPush("forgetRoutes");
-            this.forgetRoutes(toForget, Set.of(owner));
             level.getProfiler().pop();
             return retVal;
         } else {
@@ -133,5 +154,20 @@ public class RouteTable {
                 .flatMap(r -> r.getNodes().stream())
                 .filter(node -> !ignoreIds.contains(node.getNodeId()))
                 .collect(Collectors.toSet());
+    }
+
+    protected void cullInactiveRoutes(@NotNull Level level) {
+        level.getProfiler().push("cullInactiveRoutes");
+        this.routes.values().forEach(set -> {
+            Iterator<Route> iterator = set.iterator();
+            while (iterator.hasNext()) {
+                Route route = iterator.next();
+                if (!route.isActive(level)) {
+                    LOGGER.warn("Culling inactive route: {}", route);
+                    iterator.remove();
+                }
+            }
+        });
+        level.getProfiler().pop();
     }
 }

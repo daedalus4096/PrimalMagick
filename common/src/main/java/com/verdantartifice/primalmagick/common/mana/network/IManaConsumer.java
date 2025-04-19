@@ -158,6 +158,8 @@ public interface IManaConsumer extends IManaNetworkNode {
         this.getRouteTable().propagateRoutes(Set.of(this));
         level.getProfiler().pop();
 
+        this.getRouteTable().activate();
+
         level.getProfiler().pop();
         level.getProfiler().pop();
     }

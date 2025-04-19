@@ -184,6 +184,9 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         boolean shouldMarkDirty = false;
         
         if (!level.isClientSide) {
+            // Tick the entity's route table
+            entity.routeTable.tick(level);
+
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             
@@ -541,7 +544,10 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         // Update connected nodes on the newly created routes
         level.getProfiler().popPush("propagateRoutes");
         this.getRouteTable().propagateRoutes(Set.of(this));
+        LOGGER.warn("Finished propagating routes for mana battery");
         level.getProfiler().pop();
+
+        this.getRouteTable().activate();
 
         level.getProfiler().pop();
         level.getProfiler().pop();
