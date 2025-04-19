@@ -158,16 +158,7 @@ public class RouteTable {
 
     protected void cullInactiveRoutes(@NotNull Level level) {
         level.getProfiler().push("cullInactiveRoutes");
-        this.routes.values().forEach(set -> {
-            Iterator<Route> iterator = set.iterator();
-            while (iterator.hasNext()) {
-                Route route = iterator.next();
-                if (!route.isActive(level)) {
-                    LOGGER.warn("Culling inactive route: {}", route);
-                    iterator.remove();
-                }
-            }
-        });
+        this.routes.values().forEach(set -> set.removeIf(route -> !route.isActive(level)));
         level.getProfiler().pop();
     }
 }
