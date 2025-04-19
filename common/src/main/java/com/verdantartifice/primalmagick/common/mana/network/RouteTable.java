@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -60,11 +59,6 @@ public class RouteTable {
         this.routes.clear();
     }
 
-    public void copyFrom(final RouteTable other) {
-        this.clear();
-        other.routes.values().stream().flatMap(Collection::stream).forEach(this::addRoute);
-    }
-
     public Set<Route> getAllRoutes() {
         return this.routes.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
     }
@@ -78,11 +72,6 @@ public class RouteTable {
             this.routes.put(route.getHead().getNodeId(), route.getTail().getNodeId(), target);
         }
         return target != null && route.isValid() && target.add(route);
-    }
-
-    public boolean removeRoute(@NotNull Route route) {
-        Set<Route> target = this.routes.get(route.getHead().getNodeId(), route.getTail().getNodeId());
-        return target != null && target.remove(route);
     }
 
     public Optional<Route> getRoute(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull IManaNetworkNode owner) {
@@ -132,19 +121,6 @@ public class RouteTable {
             node.getRouteTable().mergeRoutes(this);
             node.getRouteTable().propagateRoutes(newProcessedNodes);
         });
-    }
-
-    public void forgetRoutes(@NotNull Set<Route> toForget, @NotNull Set<IManaNetworkNode> processedNodes) {
-        // Update the route tables of every known node to remove the given routes
-        if (!toForget.isEmpty()) {
-            Set<IManaNetworkNode> knownNodes = this.getKnownNodes(processedNodes);
-            Set<IManaNetworkNode> newProcessedNodes = new HashSet<>(processedNodes);
-            newProcessedNodes.addAll(knownNodes);
-            knownNodes.forEach(node -> {
-                toForget.forEach(node.getRouteTable()::removeRoute);
-                node.getRouteTable().forgetRoutes(toForget, newProcessedNodes);
-            });
-        }
     }
 
     protected Set<IManaNetworkNode> getKnownNodes(@NotNull Set<IManaNetworkNode> ignore) {
