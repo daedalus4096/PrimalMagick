@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.mana.network.IManaNetworkNode;
 import com.verdantartifice.primalmagick.common.mana.network.IManaRelay;
 import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
 import com.verdantartifice.primalmagick.common.mana.network.Route;
+import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
@@ -51,6 +52,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -75,8 +77,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
     protected UUID ownerUUID;
-
-    protected final RouteTable routeTable = new RouteTable();
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chargerData = new ContainerData() {
@@ -183,9 +183,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         boolean shouldMarkDirty = false;
         
         if (!level.isClientSide) {
-            // Tick the entity's route table
-            entity.routeTable.tick(level);
-
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             
@@ -196,6 +193,9 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                         .filter(entity.manaStorage::canReceive)
                         .mapToInt(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, entity.manaStorage.getMaxManaStored(s) - entity.manaStorage.getManaStored(s))))
                         .sum();
+                if (totalSiphoned > 0) {
+                    shouldMarkDirty = true;
+                }
                 if (entity.getTileOwner() instanceof ServerPlayer serverPlayer) {
                     CriteriaTriggersPM.MANA_NETWORK_SIPHON.get().trigger(serverPlayer, totalSiphoned);
                 }
@@ -478,7 +478,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public @NotNull RouteTable getRouteTable() {
-        return this.routeTable;
+        return RouteManager.getRouteTable(this.getLevel());
     }
 
     @Override
@@ -489,6 +489,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
+        Set<Route> toAdd = new HashSet<>();
 
         // Search for mana suppliers and consumers which are in range of this node
         level.getProfiler().push("findNodes");
@@ -509,14 +510,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         consumers.stream().filter(IManaConsumer::isTerminus)
                 .map(consumer -> new Route(this, consumer))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::add);
+                .forEach(toAdd::add);
 
         // Create direct routes to this consumer for origin suppliers
         level.getProfiler().popPush("createDirectSupplierRoutes");
         suppliers.stream().filter(IManaSupplier::isOrigin)
                 .map(supplier -> new Route(supplier, this))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::add);
+                .forEach(toAdd::add);
 
         // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
         level.getProfiler().popPush("createConsumerRelayRoutes");
@@ -527,7 +528,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::add);
+                .forEach(toAdd::add);
 
         // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
         level.getProfiler().popPush("createSupplierRelayRoutes");
@@ -538,14 +539,10 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::add);
-
-        // Update connected nodes on the newly created routes
-        level.getProfiler().popPush("propagateRoutes");
-        this.getRouteTable().propagateRoutes(level, Set.of(this));
+                .forEach(toAdd::add);
         level.getProfiler().pop();
 
-        this.getRouteTable().activate();
+        this.getRouteTable().addAll(toAdd);
 
         level.getProfiler().pop();
         level.getProfiler().pop();

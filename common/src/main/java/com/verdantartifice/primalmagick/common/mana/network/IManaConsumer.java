@@ -92,9 +92,11 @@ public interface IManaConsumer extends IManaNetworkNode {
             int actualReceived = route.getTail().receiveMana(source, actualExtracted, false);
             totalSiphoned += actualReceived;
             remainingTransfer -= actualReceived;
-            particleHops.addAll(route.getHops());
-            if (owner instanceof ServerPlayer serverPlayer) {
-                CriteriaTriggersPM.MANA_NETWORK_ROUTE_LENGTH.get().trigger(serverPlayer, route.getDistance());
+            if (actualReceived > 0) {
+                particleHops.addAll(route.getHops());
+                if (owner instanceof ServerPlayer serverPlayer) {
+                    CriteriaTriggersPM.MANA_NETWORK_ROUTE_LENGTH.get().trigger(serverPlayer, route.getDistance());
+                }
             }
         }
 
@@ -126,6 +128,7 @@ public interface IManaConsumer extends IManaNetworkNode {
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
+        Set<Route> toAdd = new HashSet<>();
 
         // Search for mana suppliers which are in range of this node
         level.getProfiler().push("findNodes");
@@ -140,7 +143,7 @@ public interface IManaConsumer extends IManaNetworkNode {
         suppliers.stream().filter(IManaSupplier::isOrigin)
                 .map(supplier -> new Route(supplier, this))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::add);
+                .forEach(toAdd::add);
 
         // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
         level.getProfiler().popPush("createRelayRoutes");
@@ -151,14 +154,10 @@ public interface IManaConsumer extends IManaNetworkNode {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::add);
-
-        // Update connected nodes on the newly created routes
-        level.getProfiler().popPush("propagateRoutes");
-        this.getRouteTable().propagateRoutes(level, Set.of(this));
+                .forEach(toAdd::add);
         level.getProfiler().pop();
 
-        this.getRouteTable().activate();
+        this.getRouteTable().addAll(toAdd);
 
         level.getProfiler().pop();
         level.getProfiler().pop();

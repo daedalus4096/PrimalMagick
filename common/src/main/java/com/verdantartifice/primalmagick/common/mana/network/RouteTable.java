@@ -34,7 +34,6 @@ public class RouteTable {
 
     protected int ticksExisted = 0;
     protected int nextCheck = calculateNextCheck(this.ticksExisted);
-    protected boolean active = false;
 
     protected Supplier<Set<Route>> allRoutesSupplier = Suppliers.memoize(this::getAllRoutesInner);
 
@@ -42,20 +41,9 @@ public class RouteTable {
         this.allRoutesSupplier = Suppliers.memoize(this::getAllRoutesInner);
     }
 
-    public void activate() {
-        this.active = true;
-    }
-
-    public boolean isActive() {
-        return this.active;
-    }
-
     public void tick(@NotNull final Level level) {
         if (this.ticksExisted >= this.nextCheck) {
-            if (this.isActive()) {
-                // Only cull inactive routes if the route table has been fully bootstrapped and activated
-                this.cullInactiveRoutes(level);
-            }
+            this.cullInactiveRoutes(level);
             this.nextCheck = calculateNextCheck(this.ticksExisted);
         }
         this.ticksExisted++;
@@ -147,24 +135,6 @@ public class RouteTable {
 
     public Set<IManaSupplier> getLinkedOrigins(@NotNull IManaConsumer terminus) {
         return this.getRoutesForTail(terminus).stream().map(Route::getHead).filter(IManaSupplier::isOrigin).collect(Collectors.toSet());
-    }
-
-    public void propagateRoutes(@NotNull Level level, @NotNull Set<IManaNetworkNode> processedNodes) {
-        // Update the route tables of every known node with this table's routes
-        level.getProfiler().push("getKnownNodes");
-        Set<IManaNetworkNode> knownNodes = this.getKnownNodes(processedNodes);
-        level.getProfiler().popPush("newProcessedNodes");
-        Set<IManaNetworkNode> newProcessedNodes = new HashSet<>(processedNodes);
-        newProcessedNodes.addAll(knownNodes);
-        level.getProfiler().popPush("collectSelfRoutes");
-        Set<Route> selfRoutes = this.getAllRoutes();
-        level.getProfiler().pop();
-        knownNodes.forEach(node -> {
-            level.getProfiler().push("mergeRoutes");
-            node.getRouteTable().addAll(selfRoutes);
-            level.getProfiler().pop();
-            node.getRouteTable().propagateRoutes(level, newProcessedNodes);
-        });
     }
 
     protected Set<IManaNetworkNode> getKnownNodes(@NotNull Set<IManaNetworkNode> ignore) {

@@ -3,13 +3,14 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
+import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
-import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,7 +35,6 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     protected static final int TICKS_PER_PHASE = 40;
     protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON);
 
-    protected final RouteTable routeTable = new RouteTable();
     protected int ticks = 0;
     protected Source lastSource = Sources.SKY;
     protected Source nextSource = Sources.SKY;
@@ -71,9 +71,6 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
 
         // Determine if the attached device needs mana and pull if so
         if (!level.isClientSide) {
-            // Tick the entity's route table
-            entity.routeTable.tick(level);
-
             if (entity.ticks % 5 == 0) {
                 entity.getConnectedStorage().ifPresent(storage -> {
                     final int throughput = entity.getManaThroughput();
@@ -160,6 +157,6 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
 
     @Override
     public @NotNull RouteTable getRouteTable() {
-        return this.routeTable;
+        return RouteManager.getRouteTable(this.getLevel());
     }
 }

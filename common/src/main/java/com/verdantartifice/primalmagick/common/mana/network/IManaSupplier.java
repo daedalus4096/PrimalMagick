@@ -6,6 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -56,6 +57,7 @@ public interface IManaSupplier extends IManaNetworkNode {
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
+        Set<Route> toAdd = new HashSet<>();
 
         // Search for mana consumers which are in range of this node
         level.getProfiler().push("findNodes");
@@ -70,7 +72,7 @@ public interface IManaSupplier extends IManaNetworkNode {
         consumers.stream().filter(IManaConsumer::isTerminus)
                 .map(consumer -> new Route(this, consumer))
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::add);
+                .forEach(toAdd::add);
 
         // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
         level.getProfiler().popPush("createRelayRoutes");
@@ -81,14 +83,10 @@ public interface IManaSupplier extends IManaNetworkNode {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(Route::isValid)
-                .forEach(this.getRouteTable()::add);
-
-        // Update connected nodes on the newly created routes
-        level.getProfiler().popPush("propagateRoutes");
-        this.getRouteTable().propagateRoutes(level, Set.of(this));
+                .forEach(toAdd::add);
         level.getProfiler().pop();
 
-        this.getRouteTable().activate();
+        this.getRouteTable().addAll(toAdd);
 
         level.getProfiler().pop();
         level.getProfiler().pop();

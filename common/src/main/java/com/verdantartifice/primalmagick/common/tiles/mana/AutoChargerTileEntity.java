@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
+import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -46,7 +47,6 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     protected static final Logger LOGGER = LogUtils.getLogger();
     protected static final int INPUT_INV_INDEX = 0;
 
-    protected final RouteTable routeTable = new RouteTable();
     protected int chargeTime;
     protected UUID ownerUUID;
 
@@ -112,9 +112,6 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {
         if (!level.isClientSide) {
-            // Tick the entity's route table
-            entity.routeTable.tick(level);
-
             ItemStack chargeStack = entity.getItem(INPUT_INV_INDEX, 0);
             if (entity.chargeTime % 5 == 0 && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 final ManaStorage manaStorage = chargeStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
@@ -201,6 +198,6 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public @NotNull RouteTable getRouteTable() {
-        return this.routeTable;
+        return RouteManager.getRouteTable(this.getLevel());
     }
 }

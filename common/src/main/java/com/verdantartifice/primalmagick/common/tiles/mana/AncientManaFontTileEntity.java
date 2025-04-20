@@ -55,9 +55,6 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
             }
         }
         if (!level.isClientSide) {
-            // Tick the entity's route table
-            entity.routeTable.tick(level);
-
             entity.doRecharge();
         }
     }

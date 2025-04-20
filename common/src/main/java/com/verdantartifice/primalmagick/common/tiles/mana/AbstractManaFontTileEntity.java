@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
+import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
@@ -38,7 +39,6 @@ import org.slf4j.Logger;
 public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand, IManaSupplier, ITieredDeviceBlockEntity {
     protected static final Logger LOGGER = LogUtils.getLogger();
 
-    protected final RouteTable routeTable = new RouteTable();
     protected int ticksExisted = 0;
     protected int mana;
     
@@ -177,6 +177,6 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
 
     @Override
     public @NotNull RouteTable getRouteTable() {
-        return this.routeTable;
+        return RouteManager.getRouteTable(this.getLevel());
     }
 }

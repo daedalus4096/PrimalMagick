@@ -2,12 +2,13 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.mana.network.IManaRelay;
+import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +29,6 @@ public abstract class ManaRelayTileEntity extends AbstractTilePM implements ITie
     protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON);
     protected static final Logger LOGGER = LogUtils.getLogger();
 
-    protected final RouteTable routeTable = new RouteTable();
     protected int ticks = 0;
     protected Source lastSource = Sources.SKY;
     protected Source nextSource = Sources.SKY;
@@ -40,11 +40,6 @@ public abstract class ManaRelayTileEntity extends AbstractTilePM implements ITie
     public static void tick(Level level, BlockPos pos, BlockState state, ManaRelayTileEntity entity) {
         if (entity.ticks++ % TICKS_PER_PHASE == 0) {
             entity.nextPhase();
-        }
-
-        if (!level.isClientSide()) {
-            // Tick the entity's route table
-            entity.routeTable.tick(level);
         }
     }
 
@@ -116,6 +111,6 @@ public abstract class ManaRelayTileEntity extends AbstractTilePM implements ITie
 
     @Override
     public @NotNull RouteTable getRouteTable() {
-        return this.routeTable;
+        return RouteManager.getRouteTable(this.getLevel());
     }
 }
