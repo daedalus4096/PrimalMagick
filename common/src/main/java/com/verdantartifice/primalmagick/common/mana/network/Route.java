@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
-import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.concurrent.Immutable;
 import java.util.ArrayList;
@@ -13,7 +15,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * A unidirectional path through a mana distribution network, consisting of a head, a tail, and zero or more relays.
@@ -22,17 +25,16 @@ import java.util.function.Supplier;
  */
 @Immutable
 public class Route {
-    protected final IManaSupplier head;
-    protected final List<IManaRelay> relays;    // Ordered from origin to terminus
-    protected final IManaConsumer tail;
+    protected final BlockPos headPosition;
+    protected final List<BlockPos> relayPositions;  // Ordered from head to tail
+    protected final BlockPos tailPosition;
 
     // Cached data suppliers
-    protected final Supplier<List<IManaNetworkNode>> nodeSupplier = Suppliers.memoize(this::getNodesInner);
-    protected final Supplier<List<Hop>> hopSupplier = Suppliers.memoize(this::getHopsInner);
-    protected final Supplier<Double> scoreSupplier = Suppliers.memoize(this::getScoreInner);
-    protected final Supplier<Boolean> validSupplier = Suppliers.memoize(this::isValidInner);
-    protected final Supplier<Boolean> completeSupplier = Suppliers.memoize(this::isCompleteInner);
-    protected final Supplier<Double> distanceSupplier = Suppliers.memoize(this::getDistanceInner);
+    protected final Function<Level, List<IManaNetworkNode>> nodeSupplier = Util.memoize(this::getNodesInner);
+    protected final Function<Level, List<Hop>> hopSupplier = Util.memoize(this::getHopsInner);
+    protected final Function<Level, Double> scoreSupplier = Util.memoize(this::getScoreInner);
+    protected final Function<Level, Boolean> validSupplier = Util.memoize(this::isValidInner);
+    protected final Function<Level, Double> distanceSupplier = Util.memoize(this::getDistanceInner);
 
     public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail) {
         this(head, tail, List.of());
@@ -43,76 +45,113 @@ public class Route {
     }
 
     public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail, @NotNull List<IManaRelay> relays) {
-        this.head = Objects.requireNonNull(head);
-        this.tail = Objects.requireNonNull(tail);
-        this.relays = ImmutableList.copyOf(relays.stream().filter(Objects::nonNull).toList());
+        this.headPosition = Objects.requireNonNull(head).getBlockPos();
+        this.tailPosition = Objects.requireNonNull(tail).getBlockPos();
+        this.relayPositions = ImmutableList.copyOf(relays.stream().filter(Objects::nonNull).map(IManaRelay::getBlockPos).toList());
     }
 
-    public IManaSupplier getHead() {
-        return this.head;
+    protected Route(@NotNull BlockPos headPosition, @NotNull BlockPos tailPosition, @NotNull List<BlockPos> relayPositions) {
+        this.headPosition = Objects.requireNonNull(headPosition);
+        this.tailPosition = Objects.requireNonNull(tailPosition);
+        this.relayPositions = ImmutableList.copyOf(relayPositions.stream().filter(Objects::nonNull).toList());
     }
 
-    public IManaConsumer getTail() {
-        return this.tail;
+    public @Nullable IManaSupplier getHead(@NotNull Level level) {
+        return level.getBlockEntity(this.headPosition) instanceof IManaSupplier supplier ? supplier : null;
     }
 
-    public List<IManaRelay> getRelays() {
-        return this.relays;
+    public @Nullable IManaConsumer getTail(@NotNull Level level) {
+        return level.getBlockEntity(this.tailPosition) instanceof IManaConsumer consumer ? consumer : null;
     }
 
-    public double getScore() {
-        return this.scoreSupplier.get();
+    public @Nullable List<IManaRelay> getRelays(@NotNull Level level) {
+        List<IManaRelay> retVal = this.relayPositions.stream().map(pos -> level.getBlockEntity(pos) instanceof IManaRelay relay ? relay : null).toList();
+        return retVal.stream().anyMatch(Objects::isNull) ? null : retVal;
     }
 
-    protected double getScoreInner() {
+    public double getScore(@NotNull Level level) {
+        return this.scoreSupplier.apply(level);
+    }
+
+    protected double getScoreInner(@NotNull Level level) {
         // Calculate a score for the route based on throughput, number of hops, and total distance
-        return this.getMaxThroughput() * this.getMaxThroughput() * (1D / this.getHops().size()) * (1D / this.getHops().stream().mapToDouble(Hop::getDistanceSqr).sum());
+        List<Hop> hops = this.getHops(level);
+        if (hops == null) {
+            return 0D;
+        } else {
+            int throughput = this.getMaxThroughput(level);
+            return throughput * throughput * (1D / hops.size()) * (1D / hops.stream().mapToDouble(Hop::getDistanceSqr).sum());
+        }
     }
 
-    public int getMaxThroughput() {
-        return this.getHops().stream().mapToInt(Hop::getManaThroughput).min().orElse(0);
+    public int getMaxThroughput(@NotNull Level level) {
+        List<Hop> hops = this.getHops(level);
+        return hops == null ? 0 : hops.stream().mapToInt(Hop::getManaThroughput).min().orElse(0);
     }
 
-    protected List<IManaNetworkNode> getNodes() {
-        return this.nodeSupplier.get();
+    protected @Nullable List<IManaNetworkNode> getNodes(@NotNull Level level) {
+        return this.nodeSupplier.apply(level);
     }
 
-    protected List<IManaNetworkNode> getNodesInner() {
-        return ImmutableList.<IManaNetworkNode>builder()
-                .add(this.head)
-                .addAll(this.relays)
-                .add(this.tail)
+    protected @Nullable List<IManaNetworkNode> getNodesInner(@NotNull Level level) {
+        IManaSupplier head = this.getHead(level);
+        IManaConsumer tail = this.getTail(level);
+        List<IManaRelay> relays = this.getRelays(level);
+        if (head != null && tail != null && relays != null) {
+            return ImmutableList.<IManaNetworkNode>builder()
+                    .add(head)
+                    .addAll(relays)
+                    .add(tail)
+                    .build();
+        } else {
+            return null;
+        }
+    }
+
+    protected @NotNull List<BlockPos> getNodePositions() {
+        return ImmutableList.<BlockPos>builder()
+                .add(this.headPosition)
+                .addAll(this.relayPositions)
+                .add(this.tailPosition)
                 .build();
     }
 
-    public List<Hop> getHops() {
-        return this.hopSupplier.get();
+    public @Nullable List<Hop> getHops(@NotNull Level level) {
+        return this.hopSupplier.apply(level);
     }
 
-    protected List<Hop> getHopsInner() {
-        List<Hop> retVal = new ArrayList<>();
-        IManaSupplier supplier = this.head;
+    protected @Nullable List<Hop> getHopsInner(@NotNull Level level) {
+        IManaSupplier head = this.getHead(level);
+        IManaConsumer tail = this.getTail(level);
+        List<IManaRelay> relays = this.getRelays(level);
+        if (head != null && tail != null && relays != null) {
+            List<Hop> retVal = new ArrayList<>();
+            IManaSupplier supplier = head;
 
-        for (IManaRelay relay : this.relays) {
-            retVal.add(new Hop(supplier, relay));
-            supplier = relay;
+            for (IManaRelay relay : relays) {
+                retVal.add(new Hop(supplier, relay));
+                supplier = relay;
+            }
+            retVal.add(new Hop(supplier, tail));
+
+            return retVal;
+        } else {
+            return null;
         }
-        retVal.add(new Hop(supplier, this.tail));
-
-        return retVal;
     }
 
     /**
      * Returns a new route with the given supplier at the head of the node list.
      *
      * @param supplier the desired new first node
+     * @param level the level in which the route resides
      * @return an optional containing the new route, or empty if such a route is not valid
      */
-    public Optional<Route> pushHead(IManaSupplier supplier) {
-        if (this.head instanceof IManaRelay relay) {
+    public Optional<Route> pushHead(@Nullable IManaSupplier supplier, @NotNull Level level) {
+        if (this.getHead(level) instanceof IManaRelay relay && supplier != null) {
             // If this route starts in a relay, then push the old head to the front of the relay list
-            Route retVal = new Route(supplier, this.tail, ImmutableList.<IManaRelay>builder().add(relay).addAll(this.relays).build());
-            return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
+            Route retVal = new Route(supplier.getBlockPos(), this.tailPosition, ImmutableList.<BlockPos>builder().add(relay.getBlockPos()).addAll(this.relayPositions).build());
+            return retVal.isValid(level) ? Optional.of(retVal) : Optional.empty();
         } else {
             // If this route's existing head is not a relay, then the given supplier cannot be made a new head
             return Optional.empty();
@@ -123,13 +162,14 @@ public class Route {
      * Returns a new route with the given consumer at the tail of the node list.
      *
      * @param consumer the desired new final node
+     * @param level the level in which the route resides
      * @return an optional containing the new route, or empty if such a route is not valid
      */
-    public Optional<Route> pushTail(IManaConsumer consumer) {
-        if (this.tail instanceof IManaRelay relay) {
+    public Optional<Route> pushTail(@Nullable IManaConsumer consumer, @NotNull Level level) {
+        if (this.getTail(level) instanceof IManaRelay relay && consumer != null) {
             // If this route ends in a relay, then push the old tail to the end of the relay list
-            Route retVal = new Route(this.head, consumer, ImmutableList.<IManaRelay>builder().addAll(this.relays).add(relay).build());
-            return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
+            Route retVal = new Route(this.headPosition, consumer.getBlockPos(), ImmutableList.<BlockPos>builder().addAll(this.relayPositions).add(relay.getBlockPos()).build());
+            return retVal.isValid(level) ? Optional.of(retVal) : Optional.empty();
         } else {
             // If this route's existing tail is not a relay, then the given consumer cannot be made a new tail
             return Optional.empty();
@@ -142,17 +182,18 @@ public class Route {
      * de-duplicated.
      *
      * @param other the route to be appended to this one
+     * @param level the level in which the route resides
      * @return an optional containing the new route, or empty if such a route is not valid
      */
-    public Optional<Route> connect(Route other) {
-        if (this.tail.getNodeId() == other.getHead().getNodeId() && this.tail instanceof IManaRelay relay) {
-            List<IManaRelay> newRelays = ImmutableList.<IManaRelay>builder()
-                    .addAll(this.relays)
-                    .add(relay)
-                    .addAll(other.relays)
+    public Optional<Route> connect(@NotNull Route other, @NotNull Level level) {
+        if (this.tailPosition.equals(other.headPosition) && this.getTail(level) instanceof IManaRelay relay) {
+            List<BlockPos> newRelays = ImmutableList.<BlockPos>builder()
+                    .addAll(this.relayPositions)
+                    .add(relay.getBlockPos())
+                    .addAll(other.relayPositions)
                     .build();
-            Route retVal = new Route(this.head, other.tail, newRelays);
-            return retVal.isValid() ? Optional.of(retVal) : Optional.empty();
+            Route retVal = new Route(this.headPosition, other.tailPosition, newRelays);
+            return retVal.isValid(level) ? Optional.of(retVal) : Optional.empty();
         } else {
             return Optional.empty();
         }
@@ -165,45 +206,36 @@ public class Route {
      *
      * @return whether this route is topologically valid
      */
-    public boolean isValid() {
-        return this.validSupplier.get();
+    public boolean isValid(@NotNull Level level) {
+        return this.validSupplier.apply(level);
     }
 
-    protected boolean isValidInner() {
-        if (this.head.getNodeId() == this.tail.getNodeId()) {
+    protected boolean isValidInner(@NotNull Level level) {
+        if (this.headPosition.equals(this.tailPosition)) {
             // A zero-hop route is invalid, as is a circular route going through one or more relays
             return false;
         }
 
         // Disallow any routes between nodes that are both origin and terminus to prevent feedback loops
-        if (this.head.isOrigin() && this.head instanceof IManaConsumer consumer && consumer.isTerminus() &&
-                this.tail.isTerminus() && this.tail instanceof IManaSupplier supplier && supplier.isOrigin()) {
+        if (this.getHead(level) instanceof IManaSupplier head && head.isOrigin() && head instanceof IManaConsumer consumer && consumer.isTerminus() &&
+                this.getTail(level) instanceof IManaConsumer tail && tail.isTerminus() && tail instanceof IManaSupplier supplier && supplier.isOrigin()) {
             return false;
         }
 
         // Confirm that there are no cycles in the route by checking for duplicate nodes
-        List<Long> idList = this.getNodes().stream().map(IManaNetworkNode::getNodeId).toList();
+        List<IManaNetworkNode> nodes = this.getNodes(level);
+        if (nodes == null) {
+            return false;
+        }
+        List<Long> idList = nodes.stream().map(IManaNetworkNode::getNodeId).toList();
         Set<Long> deduplicatedIdSet = new HashSet<>(idList);
         if (idList.size() > deduplicatedIdSet.size()) {
             return false;
         }
 
         // Test whether all nodes are in transmission range of each other
-        return this.getHops().stream().allMatch(Hop::inRange);
-    }
-
-    /**
-     * Tests whether this route is complete, in that it's valid, its start node is a proper origin, and its end node is
-     * a proper terminus.
-     *
-     * @return whether this route is complete
-     */
-    public boolean isComplete() {
-        return this.completeSupplier.get();
-    }
-
-    protected boolean isCompleteInner() {
-        return this.isValid() && this.head.isOrigin() && this.tail.isTerminus();
+        List<Hop> hops = this.getHops(level);
+        return hops != null && hops.stream().allMatch(Hop::inRange);
     }
 
     /**
@@ -214,50 +246,53 @@ public class Route {
      */
     public boolean isActive(Level level) {
         // First test that the route is valid at all
-        if (!this.isValid()) {
+        if (!this.isValid(level)) {
             return false;
         }
 
         // Test whether the corresponding block entities for each node still exist in the world
-        if (!(level.getBlockEntity(this.head.getBlockPos()) instanceof IManaSupplier) ||
-                !(level.getBlockEntity(this.tail.getBlockPos()) instanceof IManaConsumer) ||
-                !this.relays.stream().map(IManaRelay::getBlockPos).allMatch(pos -> level.getBlockEntity(pos) instanceof IManaRelay)) {
+        if (!(level.getBlockEntity(this.headPosition) instanceof IManaSupplier) ||
+                !(level.getBlockEntity(this.tailPosition) instanceof IManaConsumer) ||
+                !this.relayPositions.stream().allMatch(pos -> level.getBlockEntity(pos) instanceof IManaRelay)) {
             return false;
         }
 
         // Confirm that all nodes in the route are chunk-loaded
-        return this.getNodes().stream().map(IManaNetworkNode::getBlockPos).allMatch(level::isLoaded);
+        return level.isLoaded(this.headPosition) && level.isLoaded(this.tailPosition) && this.relayPositions.stream().allMatch(level::isLoaded);
     }
 
-    public boolean canRoute(Source source) {
-        return this.head.canSupply(source) && this.tail.canConsume(source) && this.relays.stream().allMatch(r -> r.canRelay(source));
+    public boolean canRoute(@NotNull Source source, @NotNull Level level) {
+        IManaSupplier head = this.getHead(level);
+        IManaConsumer tail = this.getTail(level);
+        List<IManaRelay> relays = this.getRelays(level);
+        return head != null && head.canSupply(source) &&
+                tail != null && tail.canConsume(source) &&
+                relays != null && relays.stream().allMatch(r -> r.canRelay(source));
     }
 
-    public double getDistance() {
-        return this.distanceSupplier.get();
+    public double getDistance(@NotNull Level level) {
+        return this.distanceSupplier.apply(level);
     }
 
-    protected double getDistanceInner() {
-        return this.getHops().stream().mapToDouble(Route.Hop::getDistanceSqr).map(Math::sqrt).sum();
+    protected double getDistanceInner(@NotNull Level level) {
+        List<Hop> hops = this.getHops(level);
+        return hops == null ? Double.POSITIVE_INFINITY : hops.stream().mapToDouble(Route.Hop::getDistanceSqr).map(Math::sqrt).sum();
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Route route)) return false;
-        return Objects.equals(head, route.head) && Objects.equals(relays, route.relays) && Objects.equals(tail, route.tail);
+        return Objects.equals(headPosition, route.headPosition) && Objects.equals(relayPositions, route.relayPositions) && Objects.equals(tailPosition, route.tailPosition);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(head, relays, tail);
+        return Objects.hash(headPosition, relayPositions, tailPosition);
     }
 
     @Override
     public String toString() {
-        String routeStr = String.join("->", this.getNodes().stream()
-                .map(node -> "[" + node.getBlockPos().toShortString() + "]")
-                .toList());
-        return "Route{" + routeStr + "}";
+        return "Route{" + this.getNodePositions().stream().map(pos -> "[" + pos.toShortString() + "]").collect(Collectors.joining("->")) + "}";
     }
 
     public record Hop(@NotNull IManaSupplier supplier, @NotNull IManaConsumer consumer) {
