@@ -100,7 +100,7 @@ public class RouteTable {
         return modified;
     }
 
-    public Optional<Route> getRoute(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus, @NotNull IManaNetworkNode owner) {
+    public Optional<Route> getRoute(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus) {
         if (this.routes.contains(origin.getBlockPos(), terminus.getBlockPos())) {
             level.getProfiler().push("getRouteSet");
             Set<Route> routeSet = this.routes.get(origin.getBlockPos(), terminus.getBlockPos());
@@ -119,7 +119,11 @@ public class RouteTable {
     }
 
     public Set<Route> getRoutesForHead(@NotNull IManaSupplier head) {
-        return this.routes.row(head.getBlockPos()).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+        return this.getRoutesForHead(head.getBlockPos());
+    }
+
+    public Set<Route> getRoutesForHead(@NotNull BlockPos headPos) {
+        return this.routes.row(headPos).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
     }
 
     public Set<IManaConsumer> getLinkedTerminuses(@NotNull IManaSupplier origin, @NotNull Level level) {
@@ -127,7 +131,11 @@ public class RouteTable {
     }
 
     public Set<Route> getRoutesForTail(@NotNull IManaConsumer tail) {
-        return this.routes.column(tail.getBlockPos()).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+        return this.getRoutesForTail(tail.getBlockPos());
+    }
+
+    public Set<Route> getRoutesForTail(@NotNull BlockPos tailPos) {
+        return this.routes.column(tailPos).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
     }
 
     public Set<IManaSupplier> getLinkedOrigins(@NotNull IManaConsumer terminus, @NotNull Level level) {

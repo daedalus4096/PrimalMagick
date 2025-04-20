@@ -6,6 +6,8 @@ import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
 import com.verdantartifice.primalmagick.common.mana.network.IManaNetworkNode;
 import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
 import com.verdantartifice.primalmagick.common.mana.network.Route;
+import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
+import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PropMarkerPacket;
@@ -35,10 +37,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Definition of an item for checking ritual altar and prop status.
@@ -104,17 +110,23 @@ public class DowsingRodItem extends Item {
             // Only show network route highlights if the dowsing rod is currently selected
             BlockPos primaryPos = pStack.has(DataComponentsPM.DOWSING_PRIMARY_POSITION.get()) ? pStack.get(DataComponentsPM.DOWSING_PRIMARY_POSITION.get()) : null;
             if (primaryPos != null && pLevel.getBlockEntity(primaryPos) instanceof IManaNetworkNode primaryNode) {
-                Set<Route.Hop> connectedHops = primaryNode.getRouteTable().getAllRoutes().stream().flatMap(r -> r.getHops().stream()).collect(Collectors.toCollection(HashSet::new));
+                RouteTable routeTable = RouteManager.getRouteTable(pLevel);
+                Set<Route.Hop> connectedHops = Stream.concat(routeTable.getRoutesForHead(primaryPos).stream(), routeTable.getRoutesForTail(primaryPos).stream())
+                        .map(r -> r.getHops(pLevel))
+                        .filter(Objects::nonNull)
+                        .flatMap(Collection::stream)
+                        .collect(Collectors.toSet());
                 Set<Route.Hop> highlightedHops = new HashSet<>();
                 BlockPos secondaryPos = pStack.has(DataComponentsPM.DOWSING_SECONDARY_POSITION.get()) ? pStack.get(DataComponentsPM.DOWSING_SECONDARY_POSITION.get()) : null;
                 if (secondaryPos != null && primaryNode instanceof IManaConsumer consumer && pLevel.getBlockEntity(secondaryPos) instanceof IManaSupplier supplier) {
                     // If a supplier and then a consumer were dowsed, highlight the best route between them
-                    Optional<Route> routeOpt = consumer.getRouteTable().getRoute(pLevel, Optional.empty(), supplier, consumer, consumer);
+                    Optional<Route> routeOpt = routeTable.getRoute(pLevel, Optional.empty(), supplier, consumer);
                     routeOpt.ifPresent(route -> {
-                        route.getHops().forEach(h -> {
-                            highlightedHops.add(h);
-                            connectedHops.remove(h);
-                        });
+                        List<Route.Hop> toHighlight = route.getHops(pLevel);
+                        if (toHighlight != null && !toHighlight.isEmpty()) {
+                            highlightedHops.addAll(toHighlight);
+                            toHighlight.forEach(connectedHops::remove);
+                        }
                     });
                 }
 
@@ -161,7 +173,7 @@ public class DowsingRodItem extends Item {
                 ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
         if (secondaryPos != null && level.getBlockEntity(secondaryPos) instanceof IManaNetworkNode secondaryNode) {
             if (secondaryNode instanceof IManaSupplier supplier && primaryNode instanceof IManaConsumer consumer &&
-                    consumer.getRouteTable().getRoute(level, Optional.empty(), supplier, consumer, consumer).isPresent()) {
+                    consumer.getRouteTable().getRoute(level, Optional.empty(), supplier, consumer).isPresent()) {
                 player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.route_highlight",
                         ComponentUtils.wrapInSquareBrackets(Component.literal(secondaryPos.toShortString())),
                         ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
