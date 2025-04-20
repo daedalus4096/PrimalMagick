@@ -12,11 +12,11 @@ import org.slf4j.Logger;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -55,7 +55,9 @@ public class RouteTable {
     }
 
     public void clear() {
-        this.routes.clear();
+        synchronized (this.routes) {
+            this.routes.clear();
+        }
         this.invalidate();
     }
 
@@ -64,7 +66,9 @@ public class RouteTable {
     }
 
     private Set<Route> getAllRoutesInner() {
-        return this.routes.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
+        synchronized (this.routes) {
+            return this.routes.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
+        }
     }
 
     public boolean add(@NotNull Route route) {
@@ -77,11 +81,13 @@ public class RouteTable {
 
     private boolean addInner(@NotNull Route route) {
         Set<Route> target;
-        if (this.routes.contains(route.getHeadPosition(), route.getTailPosition())) {
-            target = this.routes.get(route.getHeadPosition(), route.getTailPosition());
-        } else {
-            target = new HashSet<>();
-            this.routes.put(route.getHeadPosition(), route.getTailPosition(), target);
+        synchronized (this.routes) {
+            if (this.routes.contains(route.getHeadPosition(), route.getTailPosition())) {
+                target = this.routes.get(route.getHeadPosition(), route.getTailPosition());
+            } else {
+                target = ConcurrentHashMap.newKeySet();
+                this.routes.put(route.getHeadPosition(), route.getTailPosition(), target);
+            }
         }
 
         return target != null && target.add(route);
@@ -101,9 +107,16 @@ public class RouteTable {
     }
 
     public Optional<Route> getRoute(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus) {
-        if (this.routes.contains(origin.getBlockPos(), terminus.getBlockPos())) {
+        boolean contains;
+        synchronized (this.routes) {
+            contains = this.routes.contains(origin.getBlockPos(), terminus.getBlockPos());
+        }
+        if (contains) {
             level.getProfiler().push("getRouteSet");
-            Set<Route> routeSet = this.routes.get(origin.getBlockPos(), terminus.getBlockPos());
+            Set<Route> routeSet;
+            synchronized (this.routes) {
+                routeSet = this.routes.get(origin.getBlockPos(), terminus.getBlockPos());
+            }
             level.getProfiler().popPush("scoreRoutes");
             Optional<Route> retVal = routeSet == null ?
                     Optional.empty() :
@@ -123,7 +136,9 @@ public class RouteTable {
     }
 
     public Set<Route> getRoutesForHead(@NotNull BlockPos headPos) {
-        return this.routes.row(headPos).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+        synchronized (this.routes) {
+            return this.routes.row(headPos).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+        }
     }
 
     public Set<IManaConsumer> getLinkedTerminuses(@NotNull IManaSupplier origin, @NotNull Level level) {
@@ -135,7 +150,9 @@ public class RouteTable {
     }
 
     public Set<Route> getRoutesForTail(@NotNull BlockPos tailPos) {
-        return this.routes.column(tailPos).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+        synchronized (this.routes) {
+            return this.routes.column(tailPos).entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toSet());
+        }
     }
 
     public Set<IManaSupplier> getLinkedOrigins(@NotNull IManaConsumer terminus, @NotNull Level level) {
@@ -145,9 +162,11 @@ public class RouteTable {
     protected void cullInactiveRoutes(@NotNull Level level) {
         level.getProfiler().push("cullInactiveRoutes");
         boolean anyRemoved = false;
-        for (Set<Route> set : this.routes.values()) {
-            if (set.removeIf(r -> !r.isActive(level))) {
-                anyRemoved = true;
+        synchronized (this.routes) {
+            for (Set<Route> set : this.routes.values()) {
+                if (set.removeIf(r -> !r.isActive(level))) {
+                    anyRemoved = true;
+                }
             }
         }
         if (anyRemoved) {

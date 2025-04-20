@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Centralized repository of mana networking route tables for all levels in the instance.
@@ -14,7 +14,7 @@ import java.util.Objects;
  * @author Daedalus4096
  */
 public class RouteManager {
-    private static final Map<ResourceKey<Level>, RouteTable> ROUTE_TABLES = new HashMap<>();
+    private static final Map<ResourceKey<Level>, RouteTable> ROUTE_TABLES = new ConcurrentHashMap<>();
 
     public static RouteTable getRouteTable(@NotNull Level level) {
         Objects.requireNonNull(level);
