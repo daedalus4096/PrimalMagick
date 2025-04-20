@@ -56,12 +56,24 @@ public class Route {
         this.relayPositions = ImmutableList.copyOf(relayPositions.stream().filter(Objects::nonNull).toList());
     }
 
+    public @NotNull BlockPos getHeadPosition() {
+        return this.headPosition;
+    }
+
     public @Nullable IManaSupplier getHead(@NotNull Level level) {
         return level.getBlockEntity(this.headPosition) instanceof IManaSupplier supplier ? supplier : null;
     }
 
+    public @NotNull BlockPos getTailPosition() {
+        return this.tailPosition;
+    }
+
     public @Nullable IManaConsumer getTail(@NotNull Level level) {
         return level.getBlockEntity(this.tailPosition) instanceof IManaConsumer consumer ? consumer : null;
+    }
+
+    public @NotNull List<BlockPos> getRelayPositions() {
+        return this.relayPositions;
     }
 
     public @Nullable List<IManaRelay> getRelays(@NotNull Level level) {

@@ -509,14 +509,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         level.getProfiler().popPush("createDirectConsumerRoutes");
         consumers.stream().filter(IManaConsumer::isTerminus)
                 .map(consumer -> new Route(this, consumer))
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
 
         // Create direct routes to this consumer for origin suppliers
         level.getProfiler().popPush("createDirectSupplierRoutes");
         suppliers.stream().filter(IManaSupplier::isOrigin)
                 .map(supplier -> new Route(supplier, this))
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
 
         // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
@@ -524,10 +524,10 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
                 .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
-                .map(route -> route.pushHead(this))
+                .map(route -> route.pushHead(this, level))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
 
         // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
@@ -535,10 +535,10 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
                 .flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
-                .map(route -> route.pushTail(this))
+                .map(route -> route.pushTail(this, level))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
         level.getProfiler().pop();
 

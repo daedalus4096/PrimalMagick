@@ -82,7 +82,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
         nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
                 .filter(supplier -> supplier != null && supplier.isOrigin())
                 .map(supplier -> new Route(supplier, this))
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
 
         // Create direct routes to this relay for terminus consumers
@@ -90,7 +90,7 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
         nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
                 .filter(consumer -> consumer != null && consumer.isTerminus())
                 .map(consumer -> new Route(this, consumer))
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
 
         // For nodes that are actually relays, create bidirectional routes connecting this and that
@@ -99,31 +99,31 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .filter(Objects::nonNull)
                 .toList();
         relays.stream().flatMap(relay -> Stream.of(new Route(this, relay), new Route(relay, this)))
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
 
         // Extend the routes of neighboring relays
         relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
-                .map(route -> route.pushHead(this))
+                .map(route -> route.pushHead(this, level))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
         relays.stream().flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
-                .map(route -> route.pushTail(this))
+                .map(route -> route.pushTail(this, level))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
 
         // Connect existing routes that can use this relay as a bridge
         level.getProfiler().popPush("bridgeRoutes");
         Set<Route> heads = this.getRouteTable().getRoutesForTail(this);
         Set<Route> tails = this.getRouteTable().getRoutesForHead(this);
-        heads.forEach(head -> tails.stream().map(head::connect)
+        heads.forEach(head -> tails.stream().map(route -> head.connect(route, level))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add));
         level.getProfiler().pop();
 

@@ -75,11 +75,11 @@ public interface IManaConsumer extends IManaNetworkNode {
 
         // Get the best route for each origin linked to this terminus that can carry the requested source
         level.getProfiler().push("findBestRoutes");
-        List<Route> routes = routeTable.getLinkedOrigins(this).stream()
+        List<Route> routes = routeTable.getLinkedOrigins(this, level).stream()
                 .map(supplier -> routeTable.getRoute(level, Optional.of(source), supplier, this, this))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .sorted(Comparator.comparing(Route::getMaxThroughput).reversed().thenComparing(Route::hashCode))
+                .sorted(Comparator.<Route, Integer>comparing(route -> route.getMaxThroughput(level)).reversed().thenComparing(Route::hashCode))
                 .toList();
 
         // Transfer mana directly from the origin to the terminus
@@ -87,15 +87,22 @@ public interface IManaConsumer extends IManaNetworkNode {
         Iterator<Route> routeIterator = routes.iterator();
         while (remainingTransfer > 0 && routeIterator.hasNext()) {
             Route route = routeIterator.next();
-            int toExtract = Math.min(remainingTransfer, route.getMaxThroughput());
-            int actualExtracted = route.getHead().extractMana(source, toExtract, false);
-            int actualReceived = route.getTail().receiveMana(source, actualExtracted, false);
-            totalSiphoned += actualReceived;
-            remainingTransfer -= actualReceived;
-            if (actualReceived > 0) {
-                particleHops.addAll(route.getHops());
-                if (owner instanceof ServerPlayer serverPlayer) {
-                    CriteriaTriggersPM.MANA_NETWORK_ROUTE_LENGTH.get().trigger(serverPlayer, route.getDistance());
+            IManaSupplier head = route.getHead(level);
+            IManaConsumer tail = route.getTail(level);
+            if (head != null && tail != null) {
+                int toExtract = Math.min(remainingTransfer, route.getMaxThroughput(level));
+                int actualExtracted = head.extractMana(source, toExtract, false);
+                int actualReceived = tail.receiveMana(source, actualExtracted, false);
+                totalSiphoned += actualReceived;
+                remainingTransfer -= actualReceived;
+                if (actualReceived > 0) {
+                    List<Route.Hop> hops = route.getHops(level);
+                    if (hops != null && !hops.isEmpty()) {
+                        particleHops.addAll(hops);
+                    }
+                    if (owner instanceof ServerPlayer serverPlayer) {
+                        CriteriaTriggersPM.MANA_NETWORK_ROUTE_LENGTH.get().trigger(serverPlayer, route.getDistance(level));
+                    }
                 }
             }
         }
@@ -142,7 +149,7 @@ public interface IManaConsumer extends IManaNetworkNode {
         level.getProfiler().popPush("createDirectSupplierRoutes");
         suppliers.stream().filter(IManaSupplier::isOrigin)
                 .map(supplier -> new Route(supplier, this))
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
 
         // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
@@ -150,10 +157,10 @@ public interface IManaConsumer extends IManaNetworkNode {
         suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
                 .filter(Objects::nonNull)
                 .flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
-                .map(route -> route.pushTail(this))
+                .map(route -> route.pushTail(this, level))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .filter(Route::isValid)
+                .filter(route -> route.isValid(level))
                 .forEach(toAdd::add);
         level.getProfiler().pop();
 
