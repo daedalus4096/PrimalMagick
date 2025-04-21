@@ -58,10 +58,10 @@ public class NetworkGraph {
 
         public double getWeight(@NotNull final Level level) {
             if (!this.inRange(level)) {
-                return 0D;
+                return Double.POSITIVE_INFINITY;
             } else {
                 int throughput = this.getManaThroughput(level);
-                return this.getDistanceSqr() * (1D / (double)(throughput * throughput));
+                return throughput == 0 ? Double.POSITIVE_INFINITY : this.getDistanceSqr() * (1D / (double)(throughput * throughput));
             }
         }
     }
