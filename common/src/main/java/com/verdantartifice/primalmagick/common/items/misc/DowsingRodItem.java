@@ -111,7 +111,8 @@ public class DowsingRodItem extends Item {
             BlockPos primaryPos = pStack.has(DataComponentsPM.DOWSING_PRIMARY_POSITION.get()) ? pStack.get(DataComponentsPM.DOWSING_PRIMARY_POSITION.get()) : null;
             if (primaryPos != null && pLevel.getBlockEntity(primaryPos) instanceof IManaNetworkNode primaryNode) {
                 RouteTable routeTable = RouteManager.getRouteTable(pLevel);
-                Set<Route.Hop> connectedHops = Stream.concat(routeTable.getRoutesForHead(primaryPos).stream(), routeTable.getRoutesForTail(primaryPos).stream())
+                Set<Route.Hop> connectedHops = routeTable.getAllRoutes(pLevel, Optional.empty(), primaryNode).stream()
+//                Set<Route.Hop> connectedHops = Stream.concat(routeTable.getRoutesForHead(primaryPos).stream(), routeTable.getRoutesForTail(primaryPos).stream())
                         .map(r -> r.getHops(pLevel))
                         .filter(Objects::nonNull)
                         .flatMap(Collection::stream)

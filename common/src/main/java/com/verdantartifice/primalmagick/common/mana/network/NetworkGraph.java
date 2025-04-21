@@ -36,15 +36,15 @@ public class NetworkGraph {
         this.edges.clear();
     }
 
-    public Optional<Route> findRoute(@NotNull final IManaNetworkNode start, @NotNull final IManaNetworkNode end,
+    public Optional<Route> findRoute(@NotNull final BlockPos start, @NotNull final BlockPos end,
                                      @NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
-        return assemblePath(findPreviousEdges(start, sourceOpt, level), start.getBlockPos(), end.getBlockPos()).toRoute(level);
+        return assemblePath(findPreviousEdges(start, sourceOpt, level), start, end).toRoute(level);
     }
 
-    public Set<Route> findAllRoutes(@NotNull final IManaNetworkNode start, @NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
+    public Set<Route> findAllRoutes(@NotNull final BlockPos start, @NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
         Map<BlockPos, Edge> previousSteps = findPreviousEdges(start, sourceOpt, level);
         return this.edges.keySet().stream()
-                .map(endPos -> assemblePath(previousSteps, start.getBlockPos(), endPos).toRoute(level))
+                .map(endPos -> assemblePath(previousSteps, start, endPos).toRoute(level))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toSet());
@@ -67,8 +67,8 @@ public class NetworkGraph {
         return path;
     }
 
-    private Map<BlockPos, Edge> findPreviousEdges(@NotNull final IManaNetworkNode start, @NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
-        if (!this.edges.containsKey(start.getBlockPos())) {
+    private Map<BlockPos, Edge> findPreviousEdges(@NotNull final BlockPos start, @NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
+        if (!this.edges.containsKey(start)) {
             return Map.of();
         }
 
@@ -80,7 +80,7 @@ public class NetworkGraph {
             distances.put(pos, Double.POSITIVE_INFINITY);
             vertices.add(pos);
         });
-        distances.put(start.getBlockPos(), 0D);
+        distances.put(start, 0D);
 
         // Search through each vertex in the set
         while (!vertices.isEmpty()) {

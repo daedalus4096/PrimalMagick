@@ -107,13 +107,13 @@ public class RouteTable {
     public Optional<Route> getRoute(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaSupplier origin, @NotNull IManaConsumer terminus) {
         synchronized (this.graph) {
             // Network graphs are consumer-first, so find in reverse order
-            return this.graph.findRoute(terminus, origin, sourceOpt, level);
+            return this.graph.findRoute(terminus.getBlockPos(), origin.getBlockPos(), sourceOpt, level);
         }
     }
 
-    public Set<Route> getAllRoutes(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaConsumer terminus) {
+    public Set<Route> getAllRoutes(@NotNull Level level, @NotNull Optional<Source> sourceOpt, @NotNull IManaNetworkNode terminus) {
         synchronized (this.graph) {
-            return this.graph.findAllRoutes(terminus, sourceOpt, level);
+            return this.graph.findAllRoutes(terminus.getBlockPos(), sourceOpt, level);
         }
     }
 
