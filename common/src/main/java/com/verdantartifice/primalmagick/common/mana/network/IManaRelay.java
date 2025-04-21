@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -118,13 +119,19 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
 
         // Connect existing routes that can use this relay as a bridge
         level.getProfiler().popPush("bridgeRoutes");
+        level.getProfiler().push("getHeads");
         Set<Route> heads = this.getRouteTable().getRoutesForTail(this);
+        LogUtils.getLogger().warn("Found {} head routes", heads.size());
+        level.getProfiler().popPush("getTails");
         Set<Route> tails = this.getRouteTable().getRoutesForHead(this);
+        LogUtils.getLogger().warn("Found {} tail routes", tails.size());
+        level.getProfiler().popPush("connecting");
         heads.forEach(head -> tails.stream().map(route -> head.connect(route, level))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .filter(route -> route.isValid(level))
                 .forEach(toAdd::add));
+        level.getProfiler().pop();
         level.getProfiler().pop();
 
         this.getRouteTable().addAll(toAdd);

@@ -198,17 +198,30 @@ public class Route {
      * @return an optional containing the new route, or empty if such a route is not valid
      */
     public Optional<Route> connect(@NotNull Route other, @NotNull Level level) {
-        if (this.tailPosition.equals(other.headPosition) && this.getTail(level) instanceof IManaRelay relay) {
+        Optional<Route> retVal = Optional.empty();
+
+        level.getProfiler().push("overlapCheck");
+        boolean overlaps = this.tailPosition.equals(other.headPosition);
+        level.getProfiler().popPush("getTail");
+        IManaConsumer tail = this.getTail(level);
+
+        level.getProfiler().popPush("connectCheck");
+        if (overlaps && tail instanceof IManaRelay relay) {
+            level.getProfiler().popPush("assembleRoute");
             List<BlockPos> newRelays = ImmutableList.<BlockPos>builder()
                     .addAll(this.relayPositions)
                     .add(relay.getBlockPos())
                     .addAll(other.relayPositions)
                     .build();
-            Route retVal = new Route(this.headPosition, other.tailPosition, newRelays);
-            return retVal.isValid(level) ? Optional.of(retVal) : Optional.empty();
-        } else {
-            return Optional.empty();
+            Route newRoute = new Route(this.headPosition, other.tailPosition, newRelays);
+            level.getProfiler().popPush("isValidCheck");
+            if (newRoute.isValid(level)) {
+                retVal = Optional.of(newRoute);
+            }
         }
+
+        level.getProfiler().pop();
+        return retVal;
     }
 
     /**
