@@ -28,7 +28,24 @@ public class NetworkGraph {
         this.edges.get(from.getBlockPos()).add(new Edge(from, to));
     }
 
-    private Map<BlockPos, Edge> findPreviousEdges(@NotNull final IManaNetworkNode start) {
+    private static EdgeList assemblePath(@NotNull final Map<BlockPos, Edge> previousSteps, @NotNull final BlockPos from, @NotNull final BlockPos to) {
+        EdgeList path = new EdgeList();
+        BlockPos current = to;
+        if (previousSteps.containsKey(current) || current.equals(from)) {
+            while (current != null) {
+                Edge edge = previousSteps.get(current);
+                if (edge != null) {
+                    path.addFirst(edge);
+                    current = edge.from();
+                } else {
+                    current = null;
+                }
+            }
+        }
+        return path;
+    }
+
+    private Map<BlockPos, Edge> findPreviousEdges(@NotNull final IManaNetworkNode start, @NotNull final Level level) {
         if (!this.edges.containsKey(start.getBlockPos())) {
             return Map.of();
         }
@@ -39,7 +56,6 @@ public class NetworkGraph {
         final Set<BlockPos> vertices = new HashSet<>();
         this.edges.keySet().forEach(pos -> {
             distances.put(pos, Double.POSITIVE_INFINITY);
-            previousSteps.put(pos, null);
             vertices.add(pos);
         });
         distances.put(start.getBlockPos(), 0D);
@@ -54,9 +70,9 @@ public class NetworkGraph {
 
             // Iterate through vertex neighbors
             List<Edge> neighbors = this.edges.getOrDefault(nextVertex, List.of());
+            double currentDistance = distances.getOrDefault(nextVertex, Double.POSITIVE_INFINITY);
             neighbors.stream().filter(e -> vertices.contains(e.to())).forEach(neighbor -> {
-                double currentDistance = distances.getOrDefault(nextVertex, Double.POSITIVE_INFINITY);
-                double alt = currentDistance == Double.POSITIVE_INFINITY ? Double.POSITIVE_INFINITY : currentDistance + neighbor.getDistanceSqr();
+                double alt = currentDistance == Double.POSITIVE_INFINITY ? Double.POSITIVE_INFINITY : currentDistance + neighbor.getWeight(level);
 
                 // If the combined distance is less than the previously known best distance, record the edge as the current best
                 if (alt < distances.getOrDefault(neighbor.to(), Double.POSITIVE_INFINITY)) {
