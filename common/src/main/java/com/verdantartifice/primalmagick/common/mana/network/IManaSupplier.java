@@ -57,7 +57,7 @@ public interface IManaSupplier extends IManaNetworkNode {
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
-        Set<Route> toAdd = new HashSet<>();
+//        Set<Route> toAdd = new HashSet<>();
 
         // Search for mana consumers which are in range of this node
         level.getProfiler().push("findNodes");
@@ -68,25 +68,26 @@ public interface IManaSupplier extends IManaNetworkNode {
                 .toList();
 
         // Create direct routes from this supplier for terminus consumers
-        level.getProfiler().popPush("createDirectConsumerRoutes");
+        level.getProfiler().popPush("createDirectConsumerEdges");
         consumers.stream().filter(IManaConsumer::isTerminus)
-                .map(consumer -> new Route(this, consumer))
-                .filter(route -> route.isValid(level))
-                .forEach(toAdd::add);
+                .forEach(consumer -> this.getRouteTable().add(this, consumer));
+//                .map(consumer -> new Route(this, consumer))
+//                .filter(route -> route.isValid(level))
+//                .forEach(toAdd::add);
 
-        // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
-        level.getProfiler().popPush("createRelayRoutes");
-        consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
-                .filter(Objects::nonNull)
-                .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
-                .map(route -> route.pushHead(this, level))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(route -> route.isValid(level))
-                .forEach(toAdd::add);
+//        // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
+//        level.getProfiler().popPush("createRelayRoutes");
+//        consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
+//                .filter(Objects::nonNull)
+//                .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
+//                .map(route -> route.pushHead(this, level))
+//                .filter(Optional::isPresent)
+//                .map(Optional::get)
+//                .filter(route -> route.isValid(level))
+//                .forEach(toAdd::add);
         level.getProfiler().pop();
 
-        this.getRouteTable().addAll(toAdd);
+//        this.getRouteTable().addAll(toAdd);
 
         level.getProfiler().pop();
         level.getProfiler().pop();

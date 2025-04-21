@@ -1,22 +1,26 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class NetworkGraph {
     private final Map<BlockPos, List<Edge>> edges = new ConcurrentHashMap<>();
 
-    public void addNode(@NotNull final IManaNetworkNode node) {
+    private void addNode(@NotNull final IManaNetworkNode node) {
         if (!this.edges.containsKey(node.getBlockPos())) {
             this.edges.put(node.getBlockPos(), new LinkedList<>());
         }
@@ -26,6 +30,24 @@ public class NetworkGraph {
         this.addNode(from);
         this.addNode(to);
         this.edges.get(from.getBlockPos()).add(new Edge(from, to));
+    }
+
+    public void clear() {
+        this.edges.clear();
+    }
+
+    public Optional<Route> findRoute(@NotNull final IManaNetworkNode start, @NotNull final IManaNetworkNode end,
+                                     @NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
+        return assemblePath(findPreviousEdges(start, sourceOpt, level), start.getBlockPos(), end.getBlockPos()).toRoute(level);
+    }
+
+    public Set<Route> findAllRoutes(@NotNull final IManaNetworkNode start, @NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
+        Map<BlockPos, Edge> previousSteps = findPreviousEdges(start, sourceOpt, level);
+        return this.edges.keySet().stream()
+                .map(endPos -> assemblePath(previousSteps, start.getBlockPos(), endPos).toRoute(level))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
     }
 
     private static EdgeList assemblePath(@NotNull final Map<BlockPos, Edge> previousSteps, @NotNull final BlockPos from, @NotNull final BlockPos to) {
@@ -45,7 +67,7 @@ public class NetworkGraph {
         return path;
     }
 
-    private Map<BlockPos, Edge> findPreviousEdges(@NotNull final IManaNetworkNode start, @NotNull final Level level) {
+    private Map<BlockPos, Edge> findPreviousEdges(@NotNull final IManaNetworkNode start, @NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
         if (!this.edges.containsKey(start.getBlockPos())) {
             return Map.of();
         }
@@ -72,7 +94,7 @@ public class NetworkGraph {
             List<Edge> neighbors = this.edges.getOrDefault(nextVertex, List.of());
             double currentDistance = distances.getOrDefault(nextVertex, Double.POSITIVE_INFINITY);
             neighbors.stream().filter(e -> vertices.contains(e.to())).forEach(neighbor -> {
-                double alt = currentDistance == Double.POSITIVE_INFINITY ? Double.POSITIVE_INFINITY : currentDistance + neighbor.getWeight(level);
+                double alt = currentDistance == Double.POSITIVE_INFINITY ? Double.POSITIVE_INFINITY : currentDistance + neighbor.getWeight(sourceOpt, level);
 
                 // If the combined distance is less than the previously known best distance, record the edge as the current best
                 if (alt < distances.getOrDefault(neighbor.to(), Double.POSITIVE_INFINITY)) {
@@ -129,8 +151,20 @@ public class NetworkGraph {
             }
         }
 
-        public double getWeight(@NotNull final Level level) {
-            if (!this.inRange(level)) {
+        public boolean canRoute(@NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
+            return sourceOpt.map(source -> {
+                IManaConsumer fromNode = level.getBlockEntity(this.from) instanceof IManaConsumer n1 ? n1 : null;
+                IManaSupplier toNode = level.getBlockEntity(this.to) instanceof IManaSupplier n2 ? n2 : null;
+                if (fromNode == null || toNode == null) {
+                    return false;
+                } else {
+                    return fromNode.canConsume(source) && toNode.canSupply(source);
+                }
+            }).orElse(true);
+        }
+
+        public double getWeight(@NotNull final Optional<Source> sourceOpt, @NotNull final Level level) {
+            if (!this.inRange(level) || !this.canRoute(sourceOpt, level)) {
                 return Double.POSITIVE_INFINITY;
             } else {
                 int throughput = this.getManaThroughput(level);
@@ -140,6 +174,29 @@ public class NetworkGraph {
     }
 
     private static class EdgeList extends LinkedList<Edge> {
+        public Optional<Route> toRoute(@NotNull final Level level) {
+            if (this.isEmpty()) {
+                return Optional.empty();
+            } else {
+                List<BlockPos> positions = new LinkedList<>();
+                BlockPos lastTo = this.getFirst().from();
+                positions.add(lastTo);
+                for (Edge edge : this) {
+                    // If the edges don't form a continuous path, abort
+                    if (!lastTo.equals(edge.from())) {
+                        return Optional.empty();
+                    }
+                    lastTo = edge.to();
+                    positions.add(lastTo);
+                }
 
+                // Edge lists are ordered from consumer to supplier, but routes are expected to be from supplier to consumer
+                Collections.reverse(positions);
+
+                // Ensure the route is valid before returning it
+                Route retVal = new Route(positions);
+                return retVal.isValid(level) ? Optional.of(retVal) : Optional.empty();
+            }
+        }
     }
 }

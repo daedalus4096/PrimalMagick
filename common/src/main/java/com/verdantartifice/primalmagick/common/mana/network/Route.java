@@ -36,24 +36,34 @@ public class Route {
     protected final Function<Level, Boolean> validSupplier = Util.memoize(this::isValidInner);
     protected final Function<Level, Double> distanceSupplier = Util.memoize(this::getDistanceInner);
 
-    public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail) {
-        this(head, tail, List.of());
-    }
+//    public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail) {
+//        this(head, tail, List.of());
+//    }
+//
+//    public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail, @NotNull IManaRelay... relays) {
+//        this(head, tail, ImmutableList.copyOf(relays));
+//    }
 
-    public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail, @NotNull IManaRelay... relays) {
-        this(head, tail, ImmutableList.copyOf(relays));
-    }
-
-    public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail, @NotNull List<IManaRelay> relays) {
-        this.headPosition = Objects.requireNonNull(head).getBlockPos();
-        this.tailPosition = Objects.requireNonNull(tail).getBlockPos();
-        this.relayPositions = ImmutableList.copyOf(relays.stream().filter(Objects::nonNull).map(IManaRelay::getBlockPos).toList());
-    }
+//    public Route(@NotNull IManaSupplier head, @NotNull IManaConsumer tail, @NotNull List<IManaRelay> relays) {
+//        this.headPosition = Objects.requireNonNull(head).getBlockPos();
+//        this.tailPosition = Objects.requireNonNull(tail).getBlockPos();
+//        this.relayPositions = ImmutableList.copyOf(relays.stream().filter(Objects::nonNull).map(IManaRelay::getBlockPos).toList());
+//    }
 
     protected Route(@NotNull BlockPos headPosition, @NotNull BlockPos tailPosition, @NotNull List<BlockPos> relayPositions) {
         this.headPosition = Objects.requireNonNull(headPosition);
         this.tailPosition = Objects.requireNonNull(tailPosition);
         this.relayPositions = ImmutableList.copyOf(relayPositions.stream().filter(Objects::nonNull).toList());
+    }
+
+    public Route(@NotNull List<BlockPos> nodePositions) {
+        int size = nodePositions.size();
+        if (size < 2) {
+            throw new IllegalArgumentException("nodePositions must contain at least 2 nodes");
+        }
+        this.headPosition = Objects.requireNonNull(nodePositions.getFirst());
+        this.tailPosition = Objects.requireNonNull(nodePositions.getLast());
+        this.relayPositions = size >= 3 ? ImmutableList.copyOf(nodePositions.subList(1, size - 1)) : ImmutableList.of();
     }
 
     public @NotNull BlockPos getHeadPosition() {
@@ -241,9 +251,18 @@ public class Route {
             return false;
         }
 
+        IManaSupplier head = this.getHead(level);
+        IManaConsumer tail = this.getTail(level);
+        List<IManaRelay> relays = this.getRelays(level);
+
+        // Test whether the corresponding block entities for each node still exist in the world
+        if (head == null || tail == null || relays == null) {
+            return false;
+        }
+
         // Disallow any routes between nodes that are both origin and terminus to prevent feedback loops
-        if (this.getHead(level) instanceof IManaSupplier head && head.isOrigin() && head instanceof IManaConsumer consumer && consumer.isTerminus() &&
-                this.getTail(level) instanceof IManaConsumer tail && tail.isTerminus() && tail instanceof IManaSupplier supplier && supplier.isOrigin()) {
+        if (head.isOrigin() && head instanceof IManaConsumer consumer && consumer.isTerminus() &&
+                tail.isTerminus() && tail instanceof IManaSupplier supplier && supplier.isOrigin()) {
             return false;
         }
 
@@ -272,13 +291,6 @@ public class Route {
     public boolean isActive(Level level) {
         // First test that the route is valid at all
         if (!this.isValid(level)) {
-            return false;
-        }
-
-        // Test whether the corresponding block entities for each node still exist in the world
-        if (!(level.getBlockEntity(this.headPosition) instanceof IManaSupplier) ||
-                !(level.getBlockEntity(this.tailPosition) instanceof IManaConsumer) ||
-                !this.relayPositions.stream().allMatch(pos -> level.getBlockEntity(pos) instanceof IManaRelay)) {
             return false;
         }
 

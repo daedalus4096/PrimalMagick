@@ -489,7 +489,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
-        Set<Route> toAdd = new HashSet<>();
+//        Set<Route> toAdd = new HashSet<>();
 
         // Search for mana suppliers and consumers which are in range of this node
         level.getProfiler().push("findNodes");
@@ -506,43 +506,45 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                 .toList();
 
         // Create direct routes from this supplier for terminus consumers
-        level.getProfiler().popPush("createDirectConsumerRoutes");
+        level.getProfiler().popPush("createDirectConsumerEdges");
         consumers.stream().filter(IManaConsumer::isTerminus)
-                .map(consumer -> new Route(this, consumer))
-                .filter(route -> route.isValid(level))
-                .forEach(toAdd::add);
+                .forEach(consumer -> this.getRouteTable().add(this, consumer));
+//                .map(consumer -> new Route(this, consumer))
+//                .filter(route -> route.isValid(level))
+//                .forEach(toAdd::add);
 
         // Create direct routes to this consumer for origin suppliers
-        level.getProfiler().popPush("createDirectSupplierRoutes");
+        level.getProfiler().popPush("createDirectSupplierEdges");
         suppliers.stream().filter(IManaSupplier::isOrigin)
-                .map(supplier -> new Route(supplier, this))
-                .filter(route -> route.isValid(level))
-                .forEach(toAdd::add);
+                .forEach(supplier -> this.getRouteTable().add(supplier, this));
+//                .map(supplier -> new Route(supplier, this))
+//                .filter(route -> route.isValid(level))
+//                .forEach(toAdd::add);
 
-        // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
-        level.getProfiler().popPush("createConsumerRelayRoutes");
-        consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
-                .filter(Objects::nonNull)
-                .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
-                .map(route -> route.pushHead(this, level))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(route -> route.isValid(level))
-                .forEach(toAdd::add);
+//        // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
+//        level.getProfiler().popPush("createConsumerRelayRoutes");
+//        consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
+//                .filter(Objects::nonNull)
+//                .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
+//                .map(route -> route.pushHead(this, level))
+//                .filter(Optional::isPresent)
+//                .map(Optional::get)
+//                .filter(route -> route.isValid(level))
+//                .forEach(toAdd::add);
 
-        // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
-        level.getProfiler().popPush("createSupplierRelayRoutes");
-        suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
-                .filter(Objects::nonNull)
-                .flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
-                .map(route -> route.pushTail(this, level))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(route -> route.isValid(level))
-                .forEach(toAdd::add);
+//        // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
+//        level.getProfiler().popPush("createSupplierRelayRoutes");
+//        suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
+//                .filter(Objects::nonNull)
+//                .flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
+//                .map(route -> route.pushTail(this, level))
+//                .filter(Optional::isPresent)
+//                .map(Optional::get)
+//                .filter(route -> route.isValid(level))
+//                .forEach(toAdd::add);
         level.getProfiler().pop();
 
-        this.getRouteTable().addAll(toAdd);
+//        this.getRouteTable().addAll(toAdd);
 
         level.getProfiler().pop();
         level.getProfiler().pop();
