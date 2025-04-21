@@ -1,0 +1,68 @@
+package com.verdantartifice.primalmagick.common.mana.network;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class NetworkGraph {
+    private final Map<BlockPos, List<Edge>> edges = new ConcurrentHashMap<>();
+
+    public void addNode(@NotNull final IManaNetworkNode node) {
+        if (!this.edges.containsKey(node.getBlockPos())) {
+            this.edges.put(node.getBlockPos(), new LinkedList<>());
+        }
+    }
+
+    public void addEdge(@NotNull final IManaNetworkNode from, @NotNull final IManaNetworkNode to) {
+        this.addNode(from);
+        this.addNode(to);
+        this.edges.get(from.getBlockPos()).add(new Edge(from, to));
+    }
+
+    public record Edge(@NotNull BlockPos from, @NotNull BlockPos to) {
+        public Edge(@NotNull final IManaNetworkNode fromNode, @NotNull final IManaNetworkNode toNode) {
+            this(fromNode.getBlockPos(), toNode.getBlockPos());
+        }
+
+        public double getDistanceSqr() {
+            return this.from.distSqr(this.to);
+        }
+
+        public boolean inRange(@NotNull final Level level) {
+            double distanceSqr = this.getDistanceSqr();
+            IManaNetworkNode fromNode = level.getBlockEntity(this.from) instanceof IManaNetworkNode n1 ? n1 : null;
+            IManaNetworkNode toNode = level.getBlockEntity(this.to) instanceof IManaNetworkNode n2 ? n2 : null;
+            if (fromNode == null || toNode == null) {
+                return false;
+            } else {
+                int fromRange = fromNode.getNetworkRange();
+                int toRange = toNode.getNetworkRange();
+                return ((fromRange * fromRange) >= distanceSqr) && ((toRange * toRange) >= distanceSqr);
+            }
+        }
+
+        public int getManaThroughput(@NotNull final Level level) {
+            IManaNetworkNode fromNode = level.getBlockEntity(this.from) instanceof IManaNetworkNode n1 ? n1 : null;
+            IManaNetworkNode toNode = level.getBlockEntity(this.to) instanceof IManaNetworkNode n2 ? n2 : null;
+            if (fromNode == null || toNode == null) {
+                return 0;
+            } else {
+                return Math.min(fromNode.getManaThroughput(), toNode.getManaThroughput());
+            }
+        }
+
+        public double getWeight(@NotNull final Level level) {
+            if (!this.inRange(level)) {
+                return 0D;
+            } else {
+                int throughput = this.getManaThroughput(level);
+                return this.getDistanceSqr() * (1D / (double)(throughput * throughput));
+            }
+        }
+    }
+}
