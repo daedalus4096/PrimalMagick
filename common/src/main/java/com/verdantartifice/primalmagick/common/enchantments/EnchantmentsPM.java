@@ -600,6 +600,7 @@ public class EnchantmentsPM {
                                 EquipmentSlotGroup.ARMOR
                         )
                 )
+                .exclusiveWith(enchantmentHolderGetter.getOrThrow(EnchantmentTags.ARMOR_EXCLUSIVE))
                 .withEffect(
                         EnchantmentEffectComponents.DAMAGE_PROTECTION,
                         new AddValue(LevelBasedValue.perLevel(2.0F)),

@@ -14,6 +14,7 @@ v6.0.5
 * Removed the Bloodletter from the research and prop requirements for Blood Roses and Emberflowers
 * Standardized the breaking times of many devices, to make it less painful to have to move them
 * Allowed mana fonts to stack to sixteen
+* Fixed a bug allowing Magick Protection to be applied to armor alongside other Protection-style enchants
 
 v6.0.4
 ------
