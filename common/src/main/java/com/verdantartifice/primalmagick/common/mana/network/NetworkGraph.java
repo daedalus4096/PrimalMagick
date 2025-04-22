@@ -20,18 +20,22 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class NetworkGraph {
-    private final Map<BlockPos, List<Edge>> edges = new ConcurrentHashMap<>();
+    private final Map<BlockPos, Set<Edge>> edges = new ConcurrentHashMap<>();
 
-    private void addNode(@NotNull final BlockPos pos) {
+    private boolean addNode(@NotNull final BlockPos pos) {
         if (!this.edges.containsKey(pos)) {
-            this.edges.put(pos, new LinkedList<>());
+            this.edges.put(pos, new HashSet<>());
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void addEdge(@NotNull final BlockPos from, @NotNull final BlockPos to) {
-        this.addNode(from);
-        this.addNode(to);
-        this.edges.get(from).add(new Edge(from, to));
+    public boolean addEdge(@NotNull final BlockPos from, @NotNull final BlockPos to) {
+        boolean fromAdded = this.addNode(from);
+        boolean toAdded = this.addNode(to);
+        boolean edgeAdded = this.edges.get(from).add(new Edge(from, to));
+        return fromAdded || toAdded || edgeAdded;
     }
 
     public boolean removeIf(@NotNull final Predicate<BlockPos> predicate) {
@@ -106,7 +110,7 @@ public class NetworkGraph {
             vertices.remove(nextVertex);
 
             // Iterate through vertex neighbors
-            List<Edge> neighbors = this.edges.getOrDefault(nextVertex, List.of());
+            Set<Edge> neighbors = this.edges.getOrDefault(nextVertex, Set.of());
             double currentDistance = distances.getOrDefault(nextVertex, Double.POSITIVE_INFINITY);
             neighbors.stream().filter(e -> vertices.contains(e.to())).forEach(neighbor -> {
                 double alt = currentDistance == Double.POSITIVE_INFINITY ? Double.POSITIVE_INFINITY : currentDistance + neighbor.getWeight(sourceOpt, level);

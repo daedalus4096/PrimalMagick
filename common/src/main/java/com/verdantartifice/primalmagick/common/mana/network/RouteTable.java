@@ -49,9 +49,13 @@ public class RouteTable {
     }
 
     public void add(@NotNull IManaSupplier supplier, @NotNull IManaConsumer consumer) {
-        // Network graphs are consumer-first, so add the edge in reverse order
+        boolean added;
         synchronized (this.graph) {
-            this.graph.addEdge(consumer.getBlockPos(), supplier.getBlockPos());
+            // Network graphs are consumer-first, so add the edge in reverse order
+            added = this.graph.addEdge(consumer.getBlockPos(), supplier.getBlockPos());
+        }
+        if (added) {
+            this.invalidate();
         }
     }
 
