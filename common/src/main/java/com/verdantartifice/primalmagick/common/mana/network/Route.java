@@ -132,42 +132,6 @@ public class Route {
     }
 
     /**
-     * Returns a new route that connects this route and the given one. The given route is appended to this route, if
-     * and only if the terminus of this route is the same as the origin of the given route. The overlapping node is
-     * de-duplicated.
-     *
-     * @param other the route to be appended to this one
-     * @param level the level in which the route resides
-     * @return an optional containing the new route, or empty if such a route is not valid
-     */
-    public Optional<Route> connect(@NotNull Route other, @NotNull Level level) {
-        Optional<Route> retVal = Optional.empty();
-
-        level.getProfiler().push("overlapCheck");
-        boolean overlaps = this.tailPosition.equals(other.headPosition);
-        level.getProfiler().popPush("getTail");
-        IManaConsumer tail = this.getTail(level);
-
-        level.getProfiler().popPush("connectCheck");
-        if (overlaps && tail instanceof IManaRelay relay) {
-            level.getProfiler().popPush("assembleRoute");
-            List<BlockPos> newRelays = ImmutableList.<BlockPos>builder()
-                    .addAll(this.relayPositions)
-                    .add(relay.getBlockPos())
-                    .addAll(other.relayPositions)
-                    .build();
-            Route newRoute = new Route(this.headPosition, other.tailPosition, newRelays);
-            level.getProfiler().popPush("isValidCheck");
-            if (newRoute.isValid(level)) {
-                retVal = Optional.of(newRoute);
-            }
-        }
-
-        level.getProfiler().pop();
-        return retVal;
-    }
-
-    /**
      * Tests whether this route is topologically valid, i.e. whether it represents a possibly acceptable path from
      * origin to terminus through a mana network. Does not test whether the route is <strong>active</strong>, in that
      * all nodes are currently extant and loaded in the world.
