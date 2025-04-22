@@ -31,7 +31,7 @@ public class RouteTable {
 
     public void tick(@NotNull final Level level) {
         if (this.ticksExisted >= this.nextCheck) {
-//            this.cullInactiveRoutes(level);
+            this.cullInactiveNodes(level);
             this.nextCheck = calculateNextCheck(this.ticksExisted);
         }
         this.ticksExisted++;
@@ -51,7 +51,7 @@ public class RouteTable {
     public void add(@NotNull IManaSupplier supplier, @NotNull IManaConsumer consumer) {
         // Network graphs are consumer-first, so add the edge in reverse order
         synchronized (this.graph) {
-            this.graph.addEdge(consumer, supplier);
+            this.graph.addEdge(consumer.getBlockPos(), supplier.getBlockPos());
         }
     }
 
@@ -68,19 +68,15 @@ public class RouteTable {
         }
     }
 
-//    protected void cullInactiveRoutes(@NotNull Level level) {
-//        level.getProfiler().push("cullInactiveRoutes");
-//        boolean anyRemoved = false;
-//        synchronized (this.routes) {
-//            for (Set<Route> set : this.routes.values()) {
-//                if (set.removeIf(r -> !r.isActive(level))) {
-//                    anyRemoved = true;
-//                }
-//            }
-//        }
-//        if (anyRemoved) {
-//            this.invalidate();
-//        }
-//        level.getProfiler().pop();
-//    }
+    protected void cullInactiveNodes(@NotNull Level level) {
+        level.getProfiler().push("cullInactiveRoutes");
+        boolean anyRemoved;
+        synchronized (this.graph) {
+            anyRemoved = this.graph.removeIf(pos -> !level.isLoaded(pos) || !(level.getBlockEntity(pos) instanceof IManaNetworkNode));
+        }
+        if (anyRemoved) {
+            this.invalidate();
+        }
+        level.getProfiler().pop();
+    }
 }

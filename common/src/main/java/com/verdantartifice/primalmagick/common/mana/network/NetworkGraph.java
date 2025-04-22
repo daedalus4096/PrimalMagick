@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.mana.network;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,21 +16,35 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class NetworkGraph {
     private final Map<BlockPos, List<Edge>> edges = new ConcurrentHashMap<>();
 
-    private void addNode(@NotNull final IManaNetworkNode node) {
-        if (!this.edges.containsKey(node.getBlockPos())) {
-            this.edges.put(node.getBlockPos(), new LinkedList<>());
+    private void addNode(@NotNull final BlockPos pos) {
+        if (!this.edges.containsKey(pos)) {
+            this.edges.put(pos, new LinkedList<>());
         }
     }
 
-    public void addEdge(@NotNull final IManaNetworkNode from, @NotNull final IManaNetworkNode to) {
+    public void addEdge(@NotNull final BlockPos from, @NotNull final BlockPos to) {
         this.addNode(from);
         this.addNode(to);
-        this.edges.get(from.getBlockPos()).add(new Edge(from, to));
+        this.edges.get(from).add(new Edge(from, to));
+    }
+
+    public boolean removeIf(@NotNull final Predicate<BlockPos> predicate) {
+        MutableBoolean removed = new MutableBoolean(false);
+        this.edges.forEach((key, value) -> {
+            if (value.removeIf(edge -> predicate.test(edge.to()))) {
+                removed.setTrue();
+            }
+        });
+        if (this.edges.keySet().removeIf(predicate)) {
+            removed.setTrue();
+        }
+        return removed.getValue();
     }
 
     public void clear() {
@@ -120,10 +135,6 @@ public class NetworkGraph {
     }
 
     private record Edge(@NotNull BlockPos from, @NotNull BlockPos to) {
-        public Edge(@NotNull final IManaNetworkNode fromNode, @NotNull final IManaNetworkNode toNode) {
-            this(fromNode.getBlockPos(), toNode.getBlockPos());
-        }
-
         public double getDistanceSqr() {
             return this.from.distSqr(this.to);
         }
