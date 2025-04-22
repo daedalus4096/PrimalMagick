@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -49,6 +51,11 @@ public interface IManaSupplier extends IManaNetworkNode {
      * @param level the world in which this supplier resides
      */
     default void loadManaNetwork(@NotNull Level level) {
+        if (!Services.CONFIG.enableManaNetworking()) {
+            LogUtils.getLogger().warn("Mana networking not enabled; skipping default supplier bootstrap");
+            return;
+        }
+
         level.getProfiler().push("loadManaNetwork");
         level.getProfiler().push("defaultManaSupplier");
 

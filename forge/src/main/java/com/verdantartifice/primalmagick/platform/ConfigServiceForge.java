@@ -36,6 +36,11 @@ public class ConfigServiceForge implements IConfigService {
     }
 
     @Override
+    public boolean enableManaNetworking() {
+        return ConfigForge.ENABLE_MANA_NETWORKING.get();
+    }
+
+    @Override
     public boolean showUnscannedAffinities() {
         return ConfigForge.SHOW_UNSCANNED_AFFINITIES.get();
     }

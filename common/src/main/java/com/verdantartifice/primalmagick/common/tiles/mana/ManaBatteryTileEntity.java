@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
@@ -479,6 +480,11 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public void loadManaNetwork(@NotNull Level level) {
+        if (!Services.CONFIG.enableManaNetworking()) {
+            LOGGER.warn("Mana networking not enabled; skipping mana battery bootstrap");
+            return;
+        }
+
         // Combine supplier and consumer network loading
         level.getProfiler().push("loadManaNetwork");
         level.getProfiler().push("manaBattery");

@@ -13,6 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public class ConfigNeoforge {
     protected static final String CATEGORY_MISC = "misc";
+    protected static final String CATEGORY_PERFORMANCE = "performance";
     protected static final String CATEGORY_RADIAL = "radial";
     
     protected static ModConfigSpec COMMON_CONFIG_SPEC;
@@ -24,7 +25,8 @@ public class ConfigNeoforge {
     public static ModConfigSpec.BooleanValue RADIAL_RELEASE_TO_SWITCH;
     public static ModConfigSpec.BooleanValue RADIAL_CLIP_MOUSE;
     public static ModConfigSpec.BooleanValue RADIAL_ALLOW_CLICK_OUTSIDE_BOUNDS;
-    
+
+    public static ModConfigSpec.BooleanValue ENABLE_MANA_NETWORKING;
     public static ModConfigSpec.BooleanValue SHOW_UNSCANNED_AFFINITIES;
     public static ModConfigSpec.EnumValue<TheorycraftSpeed> THEORYCRAFT_SPEED;
     
@@ -36,7 +38,11 @@ public class ConfigNeoforge {
     protected static void buildCommonConfigSpec() {
         // Define the common config file spec
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
-        
+
+        builder.comment("Performance settings").push(CATEGORY_PERFORMANCE);
+        ENABLE_MANA_NETWORKING = builder.comment("Whether to enable bootstrapping of mana networks").define("enableManaNetworking", true);
+        builder.pop();
+
         builder.comment("Misc settings").push(CATEGORY_MISC);
         SHOW_UNSCANNED_AFFINITIES = builder.comment("Show affinities of blocks and items even without scanning them").define("showUnscannedAffinities", false);
         THEORYCRAFT_SPEED = builder.comment("Progress rate modifier for Research Table theory yields").defineEnum("theorycraftSpeed", TheorycraftSpeed.NORMAL);

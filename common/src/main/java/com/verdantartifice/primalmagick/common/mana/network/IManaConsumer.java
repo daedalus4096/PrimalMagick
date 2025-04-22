@@ -1,9 +1,11 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -128,6 +130,11 @@ public interface IManaConsumer extends IManaNetworkNode {
      * @param level the world in which this consumer resides
      */
     default void loadManaNetwork(@NotNull Level level) {
+        if (!Services.CONFIG.enableManaNetworking()) {
+            LogUtils.getLogger().warn("Mana networking not enabled; skipping default consumer bootstrap");
+            return;
+        }
+
         level.getProfiler().push("loadManaNetwork");
         level.getProfiler().push("defaultManaConsumer");
 

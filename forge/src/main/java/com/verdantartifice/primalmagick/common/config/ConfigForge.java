@@ -18,6 +18,7 @@ import java.nio.file.Path;
  */
 public class ConfigForge {
     protected static final String CATEGORY_MISC = "misc";
+    protected static final String CATEGORY_PERFORMANCE = "performance";
     protected static final String CATEGORY_RADIAL = "radial";
     
     protected static ForgeConfigSpec COMMON_CONFIG_SPEC;
@@ -29,7 +30,8 @@ public class ConfigForge {
     public static ForgeConfigSpec.BooleanValue RADIAL_RELEASE_TO_SWITCH;
     public static ForgeConfigSpec.BooleanValue RADIAL_CLIP_MOUSE;
     public static ForgeConfigSpec.BooleanValue RADIAL_ALLOW_CLICK_OUTSIDE_BOUNDS;
-    
+
+    public static ForgeConfigSpec.BooleanValue ENABLE_MANA_NETWORKING;
     public static ForgeConfigSpec.BooleanValue SHOW_UNSCANNED_AFFINITIES;
     public static ForgeConfigSpec.EnumValue<TheorycraftSpeed> THEORYCRAFT_SPEED;
     
@@ -41,6 +43,10 @@ public class ConfigForge {
     protected static void buildCommonConfigSpec() {
         // Define the common config file spec
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+
+        builder.comment("Performance settings").push(CATEGORY_PERFORMANCE);
+        ENABLE_MANA_NETWORKING = builder.comment("Whether to enable bootstrapping of mana networks").define("enableManaNetworking", true);
+        builder.pop();
         
         builder.comment("Misc settings").push(CATEGORY_MISC);
         SHOW_UNSCANNED_AFFINITIES = builder.comment("Show affinities of blocks and items even without scanning them").define("showUnscannedAffinities", false);
