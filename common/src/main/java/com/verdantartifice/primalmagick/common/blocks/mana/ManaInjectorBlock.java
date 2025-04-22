@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.mana;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.mana.network.IManaNetworkNode;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
@@ -74,6 +75,15 @@ public class ManaInjectorBlock extends BaseEntityBlock implements ITieredDevice 
         if (!pLevel.isClientSide && pPlacer instanceof Player player && pLevel.getBlockEntity(pPos) instanceof IOwnedTileEntity ownedTile) {
             ownedTile.setTileOwner(player);
         }
+    }
+
+    @Override
+    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        // Before the block entity is removed, test if it's a mana network node and if so, invalidate its route table
+        if (!pState.is(pNewState.getBlock()) && pLevel.getBlockEntity(pPos) instanceof IManaNetworkNode node) {
+            node.getRouteTable().invalidate();
+        }
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 
     @Override

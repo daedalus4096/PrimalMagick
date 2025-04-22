@@ -31,7 +31,7 @@ public class RouteTable {
 
     private TriFunction<Level, Optional<Source>, BlockPos, Set<Route>> allRoutesCache = FunctionUtils.memoize(this::getAllRoutesInner);
 
-    protected void invalidate() {
+    public void invalidate() {
         this.allRoutesCache = FunctionUtils.memoize(this::getAllRoutesInner);
     }
 

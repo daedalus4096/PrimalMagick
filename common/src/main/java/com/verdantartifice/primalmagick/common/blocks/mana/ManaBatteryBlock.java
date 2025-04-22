@@ -75,10 +75,12 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        // Drop the tile entity's inventory into the world when the block is replaced
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity tile = pLevel.getBlockEntity(pPos);
-            if (tile instanceof ManaBatteryTileEntity batteryTile) {
+        if (!pState.is(pNewState.getBlock())) {
+            if (pLevel.getBlockEntity(pPos) instanceof ManaBatteryTileEntity batteryTile) {
+                // Before the block entity is removed, invalidate its route table
+                batteryTile.getRouteTable().invalidate();
+
+                // Drop the tile entity's inventory into the world when the block is replaced
                 batteryTile.dropContents(pLevel, pPos);
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
             }

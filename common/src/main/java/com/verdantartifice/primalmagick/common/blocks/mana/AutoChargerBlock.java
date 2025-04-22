@@ -87,10 +87,12 @@ public class AutoChargerBlock extends BaseEntityBlock {
     
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Drop the tile entity's inventory into the world when the block is replaced
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof AutoChargerTileEntity castTile) {
+        if (!state.is(newState.getBlock())) {
+            if (worldIn.getBlockEntity(pos) instanceof AutoChargerTileEntity castTile) {
+                // Before the block entity is removed, invalidate its route table
+                castTile.getRouteTable().invalidate();
+
+                // Drop the tile entity's inventory into the world when the block is replaced
                 castTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
