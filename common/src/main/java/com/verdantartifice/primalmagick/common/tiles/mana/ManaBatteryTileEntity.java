@@ -8,9 +8,7 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
 import com.verdantartifice.primalmagick.common.mana.network.IManaNetworkNode;
-import com.verdantartifice.primalmagick.common.mana.network.IManaRelay;
 import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
-import com.verdantartifice.primalmagick.common.mana.network.Route;
 import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
@@ -52,11 +50,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -489,7 +485,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
-//        Set<Route> toAdd = new HashSet<>();
 
         // Search for mana suppliers and consumers which are in range of this node
         level.getProfiler().push("findNodes");
@@ -498,53 +493,21 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
                 .filter(Objects::nonNull)
                 .toList();
-        List<IManaConsumer> consumers = nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
-                .filter(Objects::nonNull)
-                .toList();
-        List<IManaSupplier> suppliers = nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
-                .filter(Objects::nonNull)
-                .toList();
 
         // Create direct routes from this supplier for terminus consumers
         level.getProfiler().popPush("createDirectConsumerEdges");
-        consumers.stream().filter(IManaConsumer::isTerminus)
-                .forEach(consumer -> this.getRouteTable().add(this, consumer));
-//                .map(consumer -> new Route(this, consumer))
-//                .filter(route -> route.isValid(level))
-//                .forEach(toAdd::add);
+        List<IManaConsumer> consumers = nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
+                .filter(Objects::nonNull)
+                .toList();
+        consumers.forEach(consumer -> this.getRouteTable().add(this, consumer));
 
         // Create direct routes to this consumer for origin suppliers
         level.getProfiler().popPush("createDirectSupplierEdges");
-        suppliers.stream().filter(IManaSupplier::isOrigin)
-                .forEach(supplier -> this.getRouteTable().add(supplier, this));
-//                .map(supplier -> new Route(supplier, this))
-//                .filter(route -> route.isValid(level))
-//                .forEach(toAdd::add);
-
-//        // For consumers that are actually relays, prepend this supplier to each of the routes that start in that consumer
-//        level.getProfiler().popPush("createConsumerRelayRoutes");
-//        consumers.stream().map(consumer -> consumer instanceof IManaRelay relay ? relay : null)
-//                .filter(Objects::nonNull)
-//                .flatMap(relay -> relay.getRouteTable().getRoutesForHead(relay).stream())
-//                .map(route -> route.pushHead(this, level))
-//                .filter(Optional::isPresent)
-//                .map(Optional::get)
-//                .filter(route -> route.isValid(level))
-//                .forEach(toAdd::add);
-
-//        // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
-//        level.getProfiler().popPush("createSupplierRelayRoutes");
-//        suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
-//                .filter(Objects::nonNull)
-//                .flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
-//                .map(route -> route.pushTail(this, level))
-//                .filter(Optional::isPresent)
-//                .map(Optional::get)
-//                .filter(route -> route.isValid(level))
-//                .forEach(toAdd::add);
+        List<IManaSupplier> suppliers = nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
+                .filter(Objects::nonNull)
+                .toList();
+        suppliers.forEach(supplier -> this.getRouteTable().add(supplier, this));
         level.getProfiler().pop();
-
-//        this.getRouteTable().addAll(toAdd);
 
         level.getProfiler().pop();
         level.getProfiler().pop();

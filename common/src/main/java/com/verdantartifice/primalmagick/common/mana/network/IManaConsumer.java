@@ -76,10 +76,7 @@ public interface IManaConsumer extends IManaNetworkNode {
         // Get the best route for each origin linked to this terminus that can carry the requested source
         level.getProfiler().push("findBestRoutes");
         List<Route> routes = routeTable.getAllRoutes(level, Optional.of(source), this).stream()
-//        List<Route> routes = routeTable.getLinkedOrigins(this, level).stream()
-//                .map(supplier -> routeTable.getRoute(level, Optional.of(source), supplier, this))
-//                .filter(Optional::isPresent)
-//                .map(Optional::get)
+                .filter(route -> route.isActive(level))
                 .sorted(Comparator.<Route, Integer>comparing(route -> route.getMaxThroughput(level)).reversed().thenComparing(Route::hashCode))
                 .toList();
 
@@ -136,7 +133,6 @@ public interface IManaConsumer extends IManaNetworkNode {
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
-//        Set<Route> toAdd = new HashSet<>();
 
         // Search for mana suppliers which are in range of this node
         level.getProfiler().push("findNodes");
@@ -148,25 +144,8 @@ public interface IManaConsumer extends IManaNetworkNode {
 
         // Create direct routes to this consumer for origin suppliers
         level.getProfiler().popPush("createDirectSupplierEdges");
-        suppliers.stream().filter(IManaSupplier::isOrigin)
-                .forEach(supplier -> this.getRouteTable().add(supplier, this));
-//                .map(supplier -> new Route(supplier, this))
-//                .filter(route -> route.isValid(level))
-//                .forEach(toAdd::add);
-
-//        // For suppliers that are actually relays, append this consumer to each of the routes that end in that supplier
-//        level.getProfiler().popPush("createRelayRoutes");
-//        suppliers.stream().map(supplier -> supplier instanceof IManaRelay relay ? relay : null)
-//                .filter(Objects::nonNull)
-//                .flatMap(relay -> relay.getRouteTable().getRoutesForTail(relay).stream())
-//                .map(route -> route.pushTail(this, level))
-//                .filter(Optional::isPresent)
-//                .map(Optional::get)
-//                .filter(route -> route.isValid(level))
-//                .forEach(toAdd::add);
+        suppliers.forEach(supplier -> this.getRouteTable().add(supplier, this));
         level.getProfiler().pop();
-
-//        this.getRouteTable().addAll(toAdd);
 
         level.getProfiler().pop();
         level.getProfiler().pop();

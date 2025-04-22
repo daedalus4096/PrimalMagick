@@ -44,7 +44,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Definition of an item for checking ritual altar and prop status.
@@ -112,7 +111,6 @@ public class DowsingRodItem extends Item {
             if (primaryPos != null && pLevel.getBlockEntity(primaryPos) instanceof IManaNetworkNode primaryNode) {
                 RouteTable routeTable = RouteManager.getRouteTable(pLevel);
                 Set<Route.Hop> connectedHops = routeTable.getAllRoutes(pLevel, Optional.empty(), primaryNode).stream()
-//                Set<Route.Hop> connectedHops = Stream.concat(routeTable.getRoutesForHead(primaryPos).stream(), routeTable.getRoutesForTail(primaryPos).stream())
                         .map(r -> r.getHops(pLevel))
                         .filter(Objects::nonNull)
                         .flatMap(Collection::stream)
