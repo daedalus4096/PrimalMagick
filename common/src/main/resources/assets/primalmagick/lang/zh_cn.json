@@ -820,6 +820,7 @@
   "event.primalmagick.scan.success": "你已经获得了有价值的研究数据",
   "event.primalmagick.scan.toobig": "那里有太多的物品要完全分析",
   "event.primalmagick.siphon_prompt": "感觉你的魔杖正把你拽向神殿中心的奇怪装置。如果你用魔杖呢？",
+  "event.primalmagick.wand_transform.wrong_bookshelf": "This isn't what you're looking for. Try a different type of bookshelf.",
   "event.primalmagick.wand_transform_hint": "这似乎起到了一些作用，但显然还不够。试着把魔杖挥得更久一点！",
   "expertise_group.primalmagick.ambrosia_basic": "Basic ambrosia",
   "expertise_group.primalmagick.ambrosia_greater": "Greater ambrosia",
