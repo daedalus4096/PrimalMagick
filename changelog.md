@@ -16,6 +16,7 @@ v6.0.5
 * Allowed mana fonts to stack to sixteen
 * Fixed a bug allowing Magick Protection to be applied to armor alongside other Protection-style enchants
 * Fixed a bug where the contents of Essence Casks would not be analyzed when scanned with the Arcanometer
+* Fixed a bug where the Grimoire entries for ritual tool rune enchantments would be prematurely unlocked
 
 v6.0.4
 ------

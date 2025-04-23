@@ -440,7 +440,7 @@ public class ResearchManager {
             if (entryComplete && !entry.addenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
                 RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
                 for (ResearchAddendum addendum : entry.addenda()) {
-                    if (addendum.completionRequirementOpt().isPresent() || addendum.completionRequirementOpt().get().isMetBy(player)) {
+                    if (addendum.completionRequirementOpt().isEmpty() || addendum.completionRequirementOpt().get().isMetBy(player)) {
                         // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
                         Set<RecipeHolder<?>> recipesToUnlock = addendum.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                         ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
