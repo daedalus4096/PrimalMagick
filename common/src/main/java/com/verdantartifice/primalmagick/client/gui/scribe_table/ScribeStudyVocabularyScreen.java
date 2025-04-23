@@ -164,7 +164,12 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     }
                     pGuiGraphics.blitSprite(ENABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
                     pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, textColor);
+                    textColor = 8453920;
                 }
+
+                // Draw the total number of levels required to choose the option
+                String costStr = "" + cost;
+                pGuiGraphics.drawString(this.font, costStr, slotTextStart + 86 - this.font.width(costStr), slotTop + 9, textColor);
             }
         }
     }
