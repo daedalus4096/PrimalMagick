@@ -995,7 +995,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("scribe_table").sub("button").sub("transcribe").output("Transcribe").end().build();
         this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("already_studied").output("Already studied").end().build();
         this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("study_count").output("Gain %2$d %1$s vocabulary").end().build();
-        this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("level_cost").output("Cost: %1$s").end().build();
+        this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("experience_cost").output("Cost: %1$s").end().build();
         this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("no_more_needed").output("Study not needed").end().build();
         this.tooltip("scribe_table").sub("widget").sub("language").output("%2$d %1$s vocabulary").end().build();
         this.tooltip("scribe_table").sub("grid").sub("reward").output("Unlocks: %1$s").end().build();
@@ -1042,6 +1042,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("unread_count").sub("discipline").sub("multiple").output("%1$d unread disciplines").end().build();
         this.tooltip("unread_count").sub("entry").sub("single").output("1 unread entry").end().build();
         this.tooltip("unread_count").sub("entry").sub("multiple").output("%1$d unread entries").end().build();
+        this.tooltip("experience").sub("one").output("1 Experience Point").end().build();
+        this.tooltip("experience").sub("many").output("%1$d Experience Points").end().build();
 
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$s %2$s mana").end().build();
