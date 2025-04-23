@@ -1624,6 +1624,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("dream_vision_talisman").sub("set_active").output("The talisman will now absorb experience.").end().build();
         this.event("dream_vision_talisman").sub("set_inactive").output("The talisman will no longer absorb experience.").end().build();
         this.event("wand_transform_hint").name("That seemed to do something, but apparently it wasn't enough. Try waving your wand for longer!").build();
+        this.event("wand_transform").sub("wrong_bookshelf").output("This isn't what you're looking for. Try a different type of bookshelf.").end().build();
         this.event("knowledge_item").sub("success").output("You have gained valuable arcane knowledge").end().build();
         this.event("knowledge_item").sub("failure").output("You can't make heads or tails of this").end().build();
         this.event("knowledge_item").sub("already_known").output("You already know everything this has to teach").end().build();

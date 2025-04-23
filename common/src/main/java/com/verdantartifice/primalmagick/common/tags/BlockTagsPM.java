@@ -20,6 +20,7 @@ public class BlockTagsPM {
     public static final TagKey<Block> DEAD_CORAL_BLOCKS = tag("dead_coral_blocks");
     public static final TagKey<Block> DEAD_CORAL_PLANTS = tag("dead_coral_plants");
     public static final TagKey<Block> DEAD_CORALS = tag("dead_corals");
+    public static final TagKey<Block> EMPTY_BOOKSHELVES = tag("empty_bookshelves");
     public static final TagKey<Block> ENCHANTING_TABLES = tag("enchanting_tables");
     public static final TagKey<Block> HALLOWOOD_LOGS = tag("hallowood_logs");
     public static final TagKey<Block> MOONWOOD_LOGS = tag("moonwood_logs");

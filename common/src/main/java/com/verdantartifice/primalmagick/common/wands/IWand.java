@@ -345,6 +345,10 @@ public interface IWand {
                     this.setPositionInUse(stack, context.getClickedPos());
                     return InteractionResult.SUCCESS;
                 }
+            } else if (transform.isSimilar(context.getLevel(), context.getPlayer(), context.getClickedPos())) {
+                // If the target is not valid for the transform, but is similar to one, show the player a warning message
+                transform.showSimilarityWarning(context.getLevel(), context.getPlayer(), context.getClickedPos());
+                return InteractionResult.FAIL;
             }
         }
         return InteractionResult.PASS;

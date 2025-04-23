@@ -9,6 +9,7 @@ v6.0.5
 * Greatly increased the mana regeneration rate of Heavenly Mana Fonts
 * Rebalanced mana consumption and storage capacity of magitech devices to account for the introduction of mana networking
 * Made item textures for energized gems more distinct from their parents' versions
+* Added a warning message for when the player tries to transform the wrong type of bookshelf into a Grimoire
 * Fixed various tooltips to refer to mana effectiveness instead of flat discounts
 * Fixed Flying Carpet research to only require knowledge of Insight Runes instead of Power Runes
 * Removed the Bloodletter from the research and prop requirements for Blood Roses and Emberflowers
