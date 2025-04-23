@@ -41,7 +41,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     protected static final int[] COSTS_PER_SLOT = new int[] { 25, 100, 300 };
 
     public final int[] costs = new int[3];
-    public final int[] minLevels = new int[] { 10, 20, 30 };
+    public final int[] minLevels = new int[] { 0, 15, 30 };
     private final DataSlot nameSeed = DataSlot.standalone();
     private final DataSlot languageClue = DataSlot.standalone();
     private final DataSlot vocabularyCount = DataSlot.standalone();

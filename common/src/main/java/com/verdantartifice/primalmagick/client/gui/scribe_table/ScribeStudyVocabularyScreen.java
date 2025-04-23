@@ -169,8 +169,10 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                 }
 
                 // Draw the total number of levels required to choose the option
-                String costStr = "" + minLevels;
-                pGuiGraphics.drawString(this.font, costStr, slotTextStart + 86 - this.font.width(costStr), slotTop + 9, textColor);
+                if (minLevels > 0) {
+                    String costStr = "" + minLevels;
+                    pGuiGraphics.drawString(this.font, costStr, slotTextStart + 86 - this.font.width(costStr), slotTop + 9, textColor);
+                }
             }
         }
     }
@@ -207,8 +209,10 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                         tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.experience_cost", costLine).withStyle(costColor));
 
                         // Add the level requirement tooltip line to the output
-                        ChatFormatting levelColor = this.minecraft.player.experienceLevel < minLevels ? ChatFormatting.RED : ChatFormatting.GRAY;
-                        tooltips.add(Component.translatable("container.enchant.level.requirement", minLevels).withStyle(levelColor));
+                        if (minLevels > 0) {
+                            ChatFormatting levelColor = this.minecraft.player.experienceLevel < minLevels ? ChatFormatting.RED : ChatFormatting.GRAY;
+                            tooltips.add(Component.translatable("container.enchant.level.requirement", minLevels).withStyle(levelColor));
+                        }
                     }
                     
                     // Show a warning if the player is trying to study vocabulary they don't need
