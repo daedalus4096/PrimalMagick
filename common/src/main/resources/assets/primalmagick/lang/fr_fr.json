@@ -820,6 +820,7 @@
   "event.primalmagick.scan.success": "You have gained valuable research data",
   "event.primalmagick.scan.toobig": "There are too many items there to scan completely",
   "event.primalmagick.siphon_prompt": "It feels like your wand is tugging you toward the strange device in the center of the shrine. What if you use the wand on it?",
+  "event.primalmagick.wand_transform.wrong_bookshelf": "This isn't what you're looking for. Try a different type of bookshelf.",
   "event.primalmagick.wand_transform_hint": "That seemed to do something, but apparently it wasn't enough. Try waving your wand for longer!",
   "expertise_group.primalmagick.ambrosia_basic": "Basic ambrosia",
   "expertise_group.primalmagick.ambrosia_greater": "Greater ambrosia",
