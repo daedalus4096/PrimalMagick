@@ -15,6 +15,7 @@ v6.0.5
 * Standardized the breaking times of many devices, to make it less painful to have to move them
 * Allowed mana fonts to stack to sixteen
 * Fixed a bug allowing Magick Protection to be applied to armor alongside other Protection-style enchants
+* Fixed a bug where the contents of Essence Casks would not be analyzed when scanned with the Arcanometer
 
 v6.0.4
 ------
