@@ -23,6 +23,8 @@ public class BlockTagsPM {
     public static final TagKey<Block> EMPTY_BOOKSHELVES = tag("empty_bookshelves");
     public static final TagKey<Block> ENCHANTING_TABLES = tag("enchanting_tables");
     public static final TagKey<Block> HALLOWOOD_LOGS = tag("hallowood_logs");
+    public static final TagKey<Block> LINGUISTICS_POWER_PROVIDERS = tag("linguistics_power_providers");
+    public static final TagKey<Block> LINGUISTICS_POWER_TRANSMITTERS = tag("linguistics_power_transmitters");
     public static final TagKey<Block> MOONWOOD_LOGS = tag("moonwood_logs");
     public static final TagKey<Block> RITUAL_CANDLES = tag("ritual_candles");
     public static final TagKey<Block> SHULKER_BOXES = tag("shulker_boxes");

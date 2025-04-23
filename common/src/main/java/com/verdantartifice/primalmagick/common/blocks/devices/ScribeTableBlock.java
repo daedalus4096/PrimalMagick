@@ -1,11 +1,14 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -26,6 +29,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.List;
+
 /**
  * Block definition for the scribe's table.  Allows players to play a minigame to increase their
  * comprehension of ancient languages, allowing them to translate ancient books found in the world.
@@ -36,6 +41,10 @@ public class ScribeTableBlock extends BaseEntityBlock {
     public static final MapCodec<ScribeTableBlock> CODEC = simpleCodec(ScribeTableBlock::new);
     
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final List<BlockPos> BOOKSHELF_OFFSETS = BlockPos.betweenClosedStream(-2, 0, -2, 2, 1, 2)
+            .filter(pos -> Math.abs(pos.getX()) == 2 || Math.abs(pos.getZ()) == 2)
+            .map(BlockPos::immutable)
+            .toList();
 
     public ScribeTableBlock(Block.Properties properties) {
         super(properties);
@@ -59,7 +68,6 @@ public class ScribeTableBlock extends BaseEntityBlock {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
@@ -108,5 +116,27 @@ public class ScribeTableBlock extends BaseEntityBlock {
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
+    }
+
+    public static boolean isValidBookshelf(Level level, BlockPos tablePos, BlockPos bookshelfPosOffset) {
+        return level.getBlockState(tablePos.offset(bookshelfPosOffset)).is(BlockTagsPM.LINGUISTICS_POWER_PROVIDERS) &&
+                level.getBlockState(tablePos.offset(bookshelfPosOffset.getX() / 2, bookshelfPosOffset.getY(), bookshelfPosOffset.getZ() / 2)).is(BlockTagsPM.LINGUISTICS_POWER_TRANSMITTERS);
+    }
+
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        super.animateTick(pState, pLevel, pPos, pRandom);
+        for (BlockPos offset : BOOKSHELF_OFFSETS) {
+            if (pRandom.nextInt(16) == 0 && isValidBookshelf(pLevel, pPos, offset)) {
+                // TODO Use ancient glyphs instead of Standard Galactic for particles
+                pLevel.addParticle(ParticleTypes.ENCHANT,
+                        pPos.getX() + 0.5D,
+                        pPos.getY() + 2.0D,
+                        pPos.getZ() + 0.5D,
+                        offset.getX() + pRandom.nextDouble() - 0.5D,
+                        offset.getY() - pRandom.nextDouble() - 1.0D,
+                        offset.getZ() + pRandom.nextDouble() - 0.5D);
+            }
+        }
     }
 }
