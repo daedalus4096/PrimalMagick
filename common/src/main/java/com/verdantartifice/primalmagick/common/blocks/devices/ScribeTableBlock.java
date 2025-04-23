@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -11,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -119,8 +122,15 @@ public class ScribeTableBlock extends BaseEntityBlock {
     }
 
     public static boolean isValidBookshelf(Level level, BlockPos tablePos, BlockPos bookshelfPosOffset) {
-        return level.getBlockState(tablePos.offset(bookshelfPosOffset)).is(BlockTagsPM.LINGUISTICS_POWER_PROVIDERS) &&
-                level.getBlockState(tablePos.offset(bookshelfPosOffset.getX() / 2, bookshelfPosOffset.getY(), bookshelfPosOffset.getZ() / 2)).is(BlockTagsPM.LINGUISTICS_POWER_TRANSMITTERS);
+        BlockPos bookshelfPos = tablePos.offset(bookshelfPosOffset);
+        return level.getBlockState(bookshelfPos).is(BlockTagsPM.LINGUISTICS_POWER_PROVIDERS) &&
+                level.getBlockState(tablePos.offset(bookshelfPosOffset.getX() / 2, bookshelfPosOffset.getY(), bookshelfPosOffset.getZ() / 2)).is(BlockTagsPM.LINGUISTICS_POWER_TRANSMITTERS) &&
+                hasBook(level, bookshelfPos);
+    }
+
+    public static boolean hasBook(Level level, BlockPos bookshelfPos) {
+        BlockState state = level.getBlockState(bookshelfPos);
+        return CarvedBookshelfBlock.SLOT_OCCUPIED_PROPERTIES.stream().anyMatch(prop -> state.hasProperty(prop) && state.getValue(prop));
     }
 
     @Override
