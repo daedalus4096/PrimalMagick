@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
+import com.verdantartifice.primalmagick.common.util.PlayerUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -33,6 +34,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * GUI screen for the study vocabulary mode of the scribe table block.
@@ -40,8 +42,8 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<ScribeStudyVocabularyMenu> {
-    private static final ResourceLocation[] ENABLED_LEVEL_SPRITES = new ResourceLocation[]{ResourceUtils.loc("scribe_table/level_1"), ResourceUtils.loc("scribe_table/level_2"), ResourceUtils.loc("scribe_table/level_3")};
-    private static final ResourceLocation[] DISABLED_LEVEL_SPRITES = new ResourceLocation[]{ResourceUtils.loc("scribe_table/level_1_disabled"), ResourceUtils.loc("scribe_table/level_2_disabled"), ResourceUtils.loc("scribe_table/level_3_disabled")};
+    private static final ResourceLocation[] ENABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 3).mapToObj("scribe_table/level_%d"::formatted).map(ResourceUtils::loc).toArray(ResourceLocation[]::new);
+    private static final ResourceLocation[] DISABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 3).mapToObj("scribe_table/level_%d_disabled"::formatted).map(ResourceUtils::loc).toArray(ResourceLocation[]::new);
     private static final ResourceLocation SLOT_DISABLED_SPRITE = ResourceUtils.loc("scribe_table/slot_disabled");
     private static final ResourceLocation SLOT_HIGHLIGHTED_SPRITE = ResourceUtils.loc("scribe_table/slot_highlighted");
     private static final ResourceLocation SLOT_SPRITE = ResourceUtils.loc("scribe_table/slot");
@@ -111,7 +113,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
         this.renderBook(pGuiGraphics, this.leftPos, this.topPos, pPartialTick);
-        EnchantmentNames.getInstance().initSeed((long)this.menu.getNameSeed());
+        EnchantmentNames.getInstance().initSeed(this.menu.getNameSeed());
         Holder.Reference<BookLanguage> activeLanguage = this.menu.getBookLanguage();
         
         // Update the vocabulary widget based on the current language in the menu
@@ -138,6 +140,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int slotTop = this.topPos + 42 + (19 * slotIndex);
             int cost = this.menu.costs[slotIndex];
+            int minLevels = this.menu.minLevels[slotIndex];
             int textColor = 6839882;
             int textWidth = 86;
             if (cost <= 0) {
@@ -150,9 +153,12 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
             } else {
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
                 FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.value().style()), textWidth, Style.EMPTY);
-                if (!this.minecraft.player.getAbilities().instabuild && this.minecraft.player.experienceLevel < cost) {
+                int levelCount = this.menu.levelCostClues[slotIndex];
+                if (!this.minecraft.player.getAbilities().instabuild && (this.minecraft.player.experienceLevel < minLevels || !PlayerUtils.canAffordXp(this.minecraft.player, cost))) {
                     pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
-                    pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
+                    if (levelCount > 0 && levelCount <= DISABLED_LEVEL_SPRITES.length) {
+                        pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
+                    }
                     pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, (textColor & 16711422) >> 1);
                 } else {
                     // Highlight all non-disabled slots up to and including the hovered slot
@@ -162,8 +168,20 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     } else {
                         pGuiGraphics.blitSprite(SLOT_SPRITE, slotLeft, slotTop, 108, 19);
                     }
-                    pGuiGraphics.blitSprite(ENABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
+
+                    // Render a level cost indicator for the number of full or partial levels that will be deducted
+                    if (levelCount > 0 && levelCount <= ENABLED_LEVEL_SPRITES.length) {
+                        pGuiGraphics.blitSprite(ENABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
+                    }
+
                     pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, textColor);
+                    textColor = 8453920;
+                }
+
+                // Draw the total number of levels required to choose the option
+                if (minLevels > 0) {
+                    String costStr = "" + minLevels;
+                    pGuiGraphics.drawString(this.font, costStr, slotTextStart + 86 - this.font.width(costStr), slotTop + 9, textColor);
                 }
             }
         }
@@ -174,6 +192,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int cost = this.menu.costs[slotIndex];
+            int minLevels = this.menu.minLevels[slotIndex];
             if (this.isHovering(60, 42 + 19 * slotIndex, 108, 17, (double)pMouseX, (double)pMouseY) && cost > 0) {
                 // Determine how many vocabulary levels are awarded by the slot, if any
                 int studyDelta = 0;
@@ -193,13 +212,16 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     // Only process experience level costs if not in creative mode
                     if (!this.minecraft.player.getAbilities().instabuild) {
                         tooltips.add(CommonComponents.EMPTY);
-                        if (this.minecraft.player.experienceLevel < cost) {
-                            // Show a warning if the player doesn't have enough levels to perform the study
-                            tooltips.add(Component.translatable("container.enchant.level.requirement", this.menu.costs[slotIndex]).withStyle(ChatFormatting.RED));
-                        } else {
-                            // Add the level cost tooltip line to the output
-                            MutableComponent costLine = cost == 1 ? Component.translatable("container.enchant.level.one") : Component.translatable("container.enchant.level.many", cost);
-                            tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.level_cost", costLine).withStyle(ChatFormatting.GRAY));
+
+                        // Add the experience cost tooltip line to the output
+                        ChatFormatting costColor = PlayerUtils.canAffordXp(this.minecraft.player, cost) ? ChatFormatting.GRAY : ChatFormatting.RED;
+                        MutableComponent costLine = cost == 1 ? Component.translatable("tooltip.primalmagick.experience.one") : Component.translatable("tooltip.primalmagick.experience.many", cost);
+                        tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.experience_cost", costLine).withStyle(costColor));
+
+                        // Add the level requirement tooltip line to the output
+                        if (minLevels > 0) {
+                            ChatFormatting levelColor = this.minecraft.player.experienceLevel < minLevels ? ChatFormatting.RED : ChatFormatting.GRAY;
+                            tooltips.add(Component.translatable("container.enchant.level.requirement", minLevels).withStyle(levelColor));
                         }
                     }
                     

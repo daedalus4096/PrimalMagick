@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.blocks.devices.ScribeTableBlock;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -13,6 +14,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
+import com.verdantartifice.primalmagick.common.util.PlayerUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -21,6 +23,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
@@ -38,8 +41,11 @@ import java.util.Optional;
 public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     public static final ResourceLocation BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
     protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
+    protected static final int[] COSTS_PER_SLOT = new int[] { 25, 100, 300 };
 
     public final int[] costs = new int[3];
+    public final int[] levelCostClues = new int[3];
+    public final int[] minLevels = new int[] { 0, 15, 30 };
     private final DataSlot nameSeed = DataSlot.standalone();
     private final DataSlot languageClue = DataSlot.standalone();
     private final DataSlot vocabularyCount = DataSlot.standalone();
@@ -55,6 +61,12 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         this.addDataSlot(DataSlot.shared(this.costs, 0));
         this.addDataSlot(DataSlot.shared(this.costs, 1));
         this.addDataSlot(DataSlot.shared(this.costs, 2));
+        this.addDataSlot(DataSlot.shared(this.levelCostClues, 0));
+        this.addDataSlot(DataSlot.shared(this.levelCostClues, 1));
+        this.addDataSlot(DataSlot.shared(this.levelCostClues, 2));
+        this.addDataSlot(DataSlot.shared(this.minLevels, 0));
+        this.addDataSlot(DataSlot.shared(this.minLevels, 1));
+        this.addDataSlot(DataSlot.shared(this.minLevels, 2));
         this.addDataSlot(this.nameSeed).set(this.player.getEnchantmentSeed());
         this.addDataSlot(this.languageClue);
         this.addDataSlot(this.vocabularyCount);
@@ -83,15 +95,21 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         ItemStack bookStack = this.studySlot.getItem();
         if (bookStack.is(ItemTagsPM.STATIC_BOOKS)) {
             this.getContainerLevelAccess().execute((level, blockPos) -> {
+                int linguisticsPower = ScribeTableBlock.getLinguisticsPower(level, blockPos, this.player);
+                float costModifier = 1F - (linguisticsPower / 100F);
                 Optional<Holder<BookLanguage>> langHolderOpt = StaticBookItem.getBookLanguage(bookStack);
                 langHolderOpt.ifPresentOrElse(lang -> {
                     int studyCount = StaticBookItem.getBookDefinition(bookStack).map(h -> LinguisticsManager.getTimesStudied(this.player, h, lang)).orElse(0);
                     for (int index = 0; index < 3; index++) {
                         // Set the cost of each slot, including the cost of any previous unstudied slots.  Studied slots are given a cost
-                        // of -1 as a marker.  In isolation, each slot's cost is equal to its index plus one (i.e. 1, 2, and 3 respectively).
-                        // Thus, the final costs in the case where none have been studied would be 1, 3, and 6 respectively.  If, rather, the
-                        // first slot had been studied, the costs would instead be -1, 2, and 5 respectively.
-                        this.costs[index] = (index >= studyCount) ? index + 1 + (index > 0 ? Math.max(this.costs[index - 1], 0) : 0) : -1;
+                        // of -1 as a marker.  In isolation, each slot's cost is equal to its indexed value in COSTS_PER_SLOT (i.e. 25, 100, 300
+                        // respectively.  Thus, the final costs in the case where none have been studied would be 25, 125, and 425 respectively.
+                        // If, rather, the first slot had been studied, the costs would instead be -1, 100, and 400 respectively.  In addition,
+                        // each slot's based cost is reduced by 1% per linguistics power being channeled into the block by its surroundings.  To
+                        // extend the previous example, with 20 linguistics power, the final costs would then be -1, 80, and 320 respectively.
+                        int baseCost = Math.round(COSTS_PER_SLOT[index] * costModifier);
+                        this.costs[index] = (index >= studyCount) ? baseCost + (index > 0 ? Math.max(this.costs[index - 1], 0) : 0) : -1;
+                        this.levelCostClues[index] = getLevelCostClue(this.costs[index], this.player);
                     }
                     this.languageClue.set(lang.getRegisteredName().hashCode());
                     this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
@@ -103,10 +121,22 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             this.setDefaultBookData();
         }
     }
-    
+
+    private static int getLevelCostClue(final int xpCost, Player player) {
+        int retVal = 0;
+        int currentCost = xpCost;
+        int currentLevel = player.experienceLevel;
+        while (currentCost > 0) {
+            retVal++;
+            currentCost -= PlayerUtils.getXpNeededForNextLevel(currentLevel--);
+        }
+        return Mth.clamp(retVal, 0, 3);
+    }
+
     protected void setDefaultBookData() {
         for (int index = 0; index < 3; index++) {
             this.costs[index] = 0;
+            this.levelCostClues[index] = 0;
         }
         this.languageClue.set(BookLanguagesPM.DEFAULT.location().toString().hashCode());
         this.vocabularyCount.set(0);
@@ -116,7 +146,9 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         // Check if the given player is allowed to study vocabulary in the given slot
         if (slotId >= 0 && slotId < this.costs.length) {
             ItemStack bookStack = this.studySlot.getItem();
-            return (this.costs[slotId] > 0 && !bookStack.isEmpty() && (player.experienceLevel >= this.costs[slotId] || player.getAbilities().instabuild));
+            return (this.costs[slotId] > 0 &&
+                    !bookStack.isEmpty() &&
+                    ((player.experienceLevel >= this.minLevels[slotId] && PlayerUtils.canAffordXp(player, this.costs[slotId])) || player.getAbilities().instabuild));
         } else {
             LOGGER.error("{} pressed invalid study vocabulary slot index {}", player.getName().getString(), slotId);
             return false;
@@ -140,7 +172,8 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
 
                 if (studyDelta > 0) {
                     // Deduct the experience cost for the study and update the player's enchantment seed
-                    player.onEnchantmentPerformed(ItemStack.EMPTY, this.costs[slotId]);
+                    player.giveExperiencePoints(-this.costs[slotId]);
+                    player.onEnchantmentPerformed(ItemStack.EMPTY, 0);
                     
                     // Grant the player increased vocabulary for the book's language
                     LinguisticsManager.incrementVocabulary(player, bookLanguage, studyDelta);

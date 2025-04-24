@@ -1,6 +1,5 @@
 v6.0.5
 ------
-* Added an affinity index to the Grimoire, to remind you of all the data you've analyzed
 * Added Mana Injectors, to let Magitech devices pull mana directly from fonts
 * Added Mana Relays, to extend the range of your mana distribution network
 * Magitech devices compatible with Mana Injectors now also accept material inputs from hoppers attached to the sides of the block, in addition to the top
@@ -8,6 +7,9 @@ v6.0.5
 * Greatly decreased the mana regeneration rate of Artificial Mana Fonts
 * Greatly increased the mana regeneration rate of Heavenly Mana Fonts
 * Rebalanced mana consumption and storage capacity of magitech devices to account for the introduction of mana networking
+* Added an affinity index to the Grimoire, to remind you of all the data you've analyzed
+* Changed Scribe's Table vocabulary costs from levels to a flat number of experience points
+* Previously studied ancient books in chiseled or carved bookshelves near the Scribe's Table now grant an experience discount when studying vocabulary
 * Made item textures for energized gems more distinct from their parents' versions
 * Added a warning message for when the player tries to transform the wrong type of bookshelf into a Grimoire
 * Fixed various tooltips to refer to mana effectiveness instead of flat discounts
