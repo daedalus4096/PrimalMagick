@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
+import com.verdantartifice.primalmagick.common.util.PlayerUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -127,20 +128,9 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         int currentLevel = player.experienceLevel;
         while (currentCost > 0) {
             retVal++;
-            currentCost -= getXpNeededForNextLevel(currentLevel--);
+            currentCost -= PlayerUtils.getXpNeededForNextLevel(currentLevel--);
         }
         return Mth.clamp(retVal, 0, 3);
-    }
-
-    /**
-     * @see Player#getXpNeededForNextLevel()
-     */
-    private static int getXpNeededForNextLevel(int currentLevel) {
-        if (currentLevel >= 30) {
-            return 112 + (currentLevel - 30) * 9;
-        } else {
-            return currentLevel >= 15 ? 37 + (currentLevel - 15) * 5 : 7 + currentLevel * 2;
-        }
     }
 
     protected void setDefaultBookData() {
@@ -158,7 +148,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             ItemStack bookStack = this.studySlot.getItem();
             return (this.costs[slotId] > 0 &&
                     !bookStack.isEmpty() &&
-                    ((player.experienceLevel >= this.minLevels[slotId] && player.totalExperience >= this.costs[slotId]) || player.getAbilities().instabuild));
+                    ((player.experienceLevel >= this.minLevels[slotId] && PlayerUtils.canAffordXp(player, this.costs[slotId])) || player.getAbilities().instabuild));
         } else {
             LOGGER.error("{} pressed invalid study vocabulary slot index {}", player.getName().getString(), slotId);
             return false;

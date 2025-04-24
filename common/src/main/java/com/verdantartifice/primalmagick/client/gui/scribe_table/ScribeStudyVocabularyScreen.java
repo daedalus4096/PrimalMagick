@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
+import com.verdantartifice.primalmagick.common.util.PlayerUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -153,7 +154,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
                 FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.value().style()), textWidth, Style.EMPTY);
                 int levelCount = this.menu.levelCostClues[slotIndex];
-                if (!this.minecraft.player.getAbilities().instabuild && (this.minecraft.player.experienceLevel < minLevels || this.minecraft.player.totalExperience < cost)) {
+                if (!this.minecraft.player.getAbilities().instabuild && (this.minecraft.player.experienceLevel < minLevels || !PlayerUtils.canAffordXp(this.minecraft.player, cost))) {
                     pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
                     if (levelCount > 0 && levelCount <= DISABLED_LEVEL_SPRITES.length) {
                         pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
@@ -213,7 +214,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                         tooltips.add(CommonComponents.EMPTY);
 
                         // Add the experience cost tooltip line to the output
-                        ChatFormatting costColor = this.minecraft.player.totalExperience < cost ? ChatFormatting.RED : ChatFormatting.GRAY;
+                        ChatFormatting costColor = PlayerUtils.canAffordXp(this.minecraft.player, cost) ? ChatFormatting.GRAY : ChatFormatting.RED;
                         MutableComponent costLine = cost == 1 ? Component.translatable("tooltip.primalmagick.experience.one") : Component.translatable("tooltip.primalmagick.experience.many", cost);
                         tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.experience_cost", costLine).withStyle(costColor));
 
