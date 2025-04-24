@@ -297,6 +297,7 @@ public class BlockStateProviderPMForge extends BlockStateProvider {
         this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_ENCHANTED.get());
         this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_FORBIDDEN.get());
         this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_HEAVENLY.get());
+        this.horizontalExistingBlockWithItem(BlocksPM.DESALINATOR.get());
 
         // Generate misc blocks
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item

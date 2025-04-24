@@ -363,6 +363,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MANA_INJECTOR_ENCHANTED).name("Enchanted Mana Injector").build();
         this.block(BlocksPM.MANA_INJECTOR_FORBIDDEN).name("Forbidden Mana Injector").build();
         this.block(BlocksPM.MANA_INJECTOR_HEAVENLY).name("Heavenly Mana Injector").build();
+        this.block(BlocksPM.DESALINATOR).name("Desalinator").build();
 
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();

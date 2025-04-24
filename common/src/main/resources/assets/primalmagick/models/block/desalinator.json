@@ -1,6 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
+	"render_type": "translucent",
+	"ambientocclusion": false,
 	"textures": {
 		"0": "block/copper_block",
 		"1": "primalmagick:block/salt_block",

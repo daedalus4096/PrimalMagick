@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "primalmagick:block/desalinator",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "primalmagick:block/desalinator"
+    },
+    "facing=south": {
+      "model": "primalmagick:block/desalinator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "primalmagick:block/desalinator",
+      "y": 270
+    }
+  }
+}

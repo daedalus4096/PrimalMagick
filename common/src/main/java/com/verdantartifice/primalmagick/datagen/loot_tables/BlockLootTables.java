@@ -112,6 +112,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.MANA_INJECTOR_ENCHANTED.get());
         this.registerBasicTable(BlocksPM.MANA_INJECTOR_FORBIDDEN.get());
         this.registerBasicTable(BlocksPM.MANA_INJECTOR_HEAVENLY.get());
+        this.registerBasicTable(BlocksPM.DESALINATOR.get());
 
         // Register misc loot tables
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());
