@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.blocks.devices.ScribeTableBlock;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -88,15 +89,20 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         ItemStack bookStack = this.studySlot.getItem();
         if (bookStack.is(ItemTagsPM.STATIC_BOOKS)) {
             this.getContainerLevelAccess().execute((level, blockPos) -> {
+                int linguisticsPower = ScribeTableBlock.getLinguisticsPower(level, blockPos, this.player);
+                float costModifier = 1F - (linguisticsPower / 100F);
                 Optional<Holder<BookLanguage>> langHolderOpt = StaticBookItem.getBookLanguage(bookStack);
                 langHolderOpt.ifPresentOrElse(lang -> {
                     int studyCount = StaticBookItem.getBookDefinition(bookStack).map(h -> LinguisticsManager.getTimesStudied(this.player, h, lang)).orElse(0);
                     for (int index = 0; index < 3; index++) {
                         // Set the cost of each slot, including the cost of any previous unstudied slots.  Studied slots are given a cost
-                        // of -1 as a marker.  In isolation, each slot's cost is equal to its index plus one (i.e. 1, 2, and 3 respectively).
-                        // Thus, the final costs in the case where none have been studied would be 1, 3, and 6 respectively.  If, rather, the
-                        // first slot had been studied, the costs would instead be -1, 2, and 5 respectively.
-                        this.costs[index] = (index >= studyCount) ? COSTS_PER_SLOT[index] + (index > 0 ? Math.max(this.costs[index - 1], 0) : 0) : -1;
+                        // of -1 as a marker.  In isolation, each slot's cost is equal to its indexed value in COSTS_PER_SLOT (i.e. 25, 100, 300
+                        // respectively.  Thus, the final costs in the case where none have been studied would be 25, 125, and 425 respectively.
+                        // If, rather, the first slot had been studied, the costs would instead be -1, 100, and 400 respectively.  In addition,
+                        // each slot's based cost is reduced by 1% per linguistics power being channeled into the block by its surroundings.  To
+                        // extend the previous example, with 20 linguistics power, the final costs would then be -1, 80, and 320 respectively.
+                        int baseCost = Math.round(COSTS_PER_SLOT[index] * costModifier);
+                        this.costs[index] = (index >= studyCount) ? baseCost + (index > 0 ? Math.max(this.costs[index - 1], 0) : 0) : -1;
                     }
                     this.languageClue.set(lang.getRegisteredName().hashCode());
                     this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
