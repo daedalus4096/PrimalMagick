@@ -22,6 +22,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
@@ -42,6 +43,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     protected static final int[] COSTS_PER_SLOT = new int[] { 25, 100, 300 };
 
     public final int[] costs = new int[3];
+    public final int[] levelCostClues = new int[3];
     public final int[] minLevels = new int[] { 0, 15, 30 };
     private final DataSlot nameSeed = DataSlot.standalone();
     private final DataSlot languageClue = DataSlot.standalone();
@@ -58,6 +60,9 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         this.addDataSlot(DataSlot.shared(this.costs, 0));
         this.addDataSlot(DataSlot.shared(this.costs, 1));
         this.addDataSlot(DataSlot.shared(this.costs, 2));
+        this.addDataSlot(DataSlot.shared(this.levelCostClues, 0));
+        this.addDataSlot(DataSlot.shared(this.levelCostClues, 1));
+        this.addDataSlot(DataSlot.shared(this.levelCostClues, 2));
         this.addDataSlot(DataSlot.shared(this.minLevels, 0));
         this.addDataSlot(DataSlot.shared(this.minLevels, 1));
         this.addDataSlot(DataSlot.shared(this.minLevels, 2));
@@ -103,6 +108,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                         // extend the previous example, with 20 linguistics power, the final costs would then be -1, 80, and 320 respectively.
                         int baseCost = Math.round(COSTS_PER_SLOT[index] * costModifier);
                         this.costs[index] = (index >= studyCount) ? baseCost + (index > 0 ? Math.max(this.costs[index - 1], 0) : 0) : -1;
+                        this.levelCostClues[index] = getLevelCostClue(this.costs[index], this.player);
                     }
                     this.languageClue.set(lang.getRegisteredName().hashCode());
                     this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
@@ -114,10 +120,33 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             this.setDefaultBookData();
         }
     }
-    
+
+    private static int getLevelCostClue(final int xpCost, Player player) {
+        int retVal = 0;
+        int currentCost = xpCost;
+        int currentLevel = player.experienceLevel;
+        while (currentCost > 0) {
+            retVal++;
+            currentCost -= getXpNeededForNextLevel(currentLevel--);
+        }
+        return Mth.clamp(retVal, 0, 3);
+    }
+
+    /**
+     * @see Player#getXpNeededForNextLevel()
+     */
+    private static int getXpNeededForNextLevel(int currentLevel) {
+        if (currentLevel >= 30) {
+            return 112 + (currentLevel - 30) * 9;
+        } else {
+            return currentLevel >= 15 ? 37 + (currentLevel - 15) * 5 : 7 + currentLevel * 2;
+        }
+    }
+
     protected void setDefaultBookData() {
         for (int index = 0; index < 3; index++) {
             this.costs[index] = 0;
+            this.levelCostClues[index] = 0;
         }
         this.languageClue.set(BookLanguagesPM.DEFAULT.location().toString().hashCode());
         this.vocabularyCount.set(0);

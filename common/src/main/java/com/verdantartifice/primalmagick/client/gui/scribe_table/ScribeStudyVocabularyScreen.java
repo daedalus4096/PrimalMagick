@@ -152,9 +152,12 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
             } else {
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
                 FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.value().style()), textWidth, Style.EMPTY);
+                int levelCount = this.menu.levelCostClues[slotIndex];
                 if (!this.minecraft.player.getAbilities().instabuild && (this.minecraft.player.experienceLevel < minLevels || this.minecraft.player.totalExperience < cost)) {
                     pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
-                    pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
+                    if (levelCount > 0 && levelCount <= DISABLED_LEVEL_SPRITES.length) {
+                        pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
+                    }
                     pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, (textColor & 16711422) >> 1);
                 } else {
                     // Highlight all non-disabled slots up to and including the hovered slot
@@ -164,7 +167,12 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     } else {
                         pGuiGraphics.blitSprite(SLOT_SPRITE, slotLeft, slotTop, 108, 19);
                     }
-                    pGuiGraphics.blitSprite(ENABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
+
+                    // Render a level cost indicator for the number of full or partial levels that will be deducted
+                    if (levelCount > 0 && levelCount <= ENABLED_LEVEL_SPRITES.length) {
+                        pGuiGraphics.blitSprite(ENABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
+                    }
+
                     pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, textColor);
                     textColor = 8453920;
                 }
