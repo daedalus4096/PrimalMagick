@@ -21,6 +21,8 @@ public class CapabilityEvents {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.CONCOCTER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.CONCOCTER.get(), (be, context) -> be.getUncachedTileResearchCache());
         event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.CONCOCTER.get(), (be, context) -> be.getUncachedManaStorage());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.DESALINATOR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.DESALINATOR.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.ESSENCE_CASK.get(), (be, face) -> cast(be.getRawItemHandler(face)));

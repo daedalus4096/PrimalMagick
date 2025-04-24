@@ -1,10 +1,14 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -82,25 +86,33 @@ public class DesalinatorBlock extends BaseEntityBlock {
 
     @Override
     public @NotNull BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        // TODO Stub
-        return null;
+        return Services.BLOCK_ENTITY_PROTOTYPES.desalinator().create(blockPos, blockState);
     }
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        // TODO Stub
-        return super.getTicker(pLevel, pState, pBlockEntityType);
+        return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.DESALINATOR.get(), Services.BLOCK_ENTITY_TICKERS.desalinator());
     }
 
     @Override
     protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        // TODO Stub
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+        if (!pState.is(pNewState.getBlock())) {
+            if (pLevel.getBlockEntity(pPos) instanceof DesalinatorTileEntity desalinatorTile) {
+                desalinatorTile.dropContents(pLevel, pPos);
+                pLevel.updateNeighbourForOutputSignal(pPos, this);
+            }
+            super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+        }
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        // TODO Stub
-        return super.useWithoutItem(pState, pLevel, pPos, pPlayer, pHitResult);
+        if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
+            // Open the GUI for the desalinator
+            if (pLevel.getBlockEntity(pPos) instanceof DesalinatorTileEntity desalinatorTile) {
+                Services.PLAYER.openMenu(serverPlayer, desalinatorTile, desalinatorTile.getBlockPos());
+            }
+        }
+        return InteractionResult.SUCCESS;
     }
 }

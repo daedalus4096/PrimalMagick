@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.platform;
 
+import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaInjectorTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaRelayTileEntityNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
@@ -63,6 +65,11 @@ public class BlockEntityPrototypeServiceNeoforge implements IBlockEntityPrototyp
     @Override
     public BlockEntityType.BlockEntitySupplier<RunecarvingTableTileEntity> runecarvingTable() {
         return RunecarvingTableTileEntityNeoforge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<DesalinatorTileEntity> desalinator() {
+        return DesalinatorTileEntityNeoforge::new;
     }
 
     @Override

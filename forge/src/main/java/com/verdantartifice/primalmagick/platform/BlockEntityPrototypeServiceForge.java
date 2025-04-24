@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntit
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntityForge;
+import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntityForge;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
@@ -63,6 +65,11 @@ public class BlockEntityPrototypeServiceForge implements IBlockEntityPrototypeSe
     @Override
     public BlockEntityType.BlockEntitySupplier<RunecarvingTableTileEntity> runecarvingTable() {
         return RunecarvingTableTileEntityForge::new;
+    }
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<DesalinatorTileEntity> desalinator() {
+        return DesalinatorTileEntityForge::new;
     }
 
     @Override
