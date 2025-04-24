@@ -41,6 +41,7 @@ public class ParticleTypesPM {
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> DRIPPING_BLOOD_DROP = registerSimple("dripping_blood_drop", false);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> FALLING_BLOOD_DROP = registerSimple("falling_blood_drop", false);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> LANDING_BLOOD_DROP = registerSimple("landing_blood_drop", false);
+    public static final IRegistryItem<ParticleType<?>, SimpleParticleType> LINGUISTICS = registerSimple("linguistics", false);
     
     private static IRegistryItem<ParticleType<?>, SimpleParticleType> registerSimple(String name, boolean overrideLimiter) {
         return Services.PARTICLE_TYPES_REGISTRY.register(name, () -> new SimpleParticleType(overrideLimiter));

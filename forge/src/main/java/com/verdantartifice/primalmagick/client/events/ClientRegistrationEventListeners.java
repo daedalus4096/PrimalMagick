@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
 import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecoratorForge;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import net.minecraft.client.particle.FlyTowardsPositionParticle;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.IItemDecorator;
 import net.minecraftforge.client.event.ModelEvent;
@@ -49,6 +50,7 @@ public class ClientRegistrationEventListeners {
         event.registerSpriteSet(ParticleTypesPM.INFERNAL_FLAME.get(), InfernalFlameParticle.Factory::new);
         event.registerSpriteSet(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Factory::new);
         event.registerSpriteSet(ParticleTypesPM.VOID_SMOKE.get(), AirCurrentParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.LINGUISTICS.get(), FlyTowardsPositionParticle.EnchantProvider::new);
     }
     
     @SubscribeEvent

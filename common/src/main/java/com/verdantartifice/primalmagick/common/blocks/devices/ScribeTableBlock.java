@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
@@ -13,7 +14,6 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
@@ -204,8 +204,7 @@ public class ScribeTableBlock extends BaseEntityBlock {
         super.animateTick(pState, pLevel, pPos, pRandom);
         for (BlockPos offset : BOOKSHELF_OFFSETS) {
             if (pRandom.nextInt(16) == 0 && isValidBookshelf(pLevel, pPos, offset)) {
-                // TODO Use ancient glyphs instead of Standard Galactic for particles
-                pLevel.addParticle(ParticleTypes.ENCHANT,
+                pLevel.addParticle(ParticleTypesPM.LINGUISTICS.get(),
                         pPos.getX() + 0.5D,
                         pPos.getY() + 2.0D,
                         pPos.getZ() + 0.5D,
