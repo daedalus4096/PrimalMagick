@@ -1,14 +1,29 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEntity;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
 
 /**
  * Server data container for the desalinator GUI.
@@ -16,11 +31,14 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorTileEntity> {
+    public static final ResourceLocation BUCKET_SLOT_TEXTURE = ResourceUtils.loc("item/empty_bucket_slot");
+    public static final ResourceLocation BOTTLE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_bottle_slot");
+    public static final ResourceLocation FLASK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_flask_slot");
+    protected static final Component WATER_BUCKET_TOOLTIP = Component.translatable("tooltip.primalmagick.desalinator.slot.water_bucket");
+    protected static final AbstractRequirement<?> FLASK_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CONCOCTING_TINCTURES));
+
     protected final ContainerData containerData;
     protected final Slot waterBucketSlot;
-    protected final Slot saltSlot;
-    protected final Slot essenceSlot;
-    protected final Slot emptyBucketSlot;
     protected final Slot wandSlot;
 
     public DesalinatorMenu(int id, Inventory playerInv, BlockPos tilePos) {
@@ -32,11 +50,24 @@ public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorT
         checkContainerDataCount(containerData, 6);
         this.containerData = containerData;
 
-        // TODO Slot 0: water bucket input
-        // TODO Slot 1: salt output
-        // TODO Slot 2: essence output
-        // TODO Slot 3: empty bucket output
-        // TODO Slot 4: wand input
+        // Slot 0: water bucket input
+        this.waterBucketSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(DesalinatorTileEntity.INPUT_INV_INDEX), 0, 30, 17,
+                new FilteredSlotProperties().filter(DesalinatorMenu::isFullWaterContainer).tooltip(WATER_BUCKET_TOOLTIP)
+                        .background(BUCKET_SLOT_TEXTURE)
+                        .background(BOTTLE_SLOT_TEXTURE)
+                        .background(FLASK_SLOT_TEXTURE, $ -> FLASK_REQUIREMENT.isMetBy(playerInv.player))));
+
+        // Slot 1: salt output
+        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(DesalinatorTileEntity.OUTPUT_INV_INDEX), 0, 108, 45));
+
+        // Slot 2: essence output
+        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(DesalinatorTileEntity.OUTPUT_INV_INDEX), 1, 130, 45));
+
+        // Slot 3: empty bucket output
+        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(DesalinatorTileEntity.OUTPUT_INV_INDEX), 2, 30, 72));
+
+        // Slot 4: wand input
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(DesalinatorTileEntity.WAND_INV_INDEX), 0, 8, 72, false));
 
         // Slots 5-31: player backpack
         for (int i = 0; i < 3; i++) {
@@ -51,6 +82,13 @@ public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorT
         }
 
         this.addDataSlots(this.containerData);
+    }
+
+    private static boolean isFullWaterContainer(ItemStack stack) {
+        // Water buckets, water bottles, and water flasks are allowed; nothing else
+        return stack.is(Items.WATER_BUCKET) ||
+                (stack.is(Items.POTION) && stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).is(Potions.WATER)) ||
+                (stack.is(ItemsPM.CONCOCTION.get()) && stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).is(Potions.WATER));
     }
 
     @Override
