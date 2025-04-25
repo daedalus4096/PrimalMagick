@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -12,7 +10,6 @@ import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEnti
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -21,9 +18,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
 
 /**
  * Server data container for the desalinator GUI.
@@ -52,7 +46,7 @@ public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorT
 
         // Slot 0: water bucket input
         this.waterBucketSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(DesalinatorTileEntity.INPUT_INV_INDEX), 0, 30, 17,
-                new FilteredSlotProperties().filter(DesalinatorMenu::isFullWaterContainer).tooltip(WATER_BUCKET_TOOLTIP)
+                new FilteredSlotProperties().filter(DesalinatorTileEntity::isFullWaterContainer).tooltip(WATER_BUCKET_TOOLTIP)
                         .background(BUCKET_SLOT_TEXTURE)
                         .background(BOTTLE_SLOT_TEXTURE)
                         .background(FLASK_SLOT_TEXTURE, $ -> FLASK_REQUIREMENT.isMetBy(playerInv.player))));
@@ -82,13 +76,6 @@ public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorT
         }
 
         this.addDataSlots(this.containerData);
-    }
-
-    private static boolean isFullWaterContainer(ItemStack stack) {
-        // Water buckets, water bottles, and water flasks are allowed; nothing else
-        return stack.is(Items.WATER_BUCKET) ||
-                (stack.is(Items.POTION) && stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).is(Potions.WATER)) ||
-                (stack.is(ItemsPM.CONCOCTION.get()) && stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).is(Potions.WATER));
     }
 
     @Override

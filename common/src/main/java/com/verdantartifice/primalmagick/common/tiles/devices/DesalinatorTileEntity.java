@@ -22,6 +22,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
@@ -33,6 +34,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
@@ -350,13 +353,21 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
         };
     }
 
+    public static boolean isFullWaterContainer(ItemStack stack) {
+        // Water buckets, water bottles, and water flasks are allowed; nothing else
+        PotionContents contents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+        return stack.is(Items.WATER_BUCKET) ||
+                (stack.is(Items.POTION) && contents.is(Potions.WATER)) ||
+                (stack.is(ItemsPM.CONCOCTION.get()) && contents.is(Potions.WATER));
+    }
+
     @Override
     protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
 
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.is(Items.WATER_BUCKET))
+                .itemValidFunction((slot, stack) -> isFullWaterContainer(stack))
                 .build());
 
         // Create fuel handler
