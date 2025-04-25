@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.platform.services.IBlockStateService;
 import com.verdantartifice.primalmagick.platform.services.ICapabilityService;
 import com.verdantartifice.primalmagick.platform.services.IConfigService;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
+import com.verdantartifice.primalmagick.platform.services.IFluidHandlerService;
 import com.verdantartifice.primalmagick.platform.services.IFluidService;
 import com.verdantartifice.primalmagick.platform.services.IFluidStateService;
 import com.verdantartifice.primalmagick.platform.services.IGuiGraphicsService;
@@ -106,6 +107,7 @@ public class Services {
     public static final IModelResourceLocationService MODEL_RESOURCE_LOCATIONS = load(IModelResourceLocationService.class);
     public static final ITagService TAGS = load(ITagService.class);
     public static final IFluidService FLUIDS = load(IFluidService.class);
+    public static final IFluidHandlerService FLUID_HANDLERS = load(IFluidHandlerService.class);
 
     // Registry services
     public static final IBlockRegistryService BLOCKS_REGISTRY = load(IBlockRegistryService.class);
