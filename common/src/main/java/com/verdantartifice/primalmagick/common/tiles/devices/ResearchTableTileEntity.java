@@ -36,7 +36,7 @@ public abstract class ResearchTableTileEntity extends AbstractTileSidedInventory
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
         ResearchTableMenu menu = new ResearchTableMenu(windowId, playerInv, this.getBlockPos(), this);
-        this.addListener(Direction.UP, menu);
+        this.addInventoryChangeListener(Direction.UP, menu);
         return menu;
     }
 
@@ -67,7 +67,7 @@ public abstract class ResearchTableTileEntity extends AbstractTileSidedInventory
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler

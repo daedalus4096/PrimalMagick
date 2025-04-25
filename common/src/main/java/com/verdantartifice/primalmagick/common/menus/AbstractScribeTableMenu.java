@@ -70,7 +70,7 @@ public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventory
     @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
-        this.tile.removeListener(this);
+        this.tile.removeInventoryChangeListener(this);
     }
     
     @Override

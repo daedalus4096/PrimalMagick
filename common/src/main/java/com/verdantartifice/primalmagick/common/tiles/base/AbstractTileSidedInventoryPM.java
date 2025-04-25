@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tiles.base;
 
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
-import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,7 +33,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,7 +78,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         }
         
         // Create item handler capabilities
-        this.itemHandlers = this.createHandlers();
+        this.itemHandlers = this.createItemHandlers();
 
         // Create container listener list
         this.listeners = NonNullList.withSize(this.getInventoryCount(), new ArrayList<>());
@@ -107,7 +105,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     
     public abstract Optional<Integer> getInventoryIndexForFace(@NotNull Direction face);
     
-    protected abstract NonNullList<IItemHandlerPM> createHandlers();
+    protected abstract NonNullList<IItemHandlerPM> createItemHandlers();
 
     /**
      * This method is intended to provide access to the block entity item handler for a given face during Neoforge
@@ -133,7 +131,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         return index >= 0 && index < this.itemHandlers.size() ? this.itemHandlers.get(index) : null;
     }
 
-    public void addListener(@Nullable Direction face, @NotNull IItemHandlerChangeListener listener) {
+    public void addInventoryChangeListener(@Nullable Direction face, @NotNull IItemHandlerChangeListener listener) {
         if (face != null) {
             this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
                 this.listeners.get(invIndex).add(listener);
@@ -141,7 +139,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         }
     }
     
-    public void removeListener(IItemHandlerChangeListener listener) {
+    public void removeInventoryChangeListener(IItemHandlerChangeListener listener) {
         this.listeners.forEach(invListeners -> invListeners.remove(listener));
     }
 

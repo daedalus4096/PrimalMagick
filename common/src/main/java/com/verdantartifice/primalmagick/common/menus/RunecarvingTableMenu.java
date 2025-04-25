@@ -67,7 +67,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos, RunecarvingTableTileEntity table) {
         super(MenuTypesPM.RUNECARVING_TABLE.get(), windowId, RunecarvingTableTileEntity.class, inv.player.level(), pos, table);
         this.player = inv.player;
-        this.tile.addListener(Direction.UP, this);
+        this.tile.addInventoryChangeListener(Direction.UP, this);
         
         // Slot 0: input slabs
         this.inputSlabSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 20, 21,
