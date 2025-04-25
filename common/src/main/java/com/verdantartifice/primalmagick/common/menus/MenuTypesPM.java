@@ -42,6 +42,7 @@ public class MenuTypesPM {
     public static final IRegistryItem<MenuType<?>, MenuType<ScribeStudyVocabularyMenu>> SCRIBE_STUDY_VOCABULARY = register("scribe_study_vocabulary", (windowId, inv, data) -> new ScribeStudyVocabularyMenu(windowId, inv, data.readBlockPos()));
     public static final IRegistryItem<MenuType<?>, MenuType<ScribeGainComprehensionMenu>> SCRIBE_GAIN_COMPREHENSION = register("scribe_gain_comprehension", (windowId, inv, data) -> new ScribeGainComprehensionMenu(windowId, inv, data.readBlockPos()));
     public static final IRegistryItem<MenuType<?>, MenuType<ScribeTranscribeWorksMenu>> SCRIBE_TRANSCRIBE_WORKS = register("scribe_transcribe_works", (windowId, inv, data) -> new ScribeTranscribeWorksMenu(windowId, inv, data.readBlockPos()));
+    public static final IRegistryItem<MenuType<?>, MenuType<DesalinatorMenu>> DESALINATOR = register("desalinator", (windowId, inv, data) -> new DesalinatorMenu(windowId, inv, data.readBlockPos()));
 
     private static <T extends AbstractContainerMenu> IRegistryItem<MenuType<?>, MenuType<T>> register(String name, IMenuFactory<T> factory) {
         return Services.MENU_TYPES_REGISTRY.register(name, factory);

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
+import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -56,21 +57,18 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     protected IFluidHandlerPM waterTank;
 
     // Define a container-trackable representation of this tile's relevant data
-    protected final ContainerData desalinatorData = new ContainerData() {
+    protected final ContainerData containerData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-                case 0:
-                    return DesalinatorTileEntity.this.boilTime;
-                case 1:
-                    return DesalinatorTileEntity.this.boilTimeTotal;
-                case 2:
-                    return DesalinatorTileEntity.this.manaStorage.getManaStored(Sources.SKY);
-                case 3:
-                    return DesalinatorTileEntity.this.manaStorage.getMaxManaStored(Sources.SKY);
-                default:
-                    return 0;
-            }
+            return switch (index) {
+                case 0 -> DesalinatorTileEntity.this.boilTime;
+                case 1 -> DesalinatorTileEntity.this.boilTimeTotal;
+                case 2 -> DesalinatorTileEntity.this.manaStorage.getManaStored(Sources.SUN);
+                case 3 -> DesalinatorTileEntity.this.manaStorage.getMaxManaStored(Sources.SUN);
+                case 4 -> DesalinatorTileEntity.this.waterTank.getFluidInTank(0).getAmount();
+                case 5 -> DesalinatorTileEntity.this.waterTank.getTankCapacity(0);
+                default -> 0;
+            };
         }
 
         @Override
@@ -88,7 +86,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
 
         @Override
         public int getCount() {
-            return 4;
+            return 6;
         }
     };
 
@@ -128,9 +126,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        // TODO Stub
-        return null;
-//        return new HoneyExtractorMenu(windowId, playerInv, this.getBlockPos(), this, this.extractorData);
+        return new DesalinatorMenu(windowId, playerInv, this.getBlockPos(), this, this.containerData);
     }
 
     @Override
