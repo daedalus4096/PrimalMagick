@@ -51,7 +51,7 @@ public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu
 
         // Animate boil progress indicator
         int cook = this.menu.getBoilProgressionScaled();
-        guiGraphics.blitSprite(PROGRESS_SPRITE, 24, 16, 0, 0, this.leftPos + 1, this.topPos + 1, cook, 16);
+        guiGraphics.blitSprite(PROGRESS_SPRITE, 24, 16, 0, 0, this.leftPos + 75, this.topPos + 44, cook, 16);
 
         // Draw water tank contents
         int height = Mth.floor(this.menu.getCurrentWaterAmount() * (float)TANK_HEIGHT / this.menu.getWaterCapacity());

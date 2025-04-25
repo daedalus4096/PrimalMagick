@@ -42,7 +42,7 @@ public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorT
     protected final Slot wandSlot;
 
     public DesalinatorMenu(int id, Inventory playerInv, BlockPos tilePos) {
-        this(id, playerInv, tilePos, null, new SimpleContainerData(4));
+        this(id, playerInv, tilePos, null, new SimpleContainerData(6));
     }
 
     public DesalinatorMenu(int id, Inventory playerInv, BlockPos tilePos, DesalinatorTileEntity desalinator, ContainerData containerData) {
@@ -72,13 +72,13 @@ public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorT
         // Slots 5-31: player backpack
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 103 + i * 18));
             }
         }
 
         // Slots 32-40: player hotbar
         for (int k = 0; k < 9; k++) {
-            this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142));
+            this.addSlot(new Slot(playerInv, k, 8 + k * 18, 161));
         }
 
         this.addDataSlots(this.containerData);
