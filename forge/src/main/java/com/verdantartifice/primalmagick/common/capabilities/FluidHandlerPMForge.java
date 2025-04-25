@@ -8,6 +8,8 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import java.util.function.Predicate;
 
 public class FluidHandlerPMForge implements IFluidHandlerPM {
+    public static final IFluidHandlerPM EMPTY = new FluidHandlerPMForge(0, fs -> false);
+
     protected final FluidTank tank;
 
     public FluidHandlerPMForge(int capacity) {

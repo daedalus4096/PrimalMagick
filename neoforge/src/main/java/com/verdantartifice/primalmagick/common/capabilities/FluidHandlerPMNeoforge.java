@@ -8,6 +8,8 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import java.util.function.Predicate;
 
 public class FluidHandlerPMNeoforge implements IFluidHandlerPM {
+    public static final IFluidHandlerPM EMPTY = new FluidHandlerPMNeoforge(0, fs -> false);
+
     protected final FluidTank tank;
 
     public FluidHandlerPMNeoforge(int capacity) {

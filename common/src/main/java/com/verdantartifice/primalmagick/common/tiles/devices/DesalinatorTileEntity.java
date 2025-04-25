@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.mojang.logging.LogUtils;
+import com.verdantartifice.primalmagick.common.capabilities.IFluidHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
@@ -51,6 +52,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     protected int boilTime;
     protected int boilTimeTotal;
     protected ManaStorage manaStorage;
+    protected IFluidHandlerPM waterTank;
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData desalinatorData = new ContainerData() {
@@ -92,10 +94,15 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     public DesalinatorTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.DESALINATOR.get(), pos, state);
         this.manaStorage = new ManaStorage(2000, 200, 200, Sources.SUN);
+        this.waterTank = Services.FLUID_HANDLERS.create(4000, fs -> true);  // TODO Validate that the stack is water
     }
 
     public IManaStorage<?> getUncachedManaStorage() {
         return this.manaStorage;
+    }
+
+    public IFluidHandlerPM getUncachedFluidHandler() {
+        return this.waterTank;
     }
 
     @Override
