@@ -7,6 +7,8 @@ v6.0.5
 * Greatly decreased the mana regeneration rate of Artificial Mana Fonts
 * Greatly increased the mana regeneration rate of Heavenly Mana Fonts
 * Rebalanced mana consumption and storage capacity of magitech devices to account for the introduction of mana networking
+* Added the Desalinator, for when you need help boiling water
+* Changed the prerequisite for Expert Magitech from the Honey Extractor to the Desalinator
 * Added an affinity index to the Grimoire, to remind you of all the data you've analyzed
 * Changed Scribe's Table vocabulary costs from levels to a flat number of experience points
 * Previously studied ancient books in chiseled or carved bookshelves near the Scribe's Table now grant an experience discount when studying vocabulary
