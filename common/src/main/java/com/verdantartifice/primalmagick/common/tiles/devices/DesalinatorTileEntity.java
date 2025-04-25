@@ -58,6 +58,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     public static final int WAND_INV_INDEX = 2;
     protected static final int REQUIRED_WATER_AMOUNT = 1000;
 
+    protected int ticks = 0;
     protected int boilTime;
     protected int boilTimeTotal;
     protected ManaStorage manaStorage;
@@ -151,8 +152,13 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
         return 200;
     }
 
+    public int getTicks() {
+        return this.ticks;
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, DesalinatorTileEntity entity) {
         boolean shouldMarkDirty = false;
+        entity.ticks++;
 
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands

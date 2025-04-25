@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -53,7 +54,7 @@ public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         // Render background texture
         guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
@@ -64,7 +65,10 @@ public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu
         // Draw water tank contents
         int height = Mth.floor(this.menu.getCurrentWaterAmount() * (float)TANK_HEIGHT / this.menu.getWaterCapacity());
         int dy = TANK_HEIGHT - height;
-        guiGraphics.blit(WATER_TEXTURE, this.leftPos + 52, this.topPos + 17 + dy, 16, height, 0, 0, 16, height, 16, 512);
+        int tick = this.menu.getTile().getTicks();
+        int frameOffsetY = tick % 28;
+        int vOffset = 16 * frameOffsetY;
+        guiGraphics.blit(WATER_TEXTURE, this.leftPos + 52, this.topPos + 17 + dy, 16, height, 0, vOffset, 16, height, 16, 512);
         guiGraphics.blitSprite(GAUGE_SPRITE, this.leftPos + 52, this.topPos + 17, 16, 71);
     }
 }
