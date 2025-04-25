@@ -7,17 +7,14 @@
   "flags": {},
   "icon": {
     "isItem": true,
-    "location": "primalmagick:mana_relay_basic"
+    "location": "primalmagick:desalinator"
   },
   "key": {
-    "rootKey": "primalmagick:mana_networking"
+    "rootKey": "primalmagick:desalinator"
   },
   "parents": [
     {
-      "rootKey": "primalmagick:desalinator"
-    },
-    {
-      "rootKey": "primalmagick:dowsing_rod"
+      "rootKey": "primalmagick:basic_magitech"
     }
   ],
   "stages": [
@@ -26,36 +23,38 @@
         "requirement_type": "primalmagick:and",
         "subRequirements": [
           {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:water_bucket"
+            }
+          },
+          {
             "amount": 1,
             "knowledgeType": "observation",
             "requirement_type": "primalmagick:knowledge"
-          },
-          {
-            "requiredValue": 200,
-            "requirement_type": "primalmagick:stat",
-            "stat": "primalmagick:mana_siphoned"
           }
         ]
       },
       "parentKey": {
-        "rootKey": "primalmagick:mana_networking"
+        "rootKey": "primalmagick:desalinator"
       },
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.mana_networking.text.stage.1"
+      "textTranslationKey": "research.primalmagick.desalinator.text.stage.1"
     },
     {
       "parentKey": {
-        "rootKey": "primalmagick:mana_networking"
+        "rootKey": "primalmagick:desalinator"
       },
       "recipes": [
-        "primalmagick:mana_relay_basic",
-        "primalmagick:mana_injector_basic"
+        "primalmagick:desalinator",
+        "primalmagick:refined_salt_from_pinches"
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.mana_networking.text.stage.2"
+      "textTranslationKey": "research.primalmagick.desalinator.text.stage.2"
     }
   ],
   "tier": "basic"

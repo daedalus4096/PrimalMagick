@@ -281,6 +281,7 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> ADVANCED_MANA_NETWORKING = create("advanced_mana_networking");
     public static final ResourceKey<ResearchEntry> FORBIDDEN_MANA_NETWORKING = create("forbidden_mana_networking");
     public static final ResourceKey<ResearchEntry> HEAVENLY_MANA_NETWORKING = create("heavenly_mana_networking");
+    public static final ResourceKey<ResearchEntry> DESALINATOR = create("desalinator");
 
     // Scans research entries
     public static final ResourceKey<ResearchEntry> RAW_MARBLE = create("raw_marble");
@@ -1543,7 +1544,7 @@ public class ResearchEntries {
         register(context, BASIC_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_MAGITECH).parent(UNLOCK_MAGITECH)
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).end()
                 .build());
-        register(context, EXPERT_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_MAGITECH).parent(HONEY_EXTRACTOR).parent(SEASCRIBE_PEN)
+        register(context, EXPERT_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_MAGITECH).parent(DESALINATOR).parent(SEASCRIBE_PEN)
                 .stage().requiredExpertise(discipline, ResearchTier.EXPERT).requiredResearch(SCAN_PRIMALITE).end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).end()
                 .build());
@@ -1752,7 +1753,7 @@ public class ResearchEntries {
                 .stage().recipe(ItemsPM.SUPREME_WARDING_MODULE.get()).end()
                 .build());
         register(context, MANA_NETWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.MANA_RELAY_BASIC.get())
-                .parent(HONEY_EXTRACTOR).parent(DOWSING_ROD)
+                .parent(DESALINATOR).parent(DOWSING_ROD)
                 .stage().requiredObservations(1).requiredStat(StatsPM.MANA_SIPHONED, 200).end()
                 .stage().recipe(ItemsPM.MANA_RELAY_BASIC.get()).recipe(ItemsPM.MANA_INJECTOR_BASIC.get()).end()
                 .build());
@@ -1770,6 +1771,10 @@ public class ResearchEntries {
                 .parent(SUPREME_MAGITECH).parent(FORBIDDEN_MANA_NETWORKING).parent(HALLOWSTEEL).parent(CLUSTER_SYNTHESIS)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.MANA_RELAY_HEAVENLY.get()).recipe(ItemsPM.MANA_INJECTOR_HEAVENLY.get()).end()
+                .build());
+        register(context, DESALINATOR, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.DESALINATOR.get()).parent(BASIC_MAGITECH)
+                .stage().requiredItem(Items.WATER_BUCKET).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.DESALINATOR.get()).recipe("refined_salt_from_pinches").end()
                 .build());
     }
     

@@ -3784,6 +3784,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.")
                 .end()
             .build();
+        this.researchEntry(ResearchEntries.DESALINATOR, lookupProvider).name("Desalinator")
+            .stages()
+                .add("I'm looking at the schematic for these magitech parts and realizing that I'm going to need a lot of mana salts, which means a lot of refined salt.  If only I had a way to extract it from plentiful seawater instead of going digging for it.")
+                .add("Yeah, this will work!  I've created a basic machine which uses Sun mana to quickly and efficiently evaporate water from a tank.  This process leaves behind trace amounts of salt; it's not a lot, but it's practically free.  Even better, the machine can process the water vapor directly into Sea essence!  I always need more of that.")
+                .end()
+            .build();
         this.researchEntry(ResearchEntries.HONEY_EXTRACTOR, lookupProvider).name("Honey Extractor")
             .stages()
                 .add("Honey is delicious and sweet, and I wish there was a way to get it more efficiently from hives.  There's more of it in honeycombs than I can get from a bottle, but it's trapped inside the wax.  Can magick help?")

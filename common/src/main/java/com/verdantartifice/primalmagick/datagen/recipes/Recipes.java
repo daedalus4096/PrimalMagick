@@ -435,6 +435,17 @@ public abstract class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.SUPREME_MAGITECH)
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 100))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.DESALINATOR.get())
+            .patternLine("GGG")
+            .patternLine("BPB")
+            .patternLine("CCC")
+            .key('G', CommonTags.Items.GLASS_BLOCKS_COLORLESS)
+            .key('B', Items.BUCKET)
+            .key('P', ItemsPM.MAGITECH_PARTS_BASIC.get())
+            .key('C', CommonTags.Items.INGOTS_COPPER)
+            .requiredResearch(ResearchEntries.DESALINATOR)
+            .manaCost(SourceList.EMPTY.add(Sources.SUN, 10))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HONEY_EXTRACTOR.get())
             .patternLine("HWB")
             .patternLine("WPW")
