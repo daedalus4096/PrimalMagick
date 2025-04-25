@@ -169,13 +169,14 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
             if (!inputStack.isEmpty()) {
                 IFluidStackPM fluidStack = getFluidStackForInput(inputStack);
                 ItemStack containerStack = getContainerForInput(inputStack);
-                if (!fluidStack.isEmpty() && entity.canFill(containerStack)) {
+                if (!fluidStack.isEmpty() && entity.waterTank.fill(fluidStack, true) == fluidStack.getAmount() && entity.canFill(containerStack)) {
                     entity.doFill(fluidStack, containerStack);
                 }
             }
 
             // Process ingredients
-            if (!entity.waterTank.drain(REQUIRED_WATER_AMOUNT, true).isEmpty() && entity.manaStorage.getManaStored(Sources.SUN) >= entity.getManaCost()) {
+            if (entity.waterTank.drain(REQUIRED_WATER_AMOUNT, true).getAmount() >= REQUIRED_WATER_AMOUNT &&
+                    entity.manaStorage.getManaStored(Sources.SUN) >= entity.getManaCost()) {
                 // If boilable input is in place and the outputs are clear, process it
                 if (entity.canBoil()) {
                     entity.boilTime++;
