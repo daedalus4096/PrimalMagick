@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.client.gui.AnalysisTableScreen;
 import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.CalcinatorScreen;
 import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
+import com.verdantartifice.primalmagick.client.gui.DesalinatorScreen;
 import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
 import com.verdantartifice.primalmagick.client.gui.EssenceCaskScreen;
 import com.verdantartifice.primalmagick.client.gui.EssenceTransmuterScreen;
@@ -102,6 +103,7 @@ public class ClientModLifecycleEvents {
         MenuScreens.register(MenuTypesPM.SCRIBE_STUDY_VOCABULARY.get(), ScribeStudyVocabularyScreen::new);
         MenuScreens.register(MenuTypesPM.SCRIBE_GAIN_COMPREHENSION.get(), ScribeGainComprehensionScreen::new);
         MenuScreens.register(MenuTypesPM.SCRIBE_TRANSCRIBE_WORKS.get(), ScribeTranscribeWorksScreen::new);
+        MenuScreens.register(MenuTypesPM.DESALINATOR.get(), DesalinatorScreen::new);
     }
     
     private static void registerTERs() {
