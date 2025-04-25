@@ -63,7 +63,7 @@ public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventory
     }
     
     @Override
-    public void itemsChanged(IItemHandlerPM pContainer) {
+    public void itemsChanged(int itemHandlerIndex, IItemHandlerPM pContainer) {
         // Do nothing by default
     }
 

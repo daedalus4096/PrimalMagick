@@ -148,7 +148,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         super.setChanged();
         for (int index = 0; index < this.getInventoryCount(); index++) {
             final int invIndex = index;
-            this.listeners.get(invIndex).forEach(listener -> listener.itemsChanged(this.itemHandlers.get(invIndex)));
+            this.listeners.get(invIndex).forEach(listener -> listener.itemsChanged(invIndex, this.itemHandlers.get(invIndex)));
         }
     }
 

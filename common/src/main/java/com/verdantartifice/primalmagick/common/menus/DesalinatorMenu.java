@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.mojang.logging.LogUtils;
+import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -10,30 +13,37 @@ import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEnti
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import org.slf4j.Logger;
 
 /**
  * Server data container for the desalinator GUI.
  *
  * @author Daedalus4096
  */
-public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorTileEntity> {
+public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorTileEntity> implements IItemHandlerChangeListener {
     public static final ResourceLocation BUCKET_SLOT_TEXTURE = ResourceUtils.loc("item/empty_bucket_slot");
     public static final ResourceLocation BOTTLE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_bottle_slot");
     public static final ResourceLocation FLASK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_flask_slot");
     protected static final Component WATER_BUCKET_TOOLTIP = Component.translatable("tooltip.primalmagick.desalinator.slot.water_bucket");
     protected static final AbstractRequirement<?> FLASK_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CONCOCTING_TINCTURES));
+    protected static final Logger LOGGER = LogUtils.getLogger();
 
+    protected final Player player;
     protected final ContainerData containerData;
     protected final Slot waterBucketSlot;
     protected final Slot wandSlot;
+    protected ItemStack lastInputStack = ItemStack.EMPTY;
 
     public DesalinatorMenu(int id, Inventory playerInv, BlockPos tilePos) {
         this(id, playerInv, tilePos, null, new SimpleContainerData(6));
@@ -43,13 +53,17 @@ public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorT
         super(MenuTypesPM.DESALINATOR.get(), id, DesalinatorTileEntity.class, playerInv.player.level(), tilePos, desalinator);
         checkContainerDataCount(containerData, 6);
         this.containerData = containerData;
+        this.player = playerInv.player;
+
+        // Add a change listener for the input bucket stack inventory
+        this.tile.addInventoryChangeListener(Direction.UP, this);
 
         // Slot 0: water bucket input
         this.waterBucketSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(DesalinatorTileEntity.INPUT_INV_INDEX), 0, 30, 17,
                 new FilteredSlotProperties().filter(DesalinatorTileEntity::isFullWaterContainer).tooltip(WATER_BUCKET_TOOLTIP)
                         .background(BUCKET_SLOT_TEXTURE)
                         .background(BOTTLE_SLOT_TEXTURE)
-                        .background(FLASK_SLOT_TEXTURE, $ -> FLASK_REQUIREMENT.isMetBy(playerInv.player))));
+                        .background(FLASK_SLOT_TEXTURE, $ -> FLASK_REQUIREMENT.isMetBy(this.player))));
 
         // Slot 1: salt output
         this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(DesalinatorTileEntity.OUTPUT_INV_INDEX), 0, 108, 45));
@@ -155,5 +169,17 @@ public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorT
 
     public int getWaterCapacity() {
         return this.containerData.get(5);
+    }
+
+    @Override
+    public void itemsChanged(int itemHandlerIndex, IItemHandlerPM itemHandler) {
+        if (itemHandlerIndex == DesalinatorTileEntity.INPUT_INV_INDEX) {
+            ItemStack stack = itemHandler.getStackInSlot(0);
+            if (stack.isEmpty() && !this.lastInputStack.isEmpty()) {
+                // If the input inventory was just emptied into the tank by the block entity ticker, play a sound for the player
+                this.player.playSound(this.lastInputStack.is(Items.WATER_BUCKET) ? SoundEvents.BUCKET_EMPTY : SoundEvents.BOTTLE_EMPTY, 1.0F, 1.0F);
+            }
+            this.lastInputStack = stack.copy();
+        }
     }
 }
