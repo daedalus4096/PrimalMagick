@@ -50,6 +50,14 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_bucket_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_flask_slot"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "primalmagick:entity/mana_font_core"
     },
     {

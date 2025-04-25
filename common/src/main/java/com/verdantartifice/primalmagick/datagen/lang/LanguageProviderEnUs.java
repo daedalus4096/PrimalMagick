@@ -1009,6 +1009,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("runescribing_altar").sub("slot").sub("rune").output("Add a rune").end().build();
         this.tooltip("analysis_table").sub("slot").sub("input").output("Add an item with magickal affinities").end().build();
         this.tooltip("calcinator").sub("slot").sub("input").output("Add an item with magickal affinities").end().build();
+        this.tooltip("desalinator").sub("slot").sub("water_bucket").output("Add a full water bucket or bottle").end().build();
         this.tooltip("essence_cask").sub("slot").sub("essence").output("Add magickal essence").end().build();
         this.tooltip("essence_transmuter").sub("slot").sub("essence").output("Add magickal essence").end().build();
         this.tooltip("honey_extractor").sub("slot").sub("bottle").output("Add an empty glass bottle").end().build();

@@ -2827,6 +2827,7 @@
   "tooltip.primalmagick.calcinator_gui.slot.fuel": "Add furnace fuel",
   "tooltip.primalmagick.codex.full": "Use to gain complete understanding of the %1$s language",
   "tooltip.primalmagick.codex.partial": "Use to increase your understanding of the %1$s language",
+  "tooltip.primalmagick.desalinator.slot.water_bucket": "Add a full water bucket or bottle",
   "tooltip.primalmagick.dream_vision_talisman.exp": "Experience: %1$d / %2$d",
   "tooltip.primalmagick.essence_cask.slot.essence": "Add magickal essence",
   "tooltip.primalmagick.essence_transmuter.slot.essence": "Add magickal essence",
