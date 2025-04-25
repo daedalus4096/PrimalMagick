@@ -460,6 +460,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, Item> IRON_GRIT = registerSupplier("iron_grit", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> GOLD_GRIT = registerSupplier("gold_grit", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> COPPER_GRIT = registerSupplier("copper_grit", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> SALT_PINCH = registerSupplier("salt_pinch", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> PRIMALITE_INGOT = registerSupplier("primalite_ingot", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> HEXIUM_INGOT = registerSupplier("hexium_ingot", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> HALLOWSTEEL_INGOT = registerSupplier("hallowsteel_ingot", () -> new Item(new Item.Properties()));

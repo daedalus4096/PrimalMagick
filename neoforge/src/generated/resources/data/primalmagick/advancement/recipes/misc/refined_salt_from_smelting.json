@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "primalmagick:refined_salt"
+        "recipe": "primalmagick:refined_salt_from_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "primalmagick:refined_salt"
+      "primalmagick:refined_salt_from_smelting"
     ]
   }
 }

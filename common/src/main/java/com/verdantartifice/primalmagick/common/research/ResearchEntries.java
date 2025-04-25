@@ -1796,8 +1796,9 @@ public class ResearchEntries {
                         .recipe(ItemsPM.MOONWOOD_SLAB.get()).recipe(ItemsPM.MOONWOOD_STAIRS.get()).recipe(ItemsPM.MOONWOOD_PILLAR.get()).end()
                 .build());
         register(context, ROCK_SALT, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.REFINED_SALT.get()).parent(UNLOCK_SCANS)
-                .stage().recipe(ItemsPM.REFINED_SALT.get()).recipe("rock_salt_from_smelting")
+                .stage().recipe("refined_salt_from_smelting").recipe("rock_salt_from_smelting")
                         .recipe(ItemsPM.SALT_BLOCK.get()).recipe("refined_salt_from_salt_block")
+                        .recipe("refined_salt_from_pinches")
                         .recipe(ItemsPM.SALTED_BAKED_POTATO.get()).recipe(ItemsPM.SALTED_BEETROOT_SOUP.get()).recipe(ItemsPM.SALTED_COOKED_BEEF.get())
                         .recipe(ItemsPM.SALTED_COOKED_CHICKEN.get()).recipe(ItemsPM.SALTED_COOKED_COD.get()).recipe(ItemsPM.SALTED_COOKED_MUTTON.get()).recipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
                         .recipe(ItemsPM.SALTED_COOKED_RABBIT.get()).recipe(ItemsPM.SALTED_COOKED_SALMON.get()).recipe(ItemsPM.SALTED_MUSHROOM_STEW.get()).recipe(ItemsPM.SALTED_RABBIT_STEW.get()).end()

@@ -925,6 +925,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.ENERGIZED_EMERALD).name("Energized Emerald").build();
         this.item(ItemsPM.ENERGIZED_QUARTZ).name("Energized Quartz").build();
         this.item(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE).name("Smithing Template").build();
+        this.item(ItemsPM.SALT_PINCH).name("Pinch of Salt").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
