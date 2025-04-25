@@ -257,7 +257,13 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     protected void doBoil() {
-        // TODO Add salt output
+        // Add salt output
+        ItemStack saltOutput = this.getItem(OUTPUT_INV_INDEX, 0);
+        if (saltOutput.isEmpty()) {
+            this.setItem(OUTPUT_INV_INDEX, 0, new ItemStack(ItemsPM.SALT_PINCH.get()));
+        } else {
+            saltOutput.grow(1);
+        }
 
         // Add sea dust output
         ItemStack essenceOutput = this.getItem(OUTPUT_INV_INDEX, 1);
