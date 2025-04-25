@@ -31,6 +31,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -94,7 +95,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     public DesalinatorTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.DESALINATOR.get(), pos, state);
         this.manaStorage = new ManaStorage(2000, 200, 200, Sources.SUN);
-        this.waterTank = Services.FLUID_HANDLERS.create(4000, fs -> true);  // TODO Validate that the stack is water
+        this.waterTank = Services.FLUID_HANDLERS.create(4000, fs -> fs.is(Fluids.WATER));
     }
 
     public IManaStorage<?> getUncachedManaStorage() {

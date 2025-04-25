@@ -10,4 +10,5 @@ import net.minecraft.world.level.material.Fluid;
 public interface IFluidStackPM {
     Fluid getFluid();
     int getAmount();
+    boolean is(Fluid fluid);
 }

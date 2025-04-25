@@ -34,6 +34,11 @@ public class FluidStackPMForge implements IFluidStackPM {
     }
 
     @Override
+    public boolean is(Fluid fluid) {
+        return this.getFluid() == fluid;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof FluidStackPMForge that)) return false;
         return Objects.equals(innerStack, that.innerStack);

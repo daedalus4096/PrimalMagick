@@ -34,6 +34,11 @@ public class FluidStackPMNeoforge implements IFluidStackPM {
     }
 
     @Override
+    public boolean is(Fluid fluid) {
+        return this.innerStack.is(fluid);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof FluidStackPMNeoforge that)) return false;
         return Objects.equals(innerStack, that.innerStack);
