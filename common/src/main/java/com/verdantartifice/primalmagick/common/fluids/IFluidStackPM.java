@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.fluids;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.material.Fluid;
 
 /**
@@ -12,4 +13,5 @@ public interface IFluidStackPM {
     int getAmount();
     boolean isEmpty();
     boolean is(Fluid fluid);
+    Component getHoverName();
 }

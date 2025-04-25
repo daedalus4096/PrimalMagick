@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.fluids;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -40,6 +41,11 @@ public class FluidStackPMNeoforge implements IFluidStackPM {
     @Override
     public boolean is(Fluid fluid) {
         return this.innerStack.is(fluid);
+    }
+
+    @Override
+    public Component getHoverName() {
+        return this.innerStack.getHoverName();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
+import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -9,6 +10,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+
+import java.util.List;
 
 /**
  * GUI screen for desalinator block.
@@ -42,6 +45,11 @@ public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu
         this.manaGauge.setMaxMana(this.menu.getMaxMana());
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
+
+        if (mouseX >= this.leftPos + 52 && mouseX <= this.leftPos + 68 && mouseY >= this.topPos + 17 && mouseY <= this.topPos + 88) {
+            Component tankTooltip = Component.translatable("tooltip.primalmagick.desalinator.tank.water", this.menu.getCurrentWaterAmount(), this.menu.getWaterCapacity());
+            GuiUtils.renderCustomTooltip(guiGraphics, List.of(tankTooltip), mouseX, mouseY);
+        }
     }
 
     @Override
