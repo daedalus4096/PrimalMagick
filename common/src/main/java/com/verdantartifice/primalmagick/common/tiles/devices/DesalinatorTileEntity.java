@@ -6,6 +6,8 @@ import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
+import com.verdantartifice.primalmagick.common.fluids.IFluidStackPM;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -23,6 +25,9 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -50,6 +55,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     public static final int INPUT_INV_INDEX = 0;
     public static final int OUTPUT_INV_INDEX = 1;
     public static final int WAND_INV_INDEX = 2;
+    protected static final int REQUIRED_WATER_AMOUNT = 1000;
 
     protected int boilTime;
     protected int boilTimeTotal;
@@ -143,7 +149,104 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, DesalinatorTileEntity entity) {
-        // TODO Stub
+        boolean shouldMarkDirty = false;
+
+        if (!level.isClientSide) {
+            // Fill up internal mana storage with that from any inserted wands
+            ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
+            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.SUN) - entity.manaStorage.getManaStored(Sources.SUN);
+                int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
+                if (wand.consumeMana(wandStack, null, Sources.SUN, centimanaToTransfer, level.registryAccess())) {
+                    entity.manaStorage.receiveMana(Sources.SUN, centimanaToTransfer, false);
+                    shouldMarkDirty = true;
+                }
+            }
+
+            // Fill the internal water tank from any inserted containers
+            ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
+            if (!inputStack.isEmpty()) {
+                IFluidStackPM fluidStack = getFluidStackForInput(inputStack);
+                ItemStack containerStack = getContainerForInput(inputStack);
+                if (!fluidStack.isEmpty() && entity.canFill(containerStack)) {
+                    entity.doFill(fluidStack, containerStack);
+                }
+            }
+
+            // Process ingredients
+            if (!entity.waterTank.drain(REQUIRED_WATER_AMOUNT, true).isEmpty() && entity.manaStorage.getManaStored(Sources.SUN) >= entity.getManaCost()) {
+                // If boilable input is in place and the outputs are clear, process it
+                if (entity.canBoil()) {
+                    entity.boilTime++;
+                    if (entity.boilTime >= entity.boilTimeTotal) {
+                        entity.boilTime = 0;
+                        entity.boilTimeTotal = entity.getBoilTimeTotal();
+                        entity.doBoil();
+                        shouldMarkDirty = true;
+                    }
+                } else {
+                    entity.boilTime = 0;
+                }
+            } else if (entity.boilTime > 0) {
+                // Decay any boil progress
+                entity.boilTime = Mth.clamp(entity.boilTime - 2, 0, entity.boilTimeTotal);
+            }
+        }
+
+        if (shouldMarkDirty) {
+            entity.setChanged();
+            entity.syncTile(true);
+        }
+    }
+
+    protected static IFluidStackPM getFluidStackForInput(ItemStack stack) {
+        if (stack.is(Items.WATER_BUCKET)) {
+            return Services.FLUIDS.makeFluidStack(Fluids.WATER, 1000);
+        } else if (stack.is(Items.POTION) || stack.is(ItemsPM.CONCOCTION.get())) {
+            return Services.FLUIDS.makeFluidStack(Fluids.WATER, 250);
+        } else {
+            return Services.FLUIDS.emptyStack();
+        }
+    }
+
+    protected static ItemStack getContainerForInput(ItemStack stack) {
+        if (stack.is(Items.WATER_BUCKET) && stack.getItem().getCraftingRemainingItem() != null) {
+            return new ItemStack(stack.getItem().getCraftingRemainingItem());
+        } else if (stack.is(Items.POTION)) {
+            return new ItemStack(Items.GLASS_BOTTLE);
+        } else if (stack.is(ItemsPM.CONCOCTION.get())) {
+            return new ItemStack(ItemsPM.SKYGLASS_FLASK.get());
+        } else {
+            return ItemStack.EMPTY;
+        }
+    }
+
+    protected boolean canFill(ItemStack containerStack) {
+        ItemStack containerOutput = this.getItem(OUTPUT_INV_INDEX, 2);
+        return containerOutput.isEmpty() ||
+                (containerOutput.is(containerStack.getItem()) &&
+                        containerOutput.getCount() < this.itemHandlers.get(OUTPUT_INV_INDEX).getSlotLimit(2) &&
+                        containerOutput.getCount() < containerOutput.getMaxStackSize());
+    }
+
+    protected void doFill(IFluidStackPM fluidStack, ItemStack containerStack) {
+        // Fill the water tank by the given amount
+        this.waterTank.fill(fluidStack, false);
+
+        // Add the given empty fluid container to the output slot
+        ItemStack outputStack = this.getItem(OUTPUT_INV_INDEX, 2);
+        if (outputStack.isEmpty()) {
+            this.setItem(OUTPUT_INV_INDEX, 2, containerStack);
+        } else {
+            outputStack.grow(1);
+        }
+
+        // Shrink the input container slot
+        ItemStack inputStack = this.getItem(INPUT_INV_INDEX, 0);
+        inputStack.shrink(1);
+        if (inputStack.isEmpty()) {
+            this.setItem(INPUT_INV_INDEX, 0, ItemStack.EMPTY);
+        }
     }
 
     protected boolean canBoil() {
@@ -156,7 +259,21 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     protected void doBoil() {
-        // TODO Stub
+        // TODO Add salt output
+
+        // Add sea dust output
+        ItemStack essenceOutput = this.getItem(OUTPUT_INV_INDEX, 1);
+        if (essenceOutput.isEmpty()) {
+            this.setItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemsPM.ESSENCE_DUST_SEA.get()));
+        } else {
+            essenceOutput.grow(1);
+        }
+
+        // Drain water
+        this.waterTank.drain(REQUIRED_WATER_AMOUNT, false);
+
+        // Consume mana
+        this.manaStorage.extractMana(Sources.SUN, this.getManaCost(), false);
     }
 
     @Override
