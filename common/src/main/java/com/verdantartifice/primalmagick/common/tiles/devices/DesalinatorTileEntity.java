@@ -119,6 +119,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
+        this.waterTank.readFromNBT(registries, compound.getCompound("WaterTank"));
     }
 
     @Override
@@ -129,6 +130,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
         ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+        compound.put("WaterTank", this.waterTank.writeToNBT(registries, new CompoundTag()));
     }
 
     @Override

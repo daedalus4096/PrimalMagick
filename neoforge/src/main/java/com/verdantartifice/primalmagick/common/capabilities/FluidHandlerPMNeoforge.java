@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.fluids.FluidStackPMNeoforge;
 import com.verdantartifice.primalmagick.common.fluids.IFluidStackPM;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
@@ -61,5 +63,17 @@ public class FluidHandlerPMNeoforge implements IFluidHandlerPM {
     @Override
     public IFluidStackPM drain(int maxDrain, boolean simulate) {
         return new FluidStackPMNeoforge(this.tank.drain(maxDrain, simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE));
+    }
+
+    @Override
+    public IFluidHandlerPM readFromNBT(HolderLookup.Provider lookupProvider, CompoundTag nbt) {
+        this.tank.readFromNBT(lookupProvider, nbt.getCompound("Tank"));
+        return this;
+    }
+
+    @Override
+    public CompoundTag writeToNBT(HolderLookup.Provider lookupProvider, CompoundTag nbt) {
+        nbt.put("Tank", this.tank.writeToNBT(lookupProvider, new CompoundTag()));
+        return nbt;
     }
 }
