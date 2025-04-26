@@ -130,7 +130,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             retVal++;
             currentCost -= PlayerUtils.getXpNeededForNextLevel(currentLevel--);
         }
-        return Mth.clamp(retVal, 0, 3);
+        return Mth.clamp(retVal, 0, 10);
     }
 
     protected void setDefaultBookData() {
@@ -210,7 +210,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(pIndex);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (pIndex == 0) {

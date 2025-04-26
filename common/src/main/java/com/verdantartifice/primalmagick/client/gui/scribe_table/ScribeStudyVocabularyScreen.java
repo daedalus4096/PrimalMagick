@@ -42,8 +42,8 @@ import java.util.stream.IntStream;
  * @author Daedalus4096
  */
 public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<ScribeStudyVocabularyMenu> {
-    private static final ResourceLocation[] ENABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 3).mapToObj("scribe_table/level_%d"::formatted).map(ResourceUtils::loc).toArray(ResourceLocation[]::new);
-    private static final ResourceLocation[] DISABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 3).mapToObj("scribe_table/level_%d_disabled"::formatted).map(ResourceUtils::loc).toArray(ResourceLocation[]::new);
+    private static final ResourceLocation[] ENABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 10).mapToObj("scribe_table/level_%d"::formatted).map(ResourceUtils::loc).toArray(ResourceLocation[]::new);
+    private static final ResourceLocation[] DISABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 10).mapToObj("scribe_table/level_%d_disabled"::formatted).map(ResourceUtils::loc).toArray(ResourceLocation[]::new);
     private static final ResourceLocation SLOT_DISABLED_SPRITE = ResourceUtils.loc("scribe_table/slot_disabled");
     private static final ResourceLocation SLOT_HIGHLIGHTED_SPRITE = ResourceUtils.loc("scribe_table/slot_highlighted");
     private static final ResourceLocation SLOT_SPRITE = ResourceUtils.loc("scribe_table/slot");
