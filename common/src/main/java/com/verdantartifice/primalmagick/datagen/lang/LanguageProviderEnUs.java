@@ -2615,7 +2615,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         this.researchEntry(ResearchEntries.HEXIUM, lookupProvider).name("Hexium")
             .stages()
-                .add("If I theorize correclty, I suspect that an even more potent magickal metal than Primalite can be created.  Early experiments have disastrously shown that simple iron is too weak to absorb the raw power of the forbidden sources, but what about Primalite?")
+                .add("If I theorize correctly, I suspect that an even more potent magickal metal than Primalite can be created.  Early experiments have disastrously shown that simple iron is too weak to absorb the raw power of the forbidden sources, but what about Primalite?")
                 .add("I hold in my hands a new metal that I call Hexium.  It is uncomfortably cold to the touch, except when it pulses with uncomfortable heat.  Still, it's managing to contain the power of the Blood, Infernal, and Void sources simultaneously, so that makes it all worthwhile.<BR>Like its precursor, I can use Hexium to craft traditional arms and armor, and their potential for enchantment exceeds even that of Primalite.  It almost feels like a waste to put such a powerful metal to use in such a mundane fashion, however.  Clearly this warrants further development.")
                 .end()
             .build();
