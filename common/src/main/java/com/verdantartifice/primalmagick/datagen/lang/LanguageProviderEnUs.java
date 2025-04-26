@@ -363,6 +363,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MANA_INJECTOR_ENCHANTED).name("Enchanted Mana Injector").build();
         this.block(BlocksPM.MANA_INJECTOR_FORBIDDEN).name("Forbidden Mana Injector").build();
         this.block(BlocksPM.MANA_INJECTOR_HEAVENLY).name("Heavenly Mana Injector").build();
+        this.block(BlocksPM.DESALINATOR).name("Desalinator").build();
 
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
@@ -924,6 +925,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.ENERGIZED_EMERALD).name("Energized Emerald").build();
         this.item(ItemsPM.ENERGIZED_QUARTZ).name("Energized Quartz").build();
         this.item(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE).name("Smithing Template").build();
+        this.item(ItemsPM.SALT_PINCH).name("Pinch of Salt").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -1008,6 +1010,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("runescribing_altar").sub("slot").sub("rune").output("Add a rune").end().build();
         this.tooltip("analysis_table").sub("slot").sub("input").output("Add an item with magickal affinities").end().build();
         this.tooltip("calcinator").sub("slot").sub("input").output("Add an item with magickal affinities").end().build();
+        this.tooltip("desalinator").sub("slot").sub("water_bucket").output("Add a full water bucket or bottle").end().build();
+        this.tooltip("desalinator").sub("tank").sub("water").output("Water: %1$d / %2$d mB").end().build();
         this.tooltip("essence_cask").sub("slot").sub("essence").output("Add magickal essence").end().build();
         this.tooltip("essence_transmuter").sub("slot").sub("essence").output("Add magickal essence").end().build();
         this.tooltip("honey_extractor").sub("slot").sub("bottle").output("Add an empty glass bottle").end().build();
@@ -3778,6 +3782,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("I believe I've finally learned all that there is to know of magitech.")
                 .add("My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.DESALINATOR, lookupProvider).name("Desalinator")
+            .stages()
+                .add("I'm looking at the schematic for these magitech parts and realizing that I'm going to need a lot of mana salts, which means a lot of refined salt.  If only I had a way to extract it from plentiful seawater instead of going digging for it.")
+                .add("Yeah, this will work!  I've created a basic machine which uses Sun mana to quickly and efficiently evaporate water from a tank.  This process leaves behind trace amounts of salt; it's not a lot, but it's practically free.  Even better, the machine can process the water vapor directly into Sea essence!  I always need more of that.")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.HONEY_EXTRACTOR, lookupProvider).name("Honey Extractor")

@@ -54,7 +54,7 @@ public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM
                 case GAIN_COMPREHENSION -> new ScribeGainComprehensionMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
                 case TRANSCRIBE_WORKS -> new ScribeTranscribeWorksMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
             };
-            this.addListener(Direction.UP, menu);
+            this.addInventoryChangeListener(Direction.UP, menu);
             return menu;
         } else {
             return null;
@@ -89,7 +89,7 @@ public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler

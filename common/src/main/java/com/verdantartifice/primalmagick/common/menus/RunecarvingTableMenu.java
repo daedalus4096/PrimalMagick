@@ -67,14 +67,14 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos, RunecarvingTableTileEntity table) {
         super(MenuTypesPM.RUNECARVING_TABLE.get(), windowId, RunecarvingTableTileEntity.class, inv.player.level(), pos, table);
         this.player = inv.player;
-        this.tile.addListener(Direction.UP, this);
+        this.tile.addInventoryChangeListener(Direction.UP, this);
         
         // Slot 0: input slabs
-        this.inputSlabSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 20, 21,
+        this.inputSlabSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(RunecarvingTableTileEntity.INPUT_INV_INDEX), 0, 20, 21,
                 new FilteredSlotProperties().background(BASE_SLOT_TEXTURE).tooltip(BASE_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_BASES)));
         
         // Slot 1: input lapis
-        this.inputLapisSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 1, 20, 46,
+        this.inputLapisSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(RunecarvingTableTileEntity.INPUT_INV_INDEX), 1, 20, 46,
                 new FilteredSlotProperties().background(ETCHING_SLOT_TEXTURE).tooltip(ETCHING_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_ETCHINGS)));
         
         // Slot 2: runecarving output
@@ -96,7 +96,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.addDataSlot(this.selectedRecipe);
         
         // Do an immediate update of the table GUI
-        this.itemsChanged(this.getTileInventory(Direction.UP));
+        this.itemsChanged(RunecarvingTableTileEntity.INPUT_INV_INDEX, this.getTileInventory(RunecarvingTableTileEntity.INPUT_INV_INDEX));
     }
 
     public RecipeCraftingHolder getOutputInventory() {
@@ -138,7 +138,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     }
 
     @Override
-    public void itemsChanged(IItemHandlerPM itemHandler) {
+    public void itemsChanged(int itemHandlerIndex, IItemHandlerPM itemHandler) {
         ItemStack slabStack = this.inputSlabSlot.getItem();
         ItemStack lapisStack = this.inputLapisSlot.getItem();
         if (slabStack.getItem() != this.slabInput.getItem() || lapisStack.getItem() != this.lapisInput.getItem()) {

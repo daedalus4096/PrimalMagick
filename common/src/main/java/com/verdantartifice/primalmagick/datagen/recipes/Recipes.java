@@ -435,6 +435,17 @@ public abstract class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.SUPREME_MAGITECH)
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 100))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.DESALINATOR.get())
+            .patternLine("GGG")
+            .patternLine("BPB")
+            .patternLine("CCC")
+            .key('G', CommonTags.Items.GLASS_BLOCKS_COLORLESS)
+            .key('B', Items.BUCKET)
+            .key('P', ItemsPM.MAGITECH_PARTS_BASIC.get())
+            .key('C', CommonTags.Items.INGOTS_COPPER)
+            .requiredResearch(ResearchEntries.DESALINATOR)
+            .manaCost(SourceList.EMPTY.add(Sources.SUN, 10))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HONEY_EXTRACTOR.get())
             .patternLine("HWB")
             .patternLine("WPW")
@@ -1364,7 +1375,11 @@ public abstract class Recipes extends RecipeProvider {
             .save(consumer, ResourceUtils.loc("rock_salt_from_smelting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.ROCK_SALT.get()), RecipeCategory.MISC, ItemsPM.REFINED_SALT.get(), 0.2F, 200)
             .unlockedBy("has_rock_salt", has(ItemsPM.ROCK_SALT.get()))
-            .save(consumer);
+            .save(consumer, ResourceUtils.loc("refined_salt_from_smelting"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemsPM.REFINED_SALT.get())
+            .requires(ItemsPM.SALT_PINCH.get(), 9)
+            .unlockedBy("has_salt_pinch", has(ItemsPM.SALT_PINCH.get()))
+            .save(consumer, ResourceUtils.loc("refined_salt_from_pinches"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ItemsPM.SALT_BLOCK.get())
             .requires(ItemsPM.REFINED_SALT.get(), 9)
             .unlockedBy("has_salt", has(ItemsPM.REFINED_SALT.get()))

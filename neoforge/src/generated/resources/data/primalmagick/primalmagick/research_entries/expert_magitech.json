@@ -13,7 +13,7 @@
   },
   "parents": [
     {
-      "rootKey": "primalmagick:honey_extractor"
+      "rootKey": "primalmagick:desalinator"
     },
     {
       "rootKey": "primalmagick:seascribe_pen"

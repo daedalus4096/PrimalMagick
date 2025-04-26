@@ -55,6 +55,8 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.ROCK_SALT_ORE.get(), ResearchEntries.ROCK_SALT));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.ROCK_SALT.get(), ResearchEntries.ROCK_SALT));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.REFINED_SALT.get(), ResearchEntries.ROCK_SALT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.SALT_PINCH.get(), ResearchEntries.ROCK_SALT));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.SALT_BLOCK.get(), ResearchEntries.ROCK_SALT));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.NUGGETS_PRIMALITE, ResearchEntries.SCAN_PRIMALITE, false));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.INGOTS_PRIMALITE, ResearchEntries.SCAN_PRIMALITE, false));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE, ResearchEntries.SCAN_PRIMALITE, false));

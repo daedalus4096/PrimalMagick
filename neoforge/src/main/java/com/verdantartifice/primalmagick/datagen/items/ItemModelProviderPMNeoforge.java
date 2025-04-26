@@ -124,6 +124,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         this.basicItem(ItemsPM.IRON_GRIT.get());
         this.basicItem(ItemsPM.GOLD_GRIT.get());
         this.basicItem(ItemsPM.COPPER_GRIT.get());
+        this.basicItem(ItemsPM.SALT_PINCH.get());
         this.basicItem(ItemsPM.PRIMALITE_INGOT.get());
         this.basicItem(ItemsPM.HEXIUM_INGOT.get());
         this.basicItem(ItemsPM.HALLOWSTEEL_INGOT.get());

@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
 import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarMenu;
+import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
@@ -83,7 +84,9 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, HoneyExtractorMenu.HONEYCOMB_SLOT_TEXTURE);
         this.addSingle(blockAtlas, HoneyExtractorMenu.BOTTLE_SLOT_TEXTURE);
         this.addSingle(blockAtlas, InfernalFurnaceMenu.IGNYX_SLOT_TEXTURE);
-        
+        this.addSingle(blockAtlas, DesalinatorMenu.BUCKET_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, DesalinatorMenu.FLASK_SLOT_TEXTURE);
+
         // Add block entity renderer textures to the block atlas
         this.addSingle(blockAtlas, ManaFontTER.TEXTURE);
         this.addSingle(blockAtlas, RitualBellTER.TEXTURE);

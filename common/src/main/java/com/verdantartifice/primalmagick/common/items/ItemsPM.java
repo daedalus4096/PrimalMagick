@@ -429,6 +429,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_ENCHANTED = registerSupplier("mana_injector_enchanted", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_FORBIDDEN = registerSupplier("mana_injector_forbidden", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_HEAVENLY = registerSupplier("mana_injector_heavenly", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, BlockItem> DESALINATOR = registerSupplier("desalinator", () -> new BlockItem(BlocksPM.DESALINATOR.get(), new Item.Properties()));
 
     // Register miscellaneous block items
     public static final IRegistryItem<Item, ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));
@@ -459,6 +460,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, Item> IRON_GRIT = registerSupplier("iron_grit", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> GOLD_GRIT = registerSupplier("gold_grit", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> COPPER_GRIT = registerSupplier("copper_grit", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> SALT_PINCH = registerSupplier("salt_pinch", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> PRIMALITE_INGOT = registerSupplier("primalite_ingot", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> HEXIUM_INGOT = registerSupplier("hexium_ingot", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> HALLOWSTEEL_INGOT = registerSupplier("hallowsteel_ingot", () -> new Item(new Item.Properties()));

@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.blocks.crafting.WandGlamourTableB
 import com.verdantartifice.primalmagick.common.blocks.crafting.WandInscriptionTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.crops.HydromelonBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.AnalysisTableBlock;
+import com.verdantartifice.primalmagick.common.blocks.devices.DesalinatorBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.DissolutionChamberBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.EssenceTransmuterBlock;
@@ -412,6 +413,7 @@ public class BlocksPM {
     public static final IRegistryItem<Block, ManaInjectorBlock> MANA_INJECTOR_ENCHANTED = register("mana_injector_enchanted", () -> new ManaInjectorBlock(DeviceTier.ENCHANTED, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
     public static final IRegistryItem<Block, ManaInjectorBlock> MANA_INJECTOR_FORBIDDEN = register("mana_injector_forbidden", () -> new ManaInjectorBlock(DeviceTier.FORBIDDEN, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
     public static final IRegistryItem<Block, ManaInjectorBlock> MANA_INJECTOR_HEAVENLY = register("mana_injector_heavenly", () -> new ManaInjectorBlock(DeviceTier.HEAVENLY, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion().lightLevel(state -> 13)));
+    public static final IRegistryItem<Block, DesalinatorBlock> DESALINATOR = register("desalinator", () -> new DesalinatorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion()));
 
     // Register misc blocks
     public static final IRegistryItem<Block, ConsecrationFieldBlock> CONSECRATION_FIELD = register("consecration_field", ConsecrationFieldBlock::new);

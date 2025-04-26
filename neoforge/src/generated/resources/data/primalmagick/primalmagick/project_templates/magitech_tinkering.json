@@ -80,6 +80,25 @@
         "requirement_type": "primalmagick:research",
         "rootKey": {
           "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:desalinator"
+        }
+      },
+      "stack": {
+        "count": 1,
+        "id": "primalmagick:desalinator"
+      },
+      "weight": 1.0
+    },
+    {
+      "afterCrafting": 0,
+      "bonusReward": 0.0,
+      "consumed": false,
+      "matchNBT": false,
+      "material_type": "primalmagick:item",
+      "requirement": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
           "rootKey": "primalmagick:arcanometer"
         }
       },

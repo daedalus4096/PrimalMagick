@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.platform.services;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
@@ -30,6 +31,7 @@ public interface IBlockEntityPrototypeService {
     BlockEntityType.BlockEntitySupplier<RunecarvingTableTileEntity> runecarvingTable();
 
     // Device tiles
+    BlockEntityType.BlockEntitySupplier<DesalinatorTileEntity> desalinator();
     BlockEntityType.BlockEntitySupplier<DissolutionChamberTileEntity> dissolutionChamber();
     BlockEntityType.BlockEntitySupplier<EssenceCaskTileEntity> essenceCask();
     BlockEntityType.BlockEntitySupplier<EssenceTransmuterTileEntity> essenceTransmuter();

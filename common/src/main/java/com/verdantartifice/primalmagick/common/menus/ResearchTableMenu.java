@@ -85,7 +85,7 @@ public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTa
     }
 
     @Override
-    public void itemsChanged(IItemHandlerPM invBasic) {
+    public void itemsChanged(int itemHandlerIndex, IItemHandlerPM invBasic) {
         this.checkWritingImplements();
     }
 

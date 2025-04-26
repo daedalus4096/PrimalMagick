@@ -818,6 +818,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.ENCHANTED_INK.get()).set(Sources.SEA, 3).set(Sources.MOON, 3).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ROCK_SALT.get()).set(Sources.EARTH, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.REFINED_SALT.get()).base(ItemsPM.ROCK_SALT.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SALT_PINCH.get()).set(Sources.EARTH, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MANA_PRISM.get()).set(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MANA_SALTS.get()).set(auraUnit.multiply(5)).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.BEESWAX.get()).set(Sources.SEA, 2).set(Sources.BLOOD, 2).build(consumer);
