@@ -22,6 +22,10 @@ public class FluidHandlerPMNeoforge implements IFluidHandlerPM {
         this.tank = new FluidTank(capacity, nfStack -> validator.test(new FluidStackPMNeoforge(nfStack)));
     }
 
+    public IFluidHandler getInner() {
+        return this.tank;
+    }
+
     @Override
     public int getTanks() {
         return this.tank.getTanks();

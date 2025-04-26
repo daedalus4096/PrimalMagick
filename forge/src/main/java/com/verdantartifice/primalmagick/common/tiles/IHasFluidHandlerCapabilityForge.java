@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles;
 
+import com.verdantartifice.primalmagick.common.capabilities.FluidHandlerPMForge;
 import com.verdantartifice.primalmagick.common.capabilities.IFluidHandlerPM;
 import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.util.LazyOptional;
@@ -12,7 +13,7 @@ public interface IHasFluidHandlerCapabilityForge {
         NonNullList<LazyOptional<IFluidHandler>> retVal = NonNullList.withSize(fluidHandlers.size(), LazyOptional.empty());
         for (int index = 0; index < fluidHandlers.size(); index++) {
             final int optIndex = index;
-            retVal.set(index, LazyOptional.of(() -> fluidHandlers.get(optIndex) instanceof IFluidHandler castHandler ? castHandler : EmptyFluidHandler.INSTANCE));
+            retVal.set(index, LazyOptional.of(() -> fluidHandlers.get(optIndex) instanceof FluidHandlerPMForge castHandler ? castHandler.getInner() : EmptyFluidHandler.INSTANCE));
         }
         return retVal;
     }

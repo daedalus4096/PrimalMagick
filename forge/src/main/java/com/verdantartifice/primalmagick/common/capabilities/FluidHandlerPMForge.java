@@ -22,6 +22,10 @@ public class FluidHandlerPMForge implements IFluidHandlerPM {
         this.tank = new FluidTank(capacity, fStack -> validator.test(new FluidStackPMForge(fStack)));
     }
 
+    public IFluidHandler getInner() {
+        return this.tank;
+    }
+
     @Override
     public int getTanks() {
         return this.tank.getTanks();

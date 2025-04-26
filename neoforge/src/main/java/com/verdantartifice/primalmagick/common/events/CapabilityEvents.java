@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
+import com.verdantartifice.primalmagick.common.capabilities.FluidHandlerPMNeoforge;
 import com.verdantartifice.primalmagick.common.capabilities.IFluidHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
@@ -58,8 +59,8 @@ public class CapabilityEvents {
     }
 
     private static IFluidHandler cast(final IFluidHandlerPM handler) {
-        if (handler instanceof IFluidHandler nfHandler) {
-            return nfHandler;
+        if (handler instanceof FluidHandlerPMNeoforge nfHandler) {
+            return nfHandler.getInner();
         } else {
             return null;
         }
