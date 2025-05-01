@@ -926,6 +926,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.ENERGIZED_QUARTZ).name("Energized Quartz").build();
         this.item(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE).name("Smithing Template").build();
         this.item(ItemsPM.SALT_PINCH).name("Pinch of Salt").build();
+        this.item(ItemsPM.PIXIE_HOUSE).name("Pixie House").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -1144,6 +1145,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.entity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE).name("Majestic Hallowed Pixie").build();
         this.entity(EntityTypesPM.FLYING_CARPET).name("Flying Carpet").build();
         this.entity(EntityTypesPM.SIN_CRYSTAL).name("Sin Crystal").build();
+        this.entity(EntityTypesPM.PIXIE_HOUSE).name("Pixie House").build();
         
         // Generate status effect localizations
         this.mobEffect(EffectsPM.FLYING).name("Flying").build();

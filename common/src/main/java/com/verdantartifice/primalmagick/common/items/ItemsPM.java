@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.items.concoctions.ConcoctionItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.SkyglassFlaskItem;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
+import com.verdantartifice.primalmagick.common.items.entities.PixieHouseItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
@@ -430,6 +431,9 @@ public class ItemsPM {
     public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_FORBIDDEN = registerSupplier("mana_injector_forbidden", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_HEAVENLY = registerSupplier("mana_injector_heavenly", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, BlockItem> DESALINATOR = registerSupplier("desalinator", () -> new BlockItem(BlocksPM.DESALINATOR.get(), new Item.Properties()));
+
+    // Register pixie structure items
+    public static final IRegistryItem<Item, PixieHouseItem> PIXIE_HOUSE = registerSupplier("pixie_house", () -> new PixieHouseItem(new Item.Properties().stacksTo(16)));
 
     // Register miscellaneous block items
     public static final IRegistryItem<Item, ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));

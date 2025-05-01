@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -160,9 +161,9 @@ public class PixieHouseEntity extends LivingEntity {
                         this.causeDamage(serverLevel, pSource, 4.0F);
                         return false;
                     } else {
-                        boolean flag1 = pSource.is(DamageTypeTags.CAN_BREAK_ARMOR_STAND);
-                        boolean flag = pSource.is(DamageTypeTags.ALWAYS_KILLS_ARMOR_STANDS);
-                        if (!flag1 && !flag) {
+                        boolean canBreak = pSource.is(DamageTypeTags.CAN_BREAK_ARMOR_STAND);
+                        boolean alwaysKill = pSource.is(DamageTypeTags.ALWAYS_KILLS_ARMOR_STANDS);
+                        if (!canBreak && !alwaysKill) {
                             return false;
                         } else {
                             if (pSource.getEntity() instanceof Player player) {
@@ -178,7 +179,7 @@ public class PixieHouseEntity extends LivingEntity {
                                 return true;
                             } else {
                                 long i = serverLevel.getGameTime();
-                                if (i - this.lastHit > WOBBLE_TIME && !flag) {
+                                if (i - this.lastHit > WOBBLE_TIME && !alwaysKill) {
                                     serverLevel.broadcastEntityEvent(this, HIT_EVENT);
                                     this.gameEvent(GameEvent.ENTITY_DAMAGE, pSource.getEntity());
                                     this.lastHit = i;
@@ -242,8 +243,7 @@ public class PixieHouseEntity extends LivingEntity {
     }
 
     private void brokenByPlayer(ServerLevel pLevel, DamageSource pDamageSource) {
-        // TODO Drop pixie house item instead of armor stand
-        ItemStack itemstack = new ItemStack(Items.ARMOR_STAND);
+        ItemStack itemstack = new ItemStack(ItemsPM.PIXIE_HOUSE.get());
         itemstack.set(DataComponents.CUSTOM_NAME, this.getCustomName());
         Block.popResource(this.level(), this.blockPosition(), itemstack);
         this.brokenByAnything(pLevel, pDamageSource);
@@ -319,7 +319,6 @@ public class PixieHouseEntity extends LivingEntity {
 
     @Override
     public ItemStack getPickResult() {
-        // FIXME Use pixie house item instead of armor stand
-        return new ItemStack(Items.ARMOR_STAND);
+        return new ItemStack(ItemsPM.PIXIE_HOUSE.get());
     }
 }
