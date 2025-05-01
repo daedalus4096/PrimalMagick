@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagick.common.entities.companions.pixies.Majest
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
+import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBombEntity;
@@ -266,6 +267,11 @@ public class EntityTypesPM {
             .sized(0.5F, 0.5F)
             .clientTrackingRange(10)
             .build(Constants.MOD_ID + ":pixie_majestic_hallowed"));
+    public static final IRegistryItem<EntityType<?>, EntityType<PixieHouseEntity>> PIXIE_HOUSE = register("pixie_house", () -> EntityType.Builder.<PixieHouseEntity>of(PixieHouseEntity::new, MobCategory.MISC)
+            .sized(0.875F, 2.0F)
+            .eyeHeight(1.7775F)
+            .clientTrackingRange(10)
+            .build(Constants.MOD_ID + ":pixie_house"));
 
     private static <T extends Entity> IRegistryItem<EntityType<?>, EntityType<T>> register(String name, Supplier<EntityType<T>> typeSupplier) {
         return Services.ENTITY_TYPES_REGISTRY.register(name, typeSupplier);
