@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.HexiumTridentRen
 import com.verdantartifice.primalmagick.client.renderers.entity.InnerDemonRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.MajesticPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.ManaArrowRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.PixieHouseRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.PrimaliteGolemRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.PrimaliteTridentRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.SinCrashRenderer;
@@ -20,6 +21,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.SpellMineRendere
 import com.verdantartifice.primalmagick.client.renderers.entity.SpellProjectileRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.TreefolkRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.FlyingCarpetModel;
+import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieHouseModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellMineModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellProjectileModel;
@@ -98,6 +100,7 @@ public class EntityRendererEvents {
         entityRenderers.register(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), BasicPixieRenderer::new);
         entityRenderers.register(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), GrandPixieRenderer::new);
         entityRenderers.register(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.PIXIE_HOUSE.get(), PixieHouseRenderer::new);
     }
 
     public interface EntityRendererRegistrar {
@@ -119,5 +122,6 @@ public class EntityRendererEvents {
         consumer.accept(ModelLayersPM.MANA_INJECTOR_FRAME_TOP_MIDDLE, ManaInjectorFrameRingTopMiddleModel::createBodyLayer);
         consumer.accept(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM_MIDDLE, ManaInjectorFrameRingBottomMiddleModel::createBodyLayer);
         consumer.accept(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM, ManaInjectorFrameRingBottomModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.PIXIE_HOUSE, PixieHouseModel::createBodyLayer);
     }
 }

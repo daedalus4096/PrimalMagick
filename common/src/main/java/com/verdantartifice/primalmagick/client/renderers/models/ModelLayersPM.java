@@ -23,4 +23,5 @@ public class ModelLayersPM {
     public static final ModelLayerLocation MANA_INJECTOR_FRAME_TOP_MIDDLE = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_top_middle"), "main");
     public static final ModelLayerLocation MANA_INJECTOR_FRAME_BOTTOM_MIDDLE = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_bottom_middle"), "main");
     public static final ModelLayerLocation MANA_INJECTOR_FRAME_BOTTOM = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_bottom"), "main");
+    public static final ModelLayerLocation PIXIE_HOUSE = new ModelLayerLocation(ResourceUtils.loc("pixie_house"), "main");
 }

@@ -3,9 +3,7 @@ package com.verdantartifice.primalmagick.client.renderers.entity.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -17,9 +15,6 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 public class PixieHouseModel extends EntityModel<PixieHouseEntity> {
 	// Made with Blockbench 4.12.4
 	// Exported for Minecraft version 1.17 or later with Mojang mappings
-
-	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceUtils.loc("pixie_house"), "main");
 
 	private final ModelPart trunk;
 	private final ModelPart support1;
