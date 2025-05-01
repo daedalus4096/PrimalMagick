@@ -27,7 +27,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -55,7 +54,7 @@ public class PixieHouseEntity extends LivingEntity {
         this.setPos(pX, pY, pZ);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
+    public static AttributeSupplier.Builder getAttributeModifiers() {
         return createLivingAttributes().add(Attributes.STEP_HEIGHT, 0.0D);
     }
 
