@@ -26,4 +26,11 @@ public class PixieHouseRenderer extends LivingEntityRenderer<PixieHouseEntity, P
         // TODO Shake branches when struck
         super.setupRotations(pEntity, pPoseStack, pBob, pYBodyRot, pPartialTick, pScale);
     }
+
+    @Override
+    protected boolean shouldShowName(PixieHouseEntity pEntity) {
+        double distSqr = this.entityRenderDispatcher.distanceToSqr(pEntity);
+        double f = pEntity.isCrouching() ? 32.0D : 64.0D;
+        return !(distSqr >= (f * f)) && pEntity.isCustomNameVisible();
+    }
 }
