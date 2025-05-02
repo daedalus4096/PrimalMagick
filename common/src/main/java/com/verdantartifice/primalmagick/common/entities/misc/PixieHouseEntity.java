@@ -268,6 +268,13 @@ public class PixieHouseEntity extends LivingEntity {
     }
 
     @Override
+    protected float tickHeadTurn(float pYRot, float pAnimStep) {
+        this.yBodyRotO = this.yRotO;
+        this.yBodyRot = this.getYRot();
+        return 0.0F;
+    }
+
+    @Override
     public void travel(Vec3 pTravelVector) {
         if (this.hasPhysics()) {
             super.travel(pTravelVector);
