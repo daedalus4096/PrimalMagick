@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.entity.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,6 +12,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 
 public class PixieHouseModel extends EntityModel<PixieHouseEntity> {
 	// Made with Blockbench 4.12.4
@@ -84,7 +86,18 @@ public class PixieHouseModel extends EntityModel<PixieHouseEntity> {
 
 	@Override
 	public void setupAnim(PixieHouseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		float partialTicks = ageInTicks - entity.tickCount;
+		float timeSinceLastHit = (float)(entity.level().getGameTime() - entity.lastHit) + partialTicks;
+		if (timeSinceLastHit < PixieHouseEntity.WOBBLE_TIME) {
+			float rot = 0.1F * Mth.sin(timeSinceLastHit / ((float)PixieHouseEntity.WOBBLE_TIME / 2F) * (float)Math.PI);
+			this.support1.zRot = -rot;
+			this.support2.zRot = rot;
+			this.support3.xRot = rot;
+		} else {
+			this.support1.zRot = 0;
+			this.support2.zRot = 0;
+			this.support3.xRot = 0;
+		}
 	}
 
 	@Override
