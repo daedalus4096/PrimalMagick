@@ -39,7 +39,7 @@ import java.util.List;
 public class PixieHouseEntity extends LivingEntity {
     public static final int MAX_OCCUPANCY = 1;
 
-    private static final long WOBBLE_TIME = 5L;
+    public static final long WOBBLE_TIME = 5L;
     private static final byte HIT_EVENT = 32;
 
     private final NonNullList<ItemStack> housedPixies = NonNullList.withSize(MAX_OCCUPANCY, ItemStack.EMPTY);
