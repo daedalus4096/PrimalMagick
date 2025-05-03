@@ -38,7 +38,8 @@ public class PixieHouseISTER extends BlockEntityWithoutLevelRenderer {
     public void renderByItem(ItemStack pStack, ItemDisplayContext pDisplayContext, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
         if (pStack.getItem() instanceof PixieHouseItem) {
             pPoseStack.pushPose();
-            pPoseStack.scale(1.0F, -1.0F, -1.0F);
+            pPoseStack.translate(0.1F, 0.3F, 0.0F);
+            pPoseStack.scale(0.7F, -0.7F, -0.7F);
             Material renderMaterial = MATERIAL;
             VertexConsumer vertexBuilder = renderMaterial.sprite().wrap(ItemRenderer.getFoilBufferDirect(pBuffer, this.model.renderType(renderMaterial.atlasLocation()), true, pStack.hasFoil()));
             this.model.renderToBuffer(pPoseStack, vertexBuilder, pPackedLight, pPackedOverlay);
