@@ -1,7 +1,10 @@
 package com.verdantartifice.primalmagick.common.items.entities;
 
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseISTER;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
+import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -21,8 +24,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-public class PixieHouseItem extends Item {
+public class PixieHouseItem extends Item implements IHasCustomRenderer {
+    private BlockEntityWithoutLevelRenderer customRenderer;
+
     public PixieHouseItem(Item.Properties pProperties) {
         super(pProperties);
     }
@@ -60,5 +66,18 @@ public class PixieHouseItem extends Item {
                 return InteractionResult.FAIL;
             }
         }
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplier() {
+        if (this.customRenderer == null) {
+            this.customRenderer = this.getCustomRendererSupplierUncached().get();
+        }
+        return () -> this.customRenderer;
+    }
+
+    @Override
+    public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
+        return PixieHouseISTER::new;
     }
 }
