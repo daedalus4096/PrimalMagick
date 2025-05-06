@@ -31,7 +31,7 @@ import java.util.function.Supplier;
  * 
  * @author Daedalus4096
  */
-public class PixieItemNeoforge extends DeferredSpawnEggItem {
+public class PixieItemNeoforge extends DeferredSpawnEggItem implements IPixieItem {
     protected static final List<PixieItemNeoforge> PIXIES = new ArrayList<>();
 
     public PixieItemNeoforge(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties) {

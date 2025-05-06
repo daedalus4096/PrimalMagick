@@ -1,14 +1,16 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import net.minecraft.core.NonNullList;
+import com.verdantartifice.primalmagick.common.items.misc.IPixieItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -37,21 +39,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PixieHouseEntity extends LivingEntity {
-    public static final int MAX_OCCUPANCY = 1;
-
+    public static final EntityDataAccessor<ItemStack> DATA_HOUSED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.ITEM_STACK);
     public static final long WOBBLE_TIME = 5L;
     private static final byte HIT_EVENT = 32;
 
-    private final NonNullList<ItemStack> housedPixies = NonNullList.withSize(MAX_OCCUPANCY, ItemStack.EMPTY);
+    private ItemStack housedPixie = ItemStack.EMPTY;
     public long lastHit;
 
     public PixieHouseEntity(EntityType<? extends PixieHouseEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-    }
-
-    public PixieHouseEntity(Level pLevel, double pX, double pY, double pZ) {
-        this(EntityTypesPM.PIXIE_HOUSE.get(), pLevel);
-        this.setPos(pX, pY, pZ);
     }
 
     public static AttributeSupplier.Builder getAttributeModifiers() {
@@ -77,8 +73,27 @@ public class PixieHouseEntity extends LivingEntity {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
-        // TODO Sync type of pixie currently housed
-        // TODO Sync source of pixie currently housed
+        pBuilder.define(DATA_HOUSED_PIXIE, ItemStack.EMPTY);
+    }
+
+    public ItemStack getHousedPixie() {
+        return this.housedPixie;
+    }
+
+    public void setHousedPixie(ItemStack pixie) {
+        this.housedPixie = pixie.copy();
+        this.entityData.set(DATA_HOUSED_PIXIE, this.housedPixie);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        // Ensure the locally cached housed pixie is up to date
+        ItemStack pixieStack = this.entityData.get(DATA_HOUSED_PIXIE);
+        if (!this.housedPixie.equals(pixieStack)) {
+            this.setHousedPixie(pixieStack);
+        }
     }
 
     @Override
@@ -102,22 +117,16 @@ public class PixieHouseEntity extends LivingEntity {
 
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
-        if (compoundTag.contains("HousedPixies", Tag.TAG_LIST)) {
-            ListTag pixieList = compoundTag.getList("HousedPixies", Tag.TAG_COMPOUND);
-            for (int index = 0; index < this.housedPixies.size(); index++) {
-                CompoundTag pixieTag = pixieList.getCompound(index);
-                this.housedPixies.set(index, ItemStack.parseOptional(this.registryAccess(), pixieTag));
-            }
+        if (compoundTag.contains("HousedPixie", Tag.TAG_COMPOUND)) {
+            this.housedPixie = ItemStack.parseOptional(this.registryAccess(), compoundTag.getCompound("HousedPixie"));
         }
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
-        ListTag pixieList = new ListTag();
-        for (ItemStack pixieStack : this.housedPixies) {
-            pixieList.add(pixieStack.saveOptional(this.registryAccess()));
+        if (this.housedPixie != null) {
+            compoundTag.put("HousedPixie", this.housedPixie.saveOptional(this.registryAccess()));
         }
-        compoundTag.put("HousedPixies", pixieList);
     }
 
     public boolean isPushable() {
@@ -129,7 +138,13 @@ public class PixieHouseEntity extends LivingEntity {
 
     @Override
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
-        // TODO Either open a GUI or add pixie from hand directly
+        ItemStack heldStack = pPlayer.getItemInHand(pHand);
+        if (heldStack.getItem() instanceof IPixieItem) {
+            LogUtils.getLogger().warn("Adding pixie {} to house", heldStack);
+            this.setHousedPixie(heldStack.copyWithCount(1));
+            heldStack.shrink(1);
+            return InteractionResult.SUCCESS;
+        }
         return super.interactAt(pPlayer, pVec, pHand);
     }
 
@@ -254,12 +269,9 @@ public class PixieHouseEntity extends LivingEntity {
 
         // TODO Discard any pixies that are deployed
 
-        for(int index = 0; index < this.housedPixies.size(); index++) {
-            ItemStack pixieStack = this.housedPixies.get(index);
-            if (!pixieStack.isEmpty()) {
-                Block.popResource(this.level(), this.blockPosition().above(), pixieStack);
-                this.housedPixies.set(index, ItemStack.EMPTY);
-            }
+        if (!this.housedPixie.isEmpty()) {
+            Block.popResource(this.level(), this.blockPosition().above(), this.housedPixie);
+            this.housedPixie = ItemStack.EMPTY;
         }
     }
 

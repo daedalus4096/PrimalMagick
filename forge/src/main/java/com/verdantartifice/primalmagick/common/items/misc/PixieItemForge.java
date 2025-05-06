@@ -31,7 +31,7 @@ import java.util.function.Supplier;
  * 
  * @author Daedalus4096
  */
-public class PixieItemForge extends ForgeSpawnEggItem {
+public class PixieItemForge extends ForgeSpawnEggItem implements IPixieItem {
     protected static final List<PixieItemForge> PIXIES = new ArrayList<>();
     
     public PixieItemForge(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties) {
