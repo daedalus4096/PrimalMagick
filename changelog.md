@@ -1,3 +1,7 @@
+v4.0.11
+-------
+* Improved performance of arcane recipe book upon data reload
+
 v4.0.10
 -------
 * Fixed a bug allowing some attribute modifiers to ignore suppression by Attunement Shackles
