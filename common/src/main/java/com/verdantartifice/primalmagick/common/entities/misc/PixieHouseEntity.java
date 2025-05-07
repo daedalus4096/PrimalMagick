@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
-import com.mojang.logging.LogUtils;
-import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.IPixieItem;
 import net.minecraft.core.component.DataComponents;
@@ -118,13 +116,13 @@ public class PixieHouseEntity extends LivingEntity {
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         if (compoundTag.contains("HousedPixie", Tag.TAG_COMPOUND)) {
-            this.housedPixie = ItemStack.parseOptional(this.registryAccess(), compoundTag.getCompound("HousedPixie"));
+            this.setHousedPixie(ItemStack.parseOptional(this.registryAccess(), compoundTag.getCompound("HousedPixie")));
         }
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
-        if (this.housedPixie != null) {
+        if (this.housedPixie != null && !this.housedPixie.isEmpty()) {
             compoundTag.put("HousedPixie", this.housedPixie.saveOptional(this.registryAccess()));
         }
     }
@@ -140,12 +138,20 @@ public class PixieHouseEntity extends LivingEntity {
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
         ItemStack heldStack = pPlayer.getItemInHand(pHand);
         if (heldStack.getItem() instanceof IPixieItem) {
-            LogUtils.getLogger().warn("Adding pixie {} to house", heldStack);
-            this.setHousedPixie(heldStack.copyWithCount(1));
+            ItemStack stack = heldStack.copyWithCount(1);
+            this.setHousedPixie(stack);
             heldStack.shrink(1);
             return InteractionResult.SUCCESS;
+        } else if (heldStack.isEmpty() && !this.housedPixie.isEmpty()) {
+            ItemStack stack = this.housedPixie.copy();
+            if (!pPlayer.getInventory().add(stack)) {
+                pPlayer.drop(stack, false);
+            }
+            this.setHousedPixie(ItemStack.EMPTY);
+            return InteractionResult.SUCCESS;
+        } else {
+            return super.interactAt(pPlayer, pVec, pHand);
         }
-        return super.interactAt(pPlayer, pVec, pHand);
     }
 
     @Override
