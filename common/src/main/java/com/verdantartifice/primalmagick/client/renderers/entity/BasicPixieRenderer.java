@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class BasicPixieRenderer extends AbstractPixieRenderer {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/pixie/basic_pixie.png");
+    public static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/pixie/basic_pixie.png");
     
     public BasicPixieRenderer(EntityRendererProvider.Context context) {
         super(context, new PixieModel(context.bakeLayer(ModelLayersPM.PIXIE_BASIC)));

@@ -3,13 +3,15 @@ package com.verdantartifice.primalmagick.client.renderers.entity.layers;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.verdantartifice.primalmagick.client.renderers.entity.BasicPixieRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.GrandPixieRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.MajesticPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieHouseModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.PixieRank;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.items.misc.IPixieItem;
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -23,9 +25,9 @@ import java.util.Map;
 
 public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseEntity, PixieHouseModel> {
     private static final Map<PixieRank, ResourceLocation> TEXTURES = ImmutableMap.of(
-            PixieRank.BASIC, ResourceUtils.loc("textures/entity/pixie/basic_pixie.png"),
-            PixieRank.GRAND, ResourceUtils.loc("textures/entity/pixie/grand_pixie.png"),
-            PixieRank.MAJESTIC, ResourceUtils.loc("textures/entity/pixie/majestic_pixie.png"));
+            PixieRank.BASIC, BasicPixieRenderer.TEXTURE,
+            PixieRank.GRAND, GrandPixieRenderer.TEXTURE,
+            PixieRank.MAJESTIC, MajesticPixieRenderer.TEXTURE);
 
     private final PixieModel basePixieModel;
     private final PixieModel royalPixieModel;
