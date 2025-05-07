@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagick.client.renderers.entity.layers;
 
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.EnchantedGolemModel;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity.Cracks;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.HallowsteelGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchantedGolemEntity.Cracks;
+import com.verdantartifice.primalmagick.common.entities.golems.HallowsteelGolemEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.resources.ResourceLocation;

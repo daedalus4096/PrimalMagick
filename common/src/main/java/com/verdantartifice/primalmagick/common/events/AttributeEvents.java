@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.HallowsteelGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.HexiumGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.PrimaliteGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.IBasicPixie;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.IGrandPixie;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.IMajesticPixie;
+import com.verdantartifice.primalmagick.common.entities.golems.HallowsteelGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.HexiumGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.IBasicPixie;
+import com.verdantartifice.primalmagick.common.entities.pixies.IGrandPixie;
+import com.verdantartifice.primalmagick.common.entities.pixies.IMajesticPixie;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;

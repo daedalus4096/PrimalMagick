@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.PixieRank;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.PixieRank;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

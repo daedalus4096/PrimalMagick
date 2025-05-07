@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.MajesticPixieRen
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieHouseModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.PixieRank;
+import com.verdantartifice.primalmagick.common.entities.pixies.PixieRank;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.items.misc.IPixieItem;
 import com.verdantartifice.primalmagick.common.sources.Source;

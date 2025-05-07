@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.golems;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.HexiumGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;

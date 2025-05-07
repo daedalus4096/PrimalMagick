@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagick.client.renderers.entity.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.EnchantedGolemModel;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity.Cracks;
+import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchantedGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchantedGolemEntity.Cracks;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
