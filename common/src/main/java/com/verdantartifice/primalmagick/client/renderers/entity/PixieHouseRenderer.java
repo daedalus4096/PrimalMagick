@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import com.verdantartifice.primalmagick.client.renderers.entity.layers.PixieHouseOccupantLayer;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieHouseModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
@@ -16,6 +17,7 @@ public class PixieHouseRenderer extends LivingEntityRenderer<PixieHouseEntity, P
 
     public PixieHouseRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new PixieHouseModel(pContext.bakeLayer(ModelLayersPM.PIXIE_HOUSE)), 0.0F);
+        this.addLayer(new PixieHouseOccupantLayer(this, pContext.getModelSet()));
     }
 
     @Override
