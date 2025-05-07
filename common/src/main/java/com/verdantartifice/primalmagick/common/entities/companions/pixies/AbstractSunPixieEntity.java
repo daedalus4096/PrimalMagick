@@ -25,7 +25,7 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
     }
 
     @Override
-    protected Source getPixieSource() {
+    public Source getPixieSource() {
         return Sources.SUN;
     }
 

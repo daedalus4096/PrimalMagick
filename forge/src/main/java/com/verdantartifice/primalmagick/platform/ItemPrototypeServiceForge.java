@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.companions.pixies.PixieRank;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
@@ -161,7 +162,7 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     }
 
     @Override
-    public Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties) {
-        return () -> new PixieItemForge(typeSupplier, source, properties);
+    public Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, PixieRank rank, Source source, Item.Properties properties) {
+        return () -> new PixieItemForge(typeSupplier, rank, source, properties);
     }
 }

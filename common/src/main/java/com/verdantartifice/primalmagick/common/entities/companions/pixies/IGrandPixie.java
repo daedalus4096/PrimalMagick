@@ -10,11 +10,17 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
  * @author Daedalus4096
  */
 public interface IGrandPixie extends IPixie {
-    public static AttributeSupplier.Builder getAttributeModifiers() {
+    static AttributeSupplier.Builder getAttributeModifiers() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 9.0D).add(Attributes.FLYING_SPEED, 0.6D).add(Attributes.MOVEMENT_SPEED, 0.3D);
     }
-    
-    public default int getSpellPower() {
+
+    @Override
+    default PixieRank getPixieRank() {
+        return PixieRank.GRAND;
+    }
+
+    @Override
+    default int getSpellPower() {
         return 3;
     }
 }

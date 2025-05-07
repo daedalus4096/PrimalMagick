@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.platform.services;
 
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.companions.pixies.PixieRank;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.EarthshatterHammerItem;
@@ -60,5 +61,5 @@ public interface IItemPrototypeService {
     Supplier<ModularStaffItem> modularStaff(Item.Properties properties);
 
     Supplier<SpawnEggItem> deferredSpawnEgg(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Item.Properties props);
-    Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties);
+    Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, PixieRank rank, Source source, Item.Properties properties);
 }

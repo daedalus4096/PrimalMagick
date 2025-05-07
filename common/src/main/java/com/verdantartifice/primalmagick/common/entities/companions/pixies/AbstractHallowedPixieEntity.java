@@ -29,7 +29,7 @@ public abstract class AbstractHallowedPixieEntity extends AbstractPixieEntity im
     }
 
     @Override
-    protected Source getPixieSource() {
+    public Source getPixieSource() {
         return Sources.HALLOWED;
     }
 

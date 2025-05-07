@@ -29,7 +29,7 @@ public abstract class AbstractSeaPixieEntity extends AbstractPixieEntity impleme
     }
 
     @Override
-    protected Source getPixieSource() {
+    public Source getPixieSource() {
         return Sources.SEA;
     }
 

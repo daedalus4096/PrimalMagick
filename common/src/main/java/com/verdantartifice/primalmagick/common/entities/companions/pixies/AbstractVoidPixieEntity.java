@@ -29,7 +29,7 @@ public abstract class AbstractVoidPixieEntity extends AbstractPixieEntity implem
     }
 
     @Override
-    protected Source getPixieSource() {
+    public Source getPixieSource() {
         return Sources.VOID;
     }
 

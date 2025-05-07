@@ -29,7 +29,7 @@ public abstract class AbstractBloodPixieEntity extends AbstractPixieEntity imple
     }
 
     @Override
-    protected Source getPixieSource() {
+    public Source getPixieSource() {
         return Sources.BLOOD;
     }
 

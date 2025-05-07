@@ -29,7 +29,7 @@ public abstract class AbstractSkyPixieEntity extends AbstractPixieEntity impleme
     }
 
     @Override
-    protected Source getPixieSource() {
+    public Source getPixieSource() {
         return Sources.SKY;
     }
 

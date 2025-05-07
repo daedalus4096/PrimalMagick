@@ -56,6 +56,7 @@ import java.util.UUID;
 public abstract class AbstractPixieEntity extends AbstractCompanionEntity implements NeutralMob, FlyingAnimal, IPixie {
     protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(AbstractPixieEntity.class, EntityDataSerializers.INT);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
+    protected static final byte PIXIE_DUST_EVENT = 15;
 
     protected int attackTimer;
     protected UUID angerTarget;
@@ -67,7 +68,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Nonnull
-    protected abstract Source getPixieSource();
+    public abstract Source getPixieSource();
     
     @Nonnull
     protected abstract SpawnEggItem getSpawnItem();
@@ -159,7 +160,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
         if (!level.isClientSide) {
             this.updatePersistentAnger((ServerLevel)level, true);
             if (this.isAlive()) {
-                level.broadcastEntityEvent(this, (byte)15);
+                level.broadcastEntityEvent(this, PIXIE_DUST_EVENT);
             }
         }
     }
@@ -175,7 +176,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
      */
     @Override
     public void handleEntityEvent(byte id) {
-        if (id == 15) {
+        if (id == PIXIE_DUST_EVENT) {
             FxDispatcher.INSTANCE.pixieDust(this.getX() + (this.random.nextGaussian() * 0.25D), this.getY() + 0.25D, this.getZ() + (this.random.nextGaussian() * 0.25D), this.getPixieSource().getColor());
         } else {
             super.handleEntityEvent(id);

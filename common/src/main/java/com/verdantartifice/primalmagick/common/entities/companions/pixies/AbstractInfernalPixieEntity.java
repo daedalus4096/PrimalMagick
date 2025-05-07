@@ -29,7 +29,7 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
     }
 
     @Override
-    protected Source getPixieSource() {
+    public Source getPixieSource() {
         return Sources.INFERNAL;
     }
 

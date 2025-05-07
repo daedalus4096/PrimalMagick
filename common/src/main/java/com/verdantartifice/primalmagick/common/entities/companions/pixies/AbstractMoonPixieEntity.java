@@ -29,7 +29,7 @@ public abstract class AbstractMoonPixieEntity extends AbstractPixieEntity implem
     }
 
     @Override
-    protected Source getPixieSource() {
+    public Source getPixieSource() {
         return Sources.MOON;
     }
 

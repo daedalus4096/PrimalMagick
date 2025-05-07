@@ -148,6 +148,7 @@ public class PixieHouseEntity extends LivingEntity {
                 pPlayer.drop(stack, false);
             }
             this.setHousedPixie(ItemStack.EMPTY);
+            this.playSound(SoundEvents.BAT_HURT, 1.0F, 1.0F);
             return InteractionResult.SUCCESS;
         } else {
             return super.interactAt(pPlayer, pVec, pHand);
