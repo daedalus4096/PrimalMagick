@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
 public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseEntity, PixieHouseModel> {
@@ -31,10 +32,11 @@ public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseEntity, Pixie
     public void render(PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, PixieHouseEntity pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         ItemStack pixieStack = pLivingEntity.getHousedPixie();
         if (pixieStack.getItem() instanceof IPixieItem) {
+            double yBob = -0.125D * Mth.sin(pAgeInTicks / 6F);
             pPoseStack.pushPose();
-            pPoseStack.translate(0D, -0.125D, 0D);
+            pPoseStack.translate(0D, -0.25D + yBob, 0D);
             pPoseStack.scale(0.25F, 0.25F, 0.25F);
-//            this.pixieModel.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
+            this.pixieModel.setupAnim(null, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
             VertexConsumer vertexConsumer = pBuffer.getBuffer(this.pixieModel.renderType(TEXTURE));
             this.pixieModel.renderToBuffer(pPoseStack, vertexConsumer, pPackedLight, OverlayTexture.NO_OVERLAY);
             pPoseStack.popPose();
