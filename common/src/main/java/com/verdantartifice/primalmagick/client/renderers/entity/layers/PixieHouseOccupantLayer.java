@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.renderers.entity.layers;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.renderers.entity.BasicPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.GrandPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.MajesticPixieRenderer;
@@ -12,6 +13,7 @@ import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.PixieRank;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.items.misc.IPixieItem;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -19,6 +21,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
@@ -42,6 +45,7 @@ public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseEntity, Pixie
     public void render(PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, PixieHouseEntity pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         ItemStack pixieStack = pLivingEntity.getHousedPixie();
         if (pixieStack.getItem() instanceof IPixieItem pixieItem) {
+            // Render pixie house occupant if present
             PixieRank rank = pixieItem.getPixieRank();
             PixieModel model = rank == PixieRank.MAJESTIC ? this.royalPixieModel : this.basePixieModel;
             double yBob = -0.125D * Mth.sin(pAgeInTicks / 6F);
@@ -52,6 +56,14 @@ public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseEntity, Pixie
             VertexConsumer vertexConsumer = pBuffer.getBuffer(model.renderType(TEXTURES.get(rank)));
             model.renderToBuffer(pPoseStack, vertexConsumer, pPackedLight, OverlayTexture.NO_OVERLAY);
             pPoseStack.popPose();
+
+            // Render falling pixie dust
+            RandomSource random = pLivingEntity.getRandom();
+            Source source = pixieItem.getPixieSource();
+            double px = pLivingEntity.getX() + (random.nextGaussian() * 0.125D);
+            double py = pLivingEntity.getY() + 1.5D - yBob;
+            double pz = pLivingEntity.getZ() + (random.nextGaussian() * 0.125D);
+            FxDispatcher.INSTANCE.pixieDust(px, py, pz, source.getColor());
         }
     }
 }
