@@ -444,9 +444,9 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         @Override
         public boolean canUse() {
             PixieHouseEntity home = this.mob.getHome();
-            if (home != null && this.mob.level() instanceof ServerLevel serverLevel && home.getPersistentAngerTarget() != null) {
-                this.attacked = serverLevel.getEntity(home.getPersistentAngerTarget()) instanceof LivingEntity living ? living : null;
-                int time = home.getPersistentAngerTimestamp();
+            if (home != null && home.getTarget() != null) {
+                this.attacked = home.getTarget();
+                int time = home.getTargetTimestamp();
                 return time != this.timestamp && this.canAttack(this.attacked, TargetingConditions.DEFAULT);
             } else {
                 return false;
@@ -459,7 +459,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
             this.mob.setTarget(this.attacked);
             PixieHouseEntity home = this.mob.getHome();
             if (home != null) {
-                this.timestamp = home.getPersistentAngerTimestamp();
+                this.timestamp = home.getTargetTimestamp();
             }
             super.start();
         }

@@ -26,9 +26,13 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -43,7 +47,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class PixieHouseEntity extends LivingEntity implements NeutralMob {
+public class PixieHouseEntity extends Mob implements NeutralMob {
     public static final EntityDataAccessor<ItemStack> DATA_HOUSED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.ITEM_STACK);
     public static final EntityDataAccessor<Optional<UUID>> DATA_DEPLOYED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     public static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.INT);
@@ -55,7 +59,7 @@ public class PixieHouseEntity extends LivingEntity implements NeutralMob {
     @Nullable private AbstractGuardianPixieEntity deployedPixieCache;
     @Nullable private LivingEntity target;
     @Nullable protected UUID angerTarget;
-    protected int angerTargetTimestamp;
+    protected int targetTimestamp;
     public long lastHit;
 
     public PixieHouseEntity(EntityType<? extends PixieHouseEntity> pEntityType, Level pLevel) {
@@ -63,7 +67,7 @@ public class PixieHouseEntity extends LivingEntity implements NeutralMob {
     }
 
     public static AttributeSupplier.Builder getAttributeModifiers() {
-        return createLivingAttributes().add(Attributes.STEP_HEIGHT, 0.0D);
+        return createLivingAttributes().add(Attributes.STEP_HEIGHT, 0.0D).add(Attributes.FOLLOW_RANGE, 16.0D);
     }
 
     public void refreshDimensions() {
@@ -80,6 +84,14 @@ public class PixieHouseEntity extends LivingEntity implements NeutralMob {
 
     public boolean isEffectiveAi() {
         return super.isEffectiveAi() && this.hasPhysics();
+    }
+
+    @Override
+    protected void registerGoals() {
+        // TODO Goal: deploy guardian pixie
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
+        this.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(this, false));
     }
 
     @Override
@@ -408,6 +420,12 @@ public class PixieHouseEntity extends LivingEntity implements NeutralMob {
     }
 
     @Override
+    public boolean canAttack(LivingEntity pTarget) {
+        // TODO Don't allow attacking the tree's owner
+        return super.canAttack(pTarget);
+    }
+
+    @Override
     public int getRemainingPersistentAngerTime() {
         return this.entityData.get(ANGER_TIME);
     }
@@ -425,11 +443,6 @@ public class PixieHouseEntity extends LivingEntity implements NeutralMob {
     @Override
     public void setPersistentAngerTarget(@Nullable UUID target) {
         this.angerTarget = target;
-        this.angerTargetTimestamp = this.tickCount;
-    }
-
-    public int getPersistentAngerTimestamp() {
-        return this.angerTargetTimestamp;
     }
 
     @Override
@@ -440,10 +453,20 @@ public class PixieHouseEntity extends LivingEntity implements NeutralMob {
     @Override
     public void setTarget(@Nullable LivingEntity livingEntity) {
         this.target = livingEntity;
+        this.targetTimestamp = this.tickCount;
     }
 
     @Override
     public @Nullable LivingEntity getTarget() {
         return this.target;
+    }
+
+    public int getTargetTimestamp() {
+        return this.targetTimestamp;
+    }
+
+    @Override
+    public boolean canBeLeashed() {
+        return false;
     }
 }
