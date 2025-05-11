@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayl
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
 import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -148,6 +149,26 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         super.defineSynchedData(pBuilder);
         pBuilder.define(ANGER_TIME, 0);
         pBuilder.define(HOME, Optional.empty());
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        this.addPersistentAngerSaveData(pCompound);
+        if (this.getHome() != null) {
+            pCompound.putUUID("HomeEntity", this.getHome().getUUID());
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        if (this.level() instanceof ServerLevel serverLevel) {
+            this.readPersistentAngerSaveData(serverLevel, pCompound);
+            if (serverLevel.getEntity(pCompound.getUUID("HomeEntity")) instanceof PixieHouseEntity house) {
+                this.setHome(house);
+            }
+        }
     }
 
     @Override
