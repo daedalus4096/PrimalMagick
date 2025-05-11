@@ -47,7 +47,8 @@ public class EntityTypeTagsProviderPMForge extends EntityTypeTagsProvider {
                 EntityTypesPM.BASIC_BLOOD_PIXIE.get(), EntityTypesPM.GRAND_BLOOD_PIXIE.get(), EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(),
                 EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), EntityTypesPM.MAJESTIC_INFERNAL_PIXIE.get(),
                 EntityTypesPM.BASIC_VOID_PIXIE.get(), EntityTypesPM.GRAND_VOID_PIXIE.get(), EntityTypesPM.MAJESTIC_VOID_PIXIE.get(),
-                EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get());
+                EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(),
+                EntityTypesPM.BASIC_GUARDIAN_PIXIE.get());
         
         this.tag(EntityTypeTagsPM.BLOOD_ROSE_IMMUNE).add(EntityType.BEE);
         this.tag(EntityTypeTagsPM.FLYING_CREATURES).addTag(EntityTypeTagsPM.PIXIES).add(EntityType.ALLAY, EntityType.BAT, EntityType.BEE, EntityType.BLAZE, EntityType.CHICKEN, EntityType.ENDER_DRAGON,

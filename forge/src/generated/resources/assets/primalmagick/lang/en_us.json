@@ -726,6 +726,7 @@
   "enchantment.primalmagick.verdant.rune_enchantment.text": "The Verdant enchantment can be imbued through the use of Summon, Creature, and Sun runes.  It can be applied to any hoe.  When applied, it causes the hoe to stimulate rapid growth when used on a plant or fungus, similar to bone meal, at the cost of durability.  Higher levels reduce the durability cost.",
   "entity.primalmagick.flying_carpet": "Flying Carpet",
   "entity.primalmagick.friendly_witch": "Witch",
+  "entity.primalmagick.guardian_pixie_basic": "Guardian Pixie",
   "entity.primalmagick.hallowsteel_golem": "Hallowsteel Golem",
   "entity.primalmagick.hexium_golem": "Hexium Golem",
   "entity.primalmagick.inner_demon": "Inner Demon",

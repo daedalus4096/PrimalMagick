@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.events;
 
+import com.verdantartifice.primalmagick.client.renderers.entity.BasicGuardianPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.BasicPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.FlyingCarpetRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.ForbiddenTridentRenderer;
@@ -101,6 +102,7 @@ public class EntityRendererEvents {
         entityRenderers.register(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), GrandPixieRenderer::new);
         entityRenderers.register(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), MajesticPixieRenderer::new);
         entityRenderers.register(EntityTypesPM.PIXIE_HOUSE.get(), PixieHouseRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_GUARDIAN_PIXIE.get(), BasicGuardianPixieRenderer::new);
     }
 
     public interface EntityRendererRegistrar {
