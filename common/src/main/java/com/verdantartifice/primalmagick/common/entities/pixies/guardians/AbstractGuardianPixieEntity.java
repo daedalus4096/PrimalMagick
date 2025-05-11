@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
 import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -91,8 +92,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
     @Nonnull
     protected AbstractSpellPayload<?> getSpellPayload() {
-        // TODO Select damage payload from pixie source
-        return null;
+        return SpellPayloadsPM.getSpellDamagePayload(this.getPixieSource());
     }
 
     @Nonnull
