@@ -66,7 +66,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     protected SpellPackage spellCache;
     protected int attackTimer;
     protected UUID angerTarget;
-    @Nullable protected PixieHouseEntity home;
+    @Nullable protected PixieHouseEntity homeCache;
 
     protected AbstractGuardianPixieEntity(EntityType<? extends AbstractGuardianPixieEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -94,14 +94,14 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
     @Nullable
     public PixieHouseEntity getHome() {
-        if (this.home == null && this.level() instanceof ServerLevel serverLevel) {
-            this.home = this.entityData.get(HOME).map(u -> serverLevel.getEntity(u) instanceof PixieHouseEntity house ? house : null).orElse(null);
+        if (this.homeCache == null && this.level() instanceof ServerLevel serverLevel) {
+            this.homeCache = this.entityData.get(HOME).map(u -> serverLevel.getEntity(u) instanceof PixieHouseEntity house ? house : null).orElse(null);
         }
-        return this.home;
+        return this.homeCache;
     }
 
     public void setHome(@NotNull PixieHouseEntity home) {
-        this.home = home;
+        this.homeCache = home;
         this.entityData.set(HOME, Optional.of(home.getUUID()));
     }
 
@@ -138,7 +138,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         this.goalSelector.addGoal(1, new StayNearHomeGoal(this, 0.9D, 16F, 10F));
         this.goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0D, 20, 30, 16.0F));
         this.goalSelector.addGoal(3, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
-        // TODO Re-enter house if no attack target and nearby
+        this.goalSelector.addGoal(4, new EnterHomeGoal(this, 0.5F));
         this.goalSelector.addGoal(5, new ReturnHomeGoal(this, 0.9D, 0.5F));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -347,6 +347,38 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         @Override
         public void start() {
             this.mob.getNavigation().moveTo(this.wantedPos.x(), this.wantedPos.y(), this.wantedPos.z(), this.speedModifier);
+        }
+    }
+
+    protected static class EnterHomeGoal extends Goal {
+        private final AbstractGuardianPixieEntity mob;
+        @Nullable private PixieHouseEntity home;
+        private final double withinDistanceSqr;
+
+        public EnterHomeGoal(AbstractGuardianPixieEntity mob, float withinDistance) {
+            this.mob = mob;
+            this.withinDistanceSqr = withinDistance * withinDistance;
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            this.home = this.mob.getHome();
+            if (this.home == null) {
+                return false;
+            } else if (this.mob.getPersistentAngerTarget() != null) {
+                // Don't return home if there's still a target to attack
+                return false;
+            } else {
+                return this.home.distanceToSqr(this.mob) < this.withinDistanceSqr;
+            }
+        }
+
+        @Override
+        public void start() {
+            if (this.home != null) {
+                this.home.removeDeployedPixie();
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
+import com.verdantartifice.primalmagick.common.entities.pixies.guardians.AbstractGuardianPixieEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.IPixieItem;
 import net.minecraft.core.component.DataComponents;
@@ -32,16 +33,21 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class PixieHouseEntity extends LivingEntity {
     public static final EntityDataAccessor<ItemStack> DATA_HOUSED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.ITEM_STACK);
+    public static final EntityDataAccessor<Optional<UUID>> DATA_DEPLOYED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     public static final long WOBBLE_TIME = 5L;
     private static final byte HIT_EVENT = 32;
 
     private ItemStack housedPixie = ItemStack.EMPTY;
+    @Nullable private AbstractGuardianPixieEntity deployedPixieCache;
     public long lastHit;
 
     public PixieHouseEntity(EntityType<? extends PixieHouseEntity> pEntityType, Level pLevel) {
@@ -72,6 +78,7 @@ public class PixieHouseEntity extends LivingEntity {
     protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(DATA_HOUSED_PIXIE, ItemStack.EMPTY);
+        pBuilder.define(DATA_DEPLOYED_PIXIE, Optional.empty());
     }
 
     public ItemStack getHousedPixie() {
@@ -81,6 +88,30 @@ public class PixieHouseEntity extends LivingEntity {
     public void setHousedPixie(ItemStack pixie) {
         this.housedPixie = pixie.copy();
         this.entityData.set(DATA_HOUSED_PIXIE, this.housedPixie);
+    }
+
+    @Nullable
+    public AbstractGuardianPixieEntity getDeployedPixie() {
+        if (this.deployedPixieCache == null && this.level() instanceof ServerLevel serverLevel) {
+            this.deployedPixieCache = this.entityData.get(DATA_DEPLOYED_PIXIE)
+                    .map(u -> serverLevel.getEntity(u) instanceof AbstractGuardianPixieEntity pixie ? pixie : null)
+                    .orElse(null);
+        }
+        return this.deployedPixieCache;
+    }
+
+    public void setDeployedPixie(@NotNull AbstractGuardianPixieEntity pixie) {
+        this.deployedPixieCache = pixie;
+        this.entityData.set(DATA_DEPLOYED_PIXIE, Optional.of(pixie.getUUID()));
+    }
+
+    public void removeDeployedPixie() {
+        AbstractGuardianPixieEntity pixie = this.getDeployedPixie();
+        if (pixie != null) {
+            this.deployedPixieCache = null;
+            this.entityData.set(DATA_DEPLOYED_PIXIE, Optional.empty());
+            pixie.discard();
+        }
     }
 
     @Override
@@ -148,6 +179,7 @@ public class PixieHouseEntity extends LivingEntity {
                 pPlayer.drop(stack, false);
             }
             this.setHousedPixie(ItemStack.EMPTY);
+            this.removeDeployedPixie();
             this.playSound(SoundEvents.BAT_HURT, 1.0F, 1.0F);
             return InteractionResult.SUCCESS;
         } else {
@@ -274,7 +306,8 @@ public class PixieHouseEntity extends LivingEntity {
         this.playBrokenSound();
         this.dropAllDeathLoot(pLevel, pDamageSource);
 
-        // TODO Discard any pixies that are deployed
+        // Discard any pixies that are deployed
+        this.removeDeployedPixie();
 
         if (!this.housedPixie.isEmpty()) {
             Block.popResource(this.level(), this.blockPosition().above(), this.housedPixie);
