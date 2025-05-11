@@ -139,7 +139,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         this.goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0D, 20, 30, 16.0F));
         this.goalSelector.addGoal(3, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
         // TODO Re-enter house if no attack target and nearby
-        // TODO Return to house if no attack target
+        this.goalSelector.addGoal(5, new ReturnHomeGoal(this, 0.9D, 0.5F));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         // TODO Query house for target
@@ -307,7 +307,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
     protected static class StayNearHomeGoal extends Goal {
         private final AbstractGuardianPixieEntity mob;
-        @Nullable private LivingEntity target;
+        @Nullable private LivingEntity home;
         @Nullable private Vec3 wantedPos;
         private final double speedModifier;
         private final double startDistanceSqr;
@@ -323,25 +323,71 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
         @Override
         public boolean canUse() {
-            this.target = this.mob.getHome();
-            if (this.target == null) {
+            this.home = this.mob.getHome();
+            if (this.home == null) {
                 return false;
-            } else if (this.target.distanceToSqr(this.mob) < this.startDistanceSqr) {
+            } else if (this.home.distanceToSqr(this.mob) < this.startDistanceSqr) {
                 return false;
             } else {
-                this.wantedPos = this.target.position().add(0D, 1.5D, 0D);
+                this.wantedPos = this.home.position().add(0D, 1.5D, 0D);
                 return true;
             }
         }
 
         @Override
         public boolean canContinueToUse() {
-            return !this.mob.getNavigation().isDone() && this.target != null && this.target.isAlive() && this.target.distanceToSqr(this.mob) > this.stopDistanceSqr;
+            return !this.mob.getNavigation().isDone() && this.home != null && this.home.isAlive() && this.home.distanceToSqr(this.mob) > this.stopDistanceSqr;
         }
 
         @Override
         public void stop() {
-            this.target = null;
+            this.home = null;
+        }
+
+        @Override
+        public void start() {
+            this.mob.getNavigation().moveTo(this.wantedPos.x(), this.wantedPos.y(), this.wantedPos.z(), this.speedModifier);
+        }
+    }
+
+    protected static class ReturnHomeGoal extends Goal {
+        private final AbstractGuardianPixieEntity mob;
+        @Nullable private LivingEntity home;
+        @Nullable private Vec3 wantedPos;
+        private final double speedModifier;
+        private final double targetDistanceSqr;
+
+        public ReturnHomeGoal(AbstractGuardianPixieEntity mob, double speedModifier, float targetDistance) {
+            this.mob = mob;
+            this.speedModifier = speedModifier;
+            this.targetDistanceSqr = targetDistance * targetDistance;
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            this.home = this.mob.getHome();
+            if (this.home == null) {
+                return false;
+            } else if (this.mob.getPersistentAngerTarget() != null) {
+                // Don't return home if there's still a target to attack
+                return false;
+            } else if (this.home.distanceToSqr(this.mob) < this.targetDistanceSqr) {
+                return false;
+            } else {
+                this.wantedPos = this.home.position().add(0D, 1.5D, 0D);
+                return true;
+            }
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return !this.mob.getNavigation().isDone() && this.home != null && this.home.isAlive() && this.home.distanceToSqr(this.mob) > this.targetDistanceSqr;
+        }
+
+        @Override
+        public void stop() {
+            this.home = null;
         }
 
         @Override
