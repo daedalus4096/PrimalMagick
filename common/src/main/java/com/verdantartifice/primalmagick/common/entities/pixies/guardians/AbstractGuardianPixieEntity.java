@@ -27,6 +27,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -41,10 +42,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.EnumSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -132,7 +135,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        // TODO Stay in range of house
+        this.goalSelector.addGoal(1, new StayNearHomeGoal(this, 0.9D, 16F, 10F));
         this.goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0D, 20, 30, 16.0F));
         this.goalSelector.addGoal(3, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
         // TODO Re-enter house if no attack target and nearby
@@ -300,5 +303,50 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     @Override
     public void performRangedAttack(LivingEntity target, float distanceFactor) {
         this.getSpellPackage().cast(this.level(), this, ItemStack.EMPTY);
+    }
+
+    protected static class StayNearHomeGoal extends Goal {
+        private final AbstractGuardianPixieEntity mob;
+        @Nullable private LivingEntity target;
+        @Nullable private Vec3 wantedPos;
+        private final double speedModifier;
+        private final double startDistanceSqr;
+        private final double stopDistanceSqr;
+
+        public StayNearHomeGoal(AbstractGuardianPixieEntity mob, double speedModifier, float startDistance, float stopDistance) {
+            this.mob = mob;
+            this.speedModifier = speedModifier;
+            this.startDistanceSqr = startDistance * startDistance;
+            this.stopDistanceSqr = stopDistance * stopDistance;
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            this.target = this.mob.getHome();
+            if (this.target == null) {
+                return false;
+            } else if (this.target.distanceToSqr(this.mob) < this.startDistanceSqr) {
+                return false;
+            } else {
+                this.wantedPos = this.target.position().add(0D, 1.5D, 0D);
+                return true;
+            }
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return !this.mob.getNavigation().isDone() && this.target != null && this.target.isAlive() && this.target.distanceToSqr(this.mob) > this.stopDistanceSqr;
+        }
+
+        @Override
+        public void stop() {
+            this.target = null;
+        }
+
+        @Override
+        public void start() {
+            this.mob.getNavigation().moveTo(this.wantedPos.x(), this.wantedPos.y(), this.wantedPos.z(), this.speedModifier);
+        }
     }
 }
