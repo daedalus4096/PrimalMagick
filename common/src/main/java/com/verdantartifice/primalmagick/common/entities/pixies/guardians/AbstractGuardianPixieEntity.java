@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.entities.pixies.guardians;
 
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.entities.pixies.IPixie;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -39,9 +40,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -51,14 +54,15 @@ import java.util.UUID;
  */
 public abstract class AbstractGuardianPixieEntity extends PathfinderMob implements NeutralMob, FlyingAnimal, RangedAttackMob, IPixie {
     protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Optional<UUID>> HOME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     protected static final byte PIXIE_DUST_EVENT = 15;
 
-    @Nullable
-    protected Source source;
+    @Nullable protected Source source;
     protected SpellPackage spellCache;
     protected int attackTimer;
     protected UUID angerTarget;
+    @Nullable protected PixieHouseEntity home;
 
     protected AbstractGuardianPixieEntity(EntityType<? extends AbstractGuardianPixieEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -81,6 +85,19 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
     protected void setPixieSource(Source source) {
         this.source = source;
+    }
+
+    @Nullable
+    public PixieHouseEntity getHome() {
+        if (this.home == null && this.level() instanceof ServerLevel serverLevel) {
+            this.home = this.entityData.get(HOME).map(u -> serverLevel.getEntity(u) instanceof PixieHouseEntity house ? house : null).orElse(null);
+        }
+        return this.home;
+    }
+
+    public void setHome(@NotNull PixieHouseEntity home) {
+        this.home = home;
+        this.entityData.set(HOME, Optional.of(home.getUUID()));
     }
 
     @Override
@@ -129,6 +146,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(ANGER_TIME, 0);
+        pBuilder.define(HOME, Optional.empty());
     }
 
     @Override
