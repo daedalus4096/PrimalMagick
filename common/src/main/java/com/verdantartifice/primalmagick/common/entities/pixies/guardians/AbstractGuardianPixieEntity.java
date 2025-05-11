@@ -34,8 +34,10 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
@@ -63,9 +65,9 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     protected static final byte PIXIE_DUST_EVENT = 15;
 
     @Nullable protected Source source;
-    protected SpellPackage spellCache;
+    @Nullable protected SpellPackage spellCache;
     protected int attackTimer;
-    protected UUID angerTarget;
+    @Nullable protected UUID angerTarget;
     @Nullable protected PixieHouseEntity homeCache;
 
     protected AbstractGuardianPixieEntity(EntityType<? extends AbstractGuardianPixieEntity> pEntityType, Level pLevel) {
@@ -142,7 +144,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         this.goalSelector.addGoal(5, new ReturnHomeGoal(this, 0.9D, 0.5F));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        // TODO Query house for target
+        this.targetSelector.addGoal(1, new HomeAngerTargetGoal(this));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
     }
@@ -168,7 +170,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         super.readAdditionalSaveData(pCompound);
         if (this.level() instanceof ServerLevel serverLevel) {
             this.readPersistentAngerSaveData(serverLevel, pCompound);
-            if (serverLevel.getEntity(pCompound.getUUID("HomeEntity")) instanceof PixieHouseEntity house) {
+            if (pCompound.hasUUID("HomeEntity") && serverLevel.getEntity(pCompound.getUUID("HomeEntity")) instanceof PixieHouseEntity house) {
                 this.setHome(house);
             }
         }
@@ -425,6 +427,41 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         @Override
         public void start() {
             this.mob.getNavigation().moveTo(this.wantedPos.x(), this.wantedPos.y(), this.wantedPos.z(), this.speedModifier);
+        }
+    }
+
+    protected static class HomeAngerTargetGoal extends TargetGoal {
+        private final AbstractGuardianPixieEntity mob;
+        private LivingEntity attacked;
+        private int timestamp;
+
+        public HomeAngerTargetGoal(AbstractGuardianPixieEntity mob) {
+            super(mob, false);
+            this.mob = mob;
+            this.setFlags(EnumSet.of(Goal.Flag.TARGET));
+        }
+
+        @Override
+        public boolean canUse() {
+            PixieHouseEntity home = this.mob.getHome();
+            if (home != null && this.mob.level() instanceof ServerLevel serverLevel && home.getPersistentAngerTarget() != null) {
+                this.attacked = serverLevel.getEntity(home.getPersistentAngerTarget()) instanceof LivingEntity living ? living : null;
+                int time = home.getPersistentAngerTimestamp();
+                return time != this.timestamp && this.canAttack(this.attacked, TargetingConditions.DEFAULT);
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public void start() {
+            this.mob.setPersistentAngerTarget(this.attacked.getUUID());
+            this.mob.setTarget(this.attacked);
+            PixieHouseEntity home = this.mob.getHome();
+            if (home != null) {
+                this.timestamp = home.getPersistentAngerTimestamp();
+            }
+            super.start();
         }
     }
 }

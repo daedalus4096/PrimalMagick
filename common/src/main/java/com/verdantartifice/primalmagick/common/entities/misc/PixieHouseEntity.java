@@ -15,6 +15,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +26,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -40,14 +43,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class PixieHouseEntity extends LivingEntity {
+public class PixieHouseEntity extends LivingEntity implements NeutralMob {
     public static final EntityDataAccessor<ItemStack> DATA_HOUSED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.ITEM_STACK);
     public static final EntityDataAccessor<Optional<UUID>> DATA_DEPLOYED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    public static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.INT);
+    protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     public static final long WOBBLE_TIME = 5L;
     private static final byte HIT_EVENT = 32;
 
-    private ItemStack housedPixie = ItemStack.EMPTY;
+    @NotNull private ItemStack housedPixie = ItemStack.EMPTY;
     @Nullable private AbstractGuardianPixieEntity deployedPixieCache;
+    @Nullable private LivingEntity target;
+    @Nullable protected UUID angerTarget;
+    protected int angerTargetTimestamp;
     public long lastHit;
 
     public PixieHouseEntity(EntityType<? extends PixieHouseEntity> pEntityType, Level pLevel) {
@@ -79,6 +87,7 @@ public class PixieHouseEntity extends LivingEntity {
         super.defineSynchedData(pBuilder);
         pBuilder.define(DATA_HOUSED_PIXIE, ItemStack.EMPTY);
         pBuilder.define(DATA_DEPLOYED_PIXIE, Optional.empty());
+        pBuilder.define(ANGER_TIME, 0);
     }
 
     public ItemStack getHousedPixie() {
@@ -126,6 +135,14 @@ public class PixieHouseEntity extends LivingEntity {
     }
 
     @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.level() instanceof ServerLevel serverLevel) {
+            this.updatePersistentAnger(serverLevel, true);
+        }
+    }
+
+    @Override
     public Iterable<ItemStack> getArmorSlots() {
         return List.of();
     }
@@ -146,6 +163,12 @@ public class PixieHouseEntity extends LivingEntity {
 
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
+        if (this.level() instanceof ServerLevel serverLevel) {
+            this.readPersistentAngerSaveData(serverLevel, compoundTag);
+            if (compoundTag.hasUUID("DeployedPixie") && serverLevel.getEntity(compoundTag.getUUID("DeployedPixie")) instanceof AbstractGuardianPixieEntity pixie) {
+                this.setDeployedPixie(pixie);
+            }
+        }
         if (compoundTag.contains("HousedPixie", Tag.TAG_COMPOUND)) {
             this.setHousedPixie(ItemStack.parseOptional(this.registryAccess(), compoundTag.getCompound("HousedPixie")));
         }
@@ -153,8 +176,12 @@ public class PixieHouseEntity extends LivingEntity {
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
-        if (this.housedPixie != null && !this.housedPixie.isEmpty()) {
+        this.addPersistentAngerSaveData(compoundTag);
+        if (!this.housedPixie.isEmpty()) {
             compoundTag.put("HousedPixie", this.housedPixie.saveOptional(this.registryAccess()));
+        }
+        if (this.deployedPixieCache != null) {
+            compoundTag.putUUID("DeployedPixie", this.deployedPixieCache.getUUID());
         }
     }
 
@@ -378,5 +405,45 @@ public class PixieHouseEntity extends LivingEntity {
     @Override
     public ItemStack getPickResult() {
         return new ItemStack(ItemsPM.PIXIE_HOUSE.get());
+    }
+
+    @Override
+    public int getRemainingPersistentAngerTime() {
+        return this.entityData.get(ANGER_TIME);
+    }
+
+    @Override
+    public void setRemainingPersistentAngerTime(int time) {
+        this.entityData.set(ANGER_TIME, time);
+    }
+
+    @Override
+    public @Nullable UUID getPersistentAngerTarget() {
+        return this.angerTarget;
+    }
+
+    @Override
+    public void setPersistentAngerTarget(@Nullable UUID target) {
+        this.angerTarget = target;
+        this.angerTargetTimestamp = this.tickCount;
+    }
+
+    public int getPersistentAngerTimestamp() {
+        return this.angerTargetTimestamp;
+    }
+
+    @Override
+    public void startPersistentAngerTimer() {
+        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
+    }
+
+    @Override
+    public void setTarget(@Nullable LivingEntity livingEntity) {
+        this.target = livingEntity;
+    }
+
+    @Override
+    public @Nullable LivingEntity getTarget() {
+        return this.target;
     }
 }
