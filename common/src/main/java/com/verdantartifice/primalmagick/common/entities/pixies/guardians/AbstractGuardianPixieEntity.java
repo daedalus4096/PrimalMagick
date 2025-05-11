@@ -75,7 +75,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         this.moveControl = new FlyingMoveControl(this, 20, false);
     }
 
-    protected static <T extends AbstractGuardianPixieEntity> T spawn(EntityType<T> entityType, Source source, PixieHouseEntity home, ServerLevel level, BlockPos pos) {
+    public static <T extends AbstractGuardianPixieEntity> T spawn(EntityType<T> entityType, Source source, PixieHouseEntity home, ServerLevel level, BlockPos pos) {
         T pixie = entityType.spawn(level, $ -> {}, pos, MobSpawnType.SPAWN_EGG, true, true);
         if (pixie != null) {
             pixie.setPixieSource(source);
@@ -379,7 +379,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         @Override
         public void start() {
             if (this.home != null) {
-                this.home.removeDeployedPixie();
+                this.home.undeployGuardian();
             }
         }
     }

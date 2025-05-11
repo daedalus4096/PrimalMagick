@@ -1,8 +1,12 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
+import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagick.common.entities.pixies.PixieRank;
 import com.verdantartifice.primalmagick.common.entities.pixies.guardians.AbstractGuardianPixieEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.IPixieItem;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,6 +18,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -30,6 +35,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -88,7 +94,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
 
     @Override
     protected void registerGoals() {
-        // TODO Goal: deploy guardian pixie
+        this.goalSelector.addGoal(1, new DeployGuardianPixieGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(this, false));
@@ -126,7 +132,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
         this.entityData.set(DATA_DEPLOYED_PIXIE, Optional.of(pixie.getUUID()));
     }
 
-    public void removeDeployedPixie() {
+    protected void removeDeployedPixie() {
         AbstractGuardianPixieEntity pixie = this.getDeployedPixie();
         if (pixie != null) {
             this.deployedPixieCache = null;
@@ -344,12 +350,15 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     private void brokenByAnything(ServerLevel pLevel, DamageSource pDamageSource) {
         this.playBrokenSound();
         this.dropAllDeathLoot(pLevel, pDamageSource);
+        this.handlePixiesWhenBroken(pLevel);
+    }
 
+    private void handlePixiesWhenBroken(Level level) {
         // Discard any pixies that are deployed
         this.removeDeployedPixie();
 
         if (!this.housedPixie.isEmpty()) {
-            Block.popResource(this.level(), this.blockPosition().above(), this.housedPixie);
+            Block.popResource(level, this.blockPosition().above(), this.housedPixie);
             this.housedPixie = ItemStack.EMPTY;
         }
     }
@@ -374,6 +383,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
 
     @Override
     public void kill() {
+        this.handlePixiesWhenBroken(this.level());
         this.remove(RemovalReason.KILLED);
         this.gameEvent(GameEvent.ENTITY_DIE);
     }
@@ -468,5 +478,61 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     @Override
     public boolean canBeLeashed() {
         return false;
+    }
+
+    @Nullable
+    private static EntityType<? extends AbstractGuardianPixieEntity> getGuardianEntityType(@NotNull ItemStack housedPixieStack) {
+        if (!housedPixieStack.isEmpty() && housedPixieStack.getItem() instanceof IPixieItem pixieItem) {
+            return switch (pixieItem.getPixieRank()) {
+                case PixieRank.BASIC -> EntityTypesPM.BASIC_GUARDIAN_PIXIE.get();
+                default -> null;
+            };
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
+    private static Source getGuardianSource(@NotNull ItemStack housedPixieStack) {
+        if (!housedPixieStack.isEmpty() && housedPixieStack.getItem() instanceof IPixieItem pixieItem) {
+            return pixieItem.getPixieSource();
+        } else {
+            return null;
+        }
+    }
+
+    public void deployGuardian() {
+        EntityType<? extends AbstractGuardianPixieEntity> entityType = getGuardianEntityType(this.housedPixie);
+        Source entitySource = getGuardianSource(this.housedPixie);
+        if (entityType != null && entitySource != null && this.level() instanceof ServerLevel serverLevel) {
+            Vec3 pos = this.getPosition(0F).add(0D, 1.5D, 0D);
+            AbstractGuardianPixieEntity pixie = AbstractGuardianPixieEntity.spawn(entityType, entitySource, this, serverLevel, BlockPos.containing(pos));
+            this.setDeployedPixie(pixie);
+            this.level().playSound(null, pos.x(), pos.y(), pos.z(), SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+    }
+
+    public void undeployGuardian() {
+        this.removeDeployedPixie();
+        Vec3 pos = this.getPosition(0F).add(0D, 1.5D, 0D);
+        this.level().playSound(null, pos.x(), pos.y(), pos.z(), SoundEvents.BEEHIVE_ENTER, SoundSource.BLOCKS, 1.0F, 1.0F);
+    }
+
+    protected static class DeployGuardianPixieGoal extends Goal {
+        private final PixieHouseEntity mob;
+
+        public DeployGuardianPixieGoal(@NotNull PixieHouseEntity mob) {
+            this.mob = mob;
+        }
+
+        @Override
+        public boolean canUse() {
+            return this.mob.isAlive() && !this.mob.getHousedPixie().isEmpty() && this.mob.getDeployedPixie() == null && this.mob.getTarget() != null && this.mob.getTarget().isAlive();
+        }
+
+        @Override
+        public void start() {
+            this.mob.deployGuardian();
+        }
     }
 }
