@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.entities.pixies.guardians;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.entities.pixies.IPixie;
+import com.verdantartifice.primalmagick.common.items.misc.DrainedPixieItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -280,6 +281,15 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     protected SoundEvent getDeathSound() {
         // TODO Replace with custom sounds
         return SoundEvents.BAT_DEATH;
+    }
+
+    @Override
+    public void die(DamageSource pDamageSource) {
+        if (!this.isRemoved() && !this.dead && this.getHome() != null) {
+            this.getHome().setHousedPixie(DrainedPixieItem.getDrainedPixie(this.getPixieRank(), this.getPixieSource()));
+            this.getHome().removeDeployedPixie();
+        }
+        super.die(pDamageSource);
     }
 
     @Override

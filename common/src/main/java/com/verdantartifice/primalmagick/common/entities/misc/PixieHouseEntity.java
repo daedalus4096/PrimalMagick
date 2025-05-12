@@ -137,7 +137,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
         this.entityData.set(DATA_DEPLOYED_PIXIE, Optional.of(pixie.getUUID()));
     }
 
-    protected void removeDeployedPixie() {
+    public void removeDeployedPixie() {
         AbstractGuardianPixieEntity pixie = this.getDeployedPixie();
         if (pixie != null) {
             this.deployedPixieCache = null;
