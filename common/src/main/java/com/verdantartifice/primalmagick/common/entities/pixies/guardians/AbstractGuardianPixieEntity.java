@@ -121,9 +121,9 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
     @Nonnull
     protected SpellPackage createSpellPackage() {
-        // Not all pixie spells need the duration property, but those that don't will ignore it
+        // Not all pixie spells need the duration property, but those that don't need it will ignore it
         return SpellPackage.builder().name("Pixie Bolt")
-                .vehicle().type(BoltSpellVehicle.INSTANCE).with(SpellPropertiesPM.RANGE.get(), 5).end()
+                .vehicle().type(BoltSpellVehicle.INSTANCE).with(SpellPropertiesPM.RANGE.get(), 2).end()
                 .payload().type(this.getSpellPayload()).with(SpellPropertiesPM.POWER.get(), this.getSpellPower()).with(SpellPropertiesPM.DURATION.get(), this.getSpellPower()).end()
                 .build();
     }
@@ -145,7 +145,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new StayNearHomeGoal(this, 0.9D, 16F, 10F));
-        this.goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0D, 20, 30, 16.0F));
+        this.goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0D, 20, 30, 10.0F));
         this.goalSelector.addGoal(3, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
         this.goalSelector.addGoal(4, new EnterHomeGoal(this, 0.5F));
         this.goalSelector.addGoal(5, new ReturnHomeGoal(this, 0.9D, 0.5F));
