@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.entities.pixies.IPixie;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
@@ -14,6 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -59,8 +61,9 @@ import java.util.UUID;
  * @author Daedalus4096
  */
 public abstract class AbstractGuardianPixieEntity extends PathfinderMob implements NeutralMob, FlyingAnimal, RangedAttackMob, IPixie {
-    protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.INT);
-    protected static final EntityDataAccessor<Optional<UUID>> HOME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<Integer> DATA_ANGER_TIME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Optional<UUID>> DATA_HOME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<String> DATA_SOURCE_TAG = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.STRING);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     protected static final byte PIXIE_DUST_EVENT = 15;
 
@@ -87,24 +90,28 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
     @Override
     public Source getPixieSource() {
+        if (this.source == null) {
+            this.source = Sources.get(ResourceLocation.parse(this.entityData.get(DATA_SOURCE_TAG)));
+        }
         return this.source;
     }
 
     protected void setPixieSource(Source source) {
         this.source = source;
+        this.entityData.set(DATA_SOURCE_TAG, source.getId().toString());
     }
 
     @Nullable
     public PixieHouseEntity getHome() {
         if (this.homeCache == null && this.level() instanceof ServerLevel serverLevel) {
-            this.homeCache = this.entityData.get(HOME).map(u -> serverLevel.getEntity(u) instanceof PixieHouseEntity house ? house : null).orElse(null);
+            this.homeCache = this.entityData.get(DATA_HOME).map(u -> serverLevel.getEntity(u) instanceof PixieHouseEntity house ? house : null).orElse(null);
         }
         return this.homeCache;
     }
 
     public void setHome(@NotNull PixieHouseEntity home) {
         this.homeCache = home;
-        this.entityData.set(HOME, Optional.of(home.getUUID()));
+        this.entityData.set(DATA_HOME, Optional.of(home.getUUID()));
     }
 
     @Override
@@ -152,8 +159,9 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
-        pBuilder.define(ANGER_TIME, 0);
-        pBuilder.define(HOME, Optional.empty());
+        pBuilder.define(DATA_ANGER_TIME, 0);
+        pBuilder.define(DATA_HOME, Optional.empty());
+        pBuilder.define(DATA_SOURCE_TAG, Sources.EARTH.getId().toString());
     }
 
     @Override
@@ -204,12 +212,12 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
     @Override
     public int getRemainingPersistentAngerTime() {
-        return this.entityData.get(ANGER_TIME);
+        return this.entityData.get(DATA_ANGER_TIME);
     }
 
     @Override
     public void setRemainingPersistentAngerTime(int time) {
-        this.entityData.set(ANGER_TIME, time);
+        this.entityData.set(DATA_ANGER_TIME, time);
     }
 
     @Override
