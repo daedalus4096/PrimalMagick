@@ -39,6 +39,8 @@ import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagick.common.entities.pixies.guardians.AbstractGuardianPixieEntity;
 import com.verdantartifice.primalmagick.common.entities.pixies.guardians.BasicGuardianPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.guardians.GrandGuardianPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.guardians.MajesticGuardianPixieEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBombEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AppleEntity;
@@ -279,6 +281,16 @@ public class EntityTypesPM {
             .clientTrackingRange(10)
             .noSummon()
             .build(Constants.MOD_ID + ":guardian_pixie_basic"));
+    public static final IRegistryItem<EntityType<?>, EntityType<GrandGuardianPixieEntity>> GRAND_GUARDIAN_PIXIE = register("guardian_pixie_grand", () -> EntityType.Builder.of(GrandGuardianPixieEntity::new, MobCategory.CREATURE)
+            .sized(0.5F, 0.5F)
+            .clientTrackingRange(10)
+            .noSummon()
+            .build(Constants.MOD_ID + ":guardian_pixie_grand"));
+    public static final IRegistryItem<EntityType<?>, EntityType<MajesticGuardianPixieEntity>> MAJESTIC_GUARDIAN_PIXIE = register("guardian_pixie_majestic", () -> EntityType.Builder.of(MajesticGuardianPixieEntity::new, MobCategory.CREATURE)
+            .sized(0.5F, 0.5F)
+            .clientTrackingRange(10)
+            .noSummon()
+            .build(Constants.MOD_ID + ":guardian_pixie_majestic"));
 
     private static <T extends Entity> IRegistryItem<EntityType<?>, EntityType<T>> register(String name, Supplier<EntityType<T>> typeSupplier) {
         return Services.ENTITY_TYPES_REGISTRY.register(name, typeSupplier);

@@ -1044,7 +1044,9 @@ public class AffinityProvider implements DataProvider {
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).value(Sources.HALLOWED, 20).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.PIXIE_HOUSE.get()).value(Sources.EARTH, 5).value(Sources.SKY, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_GUARDIAN_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).build(consumer);
-        
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_GUARDIAN_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).build(consumer);
+
         // Define potion bonuses
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.NIGHT_VISION).bonus(Sources.MOON, 2).build(consumer);
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_NIGHT_VISION).bonus(Sources.MOON, 5).build(consumer);

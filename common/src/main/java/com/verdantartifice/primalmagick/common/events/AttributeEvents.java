@@ -59,5 +59,7 @@ public class AttributeEvents {
         consumer.accept(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), IMajesticPixie.getAttributeModifiers().build());
         consumer.accept(EntityTypesPM.PIXIE_HOUSE.get(), PixieHouseEntity.getAttributeModifiers().build());
         consumer.accept(EntityTypesPM.BASIC_GUARDIAN_PIXIE.get(), IBasicPixie.getAttributeModifiers().build());
+        consumer.accept(EntityTypesPM.GRAND_GUARDIAN_PIXIE.get(), IGrandPixie.getAttributeModifiers().build());
+        consumer.accept(EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE.get(), IMajesticPixie.getAttributeModifiers().build());
     }
 }

@@ -1147,7 +1147,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.entity(EntityTypesPM.SIN_CRYSTAL).name("Sin Crystal").build();
         this.entity(EntityTypesPM.PIXIE_HOUSE).name("Pixie House").build();
         this.entity(EntityTypesPM.BASIC_GUARDIAN_PIXIE).name("Guardian Pixie").build();
-        
+        this.entity(EntityTypesPM.GRAND_GUARDIAN_PIXIE).name("Grand Guardian Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE).name("Majestic Guardian Pixie").build();
+
         // Generate status effect localizations
         this.mobEffect(EffectsPM.FLYING).name("Flying").build();
         this.mobEffect(EffectsPM.POLYMORPH).name("Polymorph").build();

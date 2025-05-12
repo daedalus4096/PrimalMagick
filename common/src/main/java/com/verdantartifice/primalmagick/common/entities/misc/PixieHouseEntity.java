@@ -490,7 +490,8 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
         if (!housedPixieStack.isEmpty() && housedPixieStack.getItem() instanceof IPixieItem pixieItem) {
             return switch (pixieItem.getPixieRank()) {
                 case PixieRank.BASIC -> EntityTypesPM.BASIC_GUARDIAN_PIXIE.get();
-                default -> null;
+                case PixieRank.GRAND -> EntityTypesPM.GRAND_GUARDIAN_PIXIE.get();
+                case PixieRank.MAJESTIC -> EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE.get();
             };
         } else {
             return null;
