@@ -76,7 +76,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     public static <T extends AbstractGuardianPixieEntity> T spawn(EntityType<T> entityType, Source source, PixieHouseEntity home, ServerLevel level, BlockPos pos) {
-        T pixie = entityType.spawn(level, $ -> {}, pos, MobSpawnType.SPAWN_EGG, true, true);
+        T pixie = entityType.create(level, $ -> {}, pos, MobSpawnType.SPAWN_EGG, true, true);
         if (pixie != null) {
             pixie.setPixieSource(source);
             pixie.setHome(home);
@@ -255,7 +255,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
      */
     @Override
     public void handleEntityEvent(byte id) {
-        if (id == PIXIE_DUST_EVENT) {
+        if (id == PIXIE_DUST_EVENT && this.getPixieSource() != null) {
             FxDispatcher.INSTANCE.pixieDust(this.getX() + (this.random.nextGaussian() * 0.25D), this.getY() + 0.25D, this.getZ() + (this.random.nextGaussian() * 0.25D), this.getPixieSource().getColor());
         } else {
             super.handleEntityEvent(id);
