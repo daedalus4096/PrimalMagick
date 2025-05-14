@@ -28,6 +28,7 @@ public class DamageTypeTagsProviderPMNeoforge extends TagsProvider<DamageType> {
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(DamageTypeTags.BYPASSES_ARMOR).add(DamageTypesPM.BLEEDING, DamageTypesPM.SORCERY_BLOOD);
         this.tag(DamageTypeTags.IS_FIRE).add(DamageTypesPM.HELLISH_CHAIN, DamageTypesPM.SORCERY_INFERNAL);
+        
         this.tag(DamageTypeTagsPM.IS_MAGIC).add(DamageTypes.MAGIC).addTag(DamageTypeTagsPM.IS_SORCERY);
         this.tag(DamageTypeTagsPM.IS_SORCERY).addTag(DamageTypeTagsPM.IS_SORCERY_EARTH).addTag(DamageTypeTagsPM.IS_SORCERY_SEA).addTag(DamageTypeTagsPM.IS_SORCERY_SKY).addTag(DamageTypeTagsPM.IS_SORCERY_SUN).addTag(DamageTypeTagsPM.IS_SORCERY_MOON).addTag(DamageTypeTagsPM.IS_SORCERY_BLOOD).addTag(DamageTypeTagsPM.IS_SORCERY_INFERNAL).addTag(DamageTypeTagsPM.IS_SORCERY_VOID).addTag(DamageTypeTagsPM.IS_SORCERY_HALLOWED);
         this.tag(DamageTypeTagsPM.IS_SORCERY_EARTH).add(DamageTypesPM.SORCERY_EARTH);
@@ -39,5 +40,10 @@ public class DamageTypeTagsProviderPMNeoforge extends TagsProvider<DamageType> {
         this.tag(DamageTypeTagsPM.IS_SORCERY_INFERNAL).add(DamageTypesPM.SORCERY_INFERNAL);
         this.tag(DamageTypeTagsPM.IS_SORCERY_VOID).add(DamageTypesPM.SORCERY_VOID);
         this.tag(DamageTypeTagsPM.IS_SORCERY_HALLOWED).add(DamageTypesPM.SORCERY_HALLOWED);
+
+        this.tag(DamageTypeTagsPM.IGNITES_PIXIE_HOUSES).add(DamageTypes.IN_FIRE, DamageTypes.CAMPFIRE);
+        this.tag(DamageTypeTagsPM.BURNS_PIXIE_HOUSES).add(DamageTypes.ON_FIRE);
+        this.tag(DamageTypeTagsPM.ALWAYS_KILLS_PIXIE_HOUSES).add(DamageTypes.FIREBALL, DamageTypes.WITHER_SKULL, DamageTypes.WIND_CHARGE);
+        this.tag(DamageTypeTagsPM.CAN_BREAK_PIXIE_HOUSES).add(DamageTypes.PLAYER_ATTACK, DamageTypes.PLAYER_EXPLOSION);
     }
 }

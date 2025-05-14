@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.entities.pixies.guardians.Abstrac
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.IPixieItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -252,7 +253,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
                         this.brokenByAnything(serverLevel, pSource);
                         this.kill();
                         return false;
-                    } else if (pSource.is(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
+                    } else if (pSource.is(DamageTypeTagsPM.IGNITES_PIXIE_HOUSES)) {
                         if (this.isOnFire()) {
                             this.causeDamage(serverLevel, pSource, 0.15F);
                         } else {
@@ -260,12 +261,12 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
                         }
 
                         return false;
-                    } else if (pSource.is(DamageTypeTags.BURNS_ARMOR_STANDS) && this.getHealth() > 0.5F) {
+                    } else if (pSource.is(DamageTypeTagsPM.BURNS_PIXIE_HOUSES) && this.getHealth() > 0.5F) {
                         this.causeDamage(serverLevel, pSource, 4.0F);
                         return false;
                     } else {
-                        boolean canBreak = pSource.is(DamageTypeTags.CAN_BREAK_ARMOR_STAND);
-                        boolean alwaysKill = pSource.is(DamageTypeTags.ALWAYS_KILLS_ARMOR_STANDS);
+                        boolean canBreak = pSource.is(DamageTypeTagsPM.CAN_BREAK_PIXIE_HOUSES);
+                        boolean alwaysKill = pSource.is(DamageTypeTagsPM.ALWAYS_KILLS_PIXIE_HOUSES);
                         if (!canBreak && !alwaysKill) {
                             return false;
                         } else {
