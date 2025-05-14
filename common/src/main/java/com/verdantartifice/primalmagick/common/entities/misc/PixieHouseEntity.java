@@ -240,7 +240,6 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
 
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
-        // FIXME Update tag uses away from armor stands
         if (this.isRemoved()) {
             return false;
         } else {

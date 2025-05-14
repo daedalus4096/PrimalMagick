@@ -28,7 +28,7 @@ public class DamageTypeTagsProviderPMNeoforge extends TagsProvider<DamageType> {
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(DamageTypeTags.BYPASSES_ARMOR).add(DamageTypesPM.BLEEDING, DamageTypesPM.SORCERY_BLOOD);
         this.tag(DamageTypeTags.IS_FIRE).add(DamageTypesPM.HELLISH_CHAIN, DamageTypesPM.SORCERY_INFERNAL);
-        
+
         this.tag(DamageTypeTagsPM.IS_MAGIC).add(DamageTypes.MAGIC).addTag(DamageTypeTagsPM.IS_SORCERY);
         this.tag(DamageTypeTagsPM.IS_SORCERY).addTag(DamageTypeTagsPM.IS_SORCERY_EARTH).addTag(DamageTypeTagsPM.IS_SORCERY_SEA).addTag(DamageTypeTagsPM.IS_SORCERY_SKY).addTag(DamageTypeTagsPM.IS_SORCERY_SUN).addTag(DamageTypeTagsPM.IS_SORCERY_MOON).addTag(DamageTypeTagsPM.IS_SORCERY_BLOOD).addTag(DamageTypeTagsPM.IS_SORCERY_INFERNAL).addTag(DamageTypeTagsPM.IS_SORCERY_VOID).addTag(DamageTypeTagsPM.IS_SORCERY_HALLOWED);
         this.tag(DamageTypeTagsPM.IS_SORCERY_EARTH).add(DamageTypesPM.SORCERY_EARTH);
