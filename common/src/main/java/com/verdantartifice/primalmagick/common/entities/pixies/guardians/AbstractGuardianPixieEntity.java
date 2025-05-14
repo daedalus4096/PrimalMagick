@@ -206,12 +206,6 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     @Override
-    public boolean canAttack(LivingEntity pTarget) {
-        // TODO Don't allow attacking the home tree's owner
-        return super.canAttack(pTarget);
-    }
-
-    @Override
     public int getRemainingPersistentAngerTime() {
         return this.entityData.get(DATA_ANGER_TIME);
     }

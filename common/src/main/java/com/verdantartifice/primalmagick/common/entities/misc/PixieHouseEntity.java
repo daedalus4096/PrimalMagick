@@ -435,12 +435,6 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     }
 
     @Override
-    public boolean canAttack(LivingEntity pTarget) {
-        // TODO Don't allow attacking the tree's owner
-        return super.canAttack(pTarget);
-    }
-
-    @Override
     public int getRemainingPersistentAngerTime() {
         return this.entityData.get(DATA_ANGER_TIME);
     }
