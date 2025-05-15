@@ -1,0 +1,51 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:pixie_house"
+  },
+  "key": {
+    "rootKey": "primalmagick:pixie_houses"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:pixies"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:pixie_houses"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.pixie_houses.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:pixie_houses"
+      },
+      "recipes": [
+        "primalmagick:pixie_house"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.pixie_houses.text.stage.2"
+    }
+  ],
+  "tier": "expert"
+}

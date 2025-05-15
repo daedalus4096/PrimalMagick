@@ -587,6 +587,16 @@ public abstract class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.WAND_GLAMOUR_TABLE)
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 40))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PIXIE_HOUSE.get())
+            .patternLine("B")
+            .patternLine("H")
+            .patternLine("S")
+            .key('B', ItemTags.BEDS)
+            .key('H', ItemsPM.HEARTWOOD.get())
+            .key('S', ItemTags.SAPLINGS)
+            .requiredResearch(ResearchEntries.PIXIE_HOUSES)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 20).add(Sources.SEA, 20).add(Sources.SKY, 20).add(Sources.SUN, 20).add(Sources.MOON, 20))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.INFERNAL_FURNACE.get())
             .patternLine("MMM")
             .patternLine("MCM")
