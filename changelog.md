@@ -1,3 +1,7 @@
+v6.0.6
+------
+* Added Pixie Houses, to give your flighty friends a home to defend
+
 v6.0.5
 ------
 * Added Mana Injectors, to let Magitech devices pull mana directly from fonts
