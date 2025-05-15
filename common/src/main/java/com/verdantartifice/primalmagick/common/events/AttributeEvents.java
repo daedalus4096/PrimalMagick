@@ -1,14 +1,15 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.HallowsteelGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.HexiumGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.PrimaliteGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.IBasicPixie;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.IGrandPixie;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.IMajesticPixie;
+import com.verdantartifice.primalmagick.common.entities.golems.HallowsteelGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.HexiumGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.IBasicPixie;
+import com.verdantartifice.primalmagick.common.entities.pixies.IGrandPixie;
+import com.verdantartifice.primalmagick.common.entities.pixies.IMajesticPixie;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
+import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,5 +57,9 @@ public class AttributeEvents {
         consumer.accept(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), IBasicPixie.getAttributeModifiers().build());
         consumer.accept(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), IGrandPixie.getAttributeModifiers().build());
         consumer.accept(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), IMajesticPixie.getAttributeModifiers().build());
+        consumer.accept(EntityTypesPM.PIXIE_HOUSE.get(), PixieHouseEntity.getAttributeModifiers().build());
+        consumer.accept(EntityTypesPM.BASIC_GUARDIAN_PIXIE.get(), IBasicPixie.getAttributeModifiers().build());
+        consumer.accept(EntityTypesPM.GRAND_GUARDIAN_PIXIE.get(), IGrandPixie.getAttributeModifiers().build());
+        consumer.accept(EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE.get(), IMajesticPixie.getAttributeModifiers().build());
     }
 }

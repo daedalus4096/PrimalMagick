@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.PixieRank;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,12 +32,27 @@ import java.util.function.Supplier;
  * 
  * @author Daedalus4096
  */
-public class PixieItemNeoforge extends DeferredSpawnEggItem {
+public class PixieItemNeoforge extends DeferredSpawnEggItem implements IPixieItem {
     protected static final List<PixieItemNeoforge> PIXIES = new ArrayList<>();
 
-    public PixieItemNeoforge(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties) {
+    protected final PixieRank rank;
+    protected final Source source;
+
+    public PixieItemNeoforge(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, PixieRank rank, Source source, Item.Properties properties) {
         super(typeSupplier, 0xFFFFFF, source.getColor(), properties);
+        this.rank = rank;
+        this.source = source;
         PIXIES.add(this);
+    }
+
+    @Override
+    public PixieRank getPixieRank() {
+        return this.rank;
+    }
+
+    @Override
+    public Source getPixieSource() {
+        return this.source;
     }
 
     @Override

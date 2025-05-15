@@ -87,6 +87,7 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> ESSENCE_CASK_HEAVENLY = create("essence_cask_heavenly");
     public static final ResourceKey<ResearchEntry> WAND_GLAMOUR_TABLE = create("wand_glamour_table");
     public static final ResourceKey<ResearchEntry> ATTUNEMENT_SHACKLES = create("attunement_shackles");
+    public static final ResourceKey<ResearchEntry> PIXIE_HOUSES = create("pixie_houses");
     public static final ResourceKey<ResearchEntry> WAND_CORE_HEARTWOOD = create("wand_core_heartwood");
     public static final ResourceKey<ResearchEntry> WAND_CORE_OBSIDIAN = create("wand_core_obsidian");
     public static final ResourceKey<ResearchEntry> WAND_CORE_CORAL = create("wand_core_coral");
@@ -747,6 +748,11 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_INFERNAL).recipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get()).end()
                 .addendum().requiredResearch(DISCOVER_VOID).recipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get()).end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).recipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get()).end()
+                .build());
+        register(context, PIXIE_HOUSES, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.PIXIE_HOUSE.get())
+                .parent(EXPERT_MANAWEAVING).parent(PIXIES)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.PIXIE_HOUSE.get()).end()
                 .build());
     }
     

@@ -926,6 +926,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.ENERGIZED_QUARTZ).name("Energized Quartz").build();
         this.item(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE).name("Smithing Template").build();
         this.item(ItemsPM.SALT_PINCH).name("Pinch of Salt").build();
+        this.item(ItemsPM.PIXIE_HOUSE).name("Pixie House").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -1144,7 +1145,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.entity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE).name("Majestic Hallowed Pixie").build();
         this.entity(EntityTypesPM.FLYING_CARPET).name("Flying Carpet").build();
         this.entity(EntityTypesPM.SIN_CRYSTAL).name("Sin Crystal").build();
-        
+        this.entity(EntityTypesPM.PIXIE_HOUSE).name("Pixie House").build();
+        this.entity(EntityTypesPM.BASIC_GUARDIAN_PIXIE).name("Guardian Pixie").build();
+        this.entity(EntityTypesPM.GRAND_GUARDIAN_PIXIE).name("Grand Guardian Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE).name("Majestic Guardian Pixie").build();
+
         // Generate status effect localizations
         this.mobEffect(EffectsPM.FLYING).name("Flying").build();
         this.mobEffect(EffectsPM.POLYMORPH).name("Polymorph").build();
@@ -3266,6 +3271,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Attunement shackles can also be made to affect Void magick.")
                 .add("Attunement shackles can also be made to affect Hallowed magick.")
                 .end()
+            .build();
+        this.researchEntry(ResearchEntries.PIXIE_HOUSES, lookupProvider).name("Pixie Houses")
+            .stages()
+                .add("My new pixie friends will need a place to live if they're going to stick around.  They get a little tired flitting about all the time, and while I could just stick them in a box somewhere, that seems... rude.  They've told me they like things that grow, maybe I can work with that.")
+                .add("I've come up with tiny enchanted treehouses for my pixie friends to live in, and they seem very happy with them.<BR>Each Pixie House can hold one pixie, and I can assign a pixie to one by simply using the pixie on it.  I don't need to worry too much about them, either, as pixies will defend their homes against any monsters that happen to wander nearby.  Should the pixie be hurt and become drained, they'll convalesce in bed until I can reinvigorate them with some magickal essence.<BR>Pixies really are amazing, helpful creatures.  These houses could be the start of a whole town.  Maybe they'd be willing to take up some work while they're here...  Hmm, I'll have to think on that.")
+            .end()
             .build();
         this.researchEntry(ResearchEntries.BASIC_RUNEWORKING, lookupProvider).name("Basic Runeworking")
             .stages()

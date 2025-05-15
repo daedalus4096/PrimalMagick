@@ -44,6 +44,7 @@ public class ItemModBusEventListeners {
         registerCustomRenderer(event::registerItem, ItemsPM.MANA_INJECTOR_ENCHANTED.get());
         registerCustomRenderer(event::registerItem, ItemsPM.MANA_INJECTOR_FORBIDDEN.get());
         registerCustomRenderer(event::registerItem, ItemsPM.MANA_INJECTOR_HEAVENLY.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.PIXIE_HOUSE.get());
     }
 
     protected static <T extends Item & IHasCustomRenderer> void registerCustomRenderer(BiConsumer<IClientItemExtensions, T> registrar, T item) {

@@ -26,6 +26,9 @@
     "primalmagick:pixie_majestic_void",
     "primalmagick:pixie_basic_hallowed",
     "primalmagick:pixie_grand_hallowed",
-    "primalmagick:pixie_majestic_hallowed"
+    "primalmagick:pixie_majestic_hallowed",
+    "primalmagick:guardian_pixie_basic",
+    "primalmagick:guardian_pixie_grand",
+    "primalmagick:guardian_pixie_majestic"
   ]
 }

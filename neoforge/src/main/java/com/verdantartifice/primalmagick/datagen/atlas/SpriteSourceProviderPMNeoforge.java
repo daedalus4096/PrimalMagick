@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaInjectorTER;
@@ -110,7 +111,8 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, HallowsteelShieldISTER.TEXTURE_SHIELD_BASE);
         this.addSingle(blockAtlas, HallowsteelShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
         this.addSingle(blockAtlas, SacredShieldItem.TEXTURE);
-        
+        this.addSingle(blockAtlas, PixieHouseISTER.TEXTURE);
+
         // Add source textures to the block atlas
         this.addSingle(blockAtlas, Source.getUnknownAtlasLocation());
         for (Source source : Sources.getAllSorted()) {

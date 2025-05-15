@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.platform;
 
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.PixieRank;
+import com.verdantartifice.primalmagick.common.items.entities.PixieHouseItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
@@ -15,6 +17,7 @@ import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItemForge;
+import com.verdantartifice.primalmagick.common.items.misc.PixieHouseItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItemForge;
@@ -96,6 +99,11 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     }
 
     @Override
+    public Supplier<PixieHouseItem> pixieHouse(Item.Properties properties) {
+        return () -> new PixieHouseItemForge(properties);
+    }
+
+    @Override
     public Supplier<PrimaliteShieldItem> primaliteShield(Item.Properties properties) {
         return () -> new PrimaliteShieldItemForge(properties);
     }
@@ -161,7 +169,7 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     }
 
     @Override
-    public Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties) {
-        return () -> new PixieItemForge(typeSupplier, source, properties);
+    public Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, PixieRank rank, Source source, Item.Properties properties) {
+        return () -> new PixieItemForge(typeSupplier, rank, source, properties);
     }
 }

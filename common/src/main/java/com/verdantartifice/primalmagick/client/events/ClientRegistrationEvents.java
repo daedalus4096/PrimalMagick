@@ -86,6 +86,7 @@ public class ClientRegistrationEvents {
         reloadListenerConsumer.accept(ItemsPM.MANA_INJECTOR_ENCHANTED.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_INJECTOR_FORBIDDEN.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_INJECTOR_HEAVENLY.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.PIXIE_HOUSE.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(LexiconLoader.getOrCreateInstance());
         reloadListenerConsumer.accept(StyleGuideLoader.getOrCreateInstance());
     }

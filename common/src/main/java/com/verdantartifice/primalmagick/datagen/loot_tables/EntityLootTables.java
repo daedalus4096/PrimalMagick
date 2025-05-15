@@ -126,6 +126,9 @@ public class EntityLootTables extends EntityLootSubProvider {
         this.registerLootTable(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.DRAINED_BASIC_HALLOWED_PIXIE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))));
         this.registerLootTable(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.DRAINED_GRAND_HALLOWED_PIXIE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))));
         this.registerLootTable(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.DRAINED_MAJESTIC_HALLOWED_PIXIE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))));
+        this.registerLootTable(EntityTypesPM.BASIC_GUARDIAN_PIXIE.get(), LootTable.lootTable());  // No loot dropped by Guardian Pixies, so use an empty table
+        this.registerLootTable(EntityTypesPM.GRAND_GUARDIAN_PIXIE.get(), LootTable.lootTable());  // No loot dropped by Guardian Pixies, so use an empty table
+        this.registerLootTable(EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE.get(), LootTable.lootTable());  // No loot dropped by Guardian Pixies, so use an empty table
     }
     
     public static LootTableProvider.SubProviderEntry getSubProviderEntry() {

@@ -138,6 +138,10 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "primalmagick:entity/pixie_house"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "primalmagick:research/research_unknown"
     },
     {

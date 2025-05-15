@@ -3,10 +3,14 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -45,5 +49,30 @@ public class SpellPayloadsPM {
     
     protected static <T extends AbstractSpellPayload<T>> IRegistryItem<SpellPayloadType<?>, SpellPayloadType<T>> register(String id, int sortOrder, Supplier<T> instanceSupplier, Supplier<AbstractRequirement<?>> requirementSupplier, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         return Services.SPELL_PAYLOAD_TYPES_REGISTRY.register(id, () -> new SpellPayloadType<T>(ResourceUtils.loc(id), sortOrder, instanceSupplier, requirementSupplier, codec, streamCodec));
+    }
+
+    @NotNull
+    public static AbstractSpellPayload<?> getSpellDamagePayload(@Nullable Source source) {
+        if (source == Sources.EARTH) {
+            return EarthDamageSpellPayload.INSTANCE;
+        } else if (source == Sources.SEA) {
+            return FrostDamageSpellPayload.INSTANCE;
+        } else if (source == Sources.SKY) {
+            return LightningDamageSpellPayload.INSTANCE;
+        } else if (source == Sources.SUN) {
+            return SolarDamageSpellPayload.INSTANCE;
+        } else if (source == Sources.MOON) {
+            return LunarDamageSpellPayload.INSTANCE;
+        } else if (source == Sources.BLOOD) {
+            return BloodDamageSpellPayload.INSTANCE;
+        } else if (source == Sources.INFERNAL) {
+            return FlameDamageSpellPayload.INSTANCE;
+        } else if (source == Sources.VOID) {
+            return VoidDamageSpellPayload.INSTANCE;
+        } else if (source == Sources.HALLOWED) {
+            return HolyDamageSpellPayload.INSTANCE;
+        } else {
+            return EmptySpellPayload.INSTANCE;
+        }
     }
 }
