@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform;
 
 import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
 import com.verdantartifice.primalmagick.common.entities.pixies.PixieRank;
+import com.verdantartifice.primalmagick.common.items.entities.PixieHouseItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
@@ -16,6 +17,7 @@ import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItemNeoforge;
+import com.verdantartifice.primalmagick.common.items.misc.PixieHouseItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItemNeoforge;
@@ -94,6 +96,11 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     @Override
     public <T extends Block> Supplier<ManaInjectorBlockItem> manaInjector(Supplier<T> blockSupplier, Item.Properties properties) {
         return () -> new ManaInjectorBlockItemNeoforge(blockSupplier.get(), properties);
+    }
+
+    @Override
+    public Supplier<PixieHouseItem> pixieHouse(Item.Properties properties) {
+        return () -> new PixieHouseItemNeoforge(properties);
     }
 
     @Override

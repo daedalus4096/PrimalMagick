@@ -435,7 +435,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> DESALINATOR = registerSupplier("desalinator", () -> new BlockItem(BlocksPM.DESALINATOR.get(), new Item.Properties()));
 
     // Register pixie structure items
-    public static final IRegistryItem<Item, PixieHouseItem> PIXIE_HOUSE = registerSupplier("pixie_house", () -> new PixieHouseItem(new Item.Properties().stacksTo(16)));
+    public static final IRegistryItem<Item, PixieHouseItem> PIXIE_HOUSE = registerSupplier("pixie_house", Services.ITEM_PROTOTYPES.pixieHouse(new Item.Properties().stacksTo(16)));
 
     // Register miscellaneous block items
     public static final IRegistryItem<Item, ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));

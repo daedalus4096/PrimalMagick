@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class PixieHouseItem extends Item implements IHasCustomRenderer {
+public abstract class PixieHouseItem extends Item implements IHasCustomRenderer {
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public PixieHouseItem(Item.Properties pProperties) {
