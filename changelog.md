@@ -1,6 +1,7 @@
 v6.0.6
 ------
 * Added Pixie Houses, to give your flighty friends a home to defend
+* Fixed a bug where consecration fields would cast shadows
 
 v6.0.5
 ------
