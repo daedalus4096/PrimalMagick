@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.datagen.sounds.SoundDefinitionsProviderP
 import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.EnchantmentTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.EnchantmentTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.MobEffectTagsProviderPMNeoforge;
@@ -65,6 +66,7 @@ public class DataGeneratorsNeoforge {
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new MobEffectTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
+        generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new LootModifierProviderNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
