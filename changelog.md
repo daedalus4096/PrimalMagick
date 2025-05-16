@@ -5,6 +5,7 @@ v6.0.6
 * Fixed a bug where the hitbox of the Celestial Harp didn't always line up with it visually
 * Fixed an item duplication bug with the Runic Grindstone
 * Fixed a bug where the Runic Grindstone wouldn't give hints in some circumstances
+* Fixed a bug that could allow Enderman teleportation to ignore an Enderward in some circumstances
 
 v6.0.5
 ------

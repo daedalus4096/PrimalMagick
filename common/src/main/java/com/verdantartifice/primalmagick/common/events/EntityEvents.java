@@ -44,8 +44,11 @@ public class EntityEvents {
     }
     
     private static boolean checkEnderward(LivingEntity entity, Vec3 target) {
-        double edgeLength = 2D * EnderwardBlock.EFFECT_RADIUS;
-        AABB searchAABB = AABB.ofSize(target, edgeLength, edgeLength, edgeLength);
+        // An Enderward must cover the entire vertical space within its blocked XZ region, to prevent the case where a
+        // creature attempts to teleport significantly above or below the ward and is redirected to a valid block inside
+        // the ward's range by LivingEntity#randomTeleport.
+        AABB searchAABB = new AABB(BlockPos.containing(target)).inflate(EnderwardBlock.EFFECT_RADIUS)
+                .setMinY(entity.level().getMinBuildHeight()).setMaxY(entity.level().getMaxBuildHeight());
         if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> entity.level().getBlockState(pos).is(BlocksPM.ENDERWARD.get()))) {
             if (entity instanceof Player player) {
                 player.displayClientMessage(Component.translatable("event.primalmagick.enderward.block").withStyle(ChatFormatting.RED), true);
