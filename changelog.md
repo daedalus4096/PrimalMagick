@@ -2,6 +2,7 @@ v6.0.6
 ------
 * Added Pixie Houses, to give your flighty friends a home to defend
 * Fixed a bug where consecration fields would cast shadows
+* Fixed a bug where the hitbox of the Celestial Harp didn't always line up with it visually
 
 v6.0.5
 ------
