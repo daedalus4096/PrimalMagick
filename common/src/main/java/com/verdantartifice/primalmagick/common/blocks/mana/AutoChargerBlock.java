@@ -22,6 +22,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -39,7 +40,7 @@ import org.jetbrains.annotations.Nullable;
  * 
  * @author Daedalus4096
  */
-public class AutoChargerBlock extends BaseEntityBlock {
+public class AutoChargerBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<AutoChargerBlock> CODEC = simpleCodec(AutoChargerBlock::new);
     
     public AutoChargerBlock(Block.Properties properties) {

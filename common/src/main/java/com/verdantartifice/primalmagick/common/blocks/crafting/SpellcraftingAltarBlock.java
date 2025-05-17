@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -41,7 +42,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingAltarBlock extends BaseEntityBlock {
+public class SpellcraftingAltarBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<SpellcraftingAltarBlock> CODEC = simpleCodec(SpellcraftingAltarBlock::new);
     
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;

@@ -20,6 +20,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -37,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
  * 
  * @author Daedalus4096
  */
-public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDevice {
+public class RunescribingAltarBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, ITieredDevice {
     public static final MapCodec<RunescribingAltarBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             DeviceTier.CODEC.fieldOf("tier").forGetter(b -> b.tier),
             propertiesCodec()

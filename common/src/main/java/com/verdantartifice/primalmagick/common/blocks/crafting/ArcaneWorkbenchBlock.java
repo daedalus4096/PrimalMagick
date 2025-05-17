@@ -16,6 +16,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -36,7 +37,7 @@ import org.jetbrains.annotations.Nullable;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchBlock extends Block {
+public class ArcaneWorkbenchBlock extends Block implements SimpleWaterloggedBlock {
     public ArcaneWorkbenchBlock() {
         super(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.5F, 6.0F).sound(SoundType.WOOD).noOcclusion());
 

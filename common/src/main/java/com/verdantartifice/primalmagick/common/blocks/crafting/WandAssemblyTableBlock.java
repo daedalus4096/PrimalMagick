@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
@@ -35,7 +36,7 @@ import net.minecraft.world.phys.BlockHitResult;
  * 
  * @author Daedalus4096
  */
-public class WandAssemblyTableBlock extends Block {
+public class WandAssemblyTableBlock extends Block implements SimpleWaterloggedBlock {
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public WandAssemblyTableBlock() {

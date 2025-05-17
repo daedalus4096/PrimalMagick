@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.GrindstoneBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -32,7 +33,7 @@ import net.minecraft.world.phys.BlockHitResult;
  * 
  * @author Daedalus4096
  */
-public class RunicGrindstoneBlock extends GrindstoneBlock {
+public class RunicGrindstoneBlock extends GrindstoneBlock implements SimpleWaterloggedBlock {
     public RunicGrindstoneBlock() {
         super(Block.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.BLOCK).strength(2.0F, 6.0F).sound(SoundType.STONE));
 

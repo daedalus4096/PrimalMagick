@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
@@ -37,7 +38,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingTableBlock extends BaseEntityBlock {
+public class RunecarvingTableBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<RunecarvingTableBlock> CODEC = simpleCodec(RunecarvingTableBlock::new);
     
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;

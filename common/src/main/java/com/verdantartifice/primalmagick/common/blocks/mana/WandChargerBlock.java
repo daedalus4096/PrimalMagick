@@ -15,6 +15,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -33,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
  * 
  * @author Daedalus4096
  */
-public class WandChargerBlock extends BaseEntityBlock {
+public class WandChargerBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<WandChargerBlock> CODEC = simpleCodec(WandChargerBlock::new);
     
     public WandChargerBlock(Block.Properties properties) {
