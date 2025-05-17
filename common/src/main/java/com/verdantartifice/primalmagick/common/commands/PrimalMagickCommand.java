@@ -90,7 +90,7 @@ import java.util.stream.Collectors;
  */
 public class PrimalMagickCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext) {
-        LiteralCommandNode<CommandSourceStack> node = dispatcher.register(Commands.literal("assets/primalmagick")
+        LiteralCommandNode<CommandSourceStack> node = dispatcher.register(Commands.literal("primalmagick")
             .requires((source) -> { return source.hasPermission(2); })
             .then(Commands.literal("reset")
                 .then(Commands.argument("target", EntityArgument.player()).executes((context) -> { return resetAll(context.getSource(), EntityArgument.getPlayer(context, "target")); }))

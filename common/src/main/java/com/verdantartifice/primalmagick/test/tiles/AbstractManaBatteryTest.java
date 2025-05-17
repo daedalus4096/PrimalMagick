@@ -159,7 +159,6 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             var batteryPos = BlockPos.ZERO.north();
             helper.setBlock(batteryPos, block);
             var batteryTile = helper.<ManaBatteryTileEntity>getBlockEntity(batteryPos);
-            var batteryState = helper.getBlockState(batteryPos);
 
             // Place a mana font block
             var fontPos = BlockPos.ZERO.east();
@@ -172,18 +171,15 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             helper.assertValueEqual(fontTile.getMana(), startFontMana, "Before font mana");
             helper.assertTrue(batteryTile.getAllMana().isEmpty(), "Before battery mana not empty");
 
-            // Run a tick of the mana battery
-            ManaBatteryTileEntity.tick(helper.getLevel(), helper.absolutePos(batteryPos), batteryState, batteryTile);
-
             // Confirm that mana was siphoned from the font to the battery
             final int transferCap = batteryTile.getBatteryTransferCap();
             final int expectedTransfer = Math.min(startFontMana, transferCap);
-            final int expectedFontMana = startFontMana - expectedTransfer;
+            final int expectedFontMana = startFontMana - expectedTransfer + fontTile.getManaRechargedPerTick();
             final SourceList expectedBatteryMana = SourceList.builder().with(font.getSource(), expectedTransfer).build();
-            helper.assertValueEqual(fontTile.getMana(), expectedFontMana, "After font mana");
-            helper.assertValueEqual(batteryTile.getAllMana(), expectedBatteryMana, "After battery mana");
-
-            helper.succeed();
+            helper.succeedOnTickWhen(1, () -> {
+                helper.assertValueEqual(fontTile.getMana(), expectedFontMana, "After font mana");
+                helper.assertValueEqual(batteryTile.getAllMana(), expectedBatteryMana, "After battery mana");
+            });
         });
     }
 }

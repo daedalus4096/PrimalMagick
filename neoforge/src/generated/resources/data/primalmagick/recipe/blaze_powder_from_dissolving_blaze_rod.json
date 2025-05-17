@@ -5,7 +5,7 @@
   },
   "mana": {
     "sources": {
-      "primalmagick:earth": 100
+      "primalmagick:earth": 1000
     }
   },
   "result": {

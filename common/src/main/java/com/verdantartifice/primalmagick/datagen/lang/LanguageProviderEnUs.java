@@ -81,15 +81,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
     protected void addLocalizations(HolderLookup.Provider lookupProvider) {
         // Generate magickal source localizations; it's important to do these first so that the language provider has access to
         // the localized source names for the source-multiplied language builders used later.
-        this.source(Sources.EARTH).name("Earth").attunement("Minor attunement to the Earth source makes it easier to channel mana.  In practice, I'll pay 5% less Earth mana for all purposes.<BR>Lesser attunement to the Earth will grant me increased stamina, allowing me to swing swords and tools faster without tiring.<BR>Finally, greater attunement to the Earth will cause the very ground to rise beneath my feet when I walk, allowing me to step up the full height of a block without needing to jump.").build();
-        this.source(Sources.SEA).name("Sea").attunement("Minor attunement to the Sea source makes it easier to channel mana.  In practice, I'll pay 5% less Sea mana for all purposes.<BR>Lesser attunement to the Sea will grant me the grace of a dolphin, greatly increasing my swim speed.<BR>Finally, greater attunement to the Sea will allow me to breathe water as if it were air.").build();
-        this.source(Sources.SKY).name("Sky").attunement("Minor attunement to the Sky source makes it easier to channel mana.  In practice, I'll pay 5% less Sky mana for all purposes.<BR>Lesser attunement to the Sky will infuse me with speed and dexterity, increasing my movement speed and greatly reducing any fall damage I take.<BR>Finally, greater attunement to the Sky truly allows me to soar.  While it won't truly let me fly, I'll be able to jump higher, and even jump a second time while in midair.").build();
-        this.source(Sources.SUN).name("Sun").attunement("Minor attunement to the Sun source makes it easier to channel mana.  In practice, I'll pay 5% less Sun mana for all purposes.<BR>Lesser attunement to the Sun will allow me to draw nourishment from it like a plant, filling my belly so long as I'm outdoors during the daytime.<BR>Finally, greater attunement to the Sun grants me true radiance.  Whenever I'm in a dark area, I'll have a chance to create lasting light in my wake.  Should I not desire this to happen, I need only sneak.").build();
-        this.source(Sources.MOON).name("Moon").attunement("Minor attunement to the Moon source makes it easier to channel mana.  In practice, I'll pay 5% less Moon mana for all purposes.<BR>Lesser attunement to the Moon will let me defensively wrap myself in shifting illusions, giving me a chance to become invisible whenever I take damage.<BR>Finally, greater attunement to the Moon allows me to become one with the night, seeing through the darkness as if it were day.").build();
-        this.source(Sources.BLOOD).name("Blood").attunement("Minor attunement to the Blood source makes it easier to channel mana.  In practice, I'll pay 5% less Blood mana for all purposes.<BR>Lesser attunement to the Blood will let me exsanguinate my foes, causing them to bleed for more damage whenever I score a solid hit on one.  All except for the loathsome undead, that is, who have no blood to shed.<BR>Finally, greater attunement to the Blood will cause me to siphon my enemies' life force, granting me a chance to heal my wounds as I harm them.").build();
-        this.source(Sources.INFERNAL).name("Infernal").attunement("Minor attunement to the Infernal source makes it easier to channel mana.  In practice, I'll pay 5% less Infernal mana for all purposes.<BR>Lesser attunement to the Infernal will let me lash out with a Hellish Chain when I strike, dealing bonus fire damage to the next-closest victim to my original target.<BR>Finally, greater attunement to the Infernal will let me become one with the flames, and immune to their ravages.").build();
-        this.source(Sources.VOID).name("Void").attunement("Minor attunement to the Void source makes it easier to channel mana.  In practice, I'll pay 5% less Void mana for all purposes.<BR>Lesser attunement to the Void will infuse my flesh with nothingness, reducing all damage I take.<BR>Finally, greater attunement to the Void will channel the hunger of the eldritch through my attacks, granting them all increased potency.").build();
-        this.source(Sources.HALLOWED).name("Hallowed").attunement("Minor attunement to the Hallowed source makes it easier to channel mana.  In practice, I'll pay 5% less Hallowed mana for all purposes.<BR>Lesser attunement to the Hallowed will make me anathema to the undead, doubling all damage I deal to them.<BR>Finally, greater attunement to the Hallowed will empower my soul such that, when fatally wounded, I will not die but live on.  Such an effort will weaken my soul for a short time, preventing such a miracle from happening again until I recover.").build();
+        this.source(Sources.EARTH).name("Earth").attunement("Minor attunement to the Earth source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Earth mana for all purposes.<BR>Lesser attunement to the Earth will grant me increased stamina, allowing me to swing swords and tools faster without tiring.<BR>Finally, greater attunement to the Earth will cause the very ground to rise beneath my feet when I walk, allowing me to step up the full height of a block without needing to jump.").build();
+        this.source(Sources.SEA).name("Sea").attunement("Minor attunement to the Sea source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Sea mana for all purposes.<BR>Lesser attunement to the Sea will grant me the grace of a dolphin, greatly increasing my swim speed.<BR>Finally, greater attunement to the Sea will allow me to breathe water as if it were air.").build();
+        this.source(Sources.SKY).name("Sky").attunement("Minor attunement to the Sky source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Sky mana for all purposes.<BR>Lesser attunement to the Sky will infuse me with speed and dexterity, increasing my movement speed and greatly reducing any fall damage I take.<BR>Finally, greater attunement to the Sky truly allows me to soar.  While it won't truly let me fly, I'll be able to jump higher, and even jump a second time while in midair.").build();
+        this.source(Sources.SUN).name("Sun").attunement("Minor attunement to the Sun source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Sun mana for all purposes.<BR>Lesser attunement to the Sun will allow me to draw nourishment from it like a plant, filling my belly so long as I'm outdoors during the daytime.<BR>Finally, greater attunement to the Sun grants me true radiance.  Whenever I'm in a dark area, I'll have a chance to create lasting light in my wake.  Should I not desire this to happen, I need only sneak.").build();
+        this.source(Sources.MOON).name("Moon").attunement("Minor attunement to the Moon source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Moon mana for all purposes.<BR>Lesser attunement to the Moon will let me defensively wrap myself in shifting illusions, giving me a chance to become invisible whenever I take damage.<BR>Finally, greater attunement to the Moon allows me to become one with the night, seeing through the darkness as if it were day.").build();
+        this.source(Sources.BLOOD).name("Blood").attunement("Minor attunement to the Blood source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Blood mana for all purposes.<BR>Lesser attunement to the Blood will let me exsanguinate my foes, causing them to bleed for more damage whenever I score a solid hit on one.  All except for the loathsome undead, that is, who have no blood to shed.<BR>Finally, greater attunement to the Blood will cause me to siphon my enemies' life force, granting me a chance to heal my wounds as I harm them.").build();
+        this.source(Sources.INFERNAL).name("Infernal").attunement("Minor attunement to the Infernal source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Infernal mana for all purposes.<BR>Lesser attunement to the Infernal will let me lash out with a Hellish Chain when I strike, dealing bonus fire damage to the next-closest victim to my original target.<BR>Finally, greater attunement to the Infernal will let me become one with the flames, and immune to their ravages.").build();
+        this.source(Sources.VOID).name("Void").attunement("Minor attunement to the Void source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Void mana for all purposes.<BR>Lesser attunement to the Void will infuse my flesh with nothingness, reducing all damage I take.<BR>Finally, greater attunement to the Void will channel the hunger of the eldritch through my attacks, granting them all increased potency.").build();
+        this.source(Sources.HALLOWED).name("Hallowed").attunement("Minor attunement to the Hallowed source makes it easier to channel mana.  In practice, I'll pay roughly 5% less Hallowed mana for all purposes.<BR>Lesser attunement to the Hallowed will make me anathema to the undead, doubling all damage I deal to them.<BR>Finally, greater attunement to the Hallowed will empower my soul such that, when fatally wounded, I will not die but live on.  Such an effort will weaken my soul for a short time, preventing such a miracle from happening again until I recover.").build();
         this.add(Source.getUnknownTranslationKey(), "Unknown");
         
         // Generate item group (i.e. creative tab) localizations
@@ -355,7 +355,16 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK).name("Flawed Budding Quartz Block").build();
         this.block(BlocksPM.ENDERWARD).name("Enderward").build();
         this.block(BlocksPM.SCRIBE_TABLE).name("Scribe's Table").build();
-        
+        this.block(BlocksPM.MANA_RELAY_BASIC).name("Mana Relay").build();
+        this.block(BlocksPM.MANA_RELAY_ENCHANTED).name("Enchanted Mana Relay").build();
+        this.block(BlocksPM.MANA_RELAY_FORBIDDEN).name("Forbidden Mana Relay").build();
+        this.block(BlocksPM.MANA_RELAY_HEAVENLY).name("Heavenly Mana Relay").build();
+        this.block(BlocksPM.MANA_INJECTOR_BASIC).name("Mana Injector").build();
+        this.block(BlocksPM.MANA_INJECTOR_ENCHANTED).name("Enchanted Mana Injector").build();
+        this.block(BlocksPM.MANA_INJECTOR_FORBIDDEN).name("Forbidden Mana Injector").build();
+        this.block(BlocksPM.MANA_INJECTOR_HEAVENLY).name("Heavenly Mana Injector").build();
+        this.block(BlocksPM.DESALINATOR).name("Desalinator").build();
+
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
         this.item(ItemsPM.CREATIVE_GRIMOIRE).name("Creative Grimoire").tooltip("Contains all the secrets of the arcane").build();
@@ -916,12 +925,14 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.ENERGIZED_EMERALD).name("Energized Emerald").build();
         this.item(ItemsPM.ENERGIZED_QUARTZ).name("Energized Quartz").build();
         this.item(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE).name("Smithing Template").build();
+        this.item(ItemsPM.SALT_PINCH).name("Pinch of Salt").build();
+        this.item(ItemsPM.PIXIE_HOUSE).name("Pixie House").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
         this.tooltip("sanguine_core").sub("2").output("Souls per spawn: %1$d").end().build();
-        this.tooltip("mana_discount").name("Mana discount: %1$d%%").build();
-        this.tooltip("mana_discount_attuned").name("%2$s mana discount: %1$d%%").build();
+        this.tooltip("mana_discount").name("Mana effectiveness: +%1$d%%").build();
+        this.tooltip("mana_discount_attuned").name("%2$s mana effectiveness: +%1$d%%").build();
         this.tooltip("glamoured").name("Glamoured").build();
         this.tooltip("warded").name("Warded").build();
         this.tooltip("runescribed").name("Runescribed").build();
@@ -987,7 +998,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("scribe_table").sub("button").sub("transcribe").output("Transcribe").end().build();
         this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("already_studied").output("Already studied").end().build();
         this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("study_count").output("Gain %2$d %1$s vocabulary").end().build();
-        this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("level_cost").output("Cost: %1$s").end().build();
+        this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("experience_cost").output("Cost: %1$s").end().build();
         this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("no_more_needed").output("Study not needed").end().build();
         this.tooltip("scribe_table").sub("widget").sub("language").output("%2$d %1$s vocabulary").end().build();
         this.tooltip("scribe_table").sub("grid").sub("reward").output("Unlocks: %1$s").end().build();
@@ -1000,6 +1011,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("runescribing_altar").sub("slot").sub("rune").output("Add a rune").end().build();
         this.tooltip("analysis_table").sub("slot").sub("input").output("Add an item with magickal affinities").end().build();
         this.tooltip("calcinator").sub("slot").sub("input").output("Add an item with magickal affinities").end().build();
+        this.tooltip("desalinator").sub("slot").sub("water_bucket").output("Add a full water bucket or bottle").end().build();
+        this.tooltip("desalinator").sub("tank").sub("water").output("Water: %1$d / %2$d mB").end().build();
         this.tooltip("essence_cask").sub("slot").sub("essence").output("Add magickal essence").end().build();
         this.tooltip("essence_transmuter").sub("slot").sub("essence").output("Add magickal essence").end().build();
         this.tooltip("honey_extractor").sub("slot").sub("bottle").output("Add an empty glass bottle").end().build();
@@ -1034,6 +1047,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("unread_count").sub("discipline").sub("multiple").output("%1$d unread disciplines").end().build();
         this.tooltip("unread_count").sub("entry").sub("single").output("1 unread entry").end().build();
         this.tooltip("unread_count").sub("entry").sub("multiple").output("%1$d unread entries").end().build();
+        this.tooltip("experience").sub("one").output("1 Experience Point").end().build();
+        this.tooltip("experience").sub("many").output("%1$d Experience Points").end().build();
 
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$s %2$s mana").end().build();
@@ -1130,7 +1145,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.entity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE).name("Majestic Hallowed Pixie").build();
         this.entity(EntityTypesPM.FLYING_CARPET).name("Flying Carpet").build();
         this.entity(EntityTypesPM.SIN_CRYSTAL).name("Sin Crystal").build();
-        
+        this.entity(EntityTypesPM.PIXIE_HOUSE).name("Pixie House").build();
+        this.entity(EntityTypesPM.BASIC_GUARDIAN_PIXIE).name("Guardian Pixie").build();
+        this.entity(EntityTypesPM.GRAND_GUARDIAN_PIXIE).name("Grand Guardian Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE).name("Majestic Guardian Pixie").build();
+
         // Generate status effect localizations
         this.mobEffect(EffectsPM.FLYING).name("Flying").build();
         this.mobEffect(EffectsPM.POLYMORPH).name("Polymorph").build();
@@ -1466,15 +1485,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate attunement threshold localizations
         this.attunementThreshold(AttunementThreshold.MINOR).name("Minor")
-            .effect(Sources.EARTH, "5% Earth mana discount")
-            .effect(Sources.SEA, "5% Sea mana discount")
-            .effect(Sources.SKY, "5% Sky mana discount")
-            .effect(Sources.SUN, "5% Sun mana discount")
-            .effect(Sources.MOON, "5% Moon mana discount")
-            .effect(Sources.BLOOD, "5% Blood mana discount")
-            .effect(Sources.INFERNAL, "5% Infernal mana discount")
-            .effect(Sources.VOID, "5% Void mana discount")
-            .effect(Sources.HALLOWED, "5% Hallowed mana discount")
+            .effect(Sources.EARTH, "+5% Earth mana effectiveness")
+            .effect(Sources.SEA, "+5% Sea mana effectiveness")
+            .effect(Sources.SKY, "+5% Sky mana effectiveness")
+            .effect(Sources.SUN, "+5% Sun mana effectiveness")
+            .effect(Sources.MOON, "+5% Moon mana effectiveness")
+            .effect(Sources.BLOOD, "+5% Blood mana effectiveness")
+            .effect(Sources.INFERNAL, "+5% Infernal mana effectiveness")
+            .effect(Sources.VOID, "+5% Void mana effectiveness")
+            .effect(Sources.HALLOWED, "+5% Hallowed mana effectiveness")
             .build();
         this.attunementThreshold(AttunementThreshold.LESSER).name("Lesser")
             .effect(Sources.EARTH, "Increased attack/mining speed")
@@ -1616,9 +1635,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("dream_vision_talisman").sub("set_active").output("The talisman will now absorb experience.").end().build();
         this.event("dream_vision_talisman").sub("set_inactive").output("The talisman will no longer absorb experience.").end().build();
         this.event("wand_transform_hint").name("That seemed to do something, but apparently it wasn't enough. Try waving your wand for longer!").build();
+        this.event("wand_transform").sub("wrong_bookshelf").output("This isn't what you're looking for. Try a different type of bookshelf.").end().build();
         this.event("knowledge_item").sub("success").output("You have gained valuable arcane knowledge").end().build();
         this.event("knowledge_item").sub("failure").output("You can't make heads or tails of this").end().build();
         this.event("knowledge_item").sub("already_known").output("You already know everything this has to teach").end().build();
+        this.event("dowsing_rod").sub("position").sub("clear").output("Clearing recorded dowsing positions").end().build();
+        this.event("dowsing_rod").sub("position").sub("record").output("Dowsing at position %1$s").end().build();
+        this.event("dowsing_rod").sub("mana_network").sub("routes").output("Showing connected network routes for %1$s").end().build();
+        this.event("dowsing_rod").sub("mana_network").sub("route_highlight").output("Highlighting best route between %1$s and %2$s").end().build();
+        this.event("dowsing_rod").sub("mana_network").sub("no_route").output("No route found between %1$s and %2$s").end().build();
         this.event("dowsing_rod").sub("altar_stability").sub("very_good").output("Altar layout stability: very good").end().build();
         this.event("dowsing_rod").sub("altar_stability").sub("good").output("Altar layout stability: good").end().build();
         this.event("dowsing_rod").sub("altar_stability").sub("neutral").output("Altar layout stability: neutral").end().build();
@@ -1675,7 +1700,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tip("sotu").name("The secrets of the universe will take a great deal of work to uncover, and are not for the faint of heart. Check the Fundamentals section of your Grimoire to learn what is required.").build();
         this.tip("mana_charger").name("The Mana Charger lets you convert magickal essence, such as dust, into mana for your wand. More potent types of essence will yield more mana.").build();
         this.tip("staves").name("Magickal staves can be inscribed with more spells than a regular wand, but are too large to fit in most crafting stations.").build();
-        this.tip("robes").name("Robes aren't as protective as normal armor, but they do offer you a discount when spending mana.").build();
+        this.tip("robes").name("Robes aren't as protective as normal armor, but they do offer you more bang for your buck when spending mana.").build();
         this.tip("ritual_symmetry").name("Symmetry is very important when setting up your ritual layout. Try using a Dowsing Rod if you're having trouble with it.").build();
         this.tip("induced_attunement").name("Eating Ambrosia will earn you induced attunement to magick, granting you passive bonuses. But every time you gain induced attunement for one source, you lose a bit for all the others.").build();
         this.tip("ambrosia_cap").name("Ambrosia has a cap on how much induced attunement it can grant you. More powerful types of Ambrosia have higher caps.").build();
@@ -1748,6 +1773,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.advancement("reuse_rune_once").name("Runic Reuse").description("Use the same rune in at least two different enchantments on the same item at once").build();
         this.advancement("reuse_rune_twice").name("Runic Efficiency").description("Use the same rune in at least three different enchantments on the same item at once").build();
         this.advancement("reuse_rune_thrice").name("Runic Conservation").description("Use the same rune in at least four different enchantments on the same item at once").build();
+        this.advancement("craft_mana_relay").name("Ping").description("Extend the reach of your mana network with a Mana Relay").build();
+        this.advancement("long_network_route").name("Traceroute").description("Transmit mana over 100 blocks to a magitech device").build();
+        this.advancement("large_network_siphon").name("Link Saturation").description("Siphon at least 128 mana into a magitech device in a single instant").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
@@ -2345,7 +2373,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate research entry localizations
         this.researchEntry(ResearchEntries.FIRST_STEPS, lookupProvider).name("First Steps")
             .stages()
-                .add("What an incredible book!  While largely blank, it seems to contain more pages than could conceivably fit in its slim binding.  Plus, it generates its own updating index as I write in it.  This will make a perfect volume in which to record my progress in magickal studies.<BR>Note, however, that I said, 'largely blank'.  Sometimes when I flip randomly through its pages, I find one covered in strange notes and diagrams, a page that seems to disappear once I turn past it.  I can't understand most of their contents, but I can eke out a few hints of how to proceed in my studies, like a trail of breadcrumbs leading me to vast knowledge.<BR>So far, the first thing I've learned that the strange dust I found under the shrine is called Essence, and that it's a physical manifestation of magickal energy, called Mana.  The magickal arts rely heavily on Essence and Mana, so I should be prepared to seek out as much as I can.<BR>The second thing I've learned, after much frustration, is that magickal crafting requires techniques, and frequently infusions of Mana, that are beyond the capacity of a normal crafting table.  I'll need to devise a new type of workbench if I'm to progress further, but curiously the Grimoire gives no suggestion as to how I might do that.  Perhaps it's a test, of sorts.<BR>I wonder...  Waving a wand at a bookshelf was enough to get me this Grimoire.  Maybe waving it at a crafting table will get me what I need a second time?")
+                .add("What an incredible book!  While largely blank, it seems to contain more pages than could conceivably fit in its slim binding.  Plus, it generates its own updating index as I write in it.  This will make a perfect volume in which to record my progress in magickal studies.<BR>Note, however, that I said, 'largely blank'.  Sometimes when I flip randomly through its pages, I find one covered in strange notes and diagrams, a page that seems to disappear once I turn past it.  I can't understand most of their contents, but I can eke out a few hints of how to proceed in my studies, like a trail of breadcrumbs leading me to vast knowledge.<BR>So far, the first thing I've learned is that the strange dust I found under the shrine is called Essence, and that it's a physical manifestation of magickal energy, called Mana.  The magickal arts rely heavily on Essence and Mana, so I should be prepared to seek out as much as I can.<BR>The second thing I've learned, after much frustration, is that magickal crafting requires techniques, and frequently infusions of Mana, that are beyond the capacity of a normal crafting table.  I'll need to devise a new type of workbench if I'm to progress further, but curiously the Grimoire gives no suggestion as to how I might do that.  Perhaps it's a test, of sorts.<BR>I wonder...  Waving a wand at a bookshelf was enough to get me this Grimoire.  Maybe waving it at a crafting table will get me what I need a second time?")
                 .add("Wow, that actually worked.  I now have access to an Arcane Workbench sufficient for my magickal crafting needs.<BR>Now I just need some mana for my wand, but how to get it?  Maybe the shrines hold the answer.  I should visit one again with my wand in hand.<BR>Whatever I do, I should be prepared to harvest more mana than I think I'll need, as the Grimoire indicates that a mundane wand like this is an inefficient conducter of it.")
                 .add("I've now got some mana and an arcane workbench with which to use it.  Now the question is what to do with them.<BR>The notes that I find in the grimoire make mention of five primal sources of magick: the Earth, the Sea, the Sky, the Sun, and the Moon.  It also hints that everything in the world, down to the smallest pebble, has an affinity to one or more of these sources.  That seems worth investigating, but I'll need better tools.<BR>It shouldn't take much to get me started.  A sturdy wooden table to work at, a magnifying glass to more closely study objects, and some paper on which to record my findings.  Yes, that'll do for now.<BR>Once I get that all set up, I can start analyzing things.  I expect that the analysis process will have to be quite thorough for me to learn anything, though.<BR>It would probably be best to hold off on analyzing anything truly valuable, as the item will undoubtedly be lost beyond repair after I'm done with it.  Still, studying a few items like this should give me the information I need to start pursuing more advanced knowledge.")
                 .add("Okay, I've made some useful observations.  These will prove foundational as I continue to study the rudiments of magick.  I should make a point to analyze everything I come across.  Just one of each type, though.  I won't learn anything new from studying the same type of object twice.<BR>Usefully, I've also formed a detailed analysis of the magickal affinities of the objects I've studied.  Granted, I'm not sure what to do with this information yet, but I'm certain it will prove valuable down the road.  I can remind myself of the affinities of any type of object I've studied by hovering over the item in my inventory and pressing the View Item Affinities key, bound by default to Left Shift.")
@@ -2368,7 +2396,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.LINGUISTICS, lookupProvider).name("Linguistics")
             .stages()
                 .add("The ancient shrines are fascinating, but I'd love to learn more about the ancients who built them.  Who were they?  What were they like?  What other wisdom did they have to share?<BR>Of course, a civilization that existed so long ago probably didn't use the same language that I do now.  If I'm lucky enough to find any lost texts of theirs, I should expect them to be in their native tongue, maybe even more than one of them.<BR>I wonder if I could learn those languages with enough study?  Think of the knowledge I could unlock!  I should make some effort in that direction, I think.")
-                .add("I was right!  They did leave writings behind, and they're just as incomprehensible as I suspected.  But never fear, I have faith I can learn more.  To that end, I've fashioned myself a Scribe's Table, a place from which I can study these ancient languages.<BR>The Scribe's Table has three modes in which it can be used.  First, I can use it to study the vocabulary of a language.  To do so, I just need an ancient book and the knowledge imparted by my experiences.  Studying a book will cost me a bit of that experience, but will earn me some new vocabulary.  Any given book can only be studied up to three times in each language I discover it, and each study session will require more experience than the last.<BR>The second mode of the Scribe's Table will let me gain comprehension of a language, allowing me to read it plainly.  Parts of it, anyway.  To do so, I need a book of that language and any vocabulary that I've already learned for it.  The table magically represents the structure of the language as a grid; by unlocking the nodes of that grid using earned vocabulary, I will gain rewards such as comprehension, research observations, or more.<BR>Finally, the third mode of the Scribe's Table lets me transcribe a work.  Basically, it lets me make a copy of any ancient book I've found, incorporating all of my comprehension into it so that other people can benefit from it.  To do so, I need an ancient book that I wish to transcribe and a Book and Quill in which to write.  I don't need to do this if I'm going to be the only one reading (it's always best in the original, after all), but if I want to share with my less well-read friends, this might help.<BR>Finally, I've added a Linguistics section to my Grimoire to help keep track of what languages I've encountered and how my studies are progressing for each of them.  I can find it on the main index page.")
+                .add("I was right!  They did leave writings behind, and they're just as incomprehensible as I suspected.  But never fear, I have faith I can learn more.  To that end, I've fashioned myself a Scribe's Table, a place from which I can study these ancient languages.<BR>The Scribe's Table has three modes in which it can be used.  First, I can use it to study the vocabulary of a language.  To do so, I just need an ancient book and the knowledge imparted by my experiences.  Studying a book will cost me a bit of that experience, but will earn me some new vocabulary.  Any given book can only be studied up to three times in each language I discover it, and each study session will require more experience than the last.  Keeping ancient books that I've already studied nearby in a chiseled or carved bookshelf will help as reference material; each unique such book will grant me a small but cumulative experience discount.<BR>The second mode of the Scribe's Table will let me gain comprehension of a language, allowing me to read it plainly.  Parts of it, anyway.  To do so, I need a book of that language and any vocabulary that I've already learned for it.  The table magically represents the structure of the language as a grid; by unlocking the nodes of that grid using earned vocabulary, I will gain rewards such as comprehension, research observations, or more.<BR>Finally, the third mode of the Scribe's Table lets me transcribe a work.  Basically, it lets me make a copy of any ancient book I've found, incorporating all of my comprehension into it so that other people can benefit from it.  To do so, I need an ancient book that I wish to transcribe and a Book and Quill in which to write.  I don't need to do this if I'm going to be the only one reading (it's always best in the original, after all), but if I want to share with my less well-read friends, this might help.<BR>Finally, I've added a Linguistics section to my Grimoire to help keep track of what languages I've encountered and how my studies are progressing for each of them.  I can find it on the main index page.")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.UNLOCK_MANAWEAVING, lookupProvider).name("Introduction to Manaweaving")
@@ -2592,7 +2620,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         this.researchEntry(ResearchEntries.HEXIUM, lookupProvider).name("Hexium")
             .stages()
-                .add("If I theorize correclty, I suspect that an even more potent magickal metal than Primalite can be created.  Early experiments have disastrously shown that simple iron is too weak to absorb the raw power of the forbidden sources, but what about Primalite?")
+                .add("If I theorize correctly, I suspect that an even more potent magickal metal than Primalite can be created.  Early experiments have disastrously shown that simple iron is too weak to absorb the raw power of the forbidden sources, but what about Primalite?")
                 .add("I hold in my hands a new metal that I call Hexium.  It is uncomfortably cold to the touch, except when it pulses with uncomfortable heat.  Still, it's managing to contain the power of the Blood, Infernal, and Void sources simultaneously, so that makes it all worthwhile.<BR>Like its precursor, I can use Hexium to craft traditional arms and armor, and their potential for enchantment exceeds even that of Primalite.  It almost feels like a waste to put such a powerful metal to use in such a mundane fashion, however.  Clearly this warrants further development.")
                 .end()
             .build();
@@ -2727,7 +2755,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         this.researchEntry(ResearchEntries.BASIC_SORCERY, lookupProvider).name("Basic Sorcery")
             .stages()
-                .add("I think I'm getting the hang of the basics of Sorcery.  It's all about visualizing the effect one wants to see, shaping mana to fit that form, and then unleashing it.  The bad news is that casting a spell through pure force of will has so far proven impossible.<BR>Fortunately, I have tools to work with.  I've learned how to freeze my visualization of a spell in my mind, and then capture that vision in written form on a scroll.  I can then take that scroll, speak a simple word of power, and unleash those energies on demand.  The scroll will be consumed, but that's a small price to pay.<BR>As for what kind of spell to cast, I decided to first go with an incantation with which to defend myself.  By channeling Earth mana, I can create a damaging burst of energy that will also propel the target away from me.  Curiously, players like myself seem very resistant to sorcerous attacks, taking only half as much damage as another creature would.<BR>So far, the range of my spells is limited to what I can touch, which isn't ideal, but will do for now.  I can also channel the energy of a spell through my own body, but obviously that's not a great idea to use with a damaging spell like this.<BR>To create a spell, I'll need to use a Spellcrafting Altar like the one I've just designed.  Placing a blank spell scroll on the altar, I'll be able to select what vehicle the spell should take (e.g. a Touch spell) and what payload it should carry (e.g. Earth damage).  I suspect I'll also be able to select ways to modify the spell once I learn more, but for now that's it.<BR>Once the characteristics of the spell are settled, I will have to take a wand, place it on the altar, and use it to spend mana to scribe the spell onto a scroll.<BR>I suspect there are a wide variety of types of spells I'll be able to cast with more experience, so I'd better get practicing!")
+                .add("I think I'm getting the hang of the basics of Sorcery.  It's all about visualizing the effect one wants to see, shaping mana to fit that form, and then unleashing it.  The bad news is that casting a spell through pure force of will has so far proven impossible.<BR>Fortunately, I have tools to work with.  I've learned how to freeze my visualization of a spell in my mind, and then capture that vision in written form on a scroll.  I can then take that scroll, speak a simple word of power, and unleash those energies on demand.  The scroll will be consumed, but that's a small price to pay.<BR>As for what kind of spell to cast, I decided to first go with an incantation with which to defend myself.  By channeling Earth mana, I can create a damaging burst of energy that will also propel the target away from me.  Curiously, players like myself seem very resistant to sorcerous attacks, taking only half as much damage as another creature would.<BR>So far, the range of my spells is limited to what I can touch, which isn't ideal, but will do for now.  I can also channel the energy of a spell through my own body, but obviously that's not a great idea to use with a damaging spell like this.<BR>To create a spell, I'll need to use a Spellcrafting Altar like the one I've just designed.  Placing a blank spell scroll on the altar, I'll be able to select what type of spell to make (e.g. a Touch spell) and what payload it should carry (e.g. Earth damage).  I suspect I'll also be able to select ways to modify the spell once I learn more, but for now that's it.<BR>Once the characteristics of the spell are settled, I will have to take a wand, place it on the altar, and use it to spend mana to scribe the spell onto a scroll.<BR>I suspect there are a wide variety of types of spells I'll be able to cast with more experience, so I'd better get practicing!")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.EXPERT_SORCERY, lookupProvider).name("Expert Sorcery")
@@ -3067,7 +3095,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_OBSIDIAN, lookupProvider).name("Wand Core: Obsidian")
             .stages()
                 .add("If my calculations are correct, obsidian might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("Fascinating!  This wand core has a solid heft to it, and I can feel the metaphysical weight of the Earth behind it.  This alignment to the Earth comes with a few benefits, it seems.<BR>First, an obsidian wand core can be inscribed with an extra spell, so long as that spell is Earth-based.<BR>Second, it channels Earth mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, an obsidian wand core will slowly draw small amounts of Earth magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Earth magick a lot.")
+                .add("Fascinating!  This wand core has a solid heft to it, and I can feel the metaphysical weight of the Earth behind it.  This alignment to the Earth comes with a few benefits, it seems.<BR>First, an obsidian wand core can be inscribed with an extra spell, so long as that spell is Earth-based.<BR>Second, it channels Earth mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, an obsidian wand core will slowly draw small amounts of Earth magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Earth magick a lot.")
                 .end()
             .addenda()
                 .add("Obsidian will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Earth spell slot is not doubled.  In total, that makes two of any type of spell plus one Earth spell.")
@@ -3076,7 +3104,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_CORAL, lookupProvider).name("Wand Core: Coral")
             .stages()
                 .add("If my calculations are correct, coral might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("Intriguing.  I'll definitely need to wear gloves when handling this, on account of the sharp bits, but I can feel the vastness of the Sea when I hold it.  This alignment comes with some benefits.<BR>First, a coral wand core can be inscribed with an extra spell, so long as that spell is Sea-based.<BR>Second, it channels Sea mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, a coral wand core will slowly draw small amounts of Sea magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sea magick a lot.")
+                .add("Intriguing.  I'll definitely need to wear gloves when handling this, on account of the sharp bits, but I can feel the vastness of the Sea when I hold it.  This alignment comes with some benefits.<BR>First, a coral wand core can be inscribed with an extra spell, so long as that spell is Sea-based.<BR>Second, it channels Sea mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, a coral wand core will slowly draw small amounts of Sea magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sea magick a lot.")
                 .end()
             .addenda()
                 .add("Coral will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Sea spell slot is not doubled.  In total, that makes two of any type of spell plus one Sea spell.")
@@ -3085,7 +3113,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_BAMBOO, lookupProvider).name("Wand Core: Bamboo")
             .stages()
                 .add("If my calculations are correct, bamboo might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("Hollow and light, the Sky runs through the center of this wand core, and it is so aligned.  This alignment comes with some benefits.<BR>First, a bamboo wand core can be inscribed with an extra spell, so long as that spell is Sky-based.<BR>Second, it channels Sky mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, a bamboo wand core will slowly draw small amounts of Sky magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sky magick a lot.")
+                .add("Hollow and light, the Sky runs through the center of this wand core, and it is so aligned.  This alignment comes with some benefits.<BR>First, a bamboo wand core can be inscribed with an extra spell, so long as that spell is Sky-based.<BR>Second, it channels Sky mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, a bamboo wand core will slowly draw small amounts of Sky magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sky magick a lot.")
                 .end()
             .addenda()
                 .add("Bamboo will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Sky spell slot is not doubled.  In total, that makes two of any type of spell plus one Sky spell.")
@@ -3094,7 +3122,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_SUNWOOD, lookupProvider).name("Wand Core: Sunwood")
             .stages()
                 .add("If my calculations are correct, sunwood might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("Gently warm to the touch, this wand core casts a very faint light.  It is clearly aligned to the Sun, and that comes with some benefits.<BR>First, a sunwood wand core can be inscribed with an extra spell, so long as that spell is Sun-based.<BR>Second, it channels Sun mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, a sunwood wand core will slowly draw small amounts of Sun magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sun magick a lot.")
+                .add("Gently warm to the touch, this wand core casts a very faint light.  It is clearly aligned to the Sun, and that comes with some benefits.<BR>First, a sunwood wand core can be inscribed with an extra spell, so long as that spell is Sun-based.<BR>Second, it channels Sun mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, a sunwood wand core will slowly draw small amounts of Sun magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Sun magick a lot.")
                 .end()
             .addenda()
                 .add("Sunwood will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Sun spell slot is not doubled.  In total, that makes two of any type of spell plus one Sun spell.")
@@ -3103,7 +3131,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_MOONWOOD, lookupProvider).name("Wand Core: Moonwood")
             .stages()
                 .add("If my calculations are correct, moonwood might also make a good wand core, one with some interesting properties.  It seems worth trying out.")
-                .add("The protean nature of this moonwood wand core is slightly disturbing.  I swear I can almost feel it changing shape under my fingers.  Nonetheless, it's clearly aligned with the Moon, and that comes with some benefits.<BR>First, a moonwood wand core can be inscribed with an extra spell, so long as that spell is Moon-based.<BR>Second, it channels Moon mana more easily, resulting in a five percent mana cost reduction.<BR>Finally, and perhaps most usefully, a moonwood wand core will slowly draw small amounts of Moon magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Moon magick a lot.")
+                .add("The protean nature of this moonwood wand core is slightly disturbing.  I swear I can almost feel it changing shape under my fingers.  Nonetheless, it's clearly aligned with the Moon, and that comes with some benefits.<BR>First, a moonwood wand core can be inscribed with an extra spell, so long as that spell is Moon-based.<BR>Second, it channels Moon mana more easily, resulting in a bonus five percent mana effectiveness.<BR>Finally, and perhaps most usefully, a moonwood wand core will slowly draw small amounts of Moon magick from the environment, refilling its wand gem over time.<BR>This will be a significant upgrade for me, should I find myself using Moon magick a lot.")
                 .end()
             .addenda()
                 .add("Moonwood will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Moon spell slot is not doubled.  In total, that makes two of any type of spell plus one Moon spell.")
@@ -3112,7 +3140,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_BONE, lookupProvider).name("Wand Core: Bone")
             .stages()
                 .add("The terrestrial sources of magick all have wand cores aligned to them, why not Blood?  It shouldn't be too difficult to find something which fills that niche.")
-                .add("In the end, the choice of material for a Blood-aligned wand core was obvious: bone.  It's hard, straight, well-sized, and has the right mojo.<BR>Unlike lesser materials, a bone wand core can be inscribed with two spells, in addition to a bonus Blood spell.<BR>It still provides a five percent Blood mana discount on all workings, and will harvest Blood mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
+                .add("In the end, the choice of material for a Blood-aligned wand core was obvious: bone.  It's hard, straight, well-sized, and has the right mojo.<BR>Unlike lesser materials, a bone wand core can be inscribed with two spells, in addition to a bonus Blood spell.<BR>It still provides a bonus five percent Blood mana effectiveness on all workings, and will harvest Blood mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
                 .end()
             .addenda()
                 .add("Bone will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Blood spell slot is not doubled.  In total, that makes four of any type of spell plus one Blood spell.")
@@ -3121,7 +3149,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_BLAZE_ROD, lookupProvider).name("Wand Core: Blaze Rod")
             .stages()
                 .add("The terrestrial sources of magick all have wand cores aligned to them, why not Infernal?  It shouldn't be too difficult to find something which fills that niche.")
-                .add("Well, it's exotic and requires some thick gloves, but a blaze rod definitely makes for a good Infernal-aligned wand core.<BR>Unlike lesser materials, a blaze rod wand core can be inscribed with two spells, in addition to a bonus Infernal spell.<BR>It still provides a five percent Infernal mana discount on all workings, and will harvest Infernal mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
+                .add("Well, it's exotic and requires some thick gloves, but a blaze rod definitely makes for a good Infernal-aligned wand core.<BR>Unlike lesser materials, a blaze rod wand core can be inscribed with two spells, in addition to a bonus Infernal spell.<BR>It still provides a bonus five percent Infernal mana effectiveness on all workings, and will harvest Infernal mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
                 .end()
             .addenda()
                 .add("Blaze rods also make suitable cores for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Infernal spell slot is not doubled.  In total, that makes four of any type of spell plus one Infernal spell.")
@@ -3130,7 +3158,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_PURPUR, lookupProvider).name("Wand Core: Purpur")
             .stages()
                 .add("The terrestrial sources of magick all have wand cores aligned to them, why not Void?  It shouldn't be too difficult to find something which fills that niche.")
-                .add("It turned out harder than I expected to isolate a suitable material, but in the end I succeeded.  The alien purpur blocks have the right material properties and have a strong alignment to the Void.<BR>Unlike lesser materials, a purpur wand core can be inscribed with two spells, in addition to a bonus Void spell.<BR>It still provides a five percent Void mana discount on all workings, and will harvest Void mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
+                .add("It turned out harder than I expected to isolate a suitable material, but in the end I succeeded.  The alien purpur blocks have the right material properties and have a strong alignment to the Void.<BR>Unlike lesser materials, a purpur wand core can be inscribed with two spells, in addition to a bonus Void spell.<BR>It still provides a bonus five percent Void mana effectiveness on all workings, and will harvest Void mana from the environment to refill its wand gem.<BR>All in all, the makings of a fine tool.")
                 .end()
             .addenda()
                 .add("Purpur will also make a suitable core for a staff.  As with all staves, it can be inscribed with double the normal amount of spells, though the bonus Void spell slot is not doubled.  In total, that makes four of any type of spell plus one Void spell.")
@@ -3139,7 +3167,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.IMBUED_WOOL, lookupProvider).name("Imbued Wool")
             .stages()
                 .add("If I'm going to study magick, I feel it's important that I look the part.  That means robes.<BR>A nice silk or breathable cotton would be nice, but wool is what I've got, so wool is what I'll use.  And I should make sure to imbue them with mana to see how it affects the result.")
-                .add("Well, it's scratchy and a little warm, but I think I made a good fitting of it.<BR>The addition of mana to the design was a good idea.  Not only are the robes more durable and protective this way, but they also seem to make it easier for me to channel mana while wearing them.  Each piece should give me a small discount on all my mana costs, and they're warm enough to prevent me from freezing in wintry environs.  Nice!")
+                .add("Well, it's scratchy and a little warm, but I think I made a good fitting of it.<BR>The addition of mana to the design was a good idea.  Not only are the robes more durable and protective this way, but they also seem to make it easier for me to channel mana while wearing them.  Each piece should give me a small effectiveness boost on all my mana expenditures, and they're warm enough to prevent me from freezing in wintry environs.  Nice!")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.SPELLCLOTH, lookupProvider).name("Spellcloth")
@@ -3163,7 +3191,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.ARTIFICIAL_MANA_FONTS, lookupProvider).name("Artificial Mana Fonts")
             .stages()
                 .add("The mana fonts in those ancient shrines are incredible.  If only I could move them!<BR>Maybe I can use what I've learned to replicate something like them.  Having a renewable mana source at home would be invaluable to my studies.")
-                .add("I've succeeded in creating an artificial mana font!  Now I can have the luxury of a regenerating mana source in the comfort of my own home.<BR>Unfortunately, my work so far pales in comparison to that of the ancients.  My font can only hold a tenth of the mana of an ancient font at once, but at least it refills at the same speed.")
+                .add("I've succeeded in creating an artificial mana font!  Now I can have the luxury of a regenerating mana source in the comfort of my own home.<BR>Unfortunately, my work so far pales in comparison to that of the ancients.  My font can only hold a tenth of the mana of an ancient font at once, and it refills at a much slower speed.")
                 .end()
             .addenda()
                 .add("Despite never having found one in the wild, Blood mana can be collected in an artificial font as well.")
@@ -3175,7 +3203,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.FORBIDDEN_MANA_FONTS, lookupProvider).name("Forbidden Mana Fonts")
             .stages()
                 .add("I tire of waiting for these artificial fonts to replenish their mana supply.  Surely at this point my power rivals that of the vaunted ancients.  I can create something just as good as their works.")
-                .add("This will do nicely, yes.<BR>With the careful application of my incredible power, I have created a mana font that can store just as much as that of the ancients.  And I can place them wherever I want!")
+                .add("This will do nicely, yes.<BR>With the careful application of my incredible power, I have created a mana font that can store just as much as that of the ancients and refill just as fast.  And I can place them wherever I want!")
                 .end()
             .addenda()
                 .add("Blood mana represents the power of life and death, and now I have a regenerating source of it at my beck and call.")
@@ -3187,7 +3215,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.HEAVENLY_MANA_FONTS, lookupProvider).name("Heavenly Mana Fonts")
             .stages()
                 .add("It is wisdom to leave the world in a better state than one found it.  Someday, one will walk in my footsteps seeking the secrets of magick.  I should leave them with better tools than were left to me.")
-                .add("My latest creations will ensure that those who come after me have a plentiful supply of mana to work from.  These fonts hold ten times as much mana as the last iteration.")
+                .add("My latest creations will ensure that those who come after me have a plentiful supply of mana to work from.  These fonts hold ten times as much mana as the last iteration and regenerate mana much more quickly.")
                 .end()
             .addenda()
                 .add("The method of my discovery of Blood magick still haunts me.  I should ensure that my successors don't have to experience that by leaving them a source of Blood mana.")
@@ -3243,6 +3271,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Attunement shackles can also be made to affect Void magick.")
                 .add("Attunement shackles can also be made to affect Hallowed magick.")
                 .end()
+            .build();
+        this.researchEntry(ResearchEntries.PIXIE_HOUSES, lookupProvider).name("Pixie Houses")
+            .stages()
+                .add("My new pixie friends will need a place to live if they're going to stick around.  They get a little tired flitting about all the time, and while I could just stick them in a box somewhere, that seems... rude.  They've told me they like things that grow, maybe I can work with that.")
+                .add("I've come up with tiny enchanted treehouses for my pixie friends to live in, and they seem very happy with them.<BR>Each Pixie House can hold one pixie, and I can assign a pixie to one by simply using the pixie on it.  I don't need to worry too much about them, either, as pixies will defend their homes against any monsters that happen to wander nearby.  Should the pixie be hurt and become drained, they'll convalesce in bed until I can reinvigorate them with some magickal essence.<BR>Pixies really are amazing, helpful creatures.  These houses could be the start of a whole town.  Maybe they'd be willing to take up some work while they're here...  Hmm, I'll have to think on that.")
+            .end()
             .build();
         this.researchEntry(ResearchEntries.BASIC_RUNEWORKING, lookupProvider).name("Basic Runeworking")
             .stages()
@@ -3414,7 +3448,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.RUNIC_TRIM, lookupProvider).name("Runic Armor Trim")
             .stages()
                 .add("Being able to customize my armor with trim is really cool.  It's so stylish!  But what if it was functional, too?")
-                .add("I've discovered how to make my own armor trim based on the runes I've been learning about.  This runic armor trim, in addition to looking snazzy, will modify the mana discount that I get from the robes I wear.<BR>First I need to make the template, the recipe for which is included here.  Then I combine it with a piece of magickal cloth armor and a source rune at a smithing table as normal.  The modified armor will grant me double the normal mana discount for the source signified by the rune I used, at the cost of no longer providing any discount for any other sources.<BR>I should consider carefully before applying this trim, as once added it cannot be removed, only replaced with a different trim.")
+                .add("I've discovered how to make my own armor trim based on the runes I've been learning about.  This runic armor trim, in addition to looking snazzy, will modify the bonus mana effectiveness that I get from the robes I wear.<BR>First I need to make the template, the recipe for which is included here.  Then I combine it with a piece of magickal cloth armor and a source rune at a smithing table as normal.  The modified armor will grant me double the normal bonus mana effectiveness for the source signified by the rune I used, at the cost of no longer providing any effectiveness for any other sources.<BR>I should consider carefully before applying this trim, as once added it cannot be removed, only replaced with a different trim.")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.ENDERWARD, lookupProvider).name("Enderward")
@@ -3474,7 +3508,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.MANAFRUIT, lookupProvider).name("Manafruit")
             .stages()
                 .add("My first real ritual!  I'm so excited.<BR>I'm piecing together the props and offerings I'll need from my Grimoire's hints.  I'll be ready to try it soon!")
-                .add("Fruit?  Huh, okay then.<BR>It looks like it's not just any old fruit, though.  In addition to being nourishing, this Manafruit will temporarily allow me to channel mana more efficiently, resulting in a slight discount in all my mana costs.<BR>Maybe I can find some other use for it as well?")
+                .add("Fruit?  Huh, okay then.<BR>It looks like it's not just any old fruit, though.  In addition to being nourishing, this Manafruit will temporarily allow me to channel mana more efficiently, resulting in a slight boost in effectiveness in all my mana usage.<BR>Maybe I can find some other use for it as well?")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.RITUAL_LECTERN, lookupProvider).name("Ritual Lectern")
@@ -3510,7 +3544,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_PRIMAL, lookupProvider).name("Wand Core: Primal")
             .stages()
                 .add("The cores that I've discovered so far are potent, but there are only so many wands that a mage can carry!<BR>I wonder if I can combine their power, somehow?")
-                .add("Combining the effects of these wand cores was no mean feat, but I think I've done it!  By taking each of the source-aligned wands cores and offering them up in a ritual with some mana salts, I've managed to fuse them into a single wand core with the power of all five.<BR>This core is aligned to all five terrestrial sources, meaning that it will provide the expected discount with Earth, Sea, Sky, Sun, or Moon magick, and will slowly regenerate mana of any of the five sources.  In addition, it can be inscribed with two spells, regardless of source.")
+                .add("Combining the effects of these wand cores was no mean feat, but I think I've done it!  By taking each of the source-aligned wands cores and offering them up in a ritual with some mana salts, I've managed to fuse them into a single wand core with the power of all five.<BR>This core is aligned to all five terrestrial sources, meaning that it will provide the expected effectiveness boost with Earth, Sea, Sky, Sun, or Moon magick, and will slowly regenerate mana of any of the five sources.  In addition, it can be inscribed with two spells, regardless of source.")
                 .end()
             .addenda()
                 .add("The process seems to work for creating magickal staves as well.  I simply start the ritual offering staff cores instead of wand cores.<BR>As with all staves, it can be inscribed with double the normal amount of spells, for a total of four, regardless of source.")
@@ -3519,7 +3553,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_DARK_PRIMAL, lookupProvider).name("Wand Core: Dark Primal")
             .stages()
                 .add("I am not content with having to use three separate wands to efficiently channel my so-called forbidden magick.  The process I used to create a primal wand core must be replicated for these sources!")
-                .add("The ritual is dangerous, but the risk is worth the reward.<BR>By offering up a primal wand core, along with the three forbidden wand cores and more mana salts, I have created a core worthy of my power.<BR>The core remains aligned to all five terrestrial sources, but is also aligned to the three forbidden sources.  It will provide the expected mana discount and regeneration for all eight sources.  In addition, a Dark Primal wand core can be inscribed with three spells, regardless of source.")
+                .add("The ritual is dangerous, but the risk is worth the reward.<BR>By offering up a primal wand core, along with the three forbidden wand cores and more mana salts, I have created a core worthy of my power.<BR>The core remains aligned to all five terrestrial sources, but is also aligned to the three forbidden sources.  It will provide the expected mana effectiveness boost and regeneration for all eight sources.  In addition, a Dark Primal wand core can be inscribed with three spells, regardless of source.")
                 .end()
             .addenda()
                 .add("Like expected, the ritual will also create a Dark Primal staff core, assuming that I use staff cores to start out with.<BR>As with all staves, it can be inscribed with double the normal amount of spells, for a total of six, regardless of source.")
@@ -3528,7 +3562,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CORE_PURE_PRIMAL, lookupProvider).name("Wand Core: Pure Primal")
             .stages()
                 .add("Can the universe's love be crafted into a wand?  There's only one way to find out.")
-                .add("Enlightenment made manifest, this wand shall be a tool to work wonders to share with the world.<BR>This core is aligned to all of the primal sources, including the Hallowed.  It will provide the expected discount for all magickal workings, and slowly regenerate all sources of mana.  In addition, a Pure Primal wand core can be inscribed with four spells, regardless of source.")
+                .add("Enlightenment made manifest, this wand shall be a tool to work wonders to share with the world.<BR>This core is aligned to all of the primal sources, including the Hallowed.  It will provide the expected effectiveness boost for all magickal workings, and slowly regenerate all sources of mana.  In addition, a Pure Primal wand core can be inscribed with four spells, regardless of source.")
                 .end()
             .addenda()
                 .add("As with the other wand core types, a Pure Primal staff core may be created as well.<BR>As with all staves, it can be inscribed with double the normal amount of spells, for a total of eight, regardless of source.")
@@ -3710,6 +3744,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Rituals are complicated, and laying out my altar space correctly seems very important to success, according to my Grimoire.<BR>Doing this by eye and the seat of my pants strikes me as a path to disaster.  I need a tool that will give me feedback on the quality of my altar layout before I attempt a ritual.")
                 .add("Well, it's simple, but I think it will do the job.<BR>Waving this dowsing rod at a ritual altar will give me a rough idea of how stable my current ritual layout is.  In addition, waving it at a prop or an offering pedestal will give me feedback on its placement.<BR>I mustn't forget, however, that a complex ritual can quickly overwhelm even a very good layout if I'm not quick and efficient in stepping through the process.")
                 .end()
+            .addenda()
+                .add("With my discovery of mana networking, I realized that I'm likely going to need a diagnostic tool at some point.  To that end, I've modified the enchantments on my Dowsing Rod.  Using it on a network device will cause it to highlight all the network connections that device is aware of for as long as the rod is in hand.  Subsequently, using it on a second device will attempt to show the best known network route between the two devices.  Using it while sneaking will clear all tracked devices.")
+                .end()
             .build();
         this.researchEntry(ResearchEntries.HYDROMELON, lookupProvider).name("Hydromelon")
             .stages()
@@ -3756,6 +3793,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("I believe I've finally learned all that there is to know of magitech.")
                 .add("My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.DESALINATOR, lookupProvider).name("Desalinator")
+            .stages()
+                .add("I'm looking at the schematic for these magitech parts and realizing that I'm going to need a lot of mana salts, which means a lot of refined salt.  If only I had a way to extract it from plentiful seawater instead of going digging for it.")
+                .add("Yeah, this will work!  I've created a basic machine which uses Sun mana to quickly and efficiently evaporate water from a tank.  This process leaves behind trace amounts of salt; it's not a lot, but it's practically free.  Even better, the machine can process the water vapor directly into Sea essence!  I always need more of that.")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.HONEY_EXTRACTOR, lookupProvider).name("Honey Extractor")
@@ -3846,6 +3889,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("As my wands can hold more mana, keeping them charged has become a challenge.  Even with mana fonts at home, it can take minutes of channeling to get one to full.<BR>I have an idea for something to ease this process...")
                 .add("My newest device is similar to a Mana Charger, but rather than consuming essence it will automatically siphon from nearby fonts.<BR>Only one wand can be held in the charger at a time, and it only has a range of five blocks, but it can pull from multiple fonts at once.<BR>Best of all, I can just drop the wand in and walk away to do other things while it works.  I think this is going to save me a lot of time.")
                 .end()
+            .addenda()
+                .add("The Auto-Charger works on similar principles to the mana networking devices I've created.  It will connect to such a network automatically, without the need for an injector placed atop it.")
+                .end()
             .build();
         this.researchEntry(ResearchEntries.ESSENCE_TRANSMUTER, lookupProvider).name("Essence Transmuter")
             .stages()
@@ -3885,6 +3931,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("I grow tired of carting around wands like batteries.  There must be a better way to store mana for long periods of time for quick charging.")
                 .add("With careful study of the flows of mana and practice in its applications, I have created the Mana Nexus.<BR>Like the Auto-Charger before it, the Mana Nexus will siphon mana directly from any nearby mana fonts.  This improved model, however, will keep that mana in internal storage indefinitely, rather than requiring immediate application to a wand.<BR>This allow me to keep greater reserves of power on hand.  In addition, the Mana Nexus will also accept mana from any essence or spare wands I have lying around.")
                 .end()
+            .addenda()
+                .add("Like the Auto-Charger before it, the Mana Nexus will automatically connect to a mana network without need for an injector.  In addition, it can also supply mana to a network like a font would.  Despite both supplying and consuming mana, however, it will not function as a relay.")
+                .end()
             .build();
         this.researchEntry(ResearchEntries.MANA_SINGULARITY, lookupProvider).name("Mana Singularity")
             .stages()
@@ -3908,6 +3957,30 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("Life is a gift that must not be squandered.  It must be cherished and protected.  With magickal barriers.")
                 .add("Further upgrades have yielded a new warding module design fully twice as effective as the base model.  My confidence in my safety is higher than ever.")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.MANA_NETWORKING, lookupProvider).name("Mana Networking")
+            .stages()
+                .add("It's apparent from my time siphoning mana fonts with my wand that mana can be transmitted through the air.  But is that a function of the wand, or the person wielding it?  Can this effect be replicated with magitech?")
+                .add("After much trial and error, I've developed a pair of new magitech devices that I think are really cool.<BR>The first device I call a Mana Injector.  When placed directly above a magitech device that consumes mana, the injector will connect with nearby sources of mana, such as fonts, and siphon from them automatically, injecting the mana into the device for use.  The range isn't great, only five blocks, but that's okay on account of the second device.<BR>That one I call a Mana Relay.  Its entire purpose is to extend the range of mana suppliers, again such as fonts, connected to the network.  Each relay has a five-block connection radius and will bounce mana from fonts to injectors in that range.  Multiple relays can be chained to extend this range even further!<BR>These devices should make it a lot easier to keep my magitech powered.  I'm so excited to try it out!")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.ADVANCED_MANA_NETWORKING, lookupProvider).name("Advanced Mana Networking")
+            .stages()
+                .add("My existing mana network is quite useful, but perhaps recent discoveries will let me upgrade it.  This warrants investigation.")
+                .add("Fantastic!  This upgraded injector design has doubled the amount of mana it can channel in the same amount of time!  And the new relays' range now extends to ten whole blocks!  This should let me extend my network further than ever.")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.FORBIDDEN_MANA_NETWORKING, lookupProvider).name("Forbidden Mana Networking")
+            .stages()
+                .add("The mana needs of my devices are greater than ever.  I must see about upgrading my network again; it will not do to stand around twiddling my thumbs while waiting for devices to recharge.")
+                .add("This pleases me. Harnessing the wonders of Hexium, I've doubled the mana throughput of my injectors yet again, and my relays now connect to devices within fifteen blocks of themselves.  Most excellent.")
+                .end()
+            .build();
+        this.researchEntry(ResearchEntries.HEAVENLY_MANA_NETWORKING, lookupProvider).name("Heavenly Mana Networking")
+            .stages()
+                .add("In my quest for power, I was so preoccupied with how far I could extend my reach that I forgot why I was reaching in the first place.  But perhaps I can remind myself.")
+                .add("The whole point of these devices is to share the marvels of magick with those less fortunate.  And now, with network throughput doubled again and relays that can reach twenty blocks away, I can do so.  Let me bathe the world in these gifts.")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.RAW_MARBLE, lookupProvider).name("Marble")

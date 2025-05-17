@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.golems;
 
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchantedGolemEntity;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;

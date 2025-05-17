@@ -818,6 +818,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.ENCHANTED_INK.get()).set(Sources.SEA, 3).set(Sources.MOON, 3).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ROCK_SALT.get()).set(Sources.EARTH, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.REFINED_SALT.get()).base(ItemsPM.ROCK_SALT.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SALT_PINCH.get()).set(Sources.EARTH, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MANA_PRISM.get()).set(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MANA_SALTS.get()).set(auraUnit.multiply(5)).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.BEESWAX.get()).set(Sources.SEA, 2).set(Sources.BLOOD, 2).build(consumer);
@@ -1041,7 +1042,11 @@ public class AffinityProvider implements DataProvider {
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_HALLOWED_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).value(Sources.HALLOWED, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_HALLOWED_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).value(Sources.HALLOWED, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).value(Sources.HALLOWED, 20).build(consumer);
-        
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.PIXIE_HOUSE.get()).value(Sources.EARTH, 5).value(Sources.SKY, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.BASIC_GUARDIAN_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.GRAND_GUARDIAN_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE.get()).value(Sources.SKY, 10).value(Sources.BLOOD, 5).build(consumer);
+
         // Define potion bonuses
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.NIGHT_VISION).bonus(Sources.MOON, 2).build(consumer);
         PotionBonusAffinityBuilder.potionBonusAffinity(Potions.LONG_NIGHT_VISION).bonus(Sources.MOON, 5).build(consumer);

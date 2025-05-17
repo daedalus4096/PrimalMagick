@@ -27,7 +27,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public abstract class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
-    protected static final int INPUT_INV_INDEX = 0;
+    public static final int INPUT_INV_INDEX = 0;
     
     public RunecarvingTableTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.RUNECARVING_TABLE.get(), pos, state);
@@ -65,7 +65,7 @@ public abstract class RunecarvingTableTileEntity extends AbstractTileSidedInvent
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler

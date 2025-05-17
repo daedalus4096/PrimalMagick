@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.datagen.advancements;
 import com.verdantartifice.primalmagick.common.advancements.critereon.AttunementThresholdTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.EntityHurtPlayerTriggerExt;
 import com.verdantartifice.primalmagick.common.advancements.critereon.LinguisticsComprehensionTrigger;
+import com.verdantartifice.primalmagick.common.advancements.critereon.ManaNetworkRouteLengthTrigger;
+import com.verdantartifice.primalmagick.common.advancements.critereon.ManaNetworkSiphonTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RecallStoneTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
 import com.verdantartifice.primalmagick.common.advancements.critereon.RuneUseCountTrigger;
@@ -459,6 +461,23 @@ public abstract class StoryAdvancementsPM {
                 .rewards(AdvancementRewards.Builder.experience(100))
                 .addCriterion("reuse_thrice", RuneUseCountTrigger.TriggerInstance.atLeast(4))
                 .save(saver, ResourceUtils.loc("story/reuse_rune_thrice").toString());
+        AdvancementHolder craftManaRelay = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_mana_relay").icon(ItemsPM.MANA_RELAY_BASIC.get()).build())
+                .parent(craftMagitechParts)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("has_basic_relay", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MANA_RELAY_BASIC.get()))
+                .addCriterion("has_enchanted_relay", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MANA_RELAY_ENCHANTED.get()))
+                .addCriterion("has_forbidden_relay", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MANA_RELAY_FORBIDDEN.get()))
+                .addCriterion("has_heavenly_relay", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MANA_RELAY_HEAVENLY.get()))
+                .save(saver, ResourceUtils.loc("story/craft_mana_relay").toString());
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("long_network_route").icon(ItemsPM.MANA_RELAY_HEAVENLY.get()).build())
+                .parent(craftManaRelay)
+                .addCriterion("long_route", ManaNetworkRouteLengthTrigger.TriggerInstance.atLeast(100))
+                .save(saver, ResourceUtils.loc("story/long_network_route").toString());
+        Advancement.Builder.advancement().display(DisplayInfoBuilder.id("large_network_siphon").icon(ItemsPM.MANA_INJECTOR_HEAVENLY.get()).type(AdvancementType.CHALLENGE).build())
+                .parent(craftManaRelay)
+                .rewards(AdvancementRewards.Builder.experience(100))
+                .addCriterion("large_siphon", ManaNetworkSiphonTrigger.TriggerInstance.atLeast(12800))
+                .save(saver, ResourceUtils.loc("story/large_network_siphon").toString());
     }
     
     private static AdvancementHolder makeComprehensionAdvancement(String id, ItemLike icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, int threshold, Consumer<AdvancementHolder> saver) {

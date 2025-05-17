@@ -52,9 +52,9 @@ import java.util.Optional;
 public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected static final int OUTPUT_INV_INDEX = 0;
-    protected static final int INPUT_INV_INDEX = 1;
-    protected static final int WAND_INV_INDEX = 2;
+    public static final int OUTPUT_INV_INDEX = 0;
+    public static final int INPUT_INV_INDEX = 1;
+    public static final int WAND_INV_INDEX = 2;
     
     protected int processTime;
     protected int processTimeTotal;
@@ -99,7 +99,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     
     public DissolutionChamberTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), pos, state);
-        this.manaStorage = new ManaStorage(25600, 100, 100, Sources.EARTH);
+        this.manaStorage = new ManaStorage(10000, 1000, 1000, Sources.EARTH);
     }
 
     public IManaStorage<?> getUncachedManaStorage() {
@@ -294,14 +294,13 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     @Override
     public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return switch (face) {
-            case UP -> Optional.of(INPUT_INV_INDEX);
             case DOWN -> Optional.of(OUTPUT_INV_INDEX);
-            default -> Optional.of(WAND_INV_INDEX);
+            default -> Optional.of(INPUT_INV_INDEX);
         };
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler

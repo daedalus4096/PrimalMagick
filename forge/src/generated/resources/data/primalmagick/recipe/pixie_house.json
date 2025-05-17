@@ -1,0 +1,39 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "B": {
+      "tag": "minecraft:beds"
+    },
+    "H": {
+      "item": "primalmagick:heartwood"
+    },
+    "S": {
+      "tag": "minecraft:saplings"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 2000,
+      "primalmagick:moon": 2000,
+      "primalmagick:sea": 2000,
+      "primalmagick:sky": 2000,
+      "primalmagick:sun": 2000
+    }
+  },
+  "pattern": [
+    "B",
+    "H",
+    "S"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:pixie_houses"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:pixie_house"
+  }
+}

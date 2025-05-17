@@ -28,6 +28,7 @@ public class ManaSparkleParticle extends TextureSheetParticle {
     protected double cosPitch;
     protected final double loops = 2.0D;
     protected double dist = 1.0D;
+    protected double phase = 0.0D;
 
     protected ManaSparkleParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
@@ -45,6 +46,10 @@ public class ManaSparkleParticle extends TextureSheetParticle {
     @Override
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    }
+
+    public void setPhase(double phase) {
+        this.phase = phase;
     }
     
     @Override
@@ -81,7 +86,7 @@ public class ManaSparkleParticle extends TextureSheetParticle {
         } else {
             double t = (double)this.age / (double)this.lifetime;
             double tpl = 2 * Math.PI * this.loops;
-            double theta = tpl * t;
+            double theta = (tpl * t) + this.phase;
             double radius = 0.5D * Math.sin(Math.PI * t);
             this.age++;
             

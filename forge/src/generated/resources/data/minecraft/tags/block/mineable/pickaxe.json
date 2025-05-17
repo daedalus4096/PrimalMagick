@@ -113,6 +113,15 @@
     "primalmagick:infernal_furnace",
     "primalmagick:mana_nexus",
     "primalmagick:mana_singularity",
-    "primalmagick:mana_singularity_creative"
+    "primalmagick:mana_singularity_creative",
+    "primalmagick:mana_relay_basic",
+    "primalmagick:mana_relay_enchanted",
+    "primalmagick:mana_relay_forbidden",
+    "primalmagick:mana_relay_heavenly",
+    "primalmagick:mana_injector_basic",
+    "primalmagick:mana_injector_enchanted",
+    "primalmagick:mana_injector_forbidden",
+    "primalmagick:mana_injector_heavenly",
+    "primalmagick:desalinator"
   ]
 }

@@ -108,10 +108,9 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
     @Override
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
-        
-        // Set the transmuter tile entity's owner when placed by a player.  Needed so that the tile entity can do research checks.
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        if (!worldIn.isClientSide && placer instanceof Player player && tile instanceof IOwnedTileEntity ownedTile) {
+
+        // Set the block entity's owner when placed by a player
+        if (!worldIn.isClientSide && placer instanceof Player player && worldIn.getBlockEntity(pos) instanceof IOwnedTileEntity ownedTile) {
             ownedTile.setTileOwner(player);
         }
     }

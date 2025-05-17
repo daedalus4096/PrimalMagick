@@ -157,72 +157,72 @@ public class RecipesNeoforge extends Recipes {
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_IRON, 3)
                 .ingredient(CommonTags.Items.ORES_IRON)
                 .setGroup("iron_grit_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_IRON, CommonTags.Items.ORES_IRON))), ResourceUtils.loc("iron_grit_from_dissolving_ore"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_IRON, 3)
                 .ingredient(CommonTags.Items.RAW_MATERIALS_IRON)
                 .setGroup("iron_grit_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_IRON, CommonTags.Items.RAW_MATERIALS_IRON))), ResourceUtils.loc("iron_grit_from_dissolving_raw_metal"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_GOLD, 3)
                 .ingredient(CommonTags.Items.ORES_GOLD)
                 .setGroup("gold_grit_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_GOLD, CommonTags.Items.ORES_GOLD))), ResourceUtils.loc("gold_grit_from_dissolving_ore"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_GOLD, 3)
                 .ingredient(CommonTags.Items.RAW_MATERIALS_GOLD)
                 .setGroup("gold_grit_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_GOLD, CommonTags.Items.RAW_MATERIALS_GOLD))), ResourceUtils.loc("gold_grit_from_dissolving_raw_metal"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_COPPER, 3)
                 .ingredient(CommonTags.Items.ORES_COPPER)
                 .setGroup("copper_grit_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_COPPER, CommonTags.Items.ORES_COPPER))), ResourceUtils.loc("copper_grit_from_dissolving_ore"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_COPPER, 3)
                 .ingredient(CommonTags.Items.RAW_MATERIALS_COPPER)
                 .setGroup("copper_grit_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_COPPER, CommonTags.Items.RAW_MATERIALS_COPPER))), ResourceUtils.loc("copper_grit_from_dissolving_raw_metal"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_TIN, 3)
                 .ingredient(ItemExtensionTags.ORES_TIN)
                 .setGroup("tin_dust_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_TIN, ItemExtensionTags.ORES_TIN))), ResourceUtils.loc("tin_dust_from_dissolving_ore"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_TIN, 3)
                 .ingredient(ItemExtensionTags.RAW_MATERIALS_TIN)
                 .setGroup("tin_dust_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_TIN, ItemExtensionTags.RAW_MATERIALS_TIN))), ResourceUtils.loc("tin_dust_from_dissolving_raw_metal"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_LEAD, 3)
                 .ingredient(ItemExtensionTags.ORES_LEAD)
                 .setGroup("lead_dust_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_LEAD, ItemExtensionTags.ORES_LEAD))), ResourceUtils.loc("lead_dust_from_dissolving_ore"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_LEAD, 3)
                 .ingredient(ItemExtensionTags.RAW_MATERIALS_LEAD)
                 .setGroup("lead_dust_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_LEAD, ItemExtensionTags.RAW_MATERIALS_LEAD))), ResourceUtils.loc("lead_dust_from_dissolving_raw_metal"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_SILVER, 3)
                 .ingredient(ItemExtensionTags.ORES_SILVER)
                 .setGroup("silver_dust_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_SILVER, ItemExtensionTags.ORES_SILVER))), ResourceUtils.loc("silver_dust_from_dissolving_ore"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_SILVER, 3)
                 .ingredient(ItemExtensionTags.RAW_MATERIALS_SILVER)
                 .setGroup("silver_dust_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_SILVER, ItemExtensionTags.RAW_MATERIALS_SILVER))), ResourceUtils.loc("silver_dust_from_dissolving_raw_metal"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_URANIUM, 3)
                 .ingredient(ItemExtensionTags.ORES_URANIUM)
                 .setGroup("uranium_dust_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_URANIUM, ItemExtensionTags.ORES_URANIUM))), ResourceUtils.loc("uranium_dust_from_dissolving_ore"));
         DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemExtensionTags.DUSTS_URANIUM, 3)
                 .ingredient(ItemExtensionTags.RAW_MATERIALS_URANIUM)
                 .setGroup("uranium_dust_dissolution")
-                .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+                .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_URANIUM, ItemExtensionTags.RAW_MATERIALS_URANIUM))), ResourceUtils.loc("uranium_dust_from_dissolving_raw_metal"));
     }
 }

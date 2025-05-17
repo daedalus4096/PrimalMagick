@@ -50,6 +50,14 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_bucket_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_flask_slot"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "primalmagick:entity/mana_font_core"
     },
     {
@@ -59,6 +67,46 @@
     {
       "type": "minecraft:single",
       "resource": "primalmagick:entity/spellcrafting_altar/spellcrafting_altar_ring"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_cube"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_relay/basic_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_relay/enchanted_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_relay/forbidden_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_relay/heavenly_frame"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/basic_frame_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/enchanted_frame_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/forbidden_frame_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/heavenly_frame_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_injector/frame_bottom"
     },
     {
       "type": "minecraft:single",
@@ -87,6 +135,10 @@
     {
       "type": "minecraft:single",
       "resource": "primalmagick:entity/shield/sacred_shield"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/pixie_house"
     },
     {
       "type": "minecraft:single",

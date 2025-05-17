@@ -1,0 +1,61 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:desalinator"
+  },
+  "key": {
+    "rootKey": "primalmagick:desalinator"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_magitech"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "count": 1,
+              "id": "minecraft:water_bucket"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:desalinator"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.desalinator.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:desalinator"
+      },
+      "recipes": [
+        "primalmagick:desalinator",
+        "primalmagick:refined_salt_from_pinches"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.desalinator.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

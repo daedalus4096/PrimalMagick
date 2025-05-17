@@ -25,10 +25,11 @@
         "rootKey": "primalmagick:rock_salt"
       },
       "recipes": [
-        "primalmagick:refined_salt",
+        "primalmagick:refined_salt_from_smelting",
         "primalmagick:rock_salt_from_smelting",
         "primalmagick:salt_block",
         "primalmagick:refined_salt_from_salt_block",
+        "primalmagick:refined_salt_from_pinches",
         "primalmagick:salted_baked_potato",
         "primalmagick:salted_beetroot_soup",
         "primalmagick:salted_cooked_beef",

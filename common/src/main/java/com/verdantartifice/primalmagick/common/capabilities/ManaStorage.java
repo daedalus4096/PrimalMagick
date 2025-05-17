@@ -120,7 +120,7 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
     }
     
     public void setMana(Source source, int amount) {
-        if (this.allowedSources.contains(source) && this.capacity != INFINITE) {
+        if (this.canStore(source) && this.capacity != INFINITE) {
             this.mana = this.mana.set(source, Mth.clamp(amount, 0, this.capacity));
         }
     }
@@ -172,7 +172,7 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
 
     @Override
     public int getMaxManaStored(Source source) {
-        return this.allowedSources.contains(source) ? this.capacity : 0;
+        return this.canStore(source) ? this.capacity : 0;
     }
 
     @Override
@@ -182,12 +182,12 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
 
     @Override
     public boolean canExtract(Source source) {
-        return this.canStore(source) && this.maxExtract > 0;
+        return this.canStore(source) && this.maxExtract > 0 && this.getManaStored(source) > 0;
     }
 
     @Override
     public boolean canReceive(Source source) {
-        return this.canStore(source) && this.maxReceive > 0;
+        return this.canStore(source) && this.maxReceive > 0 && this.getManaStored(source) < this.getMaxManaStored(source);
     }
     
     protected void onManaChanged() {

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
+import com.verdantartifice.primalmagick.common.misc.GrindstoneChangeRecord;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
@@ -91,10 +92,10 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
                         ExperienceOrb.award(serverLevel, Vec3.atCenterOf(pos), this.getExperienceAmount(level));
                         
                         // Grant runic knowledge hints to the player based on the enchantments on the pre-wipe item
-                        ItemStack preWipeStack = RunicGrindstoneMenu.this.mergeEnchants(
-                                RunicGrindstoneMenu.this.repairSlots.getItem(0), 
-                                RunicGrindstoneMenu.this.repairSlots.getItem(1));
-                        RunicGrindstoneMenu.this.grantHints(preWipeStack);
+                        ItemStack topStack = RunicGrindstoneMenu.this.repairSlots.getItem(0).copy();
+                        ItemStack bottomStack = RunicGrindstoneMenu.this.repairSlots.getItem(1).copy();
+                        RunicGrindstoneMenu.this.mergeEnchants(topStack, bottomStack);
+                        RunicGrindstoneMenu.this.grantHints(topStack, bottomStack);
                     }
                     level.levelEvent(1042, pos, 0);
                 });
@@ -172,28 +173,23 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
     }
     
     public void createResult() {
-        this.resultSlots.setItem(0, this.computeResult(this.repairSlots.getItem(0), this.repairSlots.getItem(1)));
+        var change = Services.EVENTS.onGrindstoneChange(this.repairSlots.getItem(0), this.repairSlots.getItem(1), this.resultSlots, -1);
+        this.resultSlots.setItem(0, this.computeResult(this.repairSlots.getItem(0), this.repairSlots.getItem(1), change));
 
         this.broadcastChanges();
-        
-        this.worldPosCallable.execute((world, pos) -> {
-            if (!world.isClientSide && this.player instanceof ServerPlayer spe) {
-                ItemStack stack = this.resultSlots.getItem(0);
-                spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 2, stack));
-            }
-        });
     }
     
-    private ItemStack computeResult(ItemStack pInputItem, ItemStack pAdditionalItem) {
-        var change = Services.EVENTS.onGrindstoneChange(pInputItem, pAdditionalItem, this.resultSlots, -1);
-        if (change.canceled()) {
-            this.xp = -1;
-            return ItemStack.EMPTY;
-        } else if (!change.output().isEmpty()) {
-            this.xp = change.xp();
-            return change.output();
+    private ItemStack computeResult(ItemStack pInputItem, ItemStack pAdditionalItem, GrindstoneChangeRecord change) {
+        if (change.xp() != Integer.MIN_VALUE) {
+            if (change.canceled()) {
+                this.xp = -1;
+                return ItemStack.EMPTY;
+            } else if (!change.output().isEmpty()) {
+                this.xp = change.xp();
+                return change.output();
+            }
         } else {
-            this.xp = Integer.MIN_VALUE;
+            this.xp = change.xp();
         }
 
         boolean flag = !pInputItem.isEmpty() || !pAdditionalItem.isEmpty();
@@ -253,8 +249,8 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
         return stillValid(this.worldPosCallable, playerIn, BlocksPM.RUNIC_GRINDSTONE.get());
     }
     
-    protected void grantHints(ItemStack stack) {
-        Set<Holder<Enchantment>> enchants = stack.getEnchantments().keySet();
+    protected void grantHints(ItemStack stack, ItemStack otherStack) {
+        Set<Holder<Enchantment>> enchants = stack.isEmpty() ? otherStack.getEnchantments().keySet() : stack.getEnchantments().keySet();
         
         this.worldPosCallable.execute((level, pos) -> {
             MutableInt hintCount = new MutableInt(0);
@@ -292,8 +288,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
         });
     }
     
-    public ItemStack mergeEnchants(ItemStack pCopyTo, ItemStack pCopyFrom) {
-        ItemStack retVal = pCopyTo.copy();
+    public void mergeEnchants(ItemStack pCopyTo, ItemStack pCopyFrom) {
         EnchantmentHelper.updateEnchantments(pCopyTo, updater -> {
             ItemEnchantments enchantments = EnchantmentHelper.getEnchantmentsForCrafting(pCopyFrom);
             for (Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
@@ -303,7 +298,6 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
                 }
             }
         });
-        return retVal;
     }
 
     @Override

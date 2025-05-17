@@ -36,6 +36,11 @@ public class ConfigServiceNeoforge implements IConfigService {
     }
 
     @Override
+    public boolean enableManaNetworking() {
+        return ConfigNeoforge.ENABLE_MANA_NETWORKING.getAsBoolean();
+    }
+
+    @Override
     public boolean showUnscannedAffinities() {
         return ConfigNeoforge.SHOW_UNSCANNED_AFFINITIES.getAsBoolean();
     }

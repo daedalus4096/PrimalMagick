@@ -1,11 +1,15 @@
 package com.verdantartifice.primalmagick.platform.services;
 
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.PixieRank;
+import com.verdantartifice.primalmagick.common.items.entities.PixieHouseItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.EarthshatterHammerItem;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
@@ -38,6 +42,10 @@ public interface IItemPrototypeService {
 
     <T extends Block> Supplier<ManaFontBlockItem> manaFont(Supplier<T> blockSupplier, Item.Properties properties);
     <T extends Block> Supplier<SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier, Item.Properties properties);
+    <T extends Block> Supplier<ManaRelayBlockItem> manaRelay(Supplier<T> blockSupplier, Item.Properties properties);
+    <T extends Block> Supplier<ManaInjectorBlockItem> manaInjector(Supplier<T> blockSupplier, Item.Properties properties);
+
+    Supplier<PixieHouseItem> pixieHouse(Item.Properties properties);
 
     Supplier<PrimaliteShieldItem> primaliteShield(Item.Properties properties);
     Supplier<HexiumShieldItem> hexiumShield(Item.Properties properties);
@@ -56,5 +64,5 @@ public interface IItemPrototypeService {
     Supplier<ModularStaffItem> modularStaff(Item.Properties properties);
 
     Supplier<SpawnEggItem> deferredSpawnEgg(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Item.Properties props);
-    Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties);
+    Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, PixieRank rank, Source source, Item.Properties properties);
 }

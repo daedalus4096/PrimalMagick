@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
@@ -94,6 +95,10 @@ public class ConcoctingRecipeBuilder {
     
     public ConcoctingRecipeBuilder requiredResearch(ResourceKey<ResearchEntry> research, int stage) {
         return this.requirement(new ResearchRequirement(new ResearchStageKey(research, stage)));
+    }
+
+    public ConcoctingRecipeBuilder defaultManaCost(ConcoctionType type) {
+        return this.manaCost(SourceList.EMPTY.add(Sources.INFERNAL, type.getDefaultManaCost()));
     }
     
     public ConcoctingRecipeBuilder manaCost(SourceList mana) {

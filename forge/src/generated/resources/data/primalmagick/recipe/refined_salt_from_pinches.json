@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "primalmagick:salt_pinch"
+    },
+    {
+      "item": "primalmagick:salt_pinch"
+    },
+    {
+      "item": "primalmagick:salt_pinch"
+    },
+    {
+      "item": "primalmagick:salt_pinch"
+    },
+    {
+      "item": "primalmagick:salt_pinch"
+    },
+    {
+      "item": "primalmagick:salt_pinch"
+    },
+    {
+      "item": "primalmagick:salt_pinch"
+    },
+    {
+      "item": "primalmagick:salt_pinch"
+    },
+    {
+      "item": "primalmagick:salt_pinch"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "primalmagick:refined_salt"
+  }
+}

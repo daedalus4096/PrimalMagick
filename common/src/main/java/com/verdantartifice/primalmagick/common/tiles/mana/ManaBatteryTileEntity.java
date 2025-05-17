@@ -1,12 +1,17 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
-import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
+import com.mojang.logging.LogUtils;
+import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
+import com.verdantartifice.primalmagick.common.mana.network.IManaNetworkNode;
+import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
+import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
+import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -14,6 +19,8 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -26,6 +33,8 @@ import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -35,15 +44,17 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
-import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
+import java.util.UUID;
 
 /**
  * Definition of a mana battery tile entity.  Holds the charge for the corresponding block.
@@ -51,10 +62,10 @@ import java.util.Set;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock
  * @author Daedalus4096
  */
-public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
+public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer,
+        IManaSupplier, IManaConsumer, ITieredDeviceBlockEntity, IOwnedTileEntity {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected static final int FONT_RANGE = 5;
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int CHARGE_INV_INDEX = 1;
     
@@ -62,8 +73,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     protected int chargeTimeTotal;
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
-
-    protected final Set<BlockPos> fontLocations = new HashSet<>();
+    protected UUID ownerUUID;
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chargerData = new ContainerData() {
@@ -124,32 +134,48 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
     protected int getBatteryCapacity() {
         // Return the capacity of the battery in centimana
-        if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
-            return switch (batteryBlock.getDeviceTier()) {
-                case FORBIDDEN -> 4 * WandGem.WIZARD.getCapacity();
-                case HEAVENLY -> 4 * WandGem.ARCHMAGE.getCapacity();
-                case CREATIVE -> -1;
-                default -> 0;
-            };
-        } else {
-            return 0;
-        }
+        return switch (this.getDeviceTier()) {
+            case FORBIDDEN -> 4 * WandGem.WIZARD.getCapacity();
+            case HEAVENLY -> 4 * WandGem.ARCHMAGE.getCapacity();
+            case CREATIVE -> -1;
+            default -> 0;
+        };
     }
 
     @VisibleForTesting
     public int getBatteryTransferCap() {
         // Return the max amount of centimana that can be transfered by the battery per tick
-        if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
-            return switch (batteryBlock.getDeviceTier()) {
-                case FORBIDDEN -> WandCap.HEXIUM.getSiphonAmount();
-                case HEAVENLY, CREATIVE -> WandCap.HALLOWSTEEL.getSiphonAmount();
-                default -> 0;
-            };
+        return switch (this.getDeviceTier()) {
+            case FORBIDDEN -> WandCap.HEXIUM.getSiphonAmount();
+            case HEAVENLY, CREATIVE -> WandCap.HALLOWSTEEL.getSiphonAmount();
+            default -> 0;
+        };
+    }
+
+    @Override
+    public void setTileOwner(@Nullable Player owner) {
+        this.ownerUUID = owner == null ? null : owner.getUUID();
+    }
+
+    @Override
+    public @Nullable Player getTileOwner() {
+        if (this.level instanceof ServerLevel serverLevel) {
+            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
         } else {
-            return 0;
+            return null;
         }
     }
-    
+
+    @Override
+    public int extractMana(@NotNull Source source, int maxExtract, boolean simulate) {
+        return this.manaStorage.extractMana(source, maxExtract, simulate);
+    }
+
+    @Override
+    public int receiveMana(@NotNull Source source, int maxReceive, boolean simulate) {
+        return this.manaStorage.receiveMana(source, maxReceive, simulate);
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, ManaBatteryTileEntity entity) {
         boolean shouldMarkDirty = false;
         
@@ -157,18 +183,18 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             
-            // Scan surroundings for mana fonts once a second
-            if (entity.fontSiphonTime % 20 == 0) {
-                entity.scanSurroundings();
-            }
-
             // Siphon from nearby fonts
-            Vec3 chargerCenter = Vec3.atCenterOf(pos);
-            for (BlockPos fontPos : entity.fontLocations) {
-                if (entity.fontSiphonTime % 5 == 0 && 
-                        level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity fontEntity && 
-                        level.getBlockState(fontPos).getBlock() instanceof AbstractManaFontBlock) {
-                    fontEntity.doSiphon(entity.manaStorage, level, null, chargerCenter, entity.getBatteryTransferCap());
+            if (entity.fontSiphonTime % 5 == 0) {
+                final int throughput = entity.getManaThroughput();
+                final int totalSiphoned = Sources.streamSorted()
+                        .filter(entity.manaStorage::canReceive)
+                        .mapToInt(s -> entity.doSiphon(entity.getTileOwner(), level, s, Math.min(throughput, entity.manaStorage.getMaxManaStored(s) - entity.manaStorage.getManaStored(s))))
+                        .sum();
+                if (totalSiphoned > 0) {
+                    shouldMarkDirty = true;
+                }
+                if (entity.getTileOwner() instanceof ServerPlayer serverPlayer) {
+                    CriteriaTriggersPM.MANA_NETWORK_SIPHON.get().trigger(serverPlayer, totalSiphoned);
                 }
             }
             entity.fontSiphonTime++;
@@ -255,20 +281,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         return false;
     }
     
-    @SuppressWarnings("deprecation")
-    protected void scanSurroundings() {
-        BlockPos pos = this.getBlockPos();
-        if (Services.LEVEL.isAreaLoaded(this.level, pos, FONT_RANGE)) {
-            this.fontLocations.clear();
-            Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-FONT_RANGE, -FONT_RANGE, -FONT_RANGE), pos.offset(FONT_RANGE, FONT_RANGE, FONT_RANGE));
-            for (BlockPos searchPos : positions) {
-                if (this.level.getBlockState(searchPos).getBlock() instanceof AbstractManaFontBlock) {
-                    this.fontLocations.add(searchPos.immutable());
-                }
-            }
-        }
-    }
-    
     protected boolean canOutputToWand(ItemStack outputStack, Source source) {
         if (!outputStack.isEmpty() && (this.manaStorage.getMaxManaStored(source) == -1 || this.manaStorage.getManaStored(source) > 0)) {
             return outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
@@ -296,9 +308,18 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
         this.fontSiphonTime = compound.getInt("FontSiphonTime");
+
         ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
             LOGGER.error("Failed to decode mana storage: {}", msg);
         }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
+
+        this.ownerUUID = null;
+        if (compound.contains("OwnerUUID")) {
+            String ownerUUIDStr = compound.getString("OwnerUUID");
+            if (!ownerUUIDStr.isEmpty()) {
+                this.ownerUUID = UUID.fromString(ownerUUIDStr);
+            }
+        }
     }
     
     @Override
@@ -307,9 +328,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
         compound.putInt("FontSiphonTime", this.fontSiphonTime);
+
         ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
             LOGGER.error("Failed to encode mana storage: {}", msg);
         }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+
+        if (this.ownerUUID != null) {
+            compound.putString("OwnerUUID", this.ownerUUID.toString());
+        }
     }
 
     @Override
@@ -394,7 +420,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler
@@ -425,5 +451,71 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     @Override
     public void removeComponentsFromTag(CompoundTag pTag) {
         pTag.remove("ManaStorage");
+    }
+
+    @Override
+    public boolean canSupply(@NotNull Source source) {
+        return true;
+    }
+
+    @Override
+    public boolean canConsume(@NotNull Source source) {
+        return true;
+    }
+
+    @Override
+    public int getNetworkRange() {
+        return 5;
+    }
+
+    @Override
+    public int getManaThroughput() {
+        return this.getBatteryTransferCap();
+    }
+
+    @Override
+    public @NotNull RouteTable getRouteTable() {
+        return RouteManager.getRouteTable(this.getLevel());
+    }
+
+    @Override
+    public void loadManaNetwork(@NotNull Level level) {
+        if (!Services.CONFIG.enableManaNetworking()) {
+            LOGGER.warn("Mana networking not enabled; skipping mana battery bootstrap");
+            return;
+        }
+
+        // Combine supplier and consumer network loading
+        level.getProfiler().push("loadManaNetwork");
+        level.getProfiler().push("manaBattery");
+
+        int range = this.getNetworkRange();
+        int rangeSqr = range * range;
+
+        // Search for mana suppliers and consumers which are in range of this node
+        level.getProfiler().push("findNodes");
+        List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
+                .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
+                .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
+                .filter(Objects::nonNull)
+                .toList();
+
+        // Create direct routes from this supplier for terminus consumers
+        level.getProfiler().popPush("createDirectConsumerEdges");
+        List<IManaConsumer> consumers = nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
+                .filter(Objects::nonNull)
+                .toList();
+        consumers.forEach(consumer -> this.getRouteTable().add(this, consumer));
+
+        // Create direct routes to this consumer for origin suppliers
+        level.getProfiler().popPush("createDirectSupplierEdges");
+        List<IManaSupplier> suppliers = nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
+                .filter(Objects::nonNull)
+                .toList();
+        suppliers.forEach(supplier -> this.getRouteTable().add(supplier, this));
+        level.getProfiler().pop();
+
+        level.getProfiler().pop();
+        level.getProfiler().pop();
     }
 }

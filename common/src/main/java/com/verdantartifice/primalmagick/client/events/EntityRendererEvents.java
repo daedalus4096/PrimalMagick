@@ -1,17 +1,21 @@
 package com.verdantartifice.primalmagick.client.events;
 
+import com.verdantartifice.primalmagick.client.renderers.entity.BasicGuardianPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.BasicPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.FlyingCarpetRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.ForbiddenTridentRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.FriendlyWitchRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.GrandGuardianPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.GrandPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.HallowsteelGolemRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.HallowsteelTridentRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.HexiumGolemRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.HexiumTridentRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.InnerDemonRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.MajesticGuardianPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.MajesticPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.ManaArrowRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.PixieHouseRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.PrimaliteGolemRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.PrimaliteTridentRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.SinCrashRenderer;
@@ -20,10 +24,17 @@ import com.verdantartifice.primalmagick.client.renderers.entity.SpellMineRendere
 import com.verdantartifice.primalmagick.client.renderers.entity.SpellProjectileRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.TreefolkRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.FlyingCarpetModel;
+import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieHouseModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellMineModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellProjectileModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingBottomMiddleModel;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingBottomModel;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingTopMiddleModel;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingTopModel;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaRelayFrameModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import net.minecraft.client.model.HumanoidModel;
@@ -92,6 +103,10 @@ public class EntityRendererEvents {
         entityRenderers.register(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), BasicPixieRenderer::new);
         entityRenderers.register(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), GrandPixieRenderer::new);
         entityRenderers.register(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), MajesticPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.PIXIE_HOUSE.get(), PixieHouseRenderer::new);
+        entityRenderers.register(EntityTypesPM.BASIC_GUARDIAN_PIXIE.get(), BasicGuardianPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.GRAND_GUARDIAN_PIXIE.get(), GrandGuardianPixieRenderer::new);
+        entityRenderers.register(EntityTypesPM.MAJESTIC_GUARDIAN_PIXIE.get(), MajesticGuardianPixieRenderer::new);
     }
 
     public interface EntityRendererRegistrar {
@@ -107,5 +122,12 @@ public class EntityRendererEvents {
         consumer.accept(ModelLayersPM.SPELL_PROJECTILE, SpellProjectileModel::createBodyLayer);
         consumer.accept(ModelLayersPM.TREEFOLK, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
         consumer.accept(ModelLayersPM.SPELLCRAFTING_ALTAR_RING, SpellcraftingAltarRingModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_CUBE, ManaCubeModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_RELAY_FRAME, ManaRelayFrameModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_INJECTOR_FRAME_TOP, ManaInjectorFrameRingTopModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_INJECTOR_FRAME_TOP_MIDDLE, ManaInjectorFrameRingTopMiddleModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM_MIDDLE, ManaInjectorFrameRingBottomMiddleModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM, ManaInjectorFrameRingBottomModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.PIXIE_HOUSE, PixieHouseModel::createBodyLayer);
     }
 }

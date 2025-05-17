@@ -1,7 +1,37 @@
+v6.0.6
+------
+* Added Pixie Houses, to give your flighty friends a home to defend
+* Fixed a bug where consecration fields would cast shadows
+* Fixed a bug where the hitbox of the Celestial Harp didn't always line up with it visually
+* Fixed an item duplication bug with the Runic Grindstone
+* Fixed a bug where the Runic Grindstone wouldn't give hints in some circumstances
+* Fixed a bug that could allow Enderman teleportation to ignore an Enderward in some circumstances
+* Restored the Treasure enchantment to full functionality
+
 v6.0.5
 ------
+* Added Mana Injectors, to let Magitech devices pull mana directly from fonts
+* Added Mana Relays, to extend the range of your mana distribution network
+* Magitech devices compatible with Mana Injectors now also accept material inputs from hoppers attached to the sides of the block, in addition to the top
+    * NOTE: Infernal Furnaces cannot currently accept Ignyx fuel via hopper; this will be fixed in a future version
+* Greatly decreased the mana regeneration rate of Artificial Mana Fonts
+* Greatly increased the mana regeneration rate of Heavenly Mana Fonts
+* Rebalanced mana consumption and storage capacity of magitech devices to account for the introduction of mana networking
+* Added the Desalinator, for when you need help boiling water
+* Changed the prerequisite for Expert Magitech from the Honey Extractor to the Desalinator
 * Added an affinity index to the Grimoire, to remind you of all the data you've analyzed
+* Changed Scribe's Table vocabulary costs from levels to a flat number of experience points
+* Previously studied ancient books in chiseled or carved bookshelves near the Scribe's Table now grant an experience discount when studying vocabulary
 * Made item textures for energized gems more distinct from their parents' versions
+* Added a warning message for when the player tries to transform the wrong type of bookshelf into a Grimoire
+* Fixed various tooltips to refer to mana effectiveness instead of flat discounts
+* Fixed Flying Carpet research to only require knowledge of Insight Runes instead of Power Runes
+* Removed the Bloodletter from the research and prop requirements for Blood Roses and Emberflowers
+* Standardized the breaking times of many devices, to make it less painful to have to move them
+* Allowed mana fonts to stack to sixteen
+* Fixed a bug allowing Magick Protection to be applied to armor alongside other Protection-style enchants
+* Fixed a bug where the contents of Essence Casks would not be analyzed when scanned with the Arcanometer
+* Fixed a bug where the Grimoire entries for ritual tool rune enchantments would be prematurely unlocked
 
 v6.0.4
 ------

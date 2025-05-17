@@ -39,13 +39,13 @@ public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<Disso
         this.chamberData = chamberData;
         
         // Slot 0: chamber output
-        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 125, 35));
+        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(DissolutionChamberTileEntity.OUTPUT_INV_INDEX), 0, 125, 35));
         
         // Slot 1: ore input
-        this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(Direction.UP), 0, 44, 35));
+        this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(DissolutionChamberTileEntity.INPUT_INV_INDEX), 0, 44, 35));
         
         // Slot 2: wand input
-        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(DissolutionChamberTileEntity.WAND_INV_INDEX), 0, 8, 62, false));
         
         // Slots 3-29: player backpack
         for (int i = 0; i < 3; i++) {

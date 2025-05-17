@@ -86,9 +86,8 @@ public class BlockSwapper {
                     world.setBlock(this.pos, targetState, Block.UPDATE_ALL);
                     
                     // Set the owner of the new block's tile entity, if applicable
-                    BlockEntity tile = world.getBlockEntity(this.pos);
-                    if (tile instanceof IOwnedTileEntity) {
-                        ((IOwnedTileEntity)tile).setTileOwner(this.player);
+                    if (world.getBlockEntity(this.pos) instanceof IOwnedTileEntity ownedTile) {
+                        ownedTile.setTileOwner(this.player);
                     }
                 } else {
                     // Otherwise, spawn an item in the block's place

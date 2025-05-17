@@ -8,11 +8,12 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.EssenceCaskMenu;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
-import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IHasCustomScanContents;
+import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -37,8 +38,8 @@ import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
+public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, ITieredDeviceBlockEntity, IHasCustomScanContents {
     public static final int NUM_ROWS = EssenceType.values().length;
     public static final int NUM_COLS = Sources.getAllSorted().size();
     public static final int NUM_SLOTS = NUM_ROWS * NUM_COLS;
@@ -140,11 +141,6 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     @Override
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
-    }
-    
-    @Nullable
-    protected DeviceTier getDeviceTier() {
-        return this.getBlockState().getBlock() instanceof ITieredDevice device ? device.getDeviceTier() : null;
     }
     
     public int getTotalEssenceCapacity() {
@@ -293,7 +289,7 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler
@@ -301,6 +297,19 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
                 .itemValidFunction((slot, stack) -> stack.getItem() instanceof EssenceItem)
                 .build());
 
+        return retVal;
+    }
+
+    @Override
+    public NonNullList<ItemStack> getCustomScanContents() {
+        List<Table.Cell<EssenceType, Source, Integer>> filteredContents = this.contents.cellSet().stream()
+                .filter(cell -> cell.getValue() > 0)
+                .toList();
+        NonNullList<ItemStack> retVal = NonNullList.withSize(filteredContents.size(), ItemStack.EMPTY);
+        int index = 0;
+        for (Table.Cell<EssenceType, Source, Integer> cell : filteredContents) {
+            retVal.set(index++, EssenceItem.getEssence(cell.getRowKey(), cell.getColumnKey()));
+        }
         return retVal;
     }
 }

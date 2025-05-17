@@ -47,9 +47,9 @@ import java.util.Optional;
 public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected static final int INPUT_INV_INDEX = 0;
-    protected static final int OUTPUT_INV_INDEX = 1;
-    protected static final int WAND_INV_INDEX = 2;
+    public static final int INPUT_INV_INDEX = 0;
+    public static final int OUTPUT_INV_INDEX = 1;
+    public static final int WAND_INV_INDEX = 2;
     
     protected int spinTime;
     protected int spinTimeTotal;
@@ -94,7 +94,7 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     
     public HoneyExtractorTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.HONEY_EXTRACTOR.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Sources.SKY);
+        this.manaStorage = new ManaStorage(2000, 200, 200, Sources.SKY);
     }
 
     public IManaStorage<?> getUncachedManaStorage() {
@@ -136,7 +136,7 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     }
     
     protected int getManaCost() {
-        return 10;
+        return 200;
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, HoneyExtractorTileEntity entity) {
@@ -280,14 +280,13 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     @Override
     public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return switch (face) {
-            case UP -> Optional.of(INPUT_INV_INDEX);
             case DOWN -> Optional.of(OUTPUT_INV_INDEX);
-            default -> Optional.of(WAND_INV_INDEX);
+            default -> Optional.of(INPUT_INV_INDEX);
         };
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler

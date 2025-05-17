@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.events;
 
+import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.BlockSwapper;
 import net.minecraft.world.level.Level;
@@ -16,6 +17,9 @@ public class ServerEvents {
         // Process any pending world modifiers
         tickBlockSwappers(level);
         tickBlockBreakers(level);
+
+        // Process any active mana networks
+        tickRouteTables(level);
     }
     
     protected static void tickBlockSwappers(Level level) {
@@ -38,5 +42,9 @@ public class ServerEvents {
                 BlockBreaker.schedule(level, 1, newBreaker);
             }
         }
+    }
+
+    protected static void tickRouteTables(Level level) {
+        RouteManager.getRouteTable(level).tick(level);
     }
 }

@@ -118,7 +118,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     
     public ConcocterTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.CONCOCTER.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 1000, 1000, Sources.INFERNAL);
+        this.manaStorage = new ManaStorage(20000, 5000, 5000, Sources.INFERNAL);
         this.researchCache = new TileResearchCache();
     }
 
@@ -130,7 +130,6 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         return this.manaStorage;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
@@ -148,7 +147,6 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.saveAdditional(compound, registries);
@@ -171,7 +169,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     @Override
     public void setTileOwner(Player owner) {
         // Set the owner and update the local research cache with their relevant research
-        this.ownerUUID = owner.getUUID();
+        this.ownerUUID = owner == null ? null : owner.getUUID();
         this.researchCache.update(owner, this.relevantFilter);
     }
 
@@ -400,7 +398,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler

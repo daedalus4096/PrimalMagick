@@ -43,21 +43,21 @@ public class HoneyExtractorMenu extends AbstractTileSidedInventoryMenu<HoneyExtr
         this.extractorData = extractorData;
         
         // Slot 0: honeycomb input
-        this.honeycombSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 35,
+        this.honeycombSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(HoneyExtractorTileEntity.INPUT_INV_INDEX), 0, 30, 35,
                 new FilteredSlotProperties().background(HONEYCOMB_SLOT_TEXTURE).tooltip(HONEYCOMB_SLOT_TOOLTIP).item(Items.HONEYCOMB)));
         
         // Slot 1: bottle input
-        this.bottleSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 1, 52, 35, 
+        this.bottleSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(HoneyExtractorTileEntity.INPUT_INV_INDEX), 1, 52, 35,
                 new FilteredSlotProperties().background(BOTTLE_SLOT_TEXTURE).tooltip(BOTTLE_SLOT_TOOLTIP).item(Items.GLASS_BOTTLE)));
         
         // Slot 2: honey output
-        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 108, 35));
+        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(HoneyExtractorTileEntity.OUTPUT_INV_INDEX), 0, 108, 35));
         
         // Slot 3: beeswax output
-        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 1, 130, 35));
+        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(HoneyExtractorTileEntity.OUTPUT_INV_INDEX), 1, 130, 35));
         
         // Slot 4: wand input
-        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(HoneyExtractorTileEntity.WAND_INV_INDEX), 0, 8, 62, false));
         
         // Slots 5-31: player backpack
         for (int i = 0; i < 3; i++) {

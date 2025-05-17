@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tiles.base;
 
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
-import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,7 +33,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,7 +78,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         }
         
         // Create item handler capabilities
-        this.itemHandlers = this.createHandlers();
+        this.itemHandlers = this.createItemHandlers();
 
         // Create container listener list
         this.listeners = NonNullList.withSize(this.getInventoryCount(), new ArrayList<>());
@@ -107,7 +105,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     
     public abstract Optional<Integer> getInventoryIndexForFace(@NotNull Direction face);
     
-    protected abstract NonNullList<IItemHandlerPM> createHandlers();
+    protected abstract NonNullList<IItemHandlerPM> createItemHandlers();
 
     /**
      * This method is intended to provide access to the block entity item handler for a given face during Neoforge
@@ -121,7 +119,19 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         return face == null ? null : this.getInventoryIndexForFace(face).map(this.itemHandlers::get).orElse(null);
     }
 
-    public void addListener(@Nullable Direction face, @NotNull IItemHandlerChangeListener listener) {
+    /**
+     * This method is intended to provide access to block entity item handlers not exposed on a given block face. Prefer
+     * using other accessor methods such as {@link #getItem(int, int)} whenever possible.
+     *
+     * @param index the index of the item handler within the block entity's list
+     * @return the item handler for the given index, or null if one doesn't exist
+     */
+    @Nullable
+    public IItemHandlerPM getRawItemHandler(int index) {
+        return index >= 0 && index < this.itemHandlers.size() ? this.itemHandlers.get(index) : null;
+    }
+
+    public void addInventoryChangeListener(@Nullable Direction face, @NotNull IItemHandlerChangeListener listener) {
         if (face != null) {
             this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
                 this.listeners.get(invIndex).add(listener);
@@ -129,7 +139,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         }
     }
     
-    public void removeListener(IItemHandlerChangeListener listener) {
+    public void removeInventoryChangeListener(IItemHandlerChangeListener listener) {
         this.listeners.forEach(invListeners -> invListeners.remove(listener));
     }
 
@@ -138,7 +148,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         super.setChanged();
         for (int index = 0; index < this.getInventoryCount(); index++) {
             final int invIndex = index;
-            this.listeners.get(invIndex).forEach(listener -> listener.itemsChanged(this.itemHandlers.get(invIndex)));
+            this.listeners.get(invIndex).forEach(listener -> listener.itemsChanged(invIndex, this.itemHandlers.get(invIndex)));
         }
     }
 

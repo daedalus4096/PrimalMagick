@@ -66,9 +66,9 @@ import java.util.stream.Collectors;
 public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IOwnedTileEntity {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected static final int INPUT_INV_INDEX = 0;
-    protected static final int OUTPUT_INV_INDEX = 1;
-    protected static final int WAND_INV_INDEX = 2;
+    public static final int INPUT_INV_INDEX = 0;
+    public static final int OUTPUT_INV_INDEX = 1;
+    public static final int WAND_INV_INDEX = 2;
     protected static final int ESSENCE_PER_TRANSMUTE = 8;
     protected static final int OUTPUT_CAPACITY = 9;
     
@@ -121,7 +121,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     
     public EssenceTransmuterTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Sources.MOON);
+        this.manaStorage = new ManaStorage(2000, 200, 200, Sources.MOON);
         this.researchCache = new TileResearchCache();
     }
 
@@ -187,7 +187,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     }
     
     protected int getManaCost() {
-        return 10;
+        return 200;
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceTransmuterTileEntity entity) {
@@ -329,7 +329,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
 
     @Override
     public void setTileOwner(Player owner) {
-        this.ownerUUID = owner.getUUID();
+        this.ownerUUID = owner == null ? null : owner.getUUID();
         this.updateResearchCache(owner);
     }
 
@@ -391,14 +391,13 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     @Override
     public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return switch (face) {
-            case UP -> Optional.of(INPUT_INV_INDEX);
             case DOWN -> Optional.of(OUTPUT_INV_INDEX);
-            default -> Optional.of(WAND_INV_INDEX);
+            default -> Optional.of(INPUT_INV_INDEX);
         };
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler

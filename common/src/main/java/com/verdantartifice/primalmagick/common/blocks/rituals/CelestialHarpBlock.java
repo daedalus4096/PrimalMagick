@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
+import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticleData;
@@ -7,6 +8,8 @@ import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.CelestialHarpTileEntity;
+import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -34,6 +37,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.awt.Color;
+import java.util.Map;
 
 /**
  * Block definition for a celestial harp.  Celestial harps serve as props in magickal rituals;
@@ -46,7 +50,13 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
     
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     protected static final VoxelShape SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), Block.box(7.0D, 0.0D, 0.0D, 9.0D, 16.0D, 16.0D));
-    
+    protected static final Map<Direction, VoxelShape> SHAPES = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
+        map.put(Direction.NORTH, SHAPE);
+        map.put(Direction.SOUTH, VoxelShapeUtils.rotate(SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_180));
+        map.put(Direction.WEST, VoxelShapeUtils.rotate(SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_90));
+        map.put(Direction.EAST, VoxelShapeUtils.rotate(SHAPE, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90));
+    });
+
     public CelestialHarpBlock(Block.Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
@@ -60,7 +70,7 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return SHAPES.getOrDefault(state.getValue(FACING), SHAPE);
     }
 
     @Override

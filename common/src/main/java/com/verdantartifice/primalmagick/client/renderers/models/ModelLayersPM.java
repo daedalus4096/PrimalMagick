@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.models;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Definition of registered model layer locations.
@@ -16,4 +17,11 @@ public class ModelLayersPM {
     public static final ModelLayerLocation SPELL_PROJECTILE = new ModelLayerLocation(ResourceUtils.loc("spell_projectile"), "main");
     public static final ModelLayerLocation TREEFOLK = new ModelLayerLocation(ResourceUtils.loc("treefolk"), "main");
     public static final ModelLayerLocation SPELLCRAFTING_ALTAR_RING = new ModelLayerLocation(ResourceUtils.loc("spellcrafting_altar_ring"), "main");
+    public static final ModelLayerLocation MANA_CUBE = new ModelLayerLocation(ResourceUtils.loc("mana_cube"), "main");
+    public static final ModelLayerLocation MANA_RELAY_FRAME = new ModelLayerLocation(ResourceUtils.loc("mana_relay_frame"), "main");
+    public static final ModelLayerLocation MANA_INJECTOR_FRAME_TOP = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_top"), "main");
+    public static final ModelLayerLocation MANA_INJECTOR_FRAME_TOP_MIDDLE = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_top_middle"), "main");
+    public static final ModelLayerLocation MANA_INJECTOR_FRAME_BOTTOM_MIDDLE = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_bottom_middle"), "main");
+    public static final ModelLayerLocation MANA_INJECTOR_FRAME_BOTTOM = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_bottom"), "main");
+    public static final ModelLayerLocation PIXIE_HOUSE = new ModelLayerLocation(ResourceUtils.loc("pixie_house"), "main");
 }

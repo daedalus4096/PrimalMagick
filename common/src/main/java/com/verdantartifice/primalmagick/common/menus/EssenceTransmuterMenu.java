@@ -50,7 +50,7 @@ public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<Essenc
         this.transmuterData = transmuterData;
         
         // Slot 0: essence input
-        this.inputSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(Direction.UP), 0, 44, 35, new FilteredSlotProperties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)
+        this.inputSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(EssenceTransmuterTileEntity.INPUT_INV_INDEX), 0, 44, 35, new FilteredSlotProperties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)
                 .background(DUST_SLOT_TEXTURE)
                 .background(SHARD_SLOT_TEXTURE, $ -> SHARD_REQUIREMENT.isMetBy(playerInv.player))
                 .background(CRYSTAL_SLOT_TEXTURE, $ -> CRYSTAL_REQUIREMENT.isMetBy(playerInv.player))
@@ -58,11 +58,11 @@ public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<Essenc
         
         // Slots 1-9: transmuter output
         for (int i = 0; i < 9; i++) {
-            this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), i, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
+            this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(EssenceTransmuterTileEntity.OUTPUT_INV_INDEX), i, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
         }
         
         // Slot 10: wand input
-        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(EssenceTransmuterTileEntity.WAND_INV_INDEX), 0, 8, 62, false));
         
         // Slots 11-37: player backpack
         for (int i = 0; i < 3; i++) {

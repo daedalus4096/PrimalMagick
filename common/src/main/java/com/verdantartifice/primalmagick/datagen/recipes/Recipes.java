@@ -105,6 +105,7 @@ public abstract class Recipes extends RecipeProvider {
         this.registerIgnyxRecipes(consumer);
         this.registerGemBudRecipes(consumer);
         this.registerWaxRecipes(consumer, FeatureFlagSet.of(FeatureFlags.VANILLA));
+        this.registerManaNetworkingRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(CommonTags.Items.RODS_WOODEN)
@@ -434,6 +435,17 @@ public abstract class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.SUPREME_MAGITECH)
             .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 100))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.DESALINATOR.get())
+            .patternLine("GGG")
+            .patternLine("BPB")
+            .patternLine("CCC")
+            .key('G', CommonTags.Items.GLASS_BLOCKS_COLORLESS)
+            .key('B', Items.BUCKET)
+            .key('P', ItemsPM.MAGITECH_PARTS_BASIC.get())
+            .key('C', CommonTags.Items.INGOTS_COPPER)
+            .requiredResearch(ResearchEntries.DESALINATOR)
+            .manaCost(SourceList.EMPTY.add(Sources.SUN, 10))
+            .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HONEY_EXTRACTOR.get())
             .patternLine("HWB")
             .patternLine("WPW")
@@ -574,6 +586,16 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get())
             .requiredResearch(ResearchEntries.WAND_GLAMOUR_TABLE)
             .manaCost(SourceList.EMPTY.add(Sources.MOON, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PIXIE_HOUSE.get())
+            .patternLine("B")
+            .patternLine("H")
+            .patternLine("S")
+            .key('B', ItemTags.BEDS)
+            .key('H', ItemsPM.HEARTWOOD.get())
+            .key('S', ItemTags.SAPLINGS)
+            .requiredResearch(ResearchEntries.PIXIE_HOUSES)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 20).add(Sources.SEA, 20).add(Sources.SKY, 20).add(Sources.SUN, 20).add(Sources.MOON, 20))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.INFERNAL_FURNACE.get())
             .patternLine("MMM")
@@ -1363,7 +1385,11 @@ public abstract class Recipes extends RecipeProvider {
             .save(consumer, ResourceUtils.loc("rock_salt_from_smelting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.ROCK_SALT.get()), RecipeCategory.MISC, ItemsPM.REFINED_SALT.get(), 0.2F, 200)
             .unlockedBy("has_rock_salt", has(ItemsPM.ROCK_SALT.get()))
-            .save(consumer);
+            .save(consumer, ResourceUtils.loc("refined_salt_from_smelting"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemsPM.REFINED_SALT.get())
+            .requires(ItemsPM.SALT_PINCH.get(), 9)
+            .unlockedBy("has_salt_pinch", has(ItemsPM.SALT_PINCH.get()))
+            .save(consumer, ResourceUtils.loc("refined_salt_from_pinches"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ItemsPM.SALT_BLOCK.get())
             .requires(ItemsPM.REFINED_SALT.get(), 9)
             .unlockedBy("has_salt", has(ItemsPM.REFINED_SALT.get()))
@@ -4773,7 +4799,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4783,7 +4809,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4793,7 +4819,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4804,7 +4830,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4813,7 +4839,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4823,7 +4849,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4833,7 +4859,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4843,7 +4869,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4854,7 +4880,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4863,7 +4889,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4873,7 +4899,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4883,7 +4909,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4892,7 +4918,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4902,7 +4928,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4912,7 +4938,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4922,7 +4948,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.PUFFERFISH)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4933,7 +4959,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4944,7 +4970,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4956,7 +4982,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4967,7 +4993,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4979,7 +5005,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -4991,7 +5017,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5000,7 +5026,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5010,7 +5036,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5020,7 +5046,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5029,7 +5055,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5039,7 +5065,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.TINCTURE))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5048,7 +5074,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 1))
+            .defaultManaCost(ConcoctionType.TINCTURE)
             .build(consumer);
     }
     
@@ -5060,7 +5086,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5070,7 +5096,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5080,7 +5106,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5091,7 +5117,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5100,7 +5126,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5110,7 +5136,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5120,7 +5146,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5130,7 +5156,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5141,7 +5167,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5150,7 +5176,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5160,7 +5186,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5170,7 +5196,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5179,7 +5205,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5189,7 +5215,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5199,7 +5225,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5209,7 +5235,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.PUFFERFISH)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5220,7 +5246,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5231,7 +5257,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5243,7 +5269,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5254,7 +5280,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5266,7 +5292,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5278,7 +5304,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5287,7 +5313,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5297,7 +5323,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5307,7 +5333,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5316,7 +5342,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5326,7 +5352,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.PHILTER))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5335,7 +5361,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_PHILTERS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.PHILTER)
             .build(consumer);
     }
     
@@ -5347,7 +5373,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5357,7 +5383,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5367,7 +5393,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5378,7 +5404,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5387,7 +5413,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5397,7 +5423,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5407,7 +5433,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5417,7 +5443,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5428,7 +5454,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5437,7 +5463,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5447,7 +5473,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5457,7 +5483,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5466,7 +5492,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5476,7 +5502,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5486,7 +5512,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5496,7 +5522,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.PUFFERFISH)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5507,7 +5533,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5518,7 +5544,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5530,7 +5556,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5541,7 +5567,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5553,7 +5579,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5565,7 +5591,7 @@ public abstract class Recipes extends RecipeProvider {
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5574,7 +5600,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5584,7 +5610,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5594,7 +5620,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5603,7 +5629,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5613,7 +5639,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.ELIXIR))
             .addIngredient(this.makeWaterFlaskIngredient())
@@ -5622,7 +5648,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
             .useDefaultGroup()
             .requiredResearch(ResearchEntries.CONCOCTING_ELIXIRS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 9))
+            .defaultManaCost(ConcoctionType.ELIXIR)
             .build(consumer);
     }
     
@@ -5642,7 +5668,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_NIGHT_VISION))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5651,7 +5677,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.INVISIBILITY))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5660,7 +5686,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_INVISIBILITY))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5670,7 +5696,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LEAPING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5678,7 +5704,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_LEAPING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5687,7 +5713,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_LEAPING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5696,7 +5722,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.FIRE_RESISTANCE))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5705,7 +5731,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.MAGMA_CREAM)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_FIRE_RESISTANCE))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5715,7 +5741,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SWIFTNESS))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5723,7 +5749,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SWIFTNESS))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5732,7 +5758,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SWIFTNESS))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5741,7 +5767,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.TURTLE_MASTER))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5749,7 +5775,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_TURTLE_MASTER))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5758,7 +5784,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_TURTLE_MASTER))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5767,7 +5793,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WATER_BREATHING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5776,7 +5802,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WATER_BREATHING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5786,7 +5812,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.PUFFERFISH)
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HEALING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5796,7 +5822,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HEALING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5807,7 +5833,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.REGENERATION))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5817,7 +5843,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.GHAST_TEAR)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_REGENERATION))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5828,7 +5854,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_REGENERATION))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5839,7 +5865,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRENGTH))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5847,7 +5873,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_STRENGTH))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5856,7 +5882,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_STRENGTH))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5865,7 +5891,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOW_FALLING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5873,7 +5899,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOW_FALLING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5882,7 +5908,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOWNESS))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5893,7 +5919,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOWNESS))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5905,7 +5931,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SLOWNESS))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5917,7 +5943,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HARMING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5927,7 +5953,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HARMING))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5938,7 +5964,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.POISON))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5948,7 +5974,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.SPIDER_EYE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_POISON))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5959,7 +5985,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_POISON))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5970,7 +5996,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_GLOWSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_BLOOD)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WEAKNESS))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5979,7 +6005,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WEAKNESS))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5989,7 +6015,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.DUSTS_REDSTONE)
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .requiredResearch(ResearchEntries.DISCOVER_VOID)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LUCK))
             .addIngredient(this.makeWaterBombIngredient())
@@ -5997,7 +6023,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
-            .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 3))
+            .defaultManaCost(ConcoctionType.BOMB)
             .build(consumer);
     }
     
@@ -6748,51 +6774,51 @@ public abstract class Recipes extends RecipeProvider {
 
         DissolutionRecipeBuilder.dissolutionRecipe(Items.COBBLESTONE, 2)
             .ingredient(ItemTagsPM.SURFACE_STONE)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("cobblestone_from_dissolving_surface_stone"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.COBBLED_DEEPSLATE, 2)
             .ingredient(ItemTagsPM.DEEP_STONE)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("cobbled_deepslate_from_dissolving_deep_stone"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.GRAVEL, 2)
             .ingredient(CommonTags.Items.COBBLESTONES)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("gravel_from_dissolving_cobblestone"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.SAND, 2)
             .ingredient(CommonTags.Items.GRAVELS)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("sand_from_dissolving_gravel"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.BONE_MEAL, 6)
             .ingredient(CommonTags.Items.BONES)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("bone_meal_from_dissolving_bone"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.BLAZE_POWDER, 4)
             .ingredient(CommonTags.Items.RODS_BLAZE)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("blaze_powder_from_dissolving_blaze_rod"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.STRING, 4)
             .ingredient(ItemTags.WOOL)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("string_from_dissolving_wool"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.QUARTZ, 4)
             .ingredient(Items.QUARTZ_BLOCK)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("quartz_from_dissolving_quartz_block"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.GLOWSTONE_DUST, 4)
             .ingredient(Items.GLOWSTONE)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("glowstone_dust_from_dissolving_glowstone_block"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.NETHERITE_SCRAP, 3)
             .ingredient(Items.ANCIENT_DEBRIS)
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("netherite_scrap_from_dissolving_ancient_debris"));
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.ROCK_SALT.get(), 12)
             .ingredient(ItemsPM.ROCK_SALT_ORE.get())
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("rock_salt_from_dissolving_rock_salt_ore"));
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.REFINED_SALT.get(), 3)
             .ingredient(ItemsPM.ROCK_SALT.get())
-            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 1))
+            .defaultManaCost()
             .build(consumer, ResourceUtils.loc("refined_salt_from_dissolving_rock_salt"));
     }
     
@@ -7181,7 +7207,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(ItemsPM.RUNE_BLOOD.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES)
-            .addProp(BlocksPM.BLOODLETTER.get())
+            .addProp(BlocksPM.RITUAL_BELL.get())
             .requiredResearch(ResearchEntries.BLOOD_ROSE)
             .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 50))
             .instability(4)
@@ -7193,7 +7219,7 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(ItemsPM.RUNE_INFERNAL.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES)
-            .addProp(BlocksPM.BLOODLETTER.get())
+            .addProp(BlocksPM.RITUAL_BELL.get())
             .requiredResearch(ResearchEntries.EMBERFLOWER)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 50))
             .instability(4)
@@ -7348,5 +7374,72 @@ public abstract class Recipes extends RecipeProvider {
                         .save(consumer, getConversionRecipeName(waxOn, ItemsPM.BEESWAX.get()));
             }
         });
+    }
+
+    protected void registerManaNetworkingRecipes(RecipeOutput consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_RELAY_BASIC.get())
+            .patternLine("MEM")
+            .patternLine(" C ")
+            .patternLine("MPM")
+            .key('M', CommonTags.Items.INGOTS_GOLD)
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .key('C', CommonTags.Items.STORAGE_BLOCKS_COPPER)
+            .key('P', ItemsPM.MAGITECH_PARTS_BASIC.get())
+            .requiredResearch(ResearchEntries.MANA_NETWORKING)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_INJECTOR_BASIC.get())
+            .addIngredient(ItemsPM.MANA_RELAY_BASIC.get())
+            .addIngredient(Items.HOPPER)
+            .requiredResearch(ResearchEntries.MANA_NETWORKING)
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_RELAY_ENCHANTED.get())
+            .patternLine("MEM")
+            .patternLine(" C ")
+            .patternLine("MPM")
+            .key('M', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_SHARDS)
+            .key('C', CommonTags.Items.STORAGE_BLOCKS_COPPER)
+            .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .requiredResearch(ResearchEntries.ADVANCED_MANA_NETWORKING)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 20).add(Sources.SEA, 20).add(Sources.SKY, 20).add(Sources.SUN, 20).add(Sources.MOON, 20))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_INJECTOR_ENCHANTED.get())
+            .addIngredient(ItemsPM.MANA_RELAY_ENCHANTED.get())
+            .addIngredient(Items.HOPPER)
+            .requiredResearch(ResearchEntries.ADVANCED_MANA_NETWORKING)
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_RELAY_FORBIDDEN.get())
+            .patternLine("MEM")
+            .patternLine(" C ")
+            .patternLine("MPM")
+            .key('M', ItemTagsPM.INGOTS_HEXIUM)
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_CRYSTALS)
+            .key('C', CommonTags.Items.STORAGE_BLOCKS_COPPER)
+            .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
+            .requiredResearch(ResearchEntries.FORBIDDEN_MANA_NETWORKING)
+            .manaCost(SourceList.EMPTY.add(Sources.BLOOD, 50).add(Sources.INFERNAL, 50).add(Sources.VOID, 50))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_INJECTOR_FORBIDDEN.get())
+            .addIngredient(ItemsPM.MANA_RELAY_FORBIDDEN.get())
+            .addIngredient(Items.HOPPER)
+            .requiredResearch(ResearchEntries.FORBIDDEN_MANA_NETWORKING)
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_RELAY_HEAVENLY.get())
+            .patternLine("MEM")
+            .patternLine(" C ")
+            .patternLine("MPM")
+            .key('M', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_CLUSTERS)
+            .key('C', CommonTags.Items.STORAGE_BLOCKS_COPPER)
+            .key('P', ItemsPM.MAGITECH_PARTS_HEAVENLY.get())
+            .requiredResearch(ResearchEntries.HEAVENLY_MANA_NETWORKING)
+            .manaCost(SourceList.EMPTY.add(Sources.HALLOWED, 100))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_INJECTOR_HEAVENLY.get())
+            .addIngredient(ItemsPM.MANA_RELAY_HEAVENLY.get())
+            .addIngredient(Items.HOPPER)
+            .requiredResearch(ResearchEntries.HEAVENLY_MANA_NETWORKING)
+            .build(consumer);
     }
 }

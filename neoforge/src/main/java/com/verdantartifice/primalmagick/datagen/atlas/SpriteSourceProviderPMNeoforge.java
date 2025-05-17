@@ -5,12 +5,16 @@ import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.ManaInjectorTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.ManaRelayTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
 import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarMenu;
+import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
@@ -81,12 +85,24 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, HoneyExtractorMenu.HONEYCOMB_SLOT_TEXTURE);
         this.addSingle(blockAtlas, HoneyExtractorMenu.BOTTLE_SLOT_TEXTURE);
         this.addSingle(blockAtlas, InfernalFurnaceMenu.IGNYX_SLOT_TEXTURE);
-        
+        this.addSingle(blockAtlas, DesalinatorMenu.BUCKET_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, DesalinatorMenu.FLASK_SLOT_TEXTURE);
+
         // Add block entity renderer textures to the block atlas
         this.addSingle(blockAtlas, ManaFontTER.TEXTURE);
         this.addSingle(blockAtlas, RitualBellTER.TEXTURE);
         this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE);
-        
+        this.addSingle(blockAtlas, ManaRelayTER.CORE_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.BASIC_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.ENCHANTED_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.FORBIDDEN_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.HEAVENLY_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.BASIC_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.ENCHANTED_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.FORBIDDEN_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.HEAVENLY_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.BOTTOM_FRAME_TEXTURE);
+
         // Add custom item stack renderer textures to the block atlas
         this.addSingle(blockAtlas, PrimaliteShieldISTER.TEXTURE_SHIELD_BASE);
         this.addSingle(blockAtlas, PrimaliteShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
@@ -95,7 +111,8 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, HallowsteelShieldISTER.TEXTURE_SHIELD_BASE);
         this.addSingle(blockAtlas, HallowsteelShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
         this.addSingle(blockAtlas, SacredShieldItem.TEXTURE);
-        
+        this.addSingle(blockAtlas, PixieHouseISTER.TEXTURE);
+
         // Add source textures to the block atlas
         this.addSingle(blockAtlas, Source.getUnknownAtlasLocation());
         for (Source source : Sources.getAllSorted()) {

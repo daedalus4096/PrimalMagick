@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.client.gui.AnalysisTableScreen;
 import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.CalcinatorScreen;
 import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
+import com.verdantartifice.primalmagick.client.gui.DesalinatorScreen;
 import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
 import com.verdantartifice.primalmagick.client.gui.EssenceCaskScreen;
 import com.verdantartifice.primalmagick.client.gui.EssenceTransmuterScreen;
@@ -27,6 +28,8 @@ import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeStudyVocab
 import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeTranscribeWorksScreen;
 import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.ManaInjectorTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.ManaRelayTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.OfferingPedestalTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualAltarTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
@@ -100,6 +103,7 @@ public class ClientModLifecycleEvents {
         MenuScreens.register(MenuTypesPM.SCRIBE_STUDY_VOCABULARY.get(), ScribeStudyVocabularyScreen::new);
         MenuScreens.register(MenuTypesPM.SCRIBE_GAIN_COMPREHENSION.get(), ScribeGainComprehensionScreen::new);
         MenuScreens.register(MenuTypesPM.SCRIBE_TRANSCRIBE_WORKS.get(), ScribeTranscribeWorksScreen::new);
+        MenuScreens.register(MenuTypesPM.DESALINATOR.get(), DesalinatorScreen::new);
     }
     
     private static void registerTERs() {
@@ -116,6 +120,8 @@ public class ClientModLifecycleEvents {
         BlockEntityRenderers.register(BlockEntityTypesPM.AUTO_CHARGER.get(), AutoChargerTER::new);
         BlockEntityRenderers.register(BlockEntityTypesPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarTER::new);
         BlockEntityRenderers.register(BlockEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.MANA_RELAY.get(), ManaRelayTER::new);
+        BlockEntityRenderers.register(BlockEntityTypesPM.MANA_INJECTOR.get(), ManaInjectorTER::new);
     }
     
     private static void registerItemProperties(Consumer<Runnable> workConsumer) {

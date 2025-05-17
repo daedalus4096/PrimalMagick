@@ -71,12 +71,12 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
-    protected static final int MANA_PER_HALF_SECOND = 1;
+    protected static final int MANA_PER_HALF_SECOND = 100;
     protected static final int DEFAULT_COOK_TIME = 100;
     protected static final int LIT_GRACE_TICKS_MAX = 5;
-    protected static final int OUTPUT_INV_INDEX = 0;
-    protected static final int INPUT_INV_INDEX = 1;
-    protected static final int FUEL_INV_INDEX = 2;
+    public static final int OUTPUT_INV_INDEX = 0;
+    public static final int INPUT_INV_INDEX = 1;
+    public static final int WAND_INV_INDEX = 2;
     
     protected int superchargeTime;
     protected int superchargeTimeTotal;
@@ -136,7 +136,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     
     public InfernalFurnaceTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.INFERNAL_FURNACE.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Sources.INFERNAL);
+        this.manaStorage = new ManaStorage(10000, 1000, 1000, Sources.INFERNAL);
     }
 
     public IManaStorage<?> getUncachedManaStorage() {
@@ -213,7 +213,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
         
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
-            ItemStack wandStack = entity.getItem(FUEL_INV_INDEX, 1);
+            ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 1);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.INFERNAL) - entity.manaStorage.getManaStored(Sources.INFERNAL);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
@@ -228,7 +228,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
             --entity.superchargeTime;
         }
         
-        ItemStack fuelStack = entity.getItem(FUEL_INV_INDEX, 0);
+        ItemStack fuelStack = entity.getItem(WAND_INV_INDEX, 0);
         boolean inputPopulated = !entity.getItem(INPUT_INV_INDEX, 0).isEmpty();
         boolean fuelPopulated = !fuelStack.isEmpty();
         if (entity.isCharged() && inputPopulated) {
@@ -242,11 +242,11 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
                 if (entity.isSupercharged()) {
                     shouldMarkDirty = true;
                     if (Services.ITEMS.hasCraftingRemainingItem(fuelStack)) {
-                        entity.setItem(FUEL_INV_INDEX, 0, Services.ITEMS.getCraftingRemainingItem(fuelStack));
+                        entity.setItem(WAND_INV_INDEX, 0, Services.ITEMS.getCraftingRemainingItem(fuelStack));
                     } else {
                         fuelStack.shrink(1);
                         if (fuelStack.isEmpty()) {
-                            entity.setItem(FUEL_INV_INDEX, 0, ItemStack.EMPTY);
+                            entity.setItem(WAND_INV_INDEX, 0, ItemStack.EMPTY);
                         }
                     }
                 }
@@ -463,7 +463,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     protected int getInventorySize(int inventoryIndex) {
         return switch (inventoryIndex) {
             case INPUT_INV_INDEX, OUTPUT_INV_INDEX -> 1;
-            case FUEL_INV_INDEX -> 2;
+            case WAND_INV_INDEX -> 2;
             default -> 0;
         };
     }
@@ -471,22 +471,22 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     @Override
     public Optional<Integer> getInventoryIndexForFace(@NotNull Direction face) {
         return switch (face) {
-            case UP -> Optional.of(INPUT_INV_INDEX);
             case DOWN -> Optional.of(OUTPUT_INV_INDEX);
-            default -> Optional.of(FUEL_INV_INDEX);
+            default -> Optional.of(INPUT_INV_INDEX);
         };
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.create(this.inventories.get(INPUT_INV_INDEX), this));
         
         // Create fuel handler
-        retVal.set(FUEL_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(FUEL_INV_INDEX), this)
+        retVal.set(WAND_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(WAND_INV_INDEX), this)
                 .itemValidFunction((slot, stack) -> switch (slot) {
+                    // FIXME Remove ignyx from this inventory in next major version and move it to input inventory
                     case 0 -> stack.is(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL);
                     case 1 -> stack.getItem() instanceof IWand;
                     default -> false;

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
+import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -84,12 +85,9 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
         
-        // Set the calcinator tile entity's owner when placed by a player.  Needed so that the tile entity can do research checks.
-        if (!worldIn.isClientSide && placer instanceof Player) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof AbstractCalcinatorTileEntity) {
-                ((AbstractCalcinatorTileEntity)tile).setTileOwner((Player)placer);
-            }
+        // Set the block entity's owner when placed by a player
+        if (!worldIn.isClientSide && placer instanceof Player player && worldIn.getBlockEntity(pos) instanceof IOwnedTileEntity ownedTile) {
+            ownedTile.setTileOwner(player);
         }
     }
     

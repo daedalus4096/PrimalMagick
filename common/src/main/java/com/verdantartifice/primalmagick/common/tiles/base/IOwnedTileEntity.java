@@ -17,7 +17,7 @@ public interface IOwnedTileEntity {
      * 
      * @param owner the new owning player
      */
-    public void setTileOwner(@Nullable Player owner);
+    void setTileOwner(@Nullable Player owner);
     
     /**
      * Get the owning player of the tile entity.
@@ -25,5 +25,5 @@ public interface IOwnedTileEntity {
      * @return the owning player of the tile entity
      */
     @Nullable
-    public Player getTileOwner();
+    Player getTileOwner();
 }

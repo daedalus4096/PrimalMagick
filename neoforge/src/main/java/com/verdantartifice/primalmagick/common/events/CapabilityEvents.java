@@ -2,12 +2,15 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge;
+import com.verdantartifice.primalmagick.common.capabilities.FluidHandlerPMNeoforge;
+import com.verdantartifice.primalmagick.common.capabilities.IFluidHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -21,6 +24,9 @@ public class CapabilityEvents {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.CONCOCTER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.CONCOCTER.get(), (be, context) -> be.getUncachedTileResearchCache());
         event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.CONCOCTER.get(), (be, context) -> be.getUncachedManaStorage());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.DESALINATOR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityTypesPM.DESALINATOR.get(), (be, face) -> cast(be.getUncachedFluidHandler()));
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.DESALINATOR.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, context) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityTypesPM.ESSENCE_CASK.get(), (be, face) -> cast(be.getRawItemHandler(face)));
@@ -47,6 +53,14 @@ public class CapabilityEvents {
     private static IItemHandler cast(final IItemHandlerPM handler) {
         if (handler instanceof IItemHandler nfHandler) {
             return nfHandler;
+        } else {
+            return null;
+        }
+    }
+
+    private static IFluidHandler cast(final IFluidHandlerPM handler) {
+        if (handler instanceof FluidHandlerPMNeoforge nfHandler) {
+            return nfHandler.getInner();
         } else {
             return null;
         }

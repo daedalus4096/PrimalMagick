@@ -1,41 +1,46 @@
 package com.verdantartifice.primalmagick.common.entities;
 
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.HallowsteelGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.HexiumGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.golems.PrimaliteGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.BasicBloodPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.BasicEarthPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.BasicHallowedPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.BasicInfernalPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.BasicMoonPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.BasicSeaPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.BasicSkyPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.BasicSunPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.BasicVoidPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.GrandBloodPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.GrandEarthPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.GrandHallowedPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.GrandInfernalPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.GrandMoonPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.GrandSeaPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.GrandSkyPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.GrandSunPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.GrandVoidPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticBloodPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticEarthPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticHallowedPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticInfernalPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticMoonPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticSeaPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticSkyPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticSunPixieEntity;
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticVoidPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.HallowsteelGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.HexiumGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.golems.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.BasicBloodPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.BasicEarthPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.BasicHallowedPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.BasicInfernalPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.BasicMoonPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.BasicSeaPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.BasicSkyPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.BasicSunPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.BasicVoidPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.GrandBloodPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.GrandEarthPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.GrandHallowedPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.GrandInfernalPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.GrandMoonPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.GrandSeaPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.GrandSkyPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.GrandSunPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.GrandVoidPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.MajesticBloodPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.MajesticEarthPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.MajesticHallowedPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.MajesticInfernalPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.MajesticMoonPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.MajesticSeaPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.MajesticSkyPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.MajesticSunPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.MajesticVoidPixieEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
+import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.guardians.AbstractGuardianPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.guardians.BasicGuardianPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.guardians.GrandGuardianPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.guardians.MajesticGuardianPixieEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBombEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AppleEntity;
@@ -266,6 +271,26 @@ public class EntityTypesPM {
             .sized(0.5F, 0.5F)
             .clientTrackingRange(10)
             .build(Constants.MOD_ID + ":pixie_majestic_hallowed"));
+    public static final IRegistryItem<EntityType<?>, EntityType<PixieHouseEntity>> PIXIE_HOUSE = register("pixie_house", () -> EntityType.Builder.<PixieHouseEntity>of(PixieHouseEntity::new, MobCategory.MISC)
+            .sized(0.875F, 2.0F)
+            .eyeHeight(1.7775F)
+            .clientTrackingRange(10)
+            .build(Constants.MOD_ID + ":pixie_house"));
+    public static final IRegistryItem<EntityType<?>, EntityType<BasicGuardianPixieEntity>> BASIC_GUARDIAN_PIXIE = register("guardian_pixie_basic", () -> EntityType.Builder.of(BasicGuardianPixieEntity::new, MobCategory.CREATURE)
+            .sized(0.5F, 0.5F)
+            .clientTrackingRange(10)
+            .noSummon()
+            .build(Constants.MOD_ID + ":guardian_pixie_basic"));
+    public static final IRegistryItem<EntityType<?>, EntityType<GrandGuardianPixieEntity>> GRAND_GUARDIAN_PIXIE = register("guardian_pixie_grand", () -> EntityType.Builder.of(GrandGuardianPixieEntity::new, MobCategory.CREATURE)
+            .sized(0.5F, 0.5F)
+            .clientTrackingRange(10)
+            .noSummon()
+            .build(Constants.MOD_ID + ":guardian_pixie_grand"));
+    public static final IRegistryItem<EntityType<?>, EntityType<MajesticGuardianPixieEntity>> MAJESTIC_GUARDIAN_PIXIE = register("guardian_pixie_majestic", () -> EntityType.Builder.of(MajesticGuardianPixieEntity::new, MobCategory.CREATURE)
+            .sized(0.5F, 0.5F)
+            .clientTrackingRange(10)
+            .noSummon()
+            .build(Constants.MOD_ID + ":guardian_pixie_majestic"));
 
     private static <T extends Entity> IRegistryItem<EntityType<?>, EntityType<T>> register(String name, Supplier<EntityType<T>> typeSupplier) {
         return Services.ENTITY_TYPES_REGISTRY.register(name, typeSupplier);

@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
-import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.tiles.base.IHasCustomScanContents;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
@@ -26,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -98,6 +97,15 @@ public class ScanPositionPacket implements IMessageToServer {
                         }
                     }
                 });
+
+                // If the block has a block entity that has custom scan contents, scan those too
+                if (world.getBlockEntity(message.pos) instanceof IHasCustomScanContents customScanContents) {
+                    customScanContents.getCustomScanContents().forEach(customStack -> {
+                        foundFutures.add(CompletableFuture.completedFuture(customStack).thenCombine(ResearchManager.isScannedAsync(customStack, player), (stack, isScanned) -> {
+                            return !isScanned && ResearchManager.setScanned(stack, player, false);
+                        }));
+                    });
+                }
 
                 // If at least one unscanned item was processed, send a success message
                 Util.sequence(foundFutures).thenAccept(foundList -> {

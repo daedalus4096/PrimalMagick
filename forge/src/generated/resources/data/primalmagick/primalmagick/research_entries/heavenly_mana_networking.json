@@ -1,0 +1,58 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_relay_heavenly"
+  },
+  "key": {
+    "rootKey": "primalmagick:heavenly_mana_networking"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_magitech"
+    },
+    {
+      "rootKey": "primalmagick:forbidden_mana_networking"
+    },
+    {
+      "rootKey": "primalmagick:hallowsteel"
+    },
+    {
+      "rootKey": "primalmagick:cluster_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:heavenly_mana_networking"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.heavenly_mana_networking.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:heavenly_mana_networking"
+      },
+      "recipes": [
+        "primalmagick:mana_relay_heavenly",
+        "primalmagick:mana_injector_heavenly"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.heavenly_mana_networking.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

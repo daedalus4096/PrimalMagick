@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.platform.services;
 
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.DesalinatorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
@@ -21,6 +22,7 @@ public interface IBlockEntityTickerService {
     BlockEntityTicker<ConcocterTileEntity> concocter();
 
     // Device tiles
+    BlockEntityTicker<DesalinatorTileEntity> desalinator();
     BlockEntityTicker<DissolutionChamberTileEntity> dissolutionChamber();
     BlockEntityTicker<EssenceCaskTileEntity> essenceCask();
     BlockEntityTicker<EssenceTransmuterTileEntity> essenceTransmuter();

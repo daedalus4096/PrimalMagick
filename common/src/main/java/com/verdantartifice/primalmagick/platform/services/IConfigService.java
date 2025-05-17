@@ -40,6 +40,13 @@ public interface IConfigService {
     boolean radialAllowClickOutsideBounds();
 
     /**
+     * Determine whether mana networks should bootstrap themselves on load.
+     *
+     * @return true if mana networking should be enabled, false otherwise
+     */
+    boolean enableManaNetworking();
+
+    /**
      * Determine whether blocks and items should show their affinities in tooltips even without having been scanned.
      *
      * @return true if block/item affinities should be shown before scanning, false otherwise

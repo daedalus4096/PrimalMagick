@@ -1,5 +1,21 @@
 {
-  "addenda": [],
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:mana_networking"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:dowsing_rod"
+      },
+      "recipes": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.dowsing_rod.text.addenda.1"
+    }
+  ],
   "disciplineKey": {
     "rootKey": "primalmagick:ritual"
   },

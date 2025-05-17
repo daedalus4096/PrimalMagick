@@ -23,6 +23,11 @@ public class DamageTypeTagsPM {
     public static final TagKey<DamageType> IS_SORCERY_INFERNAL = create("is_sorcery/infernal");
     public static final TagKey<DamageType> IS_SORCERY_VOID = create("is_sorcery/void");
     public static final TagKey<DamageType> IS_SORCERY_HALLOWED = create("is_sorcery/hallowed");
+
+    public static final TagKey<DamageType> IGNITES_PIXIE_HOUSES = create("ignites_pixie_houses");
+    public static final TagKey<DamageType> BURNS_PIXIE_HOUSES = create("burns_pixie_houses");
+    public static final TagKey<DamageType> ALWAYS_KILLS_PIXIE_HOUSES = create("always_kills_pixie_houses");
+    public static final TagKey<DamageType> CAN_BREAK_PIXIE_HOUSES = create("can_break_pixie_houses");
     
     private static TagKey<DamageType> create(String name) {
         return TagKey.create(Registries.DAMAGE_TYPE, ResourceUtils.loc(name));

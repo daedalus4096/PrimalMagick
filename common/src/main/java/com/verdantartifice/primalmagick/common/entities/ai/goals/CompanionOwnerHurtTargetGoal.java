@@ -13,7 +13,7 @@ import java.util.EnumSet;
  * AI goal for a companion to target its owner's last target.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.entity.ai.goal.OwnerHurtTargetGoal}
+ * @see net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal
  */
 public class CompanionOwnerHurtTargetGoal extends TargetGoal {
     protected final AbstractCompanionEntity entity;

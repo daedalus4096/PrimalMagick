@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.renderers.entity.model;
 
-import com.verdantartifice.primalmagick.common.entities.companions.pixies.AbstractPixieEntity;
+import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -9,6 +9,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Definition of a 3D model for a basic earth pixie.
@@ -56,12 +57,16 @@ public class PixieModel extends HierarchicalModel<AbstractPixieEntity> {
     }
 
     @Override
-    public void setupAnim(AbstractPixieEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@Nullable AbstractPixieEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * ((float)Math.PI / 180F);
-        this.head.yRot = netHeadYaw * ((float)Math.PI / 180F);
+        this.head.yRot = entityIn == null ? 0F : netHeadYaw * ((float)Math.PI / 180F);
         this.head.zRot = 0.0F;
-        this.head.setPos(0.0F, 0.0F, 0.0F);
-        if (entityIn.getDeltaMovement().lengthSqr() > 0.0F) {
+        if (entityIn == null) {
+            this.head.setPos(0.0F, 1.0F, 0.0F);
+        } else {
+            this.head.setPos(0.0F, 0.0F, 0.0F);
+        }
+        if (entityIn == null || entityIn.getDeltaMovement().lengthSqr() > 0.0F) {
             this.body.xRot = ((float)Math.PI / 8F);
         }
         this.body.yRot = 0.0F;

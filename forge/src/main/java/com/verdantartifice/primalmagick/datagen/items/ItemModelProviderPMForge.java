@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
+import com.verdantartifice.primalmagick.common.items.entities.PixieHouseItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
@@ -41,6 +42,7 @@ import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -124,6 +126,7 @@ public class ItemModelProviderPMForge extends ModelProvider<ItemModelBuilderPMFo
         this.basicItem(ItemsPM.IRON_GRIT.get());
         this.basicItem(ItemsPM.GOLD_GRIT.get());
         this.basicItem(ItemsPM.COPPER_GRIT.get());
+        this.basicItem(ItemsPM.SALT_PINCH.get());
         this.basicItem(ItemsPM.PRIMALITE_INGOT.get());
         this.basicItem(ItemsPM.HEXIUM_INGOT.get());
         this.basicItem(ItemsPM.HALLOWSTEEL_INGOT.get());
@@ -246,6 +249,7 @@ public class ItemModelProviderPMForge extends ModelProvider<ItemModelBuilderPMFo
         this.basicItem(ItemsPM.BASIC_WARDING_MODULE.get());
         this.basicItem(ItemsPM.GREATER_WARDING_MODULE.get());
         this.basicItem(ItemsPM.SUPREME_WARDING_MODULE.get());
+        this.pixieHouseItem(ItemsPM.PIXIE_HOUSE.get(), this.blockTexture(Blocks.OAK_LOG));
         
         // Generate knowledge items
         this.basicItem(ItemsPM.OBSERVATION_NOTES.get());
@@ -572,5 +576,21 @@ public class ItemModelProviderPMForge extends ModelProvider<ItemModelBuilderPMFo
         return this.builder(this.key(item).withSuffix("_" + color.getName()))
                 .parent(this.existingModel(this.defaultModelLoc(item)))
                 .texture("layer0", this.defaultModelLoc(item).withSuffix("_" + color.getName()));
+    }
+
+    private ItemModelBuilderPMForge pixieHouseItem(PixieHouseItem item, ResourceLocation particleTexture) {
+        return this.builder(item)
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
+                .guiLight(GuiLight.FRONT)
+                .texture("particle", particleTexture)
+                .transforms()
+                        .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 90, 0).translation(6F, 12, -3.75F).scale(0.7F).end()
+                        .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 90, 0).translation(6F, 12, 5.75F).scale(0.7F).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 0, 5).translation(7, 7, 0).scale(0.7F).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 0, 5).translation(-2, 7, 0).scale(0.7F).end()
+                        .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F).end()
+                        .transform(ItemDisplayContext.FIXED).rotation(0, 180, 0).translation(-2, 4, -5).scale(0.5F).end()
+                        .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(4, 4, 2).scale(0.25F).end()
+                        .end();
     }
 }

@@ -1,0 +1,62 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_relay_basic"
+  },
+  "key": {
+    "rootKey": "primalmagick:mana_networking"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:desalinator"
+    },
+    {
+      "rootKey": "primalmagick:dowsing_rod"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          },
+          {
+            "requiredValue": 200,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:mana_siphoned"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:mana_networking"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_networking.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:mana_networking"
+      },
+      "recipes": [
+        "primalmagick:mana_relay_basic",
+        "primalmagick:mana_injector_basic"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_networking.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

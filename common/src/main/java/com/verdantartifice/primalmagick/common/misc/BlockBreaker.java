@@ -227,15 +227,9 @@ public class BlockBreaker {
             enchHolderLookup.get(Enchantments.SILK_TOUCH).ifPresent(silkTouchHolder -> {
                 this.silkTouchOverride.filter(silk -> silk).ifPresent($ -> enchantments.upgrade(silkTouchHolder, 1));
             });
-            if (stack.getItem() instanceof IWand) {
-                enchHolderLookup.get(EnchantmentsPM.TREASURE).ifPresent(treasureHolder -> {
-                    this.fortuneOverride.filter(fortune -> fortune > 0).ifPresent(fortune -> enchantments.upgrade(treasureHolder, fortune));
-                });
-            } else {
-                enchHolderLookup.get(Enchantments.FORTUNE).ifPresent(fortuneHolder -> {
-                    this.fortuneOverride.filter(fortune -> fortune > 0).ifPresent(fortune -> enchantments.upgrade(fortuneHolder, fortune));
-                });
-            }
+            enchHolderLookup.get(Enchantments.FORTUNE).ifPresent(fortuneHolder -> {
+                this.fortuneOverride.filter(fortune -> fortune > 0).ifPresent(fortune -> enchantments.upgrade(fortuneHolder, fortune));
+            });
             EnchantmentHelper.setEnchantments(stack, enchantments.toImmutable());
         }
         return stack;

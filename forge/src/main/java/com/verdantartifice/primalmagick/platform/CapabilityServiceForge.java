@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.platform;
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesForge;
 import com.verdantartifice.primalmagick.common.capabilities.IEntitySwappers;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
@@ -20,6 +21,8 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
@@ -102,5 +105,22 @@ public class CapabilityServiceForge implements ICapabilityService {
         } else {
             return this.itemHandler(tile.getLevel(), tile.getBlockPos(), face);
         }
+    }
+
+    @Override
+    public Optional<IManaStorage<?>> manaStorage(@NotNull Level level, @NotNull BlockPos pos, @Nullable Direction face) {
+        BlockState state = level.getBlockState(pos);
+        if (state.hasBlockEntity()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity != null) {
+                return blockEntity.getCapability(CapabilitiesForge.MANA_STORAGE, face).resolve();
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<IManaStorage<?>> manaStorage(@Nullable AbstractTilePM tile, @Nullable Direction face) {
+        return tile == null ? Optional.empty() : tile.getCapability(CapabilitiesForge.MANA_STORAGE, face).resolve();
     }
 }

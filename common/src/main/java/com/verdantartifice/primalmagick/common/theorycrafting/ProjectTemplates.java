@@ -317,6 +317,7 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).consumed().requiredResearch(ResearchEntries.EXPERT_MAGITECH).bonusReward(0.25D).weight(3).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).consumed().requiredResearch(ResearchEntries.MASTER_MAGITECH).bonusReward(0.5D).weight(3).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.HONEY_EXTRACTOR.get()).requiredResearch(ResearchEntries.HONEY_EXTRACTOR).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.DESALINATOR.get()).requiredResearch(ResearchEntries.DESALINATOR).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.ARCANOMETER.get()).requiredResearch(ResearchEntries.ARCANOMETER).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.CONCOCTER.get()).requiredResearch(ResearchEntries.CONCOCTING_TINCTURES).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.ENTROPY_SINK.get()).requiredResearch(ResearchEntries.ENTROPY_SINK).weight(1).build())

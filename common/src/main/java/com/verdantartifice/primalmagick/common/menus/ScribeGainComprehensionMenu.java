@@ -62,8 +62,8 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     }
 
     @Override
-    public void itemsChanged(IItemHandlerPM pContainer) {
-        super.itemsChanged(pContainer);
+    public void itemsChanged(int itemHandlerIndex, IItemHandlerPM pContainer) {
+        super.itemsChanged(itemHandlerIndex, pContainer);
         this.refreshBookData();
     }
     

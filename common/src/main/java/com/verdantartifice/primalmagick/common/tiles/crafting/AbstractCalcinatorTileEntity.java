@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -56,7 +57,7 @@ import java.util.stream.Collectors;
  * @see com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock
  * @see net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity
  */
-public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IOwnedTileEntity {
+public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IOwnedTileEntity, ITieredDeviceBlockEntity {
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int FUEL_INV_INDEX = 1;
     protected static final int OUTPUT_INV_INDEX = 2;
@@ -148,7 +149,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    protected NonNullList<IItemHandlerPM> createHandlers() {
+    protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
         
         // Create input handler
@@ -346,7 +347,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
 
     @Override
     public void setTileOwner(Player owner) {
-        this.ownerUUID = owner.getUUID();
+        this.ownerUUID = owner == null ? null : owner.getUUID();
         this.researchCache.update(owner, this.relevantFilter);
     }
 

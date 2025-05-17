@@ -20,7 +20,7 @@ public class EnchantmentTagsProviderPM extends EnchantmentTagsProvider {
         // TODO Does enchantment tooltip order need to be registered here as well?
         
         // Add enchantments to vanilla tags
-        this.tag(EnchantmentTags.ARMOR_EXCLUSIVE).add(EnchantmentsPM.AEGIS);
+        this.tag(EnchantmentTags.ARMOR_EXCLUSIVE).add(EnchantmentsPM.AEGIS, EnchantmentsPM.MAGICK_PROTECTION);
         this.tag(EnchantmentTags.DAMAGE_EXCLUSIVE).add(EnchantmentsPM.JUDGMENT);
         this.tag(EnchantmentTags.TREASURE).addTag(EnchantmentTagsPM.RUNE_EXCLUSIVE_ENCHANTMENTS).add(
             EnchantmentsPM.JUDGMENT,

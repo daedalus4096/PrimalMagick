@@ -87,6 +87,7 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> ESSENCE_CASK_HEAVENLY = create("essence_cask_heavenly");
     public static final ResourceKey<ResearchEntry> WAND_GLAMOUR_TABLE = create("wand_glamour_table");
     public static final ResourceKey<ResearchEntry> ATTUNEMENT_SHACKLES = create("attunement_shackles");
+    public static final ResourceKey<ResearchEntry> PIXIE_HOUSES = create("pixie_houses");
     public static final ResourceKey<ResearchEntry> WAND_CORE_HEARTWOOD = create("wand_core_heartwood");
     public static final ResourceKey<ResearchEntry> WAND_CORE_OBSIDIAN = create("wand_core_obsidian");
     public static final ResourceKey<ResearchEntry> WAND_CORE_CORAL = create("wand_core_coral");
@@ -277,6 +278,11 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> WARDING_MODULE = create("warding_module");
     public static final ResourceKey<ResearchEntry> GREATER_WARDING_MODULE = create("greater_warding_module");
     public static final ResourceKey<ResearchEntry> SUPREME_WARDING_MODULE = create("supreme_warding_module");
+    public static final ResourceKey<ResearchEntry> MANA_NETWORKING = create("mana_networking");
+    public static final ResourceKey<ResearchEntry> ADVANCED_MANA_NETWORKING = create("advanced_mana_networking");
+    public static final ResourceKey<ResearchEntry> FORBIDDEN_MANA_NETWORKING = create("forbidden_mana_networking");
+    public static final ResourceKey<ResearchEntry> HEAVENLY_MANA_NETWORKING = create("heavenly_mana_networking");
+    public static final ResourceKey<ResearchEntry> DESALINATOR = create("desalinator");
 
     // Scans research entries
     public static final ResourceKey<ResearchEntry> RAW_MARBLE = create("raw_marble");
@@ -742,6 +748,11 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_INFERNAL).recipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get()).end()
                 .addendum().requiredResearch(DISCOVER_VOID).recipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get()).end()
                 .addendum().requiredResearch(DISCOVER_HALLOWED).recipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get()).end()
+                .build());
+        register(context, PIXIE_HOUSES, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.PIXIE_HOUSE.get())
+                .parent(EXPERT_MANAWEAVING).parent(PIXIES)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.PIXIE_HOUSE.get()).end()
                 .build());
     }
     
@@ -1433,7 +1444,7 @@ public class ResearchEntries {
                 .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 4).recipe(ItemsPM.SUPREME_HALLOWED_AMBROSIA.get()).end()
                 .build());
         register(context, FLYING_CARPET, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.FLYING_CARPET.get())
-                .parent(MASTER_RITUAL).parent(CRYSTAL_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_PROJECT).parent(RUNE_ITEM).parent(RUNE_POWER).parent(INCENSE_BRAZIER).parent(RITUAL_LECTERN)
+                .parent(MASTER_RITUAL).parent(CRYSTAL_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_PROJECT).parent(RUNE_ITEM).parent(RUNE_INSIGHT).parent(INCENSE_BRAZIER).parent(RITUAL_LECTERN)
                 .parent(RITUAL_BELL)
                 .stage().requiredResearch(SCAN_FLYING_CREATURE).requiredTheories(2).end()
                 .stage().attunement(Sources.SKY, 3).recipe(ItemsPM.FLYING_CARPET.get()).end()
@@ -1515,6 +1526,7 @@ public class ResearchEntries {
         register(context, DOWSING_ROD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.DOWSING_ROD.get()).parent(BASIC_RITUAL)
                 .stage().requiredObservations(1).end()
                 .stage().recipe(ItemsPM.DOWSING_ROD.get()).end()
+                .addendum().requiredResearch(MANA_NETWORKING).end()
                 .build());
         register(context, HYDROMELON, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.HYDROMELON_SLICE.get())
                 .parent(EXPERT_RITUAL).parent(RITUAL_CANDLES).parent(RITUAL_BELL).parent(RUNE_SEA).parent(SHARD_SYNTHESIS)
@@ -1522,12 +1534,12 @@ public class ResearchEntries {
                 .stage().attunement(Sources.SEA, 2).recipe("hydromelon_seeds_from_ritual").recipe(ItemsPM.HYDROMELON.get()).recipe(ItemsPM.HYDROMELON_SEEDS.get()).end()
                 .build());
         register(context, BLOOD_ROSE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.BLOOD_ROSE.get())
-                .parent(DISCOVER_BLOOD).parent(EXPERT_RITUAL).parent(HYDROMELON).parent(BLOODLETTER).parent(RUNE_BLOOD)
+                .parent(DISCOVER_BLOOD).parent(EXPERT_RITUAL).parent(HYDROMELON).parent(RITUAL_BELL).parent(RUNE_BLOOD)
                 .stage().requiredItem(Items.ROSE_BUSH).requiredTheories(1).end()
                 .stage().attunement(Sources.BLOOD, 2).recipe(ItemsPM.BLOOD_ROSE.get()).end()
                 .build());
         register(context, EMBERFLOWER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.EMBERFLOWER.get())
-                .parent(DISCOVER_INFERNAL).parent(EXPERT_RITUAL).parent(HYDROMELON).parent(BLOODLETTER).parent(RUNE_INFERNAL)
+                .parent(DISCOVER_INFERNAL).parent(EXPERT_RITUAL).parent(HYDROMELON).parent(RITUAL_BELL).parent(RUNE_INFERNAL)
                 .stage().requiredItem(Items.SUNFLOWER).requiredTheories(1).end()
                 .stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.EMBERFLOWER.get()).recipe("blaze_powder_from_emberflower").end()
                 .build());
@@ -1538,7 +1550,7 @@ public class ResearchEntries {
         register(context, BASIC_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ICON_MAGITECH).parent(UNLOCK_MAGITECH)
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).end()
                 .build());
-        register(context, EXPERT_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_MAGITECH).parent(HONEY_EXTRACTOR).parent(SEASCRIBE_PEN)
+        register(context, EXPERT_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ICON_MAGITECH).parent(DESALINATOR).parent(SEASCRIBE_PEN)
                 .stage().requiredExpertise(discipline, ResearchTier.EXPERT).requiredResearch(SCAN_PRIMALITE).end()
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).end()
                 .build());
@@ -1678,6 +1690,7 @@ public class ResearchEntries {
                 .parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING).parent(WAND_CHARGER).parent(ARTIFICIAL_MANA_FONTS)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.AUTO_CHARGER.get()).end()
+                .addendum().requiredResearch(MANA_NETWORKING).end()
                 .build());
         register(context, ESSENCE_TRANSMUTER, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.ESSENCE_TRANSMUTER.get())
                 .parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING)
@@ -1723,6 +1736,7 @@ public class ResearchEntries {
                 .parent(MASTER_MAGITECH).parent(AUTO_CHARGER).parent(HEXIUM).parent(WAND_GEM_WIZARD)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.MANA_NEXUS.get()).end()
+                .addendum().requiredResearch(MANA_NETWORKING).end()
                 .build());
         register(context, MANA_SINGULARITY, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.MANA_SINGULARITY.get())
                 .parent(SUPREME_MAGITECH).parent(MANA_NEXUS).parent(HALLOWSTEEL).parent(WAND_GEM_ARCHMAGE)
@@ -1743,6 +1757,30 @@ public class ResearchEntries {
                 .parent(SUPREME_MAGITECH).parent(RUNE_GRACE).parent(GREATER_WARDING_MODULE)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.SUPREME_WARDING_MODULE.get()).end()
+                .build());
+        register(context, MANA_NETWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.MANA_RELAY_BASIC.get())
+                .parent(DESALINATOR).parent(DOWSING_ROD)
+                .stage().requiredObservations(1).requiredStat(StatsPM.MANA_SIPHONED, 200).end()
+                .stage().recipe(ItemsPM.MANA_RELAY_BASIC.get()).recipe(ItemsPM.MANA_INJECTOR_BASIC.get()).end()
+                .build());
+        register(context, ADVANCED_MANA_NETWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.MANA_RELAY_ENCHANTED.get())
+                .parent(EXPERT_MAGITECH).parent(MANA_NETWORKING).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.MANA_RELAY_ENCHANTED.get()).recipe(ItemsPM.MANA_INJECTOR_ENCHANTED.get()).end()
+                .build());
+        register(context, FORBIDDEN_MANA_NETWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.MANA_RELAY_FORBIDDEN.get())
+                .parent(MASTER_MAGITECH).parent(ADVANCED_MANA_NETWORKING).parent(HEXIUM).parent(CRYSTAL_SYNTHESIS)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.MANA_RELAY_FORBIDDEN.get()).recipe(ItemsPM.MANA_INJECTOR_FORBIDDEN.get()).end()
+                .build());
+        register(context, HEAVENLY_MANA_NETWORKING, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.MANA_RELAY_HEAVENLY.get())
+                .parent(SUPREME_MAGITECH).parent(FORBIDDEN_MANA_NETWORKING).parent(HALLOWSTEEL).parent(CLUSTER_SYNTHESIS)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.MANA_RELAY_HEAVENLY.get()).recipe(ItemsPM.MANA_INJECTOR_HEAVENLY.get()).end()
+                .build());
+        register(context, DESALINATOR, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.DESALINATOR.get()).parent(BASIC_MAGITECH)
+                .stage().requiredItem(Items.WATER_BUCKET).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.DESALINATOR.get()).recipe("refined_salt_from_pinches").end()
                 .build());
     }
     
@@ -1769,8 +1807,9 @@ public class ResearchEntries {
                         .recipe(ItemsPM.MOONWOOD_SLAB.get()).recipe(ItemsPM.MOONWOOD_STAIRS.get()).recipe(ItemsPM.MOONWOOD_PILLAR.get()).end()
                 .build());
         register(context, ROCK_SALT, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.REFINED_SALT.get()).parent(UNLOCK_SCANS)
-                .stage().recipe(ItemsPM.REFINED_SALT.get()).recipe("rock_salt_from_smelting")
+                .stage().recipe("refined_salt_from_smelting").recipe("rock_salt_from_smelting")
                         .recipe(ItemsPM.SALT_BLOCK.get()).recipe("refined_salt_from_salt_block")
+                        .recipe("refined_salt_from_pinches")
                         .recipe(ItemsPM.SALTED_BAKED_POTATO.get()).recipe(ItemsPM.SALTED_BEETROOT_SOUP.get()).recipe(ItemsPM.SALTED_COOKED_BEEF.get())
                         .recipe(ItemsPM.SALTED_COOKED_CHICKEN.get()).recipe(ItemsPM.SALTED_COOKED_COD.get()).recipe(ItemsPM.SALTED_COOKED_MUTTON.get()).recipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
                         .recipe(ItemsPM.SALTED_COOKED_RABBIT.get()).recipe(ItemsPM.SALTED_COOKED_SALMON.get()).recipe(ItemsPM.SALTED_MUSHROOM_STEW.get()).recipe(ItemsPM.SALTED_RABBIT_STEW.get()).end()
