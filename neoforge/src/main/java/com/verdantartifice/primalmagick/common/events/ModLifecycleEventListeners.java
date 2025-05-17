@@ -1,9 +1,15 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+
+import java.util.function.Supplier;
 
 /**
  * Neoforge listeners for mod lifecycle related events.
@@ -15,5 +21,18 @@ public class ModLifecycleEventListeners {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
         ModLifecycleEvents.commonSetup(event::enqueueWork);
+        event.enqueueWork(ModLifecycleEventListeners::registerFlowerPotPlants);
+    }
+
+    private static void registerFlowerPotPlants() {
+        if (Blocks.FLOWER_POT instanceof FlowerPotBlock emptyPotBlock) {
+            registerPottedPlant(emptyPotBlock, BlocksPM.POTTED_SUNWOOD_SAPLING);
+            registerPottedPlant(emptyPotBlock, BlocksPM.POTTED_MOONWOOD_SAPLING);
+            registerPottedPlant(emptyPotBlock, BlocksPM.POTTED_HALLOWOOD_SAPLING);
+        }
+    }
+
+    private static void registerPottedPlant(FlowerPotBlock emptyPotBlock, Supplier<FlowerPotBlock> flowerSupplier) {
+        emptyPotBlock.addPlant(BuiltInRegistries.BLOCK.getKey(flowerSupplier.get().getPotted()), flowerSupplier);
     }
 }

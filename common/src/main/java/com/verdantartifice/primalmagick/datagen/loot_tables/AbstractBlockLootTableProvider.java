@@ -18,6 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.storage.loot.IntRange;
@@ -172,6 +173,11 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
         builder = builder.apply(ApplyExplosionDecay.explosionDecay());
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block).when(hasSilkTouch()).otherwise(builder)));
         this.registerLootTableBuilder(block, tableBuilder);
+    }
+
+    protected void registerPottedPlant(FlowerPotBlock block) {
+        this.registeredBlocks.add(Services.BLOCKS_REGISTRY.getKey(block));
+        this.dropPottedContents(block);
     }
     
     private void checkExpectations() {

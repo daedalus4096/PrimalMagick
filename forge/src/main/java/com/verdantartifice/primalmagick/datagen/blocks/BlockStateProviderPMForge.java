@@ -40,6 +40,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
@@ -148,7 +149,7 @@ public class BlockStateProviderPMForge extends BlockStateProvider {
         this.phasingWoodBlockWithItem(BlocksPM.SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.SUNWOOD_LOG.get()));
         this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_SUNWOOD_LOG.get()));
         this.phasingLeavesBlockWithItem(BlocksPM.SUNWOOD_LEAVES.get());
-        this.saplingBlockWithItem(BlocksPM.SUNWOOD_SAPLING.get());
+        this.saplingBlockWithPotAndItem(BlocksPM.SUNWOOD_SAPLING.get(), BlocksPM.POTTED_SUNWOOD_SAPLING.get());
         this.phasingCubeBlockWithItem(BlocksPM.SUNWOOD_PLANKS.get());
         this.phasingSlabBlockWithItem(BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.SUNWOOD_PLANKS.get());
         this.phasingStairsBlockWithItem(BlocksPM.SUNWOOD_STAIRS.get(), this.blockTexture(BlocksPM.SUNWOOD_PLANKS.get()));
@@ -160,7 +161,7 @@ public class BlockStateProviderPMForge extends BlockStateProvider {
         this.phasingWoodBlockWithItem(BlocksPM.MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.MOONWOOD_LOG.get()));
         this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_MOONWOOD_LOG.get()));
         this.phasingLeavesBlockWithItem(BlocksPM.MOONWOOD_LEAVES.get());
-        this.saplingBlockWithItem(BlocksPM.MOONWOOD_SAPLING.get());
+        this.saplingBlockWithPotAndItem(BlocksPM.MOONWOOD_SAPLING.get(), BlocksPM.POTTED_MOONWOOD_SAPLING.get());
         this.phasingCubeBlockWithItem(BlocksPM.MOONWOOD_PLANKS.get());
         this.phasingSlabBlockWithItem(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.MOONWOOD_PLANKS.get());
         this.phasingStairsBlockWithItem(BlocksPM.MOONWOOD_STAIRS.get(), this.blockTexture(BlocksPM.MOONWOOD_PLANKS.get()));
@@ -172,7 +173,7 @@ public class BlockStateProviderPMForge extends BlockStateProvider {
         this.woodBlockWithItem(BlocksPM.HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.HALLOWOOD_LOG.get()));
         this.woodBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()));
         this.leavesBlockWithItem(BlocksPM.HALLOWOOD_LEAVES.get());
-        this.saplingBlockWithItem(BlocksPM.HALLOWOOD_SAPLING.get());
+        this.saplingBlockWithPotAndItem(BlocksPM.HALLOWOOD_SAPLING.get(), BlocksPM.POTTED_HALLOWOOD_SAPLING.get());
         this.simpleCubeBlockWithItem(BlocksPM.HALLOWOOD_PLANKS.get());
         this.slabBlockWithItem(BlocksPM.HALLOWOOD_SLAB.get(), BlocksPM.HALLOWOOD_PLANKS.get());
         this.stairsBlockWithItem(BlocksPM.HALLOWOOD_STAIRS.get(), this.blockTexture(BlocksPM.HALLOWOOD_PLANKS.get()));
@@ -463,9 +464,10 @@ public class BlockStateProviderPMForge extends BlockStateProvider {
         ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
         this.simpleBlockItem(block, this.models().withExistingParent(this.name(block) + "_" + phaseName, ResourceLocation.withDefaultNamespace("block/leaves")).texture("all", phaseTexture));
     }
-    
-    private void saplingBlockWithItem(Block block) {
+
+    private void saplingBlockWithPotAndItem(Block block, FlowerPotBlock pottedBlock) {
         this.simpleBlock(block, this.models().cross(this.name(block), this.blockTexture(block)).renderType(CUTOUT));
+        this.simpleBlock(pottedBlock, this.models().withExistingParent(this.name(pottedBlock), ResourceLocation.withDefaultNamespace("block/flower_pot_cross")).texture("plant", this.blockTexture(pottedBlock.getPotted())).renderType(CUTOUT));
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", this.blockTexture(block));
     }
     

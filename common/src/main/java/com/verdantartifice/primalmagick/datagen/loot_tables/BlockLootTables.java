@@ -210,6 +210,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSlabTable(BlocksPM.SUNWOOD_SLAB.get());
         this.registerBasicTable(BlocksPM.SUNWOOD_STAIRS.get());
         this.registerBasicTable(BlocksPM.SUNWOOD_PILLAR.get());
+        this.registerPottedPlant(BlocksPM.POTTED_SUNWOOD_SAPLING.get());
     }
     
     private void registerMoonwoodLootTables() {
@@ -223,6 +224,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSlabTable(BlocksPM.MOONWOOD_SLAB.get());
         this.registerBasicTable(BlocksPM.MOONWOOD_STAIRS.get());
         this.registerBasicTable(BlocksPM.MOONWOOD_PILLAR.get());
+        this.registerPottedPlant(BlocksPM.POTTED_MOONWOOD_SAPLING.get());
     }
     
     private void registerHallowoodLootTables() {
@@ -236,6 +238,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSlabTable(BlocksPM.HALLOWOOD_SLAB.get());
         this.registerBasicTable(BlocksPM.HALLOWOOD_STAIRS.get());
         this.registerBasicTable(BlocksPM.HALLOWOOD_PILLAR.get());
+        this.registerPottedPlant(BlocksPM.POTTED_HALLOWOOD_SAPLING.get());
     }
     
     private void registerCropLootTables() {

@@ -95,6 +95,7 @@ import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
@@ -195,6 +196,7 @@ public class BlocksPM {
     public static final IRegistryItem<Block, SunwoodSlabBlock> SUNWOOD_SLAB = register("sunwood_slab", () -> new SunwoodSlabBlock(Block.Properties.ofFullCopy(SUNWOOD_PLANKS.get())));
     public static final IRegistryItem<Block, SunwoodStairsBlock> SUNWOOD_STAIRS = register("sunwood_stairs", () -> new SunwoodStairsBlock(SUNWOOD_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(SUNWOOD_PLANKS.get())));
     public static final IRegistryItem<Block, SunwoodPillarBlock> SUNWOOD_PILLAR = register("sunwood_pillar", SunwoodPillarBlock::new);
+    public static final IRegistryItem<Block, FlowerPotBlock> POTTED_SUNWOOD_SAPLING = register("potted_sunwood_sapling", Services.BLOCK_PROTOTYPES.flowerPot(() -> (FlowerPotBlock)Blocks.FLOWER_POT, SUNWOOD_SAPLING, Block.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Register moonwood blocks
     public static final IRegistryItem<Block, MoonwoodLogBlock> STRIPPED_MOONWOOD_LOG = register("stripped_moonwood_log", () -> new MoonwoodLogBlock(null));
@@ -207,6 +209,7 @@ public class BlocksPM {
     public static final IRegistryItem<Block, MoonwoodSlabBlock> MOONWOOD_SLAB = register("moonwood_slab", () -> new MoonwoodSlabBlock(Block.Properties.ofFullCopy(MOONWOOD_PLANKS.get())));
     public static final IRegistryItem<Block, MoonwoodStairsBlock> MOONWOOD_STAIRS = register("moonwood_stairs", () -> new MoonwoodStairsBlock(MOONWOOD_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(MOONWOOD_PLANKS.get())));
     public static final IRegistryItem<Block, MoonwoodPillarBlock> MOONWOOD_PILLAR = register("moonwood_pillar", MoonwoodPillarBlock::new);
+    public static final IRegistryItem<Block, FlowerPotBlock> POTTED_MOONWOOD_SAPLING = register("potted_moonwood_sapling", Services.BLOCK_PROTOTYPES.flowerPot(() -> (FlowerPotBlock)Blocks.FLOWER_POT, MOONWOOD_SAPLING, Block.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Register hallowood blocks
     public static final IRegistryItem<Block, RotatedPillarBlock> STRIPPED_HALLOWOOD_LOG = register("stripped_hallowood_log", () -> new RotatedPillarBlock(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
@@ -219,6 +222,7 @@ public class BlocksPM {
     public static final IRegistryItem<Block, SlabBlock> HALLOWOOD_SLAB = register("hallowood_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(HALLOWOOD_PLANKS.get())));
     public static final IRegistryItem<Block, StairBlock> HALLOWOOD_STAIRS = register("hallowood_stairs", () -> new StairBlockPM(HALLOWOOD_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(HALLOWOOD_PLANKS.get())));
     public static final IRegistryItem<Block, PillarBlock> HALLOWOOD_PILLAR = register("hallowood_pillar", () -> new PillarBlock(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
+    public static final IRegistryItem<Block, FlowerPotBlock> POTTED_HALLOWOOD_SAPLING = register("potted_hallowood_sapling", Services.BLOCK_PROTOTYPES.flowerPot(() -> (FlowerPotBlock)Blocks.FLOWER_POT, HALLOWOOD_SAPLING, Block.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Register crop blocks
     public static final IRegistryItem<Block, HydromelonBlock> HYDROMELON = register("hydromelon", () -> new HydromelonBlock(Block.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
