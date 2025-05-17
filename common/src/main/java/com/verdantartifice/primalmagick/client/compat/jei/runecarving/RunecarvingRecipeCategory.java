@@ -35,14 +35,27 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
     private static final ResourceLocation RESEARCH_TEXTURE = ResourceUtils.loc("textures/item/grimoire.png");
     private static final int RESEARCH_X_OFFSET = 79;
     private static final int RESEARCH_Y_OFFSET = 19;
+    private static final int BG_WIDTH = 125;
+    private static final int BG_HEIGHT = 36;
 
+    private final IDrawableStatic background;
     private final IDrawableStatic researchIcon;
 
     public RunecarvingRecipeCategory(IGuiHelper guiHelper) {
         super(guiHelper, UID, "block.primalmagick.runecarving_table");
         this.researchIcon = guiHelper.drawableBuilder(RESEARCH_TEXTURE, 0, 0, 32, 32).setTextureSize(32, 32).build();
-        this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 125, 36));
+        this.background = guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, BG_WIDTH, BG_HEIGHT);
         this.setIcon(new ItemStack(ItemsPM.RUNECARVING_TABLE.get()));
+    }
+
+    @Override
+    public int getWidth() {
+        return BG_WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return BG_HEIGHT;
     }
 
     @Override
@@ -55,6 +68,7 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
 
     @Override
     public void draw(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
         if (recipe.value().getRequirement().isPresent()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);

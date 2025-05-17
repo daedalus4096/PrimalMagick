@@ -42,7 +42,10 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
     private static final int MANA_COST_Y_OFFSET = 14;
     private static final int RESEARCH_X_OFFSET = 118;
     private static final int RESEARCH_Y_OFFSET = 49;
+    private static final int BG_WIDTH = 170;
+    private static final int BG_HEIGHT = 80;
 
+    private final IDrawableStatic background;
     private final IDrawableStatic manaCostIcon;
     private final IDrawableStatic researchIcon;
 
@@ -50,8 +53,18 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
         super(guiHelper, UID, "block.primalmagick.ritual_altar");
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 170, 0, 16, 16);
         this.researchIcon = guiHelper.drawableBuilder(RESEARCH_TEXTURE, 0, 0, 32, 32).setTextureSize(32, 32).build();
-        this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 170, 80));
+        this.background = guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, BG_WIDTH, BG_HEIGHT);
         this.setIcon(new ItemStack(ItemsPM.RITUAL_ALTAR.get()));
+    }
+
+    @Override
+    public int getWidth() {
+        return BG_WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return BG_HEIGHT;
     }
 
     @Override
@@ -73,6 +86,8 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
 
     @Override
     public void draw(RecipeHolder<IRitualRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
+
         Minecraft mc = Minecraft.getInstance();
         guiGraphics.drawString(mc.font, Component.translatable("jei.primalmagick.ritual.offerings.header"), 0, 2, Color.BLACK.getRGB(), false);
         guiGraphics.drawString(mc.font, Component.translatable("jei.primalmagick.ritual.props.header"), 0, 51, Color.BLACK.getRGB(), false);

@@ -20,23 +20,12 @@ public abstract class RecipeCategoryPM<T> implements IRecipeCategory<T> {
     protected final IGuiHelper guiHelper;
     
     protected Component title;
-    private IDrawable background;
     private IDrawable icon;
     
     public RecipeCategoryPM(IGuiHelper guiHelper, ResourceLocation uid, String titleTranslationKey) {
         this.guiHelper = guiHelper;
         this.uid = uid;
         this.title = Component.translatable(titleTranslationKey);
-    }
-
-    @Nullable
-    @Override
-    public IDrawable getBackground() {
-        return this.background;
-    }
-    
-    protected void setBackground(IDrawable background) {
-        this.background = background;
     }
 
     @Nullable

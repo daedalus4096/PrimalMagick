@@ -31,14 +31,27 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
     private static final ResourceLocation BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/dissolution_chamber.png");
     private static final int MANA_COST_X_OFFSET = 28;
     private static final int MANA_COST_Y_OFFSET = 1;
+    private static final int BG_WIDTH = 82;
+    private static final int BG_HEIGHT = 44;
 
+    private final IDrawableStatic background;
     private final IDrawableStatic manaCostIcon;
     
     public DissolutionRecipeCategory(IGuiHelper guiHelper) {
         super(guiHelper, UID, "block.primalmagick.dissolution_chamber");
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 82, 0, 16, 16);
-        this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 82, 44));
+        this.background = guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, BG_WIDTH, BG_HEIGHT);
         this.setIcon(new ItemStack(ItemsPM.DISSOLUTION_CHAMBER.get()));
+    }
+
+    @Override
+    public int getWidth() {
+        return BG_WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return BG_HEIGHT;
     }
 
     @Override
@@ -49,6 +62,7 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
 
     @Override
     public void draw(RecipeHolder<IDissolutionRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
         if (!recipe.value().getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }

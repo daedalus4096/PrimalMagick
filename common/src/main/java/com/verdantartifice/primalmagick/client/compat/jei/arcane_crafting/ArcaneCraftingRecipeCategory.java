@@ -41,8 +41,11 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
     private static final int MANA_COST_Y_OFFSET = 1;
     private static final int RESEARCH_X_OFFSET = 64;
     private static final int RESEARCH_Y_OFFSET = 36;
+    private static final int BG_WIDTH = 116;
+    private static final int BG_HEIGHT = 54;
     
     private final ICraftingGridHelper craftingGridHelper;
+    private final IDrawableStatic background;
     private final IDrawableStatic manaCostIcon;
     private final IDrawableStatic researchIcon;
 
@@ -51,8 +54,18 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
         this.craftingGridHelper = guiHelper.createCraftingGridHelper();
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 116, 0, 16, 16);
         this.researchIcon = guiHelper.drawableBuilder(RESEARCH_TEXTURE, 0, 0, 32, 32).setTextureSize(32, 32).build();
-        this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 116, 54));
+        this.background = guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, BG_WIDTH, BG_HEIGHT);
         this.setIcon(new ItemStack(ItemsPM.ARCANE_WORKBENCH.get()));
+    }
+
+    @Override
+    public int getWidth() {
+        return BG_WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return BG_HEIGHT;
     }
 
     @Override
@@ -70,6 +83,7 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
     @Override
     public void draw(RecipeHolder<IArcaneRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         IArcaneRecipe recipe = recipeHolder.value();
+        this.background.draw(guiGraphics);
         if (!recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
