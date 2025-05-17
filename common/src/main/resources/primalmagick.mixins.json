@@ -4,7 +4,9 @@
   "package": "com.verdantartifice.primalmagick.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_18",
-  "mixins": [],
+  "mixins": [
+    "EnchantedCountIncreaseFunctionMixin"
+  ],
   "client": [
   ],
   "server": [],
