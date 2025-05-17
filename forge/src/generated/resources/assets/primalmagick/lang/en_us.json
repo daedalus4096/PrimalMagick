@@ -2908,7 +2908,7 @@
   "tooltip.primalmagick.spells.capacity_with_bonus": "%1$d + 1 %2$s",
   "tooltip.primalmagick.spells.details.cooldown": "Cooldown: %1$s sec",
   "tooltip.primalmagick.spells.details.mana_cost": "Mana Cost: %1$s",
-  "tooltip.primalmagick.spells.details.mana_cost.piece": "%1$d %2$s",
+  "tooltip.primalmagick.spells.details.mana_cost.piece": "%1$s %2$s",
   "tooltip.primalmagick.spells.details.mods.double": "Mods: %1$s, %2$s",
   "tooltip.primalmagick.spells.details.mods.single": "Mod: %1$s",
   "tooltip.primalmagick.spells.details.payload": "Effect: %1$s",

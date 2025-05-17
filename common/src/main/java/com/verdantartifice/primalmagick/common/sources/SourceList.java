@@ -20,6 +20,7 @@ import net.minecraft.util.StringRepresentable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,8 @@ public class SourceList {
         return instance.group(Codec.simpleMap(Source.CODEC, Codec.INT, StringRepresentable.keys(Sources.getAllSorted().toArray(Source[]::new))).xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).fieldOf("sources").forGetter(sl -> sl.sources)).apply(instance, SourceList::new);
     });
     public static final StreamCodec<ByteBuf, SourceList> STREAM_CODEC = ByteBufCodecs.map(Object2IntOpenHashMap::new, Source.STREAM_CODEC, ByteBufCodecs.VAR_INT).map(SourceList::new, l -> l.sources);
-    
+    protected static final DecimalFormat FORMATTER = new DecimalFormat("#######.##");
+
     public static final SourceList EMPTY = new SourceList();
 
     protected final Object2IntOpenHashMap<Source> sources;
@@ -421,6 +423,10 @@ public class SourceList {
     }
     
     public Component getText() {
+        return this.getScaledText(1);
+    }
+
+    public Component getScaledText(double multiplier) {
         List<Source> contents = this.getSourcesSorted();
         MutableComponent output = Component.literal("");
         for (int index = 0; index < contents.size(); index++) {
@@ -428,7 +434,7 @@ public class SourceList {
             if (index != 0) {
                 output = output.append(Component.literal(", "));
             }
-            output = output.append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost.piece", this.getAmount(source), source.getNameText()));
+            output = output.append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost.piece", FORMATTER.format(this.getAmount(source) * multiplier), source.getNameText()));
         }
         return output;
     }

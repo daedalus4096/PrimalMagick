@@ -3,9 +3,12 @@ package com.verdantartifice.primalmagick.common.spells;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.wands.AbstractWandItem;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
@@ -262,7 +265,7 @@ public class SpellManager {
     }
     
     @Nonnull
-    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, @Nonnull ItemStack spellSource, boolean indent, HolderLookup.Provider registries) {
+    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, @Nonnull ItemStack spellSource, @Nullable Player player, boolean indent, HolderLookup.Provider registries) {
         List<Component> retVal = new ArrayList<>();
         Component leader = indent ? Component.literal("    ") : Component.literal("");
         if (spell != null) {
@@ -289,9 +292,12 @@ public class SpellManager {
             
             retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));
             
-            if (!spellSource.is(ItemsPM.SPELL_SCROLL_FILLED.get())) {
+            if (spellSource.getItem() instanceof AbstractWandItem wandItem && player != null && payload != null) {
                 // Scale the spell's centimana cost down to whole mana points for display
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost", spell.getManaCost().multiply(0.01D).getText())));
+                Source source = payload.getComponent().getSource();
+                SourceList baseCost = spell.getManaCost();
+                SourceList modifiedCost = wandItem.getModifiedCost(spellSource, player, baseCost, registries);
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost", modifiedCost.getScaledText(0.01D))));
             }
         }
         return retVal;

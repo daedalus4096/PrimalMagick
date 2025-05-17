@@ -976,7 +976,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("spells").sub("details").sub("mods").sub("double").output("Mods: %1$s, %2$s").end().build();
         this.tooltip("spells").sub("details").sub("cooldown").output("Cooldown: %1$s sec").end().build();
         this.tooltip("spells").sub("details").sub("mana_cost").output("Mana Cost: %1$s").end().build();
-        this.tooltip("spells").sub("details").sub("mana_cost").sub("piece").output("%1$d %2$s").end().build();
+        this.tooltip("spells").sub("details").sub("mana_cost").sub("piece").output("%1$s %2$s").end().build();
         this.tooltip("affinities").sub("label").output("Affinities:").end().build();
         this.tooltip("affinities").sub("none").output("Affinities: None").end().build();
         this.tooltip("affinities").sub("unknown").output("Affinities: Unknown").end().build();

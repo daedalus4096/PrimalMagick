@@ -343,7 +343,9 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     @Override
     public SourceList getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, SourceList baseCost, HolderLookup.Provider registries) {
         SourceList retVal = SourceList.EMPTY;
-        baseCost.getSources().forEach(s -> retVal.set(s, this.getModifiedCost(stack, player, s, baseCost.getAmount(s), registries)));
+        for (Source s : baseCost.getSources()) {
+            retVal = retVal.set(s, this.getModifiedCost(stack, player, s, baseCost.getAmount(s), registries));
+        }
         return retVal;
     }
 
@@ -376,7 +378,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                     SpellPackage spell = spells.get(index);
                     if (index == activeIndex) {
                         tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getDisplayName()));
-                        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, stack, true, context.registries()));
+                        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, stack, player, true, context.registries()));
                     } else {
                         tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getDisplayName()));
                     }
