@@ -3026,7 +3026,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CAP_IRON, lookupProvider).name("Wand Cap: Iron")
             .stages()
                 .add("After another round of Grimoire study, I think I'm going to start by making wand caps out of iron.  I have some concerns, but it's what I've got.")
-                .add("I'll call this a partial success.<BR>The caps will fit, certainly, but they aren't as conductive as I'd hoped.  A wand capped with iron will incur a ten percent penalty on all mana costs.<BR>That may sound bad, but it's still an improvement!  By my calculations, an uncapped wand such as my current one incurs a *twenty* percent penalty.  So hey, I'll take it.<BR>Just remember, self, you'll need to make two caps, one for each end of the wand.")
+                .add("I'll call this a partial success.<BR>The caps will fit, certainly, but they aren't as conductive as I'd hoped.  A wand capped with iron will only net me a ten percent boost to mana effectiveness.<BR>That may sound bad, but it's still an improvement!  By my calculations, an uncapped wand such as my current one gave no bonus effectiveness at all.  So hey, I'll take it.<BR>Just remember, self, you'll need to make two caps, one for each end of the wand.")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.WAND_GEM_APPRENTICE, lookupProvider).name("Wand Gem: Apprentice")
@@ -3071,7 +3071,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry(ResearchEntries.WAND_CAP_GOLD, lookupProvider).name("Wand Cap: Gold")
             .stages()
                 .add("So the iron technically worked, but it has its flaws.  I wonder if gold would work better?<BR>After all, it holds more enchantments than iron when I use it in the enchanting table.")
-                .add("Why didn't I think of this in the first place?  This is great.<BR>These gold caps lack the mana resistance of the iron version, so there's no penalty when channeling.  I can't wait to put them on a new core!")
+                .add("Why didn't I think of this in the first place?  This is great.<BR>These gold caps lack the mana resistance of the iron version, so they grant a full twenty percent bonus to my mana effectiveness.  I can't wait to put them on a new core!")
                 .end()
             .build();
         this.researchEntry(ResearchEntries.WAND_CAP_PRIMALITE, lookupProvider).name("Wand Cap: Primalite")
