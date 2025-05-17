@@ -12,11 +12,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.GrindstoneBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.AttachFace;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
@@ -30,6 +35,8 @@ import net.minecraft.world.phys.BlockHitResult;
 public class RunicGrindstoneBlock extends GrindstoneBlock {
     public RunicGrindstoneBlock() {
         super(Block.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.BLOCK).strength(2.0F, 6.0F).sound(SoundType.STONE));
+
+        registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
     }
     
     @Override
@@ -48,10 +55,29 @@ public class RunicGrindstoneBlock extends GrindstoneBlock {
             }
             
             if (state.canSurvive(context.getLevel(), context.getClickedPos())) {
-                return state;
+                return state.setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).is(Fluids.WATER));
             }
         }
         return null;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        super.createBlockStateDefinition(pBuilder);
+        pBuilder.add(BlockStateProperties.WATERLOGGED);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState pState) {
+        return pState.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(pState);
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
+        if(pState.getValue(BlockStateProperties.WATERLOGGED)){
+            pLevel.scheduleTick(pPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
+        }
+        return super.updateShape(pState, pDirection, pNeighborState, pLevel, pPos, pNeighborPos);
     }
     
     @Override
