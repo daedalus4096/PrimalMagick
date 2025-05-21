@@ -37,6 +37,8 @@ import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItemForge;
+import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItem;
+import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.TieredBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.TieredBowItemForge;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
@@ -45,6 +47,7 @@ import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItemForge;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItemForge;
+import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.platform.services.IItemPrototypeService;
 import net.minecraft.world.entity.EntityType;
@@ -146,6 +149,11 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     @Override
     public Supplier<ForbiddenBowItem> forbiddenBow(Item.Properties properties) {
         return () -> new ForbiddenBowItemForge(properties);
+    }
+
+    @Override
+    public Supplier<SpelltomeItem> spelltome(DeviceTier tier, Item.Properties properties) {
+        return () -> new SpelltomeItemForge(tier, properties);
     }
 
     @Override

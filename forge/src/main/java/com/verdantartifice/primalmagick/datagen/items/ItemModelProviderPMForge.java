@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemForge;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
+import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItem;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
@@ -176,6 +177,10 @@ public class ItemModelProviderPMForge extends ModelProvider<ItemModelBuilderPMFo
         this.handheldItem(ItemsPM.PRIMAL_HOE.get());
         this.fishingRodItem(ItemsPM.PRIMAL_FISHING_ROD.get());
         // Do not generate an item model for the sacred shield
+        this.spelltomeItem(ItemsPM.SPELLTOME_APPRENTICE.get());
+        this.spelltomeItem(ItemsPM.SPELLTOME_ADEPT.get());
+        this.spelltomeItem(ItemsPM.SPELLTOME_WIZARD.get());
+        this.spelltomeItem(ItemsPM.SPELLTOME_ARCHMAGE.get());
         
         // Generate mana arrow items
         ManaArrowItem.getManaArrows().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_mana_arrow")));
@@ -476,6 +481,21 @@ public class ItemModelProviderPMForge extends ModelProvider<ItemModelBuilderPMFo
                         .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 180, -5).translation(-15, 5, -11).scale(1.25F).end()
                         .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 180, -5).translation(5, 5, -11).scale(1.25F).end()
                         .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F).end()
+                        .end();
+    }
+
+    private ItemModelBuilderPMForge spelltomeItem(SpelltomeItem item) {
+        return this.builder(item)
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
+                .guiLight(GuiLight.FRONT)
+                .transforms()
+                        .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 90, 0).translation(10, 6, -4).scale(1).end()
+                        .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 90, 0).translation(10, 6, 12).scale(1).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 180, 5).translation(-10, 2, -10).scale(1.25F).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 180, 5).translation(10, 0, -10).scale(1.25F).end()
+                        .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F).end()
+                        .transform(ItemDisplayContext.FIXED).rotation(0, 180, 0).translation(-2, 4, -5).scale(0.5F).end()
+                        .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(4, 4, 2).scale(0.25F).end()
                         .end();
     }
     

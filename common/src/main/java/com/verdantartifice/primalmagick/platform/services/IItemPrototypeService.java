@@ -19,10 +19,12 @@ import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
+import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItem;
 import com.verdantartifice.primalmagick.common.items.tools.TieredBowItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem;
+import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -58,6 +60,8 @@ public interface IItemPrototypeService {
 
     Supplier<TieredBowItem> tieredBow(Tier tier, Item.Properties properties);
     Supplier<ForbiddenBowItem> forbiddenBow(Item.Properties properties);
+
+    Supplier<SpelltomeItem> spelltome(DeviceTier tier, Item.Properties properties);
 
     Supplier<MundaneWandItem> mundaneWand();
     Supplier<ModularWandItem> modularWand(Item.Properties properties);

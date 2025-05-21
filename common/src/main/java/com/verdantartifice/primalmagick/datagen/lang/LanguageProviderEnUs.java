@@ -927,6 +927,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE).name("Smithing Template").build();
         this.item(ItemsPM.SALT_PINCH).name("Pinch of Salt").build();
         this.item(ItemsPM.PIXIE_HOUSE).name("Pixie House").build();
+        this.item(ItemsPM.SPELLTOME_APPRENTICE).name("Apprentice's Spelltome").build();
+        this.item(ItemsPM.SPELLTOME_ADEPT).name("Adept's Spelltome").build();
+        this.item(ItemsPM.SPELLTOME_WIZARD).name("Wizard's Spelltome").build();
+        this.item(ItemsPM.SPELLTOME_ARCHMAGE).name("Archmage's Spelltome").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();

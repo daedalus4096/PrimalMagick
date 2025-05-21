@@ -7,5 +7,5 @@ package com.verdantartifice.primalmagick.common.misc;
  * @author Daedalus4096
  */
 public interface ITieredDevice {
-    public DeviceTier getDeviceTier();
+    DeviceTier getDeviceTier();
 }
