@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.util.FluidUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -57,6 +58,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     public static final int OUTPUT_INV_INDEX = 1;
     public static final int WAND_INV_INDEX = 2;
     protected static final int REQUIRED_WATER_AMOUNT = 1000;
+    protected static final int PASSIVE_WATER_INPUT = 50;
 
     protected int ticks = 0;
     protected int boilTime;
@@ -180,6 +182,11 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
                 if (!fluidStack.isEmpty() && entity.waterTank.fill(fluidStack, true) == fluidStack.getAmount() && entity.canFill(containerStack)) {
                     entity.doFill(fluidStack, containerStack);
                 }
+            }
+
+            // Fill the internal water tank from the environment if waterlogged and surrounded by water source
+            if (FluidUtils.isInfiniteSource(level, pos, Fluids.WATER)) {
+                entity.waterTank.fill(Services.FLUIDS.makeFluidStack(Fluids.WATER, PASSIVE_WATER_INPUT), false);
             }
 
             // Process ingredients
