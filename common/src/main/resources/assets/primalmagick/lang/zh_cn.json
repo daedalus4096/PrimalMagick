@@ -103,7 +103,7 @@
   "advancements.primalmagick.kill_with_all_sorcery.title": "Elemental Virtuoso",
   "advancements.primalmagick.kill_with_sorcery.description": "Kill a creature using sorcery",
   "advancements.primalmagick.kill_with_sorcery.title": "Combat Mage",
-  "advancements.primalmagick.large_network_siphon.description": "Siphon at least 128 mana into a magitech device in a single instant",
+  "advancements.primalmagick.large_network_siphon.description": "Siphon at least 256 mana into a magitech device in a single instant",
   "advancements.primalmagick.large_network_siphon.title": "Link Saturation",
   "advancements.primalmagick.long_network_route.description": "Transmit mana over 100 blocks to a magitech device",
   "advancements.primalmagick.long_network_route.title": "Traceroute",
