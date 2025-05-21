@@ -33,6 +33,10 @@ public class ItemModBusEventListeners {
         registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_TRIDENT.get());
         registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_TRIDENT.get());
         registerCustomRenderer(event::registerItem, ItemsPM.FORBIDDEN_TRIDENT.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_APPRENTICE.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_ADEPT.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_WIZARD.get());
+        registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_ARCHMAGE.get());
         registerCustomRenderer(event::registerItem, ItemsPM.MUNDANE_WAND.get());
         registerCustomRenderer(event::registerItem, ItemsPM.MODULAR_WAND.get());
         registerCustomRenderer(event::registerItem, ItemsPM.MODULAR_STAFF.get());
