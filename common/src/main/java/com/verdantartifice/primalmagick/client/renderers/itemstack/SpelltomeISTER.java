@@ -32,8 +32,10 @@ public class SpelltomeISTER extends BlockEntityWithoutLevelRenderer {
     @Override
     public void renderByItem(ItemStack pStack, ItemDisplayContext pDisplayContext, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
         if (pStack.getItem() instanceof SpelltomeItem) {
+            float open = (pDisplayContext == ItemDisplayContext.FIRST_PERSON_LEFT_HAND || pDisplayContext == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) ? 1.0F : 0.0F;
             pPoseStack.pushPose();
             pPoseStack.scale(1.0F, -1.0F, -1.0F);
+            this.model.setupAnim(0F, 0.1F, 0.9F, open);
             VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(pBuffer, this.model.renderType(this.getTextureLocation()), false, pStack.hasFoil());
             this.model.renderToBuffer(pPoseStack, vertexConsumer, pPackedLight, pPackedOverlay, -1);
             pPoseStack.popPose();
