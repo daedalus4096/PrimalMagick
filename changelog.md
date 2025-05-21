@@ -2,6 +2,7 @@ v6.0.6
 ------
 * Added Pixie Houses, to give your flighty friends a home to defend
 * Allowed magickal saplings to be placed in flower pots
+* Allowed the Desalinator to fill itself with water if placed in an infinite water source
 * Fixed a bug where consecration fields would cast shadows
 * Fixed a bug where the hitbox of the Celestial Harp didn't always line up with it visually
 * Fixed an item duplication bug with the Runic Grindstone
