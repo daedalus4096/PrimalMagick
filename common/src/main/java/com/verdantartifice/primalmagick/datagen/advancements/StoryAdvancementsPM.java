@@ -476,7 +476,7 @@ public abstract class StoryAdvancementsPM {
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("large_network_siphon").icon(ItemsPM.MANA_INJECTOR_HEAVENLY.get()).type(AdvancementType.CHALLENGE).build())
                 .parent(craftManaRelay)
                 .rewards(AdvancementRewards.Builder.experience(100))
-                .addCriterion("large_siphon", ManaNetworkSiphonTrigger.TriggerInstance.atLeast(12800))
+                .addCriterion("large_siphon", ManaNetworkSiphonTrigger.TriggerInstance.atLeast(25600))
                 .save(saver, ResourceUtils.loc("story/large_network_siphon").toString());
     }
     

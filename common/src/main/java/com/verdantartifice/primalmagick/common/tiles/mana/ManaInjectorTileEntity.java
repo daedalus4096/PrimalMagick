@@ -148,10 +148,10 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     @Override
     public int getManaThroughput() {
         return switch (this.getDeviceTier()) {
-            case BASIC -> 200;
-            case ENCHANTED -> 400;
-            case FORBIDDEN -> 800;
-            case HEAVENLY, CREATIVE -> 1600;
+            case BASIC -> 400;
+            case ENCHANTED -> 800;
+            case FORBIDDEN -> 1600;
+            case HEAVENLY, CREATIVE -> 3200;
         };
     }
 

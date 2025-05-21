@@ -3,7 +3,7 @@
   "criteria": {
     "large_siphon": {
       "conditions": {
-        "threshold": 12800
+        "threshold": 25600
       },
       "trigger": "primalmagick:mana_network_siphon"
     }
