@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
@@ -322,8 +323,7 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     public boolean setActiveSpellIndex(ItemStack stack, int index) {
         if (stack == null) {
             return false;
-        } else if (index >= -1 && index < this.getSpells(stack).size()) {
-            // -1 is a valid value and means "no active spell"
+        } else if (index == ISpellContainer.NO_SPELL_SELECTED || index == ISpellContainer.OTHER_HAND_SELECTED || (index >= 0 && index < this.getSpells(stack).size())) {
             stack.set(DataComponentsPM.ACTIVE_SPELL_INDEX.get(), index);
             return true;
         }
@@ -346,12 +346,12 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
         List<Source> spellSources = this.getSpells(stack).stream()
                 .filter(p -> (p != null && p.payload() != null))
                 .map(p -> p.payload().getComponent().getSource())
-                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+                .collect(Collectors.toCollection(ArrayList::new));
         spellSources.add(spell.payload().getComponent().getSource());
         
         int coreSlots = this.getCoreSpellSlotCount(core);
         if (spellSources.size() < coreSlots + 1) {
-            // If the spells would fit in the base slots without the bonus, then it's fine
+            // If the spells fit in the base slots without the bonus, then it's fine
             return true;
         } else if (spellSources.size() > coreSlots + 1) {
             // If the bonus slot wouldn't be enough to make them fit, then reject

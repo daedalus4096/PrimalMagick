@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells;
 
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -39,6 +40,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -179,25 +181,76 @@ public class SpellManager {
             player.getCooldowns().addCooldown(ItemsPM.MODULAR_STAFF.get(), durationTicks);
         }
     }
-    
-    public static void cycleActiveSpell(@Nullable Player player, @Nullable ItemStack wandStack, boolean reverse) {
-        // Change the active spell for the given spell container stack to the next (or previous, if specified) one in its inscribed list
-        if (wandStack != null && wandStack.getItem() instanceof ISpellContainer spellContainer) {
-            int newIndex = spellContainer.getActiveSpellIndex(wandStack) + (reverse ? -1 : 1);
-            
-            // Cycle to the beginning from the end of the list, or to the end from the beginning of the list
-            if (newIndex >= spellContainer.getSpellCount(wandStack)) {
-                newIndex = -1;
-            }
-            if (newIndex < -1) {
-                newIndex = spellContainer.getSpellCount(wandStack) - 1;
-            }
-            
-            setActiveSpell(player, wandStack, newIndex);
+
+    public static @NotNull List<SpellPackage> getSpells(@NotNull ItemStack mainHandStack, @NotNull ItemStack offHandStack) {
+        ImmutableList.Builder<SpellPackage> builder = ImmutableList.builder();
+        if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer) {
+            builder.addAll(mainHandContainer.getSpells(mainHandStack));
         }
+        if (offHandStack.getItem() instanceof ISpellContainer offHandContainer) {
+            builder.addAll(offHandContainer.getSpells(offHandStack));
+        }
+        return builder.build();
+    }
+
+    public static int getSpellCount(@NotNull ItemStack mainHandStack, @NotNull ItemStack offHandStack) {
+        return getSpells(mainHandStack, offHandStack).size();
+    }
+
+    public static int getActiveSpellIndex(@NotNull ItemStack mainHandStack, @NotNull ItemStack offHandStack) {
+        if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer) {
+            int mainHandSelection = mainHandContainer.getActiveSpellIndex(mainHandStack);
+            if (mainHandSelection != ISpellContainer.OTHER_HAND_SELECTED) {
+                return mainHandSelection;
+            }
+        }
+        if (offHandStack.getItem() instanceof ISpellContainer offHandContainer) {
+            int offHandSelection = offHandContainer.getActiveSpellIndex(offHandStack);
+            if (offHandSelection != ISpellContainer.OTHER_HAND_SELECTED) {
+                int padding = (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer) ? mainHandContainer.getSpellCount(mainHandStack) : 0;
+                return offHandSelection + padding;
+            }
+        }
+        return ISpellContainer.NO_SPELL_SELECTED;
+    }
+
+    public static @Nullable SpellPackage getActiveSpell(@NotNull ItemStack mainHandStack, @NotNull ItemStack offHandStack) {
+        if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer) {
+            SpellPackage activeSpell = mainHandContainer.getActiveSpell(mainHandStack);
+            if (activeSpell != null) {
+                return activeSpell;
+            }
+        }
+        if (offHandStack.getItem() instanceof ISpellContainer offHandContainer) {
+            return offHandContainer.getActiveSpell(offHandStack);
+        }
+        return null;
+    }
+
+    public static boolean setActiveSpellIndex(@NotNull ItemStack mainHandStack, @NotNull ItemStack offHandStack, int index) {
+        if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer && offHandStack.getItem() instanceof ISpellContainer offHandContainer) {
+            int mainHandCount = mainHandContainer.getSpellCount(mainHandStack);
+            if (index >= 0 && index < mainHandCount) {
+                mainHandContainer.setActiveSpellIndex(mainHandStack, index);
+                offHandContainer.setActiveSpellIndex(offHandStack, ISpellContainer.OTHER_HAND_SELECTED);
+                return true;
+            } else if (index >= mainHandCount && index < mainHandCount + offHandContainer.getSpellCount(offHandStack)) {
+                mainHandContainer.setActiveSpellIndex(mainHandStack, ISpellContainer.OTHER_HAND_SELECTED);
+                offHandContainer.setActiveSpellIndex(offHandStack, index - mainHandCount);
+                return true;
+            }
+        } else if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer && index >= 0 && index < mainHandContainer.getSpellCount(mainHandStack)) {
+            mainHandContainer.setActiveSpellIndex(mainHandStack, index);
+            return true;
+        } else if (offHandStack.getItem() instanceof ISpellContainer offHandContainer && index >= 0 && index < offHandContainer.getSpellCount(offHandStack)) {
+            offHandContainer.setActiveSpellIndex(offHandStack, index);
+            return true;
+        }
+        return false;
     }
     
     public static void setActiveSpell(@Nullable Player player, @Nullable ItemStack wandStack, int spellIndex) {
+        // TODO Review for needed updates
         // Set the active spell for the given spell container stack to the given index, clamped
         if (wandStack != null && wandStack.getItem() instanceof ISpellContainer spellContainer) {
             // Clamp the given index to safe bounds

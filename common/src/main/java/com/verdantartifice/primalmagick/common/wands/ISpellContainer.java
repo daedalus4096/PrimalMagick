@@ -14,6 +14,9 @@ import java.util.List;
  * @author Daedalus4096
  */
 public interface ISpellContainer {
+    int NO_SPELL_SELECTED = -1;
+    int OTHER_HAND_SELECTED = -2;
+
     /**
      * Get the list of spell packages currently inscribed on the given wand stack.
      *
