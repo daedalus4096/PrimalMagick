@@ -1,0 +1,34 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "primalmagick:spell_scroll_blank"
+    },
+    {
+      "tag": "primalmagick:essences/terrestrial_dusts"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 500,
+      "primalmagick:moon": 500,
+      "primalmagick:sea": 500,
+      "primalmagick:sky": 500,
+      "primalmagick:sun": 500
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:spelltome_apprentice"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:spelltome_apprentice"
+  }
+}

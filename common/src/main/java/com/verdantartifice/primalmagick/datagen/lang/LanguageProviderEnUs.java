@@ -3283,6 +3283,30 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("I've come up with tiny enchanted treehouses for my pixie friends to live in, and they seem very happy with them.<BR>Each Pixie House can hold one pixie, and I can assign a pixie to one by simply using the pixie on it.  I don't need to worry too much about them, either, as pixies will defend their homes against any monsters that happen to wander nearby.  Should the pixie be hurt and become drained, they'll convalesce in bed until I can reinvigorate them with some magickal essence.<BR>Pixies really are amazing, helpful creatures.  These houses could be the start of a whole town.  Maybe they'd be willing to take up some work while they're here...  Hmm, I'll have to think on that.")
             .end()
             .build();
+        this.researchEntry(ResearchEntries.SPELLTOME_APPRENTICE, lookupProvider).name("Apprentice's Spelltome")
+            .stages()
+                .add("Being able to cast spells from wands is pretty great, I just wish they had more capacity.  Sure, I could just make more wands, but keeping them all full of mana sounds like a hassle.  Maybe there's another way.")
+                .add("I've figured out how to get a wand to channel a spell from an external source!  It still needs to be inscribed onto something durable to handle the energies coursing through it, but a magickally strengthened book seems to fit the bill.<BR>If I carry this tome in my off hand while wielding a wand in my main hand, I can cast the tome's spells through my wand!  I just have to scribe the spell into the tome at a Wand Inscription Table then select the spell as normal from my wand.  Pretty neat.")
+            .end()
+            .build();
+        this.researchEntry(ResearchEntries.SPELLTOME_ADEPT, lookupProvider).name("Adept's Spelltome")
+            .stages()
+                .add("As I learn more about magick, I want to be able to carry more spells with me while I'm working or adventuring, and my wand cores aren't keeping up.  Let's see if I can increase the capacity of my spelltomes.")
+                .add("Excellent!  With a little modification to the binding process, this new tome can hold two spells instead of one.  I'm feeling like a real wizard already!")
+            .end()
+            .build();
+        this.researchEntry(ResearchEntries.SPELLTOME_WIZARD, lookupProvider).name("Wizard's Spelltome")
+            .stages()
+                .add("I need more spell capacity!  My genius will not be constrained!")
+                .add("This will do, for now.  Further modifications to the tome binding process now let it hold up to three inscribed spells for use with any wand.")
+            .end()
+            .build();
+        this.researchEntry(ResearchEntries.SPELLTOME_ARCHMAGE, lookupProvider).name("Archmage's Spelltome")
+                .stages()
+                .add("There is wisdom in preparation and in having the proper tools for anticipated tasks.  I should ensure that I have all the spells I need with me, as well as preserve them for future study.")
+                .add("This final tome will hold four spells of any variety for use with a paired wand.  May it lend wisdom to future generations.")
+                .end()
+                .build();
         this.researchEntry(ResearchEntries.BASIC_RUNEWORKING, lookupProvider).name("Basic Runeworking")
             .stages()
                 .add("I think I'm starting to get the hang of Runeworking.  Certain symbols carry inherent magickal power.  By carving them into stone, then inscribing the right combination of them onto an item, I can imbue that item with an effect much like an enchantment.<BR>While somewhat invovled, there appear to be a number of benefits to this process over using an enchanting table.<BR>First, it doesn't cost me any of my hard-won experience.  That alone makes it worth studying.<BR>Second, I have full control of the enchantment that gets applied.  No more praying for the right random result at the enchanting table.<BR>And third, I can actually apply runes to an item that I've already enchanted for further effect.<BR>This process has its drawbacks, though.  These runes are very complicated; I'm going to have to research each of them individually to make sure I get them right.  And an item can only have one set of runes applied to it at a time.  Finally, and most strangely, while a standard grindstone will remove the magick that the runes impart, it won't remove the runes themselves, so I can't apply new ones.<BR>Still, this is a discipline that seems well worth my time to pursue, if I want to give myself the arms and armor I need to survive.")

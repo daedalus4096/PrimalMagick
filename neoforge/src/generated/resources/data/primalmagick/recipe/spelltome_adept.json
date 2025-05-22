@@ -1,0 +1,37 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "primalmagick:spell_scroll_blank"
+    },
+    {
+      "item": "primalmagick:spell_scroll_blank"
+    },
+    {
+      "tag": "primalmagick:essences/terrestrial_shards"
+    }
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 2000,
+      "primalmagick:moon": 2000,
+      "primalmagick:sea": 2000,
+      "primalmagick:sky": 2000,
+      "primalmagick:sun": 2000
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:spelltome_adept"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:spelltome_adept"
+  }
+}

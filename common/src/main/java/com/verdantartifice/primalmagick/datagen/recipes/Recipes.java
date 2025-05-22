@@ -106,6 +106,7 @@ public abstract class Recipes extends RecipeProvider {
         this.registerGemBudRecipes(consumer);
         this.registerWaxRecipes(consumer, FeatureFlagSet.of(FeatureFlags.VANILLA));
         this.registerManaNetworkingRecipes(consumer);
+        this.registerSpelltomeRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(CommonTags.Items.RODS_WOODEN)
@@ -7440,6 +7441,37 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_RELAY_HEAVENLY.get())
             .addIngredient(Items.HOPPER)
             .requiredResearch(ResearchEntries.HEAVENLY_MANA_NETWORKING)
+            .build(consumer);
+    }
+
+    protected void registerSpelltomeRecipes(RecipeOutput consumer) {
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SPELLTOME_APPRENTICE.get())
+            .addIngredient(Items.BOOK)
+            .addIngredient(ItemsPM.SPELL_SCROLL_BLANK.get(), 1)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
+            .requiredResearch(ResearchEntries.SPELLTOME_APPRENTICE)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SPELLTOME_ADEPT.get())
+            .addIngredient(Items.BOOK)
+            .addIngredient(ItemsPM.SPELL_SCROLL_BLANK.get(), 2)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_SHARDS)
+            .requiredResearch(ResearchEntries.SPELLTOME_ADEPT)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 20).add(Sources.SEA, 20).add(Sources.SKY, 20).add(Sources.SUN, 20).add(Sources.MOON, 20))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SPELLTOME_WIZARD.get())
+            .addIngredient(Items.BOOK)
+            .addIngredient(ItemsPM.SPELL_SCROLL_BLANK.get(), 3)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_CRYSTALS)
+            .requiredResearch(ResearchEntries.SPELLTOME_WIZARD)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 50).add(Sources.SEA, 50).add(Sources.SKY, 50).add(Sources.SUN, 50).add(Sources.MOON, 50))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SPELLTOME_ARCHMAGE.get())
+            .addIngredient(Items.BOOK)
+            .addIngredient(ItemsPM.SPELL_SCROLL_BLANK.get(), 4)
+            .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_CLUSTERS)
+            .requiredResearch(ResearchEntries.SPELLTOME_ARCHMAGE)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 100).add(Sources.SEA, 100).add(Sources.SKY, 100).add(Sources.SUN, 100).add(Sources.MOON, 100))
             .build(consumer);
     }
 }
