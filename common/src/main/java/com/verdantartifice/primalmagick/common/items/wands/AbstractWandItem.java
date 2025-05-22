@@ -438,7 +438,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
         playerIn.startUsingItem(handIn);
-        SpellPackage activeSpell = this.getActiveSpell(stack);
+        SpellPackage activeSpell = SpellManager.getActiveSpell(playerIn.getMainHandItem(), playerIn.getOffhandItem());
         if (activeSpell != null && !SpellManager.isOnCooldown(playerIn)) {
             // If the wand has an active spell and spells are off the player's cooldown, attempt to cast the spell on right-click
             SpellManager.setCooldown(playerIn, activeSpell.getCooldownTicks());

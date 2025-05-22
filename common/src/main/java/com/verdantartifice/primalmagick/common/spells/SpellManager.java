@@ -185,7 +185,11 @@ public class SpellManager {
         boolean retVal = false;
         if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer && offHandStack.getItem() instanceof ISpellContainer offHandContainer) {
             int mainHandCount = mainHandContainer.getSpellCount(mainHandStack);
-            if (index >= 0 && index < mainHandCount) {
+            if (index == ISpellContainer.NO_SPELL_SELECTED) {
+                mainHandContainer.setActiveSpellIndex(mainHandStack, index);
+                offHandContainer.setActiveSpellIndex(offHandStack, index);
+                retVal = true;
+            } else if (index >= 0 && index < mainHandCount) {
                 mainHandContainer.setActiveSpellIndex(mainHandStack, index);
                 offHandContainer.setActiveSpellIndex(offHandStack, ISpellContainer.OTHER_HAND_SELECTED);
                 retVal = true;
@@ -194,10 +198,12 @@ public class SpellManager {
                 offHandContainer.setActiveSpellIndex(offHandStack, index - mainHandCount);
                 retVal = true;
             }
-        } else if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer && index >= 0 && index < mainHandContainer.getSpellCount(mainHandStack)) {
+        } else if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer &&
+                (index == ISpellContainer.NO_SPELL_SELECTED || (index >= 0 && index < mainHandContainer.getSpellCount(mainHandStack)))) {
             mainHandContainer.setActiveSpellIndex(mainHandStack, index);
             retVal = true;
-        } else if (offHandStack.getItem() instanceof ISpellContainer offHandContainer && index >= 0 && index < offHandContainer.getSpellCount(offHandStack)) {
+        } else if (offHandStack.getItem() instanceof ISpellContainer offHandContainer &&
+                (index == ISpellContainer.NO_SPELL_SELECTED || (index >= 0 && index < offHandContainer.getSpellCount(offHandStack)))) {
             offHandContainer.setActiveSpellIndex(offHandStack, index);
             retVal = true;
         }
