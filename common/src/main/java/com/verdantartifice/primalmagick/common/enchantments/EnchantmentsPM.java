@@ -303,8 +303,8 @@ public class EnchantmentsPM {
         );
         
         /*
-         * Definition of a mana efficiency enchantment that can be applied to wands or staves.  Decreases
-         * mana consumed when crafting or casting spells.
+         * Definition of a mana efficiency enchantment that can be applied to wizardly equipment, such as wands, staves,
+         * and robes.  Decreases mana consumed when crafting or casting spells.
          */
         register(
                 pContext,
@@ -324,7 +324,7 @@ public class EnchantmentsPM {
         );
         
         /*
-         * Definition of a wand enchantment that mimics and stacks with the effect of the Amplify spell mod.
+         * Definition of an enchantment that mimics and stacks with the effect of the Amplify spell mod.
          */
         register(
                 pContext,
