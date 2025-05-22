@@ -8,20 +8,16 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.AbstractWandItem;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
-import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ConfiguredSpellMod;
-import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.MineSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModType;
 import com.verdantartifice.primalmagick.common.spells.mods.SpellModsPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.ConfiguredSpellPayload;
-import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadType;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVehicle;
-import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
@@ -41,20 +37,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
 /**
  * Primary access point for spell-related methods.  Also stores defined spell component data in static registries.
@@ -64,39 +56,8 @@ import java.util.function.Supplier;
 public class SpellManager {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    // Lists of spell component type names
-    protected static final List<String> VEHICLE_TYPES = new ArrayList<>();
-    protected static final List<String> PAYLOAD_TYPES = new ArrayList<>();
-    protected static final List<String> MOD_TYPES = new ArrayList<>();
-    
-    // Maps of spell component type names to suppliers for default instances of those components
-    protected static final Map<String, Supplier<ISpellVehicle>> VEHICLE_INSTANCE_SUPPLIERS = new HashMap<>();
-    protected static final Map<String, Supplier<ISpellPayload>> PAYLOAD_INSTANCE_SUPPLIERS = new HashMap<>();
-    protected static final Map<String, Supplier<ISpellMod>> MOD_INSTANCE_SUPPLIERS = new HashMap<>();
-    
-    // Maps of spell component type names to suppliers for keys of required research for those components
-    protected static final Map<String, Supplier<AbstractRequirement<?>>> VEHICLE_RESEARCH_SUPPLIERS = new HashMap<>();
-    protected static final Map<String, Supplier<AbstractRequirement<?>>> PAYLOAD_RESEARCH_SUPPLIERS = new HashMap<>();
-    protected static final Map<String, Supplier<AbstractRequirement<?>>> MOD_RESEARCH_SUPPLIERS = new HashMap<>();
-    
     protected static final DecimalFormat COOLDOWN_FORMATTER = new DecimalFormat("#######.##");
 
-    @Nonnull
-    protected static List<String> getFilteredTypes(@Nullable Player player, @Nonnull List<String> types, @Nonnull Map<String, Supplier<AbstractRequirement<?>>> suppliers) {
-        // Compute a list of spell component types that the given player is able to use by dint of their accumulated research
-        List<String> retVal = new ArrayList<>();
-        for (String type : types) {
-            Supplier<AbstractRequirement<?>> supplier = suppliers.get(type);
-            if (supplier != null) {
-                AbstractRequirement<?> req = supplier.get();
-                if (req == null || req.isMetBy(player)) {
-                    retVal.add(type);
-                }
-            }
-        }
-        return retVal;
-    }
-    
     protected static <T extends ISpellComponentType> List<T> getFilteredTypes(@Nullable Player player, Collection<T> values) {
         // Compute a list of spell component types that the given player is able to use
         return values.stream()
@@ -105,61 +66,19 @@ public class SpellManager {
                 .toList();
     }
     
-    @Nonnull
+    @NotNull
     public static List<SpellVehicleType<?>> getVehicleTypes(@Nullable Player player) {
         return getFilteredTypes(player, Services.SPELL_VEHICLE_TYPES_REGISTRY.getAll());
     }
     
-    @Nullable
-    public static Supplier<ISpellVehicle> getVehicleSupplier(@Nullable String type) {
-        return VEHICLE_INSTANCE_SUPPLIERS.get(type);
-    }
-    
-    public static void registerVehicleType(@Nullable String type, @Nullable Supplier<ISpellVehicle> instanceSupplier, @Nullable Supplier<AbstractRequirement<?>> researchSupplier) {
-        // Register the given vehicle type and associate it with the given instance and research suppliers
-        if (type != null && !type.isEmpty() && instanceSupplier != null && researchSupplier != null) {
-            VEHICLE_TYPES.add(type);
-            VEHICLE_INSTANCE_SUPPLIERS.put(type, instanceSupplier);
-            VEHICLE_RESEARCH_SUPPLIERS.put(type, researchSupplier);
-        }
-    }
-    
-    @Nonnull
+    @NotNull
     public static List<SpellPayloadType<?>> getPayloadTypes(@Nullable Player player) {
         return getFilteredTypes(player, Services.SPELL_PAYLOAD_TYPES_REGISTRY.getAll());
     }
     
-    @Nullable
-    public static Supplier<ISpellPayload> getPayloadSupplier(@Nullable String type) {
-        return PAYLOAD_INSTANCE_SUPPLIERS.get(type);
-    }
-    
-    public static void registerPayloadType(@Nullable String type, @Nullable Supplier<ISpellPayload> instanceSupplier, @Nullable Supplier<AbstractRequirement<?>> researchSupplier) {
-        // Register the given payload type and associate it with the given instance and research suppliers
-        if (type != null && !type.isEmpty() && instanceSupplier != null && researchSupplier != null) {
-            PAYLOAD_TYPES.add(type);
-            PAYLOAD_INSTANCE_SUPPLIERS.put(type, instanceSupplier);
-            PAYLOAD_RESEARCH_SUPPLIERS.put(type, researchSupplier);
-        }
-    }
-    
-    @Nonnull
+    @NotNull
     public static List<SpellModType<?>> getModTypes(@Nullable Player player) {
         return getFilteredTypes(player, Services.SPELL_MOD_TYPES_REGISTRY.getAll());
-    }
-    
-    @Nullable
-    public static Supplier<ISpellMod> getModSupplier(@Nullable String type) {
-        return MOD_INSTANCE_SUPPLIERS.get(type);
-    }
-    
-    public static void registerModType(@Nullable String type, @Nullable Supplier<ISpellMod> instanceSupplier, @Nullable Supplier<AbstractRequirement<?>> researchSupplier) {
-        // Register the given mod type and associate it with the given instance and research suppliers
-        if (type != null && !type.isEmpty() && instanceSupplier != null && researchSupplier != null) {
-            MOD_TYPES.add(type);
-            MOD_INSTANCE_SUPPLIERS.put(type, instanceSupplier);
-            MOD_RESEARCH_SUPPLIERS.put(type, researchSupplier);
-        }
     }
     
     public static boolean isOnCooldown(@Nullable Player player) {
@@ -265,7 +184,7 @@ public class SpellManager {
         return retVal;
     }
     
-    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull HitResult result, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource,
+    public static void executeSpellPayload(@NotNull SpellPackage spell, @NotNull HitResult result, @NotNull Level world, @NotNull LivingEntity caster, @Nullable ItemStack spellSource,
             boolean allowMine, @Nullable Entity projectileEntity) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
         if (world instanceof ServerLevel serverLevel && spell.payload() != null) {
@@ -299,7 +218,7 @@ public class SpellManager {
         }
     }
     
-    public static boolean canPolymorph(@Nonnull EntityType<?> entityType) {
+    public static boolean canPolymorph(@NotNull EntityType<?> entityType) {
         // TODO Change to deny, allow, deny pattern
         if (entityType.is(EntityTypeTagsPM.POLYMORPH_ALLOW)) {
             return true;
@@ -311,8 +230,8 @@ public class SpellManager {
         }
     }
     
-    @Nonnull
-    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, @Nonnull ItemStack spellSource, @Nullable Player player, boolean indent, HolderLookup.Provider registries) {
+    @NotNull
+    public static List<Component> getSpellPackageDetailTooltip(@Nullable SpellPackage spell, @NotNull ItemStack spellSource, @Nullable Player player, boolean indent, HolderLookup.Provider registries) {
         List<Component> retVal = new ArrayList<>();
         Component leader = indent ? Component.literal("    ") : Component.literal("");
         if (spell != null) {
