@@ -36,7 +36,7 @@ import java.util.function.Supplier;
  * blocks.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.misc.EntitySwapper}
+ * @see com.verdantartifice.primalmagick.common.misc.EntitySwapper
  */
 public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphSpellPayload<T>> extends AbstractSpellPayload<T> {
     private static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
@@ -54,9 +54,8 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
             EntityHitResult entityTarget = (EntityHitResult)target;
             if (SpellManager.canPolymorph(entityTarget.getEntity().getType())) {
                 // Create and enqueue an entity swapper for the target entity
-                UUID entityId = entityTarget.getEntity().getUUID();
                 CompoundTag originalData = entityTarget.getEntity().saveWithoutId(new CompoundTag());
-                int ticks = 20 * this.getDurationSeconds(spell, spellSource, world.registryAccess());
+                int ticks = 20 * this.getDurationSeconds(spell, spellSource, caster, world.registryAccess());
                 EntitySwapper.enqueue(entityTarget.getEntity(), new EntitySwapper(this.getNewEntityType(), originalData, Optional.of(ticks), 0));
             }
         }
@@ -79,12 +78,12 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
         world.playSound(null, origin, this.getCastSoundEvent(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
-    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return 6 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource, registries);
+    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return 6 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource, caster, registries);
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource, registries)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource, caster, registries)));
     }
 }

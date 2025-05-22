@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.spells;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -48,7 +49,7 @@ public interface ISpellComponent {
      * 
      * @return the spell component details
      */
-    default Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+    default Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
         return this.getTypeName();
     }
     

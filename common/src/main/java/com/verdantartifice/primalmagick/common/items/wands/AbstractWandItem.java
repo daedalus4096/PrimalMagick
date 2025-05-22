@@ -296,36 +296,31 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         // Start with the base modifier, as determined by wand cap
         int modifier = this.getBaseCostModifier(stack);
         
-        // Subtract discounts from wand enchantments
-        int efficiencyLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.MANA_EFFICIENCY, registries);
-        if (efficiencyLevel > 0) {
-            modifier += (2 * efficiencyLevel);
-        }
-        
         if (player != null) {
-            // Subtract discounts from equipped player gear
+            // Add discounts from equipped player gear and enchantments
             int gearDiscount = 0;
             for (ItemStack gearStack : player.getAllSlots()) {
                 if (gearStack.getItem() instanceof IManaDiscountGear discountItem) {
                     gearDiscount += discountItem.getManaDiscount(gearStack, player, source);
                 }
+                gearDiscount += (2 * EnchantmentHelperPM.getEnchantmentLevel(gearStack, EnchantmentsPM.MANA_EFFICIENCY, registries));
             }
             if (gearDiscount > 0) {
                 modifier += gearDiscount;
             }
             
-            // Subtract discounts from attuned sources
+            // Add discounts from attuned sources
             if (AttunementManager.meetsThreshold(player, source, AttunementThreshold.MINOR)) {
                 modifier += 5;
             }
             
-            // Subtract discounts from temporary conditions
+            // Add discounts from temporary conditions
             if (player.hasEffect(EffectsPM.MANAFRUIT.getHolder())) {
                 // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
                 modifier += ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder()).getAmplifier()) + 1);
             }
             
-            // Add penalties from temporary conditions
+            // Subtract penalties from temporary conditions
             if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.getHolder())) {
                 // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
                 modifier -= (5 * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder()).getAmplifier() + 1));

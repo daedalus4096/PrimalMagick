@@ -311,14 +311,14 @@ public class EnchantmentsPM {
                 MANA_EFFICIENCY,
                 Enchantment.enchantment(
                         Enchantment.definition(
-                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
-                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.MANA_EFFICIENCY_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.MANA_EFFICIENCY_ENCHANTABLE),
                                 10,
                                 5,
                                 Enchantment.dynamicCost(1, 10),
                                 Enchantment.dynamicCost(51, 10),
                                 1,
-                                EquipmentSlotGroup.MAINHAND
+                                EquipmentSlotGroup.ANY
                         )
                 )
         );
@@ -331,14 +331,14 @@ public class EnchantmentsPM {
                 SPELL_POWER,
                 Enchantment.enchantment(
                         Enchantment.definition(
-                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
-                                itemHolderGetter.getOrThrow(ItemTagsPM.WAND_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.SPELL_POWER_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.SPELL_POWER_ENCHANTABLE),
                                 2,
                                 5,
                                 Enchantment.dynamicCost(10, 10),
                                 Enchantment.dynamicCost(35, 10),
                                 4,
-                                EquipmentSlotGroup.MAINHAND
+                                EquipmentSlotGroup.HAND
                         )
                 )
         );

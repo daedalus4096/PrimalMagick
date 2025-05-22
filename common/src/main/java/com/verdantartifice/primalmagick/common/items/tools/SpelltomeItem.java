@@ -1,9 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.SpelltomeISTER;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
@@ -76,6 +74,16 @@ public abstract class SpelltomeItem extends Item implements Equipable, IHasCusto
             case FORBIDDEN -> 3;
             case HEAVENLY, CREATIVE -> 4;
         };
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack pStack) {
+        return true;
+    }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 8 + (5 * this.getSpellCapacity());
     }
 
     @Override

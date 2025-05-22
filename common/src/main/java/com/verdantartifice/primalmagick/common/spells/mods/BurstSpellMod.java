@@ -17,6 +17,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
@@ -89,14 +90,14 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
     }
 
     @Nonnull
-    public Set<HitResult> getBurstTargets(HitResult origin, SpellPackage spell, @Nullable ItemStack spellSource, Level world) {
+    public Set<HitResult> getBurstTargets(HitResult origin, SpellPackage spell, @Nullable ItemStack spellSource, @Nullable LivingEntity caster, Level world) {
         Set<HitResult> retVal = new HashSet<>();
         Set<BlockPos> affectedBlocks = new HashSet<>();
         Vec3 hitVec = origin.getLocation();
         BlockPos hitPos = BlockPos.containing(hitVec);
         int radius = this.getRadiusBlocks(spell, spellSource);
-        int power = this.getBlastPower(spell, spellSource, world.registryAccess());
-        double sqRadius = (double)(radius * radius);
+        int power = this.getBlastPower(spell, spellSource, caster, world.registryAccess());
+        double sqRadius = radius * radius;
         int searchRadius = radius + 1;
         Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.BlockInteraction.KEEP);
         
@@ -153,12 +154,13 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
         return spell.getMod(SpellModsPM.BURST.get()).orElseThrow().getPropertyValue(SpellPropertiesPM.RADIUS.get());
     }
     
-    protected int getBlastPower(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return 5 + (3 * this.getModdedPropertyValue(SpellPropertiesPM.BURST_POWER.get(), spell, spellSource, registries));
+    protected int getBlastPower(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return 5 + (3 * this.getModdedPropertyValue(SpellPropertiesPM.BURST_POWER.get(), spell, spellSource, caster, registries));
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getRadiusBlocks(spell, spellSource), this.getBlastPower(spell, spellSource, registries));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getRadiusBlocks(spell, spellSource),
+                this.getBlastPower(spell, spellSource, caster, registries));
     }
 }

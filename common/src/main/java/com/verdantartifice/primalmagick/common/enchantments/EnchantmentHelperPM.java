@@ -19,20 +19,12 @@ import java.util.Optional;
 public class EnchantmentHelperPM {
     public static int getEquippedEnchantmentLevel(LivingEntity entity, ResourceKey<Enchantment> enchantment) {
         Optional<Holder.Reference<Enchantment>> holderOpt = entity.level().holderLookup(Registries.ENCHANTMENT).get(enchantment);
-        if (holderOpt.isPresent()) {
-            return EnchantmentHelper.getEnchantmentLevel(holderOpt.get(), entity);
-        } else {
-            return 0;
-        }
+        return holderOpt.map(enchantmentReference -> EnchantmentHelper.getEnchantmentLevel(enchantmentReference, entity)).orElse(0);
     }
     
     public static int getEnchantmentLevel(ItemStack stack, ResourceKey<Enchantment> enchantment, HolderLookup.Provider registries) {
         Optional<Holder.Reference<Enchantment>> holderOpt = registries.lookupOrThrow(Registries.ENCHANTMENT).get(enchantment);
-        if (holderOpt.isPresent()) {
-            return stack.getEnchantments().getLevel(holderOpt.get());
-        } else {
-            return 0;
-        }
+        return holderOpt.map(enchantmentReference -> stack.getEnchantments().getLevel(enchantmentReference)).orElse(0);
     }
     
     public static boolean hasEnderport(LivingEntity entity) {

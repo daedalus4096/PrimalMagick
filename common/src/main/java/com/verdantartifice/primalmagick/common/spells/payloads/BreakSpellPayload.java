@@ -79,7 +79,7 @@ public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
             float durability = (float)Math.sqrt(100.0F * state.getDestroySpeed(world, pos));
             boolean silk = (spell.payload().getPropertyValue(SpellPropertiesPM.SILK_TOUCH.get()) == 1);
             int treasure = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.TREASURE, world.registryAccess());
-            BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, world.registryAccess()))
+            BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, caster, world.registryAccess()))
                     .target(pos, state).durability(durability).player(player).tool(spellSource).silkTouch(silk).fortune(treasure).alwaysDrop().build();
             BlockBreaker.schedule(world, 1, breaker);
         }

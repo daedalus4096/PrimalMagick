@@ -245,7 +245,7 @@ public class SpellManager {
                 world.addFreshEntity(mineEntity);
             } else if (burstMod != null) {
                 // If the spell package has the burst mod, calculate the set of affected blocks/entities and execute the payload on each
-                Set<HitResult> targetSet = burstMod.getComponent().getBurstTargets(result, spell, spellSource, world);
+                Set<HitResult> targetSet = burstMod.getComponent().getBurstTargets(result, spell, spellSource, caster, world);
                 for (HitResult target : targetSet) {
                     spell.payload().getComponent().execute(target, hitVec, spell, world, caster, spellSource, null);
                 }
@@ -275,23 +275,23 @@ public class SpellManager {
         if (spell != null) {
             ConfiguredSpellVehicle<?> vehicle = spell.vehicle();
             if (vehicle != null) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getComponent().getDetailTooltip(spell, spellSource, registries))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getComponent().getDetailTooltip(spell, spellSource, null, registries))));
             }
             
             ConfiguredSpellPayload<?> payload = spell.payload();
             if (payload != null) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getComponent().getDetailTooltip(spell, spellSource, registries))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getComponent().getDetailTooltip(spell, spellSource, null, registries))));
             }
             
             Optional<ConfiguredSpellMod<?>> primary = spell.primaryMod();
             Optional<ConfiguredSpellMod<?>> secondary = spell.secondaryMod();
             if (primary.isPresent() && primary.get().getComponent().isActive() && secondary.isPresent() && secondary.get().getComponent().isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.get().getComponent().getDetailTooltip(spell, spellSource, registries),
-                        secondary.get().getComponent().getDetailTooltip(spell, spellSource, registries))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.get().getComponent().getDetailTooltip(spell, spellSource, null, registries),
+                        secondary.get().getComponent().getDetailTooltip(spell, spellSource, null, registries))));
             } else if (primary.isPresent() && primary.get().getComponent().isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", primary.get().getComponent().getDetailTooltip(spell, spellSource, registries))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", primary.get().getComponent().getDetailTooltip(spell, spellSource, null, registries))));
             } else if (secondary.isPresent() && secondary.get().getComponent().isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", secondary.get().getComponent().getDetailTooltip(spell, spellSource, registries))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", secondary.get().getComponent().getDetailTooltip(spell, spellSource, null, registries))));
             }
             
             retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));

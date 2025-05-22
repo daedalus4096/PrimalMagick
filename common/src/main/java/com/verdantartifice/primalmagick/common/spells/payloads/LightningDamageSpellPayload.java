@@ -17,8 +17,11 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nullable;
 
 /**
  * Definition of a lightning damage spell.  Deals lower than standard damage at low power property
@@ -59,8 +62,8 @@ public class LightningDamageSpellPayload extends AbstractDamageSpellPayload<Ligh
     }
 
     @Override
-    protected float getBaseDamage(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return 5.0F * this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, registries);
+    protected float getBaseDamage(SpellPackage spell, @Nullable ItemStack spellSource, @Nullable LivingEntity caster, HolderLookup.Provider registries) {
+        return 5.0F * this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, caster, registries);
     }
 
     @Override
@@ -75,7 +78,7 @@ public class LightningDamageSpellPayload extends AbstractDamageSpellPayload<Ligh
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource, registries)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource, caster, registries)));
     }
 }
