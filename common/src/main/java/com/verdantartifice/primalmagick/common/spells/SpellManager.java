@@ -22,7 +22,7 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVe
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
-import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -181,16 +181,16 @@ public class SpellManager {
     }
     
     public static void cycleActiveSpell(@Nullable Player player, @Nullable ItemStack wandStack, boolean reverse) {
-        // Change the active spell for the given wand stack to the next (or previous, if specified) one in its inscribed list
-        if (wandStack != null && wandStack.getItem() instanceof IWand wand) {
-            int newIndex = wand.getActiveSpellIndex(wandStack) + (reverse ? -1 : 1);
+        // Change the active spell for the given spell container stack to the next (or previous, if specified) one in its inscribed list
+        if (wandStack != null && wandStack.getItem() instanceof ISpellContainer spellContainer) {
+            int newIndex = spellContainer.getActiveSpellIndex(wandStack) + (reverse ? -1 : 1);
             
             // Cycle to the beginning from the end of the list, or to the end from the beginning of the list
-            if (newIndex >= wand.getSpellCount(wandStack)) {
+            if (newIndex >= spellContainer.getSpellCount(wandStack)) {
                 newIndex = -1;
             }
             if (newIndex < -1) {
-                newIndex = wand.getSpellCount(wandStack) - 1;
+                newIndex = spellContainer.getSpellCount(wandStack) - 1;
             }
             
             setActiveSpell(player, wandStack, newIndex);
@@ -198,17 +198,17 @@ public class SpellManager {
     }
     
     public static void setActiveSpell(@Nullable Player player, @Nullable ItemStack wandStack, int spellIndex) {
-        // Set the active spell for the given wand stack to the given index, clamped
-        if (wandStack != null && wandStack.getItem() instanceof IWand wand) {
+        // Set the active spell for the given spell container stack to the given index, clamped
+        if (wandStack != null && wandStack.getItem() instanceof ISpellContainer spellContainer) {
             // Clamp the given index to safe bounds
-            int newIndex = Mth.clamp(spellIndex, -1, wand.getSpellCount(wandStack) - 1);
+            int newIndex = Mth.clamp(spellIndex, -1, spellContainer.getSpellCount(wandStack) - 1);
             
             // Set the new active spell index
-            wand.setActiveSpellIndex(wandStack, newIndex);
+            spellContainer.setActiveSpellIndex(wandStack, newIndex);
             
             // Tell the player what the new active spell is
             if (player != null) {
-                SpellPackage spell = wand.getActiveSpell(wandStack);
+                SpellPackage spell = spellContainer.getActiveSpell(wandStack);
                 if (spell == null) {
                     player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell.none"));
                 } else {

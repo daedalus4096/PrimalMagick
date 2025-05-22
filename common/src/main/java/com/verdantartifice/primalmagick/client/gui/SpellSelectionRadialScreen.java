@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.client.gui.radial.SpellPackageRadialMenu
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
@@ -143,11 +144,10 @@ public class SpellSelectionRadialScreen extends Screen {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.pose().popPose();
         
-        if (this.stackEquipped.isEmpty()) {
+        if (this.stackEquipped.isEmpty() || !(this.stackEquipped.getItem() instanceof ISpellContainer wand)) {
             return;
         }
         
-        IWand wand = (IWand)this.stackEquipped.getItem();
         if (this.needsRecheckSpells) {
             // Create and add radial menu items
             this.cachedMenuItems.clear();
