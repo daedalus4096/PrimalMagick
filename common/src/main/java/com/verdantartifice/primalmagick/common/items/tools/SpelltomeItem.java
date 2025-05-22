@@ -1,11 +1,14 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.SpelltomeISTER;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
@@ -24,8 +27,10 @@ import net.minecraft.world.item.TooltipFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public abstract class SpelltomeItem extends Item implements Equipable, IHasCustomRenderer, ITieredDevice, ISpellContainer {
     private final DeviceTier tier;
@@ -64,6 +69,15 @@ public abstract class SpelltomeItem extends Item implements Equipable, IHasCusto
         return this.tier;
     }
 
+    protected int getSpellCapacity() {
+        return switch (this.getDeviceTier()) {
+            case BASIC -> 1;
+            case ENCHANTED -> 2;
+            case FORBIDDEN -> 3;
+            case HEAVENLY, CREATIVE -> 4;
+        };
+    }
+
     @Override
     public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
@@ -83,47 +97,28 @@ public abstract class SpelltomeItem extends Item implements Equipable, IHasCusto
     }
 
     @Override
-    public @NotNull List<SpellPackage> getSpells(@Nullable ItemStack stack) {
-        return List.of();
-    }
-
-    @Override
-    public int getSpellCount(@Nullable ItemStack stack) {
-        return 0;
-    }
-
-    @Override
     public Component getSpellCapacityText(@Nullable ItemStack stack) {
-        return null;
-    }
-
-    @Override
-    public int getActiveSpellIndex(@Nullable ItemStack stack) {
-        return 0;
-    }
-
-    @Override
-    public @Nullable SpellPackage getActiveSpell(@Nullable ItemStack stack) {
-        return null;
-    }
-
-    @Override
-    public boolean setActiveSpellIndex(@Nullable ItemStack stack, int index) {
-        return false;
+        if (stack == null) {
+            return Component.translatable("tooltip.primalmagick.spells.capacity", 0);
+        } else {
+            return Component.translatable("tooltip.primalmagick.spells.capacity", this.getSpellCapacity());
+        }
     }
 
     @Override
     public boolean canAddSpell(@Nullable ItemStack stack, @Nullable SpellPackage spell) {
-        return false;
-    }
+        if (stack == null || spell == null || spell.payload() == null) {
+            return false;
+        }
 
-    @Override
-    public boolean addSpell(@Nullable ItemStack stack, @Nullable SpellPackage spell) {
-        return false;
-    }
+        // Determine the payload sources of all spells to be included in the given tome
+        List<Source> spellSources = this.getSpells(stack).stream()
+                .filter(p -> (p != null && p.payload() != null))
+                .map(p -> p.payload().getComponent().getSource())
+                .collect(Collectors.toCollection(ArrayList::new));
+        spellSources.add(spell.payload().getComponent().getSource());
 
-    @Override
-    public void clearSpells(@Nullable ItemStack stack) {
-
+        int slots = this.getSpellCapacity();
+        return spellSources.size() < slots + 1;
     }
 }

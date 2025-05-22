@@ -55,7 +55,7 @@ public abstract class MundaneWandItem extends AbstractWandItem {
     }
 
     @Override
-    public List<SpellPackage> getSpells(ItemStack stack) {
+    public @NotNull List<SpellPackage> getSpells(ItemStack stack) {
         // Mundane wands can't carry spells
         return Collections.emptyList();
     }
