@@ -32,6 +32,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
@@ -101,6 +102,37 @@ public class SpellManager {
             player.getCooldowns().addCooldown(ItemsPM.MUNDANE_WAND.get(), durationTicks);
             player.getCooldowns().addCooldown(ItemsPM.MODULAR_WAND.get(), durationTicks);
             player.getCooldowns().addCooldown(ItemsPM.MODULAR_STAFF.get(), durationTicks);
+        }
+    }
+
+    public static void appendSpellListingText(@Nullable Player pPlayer, ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents) {
+        if (pStack.getItem() instanceof ISpellContainer spellContainer) {
+            List<SpellPackage> spells = spellContainer.getSpells(pStack);
+            int activeIndex = spellContainer.getActiveSpellIndex(pStack);
+            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.wand_header", spellContainer.getSpellCapacityText(pStack)));
+            if (spells.isEmpty()) {
+                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.none"));
+            } else {
+                for (int index = 0; index < spells.size(); index++) {
+                    SpellPackage spell = spells.get(index);
+                    if (index == activeIndex) {
+                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getDisplayName()));
+                        pTooltipComponents.addAll(SpellManager.getSpellPackageDetailTooltip(spell, pStack, pPlayer, true, pContext.registries()));
+                    } else {
+                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getDisplayName()));
+                    }
+                }
+            }
+        }
+    }
+
+    public static void appendActiveSpellText(ItemStack pStack, List<Component> pTooltipComponents) {
+        if (pStack.getItem() instanceof ISpellContainer spellContainer) {
+            SpellPackage activeSpell = spellContainer.getActiveSpell(pStack);
+            Component activeSpellName = (activeSpell == null) ?
+                    Component.translatable("tooltip.primalmagick.none") :
+                    activeSpell.getDisplayName();
+            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.short_wand_header", activeSpellName));
         }
     }
 
