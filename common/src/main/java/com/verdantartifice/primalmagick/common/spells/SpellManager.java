@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.spells;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -30,7 +31,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -41,6 +41,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,6 +62,8 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class SpellManager {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     // Lists of spell component type names
     protected static final List<String> VEHICLE_TYPES = new ArrayList<>();
     protected static final List<String> PAYLOAD_TYPES = new ArrayList<>();
@@ -227,51 +230,42 @@ public class SpellManager {
         return null;
     }
 
-    public static boolean setActiveSpellIndex(@NotNull ItemStack mainHandStack, @NotNull ItemStack offHandStack, int index) {
+    public static boolean setActiveSpellIndex(@Nullable Player player, @NotNull ItemStack mainHandStack, @NotNull ItemStack offHandStack, int index) {
+        boolean retVal = false;
         if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer && offHandStack.getItem() instanceof ISpellContainer offHandContainer) {
             int mainHandCount = mainHandContainer.getSpellCount(mainHandStack);
             if (index >= 0 && index < mainHandCount) {
                 mainHandContainer.setActiveSpellIndex(mainHandStack, index);
                 offHandContainer.setActiveSpellIndex(offHandStack, ISpellContainer.OTHER_HAND_SELECTED);
-                return true;
+                retVal = true;
             } else if (index >= mainHandCount && index < mainHandCount + offHandContainer.getSpellCount(offHandStack)) {
                 mainHandContainer.setActiveSpellIndex(mainHandStack, ISpellContainer.OTHER_HAND_SELECTED);
                 offHandContainer.setActiveSpellIndex(offHandStack, index - mainHandCount);
-                return true;
+                retVal = true;
             }
         } else if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer && index >= 0 && index < mainHandContainer.getSpellCount(mainHandStack)) {
             mainHandContainer.setActiveSpellIndex(mainHandStack, index);
-            return true;
+            retVal = true;
         } else if (offHandStack.getItem() instanceof ISpellContainer offHandContainer && index >= 0 && index < offHandContainer.getSpellCount(offHandStack)) {
             offHandContainer.setActiveSpellIndex(offHandStack, index);
-            return true;
+            retVal = true;
         }
-        return false;
-    }
-    
-    public static void setActiveSpell(@Nullable Player player, @Nullable ItemStack wandStack, int spellIndex) {
-        // TODO Review for needed updates
-        // Set the active spell for the given spell container stack to the given index, clamped
-        if (wandStack != null && wandStack.getItem() instanceof ISpellContainer spellContainer) {
-            // Clamp the given index to safe bounds
-            int newIndex = Mth.clamp(spellIndex, -1, spellContainer.getSpellCount(wandStack) - 1);
-            
-            // Set the new active spell index
-            spellContainer.setActiveSpellIndex(wandStack, newIndex);
-            
-            // Tell the player what the new active spell is
-            if (player != null) {
-                SpellPackage spell = spellContainer.getActiveSpell(wandStack);
-                if (spell == null) {
-                    player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell.none"));
-                } else {
-                    player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getDisplayName()));
-                }
+
+        if (retVal && player != null) {
+            SpellPackage spell = getActiveSpell(mainHandStack, offHandStack);
+            if (spell == null) {
+                player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell.none"));
+            } else {
+                player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getDisplayName()));
             }
+        } else if (!retVal) {
+            LOGGER.warn("Failed to set active spell to invalid index {}", index);
         }
+
+        return retVal;
     }
     
-    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull HitResult result, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, 
+    public static void executeSpellPayload(@Nonnull SpellPackage spell, @Nonnull HitResult result, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource,
             boolean allowMine, @Nullable Entity projectileEntity) {
         // Execute the payload of the given spell upon the block/entity in the given raytrace result
         if (world instanceof ServerLevel serverLevel && spell.payload() != null) {
