@@ -2939,6 +2939,7 @@
   "tooltip.primalmagick.wand_glamour_table.slot.gem": "Add a wand gem",
   "tooltip.primalmagick.wand_gui.slot.staff": "Add a magickal wand or staff",
   "tooltip.primalmagick.wand_gui.slot.wand": "Add a magickal wand",
+  "tooltip.primalmagick.wand_inscription_table.slot.caster": "Add a magickal wand, staff, or spelltome",
   "tooltip.primalmagick.wand_inscription_table.slot.scroll": "Add a filled spell scroll",
   "tooltip.primalmagick.warded": "Warded",
   "tooltip.primalmagick.written_book.author.unknown": "Unknown",

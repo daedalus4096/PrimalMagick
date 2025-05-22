@@ -1035,6 +1035,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("wand_glamour_table").sub("slot").sub("core").output("Add a wand or staff core").end().build();
         this.tooltip("wand_glamour_table").sub("slot").sub("cap").output("Add a wand cap").end().build();
         this.tooltip("wand_glamour_table").sub("slot").sub("gem").output("Add a wand gem").end().build();
+        this.tooltip("wand_inscription_table").sub("slot").sub("caster").output("Add a magickal wand, staff, or spelltome").end().build();
         this.tooltip("wand_inscription_table").sub("slot").sub("scroll").output("Add a filled spell scroll").end().build();
         this.tooltip("calcinator_gui").sub("slot").sub("fuel").output("Add furnace fuel").end().build();
         this.tooltip("wand_gui").sub("slot").sub("wand").output("Add a magickal wand").end().build();
