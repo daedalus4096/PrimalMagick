@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
-import com.verdantartifice.primalmagick.common.sources.IManaContainer;
+import com.verdantartifice.primalmagick.common.sources.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -44,7 +44,7 @@ import java.util.Optional;
  * @see com.verdantartifice.primalmagick.common.blocks.devices.HoneyExtractorBlock
  * @author Daedalus4096
  */
-public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
+public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainingBlockEntity {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final int INPUT_INV_INDEX = 0;

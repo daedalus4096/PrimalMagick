@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
-import com.verdantartifice.primalmagick.common.sources.IManaContainer;
+import com.verdantartifice.primalmagick.common.sources.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -49,7 +49,7 @@ import java.util.Optional;
  * @author Daedalus4096
  * @see com.verdantartifice.primalmagick.common.blocks.devices.DissolutionChamberBlock
  */
-public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, StackedContentsCompatible {
+public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainingBlockEntity, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final int OUTPUT_INV_INDEX = 0;

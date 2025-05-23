@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-import com.verdantartifice.primalmagick.common.sources.IManaContainer;
+import com.verdantartifice.primalmagick.common.sources.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -62,7 +62,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
+public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IOwnedTileEntity, IManaContainingBlockEntity, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int INPUT_INV_INDEX = 0;

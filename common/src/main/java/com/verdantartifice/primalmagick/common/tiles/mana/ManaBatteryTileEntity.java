@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
@@ -13,7 +12,7 @@ import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
 import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
-import com.verdantartifice.primalmagick.common.sources.IManaContainer;
+import com.verdantartifice.primalmagick.common.sources.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -62,7 +61,7 @@ import java.util.UUID;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock
  * @author Daedalus4096
  */
-public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer,
+public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainingBlockEntity,
         IManaSupplier, IManaConsumer, ITieredDeviceBlockEntity, IOwnedTileEntity {
     private static final Logger LOGGER = LogManager.getLogger();
 
