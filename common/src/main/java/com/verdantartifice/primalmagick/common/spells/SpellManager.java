@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVe
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
+import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -138,11 +139,17 @@ public class SpellManager {
 
     public static @NotNull List<SpellPackage> getSpells(@NotNull ItemStack mainHandStack, @NotNull ItemStack offHandStack) {
         ImmutableList.Builder<SpellPackage> builder = ImmutableList.builder();
-        if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer) {
-            builder.addAll(mainHandContainer.getSpells(mainHandStack));
-        }
-        if (offHandStack.getItem() instanceof ISpellContainer offHandContainer) {
-            builder.addAll(offHandContainer.getSpells(offHandStack));
+        if (mainHandStack.getItem() instanceof IWand mainHandWand && offHandStack.getItem() instanceof IWand) {
+            // If both hands are holding wands, then only return spells from the main hand
+            builder.addAll(mainHandWand.getSpells(mainHandStack));
+        } else {
+            // Otherwise, combine the spell lists of the two containers, if applicable
+            if (mainHandStack.getItem() instanceof ISpellContainer mainHandContainer) {
+                builder.addAll(mainHandContainer.getSpells(mainHandStack));
+            }
+            if (offHandStack.getItem() instanceof ISpellContainer offHandContainer) {
+                builder.addAll(offHandContainer.getSpells(offHandStack));
+            }
         }
         return builder.build();
     }
