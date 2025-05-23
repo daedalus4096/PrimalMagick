@@ -39,7 +39,7 @@ public class ManaOrbArchmageModel extends Model {
 		.texOffs(10, 6).addBox(-0.5F, -5.0F, -1.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(10, 8).addBox(-1.5F, -6.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(12, 0).addBox(0.5F, -6.0F, 0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(12, 2).addBox(-0.5F, -8.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+		.texOffs(12, 2).addBox(-0.5F, -8.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 16, 16);
 	}

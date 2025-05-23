@@ -509,13 +509,13 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
                 .transforms()
-                        .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 90, 0).translation(8, 6, -6).scale(1).end()
-                        .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, -90, 0).translation(-8, 6, -6).scale(1).end()
-                        .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(180, 140, -45).translation(4, -4, 9).scale(1.25F).end()
-                        .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(180, -40, 45).translation(-9, -3, -5).scale(1.25F).end()
-                        .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(2, 5, 0).scale(1F).end()
-                        .transform(ItemDisplayContext.FIXED).rotation(0, 180, 0).translation(-5, 8, -8).scale(1F).end()
-                        .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(2, 4, 2).scale(0.25F).end()
+                        .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 90, 0).translation(8, 8, -6).scale(1).end()
+                        .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, -90, 0).translation(-8, 8, -6).scale(1).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, -20, 0).translation(15, 8, 2).scale(1.25F).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, -20, 0).translation(-2, 8, -7).scale(1.25F).end()
+                        .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(4, 2, 0).scale(1F).end()
+                        .transform(ItemDisplayContext.FIXED).rotation(0, 180, 0).translation(-8, 6, -8).scale(1F).end()
+                        .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(2, 2, 2).scale(0.45F).end()
                         .end();
     }
 
