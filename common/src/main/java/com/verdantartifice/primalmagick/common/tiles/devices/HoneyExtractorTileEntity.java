@@ -145,8 +145,7 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
-            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
-                IWand wand = (IWand)wandStack.getItem();
+            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.SKY) - entity.manaStorage.getManaStored(Sources.SKY);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
                 if (wand.consumeMana(wandStack, null, Sources.SKY, centimanaToTransfer, level.registryAccess())) {

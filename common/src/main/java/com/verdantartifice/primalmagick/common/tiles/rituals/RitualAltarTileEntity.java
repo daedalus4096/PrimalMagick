@@ -514,10 +514,9 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     }
     
     protected boolean consumeMana(ItemStack wandStack, Player player, IRitualRecipe recipe) {
-        if (wandStack == null || wandStack.isEmpty() || !(wandStack.getItem() instanceof IWand)) {
+        if (wandStack == null || wandStack.isEmpty() || !(wandStack.getItem() instanceof IWand wand)) {
             return false;
         }
-        IWand wand = (IWand)wandStack.getItem();
         return wand.consumeMana(wandStack, player, recipe.getManaCosts(), player.registryAccess());
     }
     
