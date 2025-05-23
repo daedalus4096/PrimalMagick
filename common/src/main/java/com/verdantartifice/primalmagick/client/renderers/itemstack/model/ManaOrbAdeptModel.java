@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.client.renderers.entity.model;
+package com.verdantartifice.primalmagick.client.renderers.itemstack.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
