@@ -13,6 +13,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Arrays;
@@ -78,7 +79,7 @@ public class MineSpellMod extends AbstractSpellMod<MineSpellMod> {
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
         return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getDurationMinutes(spell, spellSource));
     }
 }

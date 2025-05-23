@@ -66,6 +66,7 @@ import com.verdantartifice.primalmagick.common.items.tools.PrimalShovelItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
+import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItem;
 import com.verdantartifice.primalmagick.common.items.tools.TieredBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.TieredFishingRodItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
@@ -516,6 +517,10 @@ public class ItemsPM {
     public static final IRegistryItem<Item, ForbiddenBowItem> FORBIDDEN_BOW = registerDefaultInstance("forbidden_bow", Services.ITEM_PROTOTYPES.forbiddenBow(new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, ForbiddenSwordItem> FORBIDDEN_SWORD = registerDefaultInstance("forbidden_sword", () -> new ForbiddenSwordItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(SwordItem.createAttributes(ItemTierPM.HEXIUM, 3, -2.4F))));
     public static final IRegistryItem<Item, SacredShieldItem> SACRED_SHIELD = registerDefaultInstance("sacred_shield", () -> new SacredShieldItem(new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_APPRENTICE = registerSupplier("spelltome_apprentice", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.BASIC, new Item.Properties().rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ADEPT = registerSupplier("spelltome_adept", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_WIZARD = registerSupplier("spelltome_wizard", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ARCHMAGE = registerSupplier("spelltome_archmage", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
 
     // Register mana arrow items
     public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_EARTH = registerSupplier("mana_arrow_earth", () -> new ManaArrowItem(Sources.EARTH, new Item.Properties()));

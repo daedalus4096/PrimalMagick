@@ -13,6 +13,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -62,7 +63,7 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
         return this.getPropertiesInner().stream().filter(prop -> prop.id().equals(id)).findFirst().orElse(null);
     }
 
-    public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, @Nullable ItemStack spellSource, HolderLookup.Provider registries) {
+    public int getModdedPropertyValue(SpellProperty property, SpellPackage spell, @Nullable ItemStack spellSource, @Nullable LivingEntity caster, HolderLookup.Provider registries) {
         MutableInt retVal = new MutableInt(spell.getMod(this.getType()).orElseThrow().getPropertyValue(property));
         if (retVal.intValue() > 0 && !SpellPropertiesPM.AMPLIFY_POWER.get().equals(property) && property.is(SpellPropertyTagsPM.AMPLIFIABLE)) {
             // For power or duration properties greater than zero, increase the total result by
@@ -70,8 +71,10 @@ public abstract class AbstractSpellMod<T extends AbstractSpellMod<T>> implements
             spell.getMod(SpellModsPM.AMPLIFY.get()).ifPresent(ampMod -> {
                 retVal.add(ampMod.getPropertyValue(SpellPropertiesPM.AMPLIFY_POWER.get()));
             });
-            if (spellSource != null) {
-                int enchLevel = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.SPELL_POWER, registries);
+            if (caster != null) {
+                int enchLevel =
+                        EnchantmentHelperPM.getEnchantmentLevel(caster.getMainHandItem(), EnchantmentsPM.SPELL_POWER, registries) +
+                        EnchantmentHelperPM.getEnchantmentLevel(caster.getOffhandItem(), EnchantmentsPM.SPELL_POWER, registries);
                 if (enchLevel > 0) {
                     retVal.add(enchLevel);
                 }

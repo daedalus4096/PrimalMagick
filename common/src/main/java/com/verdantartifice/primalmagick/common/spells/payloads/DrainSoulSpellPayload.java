@@ -74,7 +74,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
             if (entityTarget.getEntity() instanceof LivingEntity) {
                 // Grant the potion effect
                 LivingEntity entity = (LivingEntity)entityTarget.getEntity();
-                int ticks = 20 * this.getDurationSeconds(spell, spellSource, world.registryAccess());
+                int ticks = 20 * this.getDurationSeconds(spell, spellSource, caster, world.registryAccess());
                 entity.addEffect(new MobEffectInstance(EffectsPM.DRAIN_SOUL.getHolder(), ticks));
             }
         }
@@ -100,12 +100,12 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
         return TYPE;
     }
     
-    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return 3 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource, registries);
+    protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return 3 * this.getModdedPropertyValue(SpellPropertiesPM.NON_ZERO_DURATION.get(), spell, spellSource, caster, registries);
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource, registries)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource, caster, registries)));
     }
 }

@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
-import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandISTER;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
@@ -263,21 +262,6 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
 
     @Override
-    public List<SpellPackage> getSpells(ItemStack stack) {
-        // Deserialize the list of inscribed spells from the given wand stack's data
-        return ImmutableList.copyOf(stack.getOrDefault(DataComponentsPM.SPELL_PACKAGE_LIST.get(), ImmutableList.of()));
-    }
-    
-    @Override
-    public int getSpellCount(ItemStack stack) {
-        if (stack != null) {
-            return stack.getOrDefault(DataComponentsPM.SPELL_PACKAGE_LIST.get(), ImmutableList.of()).size();
-        } else {
-            return 0;
-        }
-    }
-    
-    @Override
     public Component getSpellCapacityText(ItemStack stack) {
         if (stack == null) {
             return Component.translatable("tooltip.primalmagick.spells.capacity", 0);
@@ -299,38 +283,6 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
 
     @Override
-    public int getActiveSpellIndex(ItemStack stack) {
-        // Return -1 if no active spell is selected
-        return stack.getOrDefault(DataComponentsPM.ACTIVE_SPELL_INDEX.get(), -1);
-    }
-    
-    @Override
-    public SpellPackage getActiveSpell(ItemStack stack) {
-        // Deserialize the active inscribed spell from the given wand stack's NBT data
-        SpellPackage retVal = null;
-        if (stack != null) {
-            List<SpellPackage> spellList = stack.get(DataComponentsPM.SPELL_PACKAGE_LIST.get());
-            int index = this.getActiveSpellIndex(stack);
-            if (spellList != null && index >= 0 && index < spellList.size()) {
-                retVal = spellList.get(index);
-            }
-        }
-        return retVal;
-    }
-
-    @Override
-    public boolean setActiveSpellIndex(ItemStack stack, int index) {
-        if (stack == null) {
-            return false;
-        } else if (index >= -1 && index < this.getSpells(stack).size()) {
-            // -1 is a valid value and means "no active spell"
-            stack.set(DataComponentsPM.ACTIVE_SPELL_INDEX.get(), index);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public boolean canAddSpell(ItemStack stack, SpellPackage spell) {
         if (stack == null || spell == null || spell.payload() == null) {
             return false;
@@ -346,12 +298,12 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
         List<Source> spellSources = this.getSpells(stack).stream()
                 .filter(p -> (p != null && p.payload() != null))
                 .map(p -> p.payload().getComponent().getSource())
-                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+                .collect(Collectors.toCollection(ArrayList::new));
         spellSources.add(spell.payload().getComponent().getSource());
         
         int coreSlots = this.getCoreSpellSlotCount(core);
         if (spellSources.size() < coreSlots + 1) {
-            // If the spells would fit in the base slots without the bonus, then it's fine
+            // If the spells fit in the base slots without the bonus, then it's fine
             return true;
         } else if (spellSources.size() > coreSlots + 1) {
             // If the bonus slot wouldn't be enough to make them fit, then reject
@@ -360,23 +312,6 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
             // If using exactly the slot count plus bonus slot, only allow if one of the spells is of the same source as the bonus
             return core.getBonusSlot() != null && spellSources.contains(core.getBonusSlot());
         }
-    }
-
-    @Override
-    public boolean addSpell(ItemStack stack, SpellPackage spell) {
-        if (this.canAddSpell(stack, spell)) {
-            // Save the given spell into the wand stack's data
-            stack.set(DataComponentsPM.SPELL_PACKAGE_LIST.get(), ImmutableList.<SpellPackage>builder().addAll(this.getSpells(stack)).add(spell).build());
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public void clearSpells(ItemStack stack) {
-        stack.remove(DataComponentsPM.SPELL_PACKAGE_LIST.get());
-        stack.remove(DataComponentsPM.ACTIVE_SPELL_INDEX.get());
     }
 
     @Override

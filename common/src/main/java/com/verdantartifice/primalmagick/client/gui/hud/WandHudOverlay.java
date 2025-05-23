@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.client.gui.hud;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.spells.SpellManager;
+import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -16,9 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.item.ItemStack;
 
-import java.awt.Color;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * HUD overlay to show wand mana levels.
@@ -37,35 +37,46 @@ public class WandHudOverlay {
     public static void render(GuiGraphics pGuiGraphics, DeltaTracker pDeltaTracker) {
         if (shouldRender()) {
             Minecraft mc = Minecraft.getInstance();
-            if (mc.player.getMainHandItem().getItem() instanceof IWand wand) {
-                renderHud(mc, pGuiGraphics, mc.player.getMainHandItem(), wand, pDeltaTracker.getGameTimeDeltaPartialTick(true));
-            } else if (mc.player.getOffhandItem().getItem() instanceof IWand wand) {
-                renderHud(mc, pGuiGraphics, mc.player.getOffhandItem(), wand, pDeltaTracker.getGameTimeDeltaPartialTick(true));
+            if (mc.player.getMainHandItem().getItem() instanceof IWand || mc.player.getOffhandItem().getItem() instanceof IWand) {
+                renderHud(mc, pGuiGraphics, mc.player.getMainHandItem(), mc.player.getOffhandItem(), pDeltaTracker.getGameTimeDeltaPartialTick(true));
             }
         }
     }
     
-    private static void renderHud(Minecraft mc, GuiGraphics guiGraphics, ItemStack stack, IWand wand, float partialTick) {
+    private static void renderHud(Minecraft mc, GuiGraphics guiGraphics, ItemStack mainHandStack, ItemStack offHandStack, float partialTick) {
         guiGraphics.pose().pushPose();
         
         int posY = 0;
-        ResourceLocation spellIcon = wand.getActiveSpell(stack) == null ? null : wand.getActiveSpell(stack).getIcon();
+        SpellPackage activeSpell = SpellManager.getActiveSpell(mainHandStack, offHandStack);
+        ResourceLocation spellIcon = activeSpell == null ? null : activeSpell.getIcon();
         posY += renderSpellDisplay(guiGraphics, 0, posY, spellIcon, partialTick);
-        
-        int index = 0;
-        int maxMana = wand.getMaxMana(stack);
-        Component maxText = wand.getMaxManaText(stack);
-        List<Source> discoveredSources = Sources.getAllSorted().stream().filter(s -> s.isDiscovered(mc.player)).collect(Collectors.toList());
-        for (Source source : discoveredSources) {
-            int curMana = wand.getMana(stack, source);
-            Component curText = wand.getManaText(stack, source);
-            
-            double ratio = (double)curMana / (double)maxMana;
-            Component ratioText = Component.translatable("tooltip.primalmagick.source.mana_summary_fragment", curText, maxText);
-            
-            posY += renderManaGauge(guiGraphics, 0, posY, ratioText, ratio, source.getColor(), (++index == discoveredSources.size()), partialTick, mc.font);
+
+        IWand wand = null;
+        ItemStack wandStack = ItemStack.EMPTY;
+        if (mainHandStack.getItem() instanceof IWand mainHandWand) {
+            wand = mainHandWand;
+            wandStack = mainHandStack;
+        } else if (offHandStack.getItem() instanceof IWand offHandWand) {
+            wand = offHandWand;
+            wandStack = offHandStack;
         }
-        
+
+        if (wand != null) {
+            int index = 0;
+            int maxMana = wand.getMaxMana(wandStack);
+            Component maxText = wand.getMaxManaText(wandStack);
+            List<Source> discoveredSources = Sources.getAllSorted().stream().filter(s -> s.isDiscovered(mc.player)).toList();
+            for (Source source : discoveredSources) {
+                int curMana = wand.getMana(wandStack, source);
+                Component curText = wand.getManaText(wandStack, source);
+
+                double ratio = (double)curMana / (double)maxMana;
+                Component ratioText = Component.translatable("tooltip.primalmagick.source.mana_summary_fragment", curText, maxText);
+
+                posY += renderManaGauge(guiGraphics, 0, posY, ratioText, ratio, source.getColor(), (++index == discoveredSources.size()), partialTick, mc.font);
+            }
+        }
+
         guiGraphics.pose().popPose();
     }
 
@@ -110,7 +121,7 @@ public class WandHudOverlay {
         if (Screen.hasShiftDown()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(61, 2, 0);
-            guiGraphics.drawString(font, text, x, y, Color.WHITE.getRGB());
+            guiGraphics.drawString(font, text, x, y, -1);
             guiGraphics.pose().popPose();
         }
         

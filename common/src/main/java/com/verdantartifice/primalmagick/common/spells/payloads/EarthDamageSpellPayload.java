@@ -77,7 +77,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload<EarthDam
                     Vec3 knockbackSource = burstPoint == null || burstPoint.equals(target.getLocation()) ? caster.getEyePosition(1.0F) : burstPoint;
                     knockbackVec = target.getLocation().subtract(knockbackSource).scale(-1.0D).normalize();
                 }
-                livingTarget.knockback(0.25F * this.getTotalDamage(entityTarget.getEntity(), spell, spellSource, world.registryAccess()), knockbackVec.x, knockbackVec.z);
+                livingTarget.knockback(0.25F * this.getTotalDamage(entityTarget.getEntity(), spell, spellSource, null, world.registryAccess()), knockbackVec.x, knockbackVec.z);
             }
         }
     }
@@ -94,7 +94,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload<EarthDam
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource, registries)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource, null, registries)));
     }
 }

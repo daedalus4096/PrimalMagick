@@ -1,0 +1,61 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:spelltome_apprentice"
+  },
+  "key": {
+    "rootKey": "primalmagick:spelltome_apprentice"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_inscription"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requiredValue": 2,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:spells_crafted"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spelltome_apprentice"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spelltome_apprentice.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:spelltome_apprentice"
+      },
+      "recipes": [
+        "primalmagick:spelltome_apprentice"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spelltome_apprentice.text.stage.2"
+    }
+  ],
+  "tier": "basic"
+}

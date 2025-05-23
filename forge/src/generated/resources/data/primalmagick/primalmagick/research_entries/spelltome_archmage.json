@@ -1,0 +1,54 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:spelltome_archmage"
+  },
+  "key": {
+    "rootKey": "primalmagick:spelltome_archmage"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:spelltome_wizard"
+    },
+    {
+      "rootKey": "primalmagick:cluster_synthesis"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spelltome_archmage"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spelltome_archmage.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:spelltome_archmage"
+      },
+      "recipes": [
+        "primalmagick:spelltome_archmage"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spelltome_archmage.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

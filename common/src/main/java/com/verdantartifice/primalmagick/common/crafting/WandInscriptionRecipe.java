@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
-import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -29,11 +29,11 @@ public class WandInscriptionRecipe extends CustomRecipe {
         ItemStack wandStack = getItem(inv, 0);
         ItemStack scrollStack = getItem(inv, 1);
         
-        // Make sure a wand is present
-        if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+        // Make sure a spell container is present
+        if (!wandStack.isEmpty() && wandStack.getItem() instanceof ISpellContainer spellContainer) {
             if (!scrollStack.isEmpty() && scrollStack.getItem() instanceof SpellScrollItem scroll) {
                 // If a filled spell scroll is also present, check that the scroll's spell will fit into the wand
-                return wand.canAddSpell(wandStack, scroll.getSpell(scrollStack));
+                return spellContainer.canAddSpell(wandStack, scroll.getSpell(scrollStack));
             } else {
                 // If no item is present in the scroll slot, clear the wand; if it's something other than a filled spell scroll, don't allow combination
                 return scrollStack.isEmpty();
@@ -48,11 +48,11 @@ public class WandInscriptionRecipe extends CustomRecipe {
         ItemStack wandStack = getItem(inv, 0);
         ItemStack scrollStack = getItem(inv, 1);
         
-        if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+        if (!wandStack.isEmpty() && wandStack.getItem() instanceof ISpellContainer spellContainer) {
             if (!scrollStack.isEmpty() && scrollStack.getItem() instanceof SpellScrollItem scroll) {
                 // If a filled spell scroll is also present, create a copy of the given wand and add the scroll's spell to it
                 ItemStack retVal = wandStack.copy();
-                if (wand.addSpell(retVal, scroll.getSpell(scrollStack)) && wand.setActiveSpellIndex(retVal, wand.getSpellCount(retVal) - 1)) {
+                if (spellContainer.addSpell(retVal, scroll.getSpell(scrollStack)) && spellContainer.setActiveSpellIndex(retVal, spellContainer.getSpellCount(retVal) - 1)) {
                     return retVal;
                 } else {
                     return ItemStack.EMPTY;
@@ -60,7 +60,7 @@ public class WandInscriptionRecipe extends CustomRecipe {
             } else if (scrollStack.isEmpty()) {
                 // If no item is present in the scroll slot, clear the wand of spells
                 ItemStack retVal = wandStack.copy();
-                wand.clearSpells(retVal);
+                spellContainer.clearSpells(retVal);
                 return retVal;
             }
         }

@@ -36,6 +36,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> SHULKER_BOXES = tag("shulker_boxes");
     public static final TagKey<Item> SKYGLASS = tag("skyglass");
     public static final TagKey<Item> SKYGLASS_PANES = tag("skyglass_panes");
+    public static final TagKey<Item> SPELLTOMES = tag("spelltomes");
     public static final TagKey<Item> STAINED_SKYGLASS = tag("stained_skyglass");
     public static final TagKey<Item> STAINED_SKYGLASS_PANES = tag("stained_skyglass_panes");
     public static final TagKey<Item> STATIC_BOOKS = tag("static_books");
@@ -86,6 +87,8 @@ public class ItemTagsPM {
     public static final TagKey<Item> BOUNTY_ENCHANTABLE = tag("enchantable/bounty");
     public static final TagKey<Item> RENDING_ENCHANTABLE = tag("enchantable/rending");
     public static final TagKey<Item> ESSENCE_THIEF_ENCHANTABLE = tag("enchantable/essence_thief");
+    public static final TagKey<Item> MANA_EFFICIENCY_ENCHANTABLE = tag("enchantable/mana_efficiency");
+    public static final TagKey<Item> SPELL_POWER_ENCHANTABLE = tag("enchantable/spell_power");
 
     private static TagKey<Item> tag(String name) {
         return TagKey.create(Registries.ITEM, ResourceUtils.loc(name));

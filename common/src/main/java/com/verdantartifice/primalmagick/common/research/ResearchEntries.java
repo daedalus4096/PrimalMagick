@@ -88,6 +88,10 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> WAND_GLAMOUR_TABLE = create("wand_glamour_table");
     public static final ResourceKey<ResearchEntry> ATTUNEMENT_SHACKLES = create("attunement_shackles");
     public static final ResourceKey<ResearchEntry> PIXIE_HOUSES = create("pixie_houses");
+    public static final ResourceKey<ResearchEntry> SPELLTOME_APPRENTICE = create("spelltome_apprentice");
+    public static final ResourceKey<ResearchEntry> SPELLTOME_ADEPT = create("spelltome_adept");
+    public static final ResourceKey<ResearchEntry> SPELLTOME_WIZARD = create("spelltome_wizard");
+    public static final ResourceKey<ResearchEntry> SPELLTOME_ARCHMAGE = create("spelltome_archmage");
     public static final ResourceKey<ResearchEntry> WAND_CORE_HEARTWOOD = create("wand_core_heartwood");
     public static final ResourceKey<ResearchEntry> WAND_CORE_OBSIDIAN = create("wand_core_obsidian");
     public static final ResourceKey<ResearchEntry> WAND_CORE_CORAL = create("wand_core_coral");
@@ -753,6 +757,26 @@ public class ResearchEntries {
                 .parent(EXPERT_MANAWEAVING).parent(PIXIES)
                 .stage().requiredTheories(1).end()
                 .stage().recipe(ItemsPM.PIXIE_HOUSE.get()).end()
+                .build());
+        register(context, SPELLTOME_APPRENTICE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.SPELLTOME_APPRENTICE.get())
+                .parent(BASIC_MANAWEAVING).parent(WAND_INSCRIPTION)
+                .stage().requiredStat(StatsPM.SPELLS_CRAFTED, 2).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.SPELLTOME_APPRENTICE.get()).end()
+                .build());
+        register(context, SPELLTOME_ADEPT, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.SPELLTOME_ADEPT.get())
+                .parent(EXPERT_MANAWEAVING).parent(SPELLTOME_APPRENTICE).parent(SHARD_SYNTHESIS)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.SPELLTOME_ADEPT.get()).end()
+                .build());
+        register(context, SPELLTOME_WIZARD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.SPELLTOME_WIZARD.get())
+                .parent(MASTER_MANAWEAVING).parent(SPELLTOME_ADEPT).parent(CRYSTAL_SYNTHESIS)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.SPELLTOME_WIZARD.get()).end()
+                .build());
+        register(context, SPELLTOME_ARCHMAGE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.SPELLTOME_ARCHMAGE.get())
+                .parent(SUPREME_MANAWEAVING).parent(SPELLTOME_WIZARD).parent(CLUSTER_SYNTHESIS)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.SPELLTOME_ARCHMAGE.get()).end()
                 .build());
     }
     

@@ -90,12 +90,12 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
             if (entityTarget.getEntity() instanceof LivingEntity entity) {
                 if (entity.isInvertedHealAndHarm()) {
                     // Undead entities get dealt damage
-                    entity.hurt(this.getDamageSource(caster, spell, projectileEntity), 1.5F * this.getBaseAmount(spell, spellSource, world.registryAccess()));
+                    entity.hurt(this.getDamageSource(caster, spell, projectileEntity), 1.5F * this.getBaseAmount(spell, spellSource, caster, world.registryAccess()));
                 } else {
                     // All other entities are healed
                     float curHealth = entity.getHealth();
                     float maxHealth = entity.getMaxHealth();
-                    float healAmount = (float)this.getBaseAmount(spell, spellSource, world.registryAccess());
+                    float healAmount = (float)this.getBaseAmount(spell, spellSource, caster, world.registryAccess());
                     float overhealing = (curHealth + healAmount) - maxHealth;
                     entity.heal(healAmount);
                     if (overhealing > 0 && overhealing >= entity.getAbsorptionAmount()) {
@@ -131,12 +131,12 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
         return TYPE;
     }
 
-    protected int getBaseAmount(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return 2 * this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, registries);
+    protected int getBaseAmount(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return 2 * this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, caster, registries);
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseAmount(spell, spellSource, registries)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseAmount(spell, spellSource, caster, registries)));
     }
 }

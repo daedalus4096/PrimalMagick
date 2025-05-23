@@ -43,11 +43,7 @@ public class SetActiveSpellPacket implements IMessageToServer {
         ServerPlayer player = ctx.sender();
         if (player != null) {
             // Main hand takes priority over the offhand in case two wands are equipped
-            if (player.getMainHandItem().getItem() instanceof IWand) {
-                SpellManager.setActiveSpell(player, player.getMainHandItem(), message.index);
-            } else if (player.getOffhandItem().getItem() instanceof IWand) {
-                SpellManager.setActiveSpell(player, player.getOffhandItem(), message.index);
-            }
+            SpellManager.setActiveSpellIndex(player, player.getMainHandItem(), player.getOffhandItem(), message.index);
         }
     }
 }

@@ -5,7 +5,9 @@ import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.crafting.WandInscriptionRecipe;
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
+import com.verdantartifice.primalmagick.common.menus.slots.IWandSlot;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -32,7 +34,9 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class WandInscriptionTableMenu extends AbstractContainerMenu {
+    protected static final Component CASTER_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.caster");
     protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.scroll");
+    protected static final ResourceLocation TOME_BACKGROUND = ResourceUtils.loc("item/empty_book_slot");
     protected static final ResourceLocation RECIPE_LOC = ResourceUtils.loc("wand_inscription");
 
     protected final ContainerLevelAccess worldPosCallable;
@@ -57,7 +61,9 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
         this.addSlot(new ResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
         // Slot 1: Input wand
-        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(componentInvWrapper, 0, 30, 35, true));
+        this.wandSlot = this.addSlot(Services.MENU.makeFilteredSlot(componentInvWrapper, 0, 30, 35,
+                new FilteredSlotProperties().typeOf(ISpellContainer.class).tooltip(CASTER_SLOT_TOOLTIP)
+                        .background(IWandSlot.TEXTURE).background(TOME_BACKGROUND)));
         
         // Slot 2: Input scroll
         this.scrollSlot = this.addSlot(Services.MENU.makeFilteredSlot(componentInvWrapper, 1, 66, 35, new FilteredSlotProperties().typeOf(SpellScrollItem.class).tooltip(SCROLL_SLOT_TOOLTIP)));

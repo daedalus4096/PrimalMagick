@@ -61,8 +61,8 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload<HolyDamag
     }
 
     @Override
-    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        float damage = super.getTotalDamage(target, spell, spellSource, registries);
+    protected float getTotalDamage(Entity target, SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        float damage = super.getTotalDamage(target, spell, spellSource, caster, registries);
         if (target instanceof LivingEntity livingTarget && livingTarget.isInvertedHealAndHarm()) {
             // Deal double damage to undead entities
             damage += damage;
@@ -82,7 +82,7 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload<HolyDamag
     }
 
     @Override
-    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, HolderLookup.Provider registries) {
-        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource, registries)));
+    public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
+        return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".detail_tooltip", DECIMAL_FORMATTER.format(this.getBaseDamage(spell, spellSource, null, registries)));
     }
 }

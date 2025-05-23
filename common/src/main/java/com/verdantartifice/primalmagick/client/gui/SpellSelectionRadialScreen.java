@@ -9,7 +9,9 @@ import com.verdantartifice.primalmagick.client.gui.radial.RadialMenuItem;
 import com.verdantartifice.primalmagick.client.gui.radial.SpellPackageRadialMenuItem;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
+import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
@@ -25,7 +27,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class SpellSelectionRadialScreen extends Screen {
-    private ItemStack stackEquipped = ItemStack.EMPTY;
+    private ItemStack mainHandStack;
+    private ItemStack offHandStack;
     private boolean needsRecheckSpells = true;
     
     private final GenericRadialMenu menu;
@@ -36,11 +39,8 @@ public class SpellSelectionRadialScreen extends Screen {
     public SpellSelectionRadialScreen() {
         super(Component.empty());
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player.getMainHandItem().getItem() instanceof IWand) {
-            this.stackEquipped = mc.player.getMainHandItem();
-        } else if (mc.player.getOffhandItem().getItem() instanceof IWand) {
-            this.stackEquipped = mc.player.getOffhandItem();
-        }
+        this.mainHandStack = (mc.player.getMainHandItem().getItem() instanceof ISpellContainer) ? mc.player.getMainHandItem() : ItemStack.EMPTY;
+        this.offHandStack = (mc.player.getOffhandItem().getItem() instanceof ISpellContainer) ? mc.player.getOffhandItem() : ItemStack.EMPTY;
         this.menu = new GenericRadialMenu(mc, new IRadialMenuHost() {
             @Override
             public void renderTooltip(GuiGraphics guiGraphics, ItemStack stack, int mouseX, int mouseY)
@@ -102,21 +102,21 @@ public class SpellSelectionRadialScreen extends Screen {
         
         ItemStack inMainHand = this.minecraft.player.getMainHandItem();
         ItemStack inOffHand = this.minecraft.player.getOffhandItem();
-        if (inMainHand.getItem() instanceof IWand) {
-            if (this.stackEquipped != inMainHand) {     // Reference comparison intended
-                this.stackEquipped = inMainHand;
-                this.needsRecheckSpells = true;
-            }
-        } else if (inOffHand.getItem() instanceof IWand) {
-            if (this.stackEquipped != inOffHand) {      // Reference comparison intended
-                this.stackEquipped = inOffHand;
-                this.needsRecheckSpells = true;
-            }
+        if (!(inMainHand.getItem() instanceof ISpellContainer) && !(inOffHand.getItem() instanceof ISpellContainer)) {
+            this.mainHandStack = ItemStack.EMPTY;
+            this.offHandStack = ItemStack.EMPTY;
         } else {
-            this.stackEquipped = ItemStack.EMPTY;
+            if (inMainHand.getItem() instanceof ISpellContainer && this.mainHandStack != inMainHand) {  // Reference comparison intended
+                this.mainHandStack = inMainHand;
+                this.needsRecheckSpells = true;
+            }
+            if (inOffHand.getItem() instanceof ISpellContainer && this.offHandStack != inOffHand) {     // Reference comparison intended
+                this.offHandStack = inOffHand;
+                this.needsRecheckSpells = true;
+            }
         }
-        
-        if (this.stackEquipped.isEmpty()) {
+
+        if (this.mainHandStack.isEmpty() && this.offHandStack.isEmpty()) {
             this.minecraft.setScreen(null);
         } else if (!Services.INPUT.isKeyDown(KeyBindings.CHANGE_SPELL_KEY)) {
             if (Services.CONFIG.radialReleaseToSwitch()) {
@@ -142,43 +142,40 @@ public class SpellSelectionRadialScreen extends Screen {
         guiGraphics.pose().pushPose();
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.pose().popPose();
-        
-        if (this.stackEquipped.isEmpty()) {
-            return;
-        }
-        
-        IWand wand = (IWand)this.stackEquipped.getItem();
-        if (this.needsRecheckSpells) {
-            // Create and add radial menu items
-            this.cachedMenuItems.clear();
-            List<SpellPackage> spells = wand.getSpells(this.stackEquipped);
-            for (int index = 0; index < spells.size(); index++) {
-                SpellPackage spell = spells.get(index);
-                SpellPackageRadialMenuItem item = new SpellPackageRadialMenuItem(menu, index, spell) {
-                    @Override
-                    public boolean onClick() {
-                        return SpellSelectionRadialScreen.this.trySwitch(getSlot());
-                    }
-                };
-                item.setVisible(true);
-                this.cachedMenuItems.add(item);
+
+        if (this.mainHandStack.getItem() instanceof ISpellContainer || this.offHandStack.getItem() instanceof ISpellContainer) {
+            if (this.needsRecheckSpells) {
+                // Create and add radial menu items
+                this.cachedMenuItems.clear();
+                List<SpellPackage> spells = SpellManager.getSpells(this.mainHandStack, this.offHandStack);
+                for (int index = 0; index < spells.size(); index++) {
+                    SpellPackage spell = spells.get(index);
+                    SpellPackageRadialMenuItem item = new SpellPackageRadialMenuItem(menu, index, spell) {
+                        @Override
+                        public boolean onClick() {
+                            return SpellSelectionRadialScreen.this.trySwitch(getSlot());
+                        }
+                    };
+                    item.setVisible(true);
+                    this.cachedMenuItems.add(item);
+                }
+
+                this.menu.clear();
+                this.menu.addAll(this.cachedMenuItems);
+                this.noSpellMenuItem.setVisible(true);
+                this.menu.add(this.noSpellMenuItem);
+
+                this.needsRecheckSpells = false;
             }
-            
-            this.menu.clear();
-            this.menu.addAll(this.cachedMenuItems);
-            this.noSpellMenuItem.setVisible(true);
-            this.menu.add(this.noSpellMenuItem);
-            
-            this.needsRecheckSpells = false;
+
+            this.menu.draw(guiGraphics, partialTick, mouseX, mouseY);
         }
-        
-        this.menu.draw(guiGraphics, partialTick, mouseX, mouseY);
     }
     
     private boolean trySwitch(int slotNumber) {
         ItemStack inMainHand = this.minecraft.player.getMainHandItem();
         ItemStack inOffHand = this.minecraft.player.getOffhandItem();
-        if (!(inMainHand.getItem() instanceof IWand) && !(inOffHand.getItem() instanceof IWand)) {
+        if (!(inMainHand.getItem() instanceof ISpellContainer) && !(inOffHand.getItem() instanceof ISpellContainer)) {
             return false;
         }
         

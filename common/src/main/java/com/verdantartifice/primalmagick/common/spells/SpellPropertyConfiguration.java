@@ -9,6 +9,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class SpellPropertyConfiguration {
     public static final Codec<SpellPropertyConfiguration> CODEC = RecordCodecBuilder.create(instance -> {
@@ -51,5 +52,16 @@ public class SpellPropertyConfiguration {
     
     public void set(SpellProperty property, int value) {
         this.propertyValues.put(property, value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof SpellPropertyConfiguration that)) return false;
+        return Objects.equals(propertyValues, that.propertyValues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(propertyValues);
     }
 }
