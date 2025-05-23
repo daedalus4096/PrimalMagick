@@ -931,6 +931,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SPELLTOME_ADEPT).name("Adept's Spelltome").build();
         this.item(ItemsPM.SPELLTOME_WIZARD).name("Wizard's Spelltome").build();
         this.item(ItemsPM.SPELLTOME_ARCHMAGE).name("Archmage's Spelltome").build();
+        this.item(ItemsPM.MANA_ORB_APPRENTICE).name("Apprentice's Mana Orb").build();
+        this.item(ItemsPM.MANA_ORB_ADEPT).name("Adept's Mana Orb").build();
+        this.item(ItemsPM.MANA_ORB_WIZARD).name("Wizard's Mana Orb").build();
+        this.item(ItemsPM.MANA_ORB_ARCHMAGE).name("Archmage's Mana Orb").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();

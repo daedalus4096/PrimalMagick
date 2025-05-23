@@ -81,6 +81,10 @@ public class ClientRegistrationEvents {
         reloadListenerConsumer.accept(ItemsPM.SPELLTOME_ADEPT.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLTOME_WIZARD.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLTOME_ARCHMAGE.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.MANA_ORB_APPRENTICE.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.MANA_ORB_ADEPT.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.MANA_ORB_WIZARD.get().getCustomRendererSupplier().get());
+        reloadListenerConsumer.accept(ItemsPM.MANA_ORB_ARCHMAGE.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLCRAFTING_ALTAR.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_RELAY_BASIC.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_RELAY_ENCHANTED.get().getCustomRendererSupplier().get());
