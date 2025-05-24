@@ -87,6 +87,18 @@ public class ManaStorage implements IManaStorage<ManaStorage> {
         return new ManaStorage(capacity, Integer.MAX_VALUE, Integer.MAX_VALUE, SourceList.EMPTY, Sources.getAllSorted());
     }
 
+    /**
+     * Creates and returns a new mana storage capability with the given capacity for the given source, for attachment
+     * to a mana orb.
+     *
+     * @param source the allowed source for the capability
+     * @param capacity the max amount of centimana for the capability
+     * @return a new mana storage capability for use in a mana orb
+     */
+    public static @NotNull ManaStorage emptyManaOrb(Source source, int capacity) {
+        return new ManaStorage(capacity, Integer.MAX_VALUE, Integer.MAX_VALUE, SourceList.EMPTY, source);
+    }
+
     @Override
     public Codec<ManaStorage> codec() {
         return CODEC;

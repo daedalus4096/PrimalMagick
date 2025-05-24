@@ -1,19 +1,28 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaOrbISTER;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.wands.IManaContainer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomRenderer, ITieredDevice {
+public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomRenderer, ITieredDevice, IManaContainer {
     private final DeviceTier tier;
     private BlockEntityWithoutLevelRenderer customRenderer;
 
@@ -58,5 +67,45 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
             case FORBIDDEN -> 23;
             case HEAVENLY, CREATIVE -> 28;
         };
+    }
+
+    public ManaStorage getManaStorage(ItemStack stack) {
+        return stack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
+    }
+
+    @Override
+    public int getMaxMana(@Nullable ItemStack stack) {
+        // TODO Stub
+        return 0;
+    }
+
+    @Override
+    public int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount) {
+        // TODO Stub
+        return 0;
+    }
+
+    @Override
+    public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries) {
+        // TODO Stub
+        return false;
+    }
+
+    @Override
+    public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources, HolderLookup.Provider registries) {
+        // TODO Stub
+        return false;
+    }
+
+    @Override
+    public boolean removeManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount) {
+        // TODO Stub
+        return false;
+    }
+
+    @Override
+    public boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries) {
+        // TODO Stub
+        return false;
     }
 }

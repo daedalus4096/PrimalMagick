@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.wands.IManaContainer;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
@@ -53,8 +54,8 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
         WandGem gem = this.getWandGem(stack);
         if (gem == null) {
             return MundaneWandItem.MAX_MANA;
-        } else if (gem.getCapacity() == -1) {
-            return -1;
+        } else if (gem.getCapacity() == IManaContainer.INFINITE_MANA) {
+            return IManaContainer.INFINITE_MANA;
         } else {
             return gem.getCapacity();
         }
