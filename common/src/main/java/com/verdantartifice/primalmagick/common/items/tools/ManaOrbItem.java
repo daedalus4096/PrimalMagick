@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.wands.IManaContainer;
+import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.MutableComponent;
@@ -69,14 +70,23 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
         };
     }
 
+    private @NotNull WandGem getWandGemEquivalent() {
+        return switch (this.getDeviceTier()) {
+            case BASIC -> WandGem.APPRENTICE;
+            case ENCHANTED -> WandGem.ADEPT;
+            case FORBIDDEN -> WandGem.WIZARD;
+            case HEAVENLY -> WandGem.ARCHMAGE;
+            case CREATIVE -> WandGem.CREATIVE;
+        };
+    }
+
     public ManaStorage getManaStorage(ItemStack stack) {
         return stack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
     }
 
     @Override
     public int getMaxMana(@Nullable ItemStack stack) {
-        // TODO Stub
-        return 0;
+        return this.getWandGemEquivalent().getCapacity();
     }
 
     @Override
