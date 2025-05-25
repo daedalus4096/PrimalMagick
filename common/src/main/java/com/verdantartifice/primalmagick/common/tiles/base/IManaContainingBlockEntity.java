@@ -1,4 +1,7 @@
-package com.verdantartifice.primalmagick.common.sources;
+package com.verdantartifice.primalmagick.common.tiles.base;
+
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import javax.annotation.Nonnull;
 
