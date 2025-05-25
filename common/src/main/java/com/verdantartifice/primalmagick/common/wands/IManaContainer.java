@@ -114,7 +114,7 @@ public interface IManaContainer {
     }
 
     /**
-     * Add the given amount of the given type of centimana to teh given wand stack, up to its maximum.
+     * Add the given amount of the given type of centimana to the given wand stack, up to its maximum.
      *
      * @param stack  the wand stack to be modified
      * @param source the type of mana to be added
