@@ -10,36 +10,60 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.DecimalFormat;
+
 /**
  * Primary access point for mana related methods for a player. Takes into account all equipped gear.
  *
  * @author Daedalus4096
  */
 public class ManaManager {
+    private static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
+
     /**
      * Get the centimana for the given source which is contained in the given player's equipment.
      *
      * @param player the player whose equipment is to be queried
-     * @param wandStack the current player's wand stack
      * @param source the type of mana to be queried
      * @return the amount of centimana contained
      */
-    public static int getMana(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source) {
-        // TODO Stub
-        return 0;
+    public static int getMana(@Nullable Player player, @Nullable Source source) {
+        int retVal = 0;
+        if (player != null && source != null) {
+            if (player.getMainHandItem().getItem() instanceof IManaContainer mainHandContainer) {
+                int mainHandAmount = mainHandContainer.getMana(player.getMainHandItem(), source);
+                if (mainHandAmount == IManaContainer.INFINITE_MANA) {
+                    return IManaContainer.INFINITE_MANA;
+                }
+                retVal += mainHandAmount;
+            }
+            if (player.getOffhandItem().getItem() instanceof IManaContainer offHandContainer) {
+                int offHandAmount = offHandContainer.getMana(player.getOffhandItem(), source);
+                if (offHandAmount == IManaContainer.INFINITE_MANA) {
+                    return IManaContainer.INFINITE_MANA;
+                }
+                retVal += offHandAmount;
+            }
+        }
+        return retVal;
     }
 
     /**
      * Get the text representation of centimana for the given source which is contained in the given player's equipment.
      *
      * @param player the player whose equipment is to be queried
-     * @param wandStack the current player's wand stack
      * @param source the type of mana to be queried
      * @return the text representation of the amount of centimana contained
      */
-    public static @NotNull MutableComponent getManaText(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source) {
-        // TODO Stub
-        return Component.empty();
+    public static @NotNull MutableComponent getManaText(@Nullable Player player, @Nullable Source source) {
+        int mana = getMana(player, source);
+        if (mana == IManaContainer.INFINITE_MANA) {
+            // If the given player has infinite mana, show the infinity symbol
+            return Component.literal(Character.toString('\u221E'));
+        } else {
+            // Otherwise show the current whole mana value for that source from the stack's data
+            return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
+        }
     }
 
     /**
@@ -184,5 +208,13 @@ public class ManaManager {
     public static boolean containsManaRaw(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source, int amount) {
         // TODO Stub
         return false;
+    }
+
+    private static @NotNull ItemStack getOffhandStack(@NotNull Player player, @NotNull ItemStack wandStack) {
+        if (wandStack == player.getOffhandItem()) { // Reference comparison intended
+            return player.getMainHandItem();
+        } else {
+            return player.getOffhandItem();
+        }
     }
 }
