@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.wands;
 
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.Stream;
 
@@ -152,8 +154,26 @@ public class ManaManager {
      * @return the amount of leftover centimana that could not fit in the wand
      */
     public static int addMana(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source, int amount) {
-        // TODO Stub
-        return 0;
+        if (player == null || wandStack == null || source == null) {
+            return amount;
+        }
+
+        // Add mana to equipment in priority order for gear slots
+        for (ItemStack stack : getPrioritizedEquipment(player, wandStack)) {
+            if (stack.getItem() instanceof IManaContainer container) {
+                // Add as much as possible to each item in priority order, leaving the remainder for lower priority items
+                amount = container.addMana(stack, source, amount);
+            }
+        }
+
+        // Return any mana that couldn't fit in all the player's equipment
+        return amount;
+    }
+
+    private static @NotNull List<ItemStack> getPrioritizedEquipment(@NotNull Player player, @NotNull ItemStack wandStack) {
+        return ImmutableList.of(
+                wandStack,
+                getOffhandStack(player, wandStack));
     }
 
     /**
