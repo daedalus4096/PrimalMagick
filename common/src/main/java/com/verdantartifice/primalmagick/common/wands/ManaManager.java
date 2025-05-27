@@ -200,19 +200,21 @@ public class ManaManager {
             return false;
         } else if (getMana(player, source) == IManaContainer.INFINITE_MANA) {
             // If the player has an infinite mana source equipped, then there's no need to deduct anything
+            recordManaConsumptionSideEffects(player, source, amount);
             return true;
         }
 
         int modifiedAmount = wandStack.getItem() instanceof IWand wand ? wand.getModifiedCost(wandStack, player, source, amount, registries) : amount;
         if (modifiedAmount > 0) {
             // Deduct mana from equipment in reverse priority order (i.e. wand last)
-            int leftover = deductManaInner(player, wandStack, source, amount);
-            recordManaConsumptionSideEffects(player, source, amount);
+            int leftover = deductManaInner(player, wandStack, source, modifiedAmount);
             if (leftover > 0) {
                 // This should have been caught by the contains check at the start, so log a warning
                 LOGGER.warn("Leftover mana when trying to consume from player equipment: {}", leftover);
             }
         }
+
+        recordManaConsumptionSideEffects(player, source, amount);
         return true;
     }
 
@@ -227,8 +229,25 @@ public class ManaManager {
      * @return true if sufficient centimana was present in the wand and successfully consumed, false otherwise
      */
     public static boolean consumeMana(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable SourceList sources, HolderLookup.Provider registries) {
-        // TODO Stub
-        return false;
+        if (player == null || sources == null || wandStack == null || !containsMana(player, wandStack, sources, registries)) {
+            return false;
+        }
+        for (Source source : sources.getSources()) {
+            int rawAmount = sources.getAmount(source);
+            if (getMana(player, source) != IManaContainer.INFINITE_MANA) {
+                int modifiedAmount = wandStack.getItem() instanceof IWand wand ? wand.getModifiedCost(wandStack, player, source, rawAmount, registries) : rawAmount;
+                if (modifiedAmount > 0) {
+                    // Deduct mana from equipment in reverse priority order (i.e. wand last)
+                    int leftover = deductManaInner(player, wandStack, source, modifiedAmount);
+                    if (leftover > 0) {
+                        // This should have been caught by the contains check at the start, so log a warning
+                        LOGGER.warn("Leftover mana when trying to consume batch from player equipment: {}", leftover);
+                    }
+                }
+            }
+            recordManaConsumptionSideEffects(player, source, rawAmount);
+        }
+        return true;
     }
 
     /**
