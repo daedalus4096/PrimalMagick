@@ -27,6 +27,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IManaContainer;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.common.wands.ManaManager;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -159,14 +160,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             }
             
             if (player != null) {
-                int realAmount = amount / 100;
-                
-                // Record the spent mana statistic change with pre-discount mana
-                StatsManager.incrementValue(player, StatsPM.MANA_SPENT_TOTAL, realAmount);
-                StatsManager.incrementValue(player, source.getManaSpentStat(), realAmount);
-                
-                // Update temporary attunement value
-                AttunementManager.incrementAttunement(player, source, AttunementType.TEMPORARY, Mth.floor(Math.sqrt(realAmount)));
+                ManaManager.recordManaConsumptionSideEffects(player, source, amount);
             }
             
             return true;
