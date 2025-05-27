@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.common.wands.ManaManager;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -197,7 +198,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                 if (isTargetWandInteractable(worldIn, playerIn, hit)) {
                     // If the current mouseover target in range has special interaction with wands, then suppress the spell cast
                     return InteractionResultHolder.pass(stack);
-                } else if (this.consumeMana(stack, playerIn, activeSpell.getManaCost(), worldIn.registryAccess())) {
+                } else if (ManaManager.consumeMana(playerIn, stack, activeSpell.getManaCost(), worldIn.registryAccess())) {
                     // If the wand contains enough mana, consume it and cast the spell
                     activeSpell.cast(worldIn, playerIn, stack);
                     playerIn.swing(handIn);
