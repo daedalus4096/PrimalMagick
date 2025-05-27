@@ -1058,6 +1058,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("unread_count").sub("entry").sub("multiple").output("%1$d unread entries").end().build();
         this.tooltip("experience").sub("one").output("1 Experience Point").end().build();
         this.tooltip("experience").sub("many").output("%1$d Experience Points").end().build();
+        this.tooltip("mana_orb").sub("unattuned").output("Unattuned").end().build();
 
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$s %2$s mana").end().build();
