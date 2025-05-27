@@ -2,13 +2,8 @@ package com.verdantartifice.primalmagick.common.wands;
 
 import com.verdantartifice.primalmagick.common.crafting.IWandTransform;
 import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
-import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -25,49 +20,6 @@ import org.jetbrains.annotations.Nullable;
  * @author Daedalus4096
  */
 public interface IWand extends ISpellContainer, IManaContainer {
-    /**
-     * Get the base mana cost modifier to be applied to mana consumption, in whole percentage points, as determined by
-     * the cap of the wand, if any.
-     *
-     * @param stack the wand stack to be queried
-     * @return the base mana cost modifier to be applied to mana consumption
-     */
-    int getBaseCostModifier(@Nullable ItemStack stack);
-    
-    /**
-     * Get the total mana cost modifier to be applied to mana consumption, in whole percentage points, from all factors
-     * (e.g. wand cap, player gear, attunement).
-     *
-     * @param stack      the wand stack to be queried
-     * @param player     the player consuming the mana
-     * @param source     the type of mana being consumed
-     * @param registries a registry lookup provider
-     * @return the total mana cost modifier to be applied to mana consumption
-     */
-    int getTotalCostModifier(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, HolderLookup.Provider registries);
-
-    /**
-     * Compute the final, fully-modified mana cost for the given base cost.
-     *
-     * @param stack the wand stack to be queried
-     * @param player the player consuming the mana
-     * @param source the type of mana being consumed
-     * @param baseCost the base amount of mana being consumed
-     * @param registries a registry lookup provider
-     * @return the final mana cost modified from the given base cost
-     */
-    int getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int baseCost, HolderLookup.Provider registries);
-
-    /**
-     *
-     * @param stack the wand stack to be queried
-     * @param player the player consuming the mana
-     * @param baseCost the base amount of mana being consumed for each source
-     * @param registries a registry lookup provider
-     * @return the final mana cost modified from the given base costs
-     */
-    SourceList getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, SourceList baseCost, HolderLookup.Provider registries);
-    
     /**
      * Get the amount of centimana to siphon from a mana font when channeling it.
      * 

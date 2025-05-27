@@ -1,12 +1,22 @@
 package com.verdantartifice.primalmagick.common.wands;
 
+import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
+import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
+import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.effects.EffectsPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.stats.StatsManager;
+import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -187,7 +197,27 @@ public interface IManaContainer {
      * @param amount the amount of centimana to be consumed
      * @return true if sufficient centimana was present in the wand and successfully consumed, false otherwise
      */
-    boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries);
+    default boolean consumeMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
+        if (stack == null || source == null) {
+            return false;
+        }
+        if (this.containsMana(stack, player, source, amount, registries)) {
+            // If the wand stack contains enough mana, process the consumption and return success
+            if (this.getMaxMana(stack, source) != IManaContainer.INFINITE_MANA) {
+                // Only actually consume something if the wand doesn't have infinite mana
+                this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, this.getModifiedCost(stack, player, source, amount, registries))));
+            }
+
+            if (player != null) {
+                ManaManager.recordManaConsumptionSideEffects(player, source, amount);
+            }
+
+            return true;
+        } else {
+            // Otherwise return failure
+            return false;
+        }
+    }
 
     /**
      * Consume the given amounts of centimana from the given wand stack for the given player.  Takes into account any
@@ -198,7 +228,41 @@ public interface IManaContainer {
      * @param sources the amount of each type of centimana to be consumed
      * @return true if sufficient centimana was present in the wand and successfully consumed, false otherwise
      */
-    boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources, HolderLookup.Provider registries);
+    default boolean consumeMana(ItemStack stack, Player player, SourceList sources, HolderLookup.Provider registries) {
+        if (stack == null || sources == null) {
+            return false;
+        }
+        if (this.containsMana(stack, player, sources, registries)) {
+            // If the wand stack contains enough mana, process the consumption and return success
+            SourceList.Builder deltaBuilder = SourceList.builder();
+            for (Source source : sources.getSources()) {
+                int amount = sources.getAmount(source);
+                int realAmount = amount / 100;
+                if (this.getMaxMana(stack, source) != IManaContainer.INFINITE_MANA) {
+                    // Only actually consume something if the wand doesn't have infinite mana
+                    this.setMana(stack, source, this.getMana(stack, source) - this.getModifiedCost(stack, player, source, amount, registries));
+                }
+
+                if (player != null) {
+                    // Record the spent mana statistic change with pre-discount mana
+                    StatsManager.incrementValue(player, StatsPM.MANA_SPENT_TOTAL, realAmount);
+                    StatsManager.incrementValue(player, source.getManaSpentStat(), realAmount);
+                }
+
+                // Compute the amount of temporary attunement to be added to the player
+                deltaBuilder.with(source, Mth.floor(Math.sqrt(realAmount)));
+            }
+            SourceList attunementDeltas = deltaBuilder.build();
+            if (player != null && !attunementDeltas.isEmpty()) {
+                // Update attunements in a batch
+                AttunementManager.incrementAttunement(player, AttunementType.TEMPORARY, attunementDeltas);
+            }
+            return true;
+        } else {
+            // Otherwise return failure
+            return false;
+        }
+    }
 
     /**
      * Remove the given amount of the given type of centimana from the given wand stack.  Ignores any cost modifiers.
@@ -236,7 +300,10 @@ public interface IManaContainer {
      * @param amount the amount of centimana required
      * @return true if sufficient centimana is present, false otherwise
      */
-    boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries);
+    default boolean containsMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
+        // A wand stack with infinite mana always contains the requested amount of mana
+        return this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA || this.getMana(stack, source) >= this.getModifiedCost(stack, player, source, amount, registries);
+    }
 
     /**
      * Determine if the given wand stack contains the given amounts of centimana for the given player.  Takes into account
@@ -268,5 +335,93 @@ public interface IManaContainer {
     default boolean containsManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount) {
         // A wand stack with infinite mana always contains the requested amount of mana
         return this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA || this.getMana(stack, source) >= amount;
+    }
+
+    /**
+     * Get the base mana cost modifier to be applied to mana consumption, in whole percentage points, as determined by
+     * the cap of the wand, if any.
+     *
+     * @param stack the wand stack to be queried
+     * @return the base mana cost modifier to be applied to mana consumption
+     */
+    int getBaseCostModifier(@Nullable ItemStack stack);
+
+    /**
+     * Get the total mana cost modifier to be applied to mana consumption, in whole percentage points, from all factors
+     * (e.g. wand cap, player gear, attunement).
+     *
+     * @param stack      the wand stack to be queried
+     * @param player     the player consuming the mana
+     * @param source     the type of mana being consumed
+     * @param registries a registry lookup provider
+     * @return the total mana cost modifier to be applied to mana consumption
+     */
+    default int getTotalCostModifier(ItemStack stack, @Nullable Player player, Source source, HolderLookup.Provider registries) {
+        // Start with the base modifier, as determined by wand cap
+        int modifier = this.getBaseCostModifier(stack);
+
+        if (player != null) {
+            // Add discounts from equipped player gear and enchantments
+            int gearDiscount = 0;
+            for (ItemStack gearStack : player.getAllSlots()) {
+                if (gearStack.getItem() instanceof IManaDiscountGear discountItem) {
+                    gearDiscount += discountItem.getManaDiscount(gearStack, player, source);
+                }
+                gearDiscount += (2 * EnchantmentHelperPM.getEnchantmentLevel(gearStack, EnchantmentsPM.MANA_EFFICIENCY, registries));
+            }
+            if (gearDiscount > 0) {
+                modifier += gearDiscount;
+            }
+
+            // Add discounts from attuned sources
+            if (AttunementManager.meetsThreshold(player, source, AttunementThreshold.MINOR)) {
+                modifier += 5;
+            }
+
+            // Add discounts from temporary conditions
+            if (player.hasEffect(EffectsPM.MANAFRUIT.getHolder())) {
+                // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
+                modifier += ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder()).getAmplifier()) + 1);
+            }
+
+            // Subtract penalties from temporary conditions
+            if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.getHolder())) {
+                // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
+                modifier -= (5 * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder()).getAmplifier() + 1));
+            }
+        }
+
+        return modifier;
+    }
+
+    /**
+     * Compute the final, fully-modified mana cost for the given base cost.
+     *
+     * @param stack the wand stack to be queried
+     * @param player the player consuming the mana
+     * @param source the type of mana being consumed
+     * @param baseCost the base amount of mana being consumed
+     * @param registries a registry lookup provider
+     * @return the final mana cost modified from the given base cost
+     */
+    default int getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int baseCost, HolderLookup.Provider registries) {
+        return (int)Math.floor(baseCost / (1 + (this.getTotalCostModifier(stack, player, source, registries) / 100.0D)));
+    }
+
+    /**
+     * Compute the final, fully-modified mana cost for the given base cost.
+     *
+     * @param stack the wand stack to be queried
+     * @param player the player consuming the mana
+     * @param baseCost the base amount of mana being consumed for each source
+     * @param registries a registry lookup provider
+     * @return the final mana cost modified from the given base costs
+     */
+    default SourceList getModifiedCost(@Nullable ItemStack stack, @Nullable Player player, SourceList baseCost, HolderLookup.Provider registries) {
+        SourceList retVal = SourceList.EMPTY;
+        for (Source s : baseCost.getSources()) {
+            retVal = retVal.set(s, this.getModifiedCost(stack, player, s, baseCost.getAmount(s), registries));
+        }
+        return retVal;
     }
 }

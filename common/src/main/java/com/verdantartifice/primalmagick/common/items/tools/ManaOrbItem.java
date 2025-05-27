@@ -7,13 +7,10 @@ import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.wands.IManaContainer;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -55,7 +52,7 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
     }
 
     @Override
-    public boolean isEnchantable(ItemStack pStack) {
+    public boolean isEnchantable(@NotNull ItemStack pStack) {
         return true;
     }
 
@@ -101,24 +98,13 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
 
     @Override
     public void setMana(@NotNull ItemStack stack, @NotNull Source source, int amount) {
-        // TODO Stub
+        stack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, mana -> mana.copyWith(source, amount));
+        stack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
     }
 
     @Override
-    public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries) {
-        // TODO Stub
-        return false;
-    }
-
-    @Override
-    public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources, HolderLookup.Provider registries) {
-        // TODO Stub
-        return false;
-    }
-
-    @Override
-    public boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount, HolderLookup.Provider registries) {
-        // TODO Stub
-        return false;
+    public int getBaseCostModifier(@Nullable ItemStack stack) {
+        // As mana orbs don't have wand cores, they don't provide a wand core discount to anything
+        return 0;
     }
 }
