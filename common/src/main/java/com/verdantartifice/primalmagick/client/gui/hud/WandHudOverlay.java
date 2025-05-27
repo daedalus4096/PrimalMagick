@@ -63,10 +63,11 @@ public class WandHudOverlay {
 
         if (wand != null) {
             int index = 0;
-            int maxMana = wand.getMaxMana(wandStack);
-            Component maxText = wand.getMaxManaText(wandStack);
             List<Source> discoveredSources = Sources.getAllSorted().stream().filter(s -> s.isDiscovered(mc.player)).toList();
             for (Source source : discoveredSources) {
+                int maxMana = wand.getMaxMana(wandStack, source);
+                Component maxText = wand.getMaxManaText(wandStack, source);
+
                 int curMana = wand.getMana(wandStack, source);
                 Component curText = wand.getManaText(wandStack, source);
 

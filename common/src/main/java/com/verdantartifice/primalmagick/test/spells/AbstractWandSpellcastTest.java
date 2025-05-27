@@ -51,8 +51,8 @@ public class AbstractWandSpellcastTest extends AbstractBaseTest {
             // Create a full wand for testing
             var wandStack = this.getTestWand();
             var wand = assertInstanceOf(helper, wandStack.getItem(), AbstractWandItem.class, "Wand stack is not a wand as expected");
-            final int maxWandMana = wand.getMaxMana(wandStack);
             Sources.getAll().forEach(s -> {
+                final int maxWandMana = wand.getMaxMana(wandStack, s);
                 wand.addMana(wandStack, s, maxWandMana);
                 helper.assertValueEqual(wand.getMana(wandStack, s), maxWandMana, "Starting wand mana for " + s.getId());
             });
@@ -76,6 +76,7 @@ public class AbstractWandSpellcastTest extends AbstractBaseTest {
             // Confirm that the correct amount of each source of mana was deducted from the wand
             var spellCost = spellPackage.getManaCost();
             Sources.getAll().forEach(s -> {
+                final int maxWandMana = wand.getMaxMana(wandStack, s);
                 final int consumedCentimana = spellCost.getAmount(s);
                 final int finalCost = wand.getModifiedCost(wandStack, player, s, consumedCentimana, helper.getLevel().registryAccess());
                 final int expectedCentimana = maxWandMana - finalCost;

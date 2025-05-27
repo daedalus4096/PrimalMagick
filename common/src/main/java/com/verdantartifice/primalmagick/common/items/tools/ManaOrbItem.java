@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.wands.IManaContainer;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Equipable;
@@ -85,7 +84,8 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
     }
 
     @Override
-    public int getMaxMana(@Nullable ItemStack stack) {
+    public int getMaxMana(@Nullable ItemStack stack, @Nullable Source source) {
+        // FIXME Get the per-source amount
         return this.getWandGemEquivalent().getCapacity();
     }
 

@@ -32,7 +32,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -79,7 +78,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         if (stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
             return stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
         } else {
-            ManaStorage retVal = ManaStorage.emptyWand(this.getMaxMana(stack));
+            ManaStorage retVal = ManaStorage.emptyWand(this.getMaxMana(stack, null));
             retVal.setMana(stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY));
             stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), retVal);
             stack.remove(DataComponentsPM.STORED_CENTIMANA.get());
@@ -97,7 +96,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             stack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, mana -> mana.copyWith(source, amount));
             stack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
         } else {
-            ManaStorage newStorage = ManaStorage.emptyWand(this.getMaxMana(stack));
+            ManaStorage newStorage = ManaStorage.emptyWand(this.getMaxMana(stack, source));
             newStorage.setMana(stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY));
             newStorage.setMana(source, amount);
             stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), newStorage);
@@ -112,12 +111,12 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
 
     @Override
     public int addMana(ItemStack stack, Source source, int amount) {
-        return this.addMana(stack, source, amount, this.getMaxMana(stack));
+        return this.addMana(stack, source, amount, this.getMaxMana(stack, source));
     }
 
     protected int addMana(ItemStack stack, Source source, int amount, int max) {
         // If the parameters are invalid or the given wand stack has infinite mana, do nothing
-        if (stack == null || source == null || this.getMaxMana(stack) == IManaContainer.INFINITE_MANA) {
+        if (stack == null || source == null || this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA) {
             return 0;
         }
 
@@ -136,7 +135,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         }
         if (this.containsMana(stack, player, source, amount, registries)) {
             // If the wand stack contains enough mana, process the consumption and return success
-            if (this.getMaxMana(stack) != IManaContainer.INFINITE_MANA) {
+            if (this.getMaxMana(stack, source) != IManaContainer.INFINITE_MANA) {
                 // Only actually consume something if the wand doesn't have infinite mana
                 this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, this.getModifiedCost(stack, player, source, amount, registries))));
             }
@@ -166,12 +165,11 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         }
         if (this.containsMana(stack, player, sources, registries)) {
             // If the wand stack contains enough mana, process the consumption and return success
-            boolean isInfinite = (this.getMaxMana(stack) == IManaContainer.INFINITE_MANA);
             SourceList.Builder deltaBuilder = SourceList.builder();
             for (Source source : sources.getSources()) {
                 int amount = sources.getAmount(source);
                 int realAmount = amount / 100;
-                if (!isInfinite) {
+                if (this.getMaxMana(stack, source) != IManaContainer.INFINITE_MANA) {
                     // Only actually consume something if the wand doesn't have infinite mana
                     this.setMana(stack, source, this.getMana(stack, source) - this.getModifiedCost(stack, player, source, amount, registries));
                 }
@@ -204,7 +202,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         }
         if (this.containsManaRaw(stack, source, amount)) {
             // If the wand stack contains enough mana, process the consumption and return success
-            if (this.getMaxMana(stack) != IManaContainer.INFINITE_MANA) {
+            if (this.getMaxMana(stack, source) != IManaContainer.INFINITE_MANA) {
                 // Only actually consume something if the wand doesn't have infinite mana
                 this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, (int)amount)));
             }
@@ -219,7 +217,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     @Override
     public boolean containsMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
         // A wand stack with infinite mana always contains the requested amount of mana
-        return this.getMaxMana(stack) == IManaContainer.INFINITE_MANA || this.getMana(stack, source) >= this.getModifiedCost(stack, player, source, amount, registries);
+        return this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA || this.getMana(stack, source) >= this.getModifiedCost(stack, player, source, amount, registries);
     }
 
     @Override
@@ -288,7 +286,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                 if (source.isDiscovered(player)) {
                     Component nameComp = source.getNameText();
                     int modifier = this.getTotalCostModifier(stack, player, source, context.registries());
-                    Component line = Component.translatable("tooltip.primalmagick.source.mana", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
+                    Component line = Component.translatable("tooltip.primalmagick.source.mana", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack, source), modifier);
                     tooltip.add(line);
                 }
             }

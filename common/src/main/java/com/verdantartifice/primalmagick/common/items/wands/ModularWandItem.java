@@ -22,9 +22,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +46,7 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
 
     @Override
-    public int getMaxMana(ItemStack stack) {
+    public int getMaxMana(ItemStack stack, @Nullable Source source) {
         // The maximum amount of mana a wand can hold is determined by its gem
         if (stack == null) {
             return MundaneWandItem.MAX_MANA;
@@ -245,12 +245,12 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
         
         // Regenerate one mana per second for core-aligned sources
         if (stack != null && entityIn.tickCount % 20 == 0) {
-            int maxMana = this.getMaxMana(stack);
             WandCore core = this.getWandCore(stack);
-            if (core != null && maxMana != -1) {
+            if (core != null) {
                 for (Source alignedSource : core.getAlignedSources()) {
+                    int maxMana = this.getMaxMana(stack, alignedSource);
                     int curMana = this.getMana(stack, alignedSource);
-                    if (curMana < (0.1D * maxMana)) {
+                    if (maxMana != IManaContainer.INFINITE_MANA && curMana < (0.1D * maxMana)) {
                         this.addMana(stack, alignedSource, 100, (int)(0.1D * maxMana));
                     }
                 }

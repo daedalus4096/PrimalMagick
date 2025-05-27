@@ -34,7 +34,7 @@ public interface IManaContainer {
      * @return the amount of centimana contained
      */
     default int getMana(@Nullable ItemStack stack, @Nullable Source source) {
-        if (this.getMaxMana(stack) == IManaContainer.INFINITE_MANA) {
+        if (this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA) {
             // If the given stack has infinite mana, return that
             return IManaContainer.INFINITE_MANA;
         } else {
@@ -75,9 +75,8 @@ public interface IManaContainer {
     default SourceList getAllMana(@Nullable ItemStack stack) {
         SourceList retVal = SourceList.EMPTY;
         SourceList stored = this.getManaStorage(stack).getAllManaStored();
-        boolean isInfinite = this.getMaxMana(stack) == IManaContainer.INFINITE_MANA;
         for (Source source : Sources.getAllSorted()) {
-            if (isInfinite) {
+            if (this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA) {
                 // If the stack has infinite mana, set that into the returned source list (not merge; it would keep the default zero)
                 retVal = retVal.set(source, IManaContainer.INFINITE_MANA);
             } else {
@@ -91,10 +90,11 @@ public interface IManaContainer {
     /**
      * Get the maximum amount of centimana that can be held by the given wand stack.
      *
-     * @param stack the wand stack whose maximum mana to return
+     * @param stack  the wand stack whose maximum mana to return
+     * @param source
      * @return the maximum amount of centimana that can be held by the given wand stack
      */
-    int getMaxMana(@Nullable ItemStack stack);
+    int getMaxMana(@Nullable ItemStack stack, @Nullable Source source);
 
     /**
      * Get the text representation of the maximum amount of centimana that can be held by the given wand stack.
@@ -102,8 +102,8 @@ public interface IManaContainer {
      * @param stack the wand stack whose maximum mana to return
      * @return the text representation of the maximum amount of centimana that can be held by the given wand stack
      */
-    default MutableComponent getMaxManaText(@Nullable ItemStack stack) {
-        int mana = this.getMaxMana(stack);
+    default MutableComponent getMaxManaText(@Nullable ItemStack stack, @Nullable Source source) {
+        int mana = stack == null || source == null ? 0 : this.getMaxMana(stack, source);
         if (mana == IManaContainer.INFINITE_MANA) {
             // If the given wand stack has infinite mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
@@ -197,6 +197,6 @@ public interface IManaContainer {
      */
     default boolean containsManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount) {
         // A wand stack with infinite mana always contains the requested amount of mana
-        return this.getMaxMana(stack) == IManaContainer.INFINITE_MANA || this.getMana(stack, source) >= amount;
+        return this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA || this.getMana(stack, source) >= amount;
     }
 }

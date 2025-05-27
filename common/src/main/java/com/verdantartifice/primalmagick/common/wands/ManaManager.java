@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,24 +29,28 @@ public class ManaManager {
      * @return the amount of centimana contained
      */
     public static int getMana(@Nullable Player player, @Nullable Source source) {
-        int retVal = 0;
         if (player != null && source != null) {
-            if (player.getMainHandItem().getItem() instanceof IManaContainer mainHandContainer) {
-                int mainHandAmount = mainHandContainer.getMana(player.getMainHandItem(), source);
-                if (mainHandAmount == IManaContainer.INFINITE_MANA) {
+            return collectManaAmount(ManaManager::getStackMana, source, player.getMainHandItem(), player.getOffhandItem());
+        }
+        return 0;
+    }
+
+    private static int collectManaAmount(@NotNull TriFunction<IManaContainer, ItemStack, Source, Integer> extractor, @NotNull Source source, @NotNull ItemStack... stacks) {
+        int retVal = 0;
+        for (ItemStack stack : stacks) {
+            if (stack.getItem() instanceof IManaContainer container) {
+                int amount = extractor.apply(container, stack, source);
+                if (amount == IManaContainer.INFINITE_MANA) {
                     return IManaContainer.INFINITE_MANA;
                 }
-                retVal += mainHandAmount;
-            }
-            if (player.getOffhandItem().getItem() instanceof IManaContainer offHandContainer) {
-                int offHandAmount = offHandContainer.getMana(player.getOffhandItem(), source);
-                if (offHandAmount == IManaContainer.INFINITE_MANA) {
-                    return IManaContainer.INFINITE_MANA;
-                }
-                retVal += offHandAmount;
+                retVal += amount;
             }
         }
         return retVal;
+    }
+
+    private static int getStackMana(@NotNull IManaContainer container, @NotNull ItemStack itemStack, @NotNull Source source) {
+        return container.getMana(itemStack, source);
     }
 
     /**
@@ -56,13 +61,16 @@ public class ManaManager {
      * @return the text representation of the amount of centimana contained
      */
     public static @NotNull MutableComponent getManaText(@Nullable Player player, @Nullable Source source) {
-        int mana = getMana(player, source);
-        if (mana == IManaContainer.INFINITE_MANA) {
+        return formatManaAmountText(getMana(player, source));
+    }
+
+    private static @NotNull MutableComponent formatManaAmountText(int amount) {
+        if (amount == IManaContainer.INFINITE_MANA) {
             // If the given player has infinite mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
             // Otherwise show the current whole mana value for that source from the stack's data
-            return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
+            return Component.literal(MANA_FORMATTER.format(amount / 100.0D));
         }
     }
 
@@ -82,26 +90,29 @@ public class ManaManager {
      * Get the maximum amount of centimana that can be held by the given player's equipment.
      *
      * @param player the player whose equipment is to be queried
-     * @param wandStack the current player's wand stack
      * @param source the source of mana to be queried
      * @return the maximum amount of centimana that can be held by the given player's equipment
      */
-    public static int getMaxMana(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source) {
-        // TODO Stub
+    public static int getMaxMana(@Nullable Player player, @Nullable Source source) {
+        if (player != null && source != null) {
+            return collectManaAmount(ManaManager::getStackMaxMana, source, player.getMainHandItem(), player.getOffhandItem());
+        }
         return 0;
+    }
+
+    private static int getStackMaxMana(@NotNull IManaContainer container, @NotNull ItemStack itemStack, @NotNull Source source) {
+        return container.getMaxMana(itemStack, source);
     }
 
     /**
      * Get the text representation of the maximum amount of centimana that can be held by the given player's equipment.
      *
      * @param player the player whose eqiupment is to be queried
-     * @param wandStack the current player's wand stack
      * @param source the source of mana to be queried
      * @return the text representation of the maximum amount of centimana that can be held by the given player's equipment
      */
-    public static @NotNull MutableComponent getMaxManaText(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source) {
-        // TODO Stub
-        return Component.empty();
+    public static @NotNull MutableComponent getMaxManaText(@Nullable Player player, @Nullable Source source) {
+        return formatManaAmountText(getMaxMana(player, source));
     }
 
     /**
