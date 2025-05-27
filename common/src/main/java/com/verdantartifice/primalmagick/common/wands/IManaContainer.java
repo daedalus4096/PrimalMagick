@@ -113,6 +113,8 @@ public interface IManaContainer {
         }
     }
 
+    void setMana(@NotNull ItemStack stack, @NotNull Source source, int amount);
+
     /**
      * Add the given amount of the given type of centimana to the given wand stack, up to its maximum.
      *
@@ -121,9 +123,32 @@ public interface IManaContainer {
      * @param amount the amount of centimana to be added
      * @return the amount of leftover centimana that could not fit in the wand
      */
-    int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
+    default int addMana(ItemStack stack, Source source, int amount) {
+        return this.addMana(stack, source, amount, this.getMaxMana(stack, source));
+    }
 
-    int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount, int max);
+    /**
+     * Add the given amount of the given type of centimana to the given wand stack, up to the given maximum.
+     *
+     * @param stack  the wand stack to be modified
+     * @param source the type of mana to be added
+     * @param amount the amount of centimana to be added
+     * @param max the maximum amount of mana the stack should have post-add
+     * @return the amount of leftover centimana that could not fit in the wand
+     */
+    default int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount, int max) {
+        // If the parameters are invalid or the given wand stack has infinite mana, do nothing
+        if (stack == null || source == null || this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA) {
+            return 0;
+        }
+
+        // Otherwise, increment and set the new centimana total for the source into the wand's data, up to
+        // the given centimana threshold, returning any leftover centimana that wouldn't fit
+        int toStore = this.getMana(stack, source) + amount;
+        int leftover = Math.max(toStore - max, 0);
+        this.setMana(stack, source, Math.min(toStore, max));
+        return leftover;
+    }
 
     /**
      * Deduct the given amount of the given type of centimana from the given wand stack, to a minimum of zero.  Intended
@@ -135,7 +160,22 @@ public interface IManaContainer {
      * @param amount the amount of centimana to be deducted
      * @return the amount of leftover centimana that could not be deducted
      */
-    int deductMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
+    default int deductMana(@Nullable ItemStack stack, @Nullable Source source, int amount) {
+        if (stack == null || source == null) {
+            // If the parameters are invalid, do nothing
+            return amount;
+        } else if (this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA) {
+            // If the given stack has infinite mana, no deduction need take place
+            return 0;
+        }
+
+        // Otherwise, decrement and set the new centimana total for the source into the wand's data, up to
+        // its maximum, returning any leftover centimana that couldn't be covered
+        int toStore = this.getMana(stack, source) - amount;
+        int leftover = Math.max(-toStore, 0);
+        this.setMana(stack, source, Math.max(toStore, 0));
+        return leftover;
+    }
 
     /**
      * Consume the given amount of the given type of centimana from the given wand stack for the given player.  Takes
@@ -168,7 +208,23 @@ public interface IManaContainer {
      * @param amount the amount of mana to be removed
      * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
      */
-    boolean removeManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount);
+    default boolean removeManaRaw(ItemStack stack, Source source, int amount) {
+        if (stack == null || source == null) {
+            return false;
+        }
+        if (this.containsManaRaw(stack, source, amount)) {
+            // If the wand stack contains enough mana, process the consumption and return success
+            if (this.getMaxMana(stack, source) != IManaContainer.INFINITE_MANA) {
+                // Only actually consume something if the wand doesn't have infinite mana
+                this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, amount)));
+            }
+
+            return true;
+        } else {
+            // Otherwise return failure
+            return false;
+        }
+    }
 
     /**
      * Determine if the given wand stack contains the given amount of the given type of centimana for the given player.  Takes

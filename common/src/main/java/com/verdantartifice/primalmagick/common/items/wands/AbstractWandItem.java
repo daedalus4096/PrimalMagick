@@ -105,47 +105,10 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         }
     }
 
-    protected void setMana(@NotNull ItemStack stack, @NotNull Source source, int amount) {
+    @Override
+    public void setMana(@NotNull ItemStack stack, @NotNull Source source, int amount) {
         // Save the given amount of centimana for the given source into the stack's data
         this.updateManaStorageWith(stack, source, amount);
-    }
-
-    @Override
-    public int addMana(ItemStack stack, Source source, int amount) {
-        return this.addMana(stack, source, amount, this.getMaxMana(stack, source));
-    }
-
-    @Override
-    public int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount, int max) {
-        // If the parameters are invalid or the given wand stack has infinite mana, do nothing
-        if (stack == null || source == null || this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA) {
-            return 0;
-        }
-
-        // Otherwise, increment and set the new centimana total for the source into the wand's data, up to
-        // the given centimana threshold, returning any leftover centimana that wouldn't fit
-        int toStore = this.getMana(stack, source) + amount;
-        int leftover = Math.max(toStore - max, 0);
-        this.setMana(stack, source, Math.min(toStore, max));
-        return leftover;
-    }
-
-    @Override
-    public int deductMana(@Nullable ItemStack stack, @Nullable Source source, int amount) {
-        if (stack == null || source == null) {
-            // If the parameters are invalid, do nothing
-            return amount;
-        } else if (this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA) {
-            // If the given stack has infinite mana, no deduction need take place
-            return 0;
-        }
-
-        // Otherwise, decrement and set the new centimana total for the source into the wand's data, up to
-        // its maximum, returning any leftover centimana that couldn't be covered
-        int toStore = this.getMana(stack, source) - amount;
-        int leftover = Math.max(-toStore, 0);
-        this.setMana(stack, source, Math.max(toStore, 0));
-        return leftover;
     }
 
     @Override
@@ -201,25 +164,6 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                 // Update attunements in a batch
                 AttunementManager.incrementAttunement(player, AttunementType.TEMPORARY, attunementDeltas);
             }
-            return true;
-        } else {
-            // Otherwise return failure
-            return false;
-        }
-    }
-
-    @Override
-    public boolean removeManaRaw(ItemStack stack, Source source, int amount) {
-        if (stack == null || source == null) {
-            return false;
-        }
-        if (this.containsManaRaw(stack, source, amount)) {
-            // If the wand stack contains enough mana, process the consumption and return success
-            if (this.getMaxMana(stack, source) != IManaContainer.INFINITE_MANA) {
-                // Only actually consume something if the wand doesn't have infinite mana
-                this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, (int)amount)));
-            }
-            
             return true;
         } else {
             // Otherwise return failure

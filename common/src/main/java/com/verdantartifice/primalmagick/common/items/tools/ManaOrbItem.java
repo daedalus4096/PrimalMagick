@@ -83,28 +83,25 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
         return stack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
     }
 
+    public void attuneStorage(@NotNull ItemStack stack, @NotNull Source source) {
+        if (!this.getManaStorage(stack).canStore(source)) {
+            // If attuning to a source other than the one currently used, replace the stack's mana storage component
+            // with one for the given source; any stored mana of other sources is lost.
+            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyManaOrb(source, this.getWandGemEquivalent().getCapacity()));
+        }
+    }
+
     @Override
     public int getMaxMana(@Nullable ItemStack stack, @Nullable Source source) {
-        // FIXME Get the per-source amount
-        return this.getWandGemEquivalent().getCapacity();
+        if (stack == null || source == null) {
+            return 0;
+        }
+        return this.getManaStorage(stack).getMaxManaStored(source);
     }
 
     @Override
-    public int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount) {
+    public void setMana(@NotNull ItemStack stack, @NotNull Source source, int amount) {
         // TODO Stub
-        return 0;
-    }
-
-    @Override
-    public int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount, int max) {
-        // TODO Stub
-        return 0;
-    }
-
-    @Override
-    public int deductMana(@Nullable ItemStack stack, @Nullable Source source, int amount) {
-        // TODO Stub
-        return 0;
     }
 
     @Override
@@ -115,12 +112,6 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
 
     @Override
     public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources, HolderLookup.Provider registries) {
-        // TODO Stub
-        return false;
-    }
-
-    @Override
-    public boolean removeManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount) {
         // TODO Stub
         return false;
     }
