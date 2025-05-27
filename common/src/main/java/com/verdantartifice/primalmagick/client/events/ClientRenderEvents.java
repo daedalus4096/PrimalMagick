@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.wands.IManaContainer;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
@@ -66,8 +67,8 @@ public class ClientRenderEvents {
             tooltip.add(Component.translatable("tooltip.primalmagick.warded").append(CommonComponents.SPACE).append(levelComponent).withStyle(ChatFormatting.DARK_AQUA));
         }
         
-        // Show a tooltip entry if the item has attached mana storage but is not a wand; wands have their own special tooltips
-        if (!(stack.getItem() instanceof IWand)) {
+        // Show a tooltip entry if the item has attached mana storage but is not a wand or mana orb; they have their own special tooltips
+        if (!(stack.getItem() instanceof IManaContainer)) {
             ManaStorage manaStorage = stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
             if (manaStorage != null) {
                 Sources.getAllSorted().stream().filter(source -> source.isDiscovered(player) && manaStorage.canStore(source)).forEach(source ->
