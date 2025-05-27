@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomRenderer, ITieredDevice, IManaContainer {
@@ -71,16 +72,22 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
         };
     }
 
-    private @NotNull WandGem getWandGemEquivalent() {
-        return switch (this.getDeviceTier()) {
-            case BASIC -> WandGem.APPRENTICE;
-            case ENCHANTED -> WandGem.ADEPT;
-            case FORBIDDEN -> WandGem.WIZARD;
-            case HEAVENLY -> WandGem.ARCHMAGE;
-            case CREATIVE -> WandGem.CREATIVE;
-        };
+    private static @NotNull Optional<WandGem> getWandGemEquivalent(@NotNull ItemStack stack) {
+        if (stack.getItem() instanceof ManaOrbItem orbItem) {
+            WandGem gem = switch (orbItem.getDeviceTier()) {
+                case BASIC -> WandGem.APPRENTICE;
+                case ENCHANTED -> WandGem.ADEPT;
+                case FORBIDDEN -> WandGem.WIZARD;
+                case HEAVENLY -> WandGem.ARCHMAGE;
+                case CREATIVE -> WandGem.CREATIVE;
+            };
+            return Optional.of(gem);
+        } else {
+            return Optional.empty();
+        }
     }
 
+    @Override
     public ManaStorage getManaStorage(ItemStack stack) {
         return stack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
     }
@@ -93,11 +100,21 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
         return this.getManaStorage(stack).canStore(source);
     }
 
-    public void attuneStorage(@NotNull ItemStack stack, @NotNull Source source) {
-        if (!this.getManaStorage(stack).canStore(source)) {
-            // If attuning to a source other than the one currently used, replace the stack's mana storage component
-            // with one for the given source; any stored mana of other sources is lost.
-            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyManaOrb(source, this.getWandGemEquivalent().getCapacity()));
+    public static ItemStack attuneStorage(@NotNull ItemStack stack, @Nullable Source source) {
+        if (stack.getItem() instanceof ManaOrbItem) {
+            ItemStack retVal = stack.copy();
+            if (source == null) {
+                // If no source is given, then de-attune the orb; any stored mana is lost
+                retVal.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
+            } else if (!stack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).canStore(source)) {
+                // If attuning to a source other than the one currently used, replace the stack's mana storage component
+                // with one for the given source; any stored mana of other sources is lost.
+                retVal.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyManaOrb(source,
+                        getWandGemEquivalent(stack).map(WandGem::getCapacity).orElse(0)));
+            }
+            return retVal;
+        } else {
+            return ItemStack.EMPTY;
         }
     }
 
@@ -122,7 +139,7 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+    public void appendHoverText(@NotNull ItemStack pStack, @NotNull TooltipContext pContext, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
 
         if (this.isAttuned(pStack)) {

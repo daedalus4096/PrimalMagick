@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
+import com.verdantartifice.primalmagick.common.crafting.AttuneManaOrbRecipe;
 import com.verdantartifice.primalmagick.common.crafting.FlyingCarpetDyeRecipe;
 import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.StaticBookCloningRecipe;
@@ -681,6 +682,7 @@ public abstract class Recipes extends RecipeProvider {
         SpecialRecipeBuilder.special(WardingModuleApplicationRecipe::new).save(consumer, ResourceUtils.loc("warding_module_application"));
         SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(consumer, ResourceUtils.loc("static_book_cloning"));
         SpecialRecipeBuilder.special(WritableBookCraftingRecipe::new).save(consumer, ResourceUtils.loc("writable_book_crafting"));
+        SpecialRecipeBuilder.special(AttuneManaOrbRecipe::new).save(consumer, ResourceUtils.loc("attune_mana_orb"));
     }
 
     protected void registerMarbleRecipes(RecipeOutput consumer) {

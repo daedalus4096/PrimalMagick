@@ -37,6 +37,7 @@ public class RecipeSerializersPM {
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapelessTagRecipe>> CRAFTING_SHAPELESS_TAG = register("crafting_shapeless_tag", ShapelessTagRecipe.Serializer::new);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapelessArcaneTagRecipe>> ARCANE_CRAFTING_SHAPELESS_TAG = register("arcane_crafting_shapeless_tag", ShapelessArcaneTagRecipe.Serializer::new);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<DissolutionTagRecipe>> DISSOLUTION_TAG = register("dissolution_tag", DissolutionTagRecipe.Serializer::new);
+    public static final IRegistryItem<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<AttuneManaOrbRecipe>> ATTUNE_MANA_ORB = register("attune_mana_orb_special", () -> new SimpleCraftingRecipeSerializer<>(AttuneManaOrbRecipe::new));
 
     private static <T extends Recipe<?>, S extends RecipeSerializer<T>> IRegistryItem<RecipeSerializer<?>, S> register(String name, Supplier<S> supplier) {
         return Services.RECIPE_SERIALIZERS_REGISTRY.register(name, supplier);
