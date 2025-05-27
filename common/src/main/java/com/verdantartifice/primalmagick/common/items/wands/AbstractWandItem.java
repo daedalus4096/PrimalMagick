@@ -115,7 +115,8 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         return this.addMana(stack, source, amount, this.getMaxMana(stack, source));
     }
 
-    protected int addMana(ItemStack stack, Source source, int amount, int max) {
+    @Override
+    public int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount, int max) {
         // If the parameters are invalid or the given wand stack has infinite mana, do nothing
         if (stack == null || source == null || this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA) {
             return 0;

@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.common.wands.ManaManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -114,7 +115,7 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
                 if (source != null) {
                     // Transfer mana from the font to the wand
                     int tap = Math.min(this.mana, wand.getSiphonAmount(wandStack));
-                    int leftover = wand.addMana(wandStack, source, tap);
+                    int leftover = ManaManager.addMana(player, wandStack, source, tap);
                     if (leftover < tap) {
                         this.mana -= (tap - leftover);
                         StatsManager.incrementValue(player, StatsPM.MANA_SIPHONED, (tap - leftover) / 100); // Record whole mana siphoned for stats

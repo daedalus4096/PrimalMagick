@@ -96,6 +96,12 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
     }
 
     @Override
+    public int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount, int max) {
+        // TODO Stub
+        return 0;
+    }
+
+    @Override
     public int deductMana(@Nullable ItemStack stack, @Nullable Source source, int amount) {
         // TODO Stub
         return 0;

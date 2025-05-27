@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.common.wands.ManaManager;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -31,15 +32,14 @@ public class WandHudOverlay {
     
     public static boolean shouldRender() {
         Minecraft mc = Minecraft.getInstance();
-        return !mc.options.hideGui && !mc.player.isSpectator() && Services.CONFIG.showWandHud();
+        return !mc.options.hideGui && mc.player != null && !mc.player.isSpectator() && Services.CONFIG.showWandHud() &&
+                (mc.player.getMainHandItem().getItem() instanceof IWand || mc.player.getOffhandItem().getItem() instanceof IWand);
     }
     
     public static void render(GuiGraphics pGuiGraphics, DeltaTracker pDeltaTracker) {
         if (shouldRender()) {
             Minecraft mc = Minecraft.getInstance();
-            if (mc.player.getMainHandItem().getItem() instanceof IWand || mc.player.getOffhandItem().getItem() instanceof IWand) {
-                renderHud(mc, pGuiGraphics, mc.player.getMainHandItem(), mc.player.getOffhandItem(), pDeltaTracker.getGameTimeDeltaPartialTick(true));
-            }
+            renderHud(mc, pGuiGraphics, mc.player.getMainHandItem(), mc.player.getOffhandItem(), pDeltaTracker.getGameTimeDeltaPartialTick(true));
         }
     }
     
@@ -51,31 +51,19 @@ public class WandHudOverlay {
         ResourceLocation spellIcon = activeSpell == null ? null : activeSpell.getIcon();
         posY += renderSpellDisplay(guiGraphics, 0, posY, spellIcon, partialTick);
 
-        IWand wand = null;
-        ItemStack wandStack = ItemStack.EMPTY;
-        if (mainHandStack.getItem() instanceof IWand mainHandWand) {
-            wand = mainHandWand;
-            wandStack = mainHandStack;
-        } else if (offHandStack.getItem() instanceof IWand offHandWand) {
-            wand = offHandWand;
-            wandStack = offHandStack;
-        }
+        int index = 0;
+        List<Source> discoveredSources = Sources.getAllSorted().stream().filter(s -> s.isDiscovered(mc.player)).toList();
+        for (Source source : discoveredSources) {
+            int maxMana = ManaManager.getMaxMana(mc.player, source);
+            Component maxText = ManaManager.getMaxManaText(mc.player, source);
 
-        if (wand != null) {
-            int index = 0;
-            List<Source> discoveredSources = Sources.getAllSorted().stream().filter(s -> s.isDiscovered(mc.player)).toList();
-            for (Source source : discoveredSources) {
-                int maxMana = wand.getMaxMana(wandStack, source);
-                Component maxText = wand.getMaxManaText(wandStack, source);
+            int curMana = ManaManager.getMana(mc.player, source);
+            Component curText = ManaManager.getManaText(mc.player, source);
 
-                int curMana = wand.getMana(wandStack, source);
-                Component curText = wand.getManaText(wandStack, source);
+            double ratio = (double)curMana / (double)maxMana;
+            Component ratioText = Component.translatable("tooltip.primalmagick.source.mana_summary_fragment", curText, maxText);
 
-                double ratio = (double)curMana / (double)maxMana;
-                Component ratioText = Component.translatable("tooltip.primalmagick.source.mana_summary_fragment", curText, maxText);
-
-                posY += renderManaGauge(guiGraphics, 0, posY, ratioText, ratio, source.getColor(), (++index == discoveredSources.size()), partialTick, mc.font);
-            }
+            posY += renderManaGauge(guiGraphics, 0, posY, ratioText, ratio, source.getColor(), (++index == discoveredSources.size()), partialTick, mc.font);
         }
 
         guiGraphics.pose().popPose();

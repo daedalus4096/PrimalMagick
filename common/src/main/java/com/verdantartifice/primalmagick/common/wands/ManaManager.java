@@ -162,6 +162,20 @@ public class ManaManager {
      * @return the amount of leftover centimana that could not fit in the wand
      */
     public static int addMana(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source, int amount) {
+        return addMana(player, wandStack, source, amount, getMaxMana(player, source));
+    }
+
+    /**
+     * Add the given amount of the given type of centimana to the given player's equipment, up to the given maximum.
+     *
+     * @param player the player doing the adding
+     * @param wandStack the wand stack to be modified
+     * @param source the type of mana to be added
+     * @param amount the amount of centimana to be added
+     * @param max the maximum amount of mana the player should have post-add
+     * @return the amount of leftover centimana that could not fit in the wand
+     */
+    public static int addMana(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source, int amount, int max) {
         if (player == null || wandStack == null || source == null) {
             return amount;
         }
@@ -170,7 +184,7 @@ public class ManaManager {
         for (ItemStack stack : getPrioritizedEquipment(player, wandStack)) {
             if (stack.getItem() instanceof IManaContainer container) {
                 // Add as much as possible to each item in priority order, leaving the remainder for lower priority items
-                amount = container.addMana(stack, source, amount);
+                amount = container.addMana(stack, source, amount, max);
             }
         }
 

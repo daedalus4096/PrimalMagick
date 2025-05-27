@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.IManaContainer;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
+import com.verdantartifice.primalmagick.common.wands.ManaManager;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -244,14 +245,15 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
         
         // Regenerate one mana per second for core-aligned sources
-        if (stack != null && entityIn.tickCount % 20 == 0) {
+        if (entityIn.tickCount % 20 == 0) {
             WandCore core = this.getWandCore(stack);
-            if (core != null) {
+            if (core != null && entityIn instanceof Player player) {
                 for (Source alignedSource : core.getAlignedSources()) {
-                    int maxMana = this.getMaxMana(stack, alignedSource);
-                    int curMana = this.getMana(stack, alignedSource);
-                    if (maxMana != IManaContainer.INFINITE_MANA && curMana < (0.1D * maxMana)) {
-                        this.addMana(stack, alignedSource, 100, (int)(0.1D * maxMana));
+                    int maxMana = ManaManager.getMaxMana(player, alignedSource);
+                    int curMana = ManaManager.getMana(player, alignedSource);
+                    double targetMax = (0.1D * maxMana);
+                    if (maxMana != IManaContainer.INFINITE_MANA && curMana < targetMax) {
+                        ManaManager.addMana(player, stack, alignedSource, 100, (int)targetMax);
                     }
                 }
             }
