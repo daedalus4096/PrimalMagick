@@ -43,12 +43,12 @@ public class ManaManager {
      */
     public static int getMana(@Nullable Player player, @Nullable Source source) {
         if (player != null && source != null) {
-            return collectManaAmount(ManaManager::getStackMana, source, player.getMainHandItem(), player.getOffhandItem());
+            return collectManaAmount(ManaManager::getStackMana, source, getPrioritizedEquipment(player, player.getMainHandItem()));
         }
         return 0;
     }
 
-    private static int collectManaAmount(@NotNull TriFunction<IManaContainer, ItemStack, Source, Integer> extractor, @NotNull Source source, @NotNull ItemStack... stacks) {
+    private static int collectManaAmount(@NotNull TriFunction<IManaContainer, ItemStack, Source, Integer> extractor, @NotNull Source source, @NotNull List<ItemStack> stacks) {
         int retVal = 0;
         for (ItemStack stack : stacks) {
             if (stack.getItem() instanceof IManaContainer container) {
@@ -132,7 +132,7 @@ public class ManaManager {
      */
     public static int getMaxMana(@Nullable Player player, @Nullable Source source) {
         if (player != null && source != null) {
-            return collectManaAmount(ManaManager::getStackMaxMana, source, player.getMainHandItem(), player.getOffhandItem());
+            return collectManaAmount(ManaManager::getStackMaxMana, source, getPrioritizedEquipment(player, player.getMainHandItem()));
         }
         return 0;
     }
@@ -179,9 +179,18 @@ public class ManaManager {
     }
 
     private static @NotNull List<ItemStack> getPrioritizedEquipment(@NotNull Player player, @NotNull ItemStack wandStack) {
-        return ImmutableList.of(
-                wandStack,
-                getOffhandStack(player, wandStack));
+        ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
+
+        // Always consider the wand stack, typically in the main hand
+        builder.add(wandStack);
+
+        // Don't consider the offhand stack if both the main and off hands are holding wands
+        ItemStack offhandStack = getOffhandStack(player, wandStack);
+        if (!(wandStack.getItem() instanceof IWand) || !(offhandStack.getItem() instanceof IWand)) {
+            builder.add(offhandStack);
+        }
+
+        return builder.build();
     }
 
     /**
