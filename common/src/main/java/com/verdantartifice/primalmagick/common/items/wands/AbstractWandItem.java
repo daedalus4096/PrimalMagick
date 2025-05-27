@@ -129,6 +129,24 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
 
     @Override
+    public int deductMana(@Nullable ItemStack stack, @Nullable Source source, int amount) {
+        if (stack == null || source == null) {
+            // If the parameters are invalid, do nothing
+            return amount;
+        } else if (this.getMaxMana(stack, source) == IManaContainer.INFINITE_MANA) {
+            // If the given stack has infinite mana, no deduction need take place
+            return 0;
+        }
+
+        // Otherwise, decrement and set the new centimana total for the source into the wand's data, up to
+        // its maximum, returning any leftover centimana that couldn't be covered
+        int toStore = this.getMana(stack, source) - amount;
+        int leftover = Math.max(-toStore, 0);
+        this.setMana(stack, source, Math.max(toStore, 0));
+        return leftover;
+    }
+
+    @Override
     public boolean consumeMana(ItemStack stack, Player player, Source source, int amount, HolderLookup.Provider registries) {
         if (stack == null || source == null) {
             return false;

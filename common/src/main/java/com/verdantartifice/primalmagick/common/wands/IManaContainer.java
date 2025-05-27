@@ -124,6 +124,18 @@ public interface IManaContainer {
     int addMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
 
     /**
+     * Deduct the given amount of the given type of centimana from the given wand stack, to a minimum of zero.  Intended
+     * to be used when deducting mana from the whole of the player's equipment, where another piece of gear can cover
+     * whatever's missing from this stack.
+     *
+     * @param stack  the wand stack to be modified
+     * @param source the type of mana to be deducted
+     * @param amount the amount of centimana to be deducted
+     * @return the amount of leftover centimana that could not be deducted
+     */
+    int deductMana(@Nullable ItemStack stack, @Nullable Source source, int amount);
+
+    /**
      * Consume the given amount of the given type of centimana from the given wand stack for the given player.  Takes
      * into account any cost modifiers.
      *

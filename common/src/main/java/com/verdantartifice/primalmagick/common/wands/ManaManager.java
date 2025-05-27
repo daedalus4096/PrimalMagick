@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.wands;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.stream.Stream;
  */
 public class ManaManager {
     private static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     /**
      * Get the centimana for the given source which is contained in the given player's equipment.
@@ -218,8 +221,27 @@ public class ManaManager {
      * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
      */
     public static boolean removeManaRaw(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source, int amount) {
-        // TODO Stub
-        return false;
+        if (player == null || wandStack == null || source == null || !containsManaRaw(player, source, amount)) {
+            return false;
+        } else if (getMana(player, source) == IManaContainer.INFINITE_MANA) {
+            // If at least one piece of equipment grants infinite mana for the source, don't bother deducting
+            return true;
+        }
+
+        // Deduct mana from equipment in reverse priority order (i.e. wand last)
+        for (ItemStack stack : getPrioritizedEquipment(player, wandStack).reversed()) {
+            if (stack.getItem() instanceof IManaContainer container) {
+                // Deduct as much as possible from each item in reverse priority order, leaving the remainder for next priority items
+                amount = container.deductMana(stack, source, amount);
+            }
+        }
+
+        // Return any mana that couldn't fit in all the player's equipment
+        if (amount > 0) {
+            // This should have been caught by the contains check at the start, so log a warning
+            LOGGER.warn("Leftover mana when trying to remove from player equipoment: {}", amount);
+        }
+        return amount <= 0;
     }
 
     /**
