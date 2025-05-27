@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.wands;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -12,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
+import java.util.OptionalInt;
+import java.util.stream.Stream;
 
 /**
  * Primary access point for mana related methods for a player. Takes into account all equipped gear.
@@ -78,12 +81,36 @@ public class ManaManager {
      * Get the centimana amounts of all types of mana contained in the given player's equipment.
      *
      * @param player the player whose equipment is to be queried
-     * @param wandStack the current player's wand stack
      * @return the amount of each type of mana contained
      */
-    public static @NotNull SourceList getAllMana(@Nullable Player player, @Nullable ItemStack wandStack) {
-        // TODO Stub
-        return SourceList.EMPTY;
+    public static @NotNull SourceList getAllMana(@Nullable Player player) {
+        if (player == null) {
+            return SourceList.EMPTY;
+        }
+        return Stream.of(player.getMainHandItem(), player.getOffhandItem())
+                .map(stack -> stack.getItem() instanceof IManaContainer container ? container.getAllMana(stack) : SourceList.EMPTY)
+                .reduce(SourceList.EMPTY, ManaManager::combineSourceLists);
+    }
+
+    private static @NotNull SourceList combineSourceLists(@NotNull SourceList lhs, @NotNull SourceList rhs) {
+        SourceList retVal = SourceList.EMPTY;
+        for (Source source : Sources.getAllSorted()) {
+            OptionalInt amountOpt = combineSourceAmounts(source, lhs, rhs);
+            if (amountOpt.isPresent()) {
+                retVal.set(source, amountOpt.getAsInt());
+            }
+        }
+        return retVal;
+    }
+
+    private static @NotNull OptionalInt combineSourceAmounts(@NotNull Source source, @NotNull SourceList lhs, @NotNull SourceList rhs) {
+        if (lhs.getAmount(source) == IManaContainer.INFINITE_MANA || rhs.getAmount(source) == IManaContainer.INFINITE_MANA) {
+            return OptionalInt.of(IManaContainer.INFINITE_MANA);
+        } else if (!lhs.isPresent(source) && !rhs.isPresent(source)) {
+            return OptionalInt.empty();
+        } else {
+            return OptionalInt.of(lhs.getAmount(source) + rhs.getAmount(source));
+        }
     }
 
     /**
