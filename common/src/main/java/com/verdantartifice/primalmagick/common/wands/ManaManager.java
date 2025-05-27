@@ -234,7 +234,10 @@ public class ManaManager {
      * @return true if sufficient mana is present, false otherwise
      */
     public static boolean containsMana(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source, int amount, HolderLookup.Provider registries) {
-        // TODO Stub
+        if (player != null && wandStack != null && source != null && wandStack.getItem() instanceof IWand wand) {
+            int totalMana = getMana(player, source);
+            return totalMana == IManaContainer.INFINITE_MANA || totalMana >= wand.getModifiedCost(wandStack, player, source, amount, registries);
+        }
         return false;
     }
 
@@ -249,8 +252,17 @@ public class ManaManager {
      * @return true if sufficient mana is present, false otherwise
      */
     public static boolean containsMana(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable SourceList sources, HolderLookup.Provider registries) {
-        // TODO Stub
-        return false;
+        if (sources == null || sources.isEmpty()) {
+            return true;
+        } else if (player == null || wandStack == null) {
+            return false;
+        }
+        for (Source source : sources.getSources()) {
+            if (!containsMana(player, wandStack, source, sources.getAmount(source), registries)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -258,14 +270,13 @@ public class ManaManager {
      * cost modifiers.
      *
      * @param player the player to be queried
-     * @param wandStack the wand stack to be queried
      * @param source the type of mana being queried
      * @param amount the amount of mana required
      * @return true if sufficient mana is present, false otherwise
      */
-    public static boolean containsManaRaw(@Nullable Player player, @Nullable ItemStack wandStack, @Nullable Source source, int amount) {
-        // TODO Stub
-        return false;
+    public static boolean containsManaRaw(@Nullable Player player, @Nullable Source source, int amount) {
+        int total = getMana(player, source);
+        return total == IManaContainer.INFINITE_MANA || total >= amount;
     }
 
     private static @NotNull ItemStack getOffhandStack(@NotNull Player player, @NotNull ItemStack wandStack) {
