@@ -129,7 +129,6 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
     @Override
     public void setMana(@NotNull ItemStack stack, @NotNull Source source, int amount) {
         stack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, mana -> mana.copyWith(source, amount));
-        stack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
     }
 
     @Override
