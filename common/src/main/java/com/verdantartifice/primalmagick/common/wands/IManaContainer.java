@@ -60,18 +60,20 @@ public interface IManaContainer {
     /**
      * Get the text representation of centimana for the given source which is contained in the given wand stack.
      *
-     * @param stack  the wand stack to be queried
-     * @param source the type of mana to be queried
+     * @param stack    the wand stack to be queried
+     * @param source   the type of mana to be queried
+     * @param truncate whether to truncate any fractional part of the mana value
      * @return the text representation of the amount of centimana contained
      */
-    default MutableComponent getManaText(@Nullable ItemStack stack, @Nullable Source source) {
+    default MutableComponent getManaText(@Nullable ItemStack stack, @Nullable Source source, boolean truncate) {
         int mana = this.getMana(stack, source);
         if (mana == IManaContainer.INFINITE_MANA) {
             // If the given stack has infinite mana, show the infinity symbol
             return Component.literal(Character.toString('\u221E'));
         } else {
             // Otherwise show the current whole mana value for that source from the stack's data
-            return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
+            double wholeMana = mana / 100.0D;
+            return Component.literal(MANA_FORMATTER.format(truncate ? (int)wholeMana : wholeMana));
         }
     }
 

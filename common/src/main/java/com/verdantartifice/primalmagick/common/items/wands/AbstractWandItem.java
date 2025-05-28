@@ -111,7 +111,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                 if (source.isDiscovered(player)) {
                     Component nameComp = source.getNameText();
                     int modifier = this.getTotalCostModifier(stack, player, source, context.registries());
-                    Component line = Component.translatable("tooltip.primalmagick.source.mana", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack, source), modifier);
+                    Component line = Component.translatable("tooltip.primalmagick.source.mana", nameComp, this.getManaText(stack, source, false), this.getMaxManaText(stack, source), modifier);
                     tooltip.add(line);
                 }
             }
@@ -125,7 +125,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             for (Source source : Sources.getAllSorted()) {
                 // Only include a mana source in the summary if it's been discovered
                 if (source.isDiscovered(player)) {
-                    Component manaText = this.getManaText(stack, source).withStyle(source.getChatColor());
+                    Component manaText = this.getManaText(stack, source, true).withStyle(source.getChatColor());
                     if (first) {
                         summaryText = manaText;
                     } else {

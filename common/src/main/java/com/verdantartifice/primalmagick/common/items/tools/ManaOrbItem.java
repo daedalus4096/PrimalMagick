@@ -147,7 +147,7 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
                 // Only include a mana source in the listing if this orb is attuned to it
                 if (this.isAttuned(pStack, source)) {
                     Component nameComp = source.getNameText();
-                    Component line = Component.translatable("tooltip.primalmagick.source.mana_gauge", nameComp, this.getManaText(pStack, source), this.getMaxManaText(pStack, source));
+                    Component line = Component.translatable("tooltip.primalmagick.source.mana_gauge", nameComp, this.getManaText(pStack, source, false), this.getMaxManaText(pStack, source));
                     pTooltipComponents.add(line);
                 }
             }
