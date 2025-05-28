@@ -3,9 +3,13 @@ package com.verdantartifice.primalmagick.common.items.wands;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandISTER;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
+import com.verdantartifice.primalmagick.common.wands.IManaContainer;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
+import com.verdantartifice.primalmagick.common.wands.ManaManager;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -14,6 +18,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -21,9 +26,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +43,8 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public abstract class ModularWandItem extends AbstractWandItem implements IHasWandComponents {
+    protected static final int BASE_CORE_REGEN_PER_TICK = 5;
+
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ModularWandItem(Properties properties) {
@@ -45,7 +52,7 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
 
     @Override
-    public int getMaxMana(ItemStack stack) {
+    public int getMaxMana(ItemStack stack, @Nullable Source source) {
         // The maximum amount of mana a wand can hold is determined by its gem
         if (stack == null) {
             return MundaneWandItem.MAX_MANA;
@@ -53,8 +60,8 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
         WandGem gem = this.getWandGem(stack);
         if (gem == null) {
             return MundaneWandItem.MAX_MANA;
-        } else if (gem.getCapacity() == -1) {
-            return -1;
+        } else if (gem.getCapacity() == IManaContainer.INFINITE_MANA) {
+            return IManaContainer.INFINITE_MANA;
         } else {
             return gem.getCapacity();
         }
@@ -237,21 +244,24 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
             output.accept(stack);
         }
     }
+
+    protected int getCoreRegenPerTick(ItemStack wandStack, LivingEntity wielderEntity) {
+        return BASE_CORE_REGEN_PER_TICK + EnchantmentHelperPM.getEquippedEnchantmentLevel(wielderEntity, EnchantmentsPM.PONDERING);
+    }
     
     @Override
     public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
         
-        // Regenerate one mana per second for core-aligned sources
-        if (stack != null && entityIn.tickCount % 20 == 0) {
-            int maxMana = this.getMaxMana(stack);
-            WandCore core = this.getWandCore(stack);
-            if (core != null && maxMana != -1) {
-                for (Source alignedSource : core.getAlignedSources()) {
-                    int curMana = this.getMana(stack, alignedSource);
-                    if (curMana < (0.1D * maxMana)) {
-                        this.addMana(stack, alignedSource, 100, (int)(0.1D * maxMana));
-                    }
+        // Smoothly regenerate one mana per second for core-aligned sources
+        WandCore core = this.getWandCore(stack);
+        if (core != null && entityIn instanceof Player player) {
+            for (Source alignedSource : core.getAlignedSources()) {
+                int maxMana = ManaManager.getMaxMana(player, alignedSource);
+                int curMana = ManaManager.getMana(player, alignedSource);
+                double targetMax = (0.1D * maxMana);
+                if (maxMana != IManaContainer.INFINITE_MANA && curMana < targetMax) {
+                    ManaManager.addMana(player, stack, alignedSource, this.getCoreRegenPerTick(stack, player), (int)targetMax);
                 }
             }
         }

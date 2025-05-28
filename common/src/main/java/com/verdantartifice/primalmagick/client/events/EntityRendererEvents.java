@@ -28,6 +28,11 @@ import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieHouse
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellMineModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellProjectileModel;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.model.ManaOrbAdeptModel;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.model.ManaOrbApprenticeModel;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.model.ManaOrbArchmageModel;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.model.ManaOrbNuggetModel;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.model.ManaOrbWizardModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingBottomMiddleModel;
@@ -129,5 +134,10 @@ public class EntityRendererEvents {
         consumer.accept(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM_MIDDLE, ManaInjectorFrameRingBottomMiddleModel::createBodyLayer);
         consumer.accept(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM, ManaInjectorFrameRingBottomModel::createBodyLayer);
         consumer.accept(ModelLayersPM.PIXIE_HOUSE, PixieHouseModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_ORB_APPRENTICE, ManaOrbApprenticeModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_ORB_ADEPT, ManaOrbAdeptModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_ORB_WIZARD, ManaOrbWizardModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_ORB_ARCHMAGE, ManaOrbArchmageModel::createBodyLayer);
+        consumer.accept(ModelLayersPM.MANA_ORB_NUGGET, ManaOrbNuggetModel::createBodyLayer);
     }
 }

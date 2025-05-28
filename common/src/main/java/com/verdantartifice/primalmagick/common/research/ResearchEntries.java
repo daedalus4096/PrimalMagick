@@ -92,6 +92,10 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SPELLTOME_ADEPT = create("spelltome_adept");
     public static final ResourceKey<ResearchEntry> SPELLTOME_WIZARD = create("spelltome_wizard");
     public static final ResourceKey<ResearchEntry> SPELLTOME_ARCHMAGE = create("spelltome_archmage");
+    public static final ResourceKey<ResearchEntry> MANA_ORB_APPRENTICE = create("mana_orb_apprentice");
+    public static final ResourceKey<ResearchEntry> MANA_ORB_ADEPT = create("mana_orb_adept");
+    public static final ResourceKey<ResearchEntry> MANA_ORB_WIZARD = create("mana_orb_wizard");
+    public static final ResourceKey<ResearchEntry> MANA_ORB_ARCHMAGE = create("mana_orb_archmage");
     public static final ResourceKey<ResearchEntry> WAND_CORE_HEARTWOOD = create("wand_core_heartwood");
     public static final ResourceKey<ResearchEntry> WAND_CORE_OBSIDIAN = create("wand_core_obsidian");
     public static final ResourceKey<ResearchEntry> WAND_CORE_CORAL = create("wand_core_coral");
@@ -777,6 +781,26 @@ public class ResearchEntries {
                 .parent(SUPREME_MANAWEAVING).parent(SPELLTOME_WIZARD).parent(CLUSTER_SYNTHESIS)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.SPELLTOME_ARCHMAGE.get()).end()
+                .build());
+        register(context, MANA_ORB_APPRENTICE, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.BASIC).icon(ItemsPM.MANA_ORB_APPRENTICE.get())
+                .parent(BASIC_MANAWEAVING).parent(WAND_GEM_APPRENTICE).parent(WAND_INSCRIPTION)
+                .stage().requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 20).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.MANA_ORB_APPRENTICE.get()).end()
+                .build());
+        register(context, MANA_ORB_ADEPT, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.EXPERT).icon(ItemsPM.MANA_ORB_ADEPT.get())
+                .parent(EXPERT_MANAWEAVING).parent(MANA_ORB_APPRENTICE).parent(WAND_GEM_ADEPT)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.MANA_ORB_ADEPT.get()).end()
+                .build());
+        register(context, MANA_ORB_WIZARD, key -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.MASTER).icon(ItemsPM.MANA_ORB_WIZARD.get())
+                .parent(MASTER_MANAWEAVING).parent(MANA_ORB_ADEPT).parent(WAND_GEM_WIZARD)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.MANA_ORB_WIZARD.get()).end()
+                .build());
+        register(context, MANA_ORB_ARCHMAGE, key  -> ResearchEntry.builder(key).discipline(discipline).tier(ResearchTier.SUPREME).icon(ItemsPM.MANA_ORB_ARCHMAGE.get())
+                .parent(SUPREME_MANAWEAVING).parent(MANA_ORB_WIZARD).parent(WAND_GEM_ARCHMAGE)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.MANA_ORB_ARCHMAGE.get()).end()
                 .build());
     }
     

@@ -26,6 +26,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> HALLOWOOD_LOGS = tag("hallowood_logs");
     public static final TagKey<Item> INFERNAL_SUPERCHARGE_FUEL = tag("infernal_supercharge_fuel");
     public static final TagKey<Item> MAGICKAL_CLOTH = tag("magickal_cloth");
+    public static final TagKey<Item> MANA_ORBS = tag("mana_orbs");
     public static final TagKey<Item> MOONWOOD_LOGS = tag("moonwood_logs");
     public static final TagKey<Item> NO_REPAIR = tag("no_repair");
     public static final TagKey<Item> RITUAL_CANDLES = tag("ritual_candles");
@@ -89,6 +90,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> ESSENCE_THIEF_ENCHANTABLE = tag("enchantable/essence_thief");
     public static final TagKey<Item> MANA_EFFICIENCY_ENCHANTABLE = tag("enchantable/mana_efficiency");
     public static final TagKey<Item> SPELL_POWER_ENCHANTABLE = tag("enchantable/spell_power");
+    public static final TagKey<Item> PONDERING_ENCHANTABLE = tag("enchantable/pondering");
 
     private static TagKey<Item> tag(String name) {
         return TagKey.create(Registries.ITEM, ResourceUtils.loc(name));

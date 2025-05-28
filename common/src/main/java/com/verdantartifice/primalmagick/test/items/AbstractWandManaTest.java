@@ -80,7 +80,7 @@ public abstract class AbstractWandManaTest extends AbstractBaseTest {
             // Confirm that the wand was created successfully
             IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack is not a wand as expected");
 
-            int maxCentimana = wand.getMaxMana(wandStack);
+            int maxCentimana = wand.getMaxMana(wandStack, source);
             int attemptedRealMana = 100000;
             int attemptedCentimana = 100 * attemptedRealMana;
             int expectedCentimana = attemptedCentimana - maxCentimana;

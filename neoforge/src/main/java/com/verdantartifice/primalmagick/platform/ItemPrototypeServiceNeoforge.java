@@ -33,6 +33,8 @@ import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItemNeoforge;
+import com.verdantartifice.primalmagick.common.items.tools.ManaOrbItem;
+import com.verdantartifice.primalmagick.common.items.tools.ManaOrbItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
@@ -154,6 +156,11 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     @Override
     public Supplier<SpelltomeItem> spelltome(DeviceTier tier, Item.Properties properties) {
         return () -> new SpelltomeItemNeoforge(tier, properties);
+    }
+
+    @Override
+    public Supplier<ManaOrbItem> manaOrb(DeviceTier tier, Item.Properties properties) {
+        return () -> new ManaOrbItemNeoforge(tier, properties);
     }
 
     @Override

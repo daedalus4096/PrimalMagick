@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-import com.verdantartifice.primalmagick.common.sources.IManaContainer;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -62,7 +62,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
+public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IOwnedTileEntity, IManaContainingBlockEntity, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int INPUT_INV_INDEX = 0;
@@ -225,8 +225,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
-            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
-                IWand wand = (IWand)wandStack.getItem();
+            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.INFERNAL) - entity.manaStorage.getManaStored(Sources.INFERNAL);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
                 if (wand.consumeMana(wandStack, null, Sources.INFERNAL, centimanaToTransfer, level.registryAccess())) {

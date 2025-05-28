@@ -33,6 +33,8 @@ import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItemForge;
+import com.verdantartifice.primalmagick.common.items.tools.ManaOrbItem;
+import com.verdantartifice.primalmagick.common.items.tools.ManaOrbItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
@@ -154,6 +156,11 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     @Override
     public Supplier<SpelltomeItem> spelltome(DeviceTier tier, Item.Properties properties) {
         return () -> new SpelltomeItemForge(tier, properties);
+    }
+
+    @Override
+    public Supplier<ManaOrbItem> manaOrb(DeviceTier tier, Item.Properties properties) {
+        return () -> new ManaOrbItemForge(tier, properties);
     }
 
     @Override

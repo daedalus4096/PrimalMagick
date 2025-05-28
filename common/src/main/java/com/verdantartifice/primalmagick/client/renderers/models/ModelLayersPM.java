@@ -24,4 +24,9 @@ public class ModelLayersPM {
     public static final ModelLayerLocation MANA_INJECTOR_FRAME_BOTTOM_MIDDLE = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_bottom_middle"), "main");
     public static final ModelLayerLocation MANA_INJECTOR_FRAME_BOTTOM = new ModelLayerLocation(ResourceUtils.loc("mana_injector_frame_ring_bottom"), "main");
     public static final ModelLayerLocation PIXIE_HOUSE = new ModelLayerLocation(ResourceUtils.loc("pixie_house"), "main");
+    public static final ModelLayerLocation MANA_ORB_APPRENTICE = new ModelLayerLocation(ResourceUtils.loc("mana_orb_apprentice"), "main");
+    public static final ModelLayerLocation MANA_ORB_ADEPT = new ModelLayerLocation(ResourceUtils.loc("mana_orb_adept"), "main");
+    public static final ModelLayerLocation MANA_ORB_WIZARD = new ModelLayerLocation(ResourceUtils.loc("mana_orb_wizard"), "main");
+    public static final ModelLayerLocation MANA_ORB_ARCHMAGE = new ModelLayerLocation(ResourceUtils.loc("mana_orb_archmage"), "main");
+    public static final ModelLayerLocation MANA_ORB_NUGGET = new ModelLayerLocation(ResourceUtils.loc("mana_orb_nugget"), "main");
 }

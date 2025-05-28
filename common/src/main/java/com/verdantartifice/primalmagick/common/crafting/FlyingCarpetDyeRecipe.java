@@ -38,6 +38,8 @@ public class FlyingCarpetDyeRecipe extends CustomRecipe {
                         return false;
                     }
                     dyeStack = slotStack;
+                } else {
+                    return false;
                 }
             }
         }
@@ -63,6 +65,8 @@ public class FlyingCarpetDyeRecipe extends CustomRecipe {
                         return ItemStack.EMPTY;
                     }
                     dyeStack = slotStack;
+                } else {
+                    return ItemStack.EMPTY;
                 }
             }
         }

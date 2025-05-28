@@ -36,6 +36,7 @@ import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
+import com.verdantartifice.primalmagick.common.wands.ManaManager;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -517,8 +518,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         if (wandStack == null || wandStack.isEmpty() || !(wandStack.getItem() instanceof IWand)) {
             return false;
         }
-        IWand wand = (IWand)wandStack.getItem();
-        return wand.consumeMana(wandStack, player, recipe.getManaCosts(), player.registryAccess());
+        return ManaManager.consumeMana(player, wandStack, recipe.getManaCosts(), player.registryAccess());
     }
     
     protected void scanSurroundings() {

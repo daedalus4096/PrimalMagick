@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
+import com.verdantartifice.primalmagick.common.items.tools.ManaOrbItem;
 import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItem;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
@@ -181,6 +182,10 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         this.spelltomeItem(ItemsPM.SPELLTOME_ADEPT.get());
         this.spelltomeItem(ItemsPM.SPELLTOME_WIZARD.get());
         this.spelltomeItem(ItemsPM.SPELLTOME_ARCHMAGE.get());
+        this.manaOrbItem(ItemsPM.MANA_ORB_APPRENTICE.get());
+        this.manaOrbItem(ItemsPM.MANA_ORB_ADEPT.get());
+        this.manaOrbItem(ItemsPM.MANA_ORB_WIZARD.get());
+        this.manaOrbItem(ItemsPM.MANA_ORB_ARCHMAGE.get());
 
         // Generate mana arrow items
         ManaArrowItem.getManaArrows().forEach(item -> this.itemWithParent(item, ResourceUtils.loc("item/template_mana_arrow")));
@@ -496,6 +501,21 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
                         .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(2, 5, 0).scale(1F).end()
                         .transform(ItemDisplayContext.FIXED).rotation(0, 180, 0).translation(-5, 8, -8).scale(1F).end()
                         .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(2, 4, 2).scale(0.25F).end()
+                        .end();
+    }
+
+    private ItemModelBuilderPMNeoforge manaOrbItem(ManaOrbItem item) {
+        return this.builder(item)
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
+                .guiLight(GuiLight.FRONT)
+                .transforms()
+                        .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 90, 0).translation(8, 8, -6).scale(1).end()
+                        .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, -90, 0).translation(-8, 8, -6).scale(1).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, -20, 0).translation(15, 8, 2).scale(1.25F).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, -20, 0).translation(-2, 8, -7).scale(1.25F).end()
+                        .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(4, 2, 0).scale(1F).end()
+                        .transform(ItemDisplayContext.FIXED).rotation(0, 180, 0).translation(-8, 6, -8).scale(1F).end()
+                        .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(2, 2, 2).scale(0.45F).end()
                         .end();
     }
 

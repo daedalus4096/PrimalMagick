@@ -1,0 +1,21 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.primalmagick.pondering"
+  },
+  "max_cost": {
+    "base": 35,
+    "per_level_above_first": 10
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 10
+  },
+  "primary_items": "#primalmagick:enchantable/pondering",
+  "slots": [
+    "offhand"
+  ],
+  "supported_items": "#primalmagick:enchantable/pondering",
+  "weight": 2
+}

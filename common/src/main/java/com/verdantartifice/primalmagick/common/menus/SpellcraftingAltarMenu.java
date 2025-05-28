@@ -407,10 +407,9 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     
     protected boolean wandContainsEnoughMana(Player player) {
         ItemStack stack = this.wandInv.getItem(0);
-        if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof IWand)) {
+        if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof IWand wand)) {
             return false;
         }
-        IWand wand = (IWand)stack.getItem();
         return wand.containsMana(stack, player, this.getManaCosts(), player.registryAccess());
     }
     

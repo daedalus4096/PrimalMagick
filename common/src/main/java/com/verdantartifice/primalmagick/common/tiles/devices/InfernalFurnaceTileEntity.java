@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
-import com.verdantartifice.primalmagick.common.sources.IManaContainer;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -67,7 +67,7 @@ import java.util.function.Predicate;
  * @see com.verdantartifice.primalmagick.common.blocks.devices.InfernalFurnaceBlock
  * @author Daedalus4096
  */
-public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, RecipeCraftingHolder, StackedContentsCompatible {
+public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainingBlockEntity, RecipeCraftingHolder, StackedContentsCompatible {
     private static final Logger LOGGER = LogManager.getLogger();
 
     protected static final int SUPERCHARGE_MULTIPLIER = 5;

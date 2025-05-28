@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterMenu;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
-import com.verdantartifice.primalmagick.common.sources.IManaContainer;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -63,7 +63,7 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  * @see com.verdantartifice.primalmagick.common.blocks.devices.EssenceTransmuterBlock
  */
-public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, IOwnedTileEntity {
+public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainingBlockEntity, IOwnedTileEntity {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final int INPUT_INV_INDEX = 0;

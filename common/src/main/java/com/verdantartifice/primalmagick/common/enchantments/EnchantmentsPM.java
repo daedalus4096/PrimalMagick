@@ -64,6 +64,7 @@ public class EnchantmentsPM {
     public static final ResourceKey<Enchantment> BULWARK = key("bulwark");
     public static final ResourceKey<Enchantment> MAGICK_PROTECTION = key("magick_protection");
     public static final ResourceKey<Enchantment> GUILLOTINE = key("guillotine");
+    public static final ResourceKey<Enchantment> PONDERING = key("pondering");
     
     public static void bootstrap(BootstrapContext<Enchantment> pContext) {
         HolderGetter<Item> itemHolderGetter = pContext.lookup(Registries.ITEM);
@@ -631,8 +632,28 @@ public class EnchantmentsPM {
                         )
                 )
         );
+
+        /*
+         * Definition of an enchantment that speeds up passive mana regeneration for paired wands
+         */
+        register(
+                pContext,
+                PONDERING,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(ItemTagsPM.PONDERING_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTagsPM.PONDERING_ENCHANTABLE),
+                                2,
+                                5,
+                                Enchantment.dynamicCost(10, 10),
+                                Enchantment.dynamicCost(35, 10),
+                                4,
+                                EquipmentSlotGroup.OFFHAND
+                        )
+                )
+        );
     }
-    
+
     private static void register(BootstrapContext<Enchantment> pContext, ResourceKey<Enchantment> pKey, Enchantment.Builder pBuilder) {
         pContext.register(pKey, pBuilder.build(pKey.location()));
     }

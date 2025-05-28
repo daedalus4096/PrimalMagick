@@ -931,6 +931,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SPELLTOME_ADEPT).name("Adept's Spelltome").build();
         this.item(ItemsPM.SPELLTOME_WIZARD).name("Wizard's Spelltome").build();
         this.item(ItemsPM.SPELLTOME_ARCHMAGE).name("Archmage's Spelltome").build();
+        this.item(ItemsPM.MANA_ORB_APPRENTICE).name("Apprentice's Mana Orb").build();
+        this.item(ItemsPM.MANA_ORB_ADEPT).name("Adept's Mana Orb").build();
+        this.item(ItemsPM.MANA_ORB_WIZARD).name("Wizard's Mana Orb").build();
+        this.item(ItemsPM.MANA_ORB_ARCHMAGE).name("Archmage's Mana Orb").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -1054,6 +1058,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("unread_count").sub("entry").sub("multiple").output("%1$d unread entries").end().build();
         this.tooltip("experience").sub("one").output("1 Experience Point").end().build();
         this.tooltip("experience").sub("many").output("%1$d Experience Points").end().build();
+        this.tooltip("mana_orb").sub("unattuned").output("Unattuned").end().build();
 
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$s %2$s mana").end().build();
@@ -1271,6 +1276,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .description("Grants a chance for the victim to drop its head when slain.")
             .fullRuneText("The Guillotine enchantment can be imbued through the use of Dispel, Creature, and Blood runes.  It can be applied to any sword or axe.  When applied, it increases the chance for the victim to drop its head when slain.")
             .partialRuneText("The Guillotine enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword or axe.  When applied, it increases the chance for the victim to drop its head when slain.")
+            .build();
+        this.enchantment(EnchantmentsPM.PONDERING).name("Pondering")
+            .description("Increases the speed at which paired wands regenerate mana from their cores.")
+            .fullRuneText("The Pondering enchantment can be imbued through the use of Absorb, Item, and Void runes.  It can be applied to any mana orb.  When applied, it increases the speed at which paird wands regenerate mana from their cores.")
+            .partialRuneText("The Pondering enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any mana orb.  When applied, it increases the speed at which paird wands regenerate mana from their cores.")
             .build();
 
         // Generate vanilla enchantment localization extensions
@@ -3302,11 +3312,35 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .end()
             .build();
         this.researchEntry(ResearchEntries.SPELLTOME_ARCHMAGE, lookupProvider).name("Archmage's Spelltome")
-                .stages()
+            .stages()
                 .add("There is wisdom in preparation and in having the proper tools for anticipated tasks.  I should ensure that I have all the spells I need with me, as well as preserve them for future study.")
                 .add("This final tome will hold four spells of any variety for use with a paired wand.  May it lend wisdom to future generations.")
-                .end()
-                .build();
+            .end()
+            .build();
+        this.researchEntry(ResearchEntries.MANA_ORB_APPRENTICE, lookupProvider).name("Apprentice's Mana Orb")
+            .stages()
+                .add("I love casting spells from my wand!  Not having to burn through spell scrolls is great, and I feel like a real wizard when I wave it around.  I just wish it had a bigger mana capacity.  Maybe I can find a way to supplement it somehow?")
+                .add("I've figured out how to get a wand to channel mana from an external source when casting spells!  With special preparation, I can get a wand gem to store mana on its own, without a core or caps.  Then I can carry it in my off hand while wielding a wand in my main hand.  While doing so, the wand will treat it like an extension of its own mana pool.<BR>There are two primary drawbacks to these orbs, but they're pretty minor and both stem from it being basically an incomplete wand.  First, it can only store mana of a single source; to attune it, I have to combine the finished mana orb with some dust.  Second, I can't use it as a mana source for crafting.  Other than that, though, I should be able to treat a mana orb as an extension of my wand.<BR>Pretty cool!")
+            .end()
+            .build();
+        this.researchEntry(ResearchEntries.MANA_ORB_ADEPT, lookupProvider).name("Adept's Mana Orb")
+            .stages()
+                .add("As I become more experienced with magick, I find I need more access to mana while on the go.  I can recharge safely at home, but I hate having to cut an expedition short because I can't cast any more spells.  Maybe I can augment this with a bigger mana orb?")
+                .add("Success!  By incorporating a more advanced wand gem into the existing process, I can create a mana orb which will hold more mana.")
+            .end()
+            .build();
+        this.researchEntry(ResearchEntries.MANA_ORB_WIZARD, lookupProvider).name("Wizard's Mana Orb")
+            .stages()
+                .add("The want of mana is like an ideal gas, it expands to fill all available capacity.  As my genius grows, so too do my expenditures of the precious energy.  I need more!")
+                .add("I can work with this.  Further modifications to the mana orb recipe have yielded one with greater capacity than ever before.")
+            .end()
+            .build();
+        this.researchEntry(ResearchEntries.MANA_ORB_ARCHMAGE, lookupProvider).name("Archmage's Mana Orb")
+            .stages()
+                .add("Wisdom comes with a cost.  I used to think that meant compromising one's ethics and morals, but the truth in this case is far more literal.  Reshaping the world for the better requires ever more mana, and I should be sure my tools are up to the task.")
+                .add("This final mana orb can hold a truly staggering amount of energy.  It is well that I have other ways to charge it, as I might perish of old age should I try to fill it and a wand by merely siphoning a font.")
+            .end()
+            .build();
         this.researchEntry(ResearchEntries.BASIC_RUNEWORKING, lookupProvider).name("Basic Runeworking")
             .stages()
                 .add("I think I'm starting to get the hang of Runeworking.  Certain symbols carry inherent magickal power.  By carving them into stone, then inscribing the right combination of them onto an item, I can imbue that item with an effect much like an enchantment.<BR>While somewhat invovled, there appear to be a number of benefits to this process over using an enchanting table.<BR>First, it doesn't cost me any of my hard-won experience.  That alone makes it worth studying.<BR>Second, I have full control of the enchantment that gets applied.  No more praying for the right random result at the enchanting table.<BR>And third, I can actually apply runes to an item that I've already enchanted for further effect.<BR>This process has its drawbacks, though.  These runes are very complicated; I'm going to have to research each of them individually to make sure I get them right.  And an item can only have one set of runes applied to it at a time.  Finally, and most strangely, while a standard grindstone will remove the magick that the runes impart, it won't remove the runes themselves, so I can't apply new ones.<BR>Still, this is a discipline that seems well worth my time to pursue, if I want to give myself the arms and armor I need to survive.")

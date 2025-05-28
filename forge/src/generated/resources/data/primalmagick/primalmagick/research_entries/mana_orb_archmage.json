@@ -1,0 +1,54 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_orb_archmage"
+  },
+  "key": {
+    "rootKey": "primalmagick:mana_orb_archmage"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:mana_orb_wizard"
+    },
+    {
+      "rootKey": "primalmagick:wand_gem_archmage"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 3,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:mana_orb_archmage"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_orb_archmage.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:mana_orb_archmage"
+      },
+      "recipes": [
+        "primalmagick:mana_orb_archmage"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.mana_orb_archmage.text.stage.2"
+    }
+  ],
+  "tier": "supreme"
+}

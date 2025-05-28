@@ -115,6 +115,7 @@ public class ItemTagsProviderPMNeoforge extends ItemTagsProvider {
         this.tag(ItemTagsPM.HALLOWOOD_LOGS).add(ItemsPM.HALLOWOOD_LOG.get(), ItemsPM.STRIPPED_HALLOWOOD_LOG.get(), ItemsPM.HALLOWOOD_WOOD.get(), ItemsPM.STRIPPED_HALLOWOOD_WOOD.get());
         this.tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL).add(ItemsPM.IGNYX.get(), ItemsPM.IGNYX_BLOCK.get());
         this.tag(ItemTagsPM.MAGICKAL_CLOTH).add(ItemsPM.SPELLCLOTH.get(), ItemsPM.HEXWEAVE.get(), ItemsPM.SAINTSWOOL.get());
+        this.tag(ItemTagsPM.MANA_ORBS).add(ItemsPM.MANA_ORB_APPRENTICE.get(), ItemsPM.MANA_ORB_ADEPT.get(), ItemsPM.MANA_ORB_WIZARD.get(), ItemsPM.MANA_ORB_ARCHMAGE.get());
         this.tag(ItemTagsPM.MOONWOOD_LOGS).add(ItemsPM.MOONWOOD_LOG.get(), ItemsPM.STRIPPED_MOONWOOD_LOG.get(), ItemsPM.MOONWOOD_WOOD.get(), ItemsPM.STRIPPED_MOONWOOD_WOOD.get());
         this.tag(ItemTagsPM.NO_REPAIR).add(ItemsPM.EARTHSHATTER_HAMMER.get());
         this.tag(ItemTagsPM.RITUAL_CANDLES).add(ItemsPM.RITUAL_CANDLE_BLACK.get(), ItemsPM.RITUAL_CANDLE_BLUE.get(), ItemsPM.RITUAL_CANDLE_BROWN.get(), ItemsPM.RITUAL_CANDLE_CYAN.get(), ItemsPM.RITUAL_CANDLE_GRAY.get(), ItemsPM.RITUAL_CANDLE_GREEN.get(), ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get(), ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get(), ItemsPM.RITUAL_CANDLE_LIME.get(), ItemsPM.RITUAL_CANDLE_MAGENTA.get(), ItemsPM.RITUAL_CANDLE_ORANGE.get(), ItemsPM.RITUAL_CANDLE_PINK.get(), ItemsPM.RITUAL_CANDLE_PURPLE.get(), ItemsPM.RITUAL_CANDLE_RED.get(), ItemsPM.RITUAL_CANDLE_WHITE.get(), ItemsPM.RITUAL_CANDLE_YELLOW.get());
@@ -178,7 +179,8 @@ public class ItemTagsProviderPMNeoforge extends ItemTagsProvider {
         this.tag(ItemTagsPM.BOUNTY_ENCHANTABLE).addTag(ItemTags.FISHING_ENCHANTABLE).addTag(ItemTagsPM.HOE_ENCHANTABLE);
         this.tag(ItemTagsPM.RENDING_ENCHANTABLE).addTag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(ItemTags.TRIDENT_ENCHANTABLE);
         this.tag(ItemTagsPM.ESSENCE_THIEF_ENCHANTABLE).addTag(ItemTags.WEAPON_ENCHANTABLE).addTag(ItemTags.TRIDENT_ENCHANTABLE).addTag(ItemTagsPM.WAND_ENCHANTABLE);
-        this.tag(ItemTagsPM.MANA_EFFICIENCY_ENCHANTABLE).addTag(ItemTagsPM.WAND_ENCHANTABLE).addTag(ItemTagsPM.SPELLTOMES).addTag(ItemTagsPM.ROBES);
+        this.tag(ItemTagsPM.MANA_EFFICIENCY_ENCHANTABLE).addTag(ItemTagsPM.WAND_ENCHANTABLE).addTag(ItemTagsPM.SPELLTOMES).addTag(ItemTagsPM.MANA_ORBS).addTag(ItemTagsPM.ROBES);
         this.tag(ItemTagsPM.SPELL_POWER_ENCHANTABLE).addTag(ItemTagsPM.WAND_ENCHANTABLE).addTag(ItemTagsPM.SPELLTOMES);
+        this.tag(ItemTagsPM.PONDERING_ENCHANTABLE).addTag(ItemTagsPM.MANA_ORBS);
     }
 }
