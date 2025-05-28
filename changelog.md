@@ -19,6 +19,7 @@ v6.0.6
 * Made several blocks waterloggable (Thanks, eehunter!)
 * Removed outdated references to mana cost penalties from some Grimoire entries
 * Fixed a tooltip bug for wands that were showing incorrect mana costs for spells
+* Fixed base mana cost modifiers for multiple spell components
 
 v6.0.5
 ------

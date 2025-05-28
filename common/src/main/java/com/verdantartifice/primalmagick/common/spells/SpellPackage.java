@@ -130,15 +130,15 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
         
         // Collect all appropriate modifiers before doing the calculation to prevent mod order dependency
         if (this.vehicle != null) {
-            baseModifier += this.vehicle.getBaseManaCostModifier();
+            baseModifier += 100 * this.vehicle.getBaseManaCostModifier();
             multiplier *= this.vehicle.getManaCostMultiplier();
         }
         if (this.primaryMod.isPresent()) {
-            baseModifier += this.primaryMod.get().getBaseManaCostModifier();
+            baseModifier += 100 * this.primaryMod.get().getBaseManaCostModifier();
             multiplier *= this.primaryMod.get().getManaCostMultiplier();
         }
         if (this.secondaryMod.isPresent()) {
-            baseModifier += this.secondaryMod.get().getBaseManaCostModifier();
+            baseModifier += 100 * this.secondaryMod.get().getBaseManaCostModifier();
             multiplier *= this.secondaryMod.get().getManaCostMultiplier();
         }
         
