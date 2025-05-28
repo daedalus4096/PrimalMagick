@@ -1277,6 +1277,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Guillotine enchantment can be imbued through the use of Dispel, Creature, and Blood runes.  It can be applied to any sword or axe.  When applied, it increases the chance for the victim to drop its head when slain.")
             .partialRuneText("The Guillotine enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword or axe.  When applied, it increases the chance for the victim to drop its head when slain.")
             .build();
+        this.enchantment(EnchantmentsPM.PONDERING).name("Pondering")
+            .description("Increases the speed at which paired wands regenerate mana from their cores.")
+            .fullRuneText("The Pondering enchantment can be imbued through the use of Absorb, Item, and Void runes.  It can be applied to any mana orb.  When applied, it increases the speed at which paird wands regenerate mana from their cores.")
+            .partialRuneText("The Pondering enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any mana orb.  When applied, it increases the speed at which paird wands regenerate mana from their cores.")
+            .build();
 
         // Generate vanilla enchantment localization extensions
         this.enchantment(Enchantments.PROTECTION)

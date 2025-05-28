@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.items.wands;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandISTER;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.IManaContainer;
@@ -244,8 +246,7 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
 
     protected int getCoreRegenPerTick(ItemStack wandStack, LivingEntity wielderEntity) {
-        // TODO Increase based on mana orb enchantments, if any
-        return BASE_CORE_REGEN_PER_TICK;
+        return BASE_CORE_REGEN_PER_TICK + EnchantmentHelperPM.getEquippedEnchantmentLevel(wielderEntity, EnchantmentsPM.PONDERING);
     }
     
     @Override

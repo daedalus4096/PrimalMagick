@@ -182,5 +182,6 @@ public class ItemTagsProviderPMForge extends ItemTagsProvider {
         this.tag(ItemTagsPM.ESSENCE_THIEF_ENCHANTABLE).addTag(ItemTags.WEAPON_ENCHANTABLE).addTag(ItemTags.TRIDENT_ENCHANTABLE).addTag(ItemTagsPM.WAND_ENCHANTABLE);
         this.tag(ItemTagsPM.MANA_EFFICIENCY_ENCHANTABLE).addTag(ItemTagsPM.WAND_ENCHANTABLE).addTag(ItemTagsPM.SPELLTOMES).addTag(ItemTagsPM.MANA_ORBS).addTag(ItemTagsPM.ROBES);
         this.tag(ItemTagsPM.SPELL_POWER_ENCHANTABLE).addTag(ItemTagsPM.WAND_ENCHANTABLE).addTag(ItemTagsPM.SPELLTOMES);
+        this.tag(ItemTagsPM.PONDERING_ENCHANTABLE).addTag(ItemTagsPM.MANA_ORBS);
     }
 }

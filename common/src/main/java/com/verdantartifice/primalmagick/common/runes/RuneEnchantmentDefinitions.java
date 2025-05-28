@@ -80,6 +80,7 @@ public class RuneEnchantmentDefinitions {
     public static final ResourceKey<RuneEnchantmentDefinition> BULWARK = createKey(EnchantmentsPM.BULWARK);
     public static final ResourceKey<RuneEnchantmentDefinition> MAGICK_PROTECTION = createKey(EnchantmentsPM.MAGICK_PROTECTION);
     public static final ResourceKey<RuneEnchantmentDefinition> GUILLOTINE = createKey(EnchantmentsPM.GUILLOTINE);
+    public static final ResourceKey<RuneEnchantmentDefinition> PONDERING = createKey(EnchantmentsPM.PONDERING);
 
     public static ResourceKey<RuneEnchantmentDefinition> createKey(ResourceKey<Enchantment> ench) {
         return ResourceKey.create(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, ench.location());
@@ -168,6 +169,7 @@ public class RuneEnchantmentDefinitions {
             .requiredResearch(ResearchEntries.RUNE_SELF).requiredResearch(ResearchEntries.RUNE_HALLOWED).build());
         register(context, MAGICK_PROTECTION, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.PROTECT).noun(Rune.SELF).source(Rune.VOID).build());
         register(context, GUILLOTINE, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.DISPEL).noun(Rune.CREATURE).source(Rune.BLOOD).build());
+        register(context, PONDERING, ench -> RuneEnchantmentDefinition.builder(ench).verb(Rune.ABSORB).noun(Rune.ITEM).source(Rune.VOID).build());
     }
     
     private static Holder.Reference<RuneEnchantmentDefinition> register(BootstrapContext<RuneEnchantmentDefinition> context, ResourceKey<RuneEnchantmentDefinition> key, 

@@ -90,6 +90,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> ESSENCE_THIEF_ENCHANTABLE = tag("enchantable/essence_thief");
     public static final TagKey<Item> MANA_EFFICIENCY_ENCHANTABLE = tag("enchantable/mana_efficiency");
     public static final TagKey<Item> SPELL_POWER_ENCHANTABLE = tag("enchantable/spell_power");
+    public static final TagKey<Item> PONDERING_ENCHANTABLE = tag("enchantable/pondering");
 
     private static TagKey<Item> tag(String name) {
         return TagKey.create(Registries.ITEM, ResourceUtils.loc(name));
