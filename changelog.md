@@ -2,11 +2,14 @@ v6.0.6
 ------
 * Added Pixie Houses, to give your flighty friends a home to defend
 * Added Spelltomes, to expand the repertoire of spells you can use at once
+* Added Mana Orbs, to supplement your supply of mana on the go
+* Added a new enchantment for Mana Orbs, Pondering, to increase the rate of paired wands' passive regeneration
 * Allowed magickal saplings to be placed in flower pots
 * Allowed the Desalinator to fill itself with water if placed in an infinite water source
 * Increased mana throughput for all tiers of mana relays and injectors
 * Increased the required mana siphon amount for the Link Saturation advancement
-* Made the Mana Efficiency enchantment applicable to magickal robes as well
+* Made the Mana Efficiency enchantment applicable to magickal robes and offhand items as well
+* Made the Spell Power enchantment applicable to spelltomes as well
 * Fixed a bug where consecration fields would cast shadows
 * Fixed a bug where the hitbox of the Celestial Harp didn't always line up with it visually
 * Fixed an item duplication bug with the Runic Grindstone
