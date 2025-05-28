@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.util;
 
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -14,7 +15,7 @@ public class FluidUtils {
                 adjacentCount++;
             }
         }
-        if (fluid.canConvertToSource(level) && adjacentCount >= 2) {
+        if (adjacentCount >= 2 && Services.FLUIDS.canConvertToSource(fluid, level.getFluidState(pos), level, pos)) {
             return level.getBlockState(pos.below()).isSolid() || level.getFluidState(pos.below()).isSourceOfType(fluid);
         }
         return false;
