@@ -108,6 +108,7 @@ public abstract class Recipes extends RecipeProvider {
         this.registerWaxRecipes(consumer, FeatureFlagSet.of(FeatureFlags.VANILLA));
         this.registerManaNetworkingRecipes(consumer);
         this.registerSpelltomeRecipes(consumer);
+        this.registerManaOrbRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(CommonTags.Items.RODS_WOODEN)
@@ -7473,6 +7474,45 @@ public abstract class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.SPELL_SCROLL_BLANK.get(), 4)
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_CLUSTERS)
             .requiredResearch(ResearchEntries.SPELLTOME_ARCHMAGE)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 100).add(Sources.SEA, 100).add(Sources.SKY, 100).add(Sources.SUN, 100).add(Sources.MOON, 100))
+            .build(consumer);
+    }
+
+    protected void registerManaOrbRecipes(RecipeOutput consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ORB_APPRENTICE.get())
+            .patternLine(" N ")
+            .patternLine("NGN")
+            .patternLine(" N ")
+            .key('N', CommonTags.Items.NUGGETS_GOLD)
+            .key('G', ItemsPM.APPRENTICE_WAND_GEM_ITEM.get())
+            .requiredResearch(ResearchEntries.MANA_ORB_APPRENTICE)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ORB_ADEPT.get())
+            .patternLine(" N ")
+            .patternLine("NGN")
+            .patternLine(" N ")
+            .key('N', CommonTags.Items.NUGGETS_GOLD)
+            .key('G', ItemsPM.ADEPT_WAND_GEM_ITEM.get())
+            .requiredResearch(ResearchEntries.MANA_ORB_ADEPT)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 20).add(Sources.SEA, 20).add(Sources.SKY, 20).add(Sources.SUN, 20).add(Sources.MOON, 20))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ORB_WIZARD.get())
+            .patternLine(" N ")
+            .patternLine("NGN")
+            .patternLine(" N ")
+            .key('N', CommonTags.Items.NUGGETS_GOLD)
+            .key('G', ItemsPM.WIZARD_WAND_GEM_ITEM.get())
+            .requiredResearch(ResearchEntries.MANA_ORB_WIZARD)
+            .manaCost(SourceList.EMPTY.add(Sources.EARTH, 50).add(Sources.SEA, 50).add(Sources.SKY, 50).add(Sources.SUN, 50).add(Sources.MOON, 50))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ORB_ARCHMAGE.get())
+            .patternLine(" N ")
+            .patternLine("NGN")
+            .patternLine(" N ")
+            .key('N', CommonTags.Items.NUGGETS_GOLD)
+            .key('G', ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get())
+            .requiredResearch(ResearchEntries.MANA_ORB_ARCHMAGE)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 100).add(Sources.SEA, 100).add(Sources.SKY, 100).add(Sources.SUN, 100).add(Sources.MOON, 100))
             .build(consumer);
     }

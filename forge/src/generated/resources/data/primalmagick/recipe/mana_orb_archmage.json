@@ -1,0 +1,36 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "G": {
+      "item": "primalmagick:archmage_wand_gem_item"
+    },
+    "N": {
+      "tag": "c:nuggets/gold"
+    }
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 10000,
+      "primalmagick:moon": 10000,
+      "primalmagick:sea": 10000,
+      "primalmagick:sky": 10000,
+      "primalmagick:sun": 10000
+    }
+  },
+  "pattern": [
+    " N ",
+    "NGN",
+    " N "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_orb_archmage"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "primalmagick:mana_orb_archmage"
+  }
+}
