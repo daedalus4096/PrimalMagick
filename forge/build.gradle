@@ -92,6 +92,9 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
+    // Verdant Core
+    implementation "com.verdantartifice.verdantcore:verdantcore-forge-${minecraft_version}:${verdantcore_version}"
+
     // JEI API
     compileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
 
