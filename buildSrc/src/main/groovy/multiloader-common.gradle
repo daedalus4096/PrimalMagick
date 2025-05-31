@@ -14,7 +14,6 @@ java {
 }
 
 repositories {
-    mavenLocal()
     // https://github.com/jaredlll08/MultiLoader-Template/issues/75
     repositories{
         maven {
@@ -54,6 +53,12 @@ repositories {
     }
     maven {
         url = 'https://jm.gserv.me/repository/maven-public/'
+    }
+    maven {
+        url = 's3://verdantartifice-maven-repo/releases/'
+        authentication {
+            awsIm(AwsImAuthentication)
+        }
     }
 }
 
