@@ -84,6 +84,13 @@ minecraft {
     }
 }
 
+tasks.jarJar.configure {
+    archiveClassifier.set("")
+}
+tasks.named("assemble").configure {
+    dependsOn("jarJar")
+}
+
 sourceSets.main.resources.srcDir 'src/generated/resources'
 processResources {
     from(project(":common").sourceSets.main.resources)
