@@ -31,7 +31,7 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="verdantcore"
 mandatory=true
-versionRange="[${verdantcore_version},)"
+versionRange="${verdantcore_version_range}"
 ordering="NONE"
 side="BOTH"
 

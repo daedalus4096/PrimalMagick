@@ -119,7 +119,7 @@ processResources {
             "common_network_version"       : common_network_version,
             'credits'                      : credits,
             'jei_version'                  : jei_version,
-            'verdantcore_version'          : verdantcore_version,
+            'verdantcore_version_range'    : verdantcore_version_range,
             'java_version'                 : java_version
     ]
 

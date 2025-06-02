@@ -37,7 +37,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]] #optional
 modId = "verdantcore"
 type = "required" #mandatory (Can be one of "required", "optional", "incompatible" or "discouraged")
-versionRange = "[${verdantcore_version},)" #mandatory
+versionRange = "${verdantcore_version_range}" #mandatory
 ordering = "NONE" # The order that this dependency should load in relation to your mod, required to be either 'BEFORE' or 'AFTER' if the dependency is not mandatory
 side = "BOTH" # Side this dependency is applied on - 'BOTH', 'CLIENT' or 'SERVER'
 
