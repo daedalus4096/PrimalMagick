@@ -90,7 +90,12 @@ public class ClientRenderEvents {
                     elements.add(Either.left(Component.translatable("tooltip.primalmagick.affinities.unknown")));
                 } else {
                     elements.add(Either.left(Component.translatable("tooltip.primalmagick.affinities.label")));
-                    elements.add(Either.right(new AffinityTooltipComponent(sources)));
+                    if (Services.CONFIG.showAffinityIcons()) {
+                        elements.add(Either.right(new AffinityTooltipComponent(sources)));
+                    } else {
+                        sources.getSourcesSorted().forEach(s -> elements.add(Either.left(
+                                Component.translatable("tooltip.primalmagick.affinities.text", s.getNameText(), sources.getAmount(s)))));
+                    }
                 }
             }, () -> {
                 // If the optional is empty, that means the asynchronous calculation is still in progress

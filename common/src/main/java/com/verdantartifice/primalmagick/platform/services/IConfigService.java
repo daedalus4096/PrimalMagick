@@ -12,6 +12,13 @@ public interface IConfigService {
     boolean showAffinities();
 
     /**
+     * Determine whether affinities should be rendered as icons or text.
+     *
+     * @return true if item affinities should be shown in icon format, false if they should instead be rendered as text
+     */
+    boolean showAffinityIcons();
+
+    /**
      * Determine whether the wand HUD should be shown when the player has a wand in hand.
      *
      * @return true if the wand HUD should be shown, false otherwise

@@ -16,6 +16,11 @@ public class ConfigServiceForge implements IConfigService {
     }
 
     @Override
+    public boolean showAffinityIcons() {
+        return ConfigForge.SHOW_AFFINITY_ICONS.get();
+    }
+
+    @Override
     public boolean showWandHud() {
         return ConfigForge.SHOW_WAND_HUD.get();
     }

@@ -989,6 +989,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("affinities").sub("none").output("Affinities: None").end().build();
         this.tooltip("affinities").sub("unknown").output("Affinities: Unknown").end().build();
         this.tooltip("affinities").sub("calculating").output("Affinities: Calculating...").end().build();
+        this.tooltip("affinities").sub("text").output("%1$s: %2$d").end().build();
         this.tooltip("written_book").sub("author").sub("unknown").output("Unknown").end().build();
         this.tooltip("written_language").sub("header").output("Language: %1$s").end().build();
         this.tooltip("written_language").sub("comprehension").output("Comprehension: %1$s%%").end().build();
