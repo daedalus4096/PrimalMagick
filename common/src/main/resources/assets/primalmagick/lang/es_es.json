@@ -2866,6 +2866,7 @@
   "tooltip.primalmagick.affinities.calculating": "Affinities: Calculating...",
   "tooltip.primalmagick.affinities.label": "Affinities:",
   "tooltip.primalmagick.affinities.none": "Affinities: None",
+  "tooltip.primalmagick.affinities.text": "%1$s: %2$d",
   "tooltip.primalmagick.affinities.unknown": "Affinities: Unknown",
   "tooltip.primalmagick.analysis_table.slot.input": "Add an item with magickal affinities",
   "tooltip.primalmagick.analyze_button.1": "Analyze item affinities",
