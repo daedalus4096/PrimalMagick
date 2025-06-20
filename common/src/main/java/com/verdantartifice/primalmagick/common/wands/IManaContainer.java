@@ -32,7 +32,8 @@ import java.text.DecimalFormat;
  */
 public interface IManaContainer {
     int INFINITE_MANA = -1;
-    DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
+    DecimalFormat FRACTIONAL_MANA_FORMATTER = new DecimalFormat("######0.00");
+    DecimalFormat WHOLE_MANA_FORMATTER = new DecimalFormat("#######");
 
     ManaStorage getManaStorage(ItemStack stack);
 
@@ -73,7 +74,9 @@ public interface IManaContainer {
         } else {
             // Otherwise show the current whole mana value for that source from the stack's data
             double wholeMana = mana / 100.0D;
-            return Component.literal(MANA_FORMATTER.format(truncate ? (int)wholeMana : wholeMana));
+            double toDisplay = truncate ? (int)wholeMana : wholeMana;
+            DecimalFormat formatter = (toDisplay == (int)toDisplay) ? WHOLE_MANA_FORMATTER : FRACTIONAL_MANA_FORMATTER;
+            return Component.literal(formatter.format(toDisplay));
         }
     }
 
@@ -121,7 +124,7 @@ public interface IManaContainer {
             return Component.literal(Character.toString('\u221E'));
         } else {
             // Otherwise show the max centimana for that source from the stack's data
-            return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
+            return Component.literal(WHOLE_MANA_FORMATTER.format(mana / 100.0D));
         }
     }
 
