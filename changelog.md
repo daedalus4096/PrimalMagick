@@ -1,6 +1,7 @@
 v6.0.7
 ------
 * Add client-side config option to render affinities as text instead of with icons
+* Fixed a bug where mana orbs could sometimes drastically reduce mana stored in a wand
 
 v6.0.6
 ------
