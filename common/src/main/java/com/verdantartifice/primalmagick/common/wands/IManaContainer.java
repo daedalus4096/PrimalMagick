@@ -155,10 +155,12 @@ public interface IManaContainer {
         }
 
         // Otherwise, increment and set the new centimana total for the source into the wand's data, up to
-        // the given centimana threshold, returning any leftover centimana that wouldn't fit
-        int toStore = this.getMana(stack, source) + amount;
+        // the given centimana threshold, returning any leftover centimana that wouldn't fit. Ensure that
+        // stored mana is only ever increased via this operation.
+        int current = this.getMana(stack, source);
+        int toStore = current + amount;
         int leftover = Math.max(toStore - max, 0);
-        this.setMana(stack, source, Math.min(toStore, max));
+        this.setMana(stack, source, Math.max(current, Math.min(toStore, max)));
         return leftover;
     }
 
