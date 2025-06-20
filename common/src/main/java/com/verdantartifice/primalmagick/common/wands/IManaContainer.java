@@ -162,7 +162,7 @@ public interface IManaContainer {
         // stored mana is only ever increased via this operation.
         int current = this.getMana(stack, source);
         int toStore = current + amount;
-        int leftover = Math.max(toStore - max, 0);
+        int leftover = Mth.clamp(toStore - max, 0, amount);
         this.setMana(stack, source, Math.max(current, Math.min(toStore, max)));
         return leftover;
     }
@@ -189,7 +189,7 @@ public interface IManaContainer {
         // Otherwise, decrement and set the new centimana total for the source into the wand's data, up to
         // its maximum, returning any leftover centimana that couldn't be covered
         int toStore = this.getMana(stack, source) - amount;
-        int leftover = Math.max(-toStore, 0);
+        int leftover = Mth.clamp(-toStore, 0, amount);
         this.setMana(stack, source, Math.max(toStore, 0));
         return leftover;
     }
