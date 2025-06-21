@@ -5,7 +5,6 @@ import com.electronwill.nightconfig.core.io.WritingMode;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftSpeed;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -26,6 +25,7 @@ public class ConfigForge {
     protected static boolean IS_REGISTERED = false;
     
     public static ForgeConfigSpec.BooleanValue SHOW_AFFINITIES;
+    public static ForgeConfigSpec.BooleanValue SHOW_AFFINITY_ICONS;
     public static ForgeConfigSpec.BooleanValue SHOW_WAND_HUD;
     public static ForgeConfigSpec.BooleanValue RADIAL_RELEASE_TO_SWITCH;
     public static ForgeConfigSpec.BooleanValue RADIAL_CLIP_MOUSE;
@@ -62,6 +62,7 @@ public class ConfigForge {
         
         builder.comment("Misc settings").push(CATEGORY_MISC);
         SHOW_AFFINITIES = builder.comment("Item affinities are hidden by default and pressing shift reveals them.", "Setting this to 'true' will reverse this behavior.").define("showAffinities", false);
+        SHOW_AFFINITY_ICONS = builder.comment("Whether to use the standard icon representation for item affinities.", "Setting this to 'false' will render them as text instead.").define("showAffinityIcons", true);
         SHOW_WAND_HUD = builder.comment("Whether to show the wand HUD while a wand or staff is held in the main hand.").define("showWandHud", true);
         builder.pop();
         

@@ -256,12 +256,13 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
         // Smoothly regenerate one mana per second for core-aligned sources
         WandCore core = this.getWandCore(stack);
         if (core != null && entityIn instanceof Player player) {
+            int regenAmount = this.getCoreRegenPerTick(stack, player);
             for (Source alignedSource : core.getAlignedSources()) {
                 int maxMana = ManaManager.getMaxMana(player, alignedSource);
                 int curMana = ManaManager.getMana(player, alignedSource);
                 double targetMax = (0.1D * maxMana);
                 if (maxMana != IManaContainer.INFINITE_MANA && curMana < targetMax) {
-                    ManaManager.addMana(player, stack, alignedSource, this.getCoreRegenPerTick(stack, player), (int)targetMax);
+                    ManaManager.addMana(player, stack, alignedSource, regenAmount, (int)targetMax);
                 }
             }
         }

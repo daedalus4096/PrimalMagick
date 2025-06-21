@@ -182,7 +182,7 @@ public class ManaManager {
 
         // Add mana to equipment in priority order for gear slots
         for (ItemStack stack : getPrioritizedEquipment(player, wandStack)) {
-            if (stack.getItem() instanceof IManaContainer container) {
+            if (stack.getItem() instanceof IManaContainer container && amount > 0) {
                 // Add as much as possible to each item in priority order, leaving the remainder for lower priority items
                 amount = container.addMana(stack, source, amount, max);
             }

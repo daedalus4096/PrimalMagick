@@ -66,7 +66,7 @@ public class AutoChargerBlock extends BaseEntityBlock implements SimpleWaterlogg
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+        if (handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity charger) {
                 if (charger.getItem().isEmpty() && stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {

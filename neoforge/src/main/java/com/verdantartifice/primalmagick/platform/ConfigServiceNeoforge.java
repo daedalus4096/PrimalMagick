@@ -16,6 +16,11 @@ public class ConfigServiceNeoforge implements IConfigService {
     }
 
     @Override
+    public boolean showAffinityIcons() {
+        return ConfigNeoforge.SHOW_AFFINITY_ICONS.getAsBoolean();
+    }
+
+    @Override
     public boolean showWandHud() {
         return ConfigNeoforge.SHOW_WAND_HUD.getAsBoolean();
     }

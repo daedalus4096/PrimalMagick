@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.config;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftSpeed;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
@@ -21,6 +20,7 @@ public class ConfigNeoforge {
     protected static boolean IS_REGISTERED = false;
     
     public static ModConfigSpec.BooleanValue SHOW_AFFINITIES;
+    public static ModConfigSpec.BooleanValue SHOW_AFFINITY_ICONS;
     public static ModConfigSpec.BooleanValue SHOW_WAND_HUD;
     public static ModConfigSpec.BooleanValue RADIAL_RELEASE_TO_SWITCH;
     public static ModConfigSpec.BooleanValue RADIAL_CLIP_MOUSE;
@@ -57,6 +57,7 @@ public class ConfigNeoforge {
         
         builder.comment("Misc settings").push(CATEGORY_MISC);
         SHOW_AFFINITIES = builder.comment("Item affinities are hidden by default and pressing shift reveals them.", "Setting this to 'true' will reverse this behavior.").define("showAffinities", false);
+        SHOW_AFFINITY_ICONS = builder.comment("Whether to use the standard icon representation for item affinities.", "Setting this to 'false' will render them as text instead.").define("showAffinityIcons", true);
         SHOW_WAND_HUD = builder.comment("Whether to show the wand HUD while a wand or staff is held in the main hand.").define("showWandHud", true);
         builder.pop();
         

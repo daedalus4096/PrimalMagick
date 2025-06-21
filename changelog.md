@@ -1,3 +1,10 @@
+v6.0.7
+------
+* Add client-side config option to render affinities as text instead of with icons
+* Fixed a bug where Mana Orbs could sometimes drastically reduce mana stored in a wand
+* Made text formatting of mana values during wand charging less jerky
+* Fixed a bug where placing warded armor into an Auto-Charger would appear to equip the armor instead
+
 v6.0.6
 ------
 * Added Pixie Houses, to give your flighty friends a home to defend

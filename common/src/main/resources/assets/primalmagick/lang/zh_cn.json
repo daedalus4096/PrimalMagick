@@ -2866,6 +2866,7 @@
   "tooltip.primalmagick.affinities.calculating": "Affinities: Calculating...",
   "tooltip.primalmagick.affinities.label": "亲和力:",
   "tooltip.primalmagick.affinities.none": "亲和力: 无",
+  "tooltip.primalmagick.affinities.text": "%1$s: %2$d",
   "tooltip.primalmagick.affinities.unknown": "亲和力: 未知",
   "tooltip.primalmagick.analysis_table.slot.input": "Add an item with magickal affinities",
   "tooltip.primalmagick.analyze_button.1": "分析物品亲和力",

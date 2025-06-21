@@ -32,7 +32,8 @@ import java.text.DecimalFormat;
  */
 public interface IManaContainer {
     int INFINITE_MANA = -1;
-    DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
+    DecimalFormat FRACTIONAL_MANA_FORMATTER = new DecimalFormat("######0.00");
+    DecimalFormat WHOLE_MANA_FORMATTER = new DecimalFormat("#######");
 
     ManaStorage getManaStorage(ItemStack stack);
 
@@ -73,7 +74,9 @@ public interface IManaContainer {
         } else {
             // Otherwise show the current whole mana value for that source from the stack's data
             double wholeMana = mana / 100.0D;
-            return Component.literal(MANA_FORMATTER.format(truncate ? (int)wholeMana : wholeMana));
+            double toDisplay = truncate ? (int)wholeMana : wholeMana;
+            DecimalFormat formatter = (toDisplay == (int)toDisplay) ? WHOLE_MANA_FORMATTER : FRACTIONAL_MANA_FORMATTER;
+            return Component.literal(formatter.format(toDisplay));
         }
     }
 
@@ -121,7 +124,7 @@ public interface IManaContainer {
             return Component.literal(Character.toString('\u221E'));
         } else {
             // Otherwise show the max centimana for that source from the stack's data
-            return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
+            return Component.literal(WHOLE_MANA_FORMATTER.format(mana / 100.0D));
         }
     }
 
@@ -155,10 +158,12 @@ public interface IManaContainer {
         }
 
         // Otherwise, increment and set the new centimana total for the source into the wand's data, up to
-        // the given centimana threshold, returning any leftover centimana that wouldn't fit
-        int toStore = this.getMana(stack, source) + amount;
-        int leftover = Math.max(toStore - max, 0);
-        this.setMana(stack, source, Math.min(toStore, max));
+        // the given centimana threshold, returning any leftover centimana that wouldn't fit. Ensure that
+        // stored mana is only ever increased via this operation.
+        int current = this.getMana(stack, source);
+        int toStore = current + amount;
+        int leftover = Mth.clamp(toStore - max, 0, amount);
+        this.setMana(stack, source, Math.max(current, Math.min(toStore, max)));
         return leftover;
     }
 
@@ -184,7 +189,7 @@ public interface IManaContainer {
         // Otherwise, decrement and set the new centimana total for the source into the wand's data, up to
         // its maximum, returning any leftover centimana that couldn't be covered
         int toStore = this.getMana(stack, source) - amount;
-        int leftover = Math.max(-toStore, 0);
+        int leftover = Mth.clamp(-toStore, 0, amount);
         this.setMana(stack, source, Math.max(toStore, 0));
         return leftover;
     }
