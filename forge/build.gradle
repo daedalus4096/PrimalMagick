@@ -103,6 +103,7 @@ dependencies {
 
     // Verdant Core
     jarJar(group: 'com.verdantartifice.verdantcore', name: "verdantcore-forge-${minecraft_version}", version: "${verdantcore_version_range}")
+    runtimeOnly("com.verdantartifice.verdantcore:verdantcore-forge-${minecraft_version}:${verdantcore_dev_version}")
 
     // JEI API
     compileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
