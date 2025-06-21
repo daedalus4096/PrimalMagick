@@ -14,6 +14,7 @@ java {
 }
 
 repositories {
+    mavenLocal()
     // https://github.com/jaredlll08/MultiLoader-Template/issues/75
     repositories{
         maven {
