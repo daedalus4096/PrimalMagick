@@ -4,8 +4,10 @@ import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.ResearchTiers;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -57,12 +59,15 @@ public class ExpertiseManager {
     }
     
     protected static int getThresholdBySpellsCast(ResearchTier tier) {
-        return switch (tier) {
-            case EXPERT -> 50;      // Assume 10 spells at 5 mana each
-            case MASTER -> 500;     // Assume 50 spells at 10 mana each
-            case SUPREME -> 2500;   // Assume 125 spells at 20 mana each
-            default -> 0;
-        };
+        if (tier.equals(ResearchTiers.EXPERT)) {
+            return 50;      // Assume 10 spells at 5 mana each
+        } else if (tier.equals(ResearchTiers.MASTER)) {
+            return 500;     // Assume 50 spells at 10 mana each
+        } else if (tier.equals(ResearchTiers.SUPREME)) {
+            return 2500;    // Assume 125 spells at 20 mana each
+        } else {
+            return 0;
+        }
     }
     
     protected static int getThresholdByDisciplineRecipes(RegistryAccess registryAccess, RecipeManager recipeManager, ResearchDisciplineKey discKey, ResearchTier tier) {
@@ -170,7 +175,7 @@ public class ExpertiseManager {
     public static Optional<ResearchTier> getRuneEnchantmentTier(RegistryAccess registryAccess, RuneEnchantmentDefinition runeEnchDef) {
         // Determine the highest research tier represented by any of the runes in this enchantment's definition
         Optional<ResearchTier> maxTierOpt = Optional.empty();
-        for (AbstractRequirement<?> req : runeEnchDef.getRunes().stream().map(r -> r.getRequirement()).toList()) {
+        for (AbstractRequirement<?> req : runeEnchDef.getRunes().stream().map(Rune::getRequirement).toList()) {
             Optional<ResearchTier> tierOpt = req.getResearchTier(registryAccess);
             if (maxTierOpt.isEmpty() || (tierOpt.isPresent() && tierOpt.get().compareTo(maxTierOpt.get()) > 0)) {
                 maxTierOpt = tierOpt;
