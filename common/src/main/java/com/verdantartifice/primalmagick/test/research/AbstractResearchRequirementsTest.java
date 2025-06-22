@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.ResearchTiers;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
@@ -80,7 +80,7 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
 
     public void expertise_requirement(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper); // Stats are only recorded on the server side
-        var req = new ExpertiseRequirement(ResearchDisciplines.MANAWEAVING, ResearchTier.EXPERT, 12);
+        var req = new ExpertiseRequirement(ResearchDisciplines.MANAWEAVING, ResearchTiers.EXPERT, 12);
         helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.UNLOCK_MANAWEAVING);
         ExpertiseManager.setValue(player, new ResearchDisciplineKey(ResearchDisciplines.MANAWEAVING), 12);

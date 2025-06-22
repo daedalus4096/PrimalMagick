@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
-import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
@@ -64,31 +63,6 @@ public class ExpertiseManager {
             case SUPREME -> 2500;   // Assume 125 spells at 20 mana each
             default -> 0;
         };
-    }
-    
-    protected static int getThresholdByEnchantmentsRunescribed(RegistryAccess registryAccess, ResearchTier tier) {
-        MutableInt retVal = new MutableInt(0);
-        registryAccess.registryOrThrow(Registries.ENCHANTMENT).holders().forEach(ench -> {
-            RuneManager.getRuneDefinition(registryAccess, ench).ifPresent(runeEnchDef -> {
-                // Only consider rune enchantment definitions with a research tier lower than the given one
-                getRuneEnchantmentTier(registryAccess, runeEnchDef).filter(enchTier -> enchTier.compareTo(tier) < 0).ifPresent(enchTier -> {
-                    int reward = enchTier.getDefaultExpertise() + enchTier.getDefaultBonusExpertise();
-                    retVal.add(reward);
-                });
-            });
-        });
-        
-        // Only require a fraction of the possible enchantments to be runescribed
-        float multiplier = switch (tier) {
-            case EXPERT -> 0.2F;
-            case MASTER -> 0.4F;
-            case SUPREME -> 0.6F;
-            default -> 0F;
-        };
-
-        int total = (int)(multiplier * (float)retVal.intValue());
-        LOGGER.debug("Final expertise enchantment value for runeworking tier {}: {} ({} * {})", tier.getSerializedName(), total, retVal.intValue(), multiplier);
-        return total;
     }
     
     protected static int getThresholdByDisciplineRecipes(RegistryAccess registryAccess, RecipeManager recipeManager, ResearchDisciplineKey discKey, ResearchTier tier) {
@@ -193,28 +167,6 @@ public class ExpertiseManager {
         }
     }
     
-    /**
-     * Award expertise to the given player for runescribing the given enchantment onto a piece of gear.
-     * 
-     * @param player the player to receive the expertise
-     * @param enchantment the enchantment that was runescribed
-     */
-    public static void awardExpertise(@Nullable Player player, Holder<Enchantment> enchantment) {
-        if (player != null && enchantment != null) {
-            ResearchDisciplineKey discKey = new ResearchDisciplineKey(ResearchDisciplines.RUNEWORKING);
-            RuneManager.getRuneDefinition(player.level().registryAccess(), enchantment).ifPresent(runeEnchDef -> {
-                // Award the expertise based on the research tier of the enchantment, then mark it as having been crafted
-                getRuneEnchantmentTier(player.level().registryAccess(), runeEnchDef).ifPresent(tier -> {
-                    incrementValue(player, discKey, tier.getDefaultExpertise());
-                    if (isBonusEligible(player, enchantment)) {
-                        incrementValue(player, discKey, tier.getDefaultBonusExpertise());
-                        markCrafted(player, enchantment);
-                    }
-                });
-            });
-        }
-    }
-    
     public static Optional<ResearchTier> getRuneEnchantmentTier(RegistryAccess registryAccess, RuneEnchantmentDefinition runeEnchDef) {
         // Determine the highest research tier represented by any of the runes in this enchantment's definition
         Optional<ResearchTier> maxTierOpt = Optional.empty();
@@ -230,13 +182,6 @@ public class ExpertiseManager {
     public static boolean isBonusEligible(Player player, Holder<Enchantment> enchantment) {
         ResourceLocation enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
         return player != null && enchKey != null && Services.CAPABILITIES.stats(player).map(stats -> !stats.isRuneEnchantmentCrafted(enchKey)).orElse(false);
-    }
-    
-    protected static void markCrafted(Player player, Holder<Enchantment> enchantment) {
-        ResourceLocation enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
-        if (player != null && enchKey != null) {
-            Services.CAPABILITIES.stats(player).ifPresent(stats -> stats.setRuneEnchantmentCrafted(enchKey));
-        }
     }
     
     /**
