@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
-import com.verdantartifice.primalmagick.common.research.IconDefinition;
+import com.verdantartifice.primalmagick.common.misc.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.IVanillaStatRequirement;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;

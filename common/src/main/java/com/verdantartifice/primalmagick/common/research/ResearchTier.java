@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.research;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.misc.IconDefinition;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
