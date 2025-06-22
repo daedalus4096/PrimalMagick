@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.research.IconDefinition;
+import com.verdantartifice.primalmagick.common.misc.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;

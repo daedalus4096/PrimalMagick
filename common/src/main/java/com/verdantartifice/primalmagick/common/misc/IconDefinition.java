@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.research;
+package com.verdantartifice.primalmagick.common.misc;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;

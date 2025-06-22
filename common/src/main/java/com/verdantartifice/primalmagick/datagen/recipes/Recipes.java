@@ -18,7 +18,7 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.ResearchTiers;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -194,7 +194,7 @@ public abstract class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.HEXIUM)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 10))
             .discipline(ResearchDisciplines.MANAWEAVING)
-            .expertiseTier(ResearchTier.EXPERT)
+            .expertiseTier(ResearchTiers.EXPERT)
             .expertiseGroup("sunlamp")
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_PRISM.get())
@@ -2684,7 +2684,7 @@ public abstract class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.WAND_CORE_HEARTWOOD)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
             .expertiseGroup("heartwood_core")
-            .expertiseTier(ResearchTier.BASIC)
+            .expertiseTier(ResearchTiers.BASIC)
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get())
             .patternLine(" D#")
