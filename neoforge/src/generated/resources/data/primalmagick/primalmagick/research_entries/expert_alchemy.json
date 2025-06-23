@@ -26,7 +26,7 @@
           "rootKey": "primalmagick:alchemy"
         },
         "requirement_type": "primalmagick:expertise",
-        "tier": "expert"
+        "tier": "primalmagick:expert"
       },
       "parentKey": {
         "rootKey": "primalmagick:expert_alchemy"
@@ -46,5 +46,5 @@
       "textTranslationKey": "research.primalmagick.expert_alchemy.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

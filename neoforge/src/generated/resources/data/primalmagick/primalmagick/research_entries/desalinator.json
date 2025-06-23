@@ -57,5 +57,5 @@
       "textTranslationKey": "research.primalmagick.desalinator.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

@@ -44,5 +44,5 @@
       "textTranslationKey": "research.primalmagick.rune_protect.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

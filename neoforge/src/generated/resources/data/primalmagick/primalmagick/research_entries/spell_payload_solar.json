@@ -32,16 +32,18 @@
       "textTranslationKey": "research.primalmagick.spell_payload_solar.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sun": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_solar"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_solar.text.stage.2"
     }

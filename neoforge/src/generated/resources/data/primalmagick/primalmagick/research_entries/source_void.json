@@ -55,16 +55,18 @@
       "textTranslationKey": "research.primalmagick.source_void.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:void": 5
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:source_void"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 5,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:void"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.source_void.text.stage.2"
     }

@@ -69,5 +69,5 @@
       "textTranslationKey": "research.primalmagick.auto_charger.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

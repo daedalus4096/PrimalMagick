@@ -60,5 +60,5 @@
       "textTranslationKey": "research.primalmagick.mana_orb_apprentice.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

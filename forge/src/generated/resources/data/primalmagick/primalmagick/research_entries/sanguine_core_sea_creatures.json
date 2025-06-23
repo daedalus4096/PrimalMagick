@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.sanguine_core_sea_creatures.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sea": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:sanguine_core_sea_creatures"
       },
@@ -57,9 +52,16 @@
         "primalmagick:sanguine_core_frog"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.sanguine_core_sea_creatures.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

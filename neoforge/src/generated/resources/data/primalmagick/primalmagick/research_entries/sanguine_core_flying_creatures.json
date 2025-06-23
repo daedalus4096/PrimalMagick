@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.sanguine_core_flying_creatures.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sky": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:sanguine_core_flying_creatures"
       },
@@ -51,9 +46,16 @@
         "primalmagick:sanguine_core_allay"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.sanguine_core_flying_creatures.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

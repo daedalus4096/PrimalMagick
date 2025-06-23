@@ -32,16 +32,18 @@
       "textTranslationKey": "research.primalmagick.spell_payload_lunar.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:moon": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_lunar"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_lunar.text.stage.2"
     }

@@ -54,5 +54,5 @@
       "textTranslationKey": "research.primalmagick.spellcloth.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

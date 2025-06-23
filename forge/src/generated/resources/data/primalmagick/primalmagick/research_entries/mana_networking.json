@@ -58,5 +58,5 @@
       "textTranslationKey": "research.primalmagick.mana_networking.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

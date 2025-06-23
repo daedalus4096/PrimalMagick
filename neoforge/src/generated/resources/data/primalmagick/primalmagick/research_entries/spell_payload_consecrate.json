@@ -47,16 +47,18 @@
       "textTranslationKey": "research.primalmagick.spell_payload_consecrate.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:hallowed": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_consecrate"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_consecrate.text.stage.2"
     }

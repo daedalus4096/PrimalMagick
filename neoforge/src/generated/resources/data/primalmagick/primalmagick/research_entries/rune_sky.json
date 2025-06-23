@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.rune_sky.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sky": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:rune_sky"
       },
@@ -45,9 +40,16 @@
         "primalmagick:rune_sky"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.rune_sky.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

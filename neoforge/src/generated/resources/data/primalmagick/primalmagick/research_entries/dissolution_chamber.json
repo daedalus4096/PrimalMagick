@@ -59,11 +59,6 @@
       "textTranslationKey": "research.primalmagick.dissolution_chamber.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:dissolution_chamber"
       },
@@ -97,9 +92,16 @@
         "primalmagick:netherite_scrap_from_dissolving_ancient_debris"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.dissolution_chamber.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

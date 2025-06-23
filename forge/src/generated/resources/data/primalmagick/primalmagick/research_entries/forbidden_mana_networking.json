@@ -54,5 +54,5 @@
       "textTranslationKey": "research.primalmagick.forbidden_mana_networking.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

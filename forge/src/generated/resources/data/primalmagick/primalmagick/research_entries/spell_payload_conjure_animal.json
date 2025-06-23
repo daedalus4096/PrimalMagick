@@ -47,16 +47,18 @@
       "textTranslationKey": "research.primalmagick.spell_payload_conjure_animal.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_conjure_animal"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_conjure_animal.text.stage.2"
     }

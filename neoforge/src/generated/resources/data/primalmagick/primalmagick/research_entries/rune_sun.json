@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.rune_sun.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sun": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:rune_sun"
       },
@@ -45,9 +40,16 @@
         "primalmagick:rune_sun"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.rune_sun.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

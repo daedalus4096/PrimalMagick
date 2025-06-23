@@ -57,16 +57,18 @@
       "textTranslationKey": "research.primalmagick.source_infernal.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 5
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:source_infernal"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 5,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.source_infernal.text.stage.2"
     }

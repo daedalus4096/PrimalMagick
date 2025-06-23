@@ -1,11 +1,6 @@
 {
   "addenda": [
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 1
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -19,15 +14,17 @@
       "recipes": [
         "primalmagick:essence_crystal_blood_from_cluster"
       ],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.cluster_desynthesis.text.addenda.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 1
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -41,15 +38,17 @@
       "recipes": [
         "primalmagick:essence_crystal_infernal_from_cluster"
       ],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.cluster_desynthesis.text.addenda.2"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:void": 1
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -63,15 +62,17 @@
       "recipes": [
         "primalmagick:essence_crystal_void_from_cluster"
       ],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:void"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.cluster_desynthesis.text.addenda.3"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:hallowed": 1
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -84,6 +85,13 @@
       },
       "recipes": [
         "primalmagick:essence_crystal_hallowed_from_cluster"
+      ],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        }
       ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.cluster_desynthesis.text.addenda.4"
@@ -122,15 +130,6 @@
       "textTranslationKey": "research.primalmagick.cluster_desynthesis.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 1,
-          "primalmagick:moon": 1,
-          "primalmagick:sea": 1,
-          "primalmagick:sky": 1,
-          "primalmagick:sun": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:cluster_desynthesis"
       },
@@ -142,9 +141,36 @@
         "primalmagick:essence_crystal_moon_from_cluster"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.cluster_desynthesis.text.stage.2"
     }
   ],
-  "tier": "supreme"
+  "tier": "primalmagick:supreme"
 }

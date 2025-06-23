@@ -45,11 +45,6 @@
       "textTranslationKey": "research.primalmagick.cryotreatment.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sea": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:cryotreatment"
       },
@@ -59,9 +54,16 @@
         "primalmagick:slime_ball_from_cryotreatment"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.cryotreatment.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

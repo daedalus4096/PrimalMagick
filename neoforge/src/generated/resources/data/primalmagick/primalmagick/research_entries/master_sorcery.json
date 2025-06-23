@@ -36,7 +36,7 @@
               "rootKey": "primalmagick:sorcery"
             },
             "requirement_type": "primalmagick:expertise",
-            "tier": "master"
+            "tier": "primalmagick:master"
           },
           {
             "requiredValue": 50,

@@ -36,11 +36,6 @@
       "textTranslationKey": "research.primalmagick.rune_infernal.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:rune_infernal"
       },
@@ -48,9 +43,16 @@
         "primalmagick:rune_infernal"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.rune_infernal.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

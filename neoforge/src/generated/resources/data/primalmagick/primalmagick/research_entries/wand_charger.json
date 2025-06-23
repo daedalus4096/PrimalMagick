@@ -54,5 +54,5 @@
       "textTranslationKey": "research.primalmagick.wand_charger.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

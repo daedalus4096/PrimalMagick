@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.ritual_lectern.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:moon": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:ritual_lectern"
       },
@@ -45,9 +40,16 @@
         "primalmagick:ritual_lectern"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.ritual_lectern.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

@@ -1,11 +1,6 @@
 {
   "addenda": [
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:hallowed": 3
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -29,6 +24,13 @@
         "primalmagick:damaged_budding_quartz_block",
         "primalmagick:chipped_budding_quartz_block",
         "primalmagick:flawed_budding_quartz_block"
+      ],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        }
       ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.synthetic_gem_buds.text.addenda.1"
@@ -83,12 +85,6 @@
       "textTranslationKey": "research.primalmagick.synthetic_gem_buds.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 3,
-          "primalmagick:sun": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:synthetic_gem_buds"
       },
@@ -99,9 +95,21 @@
         "primalmagick:flawed_budding_amethyst_block"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.synthetic_gem_buds.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

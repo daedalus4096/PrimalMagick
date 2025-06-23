@@ -47,5 +47,5 @@
       "textTranslationKey": "research.primalmagick.essence_transmuter.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

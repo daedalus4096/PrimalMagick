@@ -39,11 +39,6 @@
       "textTranslationKey": "research.primalmagick.soul_anvil.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:soul_anvil"
       },
@@ -51,9 +46,16 @@
         "primalmagick:soul_anvil"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.soul_anvil.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

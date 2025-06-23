@@ -33,7 +33,7 @@
               "rootKey": "primalmagick:runeworking"
             },
             "requirement_type": "primalmagick:expertise",
-            "tier": "supreme"
+            "tier": "primalmagick:supreme"
           }
         ]
       },
@@ -71,5 +71,5 @@
       "textTranslationKey": "research.primalmagick.supreme_runeworking.text.stage.2"
     }
   ],
-  "tier": "supreme"
+  "tier": "primalmagick:supreme"
 }

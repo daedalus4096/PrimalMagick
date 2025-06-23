@@ -47,16 +47,18 @@
       "textTranslationKey": "research.primalmagick.spell_payload_conjure_water.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sea": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_conjure_water"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_conjure_water.text.stage.2"
     }

@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.sanguine_core_land_animals.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:sanguine_core_land_animals"
       },
@@ -65,9 +60,16 @@
         "primalmagick:sanguine_core_wolf"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.sanguine_core_land_animals.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

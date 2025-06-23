@@ -54,5 +54,5 @@
       "textTranslationKey": "research.primalmagick.wand_gem_apprentice.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

@@ -29,7 +29,7 @@
           "rootKey": "primalmagick:runeworking"
         },
         "requirement_type": "primalmagick:expertise",
-        "tier": "expert"
+        "tier": "primalmagick:expert"
       },
       "parentKey": {
         "rootKey": "primalmagick:expert_runeworking"
@@ -51,5 +51,5 @@
       "textTranslationKey": "research.primalmagick.expert_runeworking.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

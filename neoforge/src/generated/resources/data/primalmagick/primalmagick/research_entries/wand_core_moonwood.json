@@ -66,11 +66,6 @@
       "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:moon": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:wand_core_moonwood"
       },
@@ -78,9 +73,16 @@
         "primalmagick:moonwood_wand_core_item"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

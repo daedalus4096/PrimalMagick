@@ -34,24 +34,58 @@
       "textTranslationKey": "research.primalmagick.complete_alchemy.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 1,
-          "primalmagick:earth": 1,
-          "primalmagick:hallowed": 1,
-          "primalmagick:infernal": 1,
-          "primalmagick:moon": 1,
-          "primalmagick:sea": 1,
-          "primalmagick:sky": 1,
-          "primalmagick:sun": 1,
-          "primalmagick:void": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:complete_alchemy"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:void"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.complete_alchemy.text.stage.2"
     }

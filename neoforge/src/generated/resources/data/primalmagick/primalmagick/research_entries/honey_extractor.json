@@ -63,5 +63,5 @@
       "textTranslationKey": "research.primalmagick.honey_extractor.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

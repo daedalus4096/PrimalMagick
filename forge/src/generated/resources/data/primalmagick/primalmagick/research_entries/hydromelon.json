@@ -71,11 +71,6 @@
       "textTranslationKey": "research.primalmagick.hydromelon.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sea": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:hydromelon"
       },
@@ -85,9 +80,16 @@
         "primalmagick:hydromelon_seeds"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.hydromelon.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

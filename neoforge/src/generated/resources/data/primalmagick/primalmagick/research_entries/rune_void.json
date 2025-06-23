@@ -36,11 +36,6 @@
       "textTranslationKey": "research.primalmagick.rune_void.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:void": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:rune_void"
       },
@@ -48,9 +43,16 @@
         "primalmagick:rune_void"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:void"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.rune_void.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

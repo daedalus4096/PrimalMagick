@@ -70,11 +70,6 @@
       "textTranslationKey": "research.primalmagick.enderward.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:void": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:enderward"
       },
@@ -82,9 +77,16 @@
         "primalmagick:enderward"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:void"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.enderward.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

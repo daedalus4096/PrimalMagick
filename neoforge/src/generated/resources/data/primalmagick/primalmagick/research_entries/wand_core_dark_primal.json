@@ -81,13 +81,6 @@
       "textTranslationKey": "research.primalmagick.wand_core_dark_primal.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 4,
-          "primalmagick:infernal": 4,
-          "primalmagick:void": 4
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:wand_core_dark_primal"
       },
@@ -95,9 +88,26 @@
         "primalmagick:dark_primal_wand_core_item"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 4,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        },
+        {
+          "amount": 4,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        },
+        {
+          "amount": 4,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:void"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.wand_core_dark_primal.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

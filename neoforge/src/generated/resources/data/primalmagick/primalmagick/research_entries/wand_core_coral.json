@@ -64,11 +64,6 @@
       "textTranslationKey": "research.primalmagick.wand_core_coral.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sea": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:wand_core_coral"
       },
@@ -76,9 +71,16 @@
         "primalmagick:coral_wand_core_item"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.wand_core_coral.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

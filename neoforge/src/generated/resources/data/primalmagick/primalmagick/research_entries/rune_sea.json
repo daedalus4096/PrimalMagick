@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.rune_sea.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sea": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:rune_sea"
       },
@@ -45,9 +40,16 @@
         "primalmagick:rune_sea"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.rune_sea.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

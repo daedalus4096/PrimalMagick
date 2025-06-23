@@ -66,11 +66,6 @@
       "textTranslationKey": "research.primalmagick.wand_core_bamboo.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sky": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:wand_core_bamboo"
       },
@@ -78,9 +73,16 @@
         "primalmagick:bamboo_wand_core_item"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.wand_core_bamboo.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

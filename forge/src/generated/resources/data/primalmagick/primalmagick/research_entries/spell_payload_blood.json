@@ -35,16 +35,18 @@
       "textTranslationKey": "research.primalmagick.spell_payload_blood.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_blood"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_blood.text.stage.2"
     }

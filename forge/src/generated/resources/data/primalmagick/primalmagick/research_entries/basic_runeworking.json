@@ -31,5 +31,5 @@
       "textTranslationKey": "research.primalmagick.basic_runeworking.text.stage.1"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

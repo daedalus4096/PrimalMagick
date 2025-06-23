@@ -47,16 +47,18 @@
       "textTranslationKey": "research.primalmagick.spell_payload_polymorph.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:moon": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_polymorph"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_polymorph.text.stage.2"
     }
