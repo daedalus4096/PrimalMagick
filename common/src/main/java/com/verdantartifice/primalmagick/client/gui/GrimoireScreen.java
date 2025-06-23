@@ -64,6 +64,7 @@ import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopi
 import com.verdantartifice.primalmagick.common.research.topics.SourceResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.TopicLink;
 import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
+import com.verdantartifice.primalmagick.common.rewards.AttunementReward;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -664,9 +665,11 @@ public class GrimoireScreen extends Screen {
         }
         
         // Add attunement gain page if applicable
-        List<AbstractReward<?>> rewards = new ArrayList<>(stage.rewards());
+        List<AttunementReward> rewards = new ArrayList<>(stage.rewards().stream()
+                .map(r -> r instanceof AttunementReward ar ? ar : null).filter(Objects::nonNull).toList());
         for (ResearchAddendum addendum : addenda) {
-            rewards.addAll(addendum.rewards());
+            rewards.addAll(addendum.rewards().stream()
+                    .map(r -> r instanceof AttunementReward ar ? ar : null).filter(Objects::nonNull).toList());
         }
         if (!rewards.isEmpty()) {
             this.pages.add(new AttunementGainPage(rewards));
