@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
+package com.verdantartifice.primalmagick.common.rewards;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;

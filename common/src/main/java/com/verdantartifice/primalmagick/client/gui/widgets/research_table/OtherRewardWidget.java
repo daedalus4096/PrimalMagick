@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
+import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;

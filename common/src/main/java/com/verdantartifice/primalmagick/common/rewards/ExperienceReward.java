@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
+package com.verdantartifice.primalmagick.common.rewards;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -12,7 +12,7 @@ import net.minecraft.util.ExtraCodecs;
 import java.util.Objects;
 
 /**
- * Theorycrafting reward that grants experience points.
+ * Reward that grants experience points.
  * 
  * @author Daedalus4096
  */
@@ -22,8 +22,7 @@ public class ExperienceReward extends AbstractReward<ExperienceReward> {
         ).apply(instance, ExperienceReward::new));
     
     public static final StreamCodec<ByteBuf, ExperienceReward> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VAR_INT,
-            reward -> reward.points,
+            ByteBufCodecs.VAR_INT, reward -> reward.points,
             ExperienceReward::new);
     
     private final int points;

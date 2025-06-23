@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
+package com.verdantartifice.primalmagick.common.rewards;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -8,7 +8,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
- * Base class for a non-theory reward provided by a theorycrafting research project upon successful completion.
+ * Base class for a tangible reward provided by knowledge work (e.g. theorycrafting project, research stage) upon
+ * successful completion.
  * 
  * @author Daedalus4096
  */

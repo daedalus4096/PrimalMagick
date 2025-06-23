@@ -17,7 +17,7 @@ import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadType;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialType;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType;
+import com.verdantartifice.primalmagick.common.rewards.RewardType;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionType;
 import com.verdantartifice.primalmagick.common.tips.TipDefinition;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -40,7 +40,7 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<ResearchEntry>> RESEARCH_ENTRIES = key("research_entries");
     public static final ResourceKey<Registry<ProjectTemplate>> PROJECT_TEMPLATES = key("project_templates");
     public static final ResourceKey<Registry<ProjectMaterialType<?>>> PROJECT_MATERIAL_TYPES = key("project_material_types");
-    public static final ResourceKey<Registry<RewardType<?>>> PROJECT_REWARD_TYPES = key("project_reward_types");
+    public static final ResourceKey<Registry<RewardType<?>>> REWARD_TYPES = key("reward_types");
     public static final ResourceKey<Registry<WeightFunctionType<?>>> PROJECT_WEIGHT_FUNCTION_TYPES = key("project_weight_function_types");
     public static final ResourceKey<Registry<RuneEnchantmentDefinition>> RUNE_ENCHANTMENT_DEFINITIONS = key("rune_enchantment_definitions");
     public static final ResourceKey<Registry<SpellProperty>> SPELL_PROPERTIES = key("spell_properties");

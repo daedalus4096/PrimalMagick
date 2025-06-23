@@ -13,7 +13,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
+import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.AbstractWeightFunction;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;

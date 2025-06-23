@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
+package com.verdantartifice.primalmagick.common.rewards;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.MapCodec;
@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
- * Theorycrafting reward that grants a specific item stack.
+ * Reward that grants a specific item stack.
  * 
  * @author Daedalus4096
  */
@@ -30,8 +30,7 @@ public class ItemReward extends AbstractReward<ItemReward> {
         ).apply(instance, ItemReward::new));
     
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemReward> STREAM_CODEC = StreamCodec.composite(
-            ItemStack.STREAM_CODEC,
-            reward -> reward.stack,
+            ItemStack.STREAM_CODEC, reward -> reward.stack,
             ItemReward::new);
     
     private final ItemStack stack;
