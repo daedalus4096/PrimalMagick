@@ -30,7 +30,7 @@ public class OtherRewardWidget extends AbstractWidget {
         super(x, y, 16, 16, Component.empty());
         List<Component> lines = new ArrayList<>();
         lines.add(HEADER);
-        rewards.stream().map(AbstractReward::getDescription).forEach(lines::add);
+        rewards.stream().map(r -> r.getDescription(Minecraft.getInstance().player)).forEach(lines::add);
         this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
     }
 

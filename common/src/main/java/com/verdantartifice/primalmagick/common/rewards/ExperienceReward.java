@@ -8,6 +8,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.Objects;
 
@@ -42,7 +43,7 @@ public class ExperienceReward extends AbstractReward<ExperienceReward> {
     }
 
     @Override
-    public Component getDescription() {
+    public Component getDescription(Player player) {
         Component label = Component.translatable("label.primalmagick.experience.points");
         return Component.translatable("label.primalmagick.research_table.reward", this.points, label);
     }

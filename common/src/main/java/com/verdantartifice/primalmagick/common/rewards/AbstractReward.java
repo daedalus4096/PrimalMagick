@@ -6,6 +6,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Base class for a tangible reward provided by knowledge work (e.g. theorycrafting project, research stage) upon
@@ -24,7 +25,7 @@ public abstract class AbstractReward<T extends AbstractReward<T>> {
     
     public abstract void grant(ServerPlayer player);
     
-    public abstract Component getDescription();
+    public abstract Component getDescription(Player player);
     
     protected abstract RewardType<T> getType();
 

@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
@@ -66,7 +67,7 @@ public class ItemReward extends AbstractReward<ItemReward> {
     }
 
     @Override
-    public Component getDescription() {
+    public Component getDescription(Player player) {
         MutableComponent itemName = Component.empty().append(this.stack.getHoverName()).withStyle(this.stack.getRarity().color());
         if (this.stack.has(DataComponents.CUSTOM_NAME)) {
             itemName.withStyle(ChatFormatting.ITALIC);
