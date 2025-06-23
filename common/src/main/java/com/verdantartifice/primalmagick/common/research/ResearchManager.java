@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey
 import com.verdantartifice.primalmagick.common.research.keys.EntityScanKey;
 import com.verdantartifice.primalmagick.common.research.keys.ItemScanKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -397,17 +398,11 @@ public class ResearchManager {
             entryComplete = (currentStageNum >= entry.stages().size());
             
             if (currentStage != null) {
-                // Process any attunement grants in the newly-reached stage
-                SourceList attunements = currentStage.attunements();
-                for (Source source : attunements.getSources()) {
-                    int amount = attunements.getAmount(source);
-                    if (amount > 0) {
-                        AttunementManager.incrementAttunement(player, source, AttunementType.PERMANENT, amount);
-                    }
-                }
-                
-                // Add any unlocked recipes from the current stage to the player's arcane recipe book
                 if (player instanceof ServerPlayer serverPlayer) {
+                    // Process any rewards from the newly-reached stage
+                    currentStage.rewards().forEach(r -> r.grant(serverPlayer));
+
+                    // Add any unlocked recipes from the current stage to the player's arcane recipe book
                     RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
                     Set<RecipeHolder<?>> recipesToUnlock = currentStage.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                     ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
@@ -483,17 +478,11 @@ public class ResearchManager {
                             knowledge.addResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
                             knowledge.removeResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.READ);
                             
-                            // Process attunement grants
-                            SourceList attunements = addendum.attunements();
-                            for (Source source : attunements.getSources()) {
-                                int amount = attunements.getAmount(source);
-                                if (amount > 0) {
-                                    AttunementManager.incrementAttunement(player, source, AttunementType.PERMANENT, amount);
-                                }
-                            }
-                            
-                            // Add any unlocked recipes to the player's arcane recipe book
                             if (player instanceof ServerPlayer serverPlayer) {
+                                // Process addendum rewards
+                                addendum.rewards().forEach(r -> r.grant(serverPlayer));
+
+                                // Add any unlocked recipes to the player's arcane recipe book
                                 RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
                                 Set<RecipeHolder<?>> recipesToUnlock = addendum.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                                 ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
