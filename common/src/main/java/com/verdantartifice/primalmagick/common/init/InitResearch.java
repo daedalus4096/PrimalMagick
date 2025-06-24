@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchTiers;
 import com.verdantartifice.primalmagick.common.research.ScanEntityResearchTrigger;
 import com.verdantartifice.primalmagick.common.research.ScanEntityTagResearchTrigger;
 import com.verdantartifice.primalmagick.common.research.ScanItemResearchTrigger;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.Items;
  */
 public class InitResearch {
     public static void initResearch() {
+        ResearchTiers.init();
         initScanResearch();
     }
     
