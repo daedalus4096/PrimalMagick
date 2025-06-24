@@ -55,11 +55,6 @@
       "textTranslationKey": "research.primalmagick.celestial_harp.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:hallowed": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:celestial_harp"
       },
@@ -67,9 +62,16 @@
         "primalmagick:celestial_harp"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.celestial_harp.text.stage.2"
     }
   ],
-  "tier": "supreme"
+  "tier": "primalmagick:supreme"
 }

@@ -64,16 +64,18 @@
       "textTranslationKey": "research.primalmagick.source_moon.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:moon": 5
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:source_moon"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 5,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.source_moon.text.stage.2"
     }

@@ -54,11 +54,6 @@
       "textTranslationKey": "research.primalmagick.spell_payload_drain_soul.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_drain_soul"
       },
@@ -66,6 +61,13 @@
         "primalmagick:soul_gem"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_drain_soul.text.stage.2"
     }

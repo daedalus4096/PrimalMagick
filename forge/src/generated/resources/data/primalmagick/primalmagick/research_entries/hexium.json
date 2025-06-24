@@ -84,13 +84,6 @@
       "textTranslationKey": "research.primalmagick.hexium.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 2,
-          "primalmagick:infernal": 2,
-          "primalmagick:void": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:hexium"
       },
@@ -115,6 +108,23 @@
         "primalmagick:hexium_shield"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        },
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        },
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:void"
+        }
+      ],
       "siblings": [
         {
           "key_type": "primalmagick:research_entry",
@@ -124,5 +134,5 @@
       "textTranslationKey": "research.primalmagick.hexium.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

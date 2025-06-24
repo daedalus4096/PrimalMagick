@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
+package com.verdantartifice.primalmagick.common.rewards;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import java.util.Objects;
 
 /**
- * Theorycrafting reward that grants random items from a loot table.
+ * Reward that grants random items from a loot table.
  * 
  * @author Daedalus4096
  */
@@ -36,12 +37,9 @@ public class LootTableReward extends AbstractReward<LootTableReward> {
         ).apply(instance, LootTableReward::new));
     
     public static final StreamCodec<ByteBuf, LootTableReward> STREAM_CODEC = StreamCodec.composite(
-            ResourceKey.streamCodec(Registries.LOOT_TABLE),
-            reward -> reward.lootTable,
-            ByteBufCodecs.VAR_INT,
-            reward -> reward.pullCount,
-            ByteBufCodecs.STRING_UTF8,
-            reward -> reward.descTranslationKey,
+            ResourceKey.streamCodec(Registries.LOOT_TABLE), reward -> reward.lootTable,
+            ByteBufCodecs.VAR_INT, reward -> reward.pullCount,
+            ByteBufCodecs.STRING_UTF8, reward -> reward.descTranslationKey,
             LootTableReward::new);
 
     private final ResourceKey<LootTable> lootTable;
@@ -87,7 +85,7 @@ public class LootTableReward extends AbstractReward<LootTableReward> {
     }
 
     @Override
-    public Component getDescription() {
+    public Component getDescription(Player player) {
         return Component.translatable("label.primalmagick.research_table.reward", this.pullCount, Component.translatable(this.descTranslationKey));
     }
 

@@ -49,16 +49,18 @@
       "textTranslationKey": "research.primalmagick.spell_payload_flight.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sky": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_flight"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_flight.text.stage.2"
     }

@@ -45,12 +45,6 @@
       "textTranslationKey": "research.primalmagick.sanguine_crucible.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 3,
-          "primalmagick:infernal": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:sanguine_crucible"
       },
@@ -59,6 +53,18 @@
         "primalmagick:sanguine_core_blank"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [
         {
           "key_type": "primalmagick:research_entry",
@@ -68,5 +74,5 @@
       "textTranslationKey": "research.primalmagick.sanguine_crucible.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

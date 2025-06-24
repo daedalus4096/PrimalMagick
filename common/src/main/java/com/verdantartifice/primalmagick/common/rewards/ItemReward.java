@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
+package com.verdantartifice.primalmagick.common.rewards;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.MapCodec;
@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
@@ -20,7 +21,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
- * Theorycrafting reward that grants a specific item stack.
+ * Reward that grants a specific item stack.
  * 
  * @author Daedalus4096
  */
@@ -30,8 +31,7 @@ public class ItemReward extends AbstractReward<ItemReward> {
         ).apply(instance, ItemReward::new));
     
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemReward> STREAM_CODEC = StreamCodec.composite(
-            ItemStack.STREAM_CODEC,
-            reward -> reward.stack,
+            ItemStack.STREAM_CODEC, reward -> reward.stack,
             ItemReward::new);
     
     private final ItemStack stack;
@@ -67,7 +67,7 @@ public class ItemReward extends AbstractReward<ItemReward> {
     }
 
     @Override
-    public Component getDescription() {
+    public Component getDescription(Player player) {
         MutableComponent itemName = Component.empty().append(this.stack.getHoverName()).withStyle(this.stack.getRarity().color());
         if (this.stack.has(DataComponents.CUSTOM_NAME)) {
             itemName.withStyle(ChatFormatting.ITALIC);

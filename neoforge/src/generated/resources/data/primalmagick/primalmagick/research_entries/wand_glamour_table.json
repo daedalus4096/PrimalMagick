@@ -36,11 +36,6 @@
       "textTranslationKey": "research.primalmagick.wand_glamour_table.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:moon": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:wand_glamour_table"
       },
@@ -48,9 +43,16 @@
         "primalmagick:wand_glamour_table"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.wand_glamour_table.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

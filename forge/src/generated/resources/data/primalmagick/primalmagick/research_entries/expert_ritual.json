@@ -26,7 +26,7 @@
           "rootKey": "primalmagick:ritual"
         },
         "requirement_type": "primalmagick:expertise",
-        "tier": "expert"
+        "tier": "primalmagick:expert"
       },
       "parentKey": {
         "rootKey": "primalmagick:expert_ritual"
@@ -46,5 +46,5 @@
       "textTranslationKey": "research.primalmagick.expert_ritual.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

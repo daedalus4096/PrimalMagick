@@ -66,16 +66,18 @@
       "textTranslationKey": "research.primalmagick.source_sea.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sea": 5
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:source_sea"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 5,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.source_sea.text.stage.2"
     }

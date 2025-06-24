@@ -63,6 +63,8 @@ import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearch
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.SourceResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.TopicLink;
+import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
+import com.verdantartifice.primalmagick.common.rewards.AttunementReward;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -663,14 +665,14 @@ public class GrimoireScreen extends Screen {
         }
         
         // Add attunement gain page if applicable
-        SourceList attunements = stage.attunements();
+        List<AttunementReward> rewards = new ArrayList<>(stage.rewards().stream()
+                .map(r -> r instanceof AttunementReward ar ? ar : null).filter(Objects::nonNull).toList());
         for (ResearchAddendum addendum : addenda) {
-            if (addendum.completionRequirementOpt().isEmpty() || addendum.completionRequirementOpt().get().isMetBy(player)) {
-                attunements = attunements.merge(addendum.attunements());
-            }
+            rewards.addAll(addendum.rewards().stream()
+                    .map(r -> r instanceof AttunementReward ar ? ar : null).filter(Objects::nonNull).toList());
         }
-        if (!attunements.isEmpty()) {
-            this.pages.add(new AttunementGainPage(attunements));
+        if (!rewards.isEmpty()) {
+            this.pages.add(new AttunementGainPage(rewards));
         }
         
         // Add requirements page if applicable

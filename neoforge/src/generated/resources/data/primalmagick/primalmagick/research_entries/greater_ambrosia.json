@@ -1,11 +1,6 @@
 {
   "addenda": [
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 3
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -19,15 +14,17 @@
       "recipes": [
         "primalmagick:ambrosia_greater_blood"
       ],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 3
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -41,15 +38,17 @@
       "recipes": [
         "primalmagick:ambrosia_greater_infernal"
       ],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.2"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:void": 3
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -63,15 +62,17 @@
       "recipes": [
         "primalmagick:ambrosia_greater_void"
       ],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:void"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.3"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:hallowed": 3
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -84,6 +85,13 @@
       },
       "recipes": [
         "primalmagick:ambrosia_greater_hallowed"
+      ],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        }
       ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.4"
@@ -146,15 +154,6 @@
       "textTranslationKey": "research.primalmagick.greater_ambrosia.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 3,
-          "primalmagick:moon": 3,
-          "primalmagick:sea": 3,
-          "primalmagick:sky": 3,
-          "primalmagick:sun": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:greater_ambrosia"
       },
@@ -166,9 +165,36 @@
         "primalmagick:ambrosia_greater_moon"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.greater_ambrosia.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

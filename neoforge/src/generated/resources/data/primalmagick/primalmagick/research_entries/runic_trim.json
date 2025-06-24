@@ -102,5 +102,5 @@
       "textTranslationKey": "research.primalmagick.runic_trim.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

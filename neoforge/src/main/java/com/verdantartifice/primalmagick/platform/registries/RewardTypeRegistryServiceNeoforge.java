@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.platform.registries;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.RewardType;
+import com.verdantartifice.primalmagick.common.rewards.RewardType;
 import com.verdantartifice.primalmagick.platform.services.registries.IRewardTypeRegistryService;
 import net.minecraft.core.Registry;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class RewardTypeRegistryServiceNeoforge extends AbstractRegistryServiceNeoforge<RewardType<?>> implements IRewardTypeRegistryService {
-    public static final Registry<RewardType<?>> TYPES = new RegistryBuilder<>(RegistryKeysPM.PROJECT_REWARD_TYPES)
+    public static final Registry<RewardType<?>> TYPES = new RegistryBuilder<>(RegistryKeysPM.REWARD_TYPES)
             .sync(true)
             .create();
     private static final DeferredRegister<RewardType<?>> DEFERRED_TYPES = DeferredRegister.create(TYPES, Constants.MOD_ID);

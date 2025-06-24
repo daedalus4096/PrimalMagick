@@ -51,11 +51,6 @@
       "textTranslationKey": "research.primalmagick.ritual_candles.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sun": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:ritual_candles"
       },
@@ -80,9 +75,16 @@
         "primalmagick:ritual_candle_yellow"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.ritual_candles.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

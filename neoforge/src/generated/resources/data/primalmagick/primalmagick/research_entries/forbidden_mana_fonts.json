@@ -126,5 +126,5 @@
       "textTranslationKey": "research.primalmagick.forbidden_mana_fonts.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

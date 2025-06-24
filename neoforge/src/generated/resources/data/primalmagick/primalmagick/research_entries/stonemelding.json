@@ -55,11 +55,6 @@
       "textTranslationKey": "research.primalmagick.stonemelding.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:stonemelding"
       },
@@ -70,9 +65,16 @@
         "primalmagick:gravel_from_stonemelding"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.stonemelding.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

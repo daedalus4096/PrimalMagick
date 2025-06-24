@@ -36,11 +36,6 @@
       "textTranslationKey": "research.primalmagick.rune_blood.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:rune_blood"
       },
@@ -48,9 +43,16 @@
         "primalmagick:rune_blood"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.rune_blood.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

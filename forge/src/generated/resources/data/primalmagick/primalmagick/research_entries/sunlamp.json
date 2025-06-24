@@ -1,11 +1,6 @@
 {
   "addenda": [
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 2
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -18,6 +13,13 @@
       },
       "recipes": [
         "primalmagick:spirit_lantern"
+      ],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
       ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.sunlamp.text.addenda.1"
@@ -71,11 +73,6 @@
       "textTranslationKey": "research.primalmagick.sunlamp.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sun": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:sunlamp"
       },
@@ -83,9 +80,16 @@
         "primalmagick:sunlamp"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.sunlamp.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

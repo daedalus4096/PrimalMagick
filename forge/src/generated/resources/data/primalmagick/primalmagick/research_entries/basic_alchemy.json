@@ -46,5 +46,5 @@
       "textTranslationKey": "research.primalmagick.basic_alchemy.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

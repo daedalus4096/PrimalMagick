@@ -64,5 +64,5 @@
       "textTranslationKey": "research.primalmagick.seascribe_pen.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

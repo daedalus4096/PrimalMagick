@@ -55,11 +55,6 @@
       "textTranslationKey": "research.primalmagick.infernal_furnace.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:infernal_furnace"
       },
@@ -67,9 +62,16 @@
         "primalmagick:infernal_furnace"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.infernal_furnace.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

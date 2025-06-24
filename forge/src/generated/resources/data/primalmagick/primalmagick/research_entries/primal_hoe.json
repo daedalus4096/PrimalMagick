@@ -113,5 +113,5 @@
       "textTranslationKey": "research.primalmagick.primal_hoe.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

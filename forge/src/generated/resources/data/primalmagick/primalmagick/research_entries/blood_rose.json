@@ -57,11 +57,6 @@
       "textTranslationKey": "research.primalmagick.blood_rose.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:blood_rose"
       },
@@ -69,9 +64,16 @@
         "primalmagick:blood_rose"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.blood_rose.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

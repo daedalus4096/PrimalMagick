@@ -16,6 +16,8 @@ import com.verdantartifice.primalmagick.common.research.requirements.ItemTagRequ
 import com.verdantartifice.primalmagick.common.research.requirements.KnowledgeRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
+import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
+import com.verdantartifice.primalmagick.common.rewards.AttunementReward;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
@@ -44,8 +46,8 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, 
-        List<ResourceLocation> recipes, List<AbstractResearchKey<?>> siblings, SourceList attunements) {
+public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt,
+                               List<ResourceLocation> recipes, List<AbstractResearchKey<?>> siblings, List<AbstractReward<?>> rewards) {
     public static Codec<ResearchAddendum> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchAddendum::parentKey),
@@ -53,24 +55,18 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
                 AbstractRequirement.dispatchCodec().optionalFieldOf("completionRequirementOpt").forGetter(ResearchAddendum::completionRequirementOpt),
                 ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchAddendum::recipes),
                 AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchAddendum::siblings),
-                SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchAddendum::attunements)
+                AbstractReward.dispatchCodec().listOf().optionalFieldOf("rewards", List.of()).forGetter(ResearchAddendum::rewards)
             ).apply(instance, ResearchAddendum::new));
     }
     
     public static StreamCodec<RegistryFriendlyByteBuf, ResearchAddendum> streamCodec() {
         return StreamCodec.composite(
-                ResearchEntryKey.STREAM_CODEC,
-                ResearchAddendum::parentKey,
-                ByteBufCodecs.STRING_UTF8,
-                ResearchAddendum::textTranslationKey,
-                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()),
-                ResearchAddendum::completionRequirementOpt,
-                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()),
-                ResearchAddendum::recipes,
-                AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()),
-                ResearchAddendum::siblings,
-                SourceList.STREAM_CODEC,
-                ResearchAddendum::attunements,
+                ResearchEntryKey.STREAM_CODEC, ResearchAddendum::parentKey,
+                ByteBufCodecs.STRING_UTF8, ResearchAddendum::textTranslationKey,
+                ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), ResearchAddendum::completionRequirementOpt,
+                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchAddendum::recipes,
+                AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchAddendum::siblings,
+                AbstractReward.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchAddendum::rewards,
                 ResearchAddendum::new);
     }
     
@@ -82,8 +78,8 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         protected final List<ResourceLocation> recipes = new ArrayList<>();
         protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
-        protected final SourceList.Builder attunements = SourceList.builder();
-        
+        protected final List<AbstractReward<?>> rewards = new ArrayList<>();
+
         public Builder(String modId, ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int addendumIndex) {
             this.modId = Preconditions.checkNotNull(modId);
             this.entryBuilder = Preconditions.checkNotNull(entryBuilder);
@@ -170,14 +166,14 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         public Builder requiredStat(Stat stat, int value) {
             return this.requirement(new StatRequirement(stat, value));
         }
-        
+
         public Builder attunement(SourceList sources) {
-            this.attunements.with(sources);
+            sources.getSourcesSorted().stream().map(s -> new AttunementReward(s, sources.getAmount(s))).forEach(this.rewards::add);
             return this;
         }
-        
+
         public Builder attunement(Source source, int amount) {
-            this.attunements.with(source, amount);
+            this.rewards.add(new AttunementReward(source, amount));
             return this;
         }
         
@@ -189,7 +185,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
             if (this.requirements.isEmpty()) {
                 return Optional.empty();
             } else if (this.requirements.size() == 1) {
-                return Optional.of(this.requirements.get(0));
+                return Optional.of(this.requirements.getFirst());
             } else {
                 return Optional.of(new AndRequirement(this.requirements));
             }
@@ -205,7 +201,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         
         ResearchAddendum build() {
             this.validate();
-            return new ResearchAddendum(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes, this.siblings, this.attunements.build());
+            return new ResearchAddendum(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes, this.siblings, this.rewards);
         }
         
         public ResearchEntry.Builder end() {

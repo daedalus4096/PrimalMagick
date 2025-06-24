@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.ritual_bell.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sea": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:ritual_bell"
       },
@@ -45,9 +40,16 @@
         "primalmagick:ritual_bell"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.ritual_bell.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

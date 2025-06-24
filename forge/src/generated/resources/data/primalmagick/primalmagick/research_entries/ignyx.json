@@ -52,11 +52,6 @@
       "textTranslationKey": "research.primalmagick.ignyx.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:ignyx"
       },
@@ -67,9 +62,16 @@
         "primalmagick:torch_from_ignyx"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.ignyx.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

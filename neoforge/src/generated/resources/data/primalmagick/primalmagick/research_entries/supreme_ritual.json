@@ -36,7 +36,7 @@
               "rootKey": "primalmagick:ritual"
             },
             "requirement_type": "primalmagick:expertise",
-            "tier": "supreme"
+            "tier": "primalmagick:supreme"
           }
         ]
       },
@@ -72,5 +72,5 @@
       "textTranslationKey": "research.primalmagick.supreme_ritual.text.stage.2"
     }
   ],
-  "tier": "supreme"
+  "tier": "primalmagick:supreme"
 }

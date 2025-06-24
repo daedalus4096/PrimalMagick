@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.rune_earth.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:rune_earth"
       },
@@ -45,9 +40,16 @@
         "primalmagick:rune_earth"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.rune_earth.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

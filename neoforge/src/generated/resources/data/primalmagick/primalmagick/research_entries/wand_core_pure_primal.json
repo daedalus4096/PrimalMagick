@@ -69,11 +69,6 @@
       "textTranslationKey": "research.primalmagick.wand_core_pure_primal.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:hallowed": 5
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:wand_core_pure_primal"
       },
@@ -81,9 +76,16 @@
         "primalmagick:pure_primal_wand_core_item"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 5,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.wand_core_pure_primal.text.stage.2"
     }
   ],
-  "tier": "supreme"
+  "tier": "primalmagick:supreme"
 }

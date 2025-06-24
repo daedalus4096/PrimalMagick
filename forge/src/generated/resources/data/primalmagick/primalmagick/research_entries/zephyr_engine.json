@@ -51,11 +51,6 @@
       "textTranslationKey": "research.primalmagick.zephyr_engine.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sky": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:zephyr_engine"
       },
@@ -63,9 +58,16 @@
         "primalmagick:zephyr_engine"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.zephyr_engine.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

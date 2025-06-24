@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
+package com.verdantartifice.primalmagick.common.rewards;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -8,11 +8,12 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.Objects;
 
 /**
- * Theorycrafting reward that grants experience points.
+ * Reward that grants experience points.
  * 
  * @author Daedalus4096
  */
@@ -22,8 +23,7 @@ public class ExperienceReward extends AbstractReward<ExperienceReward> {
         ).apply(instance, ExperienceReward::new));
     
     public static final StreamCodec<ByteBuf, ExperienceReward> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VAR_INT,
-            reward -> reward.points,
+            ByteBufCodecs.VAR_INT, reward -> reward.points,
             ExperienceReward::new);
     
     private final int points;
@@ -43,7 +43,7 @@ public class ExperienceReward extends AbstractReward<ExperienceReward> {
     }
 
     @Override
-    public Component getDescription() {
+    public Component getDescription(Player player) {
         Component label = Component.translatable("label.primalmagick.experience.points");
         return Component.translatable("label.primalmagick.research_table.reward", this.points, label);
     }

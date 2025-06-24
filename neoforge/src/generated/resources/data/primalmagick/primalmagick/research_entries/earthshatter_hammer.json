@@ -62,11 +62,6 @@
       "textTranslationKey": "research.primalmagick.earthshatter_hammer.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:earthshatter_hammer"
       },
@@ -98,9 +93,16 @@
         "primalmagick:netherite_scrap_from_earthshatter_hammer"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.earthshatter_hammer.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

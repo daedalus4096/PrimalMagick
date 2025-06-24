@@ -36,11 +36,6 @@
       "textTranslationKey": "research.primalmagick.bloodletter.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:bloodletter"
       },
@@ -48,9 +43,16 @@
         "primalmagick:bloodletter"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.bloodletter.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

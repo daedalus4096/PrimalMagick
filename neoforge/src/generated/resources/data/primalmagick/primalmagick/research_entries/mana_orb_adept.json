@@ -50,5 +50,5 @@
       "textTranslationKey": "research.primalmagick.mana_orb_adept.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

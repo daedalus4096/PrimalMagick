@@ -63,5 +63,5 @@
       "textTranslationKey": "research.primalmagick.hexweave.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

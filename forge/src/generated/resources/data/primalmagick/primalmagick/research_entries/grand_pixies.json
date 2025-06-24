@@ -1,11 +1,6 @@
 {
   "addenda": [
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 3
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -20,15 +15,17 @@
         "primalmagick:pixie_grand_blood",
         "primalmagick:pixie_grand_blood_revive"
       ],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.grand_pixies.text.addenda.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 3
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -43,15 +40,17 @@
         "primalmagick:pixie_grand_infernal",
         "primalmagick:pixie_grand_infernal_revive"
       ],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.grand_pixies.text.addenda.2"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:void": 3
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -66,15 +65,17 @@
         "primalmagick:pixie_grand_void",
         "primalmagick:pixie_grand_void_revive"
       ],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:void"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.grand_pixies.text.addenda.3"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:hallowed": 3
-        }
-      },
       "completionRequirementOpt": {
         "requirement_type": "primalmagick:research",
         "rootKey": {
@@ -88,6 +89,13 @@
       "recipes": [
         "primalmagick:pixie_grand_hallowed",
         "primalmagick:pixie_grand_hallowed_revive"
+      ],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:hallowed"
+        }
       ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.grand_pixies.text.addenda.4"
@@ -150,15 +158,6 @@
       "textTranslationKey": "research.primalmagick.grand_pixies.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 3,
-          "primalmagick:moon": 3,
-          "primalmagick:sea": 3,
-          "primalmagick:sky": 3,
-          "primalmagick:sun": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:grand_pixies"
       },
@@ -175,9 +174,36 @@
         "primalmagick:pixie_grand_moon_revive"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.grand_pixies.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

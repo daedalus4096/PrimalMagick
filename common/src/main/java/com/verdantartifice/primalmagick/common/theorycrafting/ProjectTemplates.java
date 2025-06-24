@@ -12,9 +12,9 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.Experien
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ExperienceReward;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ItemReward;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableReward;
+import com.verdantartifice.primalmagick.common.rewards.ExperienceReward;
+import com.verdantartifice.primalmagick.common.rewards.ItemReward;
+import com.verdantartifice.primalmagick.common.rewards.LootTableReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;

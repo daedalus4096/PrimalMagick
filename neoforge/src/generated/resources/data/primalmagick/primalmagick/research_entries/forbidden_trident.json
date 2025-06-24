@@ -113,5 +113,5 @@
       "textTranslationKey": "research.primalmagick.forbidden_trident.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

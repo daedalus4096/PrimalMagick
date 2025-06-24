@@ -60,5 +60,5 @@
       "textTranslationKey": "research.primalmagick.wand_gem_wizard.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

@@ -42,16 +42,18 @@
       "textTranslationKey": "research.primalmagick.spell_payload_break.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:spell_payload_break"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.spell_payload_break.text.stage.2"
     }

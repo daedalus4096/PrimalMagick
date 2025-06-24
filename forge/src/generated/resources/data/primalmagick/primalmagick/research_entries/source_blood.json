@@ -57,16 +57,18 @@
       "textTranslationKey": "research.primalmagick.source_blood.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:blood": 5
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:source_blood"
       },
       "recipes": [],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 5,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:blood"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.source_blood.text.stage.2"
     }

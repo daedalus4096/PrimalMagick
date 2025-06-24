@@ -57,11 +57,6 @@
       "textTranslationKey": "research.primalmagick.emberflower.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:emberflower"
       },
@@ -70,9 +65,16 @@
         "primalmagick:blaze_powder_from_emberflower"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.emberflower.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

@@ -29,7 +29,7 @@
               "rootKey": "primalmagick:magitech"
             },
             "requirement_type": "primalmagick:expertise",
-            "tier": "expert"
+            "tier": "primalmagick:expert"
           },
           {
             "requirement_type": "primalmagick:research",
@@ -60,5 +60,5 @@
       "textTranslationKey": "research.primalmagick.expert_magitech.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

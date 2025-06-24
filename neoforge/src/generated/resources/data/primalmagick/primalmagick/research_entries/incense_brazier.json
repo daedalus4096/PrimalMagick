@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.incense_brazier.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:sky": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:incense_brazier"
       },
@@ -46,9 +41,16 @@
         "primalmagick:incense_stick"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.incense_brazier.text.stage.2"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

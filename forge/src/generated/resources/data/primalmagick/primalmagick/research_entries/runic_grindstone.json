@@ -44,5 +44,5 @@
       "textTranslationKey": "research.primalmagick.runic_grindstone.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

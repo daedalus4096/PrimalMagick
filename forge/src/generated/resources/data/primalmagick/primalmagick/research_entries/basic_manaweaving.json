@@ -29,5 +29,5 @@
       "textTranslationKey": "research.primalmagick.basic_manaweaving.text.stage.1"
     }
   ],
-  "tier": "basic"
+  "tier": "primalmagick:basic"
 }

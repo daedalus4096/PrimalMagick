@@ -33,11 +33,6 @@
       "textTranslationKey": "research.primalmagick.sanguine_core_demons.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 2
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:sanguine_core_demons"
       },
@@ -51,9 +46,16 @@
         "primalmagick:sanguine_core_strider"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 2,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.sanguine_core_demons.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

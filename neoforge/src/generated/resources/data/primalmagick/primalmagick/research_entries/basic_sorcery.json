@@ -18,11 +18,6 @@
   ],
   "stages": [
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:basic_sorcery"
       },
@@ -31,6 +26,13 @@
         "primalmagick:spellcrafting_altar"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.basic_sorcery.text.stage.1"
     }

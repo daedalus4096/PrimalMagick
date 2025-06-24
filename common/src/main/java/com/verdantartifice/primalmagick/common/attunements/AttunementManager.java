@@ -30,7 +30,7 @@ import java.util.stream.Stream;
  * is what determines any bonuses received.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.attunements.AttunementType}
+ * @see com.verdantartifice.primalmagick.common.attunements.AttunementType
  */
 public class AttunementManager {
     protected static final List<AttunementAttributeModifier> MODIFIERS = new ArrayList<>();

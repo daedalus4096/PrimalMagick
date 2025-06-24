@@ -73,15 +73,6 @@
       "textTranslationKey": "research.primalmagick.primalite.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:earth": 1,
-          "primalmagick:moon": 1,
-          "primalmagick:sea": 1,
-          "primalmagick:sky": 1,
-          "primalmagick:sun": 1
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:primalite"
       },
@@ -106,9 +97,36 @@
         "primalmagick:primalite_shield"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:earth"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sea"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sky"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:sun"
+        },
+        {
+          "amount": 1,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:moon"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.primalite.text.stage.2"
     }
   ],
-  "tier": "expert"
+  "tier": "primalmagick:expert"
 }

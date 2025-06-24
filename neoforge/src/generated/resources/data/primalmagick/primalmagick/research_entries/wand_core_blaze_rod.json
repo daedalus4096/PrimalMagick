@@ -67,11 +67,6 @@
       "textTranslationKey": "research.primalmagick.wand_core_blaze_rod.text.stage.1"
     },
     {
-      "attunements": {
-        "sources": {
-          "primalmagick:infernal": 3
-        }
-      },
       "parentKey": {
         "rootKey": "primalmagick:wand_core_blaze_rod"
       },
@@ -79,9 +74,16 @@
         "primalmagick:blaze_rod_wand_core_item"
       ],
       "revelations": [],
+      "rewards": [
+        {
+          "amount": 3,
+          "reward_type": "primalmagick:attunement",
+          "source": "primalmagick:infernal"
+        }
+      ],
       "siblings": [],
       "textTranslationKey": "research.primalmagick.wand_core_blaze_rod.text.stage.2"
     }
   ],
-  "tier": "master"
+  "tier": "primalmagick:master"
 }

@@ -22,6 +22,8 @@ import com.verdantartifice.primalmagick.common.research.requirements.VanillaCust
 import com.verdantartifice.primalmagick.common.research.requirements.VanillaItemUsedStatRequirement;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.TopicLink;
+import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
+import com.verdantartifice.primalmagick.common.rewards.AttunementReward;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
@@ -58,7 +60,7 @@ import java.util.stream.Stream;
  * @author Daedalus4096
  */
 public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceLocation> recipes,
-                            List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, List<ResearchEntryKey> highlights, SourceList attunements,
+                            List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, List<ResearchEntryKey> highlights, List<AbstractReward<?>> rewards,
                             Optional<TopicLink> ctaLinkOpt) {
     public static Codec<ResearchStage> codec() { 
         return RecordCodecBuilder.create(instance -> instance.group(
@@ -69,7 +71,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
             ResearchEntryKey.CODEC.codec().listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
             ResearchEntryKey.CODEC.codec().listOf().optionalFieldOf("highlights", List.of()).forGetter(ResearchStage::highlights),
-            SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchStage::attunements),
+            AbstractReward.dispatchCodec().listOf().optionalFieldOf("rewards", List.of()).forGetter(ResearchStage::rewards),
             TopicLink.codec().optionalFieldOf("ctaLink").forGetter(ResearchStage::ctaLinkOpt)
         ).apply(instance, ResearchStage::new));
     }
@@ -83,7 +85,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
                 AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchStage::siblings,
                 ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::revelations,
                 ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::highlights,
-                SourceList.STREAM_CODEC, ResearchStage::attunements,
+                AbstractReward.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchStage::rewards,
                 ByteBufCodecs.optional(TopicLink.streamCodec()), ResearchStage::ctaLinkOpt,
                 ResearchStage::new);
     }
@@ -135,7 +137,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
         protected final List<ResearchEntryKey> revelations = new ArrayList<>();
         protected final List<ResearchEntryKey> highlights = new ArrayList<>();
-        protected final SourceList.Builder attunements = SourceList.builder();
+        protected final List<AbstractReward<?>> rewards = new ArrayList<>();
         protected Optional<TopicLink> ctaLinkOpt = Optional.empty();
         
         public Builder(String modId, ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int stageIndex) {
@@ -255,12 +257,12 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
         
         public Builder attunement(SourceList sources) {
-            this.attunements.with(sources);
+            sources.getSourcesSorted().stream().map(s -> new AttunementReward(s, sources.getAmount(s))).forEach(this.rewards::add);
             return this;
         }
         
         public Builder attunement(Source source, int amount) {
-            this.attunements.with(source, amount);
+            this.rewards.add(new AttunementReward(source, amount));
             return this;
         }
 
@@ -299,7 +301,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         ResearchStage build() {
             this.validate();
             return new ResearchStage(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes,
-                    this.siblings, this.revelations, this.highlights, this.attunements.build(), this.ctaLinkOpt);
+                    this.siblings, this.revelations, this.highlights, this.rewards, this.ctaLinkOpt);
         }
         
         public ResearchEntry.Builder end() {
