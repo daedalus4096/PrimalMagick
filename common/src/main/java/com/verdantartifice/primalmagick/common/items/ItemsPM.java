@@ -812,7 +812,7 @@ public class ItemsPM {
 
     // Register concoction items
     public static final IRegistryItem<Item, SkyglassFlaskItem> SKYGLASS_FLASK = registerSupplier("skyglass_flask", () -> new SkyglassFlaskItem(new Item.Properties()));
-    public static final IRegistryItem<Item, ConcoctionItem> CONCOCTION = registerCustom("concoction", ConcoctionItem::registerCreativeTabItems, () -> new ConcoctionItem(new Item.Properties().stacksTo(1)));
+    public static final IRegistryItem<Item, ConcoctionItem> CONCOCTION = registerCustom("concoction", ConcoctionItem::registerCreativeTabItems, () -> new ConcoctionItem(new Item.Properties().craftRemainder(SKYGLASS_FLASK.get()).stacksTo(1)));
     public static final IRegistryItem<Item, BombCasingItem> BOMB_CASING = registerSupplier("bomb_casing", () -> new BombCasingItem(new Item.Properties()));
     public static final IRegistryItem<Item, AlchemicalBombItem> ALCHEMICAL_BOMB = registerCustom("alchemical_bomb", AlchemicalBombItem::registerCreativeTabItems, () -> new AlchemicalBombItem(new Item.Properties().stacksTo(1)));
 
