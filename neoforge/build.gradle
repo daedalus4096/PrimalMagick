@@ -10,7 +10,7 @@ neoForge {
     // Automatically enable neoforge AccessTransformers if the file exists
     def at = project(':common').file('src/main/resources/META-INF/accesstransformer.common.cfg')
     if (at.exists()) {
-        accessTransformers.add(at.absolutePath)
+        accessTransformers.from(at.absolutePath)
     }
     parchment {
         minecraftVersion = parchment_minecraft
@@ -44,9 +44,13 @@ neoForge {
 
 dependencies {
     // compile against the JEI API but do not include it at runtime
-    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
+    // FIXME Replace hardcoded version with config variable once back on a supported version of MC for JEI
+    compileOnly("mezz.jei:jei-1.21.1-neoforge-api:${jei_version}")
+
     // at runtime, use the full JEI jar for NeoForge
-    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+    // FIXME Replace hardcoded version with config variable once back on a supported version of MC for JEI
+    runtimeOnly("mezz.jei:jei-1.21.1-neoforge:${jei_version}")
+
     // Common Networking
     implementation "mysticdrew:common-networking-neoforge:${common_network_version}-${minecraft_version}"
 }

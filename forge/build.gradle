@@ -102,10 +102,12 @@ dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
     // JEI API
-    compileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
+    // FIXME Replace hardcoded version with config variable once back on a supported version of MC for JEI
+    compileOnly "mezz.jei:jei-1.21.1-forge-api:${jei_version}"
 
     // JEI implementation
-    runtimeOnly "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
+    // FIXME Replace hardcoded version with config variable once back on a supported version of MC for JEI
+    runtimeOnly "mezz.jei:jei-1.21.1-forge:${jei_version}"
 
     // Common Networking
     implementation "mysticdrew:common-networking-forge:${common_network_version}-${minecraft_version}"

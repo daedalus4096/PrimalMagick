@@ -10,7 +10,7 @@ neoForge {
     // Automatically enable AccessTransformers if the file exists
     def at = file('src/main/resources/META-INF/accesstransformer.common.cfg')
     if (at.exists()) {
-        accessTransformers.add(at.absolutePath)
+        accessTransformers.from(at.absolutePath)
     }
     parchment {
         minecraftVersion = parchment_minecraft
@@ -25,7 +25,8 @@ dependencies {
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
 
     // Common API for JEI compatibility
-    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    // FIXME Replace hardcoded version with config variable once back on a supported version of MC for JEI
+    compileOnly "mezz.jei:jei-1.21.1-common-api:${jei_version}"
 
     // Common Networking
     implementation "mysticdrew:common-networking-common:${common_network_version}-${minecraft_version}"
