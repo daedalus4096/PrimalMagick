@@ -14,7 +14,6 @@ java {
 }
 
 repositories {
-    mavenLocal()
     // https://github.com/jaredlll08/MultiLoader-Template/issues/75
     repositories{
         maven {
@@ -54,10 +53,6 @@ repositories {
     }
     maven {
         url = 'https://jm.gserv.me/repository/maven-public/'
-    }
-    maven {
-        name = 'Verdant Artifice Mods'
-        url = 'https://d121e9zwckicwj.cloudfront.net'
     }
 }
 
@@ -118,7 +113,6 @@ processResources {
             "common_network_version"       : common_network_version,
             'credits'                      : credits,
             'jei_version'                  : jei_version,
-            'verdantcore_version_range'    : verdantcore_version_range,
             'java_version'                 : java_version
     ]
 
