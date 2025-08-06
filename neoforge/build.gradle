@@ -26,7 +26,7 @@ neoForge {
         }
         data {
             programArguments = ['--mod', mod_id, '--all', '--output', rootProject.file('neoforge/src/generated/resources/').getAbsolutePath(), '--existing', rootProject.file('common/src/main/resources/').getAbsolutePath()]
-            data()
+            clientData()
         }
         server {
             server()
@@ -44,15 +44,14 @@ neoForge {
 
 dependencies {
     // compile against the JEI API but do not include it at runtime
-    // FIXME Replace hardcoded version with config variable once back on a supported version of MC for JEI
-    compileOnly("mezz.jei:jei-1.21.1-neoforge-api:${jei_version}")
+    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
 
     // at runtime, use the full JEI jar for NeoForge
-    // FIXME Replace hardcoded version with config variable once back on a supported version of MC for JEI
-    runtimeOnly("mezz.jei:jei-1.21.1-neoforge:${jei_version}")
+    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
     // Common Networking
-    implementation "mysticdrew:common-networking-neoforge:${common_network_version}-${minecraft_version}"
+    // FIXME Replace hardcoded version with config variable once back on a supported version of MC for CN
+    implementation "mysticdrew:common-networking-neoforge:${common_network_version}-1.21.7"
 }
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
