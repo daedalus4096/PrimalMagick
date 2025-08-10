@@ -45,16 +45,16 @@ public class AbstractWandSpellcastTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions("damage_spells_deduct_mana_from_wand", templateName, TEST_PAYLOADS, (helper, payloadType) -> {
             var player = this.makeMockServerPlayer(helper, true);
             var expOpt = ExpertiseManager.getValue(player, ResearchDisciplines.SORCERY);
-            helper.assertTrue(expOpt.isPresent(), "Sorcery expertise not found");
-            helper.assertValueEqual(expOpt.get(), 0, "Starting sorcery expertise");
+            this.assertTrue(helper, expOpt.isPresent(), "Sorcery expertise not found");
+            this.assertValueEqual(helper, expOpt.get(), 0, "Starting sorcery expertise");
 
             // Create a full wand for testing
             var wandStack = this.getTestWand();
-            var wand = assertInstanceOf(helper, wandStack.getItem(), AbstractWandItem.class, "Wand stack is not a wand as expected");
+            var wand = this.assertInstanceOf(helper, wandStack.getItem(), AbstractWandItem.class, "Wand stack is not a wand as expected");
             Sources.getAll().forEach(s -> {
                 final int maxWandMana = wand.getMaxMana(wandStack, s);
                 wand.addMana(wandStack, s, maxWandMana);
-                helper.assertValueEqual(wand.getMana(wandStack, s), maxWandMana, "Starting wand mana for " + s.getId());
+                this.assertValueEqual(helper, wand.getMana(wandStack, s), maxWandMana, "Starting wand mana for " + s.getId());
             });
             player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
 
@@ -68,10 +68,10 @@ public class AbstractWandSpellcastTest extends AbstractBaseTest {
                     .build();
 
             // Cast the spell
-            helper.assertTrue(wand.addSpell(wandStack, spellPackage), "Spell was not added to the wand");
-            helper.assertTrue(wand.setActiveSpellIndex(wandStack, 0), "Spell was not set to active");
+            this.assertTrue(helper, wand.addSpell(wandStack, spellPackage), "Spell was not added to the wand");
+            this.assertTrue(helper, wand.setActiveSpellIndex(wandStack, 0), "Spell was not set to active");
             var result = wand.use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
-            helper.assertTrue(result.getResult().consumesAction(), "Wand use result was not a success");
+            this.assertTrue(helper, result.getResult().consumesAction(), "Wand use result was not a success");
 
             // Confirm that the correct amount of each source of mana was deducted from the wand
             var spellCost = spellPackage.getManaCost();
@@ -80,14 +80,14 @@ public class AbstractWandSpellcastTest extends AbstractBaseTest {
                 final int consumedCentimana = spellCost.getAmount(s);
                 final int finalCost = wand.getModifiedCost(wandStack, player, s, consumedCentimana, helper.getLevel().registryAccess());
                 final int expectedCentimana = maxWandMana - finalCost;
-                helper.assertValueEqual(wand.getMana(wandStack, s), expectedCentimana, "Final wand mana for " + s.getId());
+                this.assertValueEqual(helper, wand.getMana(wandStack, s), expectedCentimana, "Final wand mana for " + s.getId());
             });
 
             // Confirm that the correct amount of sorcery expertise was awarded
             var expectedExpertise = spellCost.getManaSize() / 100;
             expOpt = ExpertiseManager.getValue(player, ResearchDisciplines.SORCERY);
-            helper.assertTrue(expOpt.isPresent(), "Final sorcery expertise not found");
-            helper.assertValueEqual(expOpt.get(), expectedExpertise, "Final sorcery expertise");
+            this.assertTrue(helper, expOpt.isPresent(), "Final sorcery expertise not found");
+            this.assertValueEqual(helper, expOpt.get(), expectedExpertise, "Final sorcery expertise");
 
             helper.succeed();
         });

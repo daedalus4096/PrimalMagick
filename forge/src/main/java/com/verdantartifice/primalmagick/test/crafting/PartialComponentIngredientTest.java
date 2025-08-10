@@ -28,17 +28,17 @@ public class PartialComponentIngredientTest extends AbstractBaseTest {
         
         // Confirm that a standard water flask matches
         var stack = ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER);
-        helper.assertTrue(ingredient.test(stack), "Water flask not a match");
+        this.assertTrue(helper, ingredient.test(stack), "Water flask not a match");
         
         // Confirm that the same water flask still matches even when it's low on doses
         ConcoctionUtils.setCurrentDoses(stack, 1);
-        helper.assertTrue(ingredient.test(stack), "Drained water flask not a match");
+        this.assertTrue(helper, ingredient.test(stack), "Drained water flask not a match");
         
         // Confirm that a concoction of a different type does not match
-        helper.assertFalse(ingredient.test(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.TINCTURE)), "Fire resistance tincture incorrectly matches");
+        this.assertFalse(helper, ingredient.test(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.TINCTURE)), "Fire resistance tincture incorrectly matches");
         
         // Confirm that a standard water bomb does not match
-        helper.assertFalse(ingredient.test(ConcoctionUtils.newBomb(Potions.WATER)), "Water bomb incorrectly matches");
+        this.assertFalse(helper, ingredient.test(ConcoctionUtils.newBomb(Potions.WATER)), "Water bomb incorrectly matches");
 
         helper.succeed();
     }

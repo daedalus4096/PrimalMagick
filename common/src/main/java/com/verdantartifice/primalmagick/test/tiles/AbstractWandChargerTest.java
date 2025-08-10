@@ -36,11 +36,11 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
         // Place a wand charger block and get its block entity
         var pos = BlockPos.ZERO;
         helper.setBlock(pos, BlocksPM.WAND_CHARGER.get());
-        var tile = helper.<WandChargerTileEntity>getBlockEntity(pos);
+        var tile = helper.getBlockEntity(pos, WandChargerTileEntity.class);
 
         // Open the block entity menu
         Services.PLAYER.openMenu(player, tile, pos);
-        assertInstanceOf(helper, player.containerMenu, WandChargerMenu.class, "Menu not of expected type");
+        this.assertInstanceOf(helper, player.containerMenu, WandChargerMenu.class, "Menu not of expected type");
 
         helper.succeed();
     }
@@ -57,7 +57,7 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewWandCharger(helper, Direction.NORTH);
 
             // Confirm that the output item handler will accept the test item
-            helper.assertTrue(handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
+            this.assertTrue(helper, handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
 
             helper.succeed();
         });
@@ -74,7 +74,7 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewWandCharger(helper, Direction.NORTH);
 
             // Confirm that the output item handler will accept the test item
-            helper.assertFalse(handler.isItemValid(0, stack), "Test stack unexpectedly valid for item handler");
+            this.assertFalse(helper, handler.isItemValid(0, stack), "Test stack unexpectedly valid for item handler");
 
             helper.succeed();
         });
@@ -90,7 +90,7 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewWandCharger(helper, Direction.UP);
 
             // Confirm that the output item handler will accept the test item
-            helper.assertTrue(handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
+            this.assertTrue(helper, handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
 
             helper.succeed();
         });
@@ -107,7 +107,7 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewWandCharger(helper, Direction.UP);
 
             // Confirm that the output item handler will accept the test item
-            helper.assertFalse(handler.isItemValid(0, stack), "Test stack unexpectedly valid for item handler");
+            this.assertFalse(helper, handler.isItemValid(0, stack), "Test stack unexpectedly valid for item handler");
 
             helper.succeed();
         });
@@ -117,11 +117,11 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
         // Place a wand charger block and get its block entity
         var pos = BlockPos.ZERO;
         helper.setBlock(pos, BlocksPM.WAND_CHARGER.get());
-        var tile = helper.<WandChargerTileEntity>getBlockEntity(pos);
+        var tile = helper.getBlockEntity(pos, WandChargerTileEntity.class);
 
         // Get the item handler for the block entity for the given face
         var handler = tile.getRawItemHandler(direction);
-        helper.assertFalse(handler == null, "No item handler found");
+        this.assertFalse(helper, handler == null, "No item handler found");
 
         return handler;
     }
@@ -137,14 +137,14 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
             // Place a wand charger block and get its block entity
             var pos = BlockPos.ZERO;
             helper.setBlock(pos, BlocksPM.WAND_CHARGER.get());
-            var tile = helper.<WandChargerTileEntity>getBlockEntity(pos);
+            var tile = helper.getBlockEntity(pos, WandChargerTileEntity.class);
 
             // Fill the block entity with essence and a chargeable item
             tile.setItem(WandChargerTileEntity.INPUT_INV_INDEX, 0, ItemsPM.ESSENCE_DUST_EARTH.get().getDefaultInstance());
             tile.setItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0, stack);
 
             // Confirm that the charger can charge with the inputs provided
-            helper.assertTrue(tile.canCharge(), "Unable to charge");
+            this.assertTrue(helper, tile.canCharge(), "Unable to charge");
 
             helper.succeed();
         });
@@ -161,7 +161,7 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
             // Place a wand charger block and get its block entity
             var pos = BlockPos.ZERO;
             helper.setBlock(pos, BlocksPM.WAND_CHARGER.get());
-            var tile = helper.<WandChargerTileEntity>getBlockEntity(pos);
+            var tile = helper.getBlockEntity(pos, WandChargerTileEntity.class);
 
             // Fill the block entity with essence and a chargeable item
             var essenceItem = ItemsPM.ESSENCE_DUST_EARTH.get();
@@ -169,19 +169,19 @@ public class AbstractWandChargerTest extends AbstractBaseTest {
             tile.setItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0, stack);
 
             // Confirm that the test stack has mana storage and note its initial load of the relevant mana source
-            helper.assertTrue(stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "Stack has no starting mana storage");
+            this.assertTrue(helper, stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "Stack has no starting mana storage");
             var before = stack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).getManaStored(essenceItem.getSource());
 
             // Attempt the charge
             tile.doCharge();
 
             // Confirm that the output items are correct
-            helper.assertTrue(tile.getItem(WandChargerTileEntity.INPUT_INV_INDEX, 0).isEmpty(), "Input stack not empty");
-            helper.assertFalse(tile.getItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0).isEmpty(), "Charge stack empty");
+            this.assertTrue(helper, tile.getItem(WandChargerTileEntity.INPUT_INV_INDEX, 0).isEmpty(), "Input stack not empty");
+            this.assertFalse(helper, tile.getItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0).isEmpty(), "Charge stack empty");
 
             // Confirm that the test stack's mana load for the relevant source has increased by the correct amount
-            helper.assertTrue(stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "Stack has no ending mana storage");
-            helper.assertValueEqual(stack.getOrDefault(
+            this.assertTrue(helper, stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "Stack has no ending mana storage");
+            this.assertValueEqual(helper, stack.getOrDefault(
                     DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).getManaStored(essenceItem.getSource()),
                     before + essenceItem.getEssenceType().getManaEquivalent(),
                     "Final mana load not as expected");

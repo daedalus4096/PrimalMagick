@@ -8,6 +8,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.Connection;
 import net.minecraft.network.ProtocolInfo;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.game.GameProtocols;
 import net.minecraft.network.protocol.game.ServerGamePacketListener;
@@ -40,7 +41,7 @@ public abstract class AbstractBaseTest {
         new EmbeddedChannel(new ChannelHandler[]{connection});
         MinecraftServer server = level.getServer();
         ServerGamePacketListenerImpl listener = new ServerGamePacketListenerImpl(server, connection, player, cookie);
-        ProtocolInfo<ServerGamePacketListener> info = GameProtocols.SERVERBOUND_TEMPLATE.bind(RegistryFriendlyByteBuf.decorator(server.registryAccess()));
+        ProtocolInfo<ServerGamePacketListener> info = GameProtocols.SERVERBOUND_TEMPLATE.bind(RegistryFriendlyByteBuf.decorator(server.registryAccess()), listener);
         connection.setupInboundProtocol(info, listener);
         Services.TEST.configureMockConnection(connection);
         if (joinLevel) {
@@ -49,9 +50,21 @@ public abstract class AbstractBaseTest {
         return player;
     }
 
+    protected void assertTrue(GameTestHelper helper, boolean condition, String failureMessage) {
+        helper.assertTrue(condition, Component.literal(failureMessage));
+    }
+
+    protected void assertFalse(GameTestHelper helper, boolean condition, String failureMessage) {
+        helper.assertFalse(condition, Component.literal(failureMessage));
+    }
+
+    protected <T> void assertValueEqual(GameTestHelper helper, T expected, T actual, String failureMessage) {
+        helper.assertValueEqual(expected, actual, Component.literal(failureMessage));
+    }
+
     @SuppressWarnings("unchecked")
-    protected static <T> T assertInstanceOf(GameTestHelper helper, Object obj, Class<T> clazz, String failureMessage) {
-        helper.assertTrue(clazz.isInstance(obj), failureMessage);
+    protected <T> T assertInstanceOf(GameTestHelper helper, Object obj, Class<T> clazz, String failureMessage) {
+        this.assertTrue(helper, clazz.isInstance(obj), failureMessage);
         return (T)obj;
     }
 }

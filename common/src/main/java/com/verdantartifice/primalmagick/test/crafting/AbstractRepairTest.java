@@ -21,7 +21,7 @@ public class AbstractRepairTest extends AbstractBaseTest {
         var recipes = helper.getLevel().getRecipeManager().getRecipesFor(RecipeType.CRAFTING, input, helper.getLevel());
 
         // Confirm that no such recipes exist
-        helper.assertTrue(recipes.isEmpty(), "Found recipes for repairing Earthshatter Hammer when none should exist");
+        this.assertTrue(helper, recipes.isEmpty(), "Found recipes for repairing Earthshatter Hammer when none should exist");
         helper.succeed();
     }
 }

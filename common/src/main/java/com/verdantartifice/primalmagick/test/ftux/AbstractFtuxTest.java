@@ -19,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -53,18 +54,16 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
             // Create a player in the level and confirm that they start out not having found a shrine
             var player = this.makeMockServerPlayer(helper, true);
             player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO)));
-            helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research already present on new player");
+            this.assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research already present on new player");
 
             // Place an ancient font near the player
             BlockPos fontPos = new BlockPos(1, 1, 1);
             helper.setBlock(fontPos, block);
-            helper.assertBlockState(fontPos, state -> {
-                return state.is(block);
-            }, () -> "Test font not found!");
+            helper.assertBlockState(fontPos, state -> state.is(block), state -> Component.literal("Test font not found!"));
             
             // Succeed once the player has been marked as having found a shrine
             helper.succeedWhen(() -> {
-                helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research not complete");
+                this.assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research not complete");
                 helper.getLevel().getServer().getPlayerList().remove(player);
             });
         });
@@ -73,9 +72,9 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
     public void sleeping_after_shrine_grants_dream(GameTestHelper helper) {
         // Create a player who's found a shrine and is primed for the dream, but hasn't had it yet
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE), "Failed to grant prerequisite research");
-        helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Created player already marked as having had the dream");
-        helper.assertTrue(player.getInventory().isEmpty(), "Fresh player inventory is not empty");
+        this.assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE), "Failed to grant prerequisite research");
+        this.assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Created player already marked as having had the dream");
+        this.assertTrue(helper, player.getInventory().isEmpty(), "Fresh player inventory is not empty");
         
         // Place a bed and sleep in it
         BlockPos bedPos = new BlockPos(2, 2, 2);
@@ -86,10 +85,10 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         
         // Succeed once the player has been marked as having had the dream and received the dream journal
         helper.succeedWhen(() -> {
-            helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Got Dream research not complete");
+            this.assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Got Dream research not complete");
             NonNullList<ItemStack> stacks = InventoryUtils.find(player, ItemTagsPM.STATIC_BOOKS);
-            helper.assertTrue(stacks.size() == 1, "No potential Dream Journals found");
-            helper.assertTrue(stacks.stream().anyMatch(stack -> {
+            this.assertTrue(helper, stacks.size() == 1, "No potential Dream Journals found");
+            this.assertTrue(helper, stacks.stream().anyMatch(stack -> {
                 return StaticBookItem.getBookId(stack).filter(id -> BooksPM.DREAM_JOURNAL.equals(id)).isPresent() &&
                         StaticBookItem.getBookLanguageId(stack).filter(id -> BookLanguagesPM.DEFAULT.equals(id)).isPresent() &&
                         StaticBookItem.getAuthor(stack).equals(player.getName());
@@ -108,8 +107,8 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions("mundane_wand_crafting_tests", templateName, testParams, (helper, dust) -> {
             var container = CraftingInput.of(2, 1, List.of(new ItemStack(Items.STICK), new ItemStack(dust)));
             var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, container, helper.getLevel());
-            helper.assertTrue(recipe.isPresent(), "Recipe not found when expected");
-            helper.assertTrue(recipe.get().value().getResultItem(helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
+            this.assertTrue(helper, recipe.isPresent(), "Recipe not found when expected");
+            this.assertTrue(helper, recipe.get().value().getResultItem(helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
             helper.succeed();
         });
     }
@@ -117,8 +116,8 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
     public void transform_abort_gives_hint(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
-        helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Newly created player already has sought research");
+        this.assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
+        this.assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Newly created player already has sought research");
         
         // Put a mundane wand in that player's main hand
         ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
@@ -135,12 +134,12 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         BlockPos posAbs = helper.absolutePos(pos);
         BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
         UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
-        helper.assertTrue(Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        this.assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
         
         // Immediately stop transforming and check for hint flag research
         int remainingTicks = wandItem.getUseDuration(wandStack, player);
         wandItem.releaseUsing(wandStack, helper.getLevel(), player, remainingTicks);
-        helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Sought research not found");
+        this.assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Sought research not found");
         helper.succeed();
     }
 
@@ -163,7 +162,7 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         BlockPos posAbs = helper.absolutePos(pos);
         BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
         UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
-        helper.assertTrue(Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.PASS), "Failed to start using wand on block");
+        this.assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.PASS), "Failed to start using wand on block");
 
         // Continue channeling for the expected transform duration, then confirm that nothing has changed
         MutableInt remainingTicks = new MutableInt(WandTransforms.CHANNEL_DURATION + 1);
@@ -179,7 +178,7 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
     public void transform_grimoire(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
+        this.assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
         
         // Put a mundane wand in that player's main hand
         ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
@@ -196,7 +195,7 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         BlockPos posAbs = helper.absolutePos(pos);
         BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
         UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
-        helper.assertTrue(Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        this.assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
         
         // Continue channeling the wand until the transformation succeeds or the test times out and fails
         MutableInt remainingTicks = new MutableInt(wandItem.getUseDuration(wandStack, player));

@@ -55,10 +55,10 @@ public class AbstractRitualEnchantmentTest extends AbstractBaseTest {
             var actualLoot = LootModifiers.essenceThief(initialLoot, lootContext);
 
             // Confirm that the modified loot contains only the expected grade of essence
-            helper.assertTrue(actualLoot.size() == 1, "Modified loot does not contain exactly one item");
+            this.assertTrue(helper, actualLoot.size() == 1, "Modified loot does not contain exactly one item");
             var stack = actualLoot.getFirst();
-            helper.assertTrue(stack.getCount() == 1, "Modified loot stack does not have a count of one");
-            var essenceItem = assertInstanceOf(helper, stack.getItem(), EssenceItem.class, "Loot item is not essence");
+            this.assertTrue(helper, stack.getCount() == 1, "Modified loot stack does not have a count of one");
+            var essenceItem = this.assertInstanceOf(helper, stack.getItem(), EssenceItem.class, "Loot item is not essence");
             var expectedEssenceType = switch (enchLevel) {
                 case 1 -> EssenceType.DUST;
                 case 2 -> EssenceType.SHARD;
@@ -66,8 +66,8 @@ public class AbstractRitualEnchantmentTest extends AbstractBaseTest {
                 case 4 -> EssenceType.CLUSTER;
                 default -> throw new IllegalStateException("Unexpected value: " + enchLevel);
             };
-            helper.assertTrue(essenceItem.getEssenceType().equals(expectedEssenceType), "Modified loot essence is not of expected grade");
-            helper.assertTrue(essenceItem.getSource().equals(Sources.BLOOD), "Modified loot essence is not of expected source");
+            this.assertTrue(helper, essenceItem.getEssenceType().equals(expectedEssenceType), "Modified loot essence is not of expected grade");
+            this.assertTrue(helper, essenceItem.getSource().equals(Sources.BLOOD), "Modified loot essence is not of expected source");
 
             helper.succeed();
         });

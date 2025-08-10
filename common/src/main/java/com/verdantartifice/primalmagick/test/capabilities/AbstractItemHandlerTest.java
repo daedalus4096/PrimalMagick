@@ -31,10 +31,10 @@ public abstract class AbstractItemHandlerTest extends AbstractBaseTest {
             // Place a copy of the block into the test world
             var pos = BlockPos.ZERO;
             helper.setBlock(pos, block);
-            var tile = helper.getBlockEntity(pos);
+            var tile = helper.getBlockEntity(pos, BlockEntity.class);
 
             // Confirm that the item handler for the block entity can be fetched with a null direction without crashing
-            helper.assertTrue(this.touchItemHandler(tile, null), "Failed to get item handler");
+            this.assertTrue(helper, this.touchItemHandler(tile, null), "Failed to get item handler");
             helper.succeed();
         });
     }

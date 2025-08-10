@@ -52,7 +52,7 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewAutoCharger(helper, BlockPos.ZERO, Direction.NORTH);
 
             // Confirm that the output item handler will accept the test item
-            helper.assertTrue(handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
+            this.assertTrue(helper, handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
 
             helper.succeed();
         });
@@ -65,7 +65,7 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewAutoCharger(helper, BlockPos.ZERO, Direction.NORTH);
 
             // Confirm that the output item handler will accept the test item
-            helper.assertFalse(handler.isItemValid(0, stack), "Test stack unexpectedly valid for item handler");
+            this.assertFalse(helper, handler.isItemValid(0, stack), "Test stack unexpectedly valid for item handler");
 
             helper.succeed();
         });
@@ -74,11 +74,11 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
     private IItemHandlerPM getItemHandlerForNewAutoCharger(GameTestHelper helper, BlockPos pos, Direction face) {
         // Place an auto charger block and get its block entity
         helper.setBlock(pos, BlocksPM.AUTO_CHARGER.get());
-        var tile = helper.<AutoChargerTileEntity>getBlockEntity(pos);
+        var tile = helper.getBlockEntity(pos, AutoChargerTileEntity.class);
 
         // Get the item handler for the block entity for the given face
         var handler = tile.getRawItemHandler(face);
-        helper.assertFalse(handler == null, "No item handler found");
+        this.assertFalse(helper, handler == null, "No item handler found");
 
         return handler;
     }
@@ -96,7 +96,7 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             // Place an auto charger and get its item handler
             var chargerPos = BlockPos.ZERO;
             var handler = this.getItemHandlerForNewAutoCharger(helper, chargerPos, Direction.UP);
-            helper.assertTrue(handler.getStackInSlot(0).isEmpty(), "Charger has an item before use");
+            this.assertTrue(helper, handler.getStackInSlot(0).isEmpty(), "Charger has an item before use");
 
             // Use the player's main hand item on the charger
             var chargerState = helper.getBlockState(chargerPos);
@@ -104,9 +104,9 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             var useResult = chargerState.useItemOn(stack, helper.getLevel(), player, InteractionHand.MAIN_HAND, hitResult);
 
             // Confirm success
-            helper.assertTrue(useResult.consumesAction(), "Use action failed");
-            helper.assertFalse(handler.getStackInSlot(0).isEmpty(), "Charger has no item after use");
-            helper.assertTrue(handler.getStackInSlot(0).is(before.getItem()), "Charge item does not match initial stack");
+            this.assertTrue(helper, useResult.consumesAction(), "Use action failed");
+            this.assertFalse(helper, handler.getStackInSlot(0).isEmpty(), "Charger has no item after use");
+            this.assertTrue(helper, handler.getStackInSlot(0).is(before.getItem()), "Charge item does not match initial stack");
 
             helper.succeed();
         });
@@ -122,7 +122,7 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             // Place an auto charger and get its item handler
             var chargerPos = BlockPos.ZERO.north();
             var handler = this.getItemHandlerForNewAutoCharger(helper, chargerPos, Direction.UP);
-            helper.assertTrue(handler.getStackInSlot(0).isEmpty(), "Charger has an item before use");
+            this.assertTrue(helper, handler.getStackInSlot(0).isEmpty(), "Charger has an item before use");
 
             // Use the player's main hand item on the charger
             var chargerState = helper.getBlockState(chargerPos);
@@ -130,8 +130,8 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             var useResult = chargerState.useItemOn(stack, helper.getLevel(), player, InteractionHand.MAIN_HAND, hitResult);
 
             // Confirm success
-            helper.assertFalse(useResult.consumesAction(), "Use action unexpectedly succeeded");
-            helper.assertTrue(handler.getStackInSlot(0).isEmpty(), "Charger has item after use");
+            this.assertFalse(helper, useResult.consumesAction(), "Use action unexpectedly succeeded");
+            this.assertTrue(helper, handler.getStackInSlot(0).isEmpty(), "Charger has item after use");
 
             helper.succeed();
         });
@@ -151,7 +151,7 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             var chargerPos = BlockPos.ZERO;
             var handler = this.getItemHandlerForNewAutoCharger(helper, chargerPos, Direction.UP);
             handler.setStackInSlot(0, stack);
-            helper.assertFalse(handler.getStackInSlot(0).isEmpty(), "Failed to set item in charger");
+            this.assertFalse(helper, handler.getStackInSlot(0).isEmpty(), "Failed to set item in charger");
 
             // Use the player's empty main hand on the charger
             var chargerState = helper.getBlockState(chargerPos);
@@ -159,9 +159,9 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             var useResult = chargerState.useItemOn(ItemStack.EMPTY, helper.getLevel(), player, InteractionHand.MAIN_HAND, hitResult);
 
             // Confirm success
-            helper.assertTrue(useResult.consumesAction(), "Use action failed");
-            helper.assertTrue(handler.getStackInSlot(0).isEmpty(), "Charger has item after use");
-            helper.assertTrue(player.getItemInHand(InteractionHand.MAIN_HAND).is(before.getItem()), "Hand item does not match initial stack");
+            this.assertTrue(helper, useResult.consumesAction(), "Use action failed");
+            this.assertTrue(helper, handler.getStackInSlot(0).isEmpty(), "Charger has item after use");
+            this.assertTrue(helper, player.getItemInHand(InteractionHand.MAIN_HAND).is(before.getItem()), "Hand item does not match initial stack");
 
             helper.succeed();
         });
@@ -176,37 +176,37 @@ public class AbstractAutoChargerTest extends AbstractBaseTest {
             // Place an auto charger block
             var chargerPos = BlockPos.ZERO.north();
             helper.setBlock(chargerPos, BlocksPM.AUTO_CHARGER.get());
-            var chargerTile = helper.<AutoChargerTileEntity>getBlockEntity(chargerPos);
+            var chargerTile = helper.getBlockEntity(chargerPos, AutoChargerTileEntity.class);
 
             // Place an earth font block
             var fontPos = BlockPos.ZERO.east();
             helper.setBlock(fontPos, BlocksPM.ARTIFICIAL_FONT_EARTH.get());
-            var fontTile = helper.<AbstractManaFontTileEntity>getBlockEntity(fontPos);
+            var fontTile = helper.getBlockEntity(fontPos, AbstractManaFontTileEntity.class);
             final int startFontMana = 1000;
             fontTile.setMana(startFontMana);
 
             // Place the chargeable item stack into the auto charger
             var handler = chargerTile.getRawItemHandler(Direction.NORTH);
-            helper.assertFalse(handler == null, "No item handler found");
+            this.assertFalse(helper, handler == null, "No item handler found");
             handler.setStackInSlot(0, stack);
 
             // Confirm initial state
             var beforeStack = handler.getStackInSlot(0);
-            helper.assertFalse(beforeStack.isEmpty(), "Stack not successfully inserted into charger");
-            helper.assertTrue(beforeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "Before stack has no mana storage");
-            helper.assertValueEqual(beforeStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).getManaStored(Sources.EARTH), 0, "Before stack not initially empty");
-            helper.assertValueEqual(fontTile.getMana(), startFontMana, "Before font mana not as expected");
+            this.assertFalse(helper, beforeStack.isEmpty(), "Stack not successfully inserted into charger");
+            this.assertTrue(helper, beforeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "Before stack has no mana storage");
+            this.assertValueEqual(helper, beforeStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).getManaStored(Sources.EARTH), 0, "Before stack not initially empty");
+            this.assertValueEqual(helper, fontTile.getMana(), startFontMana, "Before font mana not as expected");
 
             // Confirm that mana was successfully siphoned
             final int expectedSiphonAmount = 100;
             helper.succeedOnTickWhen(1, () -> {
                 var afterStack = handler.getStackInSlot(0);
-                helper.assertFalse(afterStack.isEmpty(), "After stack empty");
-                helper.assertTrue(afterStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "After stack has no mana storage");
+                this.assertFalse(helper, afterStack.isEmpty(), "After stack empty");
+                this.assertTrue(helper, afterStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "After stack has no mana storage");
                 int afterStackMana = afterStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).getManaStored(Sources.EARTH);
                 int fontMana = fontTile.getMana();
-                helper.assertValueEqual(afterStackMana, expectedSiphonAmount, "After stack mana total not as expected");
-                helper.assertValueEqual(fontMana, startFontMana - expectedSiphonAmount + fontTile.getManaRechargedPerTick(), "After font mana not as expected");
+                this.assertValueEqual(helper, afterStackMana, expectedSiphonAmount, "After stack mana total not as expected");
+                this.assertValueEqual(helper, fontMana, startFontMana - expectedSiphonAmount + fontTile.getManaRechargedPerTick(), "After font mana not as expected");
             });
         });
     }

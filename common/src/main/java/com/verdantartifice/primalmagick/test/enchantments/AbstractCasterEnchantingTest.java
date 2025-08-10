@@ -28,7 +28,7 @@ public class AbstractCasterEnchantingTest extends AbstractBaseTest {
         return TestUtils.createParameterizedTestFunctions("caster_enchanting_tests", templateName, testParams, (helper, item) -> {
             // Get a stream of all possible enchantments for the enchanting table
             var possibleEnchantsOpt = helper.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT).getTag(EnchantmentTags.IN_ENCHANTING_TABLE);
-            helper.assertTrue(possibleEnchantsOpt.isPresent(), "No possible enchantments found for table");
+            this.assertTrue(helper, possibleEnchantsOpt.isPresent(), "No possible enchantments found for table");
 
             // Create an item stack for this test's caster item
             ItemStack casterStack = new ItemStack(item);
@@ -40,7 +40,7 @@ public class AbstractCasterEnchantingTest extends AbstractBaseTest {
 
             // Confirm that enchantments are possible for the given caster item
             var enchList = EnchantmentHelper.selectEnchantment(helper.getLevel().random, casterStack, 30, possibleEnchantsOpt.get().stream());
-            helper.assertFalse(enchList.isEmpty(), "No enchantments found for caster stack");
+            this.assertFalse(helper, enchList.isEmpty(), "No enchantments found for caster stack");
             
             helper.succeed();
         });

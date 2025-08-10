@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -32,13 +33,13 @@ public class AbstractDispenserTest extends AbstractBaseTest {
             helper.setBlock(buttonPos, Blocks.OAK_BUTTON.defaultBlockState().setValue(ButtonBlock.FACING, Direction.NORTH));
 
             // Insert an appropriate mana-tinged arrow into the dispenser
-            var dispenserEntity = helper.<DispenserBlockEntity>getBlockEntity(dispenserPos);
+            var dispenserEntity = helper.getBlockEntity(dispenserPos, DispenserBlockEntity.class);
             dispenserEntity.insertItem(new ItemStack(arrow));
 
             // Press the button to fire the arrow
-            helper.assertBlockState(dispenserPos, state -> !state.getValue(DispenserBlock.TRIGGERED), () -> "Dispenser triggered before expected");
+            helper.assertBlockState(dispenserPos, state -> !state.getValue(DispenserBlock.TRIGGERED), state -> Component.literal("Dispenser triggered before expected"));
             helper.pressButton(buttonPos);
-            helper.assertBlockState(dispenserPos, state -> state.getValue(DispenserBlock.TRIGGERED), () -> "Dispenser was not triggered as expected");
+            helper.assertBlockState(dispenserPos, state -> state.getValue(DispenserBlock.TRIGGERED), state -> Component.literal("Dispenser was not triggered as expected"));
 
             // Confirm that the dispenser fired the correct arrow instead of dispensing an item stack
             var expectedArrowPos = dispenserPos.north();
@@ -46,7 +47,7 @@ public class AbstractDispenserTest extends AbstractBaseTest {
                 helper.assertItemEntityNotPresent(arrow, expectedArrowPos, 1D);
                 helper.assertEntitiesPresent(EntityTypesPM.MANA_ARROW.get(), expectedArrowPos, 1, 1D);
                 helper.getEntities(EntityTypesPM.MANA_ARROW.get(), expectedArrowPos, 1D).forEach(e -> {
-                    helper.assertTrue(e.getSource().equals(arrow.getSource()), "Arrow entity source is not as expected: " + e.getSource());
+                    this.assertTrue(helper, e.getSource().equals(arrow.getSource()), "Arrow entity source is not as expected: " + e.getSource());
                 });
             });
         });

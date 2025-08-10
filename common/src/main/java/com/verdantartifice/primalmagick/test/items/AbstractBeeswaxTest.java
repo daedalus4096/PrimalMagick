@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.HoneycombItem;
 import net.minecraft.world.item.ItemStack;
@@ -39,11 +40,11 @@ public class AbstractBeeswaxTest extends AbstractBaseTest {
 
             // Use the beeswax on the block
             var context = new UseOnContext(player, InteractionHand.MAIN_HAND, new BlockHitResult(BlockPos.ZERO.getCenter(), Direction.DOWN, helper.absolutePos(BlockPos.ZERO), true));
-            helper.assertTrue(player.getItemInHand(InteractionHand.MAIN_HAND).getItem().useOn(context).indicateItemUse(), "Beeswax use did not succeed");
+            this.assertTrue(helper, player.getItemInHand(InteractionHand.MAIN_HAND).getItem().useOn(context).indicateItemUse(), "Beeswax use did not succeed");
 
             // Confirm that the waxed version of the block is now at the origin of the test structure
             helper.succeedIf(() -> {
-                helper.assertBlockState(BlockPos.ZERO, state -> state.is(waxable.waxOn()), () -> "Waxed block not found as expected");
+                helper.assertBlockState(BlockPos.ZERO, state -> state.is(waxable.waxOn()), state -> Component.literal("Waxed block not found as expected"));
             });
         });
     }
@@ -57,8 +58,8 @@ public class AbstractBeeswaxTest extends AbstractBaseTest {
             var outputOpt = helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftingInput, helper.getLevel());
 
             helper.succeedIf(() -> {
-                helper.assertTrue(outputOpt.isPresent(), "No recipe found");
-                helper.assertTrue(outputOpt.get().value().getResultItem(helper.getLevel().registryAccess()).is(waxable.waxOn().asItem()), "Recipe output not as expected");
+                this.assertTrue(helper, outputOpt.isPresent(), "No recipe found");
+                this.assertTrue(helper, outputOpt.get().value().getResultItem(helper.getLevel().registryAccess()).is(waxable.waxOn().asItem()), "Recipe output not as expected");
             });
         });
     }

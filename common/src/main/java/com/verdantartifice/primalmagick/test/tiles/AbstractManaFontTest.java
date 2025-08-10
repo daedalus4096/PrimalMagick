@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,19 +36,19 @@ public class AbstractManaFontTest extends AbstractBaseTest {
             // Create a test player in the level and put a wand in their hand
             var player = this.makeMockServerPlayer(helper, true);
             var wandStack = IHasWandComponents.setWandComponents(wandItem.getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE);
-            var wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack not a wand as expected");
+            var wand = this.assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand stack not a wand as expected");
             player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
 
             // Place the font block in the world and fill it
             var fontPos = BlockPos.ZERO;
             helper.setBlock(fontPos, block);
-            helper.assertBlockState(fontPos, state -> state.is(block), () -> "Font not placed correctly");
-            var fontTile = helper.<AbstractManaFontTileEntity>getBlockEntity(fontPos);
+            helper.assertBlockState(fontPos, state -> state.is(block), state -> Component.literal("Font not placed correctly"));
+            var fontTile = helper.getBlockEntity(fontPos, AbstractManaFontTileEntity.class);
             fontTile.setMana(fontTile.getManaCapacity());
 
             // Confirm the initial wand and font state
-            Sources.getAll().forEach(s -> helper.assertValueEqual(wand.getMana(wandStack, s), 0, "Initial wand mana for " + s.getId()));
-            helper.assertValueEqual(fontTile.getMana(), fontTile.getManaCapacity(), "Initial font mana");
+            Sources.getAll().forEach(s -> this.assertValueEqual(helper, wand.getMana(wandStack, s), 0, "Initial wand mana for " + s.getId()));
+            this.assertValueEqual(helper, fontTile.getMana(), fontTile.getManaCapacity(), "Initial font mana");
 
             // Siphon a bit of mana from the font
             fontTile.doSiphon(wandStack, helper.getLevel(), player, player.getEyePosition());
@@ -56,11 +57,11 @@ public class AbstractManaFontTest extends AbstractBaseTest {
             var expectedSiphon = wand.getSiphonAmount(wandStack);
             Sources.getAll().forEach(s -> {
                 var expectedMana = s.equals(block.getSource()) ? expectedSiphon : 0;
-                helper.assertValueEqual(wand.getMana(wandStack, s), expectedMana, "Final wand mana for " + s.getId());
+                this.assertValueEqual(helper, wand.getMana(wandStack, s), expectedMana, "Final wand mana for " + s.getId());
             });
             var fontCentimanaCapacity = fontTile.getManaCapacity();
             var actualCentimana = fontTile.getMana();
-            helper.assertValueEqual(actualCentimana, fontCentimanaCapacity - expectedSiphon, "Final font mana");
+            this.assertValueEqual(helper, actualCentimana, fontCentimanaCapacity - expectedSiphon, "Final font mana");
 
             helper.succeed();
         });
@@ -72,16 +73,16 @@ public class AbstractManaFontTest extends AbstractBaseTest {
             // Place the font block in the world and ensure it's empty
             var fontPos = BlockPos.ZERO;
             helper.setBlock(fontPos, block);
-            helper.assertBlockState(fontPos, state -> state.is(block), () -> "Font not placed correctly");
-            var fontTile = helper.<AbstractManaFontTileEntity>getBlockEntity(fontPos);
+            helper.assertBlockState(fontPos, state -> state.is(block), state -> Component.literal("Font not placed correctly"));
+            var fontTile = helper.getBlockEntity(fontPos, AbstractManaFontTileEntity.class);
             fontTile.setMana(0);
-            helper.assertValueEqual(fontTile.getMana(), 0, "Initial font mana");
+            this.assertValueEqual(helper, fontTile.getMana(), 0, "Initial font mana");
 
             // Trigger a recharge tick for the font
             fontTile.doRecharge();
 
             // Confirm that the font recharged one tick's worth of mana
-            helper.assertValueEqual(fontTile.getMana(), fontTile.getManaRechargedPerTick(), "Final font mana");
+            this.assertValueEqual(helper, fontTile.getMana(), fontTile.getManaRechargedPerTick(), "Final font mana");
         });
     }
 }

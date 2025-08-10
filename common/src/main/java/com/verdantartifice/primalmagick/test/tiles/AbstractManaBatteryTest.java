@@ -64,11 +64,11 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             // Place a mana battery block and get its block entity
             var pos = BlockPos.ZERO;
             helper.setBlock(pos, block);
-            var tile = helper.<ManaBatteryTileEntity>getBlockEntity(pos);
+            var tile = helper.getBlockEntity(pos, ManaBatteryTileEntity.class);
 
             // Open the block entity menu
             Services.PLAYER.openMenu(player, tile, pos);
-            assertInstanceOf(helper, player.containerMenu, ManaBatteryMenu.class, "Menu not of expected type");
+            this.assertInstanceOf(helper, player.containerMenu, ManaBatteryMenu.class, "Menu not of expected type");
 
             helper.succeed();
         });
@@ -82,7 +82,7 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewManaBattery(helper, block, Direction.NORTH);
 
             // Confirm that the output item handler will accept the test item
-            helper.assertTrue(handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
+            this.assertTrue(helper, handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
 
             helper.succeed();
         });
@@ -96,7 +96,7 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewManaBattery(helper, block, Direction.NORTH);
 
             // Confirm that the output item handler will accept the test item
-            helper.assertFalse(handler.isItemValid(0, stack), "Test stack unexpectedly valid for item handler");
+            this.assertFalse(helper, handler.isItemValid(0, stack), "Test stack unexpectedly valid for item handler");
 
             helper.succeed();
         });
@@ -106,11 +106,11 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
         // Place a mana battery block and get its block entity
         var pos = BlockPos.ZERO;
         helper.setBlock(pos, block);
-        var tile = helper.<ManaBatteryTileEntity>getBlockEntity(pos);
+        var tile = helper.getBlockEntity(pos, ManaBatteryTileEntity.class);
 
         // Get the item handler for the block entity for the given face
         var handler = tile.getRawItemHandler(direction);
-        helper.assertFalse(handler == null, "No item handler found");
+        this.assertFalse(helper, handler == null, "No item handler found");
 
         return handler;
     }
@@ -123,7 +123,7 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewManaBattery(helper, block, Direction.UP);
 
             // Confirm that the input item handler will accept the test item
-            helper.assertTrue(handler.isItemValid(0, item.getDefaultInstance()), "Test stack unexpectedly invalid for item handler");
+            this.assertTrue(helper, handler.isItemValid(0, item.getDefaultInstance()), "Test stack unexpectedly invalid for item handler");
 
             helper.succeed();
         });
@@ -141,7 +141,7 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             var handler = this.getItemHandlerForNewManaBattery(helper, block, Direction.UP);
 
             // Confirm that the input item handler will accept the test item
-            helper.assertTrue(handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
+            this.assertTrue(helper, handler.isItemValid(0, stack), "Test stack unexpectedly invalid for item handler");
 
             helper.succeed();
         });
@@ -158,18 +158,18 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             // Place a mana battery block
             var batteryPos = BlockPos.ZERO.north();
             helper.setBlock(batteryPos, block);
-            var batteryTile = helper.<ManaBatteryTileEntity>getBlockEntity(batteryPos);
+            var batteryTile = helper.getBlockEntity(batteryPos, ManaBatteryTileEntity.class);
 
             // Place a mana font block
             var fontPos = BlockPos.ZERO.east();
             helper.setBlock(fontPos, font);
-            var fontTile = helper.<AbstractManaFontTileEntity>getBlockEntity(fontPos);
+            var fontTile = helper.getBlockEntity(fontPos, AbstractManaFontTileEntity.class);
             final int startFontMana = 1000;
             fontTile.setMana(startFontMana);
 
             // Confirm initial state
-            helper.assertValueEqual(fontTile.getMana(), startFontMana, "Before font mana");
-            helper.assertTrue(batteryTile.getAllMana().isEmpty(), "Before battery mana not empty");
+            this.assertValueEqual(helper, fontTile.getMana(), startFontMana, "Before font mana");
+            this.assertTrue(helper, batteryTile.getAllMana().isEmpty(), "Before battery mana not empty");
 
             // Confirm that mana was siphoned from the font to the battery
             final int transferCap = batteryTile.getBatteryTransferCap();
@@ -177,8 +177,8 @@ public class AbstractManaBatteryTest extends AbstractBaseTest {
             final int expectedFontMana = startFontMana - expectedTransfer + fontTile.getManaRechargedPerTick();
             final SourceList expectedBatteryMana = SourceList.builder().with(font.getSource(), expectedTransfer).build();
             helper.succeedOnTickWhen(1, () -> {
-                helper.assertValueEqual(fontTile.getMana(), expectedFontMana, "After font mana");
-                helper.assertValueEqual(batteryTile.getAllMana(), expectedBatteryMana, "After battery mana");
+                this.assertValueEqual(helper, fontTile.getMana(), expectedFontMana, "After font mana");
+                this.assertValueEqual(helper, batteryTile.getAllMana(), expectedBatteryMana, "After battery mana");
             });
         });
     }

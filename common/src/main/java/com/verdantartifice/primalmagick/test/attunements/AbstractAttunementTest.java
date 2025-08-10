@@ -62,7 +62,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
             // Create a wand with no expected mana discounts or penalties
             ItemStack wandStack = new ItemStack(ItemsPM.MODULAR_WAND.get());
-            var wandItem = assertInstanceOf(helper, wandStack.getItem(), ModularWandItem.class, "Wand is not of the expected type");
+            var wandItem = this.assertInstanceOf(helper, wandStack.getItem(), ModularWandItem.class, "Wand is not of the expected type");
             wandItem.setWandCore(wandStack, WandCore.HEARTWOOD);
             wandItem.setWandCap(wandStack, WandCap.GOLD);
             wandItem.setWandGem(wandStack, WandGem.ADEPT);
@@ -70,7 +70,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
             // Confirm that all sources have neither a discount nor penalty before attunement grant
             Sources.streamSorted().forEach(s -> {
                 int actual = wandItem.getTotalCostModifier(wandStack, player, s, helper.getLevel().registryAccess());
-                helper.assertTrue(actual == 20, "Base wand cost modifier is not as expected for source " + s.getId());
+                this.assertTrue(helper, actual == 20, "Base wand cost modifier is not as expected for source " + s.getId());
             });
 
             // Grant the test player minor attunement in the source being tested
@@ -80,7 +80,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
             Sources.streamSorted().forEach(s -> {
                 int expected = s.equals(source) ? 25 : 20;
                 int actual = wandItem.getTotalCostModifier(wandStack, player, s, helper.getLevel().registryAccess());
-                helper.assertTrue(actual == expected, "Final wand cost modifier is not as expected for source " + s.getId() + ": " + actual);
+                this.assertTrue(helper, actual == expected, "Final wand cost modifier is not as expected for source " + s.getId() + ": " + actual);
             });
 
             helper.succeed();
@@ -92,13 +92,13 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         var player = this.makeMockServerPlayer(helper);
 
         // Confirm that the player doesn't have the relevant attribute modifier to start
-        helper.assertFalse(player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player has unexpected attribute modifier");
+        this.assertFalse(helper, player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player has unexpected attribute modifier");
 
         // Grant the test player lesser attunement to the Earth
         AttunementManager.setAttunement(player, Sources.EARTH, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
 
         // Confirm that the player has the relevant attribute modifier with attunement
-        helper.assertTrue(player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player does not have expected attribute modifier");
+        this.assertTrue(helper, player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player does not have expected attribute modifier");
 
         helper.succeed();
     }
@@ -108,14 +108,14 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         var player = this.makeMockServerPlayer(helper);
 
         // Confirm that the player doesn't have the relevant attribute modifier to start
-        helper.assertFalse(player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player has unexpected attribute modifier");
+        this.assertFalse(helper, player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player has unexpected attribute modifier");
 
         // Grant the test player greater attunement to the Earth and force processing of attunement buffs
         AttunementManager.setAttunement(player, Sources.EARTH, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
         PlayerEvents.applyAttunementBuffs(player);
 
         // Confirm that the player has the relevant attribute modifier with attunement
-        helper.assertTrue(player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player does not have expected attribute modifier");
+        this.assertTrue(helper, player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player does not have expected attribute modifier");
 
         helper.succeed();
     }
@@ -125,13 +125,13 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         var player = this.makeMockServerPlayer(helper);
 
         // Confirm that the player doesn't have the relevant attribute modifier to start
-        helper.assertFalse(player.getAttributes().hasModifier(Services.ATTRIBUTES.swimSpeed(), AttunementAttributeModifiers.SEA_LESSER_ID), "Player has unexpected attribute modifier");
+        this.assertFalse(helper, player.getAttributes().hasModifier(Services.ATTRIBUTES.swimSpeed(), AttunementAttributeModifiers.SEA_LESSER_ID), "Player has unexpected attribute modifier");
 
         // Grant the test player lesser attunement to the Sea
         AttunementManager.setAttunement(player, Sources.SEA, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
 
         // Confirm that the player has the relevant attribute modifier with attunement
-        helper.assertTrue(player.getAttributes().hasModifier(Services.ATTRIBUTES.swimSpeed(), AttunementAttributeModifiers.SEA_LESSER_ID), "Player does not have expected attribute modifier");
+        this.assertTrue(helper, player.getAttributes().hasModifier(Services.ATTRIBUTES.swimSpeed(), AttunementAttributeModifiers.SEA_LESSER_ID), "Player does not have expected attribute modifier");
 
         helper.succeed();
     }
@@ -141,14 +141,14 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         var player = this.makeMockServerPlayer(helper);
 
         // Confirm that the player has the relevant effect with attunement
-        helper.assertFalse(player.hasEffect(MobEffects.WATER_BREATHING), "Player has unexpected effect");
+        this.assertFalse(helper, player.hasEffect(MobEffects.WATER_BREATHING), "Player has unexpected effect");
 
         // Grant the test player greater attunement to the Sea and force processing of attunement buffs
         AttunementManager.setAttunement(player, Sources.SEA, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
         PlayerEvents.applyAttunementBuffs(player);
 
         // Confirm that the player has the relevant effect with attunement
-        helper.assertTrue(player.hasEffect(MobEffects.WATER_BREATHING), "Player does not have expected effect");
+        this.assertTrue(helper, player.hasEffect(MobEffects.WATER_BREATHING), "Player does not have expected effect");
 
         helper.succeed();
     }
@@ -158,13 +158,13 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         var player = this.makeMockServerPlayer(helper);
 
         // Confirm that the player doesn't have the relevant attribute modifier to start
-        helper.assertFalse(player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player has unexpected attribute modifier");
+        this.assertFalse(helper, player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player has unexpected attribute modifier");
 
         // Grant the test player lesser attunement to the Sky
         AttunementManager.setAttunement(player, Sources.SKY, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
 
         // Confirm that the player has the relevant attribute modifier with attunement
-        helper.assertTrue(player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player does not have expected attribute modifier");
+        this.assertTrue(helper, player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player does not have expected attribute modifier");
 
         helper.succeed();
     }
@@ -178,7 +178,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that the player takes normal falling damage to start
         player.hurt(player.damageSources().fall(), expectedDamage);
         var actualDamage = player.getMaxHealth() - player.getHealth();
-        helper.assertTrue(actualDamage == expectedDamage, "Player did not take expected damage without attunement: " + actualDamage);
+        this.assertTrue(helper, actualDamage == expectedDamage, "Player did not take expected damage without attunement: " + actualDamage);
 
         // Reset the player's health and grant them lesser attunement to the Sky
         player.setHealth(player.getMaxHealth());
@@ -187,7 +187,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that the player takes reduced falling damage with attunement
         player.hurt(player.damageSources().fall(), expectedDamage);
         actualDamage = player.getMaxHealth() - player.getHealth();
-        helper.assertTrue(actualDamage < expectedDamage, "Player did not take reduced damage with attunement: " + actualDamage);
+        this.assertTrue(helper, actualDamage < expectedDamage, "Player did not take reduced damage with attunement: " + actualDamage);
 
         helper.succeed();
     }
@@ -199,7 +199,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Have the player jump and measure its unmodified jump strength
         player1.jumpFromGround();
-        helper.assertTrue(player1.getDeltaMovement().y() == expectedJumpStrength, "Player did not have expected starting jump strength");
+        this.assertTrue(helper, player1.getDeltaMovement().y() == expectedJumpStrength, "Player did not have expected starting jump strength");
 
         // Discard that player and create another one
         player1.discard();
@@ -210,7 +210,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Have the new player jump and confirm that their jump strength is greater
         player2.jumpFromGround();
-        helper.assertTrue(player2.getDeltaMovement().y() > expectedJumpStrength, "Player did not have boosted jump strength as expected");
+        this.assertTrue(helper, player2.getDeltaMovement().y() > expectedJumpStrength, "Player did not have boosted jump strength as expected");
 
         helper.succeed();
     }
@@ -228,7 +228,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         helper.setDayTime(0);
         helper.getLevel().tick(() -> true);
         player.getFoodData().setFoodLevel(startFood);
-        helper.assertTrue(player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
+        this.assertTrue(helper, player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
 
         // Grant the player lesser attunement to the Sun and tick photosynthesis
         AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
@@ -236,7 +236,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that their food level has regenerated
         var actualFood = player.getFoodData().getFoodLevel();
-        helper.assertTrue(actualFood == endFood, "Player does not have expected food with attunement: " + actualFood);
+        this.assertTrue(helper, actualFood == endFood, "Player does not have expected food with attunement: " + actualFood);
 
         helper.succeed();
     }
@@ -251,14 +251,14 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         helper.setNight();
         helper.getLevel().tick(() -> true);
         player.getFoodData().setFoodLevel(startFood);
-        helper.assertTrue(player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
+        this.assertTrue(helper, player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
 
         // Grant the player lesser attunement to the Sun and tick photosynthesis
         AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
         PlayerEvents.handlePhotosynthesis(player);
 
         // Confirm that their food level has regenerated
-        helper.assertTrue(player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food with attunement");
+        this.assertTrue(helper, player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food with attunement");
 
         helper.succeed();
     }
@@ -274,7 +274,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that there's no glow field present to start
         LogUtils.getLogger().warn("Block light level before attunement during day: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
-        helper.assertFalse(helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
+        this.assertFalse(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
 
         // Grant the player greater attunement to the Sun and trigger light drop
         AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
@@ -283,7 +283,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that the glow field is still not present
         LogUtils.getLogger().warn("Block light level after light drop during day: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
-        helper.assertFalse(helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be after attunement");
+        this.assertFalse(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be after attunement");
 
         helper.succeed();
     }
@@ -299,7 +299,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that there's no glow field present to start
         LogUtils.getLogger().warn("Block light level before attunement during night: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
-        helper.assertFalse(helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
+        this.assertFalse(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
 
         // Grant the player greater attunement to the Sun and trigger light drop
         AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
@@ -308,7 +308,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that there's still no glow field (because it's day time)
         LogUtils.getLogger().warn("Block light level after light drop during night: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
-        helper.assertTrue(helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field missing after attunement");
+        this.assertTrue(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field missing after attunement");
 
         helper.succeed();
     }
@@ -322,14 +322,14 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that the player is not granted invisibility without attunement
         CombatEvents.grantInvisibilityOnHurt(player, helper.getLevel(), rng);
-        helper.assertFalse(player.hasEffect(MobEffects.INVISIBILITY), "Player has invisibility when they shouldn't");
+        this.assertFalse(helper, player.hasEffect(MobEffects.INVISIBILITY), "Player has invisibility when they shouldn't");
 
         // Grant the player lesser attunement to the Moon
         AttunementManager.setAttunement(player, Sources.MOON, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
 
         // Confirm that the player is granted invisibility with attunement
         CombatEvents.grantInvisibilityOnHurt(player, helper.getLevel(), rng);
-        helper.assertTrue(player.hasEffect(MobEffects.INVISIBILITY), "Player does not have invisibility with attunement");
+        this.assertTrue(helper, player.hasEffect(MobEffects.INVISIBILITY), "Player does not have invisibility with attunement");
 
         helper.succeed();
     }
@@ -339,14 +339,14 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         var player = this.makeMockServerPlayer(helper);
 
         // Confirm that the player has the relevant effect with attunement
-        helper.assertFalse(player.hasEffect(MobEffects.NIGHT_VISION), "Player has unexpected effect");
+        this.assertFalse(helper, player.hasEffect(MobEffects.NIGHT_VISION), "Player has unexpected effect");
 
         // Grant the test player greater attunement to the Moon and force processing of attunement buffs
         AttunementManager.setAttunement(player, Sources.MOON, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
         PlayerEvents.applyAttunementBuffs(player);
 
         // Confirm that the player has the relevant effect with attunement
-        helper.assertTrue(player.hasEffect(MobEffects.NIGHT_VISION), "Player does not have expected effect");
+        this.assertTrue(helper, player.hasEffect(MobEffects.NIGHT_VISION), "Player does not have expected effect");
 
         helper.succeed();
     }
@@ -361,7 +361,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that bleeding is not inflicted upon the target without player attunement
         MutableFloat damage1 = new MutableFloat(2F);
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
-        helper.assertFalse(target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target has effect before attunement");
+        this.assertFalse(helper, target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target has effect before attunement");
 
         // Grant the test player lesser attunement to the Blood
         AttunementManager.setAttunement(player, Sources.BLOOD, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
@@ -369,7 +369,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that bleeding is inflicted upon the target with player attunement
         MutableFloat damage2 = new MutableFloat(2F);
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
-        helper.assertTrue(target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target does not have effect after attunement");
+        this.assertTrue(helper, target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target does not have effect after attunement");
 
         helper.succeed();
     }
@@ -387,7 +387,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that the player is not healed without attunement
         MutableFloat damage1 = new MutableFloat(12F);   // Do enough damage to force the RNG
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
-        helper.assertTrue(player.getHealth() == startHealth, "Player does not have expected health before attunement");
+        this.assertTrue(helper, player.getHealth() == startHealth, "Player does not have expected health before attunement");
 
         // Grant the test player greater attunement to the Blood
         AttunementManager.setAttunement(player, Sources.BLOOD, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
@@ -397,7 +397,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
         final float expected = startHealth + 1;
         final float actual = player.getHealth();
-        helper.assertTrue(actual == expected, "Player does not have expected health after attunement: " + actual);
+        this.assertTrue(helper, actual == expected, "Player does not have expected health after attunement: " + actual);
 
         helper.succeed();
     }
@@ -415,7 +415,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that the secondary target is not harmed when striking the primary target without attunement
         CombatEvents.onAttack(target1, player.damageSources().playerAttack(player), damage);
-        helper.assertTrue(target2.getHealth() == target2.getMaxHealth(), "Secondary target hurt before attunement");
+        this.assertTrue(helper, target2.getHealth() == target2.getMaxHealth(), "Secondary target hurt before attunement");
 
         // Grant the test player lesser attunement to the Infernal
         AttunementManager.setAttunement(player, Sources.INFERNAL, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
@@ -424,7 +424,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         CombatEvents.onAttack(target1, player.damageSources().playerAttack(player), damage);
         final float expected = target2.getMaxHealth() - (0.5F * damage);
         final float actual = target2.getHealth();
-        helper.assertTrue(expected == actual, "Secondary target not at expected health after attunement: " + actual);
+        this.assertTrue(helper, expected == actual, "Secondary target not at expected health after attunement: " + actual);
 
         helper.succeed();
     }
@@ -445,13 +445,13 @@ public class AbstractAttunementTest extends AbstractBaseTest {
             var damageSource = func.apply(helper.getLevel().registryAccess());
 
             // Confirm that the attack event is not supposed to be cancelled without attunement
-            helper.assertFalse(CombatEvents.onAttack(player, damageSource, 5F), "Damage being cancelled before attunement");
+            this.assertFalse(helper, CombatEvents.onAttack(player, damageSource, 5F), "Damage being cancelled before attunement");
 
             // Grant the test player greater attunement to the Infernal
             AttunementManager.setAttunement(player, Sources.INFERNAL, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
 
             // Confirm that the attack event is supposed to be cancelled with attunement
-            helper.assertTrue(CombatEvents.onAttack(player, damageSource, 5F), "Damage not being cancelled after attunement");
+            this.assertTrue(helper, CombatEvents.onAttack(player, damageSource, 5F), "Damage not being cancelled after attunement");
 
             helper.succeed();
         });
@@ -469,7 +469,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that the player takes normal damage without attunement
         MutableFloat damage1 = new MutableFloat(startingDamage);
         CombatEvents.onEntityHurt(player, player.damageSources().mobAttack(attacker), damage1::getValue, damage1::setValue);
-        helper.assertTrue(damage1.getValue() == startingDamage, "Damage modified without attunement");
+        this.assertTrue(helper, damage1.getValue() == startingDamage, "Damage modified without attunement");
 
         // Grant the test player lesser attunement to the Void
         AttunementManager.setAttunement(player, Sources.VOID, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
@@ -479,7 +479,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         CombatEvents.onEntityHurt(player, player.damageSources().mobAttack(attacker), damage2::getValue, damage2::setValue);
         final float actual = damage2.getValue();
         final float expected = 0.9F * startingDamage;
-        helper.assertTrue(expected == actual, "Damage not modified as expected after attunement");
+        this.assertTrue(helper, expected == actual, "Damage not modified as expected after attunement");
 
         helper.succeed();
     }
@@ -496,7 +496,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that the target takes normal damage without attunement
         MutableFloat damage1 = new MutableFloat(startingDamage);
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
-        helper.assertTrue(damage1.getValue() == startingDamage, "Damage modified without attunement");
+        this.assertTrue(helper, damage1.getValue() == startingDamage, "Damage modified without attunement");
 
         // Grant the test player greater attunement to the Void
         AttunementManager.setAttunement(player, Sources.VOID, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
@@ -506,7 +506,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
         final float actual = damage2.getValue();
         final float expected = 1.25F * startingDamage;
-        helper.assertTrue(expected == actual, "Damage not modified as expected after attunement");
+        this.assertTrue(helper, expected == actual, "Damage not modified as expected after attunement");
 
         helper.succeed();
     }
@@ -523,7 +523,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that the target takes normal damage without attunement
         MutableFloat damage1 = new MutableFloat(startingDamage);
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
-        helper.assertTrue(damage1.getValue() == startingDamage, "Damage modified without attunement");
+        this.assertTrue(helper, damage1.getValue() == startingDamage, "Damage modified without attunement");
 
         // Grant the player lesser attunement to the Hallowed
         AttunementManager.setAttunement(player, Sources.HALLOWED, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
@@ -533,7 +533,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
         final float actual = damage2.getValue();
         final float expected = 2F * startingDamage;
-        helper.assertTrue(expected == actual, "Damage not modified as expected after attunement");
+        this.assertTrue(helper, expected == actual, "Damage not modified as expected after attunement");
 
         helper.succeed();
     }
@@ -543,20 +543,20 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         var player = this.makeMockServerPlayer(helper);
 
         // Confirm that the target is not saved without attunement
-        helper.assertFalse(CombatEvents.onDeath(player), "Death cancelled before attunement");
-        helper.assertTrue(player.getActiveEffects().isEmpty(), "Player has unexpected effects before attunement");
-        helper.assertTrue(Services.CAPABILITIES.cooldowns(player).map(c -> c.getRemainingCooldown(IPlayerCooldowns.CooldownType.DEATH_SAVE)).orElse(0L) == 0L,
+        this.assertFalse(helper, CombatEvents.onDeath(player), "Death cancelled before attunement");
+        this.assertTrue(helper, player.getActiveEffects().isEmpty(), "Player has unexpected effects before attunement");
+        this.assertTrue(helper, Services.CAPABILITIES.cooldowns(player).map(c -> c.getRemainingCooldown(IPlayerCooldowns.CooldownType.DEATH_SAVE)).orElse(0L) == 0L,
                 "Player incurred a death save cooldown before attunement");
 
         // Grant the player greater attunement to the Hallowed
         AttunementManager.setAttunement(player, Sources.HALLOWED, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
 
         // Confirm that the target is saved with attunement
-        helper.assertTrue(CombatEvents.onDeath(player), "Death not cancelled after attunement");
-        helper.assertTrue(player.hasEffect(MobEffects.REGENERATION), "Player missing regeneration effect after attunement");
-        helper.assertTrue(player.hasEffect(MobEffects.ABSORPTION), "Player missing absorption effect after attunement");
-        helper.assertTrue(player.hasEffect(Objects.requireNonNull(EffectsPM.WEAKENED_SOUL.getHolder())), "Player missing weakened soul effect after attunement");
-        helper.assertTrue(Services.CAPABILITIES.cooldowns(player).map(c -> c.getRemainingCooldown(IPlayerCooldowns.CooldownType.DEATH_SAVE)).orElse(0L) > 0L,
+        this.assertTrue(helper, CombatEvents.onDeath(player), "Death not cancelled after attunement");
+        this.assertTrue(helper, player.hasEffect(MobEffects.REGENERATION), "Player missing regeneration effect after attunement");
+        this.assertTrue(helper, player.hasEffect(MobEffects.ABSORPTION), "Player missing absorption effect after attunement");
+        this.assertTrue(helper, player.hasEffect(Objects.requireNonNull(EffectsPM.WEAKENED_SOUL.getHolder())), "Player missing weakened soul effect after attunement");
+        this.assertTrue(helper, Services.CAPABILITIES.cooldowns(player).map(c -> c.getRemainingCooldown(IPlayerCooldowns.CooldownType.DEATH_SAVE)).orElse(0L) > 0L,
                 "Player missing a death save cooldown after attunement");
 
         helper.succeed();

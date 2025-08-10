@@ -11,18 +11,18 @@ public abstract class AbstractResearchTest extends AbstractBaseTest {
     public void research_grant_works(GameTestHelper helper) {
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         
-        helper.assertFalse(ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research already started on new player");
-        helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS), "Test research already complete on new player");
+        this.assertFalse(helper, ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research already started on new player");
+        this.assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS), "Test research already complete on new player");
         
-        helper.assertTrue(ResearchManager.progressResearch(player, ResearchEntries.FIRST_STEPS), "Failed to progress test research");
+        this.assertTrue(helper, ResearchManager.progressResearch(player, ResearchEntries.FIRST_STEPS), "Failed to progress test research");
         
-        helper.assertTrue(ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research not started after progressing");
-        helper.assertFalse(ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS), "Test research completed after only progressing");
+        this.assertTrue(helper, ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research not started after progressing");
+        this.assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS), "Test research completed after only progressing");
         
-        helper.assertTrue(ResearchManager.completeResearch(player, ResearchEntries.FIRST_STEPS), "Failed to complete test research");
+        this.assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.FIRST_STEPS), "Failed to complete test research");
         
-        helper.assertTrue(ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research not started after completing");
-        helper.assertTrue(ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS), "Test research not complete after completing");
+        this.assertTrue(helper, ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS), "Test research not started after completing");
+        this.assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS), "Test research not complete after completing");
         
         helper.succeed();
     }

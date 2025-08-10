@@ -36,76 +36,76 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
     public void research_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS));
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.FIRST_STEPS);
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 
     public void knowledge_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5);
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, 5 * KnowledgeType.OBSERVATION.getProgression());
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 
     public void item_stack_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new ItemStackRequirement(new ItemStack(Items.IRON_INGOT));
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         player.getInventory().add(new ItemStack(Items.IRON_INGOT));
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 
     public void item_tag_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var req = new ItemTagRequirement(CommonTags.Items.INGOTS_IRON, 1);
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         player.getInventory().add(new ItemStack(Items.IRON_INGOT));
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 
     public void stat_requirement(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper); // Stats are only recorded on the server side
         var req = new StatRequirement(StatsPM.MANA_SIPHONED, 2);
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         StatsManager.setValue(player, StatsPM.MANA_SIPHONED, 2);
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 
     public void expertise_requirement(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper); // Stats are only recorded on the server side
         var req = new ExpertiseRequirement(ResearchDisciplines.MANAWEAVING, ResearchTiers.EXPERT, 12);
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.UNLOCK_MANAWEAVING);
         ExpertiseManager.setValue(player, new ResearchDisciplineKey(ResearchDisciplines.MANAWEAVING), 12);
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 
     public void vanilla_item_used_stat_requirement(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper, true); // Vanilla stats require an explicit client or server player
         var req = new VanillaItemUsedStatRequirement(Items.SNOWBALL, 1);
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         var pos = new BlockPos(2, 2, 2);
         player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(pos)));
         var stack = new ItemStack(Items.SNOWBALL);
         stack.use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 
     public void vanilla_custom_stat_requirement(GameTestHelper helper) {
         var player = this.makeMockServerPlayer(helper); // Vanilla stats require an explicit client or server player
         var req = new VanillaCustomStatRequirement(Stats.JUMP, 1, null);
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         player.jumpFromGround();
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 
@@ -116,19 +116,19 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
                 new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5),
                 new ItemStackRequirement(new ItemStack(Items.IRON_INGOT))
             );
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         
         // Grant the first sub-requirement and re-test
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.FIRST_STEPS);
-        helper.assertFalse(req.isMetBy(player), "Partial expectation 1 failed");
+        this.assertFalse(helper, req.isMetBy(player), "Partial expectation 1 failed");
         
         // Grant the second sub-requirement and re-test
         player.getInventory().add(new ItemStack(Items.IRON_INGOT));
-        helper.assertFalse(req.isMetBy(player), "Partial expectation 2 failed");
+        this.assertFalse(helper, req.isMetBy(player), "Partial expectation 2 failed");
         
         // Grant the third sub-requirement and re-test
         ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, 5 * KnowledgeType.OBSERVATION.getProgression());
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 
@@ -139,21 +139,21 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
                 new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5),
                 new ItemStackRequirement(new ItemStack(Items.IRON_INGOT))
             );
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         
         // Grant the first sub-requirement and re-test
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.FIRST_STEPS);
-        helper.assertTrue(req.isMetBy(player), "Partial expectation 1 failed");
+        this.assertTrue(helper, req.isMetBy(player), "Partial expectation 1 failed");
         
         // Reset, grant the second sub-requirement, and re-test
         ResearchManager.forceRevokeWithAllChildren(player, ResearchEntries.FIRST_STEPS);
         player.getInventory().add(new ItemStack(Items.IRON_INGOT));
-        helper.assertTrue(req.isMetBy(player), "Partial expectation 2 failed");
+        this.assertTrue(helper, req.isMetBy(player), "Partial expectation 2 failed");
         
         // Reset, grant the third sub-requirement, and re-test
         player.getInventory().clearContent();
         ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, 5 * KnowledgeType.OBSERVATION.getProgression());
-        helper.assertTrue(req.isMetBy(player), "Partial expectation 3 failed");
+        this.assertTrue(helper, req.isMetBy(player), "Partial expectation 3 failed");
         helper.succeed();
     }
 
@@ -164,15 +164,15 @@ public abstract class AbstractResearchRequirementsTest extends AbstractBaseTest 
                 new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5),
                 new ItemStackRequirement(new ItemStack(Items.IRON_INGOT))
             );
-        helper.assertFalse(req.isMetBy(player), "Baseline expectation failed");
+        this.assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         
         // Grant the first sub-requirement and re-test
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.FIRST_STEPS);
-        helper.assertFalse(req.isMetBy(player), "Partial expectation 1 failed");
+        this.assertFalse(helper, req.isMetBy(player), "Partial expectation 1 failed");
         
         // Grant the second sub-requirement and re-test
         player.getInventory().add(new ItemStack(Items.IRON_INGOT));
-        helper.assertTrue(req.isMetBy(player), "Requirement not met");
+        this.assertTrue(helper, req.isMetBy(player), "Requirement not met");
         helper.succeed();
     }
 }
