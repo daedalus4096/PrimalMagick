@@ -5,14 +5,11 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.runes.SourceRune;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.armortrim.ArmorTrim;
+import net.minecraft.world.item.equipment.trim.ArmorTrim;
 
 import java.util.Optional;
 
@@ -21,9 +18,9 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public class RobeArmorItem extends ArmorItem implements IManaDiscountGear {
-    public RobeArmorItem(Holder<ArmorMaterial> material, ArmorItem.Type type, Item.Properties properties) {
-        super(material, type, properties);
+public class RobeArmorItem extends Item implements IManaDiscountGear {
+    public RobeArmorItem(Item.Properties properties) {
+        super(properties);
     }
     
     @Override

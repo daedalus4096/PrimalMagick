@@ -40,7 +40,6 @@ public class InitRegistries {
         BlocksPM.init();
         ItemsPM.init();
         CreativeModeTabsPM.init();
-        ArmorMaterialsPM.init();
         DataComponentsPM.init();
         EntityTypesPM.init();
         BlockEntityTypesPM.init();
