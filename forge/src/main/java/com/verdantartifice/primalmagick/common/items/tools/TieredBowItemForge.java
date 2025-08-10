@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 
-public class TieredBowItemForge extends TieredBowItem {
-    public TieredBowItemForge(Tier tier, Properties properties) {
-        super(tier, properties);
+public class TieredBowItemForge extends AbstractTieredBowItem {
+    public TieredBowItemForge(ToolMaterial material, Properties properties) {
+        super(material, properties);
     }
 
     @Override

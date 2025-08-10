@@ -16,7 +16,7 @@ public class PrimaliteShieldItem extends AbstractTieredShieldItem implements IHa
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public PrimaliteShieldItem(Item.Properties properties) {
-        super(ItemTierPM.PRIMALITE, properties);
+        super(ToolMaterialsPM.PRIMALITE, properties);
     }
 
     @Override

@@ -41,7 +41,7 @@ import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItemForge;
 import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItem;
 import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItemForge;
-import com.verdantartifice.primalmagick.common.items.tools.TieredBowItem;
+import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.TieredBowItemForge;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItemForge;
@@ -144,7 +144,7 @@ public class ItemPrototypeServiceForge implements IItemPrototypeService {
     }
 
     @Override
-    public Supplier<TieredBowItem> tieredBow(Tier tier, Item.Properties properties) {
+    public Supplier<AbstractTieredBowItem> tieredBow(Tier tier, Item.Properties properties) {
         return () -> new TieredBowItemForge(tier, properties);
     }
 

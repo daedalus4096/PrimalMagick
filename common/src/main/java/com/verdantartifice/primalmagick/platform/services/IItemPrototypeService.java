@@ -21,7 +21,7 @@ import com.verdantartifice.primalmagick.common.items.tools.ManaOrbItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItem;
-import com.verdantartifice.primalmagick.common.items.tools.TieredBowItem;
+import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredBowItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem;
@@ -59,7 +59,7 @@ public interface IItemPrototypeService {
     Supplier<HallowsteelTridentItem> hallowsteelTrident(Item.Properties properties);
     Supplier<ForbiddenTridentItem> forbiddenTrident(Item.Properties properties);
 
-    Supplier<TieredBowItem> tieredBow(Tier tier, Item.Properties properties);
+    Supplier<AbstractTieredBowItem> tieredBow(Tier tier, Item.Properties properties);
     Supplier<ForbiddenBowItem> forbiddenBow(Item.Properties properties);
 
     Supplier<SpelltomeItem> spelltome(DeviceTier tier, Item.Properties properties);

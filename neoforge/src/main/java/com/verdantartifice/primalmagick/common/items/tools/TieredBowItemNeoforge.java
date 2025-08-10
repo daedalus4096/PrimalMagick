@@ -2,11 +2,11 @@ package com.verdantartifice.primalmagick.common.items.tools;
 
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 
-public class TieredBowItemNeoforge extends TieredBowItem{
-    public TieredBowItemNeoforge(Tier tier, Properties properties) {
-        super(tier, properties);
+public class TieredBowItemNeoforge extends AbstractTieredBowItem {
+    public TieredBowItemNeoforge(ToolMaterial material, Properties properties) {
+        super(material, properties);
     }
 
     @Override

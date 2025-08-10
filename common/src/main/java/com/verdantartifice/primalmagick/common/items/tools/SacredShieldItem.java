@@ -24,7 +24,7 @@ public class SacredShieldItem extends AbstractTieredShieldItem implements IEncha
     public static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/shield/sacred_shield");
     
     public SacredShieldItem(Item.Properties properties) {
-        super(ItemTierPM.HALLOWSTEEL, properties);
+        super(ToolMaterialsPM.HALLOWSTEEL, properties);
     }
 
     @Override

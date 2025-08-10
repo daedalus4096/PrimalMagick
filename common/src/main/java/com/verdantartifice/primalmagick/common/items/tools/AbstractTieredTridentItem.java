@@ -19,6 +19,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
@@ -35,14 +36,19 @@ import java.util.List;
  * @author Daedalus4096
  */
 public abstract class AbstractTieredTridentItem extends TridentItem implements IHasCustomRenderer {
-    protected final Tier tier;
+    protected final ToolMaterial material;
 
-    public AbstractTieredTridentItem(Tier tier, Item.Properties properties) {
-        super(properties.durability(tier.getUses()).attributes(createAttributes(tier)).component(DataComponents.TOOL, createToolProperties()));
-        this.tier = tier;
+    public AbstractTieredTridentItem(ToolMaterial material, Item.Properties properties) {
+        super(properties
+                .durability(material.durability())
+                .enchantable(material.enchantmentValue())
+                .repairable(material.repairItems())
+                .attributes(createAttributes(material))
+                .component(DataComponents.TOOL, createToolProperties()));
+        this.material = material;
     }
     
-    public static ItemAttributeModifiers createAttributes(Tier tier) {
+    public static ItemAttributeModifiers createAttributes(ToolMaterial material) {
         return ItemAttributeModifiers.builder()
             .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 7.0D + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
             .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.9D, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -53,18 +59,8 @@ public abstract class AbstractTieredTridentItem extends TridentItem implements I
         return new Tool(List.of(), 1.0F, 2);
     }
 
-    public Tier getTier() {
-        return this.tier;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return this.tier.getEnchantmentValue();
-    }
-
-    @Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
+    public ToolMaterial getMaterial() {
+        return this.material;
     }
 
     protected abstract AbstractTridentEntity getThrownEntity(Level world, LivingEntity thrower, ItemStack stack);

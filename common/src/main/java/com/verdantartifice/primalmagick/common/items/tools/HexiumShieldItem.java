@@ -16,7 +16,7 @@ public class HexiumShieldItem extends AbstractTieredShieldItem implements IHasCu
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public HexiumShieldItem(Item.Properties properties) {
-        super(ItemTierPM.HEXIUM, properties);
+        super(ToolMaterialsPM.HEXIUM, properties);
     }
 
     @Override

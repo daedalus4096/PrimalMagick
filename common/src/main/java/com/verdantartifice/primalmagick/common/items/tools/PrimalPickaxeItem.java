@@ -5,8 +5,6 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.IEnchantedByDefault;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Map;
@@ -16,9 +14,9 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
-public class PrimalPickaxeItem extends PickaxeItem implements IEnchantedByDefault {
-    public PrimalPickaxeItem(Tier tier, Item.Properties builder) {
-        super(tier, builder);
+public class PrimalPickaxeItem extends Item implements IEnchantedByDefault {
+    public PrimalPickaxeItem(Item.Properties builder) {
+        super(builder);
     }
 
     @Override

@@ -12,7 +12,7 @@ import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -23,11 +23,15 @@ import net.minecraft.world.level.gameevent.GameEvent;
  * @author Daedalus4096
  */
 public class TieredFishingRodItem extends FishingRodItem {
-    protected final Tier tier;
+    protected final ToolMaterial material;
     
-    public TieredFishingRodItem(Tier tier, Item.Properties properties) {
-        super(properties.durability(tier.getUses() / 4));
-        this.tier = tier;
+    public TieredFishingRodItem(ToolMaterial material, Item.Properties properties) {
+        super(properties
+                .durability(material.durability() / 4)
+                .enchantable(material.enchantmentValue())
+                .repairable(material.repairItems())
+        );
+        this.material = material;
     }
     
     @Override
@@ -54,17 +58,7 @@ public class TieredFishingRodItem extends FishingRodItem {
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
 
-    public Tier getTier() {
-        return this.tier;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return this.tier.getEnchantmentValue();
-    }
-
-    @Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
+    public ToolMaterial getMaterial() {
+        return this.material;
     }
 }

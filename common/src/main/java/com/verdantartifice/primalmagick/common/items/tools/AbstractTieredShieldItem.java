@@ -1,9 +1,8 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 
 /**
  * Base definition of a shield item made of a magickal metal.
@@ -11,25 +10,19 @@ import net.minecraft.world.item.Tier;
  * @author Daedalus4096
  */
 public abstract class AbstractTieredShieldItem extends ShieldItem {
-    protected final Tier tier;
+    protected final ToolMaterial material;
     
-    public AbstractTieredShieldItem(Tier tier, Item.Properties properties) {
-        super(properties.durability(tier.getUses()));
-        this.tier = tier;
-    }
-    
-    public Tier getTier() {
-        return this.tier;
+    public AbstractTieredShieldItem(ToolMaterial material, Item.Properties properties) {
+        super(properties
+                .durability(material.durability())
+                .enchantable(material.enchantmentValue())
+                .repairable(material.repairItems())
+        );
+        this.material = material;
     }
 
-    @Override
-    public int getEnchantmentValue() {
-        return this.tier.getEnchantmentValue();
-    }
-
-    @Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
+    public ToolMaterial getMaterial() {
+        return this.material;
     }
 
     /**
