@@ -10,7 +10,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -63,7 +62,7 @@ public class SpellScrollItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         // Cast the held spell, if any, and consume the scroll
         ItemStack stack = playerIn.getItemInHand(handIn);
         playerIn.startUsingItem(handIn);
@@ -76,12 +75,12 @@ public class SpellScrollItem extends Item {
                 if (!playerIn.hasInfiniteMaterials()) {
                     stack.shrink(1);
                 }
-                return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+                return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
             } else {
-                return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
+                return InteractionResult.FAIL;
             }
         } else {
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
         }
     }
     

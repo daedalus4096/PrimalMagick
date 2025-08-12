@@ -25,7 +25,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -215,7 +214,7 @@ public class StaticBookItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
             getBookDefinition(stack).ifPresentOrElse(bookDefHolder -> {
@@ -229,7 +228,7 @@ public class StaticBookItem extends Item {
                 LOGGER.error("No book definition found when opening static book stack {}", stack.toString());
             });
         }
-        return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+        return InteractionResult.CONSUME.heldItemTransformedTo(stack);
     }
     
     public static Builder builder(Supplier<StaticBookItem> baseBook, HolderLookup.Provider registries) {

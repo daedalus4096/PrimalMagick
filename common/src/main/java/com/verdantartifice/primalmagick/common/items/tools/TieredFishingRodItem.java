@@ -5,7 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
@@ -35,7 +35,7 @@ public class TieredFishingRodItem extends FishingRodItem {
     }
     
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (player.fishing != null) {
             if (!level.isClientSide) {
@@ -55,7 +55,7 @@ public class TieredFishingRodItem extends FishingRodItem {
             player.gameEvent(GameEvent.ITEM_INTERACT_START);
         }
         
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+        return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
     }
 
     public ToolMaterial getMaterial() {

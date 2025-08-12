@@ -24,7 +24,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -184,7 +183,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
     
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
         playerIn.startUsingItem(handIn);
         SpellPackage activeSpell = SpellManager.getActiveSpell(playerIn.getMainHandItem(), playerIn.getOffhandItem());
@@ -192,23 +191,23 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             // If the wand has an active spell and spells are off the player's cooldown, attempt to cast the spell on right-click
             SpellManager.setCooldown(playerIn, activeSpell.getCooldownTicks());
             if (worldIn.isClientSide) {
-                return InteractionResultHolder.success(stack);
+                return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
             } else {
                 HitResult hit = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
                 if (isTargetWandInteractable(worldIn, playerIn, hit)) {
                     // If the current mouseover target in range has special interaction with wands, then suppress the spell cast
-                    return InteractionResultHolder.pass(stack);
+                    return InteractionResult.PASS;
                 } else if (ManaManager.consumeMana(playerIn, stack, activeSpell.getManaCost(), worldIn.registryAccess())) {
                     // If the wand contains enough mana, consume it and cast the spell
                     activeSpell.cast(worldIn, playerIn, stack);
                     playerIn.swing(handIn);
-                    return InteractionResultHolder.success(stack);
+                    return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
                 } else {
-                    return InteractionResultHolder.fail(stack);
+                    return InteractionResult.FAIL;
                 }
             }
         } else {
-            return InteractionResultHolder.pass(stack);
+            return InteractionResult.PASS;
         }
     }
     

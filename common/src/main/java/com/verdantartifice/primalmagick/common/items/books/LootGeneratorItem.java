@@ -8,7 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +36,7 @@ public class LootGeneratorItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer && pLevel instanceof ServerLevel serverLevel) {
             LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(this.lootTableLoc);
             LootParams lootParams = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, pPlayer.getEyePosition()).create(LootContextParamSets.CHEST);   // Origin is irrelevant, but expected

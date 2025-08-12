@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +33,7 @@ public class GrimoireItem extends Item {
     }
     
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (!worldIn.isClientSide && playerIn instanceof ServerPlayer serverPlayer) {
             if (this.unlockAll) {
                 ResearchManager.forceGrantAll(playerIn);
@@ -42,7 +41,7 @@ public class GrimoireItem extends Item {
             StatsManager.incrementValue(playerIn, StatsPM.GRIMOIRE_READ);
             PacketHandler.sendToPlayer(new OpenGrimoireScreenPacket(), serverPlayer);
         }
-        return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
+        return InteractionResult.SUCCESS.heldItemTransformedTo(playerIn.getItemInHand(handIn));
     }
 
     @Override

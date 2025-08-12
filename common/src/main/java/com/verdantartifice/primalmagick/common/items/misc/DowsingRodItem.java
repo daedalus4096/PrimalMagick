@@ -23,7 +23,6 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +35,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -71,21 +70,21 @@ public class DowsingRodItem extends Item {
             if (blockEntity instanceof RitualAltarTileEntity altarEntity) {
                 this.doStabilityCheck(altarEntity, player);
                 this.damageRod(player, stack);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
             } else if (block instanceof OfferingPedestalBlock pedestalBlock && blockEntity instanceof OfferingPedestalTileEntity pedestalTile) {
                 this.doPropSaltCheck(level, pedestalBlock, targetPos, player);
                 this.doPropSymmetryCheck(level, pedestalBlock, targetPos, pedestalTile.getAltarPos(), player);
                 this.damageRod(player, stack);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
             } else if (block instanceof IRitualPropBlock propBlock && blockEntity instanceof IRitualPropTileEntity propTile) {
                 this.doPropSaltCheck(level, propBlock, targetPos, player);
                 this.doPropSymmetryCheck(level, propBlock, targetPos, propTile.getAltarPos(), player);
                 this.damageRod(player, stack);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
             } else if (blockEntity instanceof IManaNetworkNode node) {
                 this.doRouteTableCheck(level, node, player, stack);
                 this.damageRod(player, stack);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
             } else {
                 return InteractionResult.PASS;
             }
@@ -95,9 +94,9 @@ public class DowsingRodItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         // If using the dowsing rod on empty air, then clear any recorded dowsing positions
-        InteractionResultHolder<ItemStack> retVal = super.use(pLevel, pPlayer, pUsedHand);
+        InteractionResult retVal = super.use(pLevel, pPlayer, pUsedHand);
         this.recordDowsingPosition(pPlayer.getItemInHand(pUsedHand), pPlayer, null);
         return retVal;
     }

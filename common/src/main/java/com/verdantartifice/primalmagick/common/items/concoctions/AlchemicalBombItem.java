@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -47,7 +47,7 @@ public class AlchemicalBombItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (playerIn.isSecondaryUseActive()) {
             // Set bomb fuse
@@ -80,7 +80,7 @@ public class AlchemicalBombItem extends Item {
                 }
             }
         }
-        return InteractionResultHolder.sidedSuccess(stack, worldIn.isClientSide());
+        return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
     }
 
     @Override
