@@ -33,7 +33,7 @@ public abstract class AbstractTieredBowItem extends BowItem {
         } else if (ToolMaterialsPM.HALLOWSTEEL.equals(this.material)) {
             damageBonus = 1.5D;
         }
-        arrow.setBaseDamage(arrow.getBaseDamage() + damageBonus);
+        arrow.setBaseDamage(arrow.baseDamage + damageBonus);
         return arrow;
     }
     

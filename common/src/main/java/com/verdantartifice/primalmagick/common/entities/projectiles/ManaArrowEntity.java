@@ -63,7 +63,7 @@ public class ManaArrowEntity extends AbstractArrow {
         } else if (source == Sources.INFERNAL) {
             this.igniteForSeconds(100);
         } else if (source == Sources.HALLOWED) {
-            this.setBaseDamage(this.getBaseDamage() + 1);
+            this.setBaseDamage(this.baseDamage + 1);
         }
     }
     

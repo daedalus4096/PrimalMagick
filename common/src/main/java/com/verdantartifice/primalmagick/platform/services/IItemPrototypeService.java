@@ -32,6 +32,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
@@ -59,7 +60,7 @@ public interface IItemPrototypeService {
     Supplier<HallowsteelTridentItem> hallowsteelTrident(Item.Properties properties);
     Supplier<ForbiddenTridentItem> forbiddenTrident(Item.Properties properties);
 
-    Supplier<AbstractTieredBowItem> tieredBow(Tier tier, Item.Properties properties);
+    Supplier<AbstractTieredBowItem> tieredBow(ToolMaterial material, Item.Properties properties);
     Supplier<ForbiddenBowItem> forbiddenBow(Item.Properties properties);
 
     Supplier<SpelltomeItem> spelltome(DeviceTier tier, Item.Properties properties);
