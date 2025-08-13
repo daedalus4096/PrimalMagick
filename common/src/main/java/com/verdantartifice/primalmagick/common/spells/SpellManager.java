@@ -49,6 +49,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Primary access point for spell-related methods.  Also stores defined spell component data in static registries.
@@ -106,34 +107,34 @@ public class SpellManager {
         }
     }
 
-    public static void appendSpellListingText(@Nullable Player pPlayer, ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents) {
+    public static void appendSpellListingText(@Nullable Player pPlayer, ItemStack pStack, Item.TooltipContext pContext, Consumer<Component> pTooltipComponents) {
         if (pStack.getItem() instanceof ISpellContainer spellContainer) {
             List<SpellPackage> spells = spellContainer.getSpells(pStack);
             int activeIndex = spellContainer.getActiveSpellIndex(pStack);
-            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.wand_header", spellContainer.getSpellCapacityText(pStack)));
+            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.wand_header", spellContainer.getSpellCapacityText(pStack)));
             if (spells.isEmpty()) {
-                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.none"));
+                pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.none"));
             } else {
                 for (int index = 0; index < spells.size(); index++) {
                     SpellPackage spell = spells.get(index);
                     if (index == activeIndex) {
-                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getDisplayName()));
-                        pTooltipComponents.addAll(SpellManager.getSpellPackageDetailTooltip(spell, pStack, pPlayer, true, pContext.registries()));
+                        pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getDisplayName()));
+                        SpellManager.getSpellPackageDetailTooltip(spell, pStack, pPlayer, true, pContext.registries()).forEach(pTooltipComponents);
                     } else {
-                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getDisplayName()));
+                        pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getDisplayName()));
                     }
                 }
             }
         }
     }
 
-    public static void appendActiveSpellText(ItemStack pStack, List<Component> pTooltipComponents) {
+    public static void appendActiveSpellText(ItemStack pStack, Consumer<Component> pTooltipComponents) {
         if (pStack.getItem() instanceof ISpellContainer spellContainer) {
             SpellPackage activeSpell = spellContainer.getActiveSpell(pStack);
             Component activeSpellName = (activeSpell == null) ?
                     Component.translatable("tooltip.primalmagick.none") :
                     activeSpell.getDisplayName();
-            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.short_wand_header", activeSpellName));
+            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.short_wand_header", activeSpellName));
         }
     }
 

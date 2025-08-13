@@ -18,11 +18,13 @@ import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomRenderer, ITieredDevice, IManaContainer {
@@ -138,9 +140,7 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack pStack, @NotNull TooltipContext pContext, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
-
+    public void appendHoverText(@NotNull ItemStack pStack, @NotNull TooltipContext pContext, @NotNull TooltipDisplay pTooltipDisplay, @NotNull Consumer<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
         if (this.isAttuned(pStack)) {
             // Add detailed mana information
             for (Source source : Sources.getAllSorted()) {
@@ -148,11 +148,11 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
                 if (this.isAttuned(pStack, source)) {
                     Component nameComp = source.getNameText();
                     Component line = Component.translatable("tooltip.primalmagick.source.mana_gauge", nameComp, this.getManaText(pStack, source, false), this.getMaxManaText(pStack, source));
-                    pTooltipComponents.add(line);
+                    pTooltipComponents.accept(line);
                 }
             }
         } else {
-            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.mana_orb.unattuned").withStyle(ChatFormatting.GRAY));
+            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.mana_orb.unattuned").withStyle(ChatFormatting.GRAY));
         }
     }
 }

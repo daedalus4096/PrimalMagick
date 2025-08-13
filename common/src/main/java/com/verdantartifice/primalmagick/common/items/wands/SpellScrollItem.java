@@ -15,11 +15,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Item definition for a filled spell scroll.  These can be used to cast their held spell directly or
@@ -55,10 +57,9 @@ public class SpellScrollItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(this.getSpell(stack), stack, null, false, context.registries()));
-        tooltip.add(TOOLTIP);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flag) {
+        SpellManager.getSpellPackageDetailTooltip(this.getSpell(stack), stack, null, false, context.registries()).forEach(tooltip);
+        tooltip.accept(TOOLTIP);
     }
 
     @Override

@@ -5,11 +5,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -37,10 +39,9 @@ public class SanguineCoreItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
-        tooltip.add(Component.translatable("tooltip.primalmagick.sanguine_core.1", stack.getMaxDamage() - stack.getDamageValue() + 1));
-        tooltip.add(Component.translatable("tooltip.primalmagick.sanguine_core.2", this.soulsPerSpawn));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.accept(Component.translatable("tooltip.primalmagick.sanguine_core.1", stack.getMaxDamage() - stack.getDamageValue() + 1));
+        tooltip.accept(Component.translatable("tooltip.primalmagick.sanguine_core.2", this.soulsPerSpawn));
     }
 
     public EntityType<?> getEntityType() {

@@ -29,6 +29,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -180,33 +182,32 @@ public class StaticBookItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pIsAdvanced);
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, TooltipDisplay pTooltipDisplay, Consumer<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         if (Services.PLATFORM.isClientDist() && hasAuthor(pStack)) {
             Component authorText = BookHelper.getAuthorText(makeBookView(pStack, pContext.registries()), getAuthor(pStack));
-            pTooltipComponents.add(Component.translatable("book.byAuthor", authorText).withStyle(ChatFormatting.GRAY));
+            pTooltipComponents.accept(Component.translatable("book.byAuthor", authorText).withStyle(ChatFormatting.GRAY));
         }
         getBookDefinition(pStack).ifPresent(defHolder -> {
             getBookLanguage(pStack).ifPresent(langHolder -> {
-                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", langHolder.value().getName()).withStyle(ChatFormatting.GRAY));
-                pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
+                pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.header", langHolder.value().getName()).withStyle(ChatFormatting.GRAY));
+                pTooltipComponents.accept(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
                 if (Services.PLATFORM.isClientDist() && hasBookDefinition(pStack) && hasBookLanguage(pStack) && langHolder.value().isComplex()) {
                     Player player = Services.PLATFORM.isClientDist() ? ClientUtils.getCurrentPlayer() : null;
                     Optional<Integer> translatedComprehension = getTranslatedComprehension(pStack);
                     int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, langHolder));
                     double percentage = BookHelper.getBookComprehension(new BookView(Either.left(defHolder), langHolder, comprehension));
-                    pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
+                    pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
                     if (translatedComprehension.isPresent()) {
                         if (translatedComprehension.get() >= langHolder.value().complexity()) {
-                            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.full").withStyle(ChatFormatting.DARK_AQUA));
+                            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.translated.full").withStyle(ChatFormatting.DARK_AQUA));
                         } else if (translatedComprehension.get() > 0) {
-                            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.partial").withStyle(ChatFormatting.DARK_AQUA));
+                            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.translated.partial").withStyle(ChatFormatting.DARK_AQUA));
                         }
                     }
                     
                     int timesStudied = LinguisticsManager.getTimesStudied(player, defHolder, langHolder);
                     if (timesStudied > 0) {
-                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.times_studied", timesStudied).withStyle(ChatFormatting.DARK_AQUA));
+                        pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.times_studied", timesStudied).withStyle(ChatFormatting.DARK_AQUA));
                     }
                 }
             });

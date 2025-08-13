@@ -11,9 +11,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Item definition for bloody flesh.  Bloody flesh drops from human-like mobs and unlocks the Blood source when eaten.
@@ -38,8 +40,8 @@ public class BloodyFleshItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Component.translatable("item.primalmagick.bloody_flesh.tooltip.1").withStyle(Sources.BLOOD.getChatColor(), ChatFormatting.ITALIC));
-        tooltip.add(Component.translatable("item.primalmagick.bloody_flesh.tooltip.2").withStyle(Sources.BLOOD.getChatColor(), ChatFormatting.ITALIC));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.accept(Component.translatable("item.primalmagick.bloody_flesh.tooltip.1").withStyle(Sources.BLOOD.getChatColor(), ChatFormatting.ITALIC));
+        tooltip.accept(Component.translatable("item.primalmagick.bloody_flesh.tooltip.2").withStyle(Sources.BLOOD.getChatColor(), ChatFormatting.ITALIC));
     }
 }

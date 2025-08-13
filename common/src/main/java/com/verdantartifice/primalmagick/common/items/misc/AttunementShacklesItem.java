@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -20,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Item definition for attunement shackles.  An item that, when carried in a player's inventory, will
@@ -48,14 +50,12 @@ public class AttunementShacklesItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
-        
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         Player player = Services.PLATFORM.isClientDist() ? ClientUtils.getCurrentPlayer() : null;
         if (AttunementManager.isSuppressed(player, this.source)) {
-            tooltip.add(Component.translatable("tooltip.primalmagick.active").withStyle(ChatFormatting.GREEN));
+            tooltip.accept(Component.translatable("tooltip.primalmagick.active").withStyle(ChatFormatting.GREEN));
         } else {
-            tooltip.add(Component.translatable("tooltip.primalmagick.inactive").withStyle(ChatFormatting.RED));
+            tooltip.accept(Component.translatable("tooltip.primalmagick.inactive").withStyle(ChatFormatting.RED));
         }
     }
 

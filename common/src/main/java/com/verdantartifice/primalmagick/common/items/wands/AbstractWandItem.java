@@ -30,6 +30,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -40,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Base item definition for a wand.  Wands store mana for use in crafting and, optionally, casting spells.
@@ -98,9 +100,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
-        
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         Player player = Services.PLATFORM.isClientDist() ? ClientUtils.getCurrentPlayer() : null;
         boolean showDetails = Services.PLATFORM.isClientDist() && ClientUtils.hasShiftDown();
         if (showDetails) {
@@ -111,7 +111,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                     Component nameComp = source.getNameText();
                     int modifier = this.getTotalCostModifier(stack, player, source, context.registries());
                     Component line = Component.translatable("tooltip.primalmagick.source.mana", nameComp, this.getManaText(stack, source, false), this.getMaxManaText(stack, source), modifier);
-                    tooltip.add(line);
+                    tooltip.accept(line);
                 }
             }
             
@@ -133,13 +133,13 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
                     first = false;
                 }
             }
-            tooltip.add(summaryText);
+            tooltip.accept(summaryText);
             
             // Add active spell
             SpellManager.appendActiveSpellText(stack, tooltip);
             
             // Add more info tooltip
-            tooltip.add(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         }
     }
     

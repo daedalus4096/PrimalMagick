@@ -10,10 +10,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Definition of a shield that comes pre-enchanted with Bulwark.
@@ -34,7 +36,7 @@ public class SacredShieldItem extends AbstractTieredShieldItem implements IEncha
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext level, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flag) {
         // Do nothing; we don't support banner patterns
     }
 

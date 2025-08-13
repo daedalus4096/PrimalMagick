@@ -22,11 +22,13 @@ import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -87,9 +89,7 @@ public abstract class SpelltomeItem extends Item implements Equipable, IHasCusto
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
-
+    public void appendHoverText(ItemStack pStack, TooltipContext pContext, TooltipDisplay pTooltipDisplay, Consumer<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
         Player player = Services.PLATFORM.isClientDist() ? ClientUtils.getCurrentPlayer() : null;
         boolean showDetails = Services.PLATFORM.isClientDist() && ClientUtils.hasShiftDown();
         if (showDetails) {
@@ -100,7 +100,7 @@ public abstract class SpelltomeItem extends Item implements Equipable, IHasCusto
             SpellManager.appendActiveSpellText(pStack, pTooltipComponents);
 
             // Add more info tooltip
-            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         }
     }
 
