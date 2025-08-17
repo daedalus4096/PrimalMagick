@@ -2,11 +2,19 @@ package com.verdantartifice.primalmagick.datagen.models;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
+import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Items;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
     public AbstractModelProviderPM(PackOutput output) {
@@ -14,12 +22,149 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     protected void executeBlockModelGenerators(BlockModelGenerators blockModels) {
-        // TODO Actually create models here
+        // TODO Generate marble blocks
         blockModels.createTrivialCube(BlocksPM.MARBLE_RAW.get());
+
+        // TODO Generate enchanted marble blocks
+        // TODO Generate smoked marble blocks
+        // TODO Generate hallowed marble blocks
+        // TODO Generate sunwood blocks
+        // TODO Generate moonwood blocks
+        // TODO Generate hallowood blocks
+        // TODO Generate crop blocks
+        // TODO Generate infused stone blocks
+        // TODO Generate budding gem blocks
+        // TODO Generate skyglass blocks
+        // TODO Generate skyglass pane blocks
+        // TODO Generate ritual candle blocks
+        // TODO Generate mana font blocks
+        // TODO Generate device blocks
+        // TODO Generate misc blocks
     }
 
     protected void executeItemModelGenerators(ItemModelGenerators itemModels) {
-        // TODO Actually create models and client items here
+        // Generate crop items
         itemModels.generateFlatItem(ItemsPM.HYDROMELON_SEEDS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HYDROMELON_SLICE.get(), ModelTemplates.FLAT_ITEM);
+
+        // Generate salted food items
+        itemModels.generateFlatItem(ItemsPM.SALTED_BAKED_POTATO.get(), Items.BAKED_POTATO, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_COOKED_BEEF.get(), Items.COOKED_BEEF, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_COOKED_CHICKEN.get(), Items.COOKED_CHICKEN, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_COOKED_COD.get(), Items.COOKED_COD,ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_COOKED_MUTTON.get(), Items.COOKED_MUTTON, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_COOKED_PORKCHOP.get(), Items.COOKED_PORKCHOP, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_COOKED_RABBIT.get(), Items.COOKED_RABBIT, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_COOKED_SALMON.get(), Items.COOKED_SALMON, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_BEETROOT_SOUP.get(), Items.BEETROOT_SOUP, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_MUSHROOM_STEW.get(), Items.MUSHROOM_STEW, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALTED_RABBIT_STEW.get(), Items.RABBIT_STEW, ModelTemplates.FLAT_ITEM);
+
+        // Generate mineral items
+        itemModels.generateFlatItem(ItemsPM.IRON_GRIT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.GOLD_GRIT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.COPPER_GRIT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SALT_PINCH.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.PRIMALITE_INGOT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HEXIUM_INGOT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.PRIMALITE_NUGGET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HEXIUM_NUGGET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_NUGGET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.QUARTZ_NUGGET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.ENERGIZED_AMETHYST.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.ENERGIZED_DIAMOND.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.ENERGIZED_EMERALD.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.ENERGIZED_QUARTZ.get(), ModelTemplates.FLAT_ITEM);
+
+        // TODO Generate tool items
+        // TODO Generate mana arrow items
+        // TODO Generate armor items
+
+        // Generate miscellaneous items
+        itemModels.generateFlatItem(ItemsPM.GRIMOIRE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.CREATIVE_GRIMOIRE.get(), ModelTemplates.FLAT_ITEM);
+        // TODO Generate arancometer
+        itemModels.generateFlatItem(ItemsPM.MAGNIFYING_GLASS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.ALCHEMICAL_WASTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.BLOODY_FLESH.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HALLOWED_ORB.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HEARTWOOD.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.ENCHANTED_INK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.ENCHANTED_INK_AND_QUILL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SEASCRIBE_PEN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.ROCK_SALT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.EARTHSHATTER_HAMMER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.MANA_PRISM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.TALLOW.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.BEESWAX.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.MANA_SALTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.MANAFRUIT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.INCENSE_STICK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SOUL_GEM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SOUL_GEM_SLIVER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SPELLCLOTH.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HEXWEAVE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SAINTSWOOL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.MAGITECH_PARTS_BASIC.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.MAGITECH_PARTS_ENCHANTED.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.MAGITECH_PARTS_HEAVENLY.get(), ModelTemplates.FLAT_ITEM);
+        // TODO Generate flying carpet item
+        itemModels.generateFlatItem(ItemsPM.DREAM_VISION_TALISMAN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.IGNYX.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.DOWSING_ROD.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.FOUR_LEAF_CLOVER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.RECALL_STONE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.BASIC_WARDING_MODULE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.GREATER_WARDING_MODULE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SUPREME_WARDING_MODULE.get(), ModelTemplates.FLAT_ITEM);
+        // TODO Generate pixie house item
+
+        // Generate knowledge items
+        itemModels.generateFlatItem(ItemsPM.OBSERVATION_NOTES.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.THEORY_NOTES.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.MYSTICAL_RELIC.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.BLOOD_NOTES.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SHEEP_TOME.get(), ModelTemplates.FLAT_ITEM);
+
+        // Generate essence items
+        EssenceItem.getAllEssences().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
+
+        // Generate rune items
+        itemModels.generateFlatItem(ItemsPM.RUNE_UNATTUNED.get(), ModelTemplates.FLAT_ITEM);
+        RuneItem.getAllRunes().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
+
+        // TODO Generate ambrosia items
+        // TODO Generate attunement shackles items
+        // TODO Generate humming artifact items
+
+        // Generate sanguine core items
+        itemModels.generateFlatItem(ItemsPM.SANGUINE_CORE_BLANK.get(), ModelTemplates.FLAT_ITEM);
+        SanguineCoreItem.getAllCores().forEach(item -> itemModels.generateFlatItem(item, ItemsPM.SANGUINE_CORE_BLANK.get(), ModelTemplates.FLAT_ITEM));
+
+        // TODO Generate concoction items
+
+        // Generate caster items
+        itemModels.generateFlatItem(ItemsPM.SPELL_SCROLL_BLANK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.SPELL_SCROLL_FILLED.get(), ModelTemplates.FLAT_ITEM);
+        // TODO Generate mundane wand
+        // TODO Generate modular wand
+        // TODO Generate modular staff
+
+        // Generate wand component items
+        WandCoreItem.getAllCores().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
+        StaffCoreItem.getAllCores().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
+        WandCapItem.getAllCaps().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
+        WandGemItem.getAllGems().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
+
+        // TODO Generate spawn items
+        // TODO Generate pixie and drained pixie items
+        // TODO Generate book items
+
+        // Generate debug items
+        itemModels.generateFlatItem(ItemsPM.TICK_STICK.get(), Items.STICK, ModelTemplates.FLAT_ITEM);
     }
 }
