@@ -13,6 +13,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 
@@ -22,6 +23,9 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     protected void executeBlockModelGenerators(BlockModelGenerators blockModels) {
+        // Generate models for defined block families
+        BlockFamiliesPM.getAllFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> blockModels.family(family.getBaseBlock()).generateFor(family));
+
         // TODO Generate marble blocks
         blockModels.createTrivialCube(BlocksPM.MARBLE_RAW.get());
 
