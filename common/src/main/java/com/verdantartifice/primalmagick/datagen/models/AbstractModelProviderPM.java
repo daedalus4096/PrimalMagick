@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.client.color.item.Constant;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -233,9 +234,21 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         WandCapItem.getAllCaps().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
         WandGemItem.getAllGems().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
 
-        // TODO Generate spawn items
+        // Generate spawn items
+        this.generateSpawnItem(itemModels, ItemsPM.TREEFOLK_SPAWN_EGG.get(), 0x76440F, 0x007302);
+        this.generateSpawnItem(itemModels, ItemsPM.PRIMALITE_GOLEM_SPAWN_EGG.get(), 0x27E1C7, 0x026278);
+        this.generateSpawnItem(itemModels, ItemsPM.HEXIUM_GOLEM_SPAWN_EGG.get(), 0x791E29, 0x100736);
+        this.generateSpawnItem(itemModels, ItemsPM.HALLOWSTEEL_GOLEM_SPAWN_EGG.get(), 0xFDFFE0, 0xEDE1A2);
+
         // TODO Generate pixie and drained pixie items
-        // TODO Generate book items
+
+        // Generate book items
+        itemModels.generateFlatItem(ItemsPM.STATIC_BOOK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.STATIC_BOOK_UNCOMMON.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.STATIC_BOOK_RARE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.STATIC_TABLET.get(), ItemsPM.MYSTICAL_RELIC.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.LORE_TABLET_FRAGMENT.get(), ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.LORE_TABLET_DIRTY.get(), ItemsPM.MYSTICAL_RELIC.get(), ModelTemplates.FLAT_ITEM);
 
         // Generate debug items
         itemModels.generateFlatItem(ItemsPM.TICK_STICK.get(), Items.STICK, ModelTemplates.FLAT_ITEM);
@@ -249,5 +262,11 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     private void generateConcoctionItem(ItemModelGenerators itemModels, Item item) {
         ResourceLocation modelLoc = itemModels.generateLayeredItem(item, ModelLocationUtils.getModelLocation(item, "_overlay"), ModelLocationUtils.getModelLocation(item));
         itemModels.addPotionTint(item, modelLoc);
+    }
+
+    private void generateSpawnItem(ItemModelGenerators itemModels, Item item, int baseColor, int overlayColor) {
+        ResourceLocation spawnEggLoc = ResourceUtils.loc("spawn_egg").withPrefix("item/");
+        ResourceLocation modelLoc = itemModels.generateLayeredItem(item, spawnEggLoc, spawnEggLoc.withSuffix("_overlay"));
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new Constant(baseColor), new Constant(overlayColor)));
     }
 }
