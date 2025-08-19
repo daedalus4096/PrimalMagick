@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.client.events;
 
+import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.client.color.item.SourceTint;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
@@ -10,9 +12,12 @@ import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -22,6 +27,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.StemBlock;
 
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
@@ -68,6 +74,10 @@ public class ColorEvents {
 
     public interface BlockColorRegistrar {
         void register(BlockColor blockColor, Block... blocks);
+    }
+
+    public static void onItemTintSourceInit(BiConsumer<ResourceLocation, MapCodec<? extends ItemTintSource>> tintMapper) {
+        tintMapper.accept(ResourceUtils.loc("source"), SourceTint.MAP_CODEC);
     }
 
     public static void onItemColorInit(ItemColorRegistrar itemColors) {
@@ -118,7 +128,6 @@ public class ColorEvents {
         }, ItemsPM.CONCOCTION.get(), ItemsPM.ALCHEMICAL_BOMB.get());
         
         AmbrosiaItem.getAllAmbrosias().forEach(ambrosia -> itemColors.register((stack, tintIndex) -> getStackColor(stack, tintIndex, ambrosia::getColor), ambrosia));
-        ManaArrowItem.getManaArrows().forEach(arrow -> itemColors.register((stack, tintIndex) -> getStackColor(stack, tintIndex, arrow::getColor), arrow));
         HummingArtifactItem.getAllHummingArtifacts().forEach(artifact -> itemColors.register((stack, tintIndex) -> getStackColor(stack, tintIndex, artifact::getColor), artifact));
         AttunementShacklesItem.getAllShackles().forEach(shackles -> itemColors.register((stack, tintIndex) -> getStackColor(stack, tintIndex, shackles::getColor), shackles));
     }

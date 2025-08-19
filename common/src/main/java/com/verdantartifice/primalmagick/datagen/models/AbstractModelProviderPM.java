@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.datagen.models;
 
+import com.verdantartifice.primalmagick.client.color.item.SourceTint;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
@@ -12,9 +14,12 @@ import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
@@ -121,7 +126,12 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // TODO Generate spelltome items
         // TODO Generate mana orb items
 
-        // TODO Generate mana arrow items
+        // Generate mana arrow items
+        ManaArrowItem.getManaArrows().forEach(item -> {
+            ResourceLocation modelLoc = itemModels.generateLayeredItem(item, ModelLocationUtils.getModelLocation(item, "_head"), ModelLocationUtils.getModelLocation(item, "_base"));
+            itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new SourceTint()));
+        });
+
         // TODO Generate armor items
 
         // Generate miscellaneous items

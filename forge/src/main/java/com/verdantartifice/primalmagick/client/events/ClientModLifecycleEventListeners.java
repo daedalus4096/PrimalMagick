@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
 import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.item.ItemTintSources;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,6 +21,7 @@ public class ClientModLifecycleEventListeners {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         ClientModLifecycleEvents.clientSetup(event::enqueueWork);
+        ColorEvents.onItemTintSourceInit(ItemTintSources.ID_MAPPER::put);
         registerHudOverlays();  // FIXME Move this to a dedicated event if/when Forge implements one
     }
 

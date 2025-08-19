@@ -22,4 +22,9 @@ public class ColorEventListeners {
     public static void onItemColorInit(RegisterColorHandlersEvent.Item event) {
         ColorEvents.onItemColorInit(event::register);
     }
+
+    @SubscribeEvent
+    public static void onItemTintSourceInit(RegisterColorHandlersEvent.ItemTintSources event) {
+        ColorEvents.onItemTintSourceInit(event::register);
+    }
 }

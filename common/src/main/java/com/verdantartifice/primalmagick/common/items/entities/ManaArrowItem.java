@@ -52,10 +52,6 @@ public class ManaArrowItem extends ArrowItem {
         return this.source;
     }
     
-    public int getColor(int tintIndex) {
-        return tintIndex == 0 ? this.source.getColor() : 0xFFFFFF;
-    }
-    
     public static Collection<ManaArrowItem> getManaArrows() {
         return Collections.unmodifiableCollection(SOURCE_MAPPING.values());
     }
