@@ -214,7 +214,11 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.SANGUINE_CORE_BLANK.get(), ModelTemplates.FLAT_ITEM);
         SanguineCoreItem.getAllCores().forEach(item -> itemModels.generateFlatItem(item, ItemsPM.SANGUINE_CORE_BLANK.get(), ModelTemplates.FLAT_ITEM));
 
-        // TODO Generate concoction items
+        // Generate concoction items
+        itemModels.generateFlatItem(ItemsPM.SKYGLASS_FLASK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsPM.BOMB_CASING.get(), ModelTemplates.FLAT_ITEM);
+        this.generateConcoctionItem(itemModels, ItemsPM.CONCOCTION.get());
+        this.generateConcoctionItem(itemModels, ItemsPM.ALCHEMICAL_BOMB.get());
 
         // Generate caster items
         itemModels.generateFlatItem(ItemsPM.SPELL_SCROLL_BLANK.get(), ModelTemplates.FLAT_ITEM);
@@ -240,5 +244,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     private void generateSourceTintedLayeredItem(ItemModelGenerators itemModels, Item item, ResourceLocation overlayModel, ResourceLocation baseModel) {
         ResourceLocation modelLoc = itemModels.generateLayeredItem(item, overlayModel, baseModel);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new SourceTint()));
+    }
+
+    private void generateConcoctionItem(ItemModelGenerators itemModels, Item item) {
+        ResourceLocation modelLoc = itemModels.generateLayeredItem(item, ModelLocationUtils.getModelLocation(item, "_overlay"), ModelLocationUtils.getModelLocation(item));
+        itemModels.addPotionTint(item, modelLoc);
     }
 }
