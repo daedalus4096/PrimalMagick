@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.items.food;
 
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -36,7 +37,7 @@ public class AmbrosiaItem extends Item {
     protected final AmbrosiaItem.Type ambrosiaType;
     
     public AmbrosiaItem(Source source, AmbrosiaItem.Type ambrosiaType, Item.Properties properties) {
-        super(properties);
+        super(properties.component(DataComponentsPM.SOURCE_TINT.get(), source));
         this.source = source;
         this.ambrosiaType = ambrosiaType;
         AMBROSIAS.add(this);

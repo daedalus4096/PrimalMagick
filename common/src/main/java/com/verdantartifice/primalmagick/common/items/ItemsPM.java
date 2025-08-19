@@ -525,15 +525,15 @@ public class ItemsPM {
     public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_ARCHMAGE = registerSupplier("mana_orb_archmage", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
     // Register mana arrow items
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_EARTH = registerSupplier("mana_arrow_earth", () -> new ManaArrowItem(Sources.EARTH, new Item.Properties().component(DataComponentsPM.SOURCE_TINT.get(), Sources.EARTH)));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SEA = registerSupplier("mana_arrow_sea", () -> new ManaArrowItem(Sources.SEA, new Item.Properties().component(DataComponentsPM.SOURCE_TINT.get(), Sources.SEA)));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SKY = registerSupplier("mana_arrow_sky", () -> new ManaArrowItem(Sources.SKY, new Item.Properties().component(DataComponentsPM.SOURCE_TINT.get(), Sources.SKY)));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SUN = registerSupplier("mana_arrow_sun", () -> new ManaArrowItem(Sources.SUN, new Item.Properties().component(DataComponentsPM.SOURCE_TINT.get(), Sources.SUN)));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_MOON = registerSupplier("mana_arrow_moon", () -> new ManaArrowItem(Sources.MOON, new Item.Properties().component(DataComponentsPM.SOURCE_TINT.get(), Sources.MOON)));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_BLOOD = registerSupplier("mana_arrow_blood", () -> new ManaArrowItem(Sources.BLOOD, new Item.Properties().component(DataComponentsPM.SOURCE_TINT.get(), Sources.BLOOD)));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_INFERNAL = registerSupplier("mana_arrow_infernal", () -> new ManaArrowItem(Sources.INFERNAL, new Item.Properties().component(DataComponentsPM.SOURCE_TINT.get(), Sources.INFERNAL)));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_VOID = registerSupplier("mana_arrow_void", () -> new ManaArrowItem(Sources.VOID, new Item.Properties().component(DataComponentsPM.SOURCE_TINT.get(), Sources.VOID)));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_HALLOWED = registerSupplier("mana_arrow_hallowed", () -> new ManaArrowItem(Sources.HALLOWED, new Item.Properties().component(DataComponentsPM.SOURCE_TINT.get(), Sources.HALLOWED)));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_EARTH = registerSupplier("mana_arrow_earth", () -> new ManaArrowItem(Sources.EARTH, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SEA = registerSupplier("mana_arrow_sea", () -> new ManaArrowItem(Sources.SEA, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SKY = registerSupplier("mana_arrow_sky", () -> new ManaArrowItem(Sources.SKY, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SUN = registerSupplier("mana_arrow_sun", () -> new ManaArrowItem(Sources.SUN, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_MOON = registerSupplier("mana_arrow_moon", () -> new ManaArrowItem(Sources.MOON, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_BLOOD = registerSupplier("mana_arrow_blood", () -> new ManaArrowItem(Sources.BLOOD, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_INFERNAL = registerSupplier("mana_arrow_infernal", () -> new ManaArrowItem(Sources.INFERNAL, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_VOID = registerSupplier("mana_arrow_void", () -> new ManaArrowItem(Sources.VOID, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_HALLOWED = registerSupplier("mana_arrow_hallowed", () -> new ManaArrowItem(Sources.HALLOWED, new Item.Properties()));
 
     // Register armor items
     public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_HEAD = registerSupplier("imbued_wool_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));

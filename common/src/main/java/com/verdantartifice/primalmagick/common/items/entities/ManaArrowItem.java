@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.entities;
 
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.ManaArrowEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.Direction;
@@ -30,7 +31,7 @@ public class ManaArrowItem extends ArrowItem {
     protected final Source source;
     
     public ManaArrowItem(Source source, Item.Properties properties) {
-        super(properties);
+        super(properties.component(DataComponentsPM.SOURCE_TINT.get(), source));
         this.source = source;
         SOURCE_MAPPING.put(this.source, this);
     }

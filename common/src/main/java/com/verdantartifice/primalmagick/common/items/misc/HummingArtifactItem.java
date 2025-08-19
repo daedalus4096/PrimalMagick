@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class HummingArtifactItem extends AbstractAttunementGainItem {
     protected static final List<HummingArtifactItem> ARTIFACTS = new ArrayList<>();
 
     public HummingArtifactItem(Source source, Properties properties) {
-        super(source, AttunementType.PERMANENT, 1, properties);
+        super(source, AttunementType.PERMANENT, 1, properties.component(DataComponentsPM.SOURCE_TINT.get(), source));
         ARTIFACTS.add(this);
     }
 

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
@@ -36,7 +37,7 @@ public class AttunementShacklesItem extends Item {
     protected final Source source;
     
     public AttunementShacklesItem(Source source, Item.Properties properties) {
-        super(properties);
+        super(properties.component(DataComponentsPM.SOURCE_TINT.get(), source));
         this.source = source;
         SHACKLES.put(source, this);
     }
