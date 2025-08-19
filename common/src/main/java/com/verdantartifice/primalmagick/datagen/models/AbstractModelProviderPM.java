@@ -81,7 +81,46 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.ENERGIZED_EMERALD.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.ENERGIZED_QUARTZ.get(), ModelTemplates.FLAT_ITEM);
 
-        // TODO Generate tool items
+        // Generate tool items
+        itemModels.generateFlatItem(ItemsPM.PRIMALITE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateTrident(ItemsPM.PRIMALITE_TRIDENT.get());
+        itemModels.generateBow(ItemsPM.PRIMALITE_BOW.get());
+        itemModels.generateFlatItem(ItemsPM.PRIMALITE_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.PRIMALITE_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.PRIMALITE_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.PRIMALITE_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFishingRod(ItemsPM.PRIMALITE_FISHING_ROD.get());
+        itemModels.generateShield(ItemsPM.PRIMALITE_SHIELD.get());
+        itemModels.generateFlatItem(ItemsPM.HEXIUM_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateTrident(ItemsPM.HEXIUM_TRIDENT.get());
+        itemModels.generateBow(ItemsPM.HEXIUM_BOW.get());
+        itemModels.generateFlatItem(ItemsPM.HEXIUM_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HEXIUM_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HEXIUM_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HEXIUM_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFishingRod(ItemsPM.HEXIUM_FISHING_ROD.get());
+        itemModels.generateShield(ItemsPM.HEXIUM_SHIELD.get());
+        itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateTrident(ItemsPM.HALLOWSTEEL_TRIDENT.get());
+        itemModels.generateBow(ItemsPM.HALLOWSTEEL_BOW.get());
+        itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFishingRod(ItemsPM.HALLOWSTEEL_FISHING_ROD.get());
+        itemModels.generateShield(ItemsPM.HALLOWSTEEL_SHIELD.get());
+        itemModels.generateFlatItem(ItemsPM.FORBIDDEN_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateTrident(ItemsPM.FORBIDDEN_TRIDENT.get());
+        itemModels.generateBow(ItemsPM.FORBIDDEN_BOW.get());
+        itemModels.generateFlatItem(ItemsPM.PRIMAL_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.PRIMAL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.PRIMAL_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsPM.PRIMAL_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFishingRod(ItemsPM.PRIMAL_FISHING_ROD.get());
+        // TODO Generate client item for sacred shield?
+        // TODO Generate spelltome items
+        // TODO Generate mana orb items
+
         // TODO Generate mana arrow items
         // TODO Generate armor items
 
