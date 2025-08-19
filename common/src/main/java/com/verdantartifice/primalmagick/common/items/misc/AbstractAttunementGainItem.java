@@ -66,8 +66,4 @@ public abstract class AbstractAttunementGainItem extends Item {
         String translationKey = "item." + Constants.MOD_ID + "." + Services.ITEMS_REGISTRY.getKey(this).getPath() + ".tooltip";
         tooltip.accept(Component.translatable(translationKey).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
-    
-    public int getColor(int tintIndex) {
-        return tintIndex == 0 ? 0xFFFFFF : this.source.getColor();
-    }
 }

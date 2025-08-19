@@ -71,10 +71,6 @@ public class AmbrosiaItem extends Item {
         return super.finishUsingItem(stack, worldIn, entityLiving);
     }
     
-    public int getColor(int tintIndex) {
-        return tintIndex == 0 ? 0xFFFFFF : this.source.getColor();
-    }
-    
     public static Collection<AmbrosiaItem> getAllAmbrosias() {
         return Collections.unmodifiableCollection(AMBROSIAS);
     }

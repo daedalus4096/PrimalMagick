@@ -126,10 +126,6 @@ public class ColorEvents {
         itemColors.register((stack, color) -> {
             return color == 0 ? stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor() : -1;
         }, ItemsPM.CONCOCTION.get(), ItemsPM.ALCHEMICAL_BOMB.get());
-        
-        AmbrosiaItem.getAllAmbrosias().forEach(ambrosia -> itemColors.register((stack, tintIndex) -> getStackColor(stack, tintIndex, ambrosia::getColor), ambrosia));
-        HummingArtifactItem.getAllHummingArtifacts().forEach(artifact -> itemColors.register((stack, tintIndex) -> getStackColor(stack, tintIndex, artifact::getColor), artifact));
-        AttunementShacklesItem.getAllShackles().forEach(shackles -> itemColors.register((stack, tintIndex) -> getStackColor(stack, tintIndex, shackles::getColor), shackles));
     }
 
     public interface ItemColorRegistrar {

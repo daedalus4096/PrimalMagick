@@ -5,12 +5,16 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
+import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
+import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -20,6 +24,7 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
@@ -127,10 +132,8 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // TODO Generate mana orb items
 
         // Generate mana arrow items
-        ManaArrowItem.getManaArrows().forEach(item -> {
-            ResourceLocation modelLoc = itemModels.generateLayeredItem(item, ModelLocationUtils.getModelLocation(item, "_head"), ModelLocationUtils.getModelLocation(item, "_base"));
-            itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new SourceTint()));
-        });
+        ManaArrowItem.getManaArrows().forEach(item ->
+                this.generateSourceTintedLayeredItem(itemModels, item, ResourceUtils.loc("mana_arrow_head").withPrefix("item/"), ResourceUtils.loc("mana_arrow_base").withPrefix("item/")));
 
         // TODO Generate armor items
 
@@ -190,9 +193,22 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.RUNE_UNATTUNED.get(), ModelTemplates.FLAT_ITEM);
         RuneItem.getAllRunes().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
 
-        // TODO Generate ambrosia items
-        // TODO Generate attunement shackles items
-        // TODO Generate humming artifact items
+        // Generate ambrosia items
+        AmbrosiaItem.getAllAmbrosiasOfType(AmbrosiaItem.Type.BASIC).forEach(item ->
+                this.generateSourceTintedLayeredItem(itemModels, item, ResourceUtils.loc("ambrosia_overlay").withPrefix("item/"), ResourceUtils.loc("ambrosia").withPrefix("item/")));
+        AmbrosiaItem.getAllAmbrosiasOfType(AmbrosiaItem.Type.GREATER).forEach(item ->
+                this.generateSourceTintedLayeredItem(itemModels, item, ResourceUtils.loc("ambrosia_overlay").withPrefix("item/"), ResourceUtils.loc("ambrosia_greater").withPrefix("item/")));
+        AmbrosiaItem.getAllAmbrosiasOfType(AmbrosiaItem.Type.SUPREME).forEach(item ->
+                this.generateSourceTintedLayeredItem(itemModels, item, ResourceUtils.loc("ambrosia_overlay").withPrefix("item/"), ResourceUtils.loc("ambrosia_supreme").withPrefix("item/")));
+
+        // Generate attunement shackles items
+        AttunementShacklesItem.getAllShackles().forEach(item ->
+                this.generateSourceTintedLayeredItem(itemModels, item, ResourceUtils.loc("attunement_shackles_overlay").withPrefix("item/"), ResourceUtils.loc("attunement_shackles").withPrefix("item/")));
+
+        // Generate humming artifact items
+        itemModels.generateFlatItem(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get(), ModelTemplates.FLAT_ITEM);
+        HummingArtifactItem.getAllHummingArtifacts().forEach(item ->
+                this.generateSourceTintedLayeredItem(itemModels, item, ResourceUtils.loc("humming_artifact_glow").withPrefix("item/"), ResourceUtils.loc("humming_artifact_case").withPrefix("item/")));
 
         // Generate sanguine core items
         itemModels.generateFlatItem(ItemsPM.SANGUINE_CORE_BLANK.get(), ModelTemplates.FLAT_ITEM);
@@ -219,5 +235,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
         // Generate debug items
         itemModels.generateFlatItem(ItemsPM.TICK_STICK.get(), Items.STICK, ModelTemplates.FLAT_ITEM);
+    }
+
+    private void generateSourceTintedLayeredItem(ItemModelGenerators itemModels, Item item, ResourceLocation overlayModel, ResourceLocation baseModel) {
+        ResourceLocation modelLoc = itemModels.generateLayeredItem(item, overlayModel, baseModel);
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new SourceTint()));
     }
 }

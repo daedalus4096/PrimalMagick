@@ -59,10 +59,6 @@ public class AttunementShacklesItem extends Item {
         }
     }
 
-    public int getColor(int tintIndex) {
-        return tintIndex == 0 ? 0xFFFFFF : this.source.getColor();
-    }
-    
     @Nullable
     public static AttunementShacklesItem getShackles(Source source) {
         return SHACKLES.getOrDefault(source, null);

@@ -1,7 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "primalmagick:item/attunement_shackles",
-        "layer1": "primalmagick:item/attunement_shackles_overlay"
-    }
-}
