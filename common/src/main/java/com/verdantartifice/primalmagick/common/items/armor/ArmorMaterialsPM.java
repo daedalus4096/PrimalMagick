@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.armor;
 
+import com.verdantartifice.primalmagick.common.items.EquipmentAssetsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;
@@ -94,7 +95,7 @@ public class ArmorMaterialsPM {
             1.0F,
             0.0F,
             ItemTagsPM.INGOTS_PRIMALITE,
-            EquipmentAssets.IRON    // FIXME Need equipment asset for armor material
+            EquipmentAssetsPM.PRIMALITE
     );
     public static final ArmorMaterial HEXIUM = new ArmorMaterial(
             45,
@@ -110,7 +111,7 @@ public class ArmorMaterialsPM {
             2.0F,
             0.1F,
             ItemTagsPM.INGOTS_HEXIUM,
-            EquipmentAssets.DIAMOND     // FIXME Need equipment asset for armor material
+            EquipmentAssetsPM.HEXIUM
     );
     public static final ArmorMaterial HALLOWSTEEL = new ArmorMaterial(
             60,
@@ -126,6 +127,6 @@ public class ArmorMaterialsPM {
             3.0F,
             0.2F,
             ItemTagsPM.INGOTS_HALLOWSTEEL,
-            EquipmentAssets.NETHERITE   // FIXME Need equipment asset for armor material
+            EquipmentAssetsPM.HALLOWSTEEL
     );
 }
