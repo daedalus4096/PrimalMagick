@@ -69,7 +69,4 @@ public interface IItemPrototypeService {
     Supplier<MundaneWandItem> mundaneWand();
     Supplier<ModularWandItem> modularWand(Item.Properties properties);
     Supplier<ModularStaffItem> modularStaff(Item.Properties properties);
-
-    Supplier<SpawnEggItem> deferredSpawnEgg(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Item.Properties props);
-    Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, PixieRank rank, Source source, Item.Properties properties);
 }

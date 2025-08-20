@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.DrainedPixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
+import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
@@ -242,7 +243,9 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.generateSpawnItem(itemModels, ItemsPM.HEXIUM_GOLEM_SPAWN_EGG.get(), 0x791E29, 0x100736);
         this.generateSpawnItem(itemModels, ItemsPM.HALLOWSTEEL_GOLEM_SPAWN_EGG.get(), 0xFDFFE0, 0xEDE1A2);
 
-        // TODO Generate pixie and drained pixie items
+        // Generate pixie and drained pixie items
+        PixieItem.getAllPixies().forEach(item ->
+                this.generateSourceTintedLayeredItem(itemModels, item, ResourceUtils.loc("pixie_overlay").withPrefix("item/"), ResourceUtils.loc("pixie").withPrefix("item/")));
         DrainedPixieItem.getAllDrainedPixies().forEach(item -> this.generateDrainedPixieItem(itemModels, item));
 
         // Generate book items

@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.platform;
 
-import com.verdantartifice.primalmagick.common.entities.pixies.PixieRank;
-import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
 import com.verdantartifice.primalmagick.common.items.entities.PixieHouseItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemNeoforge;
@@ -18,7 +16,6 @@ import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItemN
 import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.PixieHouseItemNeoforge;
-import com.verdantartifice.primalmagick.common.items.misc.PixieItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredBowItem;
@@ -50,15 +47,10 @@ import com.verdantartifice.primalmagick.common.items.wands.ModularWandItemNeofor
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItemNeoforge;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.platform.services.IItemPrototypeService;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 
 import java.util.function.Supplier;
 
@@ -176,15 +168,5 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     @Override
     public Supplier<ModularStaffItem> modularStaff(Item.Properties properties) {
         return () -> new ModularStaffItemNeoforge(properties);
-    }
-
-    @Override
-    public Supplier<SpawnEggItem> deferredSpawnEgg(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Item.Properties props) {
-        return () -> new DeferredSpawnEggItem(type, backgroundColor, highlightColor, props);
-    }
-
-    @Override
-    public Supplier<SpawnEggItem> pixie(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, PixieRank rank, Source source, Item.Properties properties) {
-        return () -> new PixieItemNeoforge(typeSupplier, rank, source, properties);
     }
 }
