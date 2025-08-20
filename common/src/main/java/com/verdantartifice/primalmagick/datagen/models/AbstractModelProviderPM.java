@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.models;
 
-import com.verdantartifice.primalmagick.client.color.item.SourceTint;
+import com.verdantartifice.primalmagick.client.item.color.SourceTint;
+import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.EquipmentAssetsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -26,11 +27,20 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.renderer.item.BlockModelWrapper;
+import net.minecraft.client.renderer.item.SelectItemModel;
+import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
     public AbstractModelProviderPM(PackOutput output) {
@@ -199,7 +209,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.MAGITECH_PARTS_ENCHANTED.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.MAGITECH_PARTS_HEAVENLY.get(), ModelTemplates.FLAT_ITEM);
-        // TODO Generate flying carpet item
+        this.generateColorSelectItem(itemModels, ItemsPM.FLYING_CARPET.get(), DyeColor.WHITE);
         itemModels.generateFlatItem(ItemsPM.DREAM_VISION_TALISMAN.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.IGNYX.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.DOWSING_ROD.get(), ModelTemplates.FLAT_ITEM);
@@ -308,5 +318,20 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     private void generateDrainedPixieItem(ItemModelGenerators itemModels, Item item) {
         ResourceLocation modelLoc = ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(ResourceUtils.loc("drained_pixie").withPrefix("item/")), itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
+    }
+
+    private void generateColorSelectItem(ItemModelGenerators itemModels, Item item, DyeColor defaultColor) {
+        BlockModelWrapper.Unbaked defaultModel = null;
+        Map<DyeColor, SelectItemModel.SwitchCase<DyeColor>> cases = new HashMap<>();
+        for (DyeColor color : DyeColor.values()) {
+            var wrapper = new BlockModelWrapper.Unbaked(ModelLocationUtils.getModelLocation(item, "_" + color.getName()), List.of());
+            cases.put(color, new SelectItemModel.SwitchCase<>(List.of(color), wrapper));
+            if (color.equals(defaultColor)) {
+                defaultModel = wrapper;
+            }
+        }
+        itemModels.itemModelOutput.accept(item, new SelectItemModel.Unbaked(
+                new SelectItemModel.UnbakedSwitch<>(new StackDyeColor(), cases.values().stream().toList()),
+                Optional.ofNullable(defaultModel)));
     }
 }

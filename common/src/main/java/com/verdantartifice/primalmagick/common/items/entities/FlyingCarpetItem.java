@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.entities;
 
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
+import com.verdantartifice.primalmagick.common.items.IHasDyeColor;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,17 +13,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
 
 /**
  * Item definition for a flying carpet.  Spawns a flying carpet entity when used for the player to
@@ -31,7 +27,7 @@ import javax.annotation.Nullable;
  * 
  * @author Daedalus4096
  */
-public class FlyingCarpetItem extends Item {
+public class FlyingCarpetItem extends Item implements IHasDyeColor {
     public static final ResourceLocation COLOR_PROPERTY = ResourceUtils.loc("color");
     
     public static final CauldronInteraction DYED_CARPET = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
@@ -86,25 +82,5 @@ public class FlyingCarpetItem extends Item {
         } else {
             return InteractionResult.PASS;
         }
-    }
-    
-    @Nullable
-    public DyeColor getDyeColor(ItemStack stack) {
-        if (stack.has(DataComponents.DYED_COLOR)) {
-            return DyeColor.byFireworkColor(stack.get(DataComponents.DYED_COLOR).rgb());
-        } else {
-            return null;
-        }
-    }
-    
-    public void setDyeColor(ItemStack stack, DyeColor color) {
-        if (color == null) {
-            return;
-        }
-        stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getFireworkColor(), true));
-    }
-    
-    public void removeDyeColor(ItemStack stack) {
-        stack.remove(DataComponents.DYED_COLOR);
     }
 }

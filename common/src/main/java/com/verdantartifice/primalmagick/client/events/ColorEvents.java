@@ -1,21 +1,20 @@
 package com.verdantartifice.primalmagick.client.events;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.client.color.item.SourceTint;
+import com.verdantartifice.primalmagick.client.item.color.SourceTint;
+import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
-import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
-import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
-import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.color.item.ItemTintSource;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
@@ -78,6 +77,10 @@ public class ColorEvents {
 
     public static void onItemTintSourceInit(BiConsumer<ResourceLocation, MapCodec<? extends ItemTintSource>> tintMapper) {
         tintMapper.accept(ResourceUtils.loc("source"), SourceTint.MAP_CODEC);
+    }
+
+    public static void onSelectItemModelPropertyInit(BiConsumer<ResourceLocation, SelectItemModelProperty.Type<?, ?>> propertyMapper) {
+        propertyMapper.accept(ResourceUtils.loc("dyeColor"), StackDyeColor.TYPE);
     }
 
     public static void onItemColorInit(ItemColorRegistrar itemColors) {

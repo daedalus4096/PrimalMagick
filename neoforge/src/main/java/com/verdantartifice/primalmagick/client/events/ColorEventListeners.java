@@ -5,6 +5,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterSelectItemModelPropertyEvent;
 
 /**
  * Neoforge listeners for client-only block/item color events.
@@ -26,5 +27,10 @@ public class ColorEventListeners {
     @SubscribeEvent
     public static void onItemTintSourceInit(RegisterColorHandlersEvent.ItemTintSources event) {
         ColorEvents.onItemTintSourceInit(event::register);
+    }
+
+    @SubscribeEvent
+    public static void onSelectItemModelPropertiesInit(RegisterSelectItemModelPropertyEvent event) {
+        ColorEvents.onSelectItemModelPropertyInit(event::register);
     }
 }
