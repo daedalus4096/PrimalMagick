@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
+import com.verdantartifice.primalmagick.common.items.misc.DrainedPixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
@@ -22,6 +23,7 @@ import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -241,6 +243,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.generateSpawnItem(itemModels, ItemsPM.HALLOWSTEEL_GOLEM_SPAWN_EGG.get(), 0xFDFFE0, 0xEDE1A2);
 
         // TODO Generate pixie and drained pixie items
+        DrainedPixieItem.getAllDrainedPixies().forEach(item -> this.generateDrainedPixieItem(itemModels, item));
 
         // Generate book items
         itemModels.generateFlatItem(ItemsPM.STATIC_BOOK.get(), ModelTemplates.FLAT_ITEM);
@@ -268,5 +271,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         ResourceLocation spawnEggLoc = ResourceUtils.loc("spawn_egg").withPrefix("item/");
         ResourceLocation modelLoc = itemModels.generateLayeredItem(item, spawnEggLoc, spawnEggLoc.withSuffix("_overlay"));
         itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new Constant(baseColor), new Constant(overlayColor)));
+    }
+
+    private void generateDrainedPixieItem(ItemModelGenerators itemModels, Item item) {
+        ResourceLocation modelLoc = ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(ResourceUtils.loc("drained_pixie").withPrefix("item/")), itemModels.modelOutput);
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 }
