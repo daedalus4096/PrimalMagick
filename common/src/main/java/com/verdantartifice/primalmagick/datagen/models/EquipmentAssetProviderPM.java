@@ -8,7 +8,6 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +24,10 @@ public class EquipmentAssetProviderPM implements DataProvider {
     }
 
     private static void bootstrap(BiConsumer<ResourceKey<EquipmentAsset>, EquipmentClientInfo> pOutput) {
+        pOutput.accept(EquipmentAssetsPM.IMBUED_WOOL, onlyHumanoid("imbued_wool"));
+        pOutput.accept(EquipmentAssetsPM.SPELLCLOTH, onlyHumanoid("spellcloth"));
+        pOutput.accept(EquipmentAssetsPM.HEXWEAVE, onlyHumanoid("hexweave"));
+        pOutput.accept(EquipmentAssetsPM.SAINTSWOOL, onlyHumanoid("saintswool"));
         pOutput.accept(EquipmentAssetsPM.PRIMALITE, onlyHumanoid("primalite"));
         pOutput.accept(EquipmentAssetsPM.HEXIUM, onlyHumanoid("hexium"));
         pOutput.accept(EquipmentAssetsPM.HALLOWSTEEL, onlyHumanoid("hallowsteel"));
