@@ -29,7 +29,6 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.renderer.item.BlockModelWrapper;
 import net.minecraft.client.renderer.item.SelectItemModel;
-import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -143,8 +142,14 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.PRIMAL_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFishingRod(ItemsPM.PRIMAL_FISHING_ROD.get());
         // TODO Generate client item for sacred shield?
-        // TODO Generate spelltome items
-        // TODO Generate mana orb items
+        this.generateSpelltome(itemModels, ItemsPM.SPELLTOME_APPRENTICE.get(), ItemsPM.STATIC_BOOK.get());
+        this.generateSpelltome(itemModels, ItemsPM.SPELLTOME_ADEPT.get(), ItemsPM.STATIC_BOOK_UNCOMMON.get());
+        this.generateSpelltome(itemModels, ItemsPM.SPELLTOME_WIZARD.get(), ItemsPM.STATIC_BOOK_RARE.get());
+        this.generateSpelltome(itemModels, ItemsPM.SPELLTOME_ARCHMAGE.get(), ItemsPM.GRIMOIRE.get());
+        this.generateManaOrb(itemModels, ItemsPM.MANA_ORB_APPRENTICE.get(), ItemsPM.APPRENTICE_WAND_GEM_ITEM.get());
+        this.generateManaOrb(itemModels, ItemsPM.MANA_ORB_ADEPT.get(), ItemsPM.ADEPT_WAND_GEM_ITEM.get());
+        this.generateManaOrb(itemModels, ItemsPM.MANA_ORB_WIZARD.get(), ItemsPM.WIZARD_WAND_GEM_ITEM.get());
+        this.generateManaOrb(itemModels, ItemsPM.MANA_ORB_ARCHMAGE.get(), ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get());
 
         // Generate mana arrow items
         ManaArrowItem.getManaArrows().forEach(item ->
@@ -333,5 +338,15 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.itemModelOutput.accept(item, new SelectItemModel.Unbaked(
                 new SelectItemModel.UnbakedSwitch<>(new StackDyeColor(), cases.values().stream().toList()),
                 Optional.ofNullable(defaultModel)));
+    }
+
+    private void generateManaOrb(ItemModelGenerators itemModels, Item item, Item particleItem) {
+        ResourceLocation modelLoc = ModelTemplatesPM.MANA_ORB.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
+    }
+
+    private void generateSpelltome(ItemModelGenerators itemModels, Item item, Item particleItem) {
+        ResourceLocation modelLoc = ModelTemplatesPM.SPELLTOME.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 }

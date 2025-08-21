@@ -7,7 +7,8 @@ import net.minecraft.client.data.models.model.TextureSlot;
 import java.util.Optional;
 
 public class ModelTemplatesPM {
-    // TODO Add necessary model templates
+    public static final ModelTemplate MANA_ORB = createItem("template_mana_orb", TextureSlot.PARTICLE);
+    public static final ModelTemplate SPELLTOME = createItem("template_spelltome", TextureSlot.PARTICLE);
 
     public static ModelTemplate createBlock(String name, TextureSlot... requiredSlots) {
         return new ModelTemplate(Optional.of(ResourceUtils.loc(name).withPrefix("block/")), Optional.empty(), requiredSlots);
