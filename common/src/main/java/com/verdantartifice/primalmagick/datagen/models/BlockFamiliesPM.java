@@ -13,6 +13,17 @@ public class BlockFamiliesPM {
     private static final Map<Block, BlockFamily> MAP = new HashMap<>();
 
     // Specify block families
+    public static final BlockFamily MARBLE = familyBuilder(BlocksPM.MARBLE.get())
+            .slab(BlocksPM.MARBLE_SLAB.get())
+            .stairs(BlocksPM.MARBLE_STAIRS.get())
+            .wall(BlocksPM.MARBLE_WALL.get())
+            .chiseled(BlocksPM.MARBLE_CHISELED.get())
+            .getFamily();
+    public static final BlockFamily MARBLE_BRICKS = familyBuilder(BlocksPM.MARBLE_BRICKS.get())
+            .slab(BlocksPM.MARBLE_BRICK_SLAB.get())
+            .stairs(BlocksPM.MARBLE_BRICK_STAIRS.get())
+            .wall(BlocksPM.MARBLE_BRICK_WALL.get())
+            .getFamily();
     public static final BlockFamily MARBLE_ENCHANTED = familyBuilder(BlocksPM.MARBLE_ENCHANTED.get())
             .slab(BlocksPM.MARBLE_ENCHANTED_SLAB.get())
             .stairs(BlocksPM.MARBLE_ENCHANTED_STAIRS.get())
