@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.models;
 
+import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -25,16 +26,23 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.model.multipart.CombinedCondition;
+import net.minecraft.client.renderer.block.model.multipart.Condition;
 import net.minecraft.client.renderer.item.BlockModelWrapper;
 import net.minecraft.client.renderer.item.SelectItemModel;
+import net.minecraft.core.Direction;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -43,6 +51,9 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,10 +69,11 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // Generate models for defined block families
         BlockFamiliesPM.getAllFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> blockModels.family(family.getBaseBlock()).generateFor(family));
 
-        // TODO Generate non-family marble blocks
+        // Generate non-family marble blocks
         this.generatePillarBlock(BlocksPM.MARBLE_PILLAR.get(), blockModels);
         blockModels.createTrivialBlock(BlocksPM.MARBLE_RUNED.get(), TexturedModel.COLUMN);
         blockModels.createTrivialCube(BlocksPM.MARBLE_TILES.get());
+        this.createCarvedBookshelf(BlocksPM.MARBLE_BOOKSHELF.get(), blockModels);
 
         // TODO Generate enchanted marble blocks
         // TODO Generate smoked marble blocks
@@ -372,5 +384,37 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                         .select(PillarBlock.Type.BASE, baseMultiVariant)
                         .select(PillarBlock.Type.BOTTOM, bottomMultiVariant)
                         .select(PillarBlock.Type.TOP, topMultiVariant)));
+    }
+
+    private void createCarvedBookshelf(Block block, BlockModelGenerators blockModels) {
+        MultiVariant multivariant = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block));
+        MultiPartGenerator multipartgenerator = MultiPartGenerator.multiPart(block);
+        List.of(Pair.of(Direction.NORTH, BlockModelGenerators.NOP), Pair.of(Direction.EAST, BlockModelGenerators.Y_ROT_90), Pair.of(Direction.SOUTH, BlockModelGenerators.Y_ROT_180), Pair.of(Direction.WEST, BlockModelGenerators.Y_ROT_270)).forEach((pair) -> {
+            Direction direction = pair.getFirst();
+            VariantMutator variantmutator = pair.getSecond();
+            Condition condition = BlockModelGenerators.condition().term(BlockStateProperties.HORIZONTAL_FACING, direction).build();
+            multipartgenerator.with(condition, multivariant.with(variantmutator).with(BlockModelGenerators.UV_LOCK));
+            this.addSlotStateAndRotationVariants(block, blockModels, multipartgenerator, condition, variantmutator);
+        });
+        blockModels.blockStateOutput.accept(multipartgenerator);
+        blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, "_inventory"));
+        BlockModelGenerators.CHISELED_BOOKSHELF_SLOT_MODEL_CACHE.clear();
+    }
+
+    private void addSlotStateAndRotationVariants(Block block, BlockModelGenerators blockModels, MultiPartGenerator generator, Condition condition, VariantMutator rotation) {
+        List.of(Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_0_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_TOP_LEFT), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_1_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_TOP_MID), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_2_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_TOP_RIGHT), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_3_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_BOTTOM_LEFT), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_4_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_BOTTOM_MID), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_5_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_BOTTOM_RIGHT)).forEach((pair) -> {
+            BooleanProperty booleanproperty = pair.getFirst();
+            ModelTemplate modeltemplate = pair.getSecond();
+            this.addBookSlotModel(block, blockModels, generator, condition, rotation, booleanproperty, modeltemplate, true);
+            this.addBookSlotModel(block, blockModels, generator, condition, rotation, booleanproperty, modeltemplate, false);
+        });
+    }
+
+    private void addBookSlotModel(Block block, BlockModelGenerators blockModels, MultiPartGenerator generator, Condition condition, VariantMutator rotation, BooleanProperty hasBookProperty, ModelTemplate template, boolean hasBook) {
+        String suffix = hasBook ? "_occupied" : "_empty";
+        TextureMapping texturemapping = (new TextureMapping()).put(TextureSlot.TEXTURE, TextureMapping.getBlockTexture(block, suffix));
+        BlockModelGenerators.BookSlotModelCacheKey blockmodelgenerators$bookslotmodelcachekey = new BlockModelGenerators.BookSlotModelCacheKey(template, suffix);
+        MultiVariant multivariant = BlockModelGenerators.plainVariant(BlockModelGenerators.CHISELED_BOOKSHELF_SLOT_MODEL_CACHE.computeIfAbsent(blockmodelgenerators$bookslotmodelcachekey, (cacheKey) -> template.createWithSuffix(Blocks.CHISELED_BOOKSHELF, suffix, texturemapping, blockModels.modelOutput)));
+        generator.with(new CombinedCondition(CombinedCondition.Operation.AND, List.of(condition, BlockModelGenerators.condition().term(hasBookProperty, hasBook).build())), multivariant.with(rotation));
     }
 }
