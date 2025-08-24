@@ -31,6 +31,7 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.client.renderer.item.BlockModelWrapper;
 import net.minecraft.client.renderer.item.SelectItemModel;
@@ -59,6 +60,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
         // TODO Generate non-family marble blocks
         this.generatePillarBlock(BlocksPM.MARBLE_PILLAR.get(), blockModels);
+        blockModels.createTrivialBlock(BlocksPM.MARBLE_RUNED.get(), TexturedModel.COLUMN);
 
         // TODO Generate enchanted marble blocks
         // TODO Generate smoked marble blocks
